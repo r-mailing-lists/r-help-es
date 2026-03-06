@@ -1,0 +1,6211 @@
+From j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com  Mon Feb  4 19:40:25 2019
+From: j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com (Paulina Jara Armijo)
+Date: Mon, 4 Feb 2019 19:40:25 +0100
+Subject: [R-es] Ayuda con calculo de variables / transponer R
+Message-ID: <CAB-To0T2UkefMGurrpB9LEvp7d3SeWYfF7NH36hdOBcqKdNXJw@mail.gmail.com>
+
+Buenas tardes, tengo dudas con el siguiente ejercicio que me han propuesto
+en un curso, no se si alguien podria indicarme como abordarlo, soy nueva en
+R y agradezco mucho su ayuda
+
+Identi car cuales son las variables que están contenidas en
+el data.frame. A continuación, transformar ese data.frame para que
+cada columna represente cada una de las variables. Usar los nombres
+Date, District y N.
+[image: image.png]
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190204/568f1b27/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 70291 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190204/568f1b27/attachment-0001.png>
+
+From d@n|e|@ch@n@e13 @end|ng |rom gm@||@com  Mon Feb  4 20:32:07 2019
+From: d@n|e|@ch@n@e13 @end|ng |rom gm@||@com (Daniel Chan Espinoza)
+Date: Mon, 4 Feb 2019 13:32:07 -0600
+Subject: [R-es] Ayuda con leyenda de mapa
+Message-ID: <4CF95E35-73FE-46AD-BF36-C0E700004D96@gmail.com>
+
+Buenas tardes, estoy creando unos mapas con  la librería tmap, pero me gustaría ajustar los valores de la leyenda, mostrando el primer valor únicamente como cero 
+
+tm_shape(localidad_poli) + tm_fill(col = "white", alpha = 0.5) + tm_borders(col = "black") +  tm_shape(localidad_calles) + tm_lines() + tm_shape(Abril) + tm_dots(size = 0.5, col = "sum_aedes", palette = "-RdBu", title="Legend")
+ 
+Utilizando el código anterior, obtengo la siguiente leyenda 
+
+Quisiera que la leyenda saliera de esta manera 
+
+
+
+Agradeceria mucho su ayuda 
+
+Saludos 
+
+Daniel Ch. 
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190204/13b75345/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura de pantalla 2019-02-04 13.08.46.png
+Type: image/png
+Size: 11107 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190204/13b75345/attachment-0002.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura de pantalla 2019-02-04 13.08.46.png
+Type: image/png
+Size: 10996 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190204/13b75345/attachment-0003.png>
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Mon Feb  4 21:25:36 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Mon, 4 Feb 2019 21:25:36 +0100
+Subject: [R-es] Ayuda con calculo de variables / transponer R
+In-Reply-To: <CAB-To0T2UkefMGurrpB9LEvp7d3SeWYfF7NH36hdOBcqKdNXJw@mail.gmail.com>
+References: <CAB-To0T2UkefMGurrpB9LEvp7d3SeWYfF7NH36hdOBcqKdNXJw@mail.gmail.com>
+Message-ID: <CAOKbq8g_tXtOyiM4ydc=NqGVw91EXsk4Vpx5NYfMhajKfC+=WA@mail.gmail.com>
+
+Hola,
+
+Lo puedes hacer con la función "gather()" del paquete "tidyr".
+De esta forma:
+
+> datos <- data.frame(
++   Date = c("2018-01-01", "2018-01-02", "2018-01-03", "2018-01-04"),
++   Berri = c(2, 3,4,6),
++   Boyer = c(10,20,30,40)
++ )
+>
+> library(tidyverse)
+> datos_new <- datos %>%
++               gather(District, N, -Date)
+> datos_new
+        Date District  N
+1 2018-01-01    Berri  2
+2 2018-01-02    Berri  3
+3 2018-01-03    Berri  4
+4 2018-01-04    Berri  6
+5 2018-01-01    Boyer 10
+6 2018-01-02    Boyer 20
+7 2018-01-03    Boyer 30
+8 2018-01-04    Boyer 40
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El lun., 4 feb. 2019 a las 19:42, Paulina Jara Armijo (<
+jara.armijo.paulina en gmail.com>) escribió:
+
+> Buenas tardes, tengo dudas con el siguiente ejercicio que me han propuesto
+> en un curso, no se si alguien podria indicarme como abordarlo, soy nueva en
+> R y agradezco mucho su ayuda
+>
+> Identi car cuales son las variables que están contenidas en
+> el data.frame. A continuación, transformar ese data.frame para que
+> cada columna represente cada una de las variables. Usar los nombres
+> Date, District y N.
+> [image: image.png]
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190204/c8b709ac/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 70291 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190204/c8b709ac/attachment-0001.png>
+
+From j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com  Tue Feb  5 06:43:46 2019
+From: j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com (Paulina Jara Armijo)
+Date: Tue, 5 Feb 2019 06:43:46 +0100
+Subject: [R-es] Ayuda con calculo de variables / transponer R
+In-Reply-To: <CAOKbq8g_tXtOyiM4ydc=NqGVw91EXsk4Vpx5NYfMhajKfC+=WA@mail.gmail.com>
+References: <CAB-To0T2UkefMGurrpB9LEvp7d3SeWYfF7NH36hdOBcqKdNXJw@mail.gmail.com>
+ <CAOKbq8g_tXtOyiM4ydc=NqGVw91EXsk4Vpx5NYfMhajKfC+=WA@mail.gmail.com>
+Message-ID: <CAB-To0TXyw8F+ewz7HdV+REuME2U1i-C+XqxK41b0Rbjo39xeQ@mail.gmail.com>
+
+¡Gracias!
+
+El lun., 4 feb. 2019 a las 21:25, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola,
+>
+> Lo puedes hacer con la función "gather()" del paquete "tidyr".
+> De esta forma:
+>
+> > datos <- data.frame(
+> +   Date = c("2018-01-01", "2018-01-02", "2018-01-03", "2018-01-04"),
+> +   Berri = c(2, 3,4,6),
+> +   Boyer = c(10,20,30,40)
+> + )
+> >
+> > library(tidyverse)
+> > datos_new <- datos %>%
+> +               gather(District, N, -Date)
+> > datos_new
+>         Date District  N
+> 1 2018-01-01    Berri  2
+> 2 2018-01-02    Berri  3
+> 3 2018-01-03    Berri  4
+> 4 2018-01-04    Berri  6
+> 5 2018-01-01    Boyer 10
+> 6 2018-01-02    Boyer 20
+> 7 2018-01-03    Boyer 30
+> 8 2018-01-04    Boyer 40
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El lun., 4 feb. 2019 a las 19:42, Paulina Jara Armijo (<
+> jara.armijo.paulina en gmail.com>) escribió:
+>
+>> Buenas tardes, tengo dudas con el siguiente ejercicio que me han
+>> propuesto en un curso, no se si alguien podria indicarme como abordarlo,
+>> soy nueva en R y agradezco mucho su ayuda
+>>
+>> Identi car cuales son las variables que están contenidas en
+>> el data.frame. A continuación, transformar ese data.frame para que
+>> cada columna represente cada una de las variables. Usar los nombres
+>> Date, District y N.
+>> [image: image.png]
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190205/693c08a7/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 70291 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190205/693c08a7/attachment-0001.png>
+
+From @@rodeno18 @end|ng |rom gm@||@com  Wed Feb  6 00:43:01 2019
+From: @@rodeno18 @end|ng |rom gm@||@com (=?UTF-8?Q?Jhon_Vidal_Figueroa_C=C3=A9spedes?=)
+Date: Tue, 5 Feb 2019 18:43:01 -0500
+Subject: [R-es] Ayuda !!!!!
+Message-ID: <CAK1bRVTQv9y4Ae+3L4epf1=5MBoL9QdtzpdkvLfYAtOFsrCi=g@mail.gmail.com>
+
+1. Implementar una rutina en R que permita estimar un modelo de regresión
+lineal omitiendo un registro. Use el archivo de datos Datos_Trabajo_R.xlsx.
+Observación: si el archivo contiene n registros, entonces se estimarán n
+regresiones con (n-1) registros cada una.
+a) El programa deberá mostrar un gráfico de dispersión cuyo eje X sería el
+número de regresión y el eje Y el valor de la pendiente de la regresión.
+b) ¿Cuál es el valor de la pendiente más grande y más pequeña?, ¿A qué
+registros están asociados estas pendientes?
+c) Calcule la pendiente promedio de todas las regresiones; y compare está
+pendiente con la pendiente de la regresión con todas las observaciones.
+
+2. Implementar una rutina en R que permita calcular la distancia de
+Mahalanobis de un registro xi al vector de medias calculado sin el registro
+xi. Muestre un histograma de estas distancias para visualizar las
+distancias más grandes.
+Observación: esta medida es sensible a la presencia de datos atípicos
+multivariantes.
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed Feb  6 04:07:56 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 6 Feb 2019 00:07:56 -0300
+Subject: [R-es] Ayuda !!!!!
+In-Reply-To: <CAK1bRVTQv9y4Ae+3L4epf1=5MBoL9QdtzpdkvLfYAtOFsrCi=g@mail.gmail.com>
+References: <CAK1bRVTQv9y4Ae+3L4epf1=5MBoL9QdtzpdkvLfYAtOFsrCi=g@mail.gmail.com>
+Message-ID: <CAHo_aERWhY3+p7JYuZqSfviBAKc99sV2YzCK3QE45GC-U1md8w@mail.gmail.com>
+
+Estimado
+
+Parece la tarea de la escuela.
+
+¿Que parte específica de R no comprende? Por ejemplo hist()
+
+Javier Rubén Marcuzzi
+
+El mar., 5 feb. 2019 a las 20:43, Jhon Vidal Figueroa Céspedes (<
+asrodeno18 en gmail.com>) escribió:
+
+> 1. Implementar una rutina en R que permita estimar un modelo de regresión
+> lineal omitiendo un registro. Use el archivo de datos Datos_Trabajo_R.xlsx.
+> Observación: si el archivo contiene n registros, entonces se estimarán n
+> regresiones con (n-1) registros cada una.
+> a) El programa deberá mostrar un gráfico de dispersión cuyo eje X sería el
+> número de regresión y el eje Y el valor de la pendiente de la regresión.
+> b) ¿Cuál es el valor de la pendiente más grande y más pequeña?, ¿A qué
+> registros están asociados estas pendientes?
+> c) Calcule la pendiente promedio de todas las regresiones; y compare está
+> pendiente con la pendiente de la regresión con todas las observaciones.
+>
+> 2. Implementar una rutina en R que permita calcular la distancia de
+> Mahalanobis de un registro xi al vector de medias calculado sin el registro
+> xi. Muestre un histograma de estas distancias para visualizar las
+> distancias más grandes.
+> Observación: esta medida es sensible a la presencia de datos atípicos
+> multivariantes.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From |ern@ndo@m@nz@n@re@8 @end|ng |rom gm@||@com  Thu Feb  7 08:47:36 2019
+From: |ern@ndo@m@nz@n@re@8 @end|ng |rom gm@||@com (Fernando Manzanares)
+Date: Thu, 7 Feb 2019 08:47:36 +0100
+Subject: [R-es] Paquete de R que use la sintaxis de SQL
+Message-ID: <CAMHW6XRDdaxq8zVzRt91c7MxMGCtYPQciD_+q0EoQE+EZQ_gcg@mail.gmail.com>
+
+Buenas a todos,
+Tengo que adaptar un proyecto que esta en lenguaje de SQL Server a RStudio.
+En el transcurso de este procedimiento tengo que realizar algunas consultas
+bastante complejas seleccionando campos de varias tablas y utilizar algunas
+clausulas como EXCEPT o UNION ALL. También debo actualizar varios campos de
+tablas usando la sentencia UPDATE y eliminar tablas bien con usando DROP
+TABLE o DELETE.
+Querría saber si existe algún paquete de R que permita trabajar usando la
+sintaxis anterior. En caso de no existir me gustaría saber que paquete de R
+es el más indicado para trabajar como he descrito anteriormente.
+Muchas gracias de antemano.
+
+	[[alternative HTML version deleted]]
+
+
+From jorpr@mo @end|ng |rom gm@||@com  Thu Feb  7 09:02:16 2019
+From: jorpr@mo @end|ng |rom gm@||@com (Jorge Pradas)
+Date: Thu, 7 Feb 2019 09:02:16 +0100
+Subject: [R-es] Paquete de R que use la sintaxis de SQL
+In-Reply-To: <CAMHW6XRDdaxq8zVzRt91c7MxMGCtYPQciD_+q0EoQE+EZQ_gcg@mail.gmail.com>
+References: <CAMHW6XRDdaxq8zVzRt91c7MxMGCtYPQciD_+q0EoQE+EZQ_gcg@mail.gmail.com>
+Message-ID: <CADf19gJk_hSA_UpLsVJ+DWHq0_S6bpjp1kUWxLt-7Vi-qDCc4Q@mail.gmail.com>
+
+Hola,
+
+¿la fuente de datos será igualmente Sql Server? si es así puedes
+usar sqlQuery y RODBC por ejemplo que usa sintaxis sql y mantener las
+mismas sentencias. Habría que probar pero supongo que aceptará todo tipo de
+sentencias sql como las que comentas. UPDATE seguro.
+
+Jorge
+
+El jue., 7 feb. 2019 a las 8:47, Fernando Manzanares (<
+fernando.manzanares8 en gmail.com>) escribió:
+
+> Buenas a todos,
+> Tengo que adaptar un proyecto que esta en lenguaje de SQL Server a RStudio.
+> En el transcurso de este procedimiento tengo que realizar algunas consultas
+> bastante complejas seleccionando campos de varias tablas y utilizar algunas
+> clausulas como EXCEPT o UNION ALL. También debo actualizar varios campos de
+> tablas usando la sentencia UPDATE y eliminar tablas bien con usando DROP
+> TABLE o DELETE.
+> Querría saber si existe algún paquete de R que permita trabajar usando la
+> sintaxis anterior. En caso de no existir me gustaría saber que paquete de R
+> es el más indicado para trabajar como he descrito anteriormente.
+> Muchas gracias de antemano.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu Feb  7 12:16:58 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 7 Feb 2019 08:16:58 -0300
+Subject: [R-es] Paquete de R que use la sintaxis de SQL
+In-Reply-To: <CADf19gJk_hSA_UpLsVJ+DWHq0_S6bpjp1kUWxLt-7Vi-qDCc4Q@mail.gmail.com>
+References: <CAMHW6XRDdaxq8zVzRt91c7MxMGCtYPQciD_+q0EoQE+EZQ_gcg@mail.gmail.com>
+ <CADf19gJk_hSA_UpLsVJ+DWHq0_S6bpjp1kUWxLt-7Vi-qDCc4Q@mail.gmail.com>
+Message-ID: <CAHo_aEReAPNUMkZkG4LLwx_DTQ5xVN_4UnHSmk2yzrDkDhTahw@mail.gmail.com>
+
+Estimado Fernando
+
+Sql Server 2017 permite dentro de SQL usar R. Tiene las dos posibilidades,
+desde R SQL y desde SQL R.
+
+Javier Rubén Marcuzzi
+
+El jue., 7 feb. 2019 a las 5:02, Jorge Pradas (<jorpramo en gmail.com>)
+escribió:
+
+> Hola,
+>
+> ¿la fuente de datos será igualmente Sql Server? si es así puedes
+> usar sqlQuery y RODBC por ejemplo que usa sintaxis sql y mantener las
+> mismas sentencias. Habría que probar pero supongo que aceptará todo tipo de
+> sentencias sql como las que comentas. UPDATE seguro.
+>
+> Jorge
+>
+> El jue., 7 feb. 2019 a las 8:47, Fernando Manzanares (<
+> fernando.manzanares8 en gmail.com>) escribió:
+>
+> > Buenas a todos,
+> > Tengo que adaptar un proyecto que esta en lenguaje de SQL Server a
+> RStudio.
+> > En el transcurso de este procedimiento tengo que realizar algunas
+> consultas
+> > bastante complejas seleccionando campos de varias tablas y utilizar
+> algunas
+> > clausulas como EXCEPT o UNION ALL. También debo actualizar varios campos
+> de
+> > tablas usando la sentencia UPDATE y eliminar tablas bien con usando DROP
+> > TABLE o DELETE.
+> > Querría saber si existe algún paquete de R que permita trabajar usando la
+> > sintaxis anterior. En caso de no existir me gustaría saber que paquete
+> de R
+> > es el más indicado para trabajar como he descrito anteriormente.
+> > Muchas gracias de antemano.
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From d@v|dcontrer@@00 @end|ng |rom gm@||@com  Thu Feb  7 17:23:45 2019
+From: d@v|dcontrer@@00 @end|ng |rom gm@||@com (David Contreras)
+Date: Thu, 7 Feb 2019 11:23:45 -0500
+Subject: [R-es] =?utf-8?q?Optimizaci=C3=B3n_identificaci=C3=B3n_de_casos_?=
+ =?utf-8?q?similares?=
+Message-ID: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+
+Buen día a todos,
+
+Agradezco su ayuda con lo siguiente:
+
+Tengo 100.000 registros con nombres de personas con su respectivo número de
+documento, quiero identificar casos que tengan un porcentaje de igualdad
+alto, no del 100% porque ya esos los tengo identificados, sino casos como
+por ejemplo:
+
+Nombre: Juan Pérez  Documento: 123456789
+Nombre: Juan Pérez  Documento: 1234056789
+
+Este caso sería una alerta de posible duplicado y tendría que revisarse
+porque posiblemente en uno de los dos casos se ingreso errado el número de
+documento.
+
+Para calcular esta diferencia uso la función adist del paquete (utils), el
+problema es que la forma en que tengo el código para revisar los 100.000
+casos, la máquina no lo soporta por los recorridos que se hacen:
+
+*El dataframe se llama Citacion.*
+
+*Citacion[,"NombreDoc"]<- paste0(Citacion[,"NOMBRE"]," ",
+Citacion[,"DOCUMENTO"]) # Concatena Nombre y documento*
+
+*Citacion[,"RNomDoc1"]<-0*
+*Citacion[,"RNomDoc2"]<-0*
+
+*ii<-1*
+*for(ii in 1:(nrow(Citacion)-1)){*
+*  jj<-ii+1*
+*  while(jj<=nrow(Citacion)){*
+
+*    if (adist(Citacion[ii,"NombreDoc"],
+Citacion[jj,"NombreDoc"])/nchar(Citacion[ii,"NombreDoc"])<0.15){  #
+Criterio para marcar los posibles casos duplicados*
+*      Citacion[ii,"RNomDoc1"]<-1*
+*      Citacion[jj,"RNomDoc2"]<-1*
+*      jj<-jj+1*
+*      } else {*
+*        Citacion[jj,"RNomDoc2"]<-0*
+*        jj<-jj+1*
+*        } *
+*  } *
+
+*}  *
+
+La idea es optimizar el código de alguna forma para agilizar el proceso y
+lograr que se identifiquen los casos a revisar.
+
+Mil gracias de nuevo.
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Thu Feb  7 17:31:08 2019
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Thu, 7 Feb 2019 16:31:08 +0000
+Subject: [R-es] 
+ =?iso-8859-1?q?Optimizaci=F3n_identificaci=F3n_de_casos_s?=
+ =?iso-8859-1?q?imilares?=
+In-Reply-To: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+References: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+Message-ID: <DBBPR04MB6090C4D6D1EAF04BC36C15C6CC680@DBBPR04MB6090.eurprd04.prod.outlook.com>
+
+Pues a mi se me ocurre algo chapuceril psp que puede funcionar.
+
+Separas cada dni ponkendo cada n?mero en una columna.
+
+A continuaci?n calculas las distancias y te quedas con aquellos cuya distancia sea menor o igual a nueve.
+
+Tendras mucho falso positivo, eso si, pero se podria afinar mas....
+
+Obtener Outlook para Android<https://aka.ms/ghei36>
+
+________________________________
+From: R-help-es <r-help-es-bounces en r-project.org> on behalf of David Contreras <davidcontreras00 en gmail.com>
+Sent: Thursday, February 7, 2019 5:23:45 PM
+To: r-help-es
+Subject: [R-es] Optimizaci?n identificaci?n de casos similares
+
+Buen d?a a todos,
+
+Agradezco su ayuda con lo siguiente:
+
+Tengo 100.000 registros con nombres de personas con su respectivo n?mero de
+documento, quiero identificar casos que tengan un porcentaje de igualdad
+alto, no del 100% porque ya esos los tengo identificados, sino casos como
+por ejemplo:
+
+Nombre: Juan P?rez  Documento: 123456789
+Nombre: Juan P?rez  Documento: 1234056789
+
+Este caso ser?a una alerta de posible duplicado y tendr?a que revisarse
+porque posiblemente en uno de los dos casos se ingreso errado el n?mero de
+documento.
+
+Para calcular esta diferencia uso la funci?n adist del paquete (utils), el
+problema es que la forma en que tengo el c?digo para revisar los 100.000
+casos, la m?quina no lo soporta por los recorridos que se hacen:
+
+*El dataframe se llama Citacion.*
+
+*Citacion[,"NombreDoc"]<- paste0(Citacion[,"NOMBRE"]," ",
+Citacion[,"DOCUMENTO"]) # Concatena Nombre y documento*
+
+*Citacion[,"RNomDoc1"]<-0*
+*Citacion[,"RNomDoc2"]<-0*
+
+*ii<-1*
+*for(ii in 1:(nrow(Citacion)-1)){*
+*  jj<-ii+1*
+*  while(jj<=nrow(Citacion)){*
+
+*    if (adist(Citacion[ii,"NombreDoc"],
+Citacion[jj,"NombreDoc"])/nchar(Citacion[ii,"NombreDoc"])<0.15){  #
+Criterio para marcar los posibles casos duplicados*
+*      Citacion[ii,"RNomDoc1"]<-1*
+*      Citacion[jj,"RNomDoc2"]<-1*
+*      jj<-jj+1*
+*      } else {*
+*        Citacion[jj,"RNomDoc2"]<-0*
+*        jj<-jj+1*
+*        } *
+*  } *
+
+*}  *
+
+La idea es optimizar el c?digo de alguna forma para agilizar el proceso y
+lograr que se identifiquen los casos a revisar.
+
+Mil gracias de nuevo.
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From d@v|dcontrer@@00 @end|ng |rom gm@||@com  Thu Feb  7 17:40:17 2019
+From: d@v|dcontrer@@00 @end|ng |rom gm@||@com (David Contreras)
+Date: Thu, 7 Feb 2019 11:40:17 -0500
+Subject: [R-es] 
+	=?utf-8?q?Optimizaci=C3=B3n_identificaci=C3=B3n_de_casos_?=
+	=?utf-8?q?similares?=
+In-Reply-To: <DBBPR04MB6090C4D6D1EAF04BC36C15C6CC680@DBBPR04MB6090.eurprd04.prod.outlook.com>
+References: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+ <DBBPR04MB6090C4D6D1EAF04BC36C15C6CC680@DBBPR04MB6090.eurprd04.prod.outlook.com>
+Message-ID: <CAELk-FE1R0U3mk3euO3K+9f6r=P-CpQ_tU7hk9Vi9iuJL375tg@mail.gmail.com>
+
+Gracias Jesús por tu ayuda.
+El tema es que como está el código si se identifican, pero el problema es
+que tiene que validar cada caso con los otros 99.999 casos y ahí la máquina
+no soporta el proceso.
+
+
+
+
+
+
+
+
+
+*David Contreras*
+
+Estadístico
+
+Móvil 3124345188.  <%2B57%20%281%29%204841410%20Ext.%20257>
+davidcontreras00 en gmail.com <cparra en contratista.icfes.gov.co>
+
+
+El jue., 7 feb. 2019 a las 11:31, Jesús Para Fernández (<
+j.para.fernandez en hotmail.com>) escribió:
+
+> Pues a mi se me ocurre algo chapuceril psp que puede funcionar.
+>
+> Separas cada dni ponkendo cada número en una columna.
+>
+> A continuación calculas las distancias y te quedas con aquellos cuya
+> distancia sea menor o igual a nueve.
+>
+> Tendras mucho falso positivo, eso si, pero se podria afinar mas....
+>
+> Obtener Outlook para Android <https://aka.ms/ghei36>
+>
+> ------------------------------
+> *From:* R-help-es <r-help-es-bounces en r-project.org> on behalf of David
+> Contreras <davidcontreras00 en gmail.com>
+> *Sent:* Thursday, February 7, 2019 5:23:45 PM
+> *To:* r-help-es
+> *Subject:* [R-es] Optimización identificación de casos similares
+>
+> Buen día a todos,
+>
+> Agradezco su ayuda con lo siguiente:
+>
+> Tengo 100.000 registros con nombres de personas con su respectivo número de
+> documento, quiero identificar casos que tengan un porcentaje de igualdad
+> alto, no del 100% porque ya esos los tengo identificados, sino casos como
+> por ejemplo:
+>
+> Nombre: Juan Pérez  Documento: 123456789
+> Nombre: Juan Pérez  Documento: 1234056789
+>
+> Este caso sería una alerta de posible duplicado y tendría que revisarse
+> porque posiblemente en uno de los dos casos se ingreso errado el número de
+> documento.
+>
+> Para calcular esta diferencia uso la función adist del paquete (utils), el
+> problema es que la forma en que tengo el código para revisar los 100.000
+> casos, la máquina no lo soporta por los recorridos que se hacen:
+>
+> *El dataframe se llama Citacion.*
+>
+> *Citacion[,"NombreDoc"]<- paste0(Citacion[,"NOMBRE"]," ",
+> Citacion[,"DOCUMENTO"]) # Concatena Nombre y documento*
+>
+> *Citacion[,"RNomDoc1"]<-0*
+> *Citacion[,"RNomDoc2"]<-0*
+>
+> *ii<-1*
+> *for(ii in 1:(nrow(Citacion)-1)){*
+> *  jj<-ii+1*
+> *  while(jj<=nrow(Citacion)){*
+>
+> *    if (adist(Citacion[ii,"NombreDoc"],
+> Citacion[jj,"NombreDoc"])/nchar(Citacion[ii,"NombreDoc"])<0.15){  #
+> Criterio para marcar los posibles casos duplicados*
+> *      Citacion[ii,"RNomDoc1"]<-1*
+> *      Citacion[jj,"RNomDoc2"]<-1*
+> *      jj<-jj+1*
+> *      } else {*
+> *        Citacion[jj,"RNomDoc2"]<-0*
+> *        jj<-jj+1*
+> *        } *
+> *  } *
+>
+> *}  *
+>
+> La idea es optimizar el código de alguna forma para agilizar el proceso y
+> lograr que se identifiquen los casos a revisar.
+>
+> Mil gracias de nuevo.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu Feb  7 19:09:31 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 7 Feb 2019 15:09:31 -0300
+Subject: [R-es] 
+	=?utf-8?q?Optimizaci=C3=B3n_identificaci=C3=B3n_de_casos_?=
+	=?utf-8?q?similares?=
+In-Reply-To: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+References: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+Message-ID: <CAHo_aETAb0RDMg3vX8zejhWy058VFADZMUyF1iN7DW1GeR5sHg@mail.gmail.com>
+
+Estimado David Contreras
+
+Puedes compilar el código, mire lo siguiente
+http://homepage.divms.uiowa.edu/~luke/R/compiler/compiler.pdf
+
+Javier Ruben Marcuzzi
+
+El jue., 7 feb. 2019 a las 13:24, David Contreras (<
+davidcontreras00 en gmail.com>) escribió:
+
+> Buen día a todos,
+>
+> Agradezco su ayuda con lo siguiente:
+>
+> Tengo 100.000 registros con nombres de personas con su respectivo número de
+> documento, quiero identificar casos que tengan un porcentaje de igualdad
+> alto, no del 100% porque ya esos los tengo identificados, sino casos como
+> por ejemplo:
+>
+> Nombre: Juan Pérez  Documento: 123456789
+> Nombre: Juan Pérez  Documento: 1234056789
+>
+> Este caso sería una alerta de posible duplicado y tendría que revisarse
+> porque posiblemente en uno de los dos casos se ingreso errado el número de
+> documento.
+>
+> Para calcular esta diferencia uso la función adist del paquete (utils), el
+> problema es que la forma en que tengo el código para revisar los 100.000
+> casos, la máquina no lo soporta por los recorridos que se hacen:
+>
+> *El dataframe se llama Citacion.*
+>
+> *Citacion[,"NombreDoc"]<- paste0(Citacion[,"NOMBRE"]," ",
+> Citacion[,"DOCUMENTO"]) # Concatena Nombre y documento*
+>
+> *Citacion[,"RNomDoc1"]<-0*
+> *Citacion[,"RNomDoc2"]<-0*
+>
+> *ii<-1*
+> *for(ii in 1:(nrow(Citacion)-1)){*
+> *  jj<-ii+1*
+> *  while(jj<=nrow(Citacion)){*
+>
+> *    if (adist(Citacion[ii,"NombreDoc"],
+> Citacion[jj,"NombreDoc"])/nchar(Citacion[ii,"NombreDoc"])<0.15){  #
+> Criterio para marcar los posibles casos duplicados*
+> *      Citacion[ii,"RNomDoc1"]<-1*
+> *      Citacion[jj,"RNomDoc2"]<-1*
+> *      jj<-jj+1*
+> *      } else {*
+> *        Citacion[jj,"RNomDoc2"]<-0*
+> *        jj<-jj+1*
+> *        } *
+> *  } *
+>
+> *}  *
+>
+> La idea es optimizar el código de alguna forma para agilizar el proceso y
+> lograr que se identifiquen los casos a revisar.
+>
+> Mil gracias de nuevo.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From @@rodeno18 @end|ng |rom gm@||@com  Thu Feb  7 19:51:59 2019
+From: @@rodeno18 @end|ng |rom gm@||@com (=?UTF-8?Q?Jhon_Vidal_Figueroa_C=C3=A9spedes?=)
+Date: Thu, 7 Feb 2019 13:51:59 -0500
+Subject: [R-es] BUCLE REGRESION
+Message-ID: <CAK1bRVSo8rPyEQf31FBVZkYiYdZkKpz3F+rjhzX3PfCD4-T3NQ@mail.gmail.com>
+
+Implementar una rutina en R que permita estimar un modelo de regresión
+lineal omitiendo un registro. Use el archivo de datos Datos_Trabajo_R.xlsx.
+
+Observación: si el archivo contiene n registros, entonces se estimarán n
+regresiones con (n-1) registros cada una.
+
+El programa deberá mostrar un gráfico de dispersión cuyo eje X sería el
+número de regresión y el eje Y el valor de la pendiente de la regresión.
+¿Cuál es el valor de la pendiente más grande y más pequeña?, ¿A qué
+registros están asociados estas pendientes?
+Calcule la pendiente promedio de todas las regresiones; y compare está
+pendiente con la pendiente de la regresión con todas las observaciones.
+
+    setwd("D:/ECONOMÍA UNFV/Software/R/R intermedio")
+
+    library(readxl)
+
+    data2 = read_excel("Datos_Trabajo_R 1.xlsx")
+    data1 = read_excel("Datos_Trabajo_R 2.xlsx")
+
+    # regresion lineal
+    n = 15
+    k = 1
+    numreg= c()
+    penreg= c()
+    for(i in 1:n){
+    Y = data.matrix(data1["Y"], rownames.force = NA)
+    Y = Y[1:n,]
+    uno = matrix(1,n,1)
+    X = cbind(uno,data.matrix(data1["X"], rownames.force = NA))
+    X = X[1:n,]
+    # estimacion de los parametros
+    B = solve(t(X)%*%X)%*%t(X)%*%Y
+    B= B[-2,]
+    pendreg = B
+    numreg  = n
+    data1["Y"]
+    data1["Y[1,]"]
+    }
+
+problema que tengo es de los valores de las pendientes, pero me falta que
+este sea un bucle y haga lo que me pida es decir que la regresion numero 1
+pendiente tal y asi sucesivamente
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Feb  8 00:48:41 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 8 Feb 2019 00:48:41 +0100
+Subject: [R-es] 
+	=?utf-8?q?Optimizaci=C3=B3n_identificaci=C3=B3n_de_casos_?=
+	=?utf-8?q?similares?=
+In-Reply-To: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+References: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+Message-ID: <CAOKbq8gKFuiaBB_atEFgApCkC2tO1JqpMNV+164Ls0Lzg79mBQ@mail.gmail.com>
+
+Hola,
+
+Puedes hacerlo de otras formas sin que tengas que calcular una matriz de
+distancias.
+
+Calcular la matriz de distancias de todos con todos, te lleva a tener una
+matriz de 1e5 x 1e5 de enteros (en el mejor de los casos) y esos son ya
+varias decenas de gigas.
+Una alternativa es esta:
+
+   - Calcular la distancia de Levenstein entre un DNI y la lista de DNIs.
+   - Del resultado ver si hay alguna distancia de "1" ó de "2"  que
+   indicaría un error a la hora de introducir el valor. Si aparece lo guardas.
+   - Y repetir este cálculo con otro DNI y así sucesivamente.
+   - En este escenario, solo haces una comparación en cada ciclo, no
+   consumes RAM. Solo consumes la RAM con los DNIs que vas guardando.
+   - Aquí, lo que ocurre es que el proceso es lento en ejecución.
+      - He probado comparando siempre el mismo DNI con una lista (siempre
+      la misma lista), que ordeno de forma aleatoria en cada ciclo.
+      - Y en mi máquina tarda 20min en hacer 25000 comparaciones.
+      - Y no he parelizado el bucle. Este problema es totalmente
+      paralelizable...
+
+Este es el código que he usado para hacer este ejemplo (sin paralelizar):
+
+#-------------
+library(stringdist)
+
+a <- "123456789"
+b <- "1234056789"
+c <- as.character(sample(1:1e5, 1e5, replace = FALSE))
+
+a <- Sys.time()
+for( i in 1:1000) {
+
+   to_compare <- sample(c(b,c), 1e5+1, replace = FALSE)
+   res_compa <- stringdist(a, to_compare, method="dl")
+   to_compare[ res_compa < 2]
+
+}
+b <- Sys.time() ; b -
+#-------------
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El jue., 7 feb. 2019 a las 17:24, David Contreras (<
+davidcontreras00 en gmail.com>) escribió:
+
+> Buen día a todos,
+>
+> Agradezco su ayuda con lo siguiente:
+>
+> Tengo 100.000 registros con nombres de personas con su respectivo número de
+> documento, quiero identificar casos que tengan un porcentaje de igualdad
+> alto, no del 100% porque ya esos los tengo identificados, sino casos como
+> por ejemplo:
+>
+> Nombre: Juan Pérez  Documento: 123456789
+> Nombre: Juan Pérez  Documento: 1234056789
+>
+> Este caso sería una alerta de posible duplicado y tendría que revisarse
+> porque posiblemente en uno de los dos casos se ingreso errado el número de
+> documento.
+>
+> Para calcular esta diferencia uso la función adist del paquete (utils), el
+> problema es que la forma en que tengo el código para revisar los 100.000
+> casos, la máquina no lo soporta por los recorridos que se hacen:
+>
+> *El dataframe se llama Citacion.*
+>
+> *Citacion[,"NombreDoc"]<- paste0(Citacion[,"NOMBRE"]," ",
+> Citacion[,"DOCUMENTO"]) # Concatena Nombre y documento*
+>
+> *Citacion[,"RNomDoc1"]<-0*
+> *Citacion[,"RNomDoc2"]<-0*
+>
+> *ii<-1*
+> *for(ii in 1:(nrow(Citacion)-1)){*
+> *  jj<-ii+1*
+> *  while(jj<=nrow(Citacion)){*
+>
+> *    if (adist(Citacion[ii,"NombreDoc"],
+> Citacion[jj,"NombreDoc"])/nchar(Citacion[ii,"NombreDoc"])<0.15){  #
+> Criterio para marcar los posibles casos duplicados*
+> *      Citacion[ii,"RNomDoc1"]<-1*
+> *      Citacion[jj,"RNomDoc2"]<-1*
+> *      jj<-jj+1*
+> *      } else {*
+> *        Citacion[jj,"RNomDoc2"]<-0*
+> *        jj<-jj+1*
+> *        } *
+> *  } *
+>
+> *}  *
+>
+> La idea es optimizar el código de alguna forma para agilizar el proceso y
+> lograr que se identifiquen los casos a revisar.
+>
+> Mil gracias de nuevo.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Feb  8 01:01:26 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 8 Feb 2019 01:01:26 +0100
+Subject: [R-es] BUCLE REGRESION
+In-Reply-To: <CAK1bRVSo8rPyEQf31FBVZkYiYdZkKpz3F+rjhzX3PfCD4-T3NQ@mail.gmail.com>
+References: <CAK1bRVSo8rPyEQf31FBVZkYiYdZkKpz3F+rjhzX3PfCD4-T3NQ@mail.gmail.com>
+Message-ID: <CAOKbq8jm8cTbt6-j5TUUE94BfdNMFwr4R5iweZzdr_EcB9AxnA@mail.gmail.com>
+
+Hola,
+
+Muy probablemente encontrarás más ayuda en la lista si en vez de plantear
+tu duda como si nos dieras una asignación, mostraras un poco más de
+"netetiquette".
+Dijeras cuál es tu problema, qué has podido plantear y si ya has hecho
+algo, qué problema estás teniendo, adjuntaras datos de ejemplo..
+
+Y yendo a tu problema,
+
+   - ¿has sido capaz de hacer este cálculo que quieres con un primer
+   ejemplo/caso?.
+   - ¿Sabes que en R para realizar un modelo lineal tienes la función
+   "lm()"?.
+   - Y que con la función "coefficients()" puedes obtener la pendiente y la
+   ordenada en el origen?.
+   - Tu problema entonces se reduce a seleccionar un subconjunto de datos,
+   usar "lm()" y "coefficients()" y guardar el resultado de coefficients en
+   cada ciclo.
+
+Seguro que en tu siguiente duda, tu nivel de "netetiquette" será mucho
+mayor... :-).
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El jue., 7 feb. 2019 a las 19:52, Jhon Vidal Figueroa Céspedes (<
+asrodeno18 en gmail.com>) escribió:
+
+> Implementar una rutina en R que permita estimar un modelo de regresión
+> lineal omitiendo un registro. Use el archivo de datos Datos_Trabajo_R.xlsx.
+>
+> Observación: si el archivo contiene n registros, entonces se estimarán n
+> regresiones con (n-1) registros cada una.
+>
+> El programa deberá mostrar un gráfico de dispersión cuyo eje X sería el
+> número de regresión y el eje Y el valor de la pendiente de la regresión.
+> ¿Cuál es el valor de la pendiente más grande y más pequeña?, ¿A qué
+> registros están asociados estas pendientes?
+> Calcule la pendiente promedio de todas las regresiones; y compare está
+> pendiente con la pendiente de la regresión con todas las observaciones.
+>
+>     setwd("D:/ECONOMÍA UNFV/Software/R/R intermedio")
+>
+>     library(readxl)
+>
+>     data2 = read_excel("Datos_Trabajo_R 1.xlsx")
+>     data1 = read_excel("Datos_Trabajo_R 2.xlsx")
+>
+>     # regresion lineal
+>     n = 15
+>     k = 1
+>     numreg= c()
+>     penreg= c()
+>     for(i in 1:n){
+>     Y = data.matrix(data1["Y"], rownames.force = NA)
+>     Y = Y[1:n,]
+>     uno = matrix(1,n,1)
+>     X = cbind(uno,data.matrix(data1["X"], rownames.force = NA))
+>     X = X[1:n,]
+>     # estimacion de los parametros
+>     B = solve(t(X)%*%X)%*%t(X)%*%Y
+>     B= B[-2,]
+>     pendreg = B
+>     numreg  = n
+>     data1["Y"]
+>     data1["Y[1,]"]
+>     }
+>
+> problema que tengo es de los valores de las pendientes, pero me falta que
+> este sea un bucle y haga lo que me pida es decir que la regresion numero 1
+> pendiente tal y asi sucesivamente
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Fri Feb  8 01:10:06 2019
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric)
+Date: Thu, 7 Feb 2019 21:10:06 -0300
+Subject: [R-es] 
+ =?utf-8?q?Optimizaci=C3=B3n_identificaci=C3=B3n_de_casos_?=
+ =?utf-8?q?similares?=
+In-Reply-To: <CAOKbq8gKFuiaBB_atEFgApCkC2tO1JqpMNV+164Ls0Lzg79mBQ@mail.gmail.com>
+References: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+ <CAOKbq8gKFuiaBB_atEFgApCkC2tO1JqpMNV+164Ls0Lzg79mBQ@mail.gmail.com>
+Message-ID: <26dbc055-1ebf-7ba7-7723-cd0c66513fb9@gmail.com>
+
+No he mirado el codigo ni los datos, pero en estos asuntos de 
+comparación la teoría dice que se ahorra tiempo si antes de comparar 
+ordenas la columna de mayor a menor por ejemplo .... en ese caso, más 
+allá de cierta distancia no vale la pena seguir comparando porque los 
+números ya serán todos diferentes al que tomaste para comparar ... ahí 
+te ahorras comparaciones ... y te puedes ahorrar algunas más ya que el 
+número que tomas para comparar con los demás ya sabes si es igual o no a 
+los anteriores que ya comparaste con él, de modo que no tienes que 
+volver a compararlo ... me explico ?
+
+Creo que esas dos ideas reducirán mucho la cantidad de comparaciones que 
+debes hacer ... si alcanzo mañana podría probar algo y comentarte.
+
+Suerte !!!!
+
+Eric.
+
+
+
+On 07/02/2019 20:48, Carlos Ortega wrote:
+> Hola,
+>
+> Puedes hacerlo de otras formas sin que tengas que calcular una matriz de
+> distancias.
+>
+> Calcular la matriz de distancias de todos con todos, te lleva a tener una
+> matriz de 1e5 x 1e5 de enteros (en el mejor de los casos) y esos son ya
+> varias decenas de gigas.
+> Una alternativa es esta:
+>
+>     - Calcular la distancia de Levenstein entre un DNI y la lista de DNIs.
+>     - Del resultado ver si hay alguna distancia de "1" ó de "2"  que
+>     indicaría un error a la hora de introducir el valor. Si aparece lo guardas.
+>     - Y repetir este cálculo con otro DNI y así sucesivamente.
+>     - En este escenario, solo haces una comparación en cada ciclo, no
+>     consumes RAM. Solo consumes la RAM con los DNIs que vas guardando.
+>     - Aquí, lo que ocurre es que el proceso es lento en ejecución.
+>        - He probado comparando siempre el mismo DNI con una lista (siempre
+>        la misma lista), que ordeno de forma aleatoria en cada ciclo.
+>        - Y en mi máquina tarda 20min en hacer 25000 comparaciones.
+>        - Y no he parelizado el bucle. Este problema es totalmente
+>        paralelizable...
+>
+> Este es el código que he usado para hacer este ejemplo (sin paralelizar):
+>
+> #-------------
+> library(stringdist)
+>
+> a <- "123456789"
+> b <- "1234056789"
+> c <- as.character(sample(1:1e5, 1e5, replace = FALSE))
+>
+> a <- Sys.time()
+> for( i in 1:1000) {
+>
+>     to_compare <- sample(c(b,c), 1e5+1, replace = FALSE)
+>     res_compa <- stringdist(a, to_compare, method="dl")
+>     to_compare[ res_compa < 2]
+>
+> }
+> b <- Sys.time() ; b -
+> #-------------
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El jue., 7 feb. 2019 a las 17:24, David Contreras (<
+> davidcontreras00 en gmail.com>) escribió:
+>
+>> Buen día a todos,
+>>
+>> Agradezco su ayuda con lo siguiente:
+>>
+>> Tengo 100.000 registros con nombres de personas con su respectivo número de
+>> documento, quiero identificar casos que tengan un porcentaje de igualdad
+>> alto, no del 100% porque ya esos los tengo identificados, sino casos como
+>> por ejemplo:
+>>
+>> Nombre: Juan Pérez  Documento: 123456789
+>> Nombre: Juan Pérez  Documento: 1234056789
+>>
+>> Este caso sería una alerta de posible duplicado y tendría que revisarse
+>> porque posiblemente en uno de los dos casos se ingreso errado el número de
+>> documento.
+>>
+>> Para calcular esta diferencia uso la función adist del paquete (utils), el
+>> problema es que la forma en que tengo el código para revisar los 100.000
+>> casos, la máquina no lo soporta por los recorridos que se hacen:
+>>
+>> *El dataframe se llama Citacion.*
+>>
+>> *Citacion[,"NombreDoc"]<- paste0(Citacion[,"NOMBRE"]," ",
+>> Citacion[,"DOCUMENTO"]) # Concatena Nombre y documento*
+>>
+>> *Citacion[,"RNomDoc1"]<-0*
+>> *Citacion[,"RNomDoc2"]<-0*
+>>
+>> *ii<-1*
+>> *for(ii in 1:(nrow(Citacion)-1)){*
+>> *  jj<-ii+1*
+>> *  while(jj<=nrow(Citacion)){*
+>>
+>> *    if (adist(Citacion[ii,"NombreDoc"],
+>> Citacion[jj,"NombreDoc"])/nchar(Citacion[ii,"NombreDoc"])<0.15){  #
+>> Criterio para marcar los posibles casos duplicados*
+>> *      Citacion[ii,"RNomDoc1"]<-1*
+>> *      Citacion[jj,"RNomDoc2"]<-1*
+>> *      jj<-jj+1*
+>> *      } else {*
+>> *        Citacion[jj,"RNomDoc2"]<-0*
+>> *        jj<-jj+1*
+>> *        } *
+>> *  } *
+>>
+>> *}  *
+>>
+>> La idea es optimizar el código de alguna forma para agilizar el proceso y
+>> lograr que se identifiquen los casos a revisar.
+>>
+>> Mil gracias de nuevo.
+>>
+>>          [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Fri Feb  8 03:32:43 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 7 Feb 2019 23:32:43 -0300
+Subject: [R-es] 
+	=?utf-8?q?Optimizaci=C3=B3n_identificaci=C3=B3n_de_casos_?=
+	=?utf-8?q?similares?=
+In-Reply-To: <CAOKbq8gKFuiaBB_atEFgApCkC2tO1JqpMNV+164Ls0Lzg79mBQ@mail.gmail.com>
+References: <CAELk-FF4znB62MokR8JevG3Qg9sdZCXzMN=uAF-W1S1oVbkTLw@mail.gmail.com>
+ <CAOKbq8gKFuiaBB_atEFgApCkC2tO1JqpMNV+164Ls0Lzg79mBQ@mail.gmail.com>
+Message-ID: <CAHo_aERt9PLaqNMuqYrtT0ALn0bL8LMmcUx-bTXqGC5OoQibzw@mail.gmail.com>
+
+Estimados
+
+Si es por la cantidad de memoria, tal como indica Carlos Ortega, yo no
+tengo experiencia ni conocimientos para el área referida en el hilo del
+correo, pero sí me tocó tener que trabajar tratando de reducir la cantidad
+de memoria al utilizar matrices, copio y pego un ejemplo por si es de
+utilidad sobre sparse matrix en R, aunque debería leer si es aplicable para
+el caso en concreto.
+
+library('Matrix')
+
+m1 <- matrix(0, nrow = 1000, ncol = 1000)
+m2 <- Matrix(0, nrow = 1000, ncol = 1000, sparse = TRUE)
+
+object.size(m1)
+# 8000200 bytes
+object.size(m2)
+# 5632 bytes
+Javier Rubén Marcuzzi
+
+El jue., 7 feb. 2019 a las 20:49, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola,
+>
+> Puedes hacerlo de otras formas sin que tengas que calcular una matriz de
+> distancias.
+>
+> Calcular la matriz de distancias de todos con todos, te lleva a tener una
+> matriz de 1e5 x 1e5 de enteros (en el mejor de los casos) y esos son ya
+> varias decenas de gigas.
+> Una alternativa es esta:
+>
+>    - Calcular la distancia de Levenstein entre un DNI y la lista de DNIs.
+>    - Del resultado ver si hay alguna distancia de "1" ó de "2"  que
+>    indicaría un error a la hora de introducir el valor. Si aparece lo
+> guardas.
+>    - Y repetir este cálculo con otro DNI y así sucesivamente.
+>    - En este escenario, solo haces una comparación en cada ciclo, no
+>    consumes RAM. Solo consumes la RAM con los DNIs que vas guardando.
+>    - Aquí, lo que ocurre es que el proceso es lento en ejecución.
+>       - He probado comparando siempre el mismo DNI con una lista (siempre
+>       la misma lista), que ordeno de forma aleatoria en cada ciclo.
+>       - Y en mi máquina tarda 20min en hacer 25000 comparaciones.
+>       - Y no he parelizado el bucle. Este problema es totalmente
+>       paralelizable...
+>
+> Este es el código que he usado para hacer este ejemplo (sin paralelizar):
+>
+> #-------------
+> library(stringdist)
+>
+> a <- "123456789"
+> b <- "1234056789"
+> c <- as.character(sample(1:1e5, 1e5, replace = FALSE))
+>
+> a <- Sys.time()
+> for( i in 1:1000) {
+>
+>    to_compare <- sample(c(b,c), 1e5+1, replace = FALSE)
+>    res_compa <- stringdist(a, to_compare, method="dl")
+>    to_compare[ res_compa < 2]
+>
+> }
+> b <- Sys.time() ; b -
+> #-------------
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El jue., 7 feb. 2019 a las 17:24, David Contreras (<
+> davidcontreras00 en gmail.com>) escribió:
+>
+> > Buen día a todos,
+> >
+> > Agradezco su ayuda con lo siguiente:
+> >
+> > Tengo 100.000 registros con nombres de personas con su respectivo número
+> de
+> > documento, quiero identificar casos que tengan un porcentaje de igualdad
+> > alto, no del 100% porque ya esos los tengo identificados, sino casos como
+> > por ejemplo:
+> >
+> > Nombre: Juan Pérez  Documento: 123456789
+> > Nombre: Juan Pérez  Documento: 1234056789
+> >
+> > Este caso sería una alerta de posible duplicado y tendría que revisarse
+> > porque posiblemente en uno de los dos casos se ingreso errado el número
+> de
+> > documento.
+> >
+> > Para calcular esta diferencia uso la función adist del paquete (utils),
+> el
+> > problema es que la forma en que tengo el código para revisar los 100.000
+> > casos, la máquina no lo soporta por los recorridos que se hacen:
+> >
+> > *El dataframe se llama Citacion.*
+> >
+> > *Citacion[,"NombreDoc"]<- paste0(Citacion[,"NOMBRE"]," ",
+> > Citacion[,"DOCUMENTO"]) # Concatena Nombre y documento*
+> >
+> > *Citacion[,"RNomDoc1"]<-0*
+> > *Citacion[,"RNomDoc2"]<-0*
+> >
+> > *ii<-1*
+> > *for(ii in 1:(nrow(Citacion)-1)){*
+> > *  jj<-ii+1*
+> > *  while(jj<=nrow(Citacion)){*
+> >
+> > *    if (adist(Citacion[ii,"NombreDoc"],
+> > Citacion[jj,"NombreDoc"])/nchar(Citacion[ii,"NombreDoc"])<0.15){  #
+> > Criterio para marcar los posibles casos duplicados*
+> > *      Citacion[ii,"RNomDoc1"]<-1*
+> > *      Citacion[jj,"RNomDoc2"]<-1*
+> > *      jj<-jj+1*
+> > *      } else {*
+> > *        Citacion[jj,"RNomDoc2"]<-0*
+> > *        jj<-jj+1*
+> > *        } *
+> > *  } *
+> >
+> > *}  *
+> >
+> > La idea es optimizar el código de alguna forma para agilizar el proceso y
+> > lograr que se identifiquen los casos a revisar.
+> >
+> > Mil gracias de nuevo.
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From xygcom m@iii@g oii gm@ii@com  Fri Feb  8 14:40:20 2019
+From: xygcom m@iii@g oii gm@ii@com (=?iso-8859-1?q?xygcom_m=40iii=40g_oii_gm=40ii=40com?=)
+Date: Fri, 8 Feb 2019 14:40:20 +0100
+Subject: [R-es] Ordenar eje en ggplot
+Message-ID: <49356F21-1EF7-4864-A67D-8C22272EE449@gmail.com>
+
+Buenas tardes, supongo que será muy sencillo, pero estoy empezando en r y no acabo de dar con la tecla. Estoy intentando hacer un gráfico de líneas con ggplot pero el eje x me sale con los meses ordenados alfabéticamente (abril, agosto, diciembre?) en vez de su orden natural (enero, febrero, marzo?.). Agradezco cualquier pista.
+Un saludo
+Jesús
+
+From jorge@@en@n @end|ng |rom |mde@@org  Fri Feb  8 15:02:02 2019
+From: jorge@@en@n @end|ng |rom |mde@@org (=?utf-8?Q?Jorge_Sen=C3=A1n_Salinas?=)
+Date: Fri, 8 Feb 2019 15:02:02 +0100
+Subject: [R-es] Ordenar eje en ggplot
+In-Reply-To: <49356F21-1EF7-4864-A67D-8C22272EE449@gmail.com>
+References: <49356F21-1EF7-4864-A67D-8C22272EE449@gmail.com>
+Message-ID: <001401d4bfb6$dd9d65a0$98d830e0$@imdea.org>
+
+Hola Jesús,
+
+Creo que para tu caso concreto la variable que define el mes, debería de tener clase temporal. No conozco si periodo o fecha...depende de tu análisis. El paquete lubridate puede ayudarte a pasar de clase "character"  a algún tipo de clase temporal. A partir de ese paso, una vez definida tu variable como temporal,  tus datos temporales serán reconocidos y ordenados por ggplot. 
+
+Te recomiendo que trabajes con clases temporales con lubridate.
+Aun así, para salir del paso, tendrías dos opciones más: i) podrías definir la variable como factor y definir los niveles (de enero a diciembre); y ii) usar +scale_x_discrete (limits= c("enero",..., "diciembre"))
+
+Los enlaces adjuntos describen las opciones que te comentaba con el código en detalle para casos similares.
+https://stackoverflow.com/questions/29974535/dates-with-month-and-day-in-time-series-plot-in-ggplot2-with-facet-for-years
+https://stackoverflow.com/questions/3253641/change-the-order-of-a-discrete-x-scale
+
+Cuesta un poquito aprender lubridate pero avanzarás más rápido  y más limpio si transformas a clases temporales. 
+
+Espero haberte aclarado algo. 
+
+Jorge Senán
+
+
+
+
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de xygcom en gmail.com
+Enviado el: viernes, 8 de febrero de 2019 14:40
+Para: r-help-es en r-project.org
+Asunto: [R-es] Ordenar eje en ggplot
+
+Buenas tardes, supongo que será muy sencillo, pero estoy empezando en r y no acabo de dar con la tecla. Estoy intentando hacer un gráfico de líneas con ggplot pero el eje x me sale con los meses ordenados alfabéticamente (abril, agosto, diciembre?) en vez de su orden natural (enero, febrero, marzo?.). Agradezco cualquier pista.
+Un saludo
+Jesús
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From xygcom m@iii@g oii gm@ii@com  Fri Feb  8 19:45:29 2019
+From: xygcom m@iii@g oii gm@ii@com (=?iso-8859-1?q?xygcom_m=40iii=40g_oii_gm=40ii=40com?=)
+Date: Fri, 8 Feb 2019 19:45:29 +0100
+Subject: [R-es] Ordenar eje en ggplot
+In-Reply-To: <001401d4bfb6$dd9d65a0$98d830e0$@imdea.org>
+References: <49356F21-1EF7-4864-A67D-8C22272EE449@gmail.com>
+ <001401d4bfb6$dd9d65a0$98d830e0$@imdea.org>
+Message-ID: <C8E95762-786D-44EA-B1FB-41FC09DA2ABD@gmail.com>
+
+Perfecto Jorge. Cualquiera de las dos soluciones funciona a la perfección. Le echaré un vistazo a lubridate, parece una solución interesante.
+
+Agradecido
+Un saludo.
+Jesús
+
+> El 8 feb 2019, a las 15:02, Jorge Senán Salinas <jorge.senan en imdea.org> escribió:
+> 
+> Hola Jesús,
+> 
+> Creo que para tu caso concreto la variable que define el mes, debería de tener clase temporal. No conozco si periodo o fecha...depende de tu análisis. El paquete lubridate puede ayudarte a pasar de clase "character"  a algún tipo de clase temporal. A partir de ese paso, una vez definida tu variable como temporal,  tus datos temporales serán reconocidos y ordenados por ggplot. 
+> 
+> Te recomiendo que trabajes con clases temporales con lubridate.
+> Aun así, para salir del paso, tendrías dos opciones más: i) podrías definir la variable como factor y definir los niveles (de enero a diciembre); y ii) usar +scale_x_discrete (limits= c("enero",..., "diciembre"))
+> 
+> Los enlaces adjuntos describen las opciones que te comentaba con el código en detalle para casos similares.
+> https://stackoverflow.com/questions/29974535/dates-with-month-and-day-in-time-series-plot-in-ggplot2-with-facet-for-years
+> https://stackoverflow.com/questions/3253641/change-the-order-of-a-discrete-x-scale
+> 
+> Cuesta un poquito aprender lubridate pero avanzarás más rápido  y más limpio si transformas a clases temporales. 
+> 
+> Espero haberte aclarado algo. 
+> 
+> Jorge Senán
+> 
+> 
+> 
+> 
+> 
+> -----Mensaje original-----
+> De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de xygcom en gmail.com
+> Enviado el: viernes, 8 de febrero de 2019 14:40
+> Para: r-help-es en r-project.org
+> Asunto: [R-es] Ordenar eje en ggplot
+> 
+> Buenas tardes, supongo que será muy sencillo, pero estoy empezando en r y no acabo de dar con la tecla. Estoy intentando hacer un gráfico de líneas con ggplot pero el eje x me sale con los meses ordenados alfabéticamente (abril, agosto, diciembre?) en vez de su orden natural (enero, febrero, marzo?.). Agradezco cualquier pista.
+> Un saludo
+> Jesús
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+
+
+From chem@ @end|ng |rom r|nzew|nd@org  Sun Feb 10 00:42:37 2019
+From: chem@ @end|ng |rom r|nzew|nd@org (=?iso-8859-1?Q?Jos=E9_Mar=EDa?= Mateos)
+Date: Sat, 9 Feb 2019 18:42:37 -0500
+Subject: [R-es] Paquete de R que use la sintaxis de SQL
+In-Reply-To: <CAMHW6XRDdaxq8zVzRt91c7MxMGCtYPQciD_+q0EoQE+EZQ_gcg@mail.gmail.com>
+References: <CAMHW6XRDdaxq8zVzRt91c7MxMGCtYPQciD_+q0EoQE+EZQ_gcg@mail.gmail.com>
+Message-ID: <20190209234237.GB2569@miniequipaje>
+
+On Thu, Feb 07, 2019 at 08:47:36AM +0100, Fernando Manzanares wrote:
+
+> Tengo que adaptar un proyecto que esta en lenguaje de SQL Server a
+> RStudio. En el transcurso de este procedimiento tengo que realizar
+> algunas consultas bastante complejas seleccionando campos de varias
+> tablas y utilizar algunas clausulas como EXCEPT o UNION ALL. También
+> debo actualizar varios campos de tablas usando la sentencia UPDATE y
+> eliminar tablas bien con usando DROP TABLE o DELETE. Querría saber
+> si existe algún paquete de R que permita trabajar usando la sintaxis
+> anterior. En caso de no existir me gustaría saber que paquete de R es
+> el más indicado para trabajar como he descrito anteriormente. Muchas
+> gracias de antemano.
+
+Hola Fernando,
+
+Creo que lo que quieres lo ofrece (al menos parcialmente, nunca he 
+trabajado con él) el paquete sqldf:
+
+https://cran.r-project.org/web/packages/sqldf/sqldf.pdf
+http://www.r-chart.com/2010/07/make-r-speak-sql-with-sqldf.html
+
+Saludos,
+
+-- 
+José María (Chema) Mateos || https://rinzewind.org
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Tue Feb 12 12:22:10 2019
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?utf-8?B?SmVzw7pzIFBhcmEgRmVybsOhbmRleg==?=)
+Date: Tue, 12 Feb 2019 11:22:10 +0000
+Subject: [R-es] Conectarme a SQL SERVER desde server linux
+Message-ID: <DBBPR04MB60902BDE6EF4BFA4E7276570CC650@DBBPR04MB6090.eurprd04.prod.outlook.com>
+
+Buenas,
+
+tengo un server en Debian que quiere conectarse a un servidor Windows que tiene una SQL Server. Para ello, estoy intentando hacerlo desde un servidor linux. Los pasos que he seguido han sido los siguientes:
+
+1 - Instalar el controlador odbc de microsoft, desde esta web:
+https://packages.microsoft.com/debian/9/prod/pool/main/m/msodbcsql17/
+
+Lo he descargado e instalado usando gdebi
+
+2- En Rstudio server poner el siguiente comando:
+
+library(odbc)
+
+con<-dbConnect(odbc::odbc(),driver="SQL Server",server="192.168.2.249",database="base",uid="usuario",pwd="pass")
+
+
+3- Recibir el error de que el driver no esta bien ?
+
+Error: nanodbc/nanodbc.cpp:950: 01000: [unixODBC][Driver Manager]Can't open lib 'SQL Server' : file not found
+
+
+¿Como puedo hacer que funcione?
+
+Gracias
+Jesús
+
+	[[alternative HTML version deleted]]
+
+
+From j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com  Tue Feb 12 12:25:56 2019
+From: j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com (Paulina Jara Armijo)
+Date: Tue, 12 Feb 2019 12:25:56 +0100
+Subject: [R-es] Consulta Fecha R
+Message-ID: <CAB-To0TO9m_T3KVB2sYCgn_ZRV6e4XVf1r2kvnZuDqUpvcdu3A@mail.gmail.com>
+
+Buenos días , por favor alguien me puede ayudar
+ necesito separar en tres columnas  una  columna fecha  que viene en el
+siguiente formato (01/01/1983)
+
+ Muchas gracias
+Saludos
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Tue Feb 12 12:36:47 2019
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Tue, 12 Feb 2019 12:36:47 +0100
+Subject: [R-es] Consulta Fecha R
+In-Reply-To: <CAB-To0TO9m_T3KVB2sYCgn_ZRV6e4XVf1r2kvnZuDqUpvcdu3A@mail.gmail.com>
+References: <CAB-To0TO9m_T3KVB2sYCgn_ZRV6e4XVf1r2kvnZuDqUpvcdu3A@mail.gmail.com>
+Message-ID: <001a01d4c2c7$3cb56bb0$b6204310$@jccm.es>
+
+Hola
+
+fecha = "01/01/1983"
+strsplit(fecha, "/")
+
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Paulina Jara
+Armijo
+Enviado el: martes, 12 de febrero de 2019 12:26
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] Consulta Fecha R
+
+Buenos días , por favor alguien me puede ayudar  necesito separar en tres
+columnas  una  columna fecha  que viene en el siguiente formato (01/01/1983)
+
+ Muchas gracias
+Saludos
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Tue Feb 12 12:37:24 2019
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Tue, 12 Feb 2019 11:37:24 +0000 (UTC)
+Subject: [R-es] Consulta Fecha R
+In-Reply-To: <CAB-To0TO9m_T3KVB2sYCgn_ZRV6e4XVf1r2kvnZuDqUpvcdu3A@mail.gmail.com>
+References: <CAB-To0TO9m_T3KVB2sYCgn_ZRV6e4XVf1r2kvnZuDqUpvcdu3A@mail.gmail.com>
+Message-ID: <1272544234.3672030.1549971444547@mail.yahoo.com>
+
+Paulina, hay un metodo sencilloUna vez cargada la libreria tidyr
+library(tidyr)
+tus_datos<-separate(tus_datos, fecha, c("dia", "mes", "año")). Esto te separa la columna fecha en tres columnas (pues llamarlas como gustes)
+
+      De: Paulina Jara Armijo <jara.armijo.paulina en gmail.com>
+ Para: Lista R <r-help-es en r-project.org> 
+ Enviado: Martes 12 de febrero de 2019 12:32
+ Asunto: [R-es] Consulta Fecha R
+   
+Buenos días , por favor alguien me puede ayudar
+ necesito separar en tres columnas  una  columna fecha  que viene en el
+siguiente formato (01/01/1983)
+
+ Muchas gracias
+Saludos
+
+    [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+   
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Tue Feb 12 12:40:54 2019
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?utf-8?B?SmVzw7pzIFBhcmEgRmVybsOhbmRleg==?=)
+Date: Tue, 12 Feb 2019 11:40:54 +0000
+Subject: [R-es] Conectarme a SQL SERVER desde server linux
+In-Reply-To: <DBBPR04MB60902BDE6EF4BFA4E7276570CC650@DBBPR04MB6090.eurprd04.prod.outlook.com>
+References: <DBBPR04MB60902BDE6EF4BFA4E7276570CC650@DBBPR04MB6090.eurprd04.prod.outlook.com>
+Message-ID: <DBBPR04MB609022AE0FA7875C4CF812BDCC650@DBBPR04MB6090.eurprd04.prod.outlook.com>
+
+Solucionado, era tan simple como cambiar el nombre de la conexion
+
+Ahora es:
+
+
+ODBC Driver 17 for SQL Server
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Jesús Para Fernández <j.para.fernandez en hotmail.com>
+Enviado: martes, 12 de febrero de 2019 12:22
+Para: Lista R
+Asunto: [R-es] Conectarme a SQL SERVER desde server linux
+
+Buenas,
+
+tengo un server en Debian que quiere conectarse a un servidor Windows que tiene una SQL Server. Para ello, estoy intentando hacerlo desde un servidor linux. Los pasos que he seguido han sido los siguientes:
+
+1 - Instalar el controlador odbc de microsoft, desde esta web:
+https://packages.microsoft.com/debian/9/prod/pool/main/m/msodbcsql17/
+
+Lo he descargado e instalado usando gdebi
+
+2- En Rstudio server poner el siguiente comando:
+
+library(odbc)
+
+con<-dbConnect(odbc::odbc(),driver="SQL Server",server="192.168.2.249",database="base",uid="usuario",pwd="pass")
+
+
+3- Recibir el error de que el driver no esta bien ?
+
+Error: nanodbc/nanodbc.cpp:950: 01000: [unixODBC][Driver Manager]Can't open lib 'SQL Server' : file not found
+
+
+¿Como puedo hacer que funcione?
+
+Gracias
+Jesús
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Tue Feb 12 12:41:40 2019
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Tue, 12 Feb 2019 11:41:40 +0000
+Subject: [R-es] Consulta Fecha R
+In-Reply-To: <CAB-To0TO9m_T3KVB2sYCgn_ZRV6e4XVf1r2kvnZuDqUpvcdu3A@mail.gmail.com>
+References: <CAB-To0TO9m_T3KVB2sYCgn_ZRV6e4XVf1r2kvnZuDqUpvcdu3A@mail.gmail.com>
+Message-ID: <DBBPR04MB6090E844830E2A65288FC78ACC650@DBBPR04MB6090.eurprd04.prod.outlook.com>
+
+Usa lubridate.
+
+Si es una fecha, puedes sacar el a?o con:
+
+year(fecha)
+
+El mes con
+month(fecha)
+
+y el dia con
+day(fecha)
+
+Un saludo
+Jes?s
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Paulina Jara Armijo <jara.armijo.paulina en gmail.com>
+Enviado: martes, 12 de febrero de 2019 12:25
+Para: Lista R
+Asunto: [R-es] Consulta Fecha R
+
+Buenos d?as , por favor alguien me puede ayudar
+ necesito separar en tres columnas  una  columna fecha  que viene en el
+siguiente formato (01/01/1983)
+
+ Muchas gracias
+Saludos
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Feb 12 12:43:21 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 12 Feb 2019 12:43:21 +0100
+Subject: [R-es] Consulta Fecha R
+In-Reply-To: <DBBPR04MB6090E844830E2A65288FC78ACC650@DBBPR04MB6090.eurprd04.prod.outlook.com>
+References: <CAB-To0TO9m_T3KVB2sYCgn_ZRV6e4XVf1r2kvnZuDqUpvcdu3A@mail.gmail.com>
+ <DBBPR04MB6090E844830E2A65288FC78ACC650@DBBPR04MB6090.eurprd04.prod.outlook.com>
+Message-ID: <CAOKbq8j-Wa6edQYjrYX1ROujNBTLw2SFnDM7iBn4Z4+3yy3CBQ@mail.gmail.com>
+
+Otra forma...
+
+> df <- data.frame(my_fecha = c("1/1/1993", "2/1/1994", "10/10/2016") )
+> df
+    my_fecha
+1   1/1/1993
+2   2/1/1994
+3 10/10/2016
+> library(tidyr)
+> df %>% separate( my_fecha, c('dia','mes','anio'), "/")
+  dia mes anio
+1   1   1 1993
+2   2   1 1994
+3  10  10 2016
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El mar., 12 feb. 2019 a las 12:42, Jesús Para Fernández (<
+j.para.fernandez en hotmail.com>) escribió:
+
+> Usa lubridate.
+>
+> Si es una fecha, puedes sacar el año con:
+>
+> year(fecha)
+>
+> El mes con
+> month(fecha)
+>
+> y el dia con
+> day(fecha)
+>
+> Un saludo
+> Jesús
+> ________________________________
+> De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Paulina Jara
+> Armijo <jara.armijo.paulina en gmail.com>
+> Enviado: martes, 12 de febrero de 2019 12:25
+> Para: Lista R
+> Asunto: [R-es] Consulta Fecha R
+>
+> Buenos días , por favor alguien me puede ayudar
+>  necesito separar en tres columnas  una  columna fecha  que viene en el
+> siguiente formato (01/01/1983)
+>
+>  Muchas gracias
+> Saludos
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From jtormo @end|ng |rom un|z@r@e@  Tue Feb 12 19:01:57 2019
+From: jtormo @end|ng |rom un|z@r@e@ (Jaume Tormo)
+Date: Tue, 12 Feb 2019 19:01:57 +0100
+Subject: [R-es] Leer un txt a trozos.
+Message-ID: <CAP3FtZiJw04iyqLEw+DFD=NpQ+6=fF+nbKe4a7Chpr9pWkLFJw@mail.gmail.com>
+
+Estimad en s eRRer en s,
+
+Tengo un txt que quiero importar a R.
+Pero no tiene un formato adecuado para usar cosas normales, como por
+ejemplo read.csv()
+El formato es algo así:
+time 1
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+time 2
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+time 3
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+Lo que me gustaría decirle a R es "ves a donde pone time y tráete X lineas"
+o "ves a donde pone time y tráete lineas hasta que llegues a end"
+En realidad debe ser bastante fácil, todas las tablas empiezan con time y
+acaban con end y tienen el mismo numero de filas.
+He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+cuantas lineas leer pero no donde empezar... creo.
+¿Alguna pista de por donde puedo empezar a mirar?
+
+Muchas gracias.
+
+Jaume
+-- 
+Dr. Jaume Tormo.
+Area of Ecology
+Departament of Agrarian and Environmental Sciences
+Technological College. Agri-food and Environment
+University of Zaragoza, Spain
+0034 974292678
+https://es.linkedin.com/in/jaumetormo
+https://acercad.wordpress.com/
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190212/9ae6179a/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: pregunta_eRReros_importar_nodinfout
+Type: application/octet-stream
+Size: 395 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190212/9ae6179a/attachment.obj>
+
+From j@utorb|@ @end|ng |rom gm@||@com  Tue Feb 12 19:16:07 2019
+From: j@utorb|@ @end|ng |rom gm@||@com (Jaume Tormo)
+Date: Tue, 12 Feb 2019 19:16:07 +0100
+Subject: [R-es] Leer un txt a trozos
+Message-ID: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+
+Estimad en s eRRer en s,
+
+Tengo un txt que quiero importar a R.
+Pero no tiene un formato adecuado para usar cosas normales, como por
+ejemplo read.csv()
+El formato es algo así:
+time 1
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+time 2
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+time 3
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+Lo que me gustaría decirle a R es "ves a donde pone time y tráete X lineas"
+o "ves a donde pone time y tráete lineas hasta que llegues a end"
+En realidad debe ser bastante fácil, todas las tablas empiezan con time y
+acaban con end y tienen el mismo numero de filas.
+He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+cuantas lineas leer pero no donde empezar... creo.
+¿Alguna pista de por donde puedo empezar a mirar?
+
+Muchas gracias.
+
+
+-- 
+Jaume Tormo.
+https://es.linkedin.com/in/jaumetormo
+https://acercad.wordpress.com/
+
+	[[alternative HTML version deleted]]
+
+
+From m@c_j@v| @end|ng |rom hotm@||@com  Tue Feb 12 19:33:54 2019
+From: m@c_j@v| @end|ng |rom hotm@||@com (Javier Nieto)
+Date: Tue, 12 Feb 2019 18:33:54 +0000
+Subject: [R-es] Leer un txt a trozos
+In-Reply-To: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+References: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+Message-ID: <BN7PR08MB414795A144AFC728262327F2EB650@BN7PR08MB4147.namprd08.prod.outlook.com>
+
+Hola desconozco como hacer eso en R. Yo lo har?a editando el archivo por fuera utilizando sed para eliminar los nombres de columnas, los time #, los end y finalmente las l?neas en blanco, despu?s lo leer?a en R con read.csv
+
+Saludos
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Jaume Tormo <jautorbla en gmail.com>
+Enviado: martes, 12 de febrero de 2019 12:16 p. m.
+Para: r-help-es en r-project.org
+Asunto: [R-es] Leer un txt a trozos
+
+Estimad en s eRRer en s,
+
+Tengo un txt que quiero importar a R.
+Pero no tiene un formato adecuado para usar cosas normales, como por
+ejemplo read.csv()
+El formato es algo as?:
+time 1
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+time 2
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+time 3
+col1 col2 col3 col4
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+dato dato dato dato
+end
+
+Lo que me gustar?a decirle a R es "ves a donde pone time y tr?ete X lineas"
+o "ves a donde pone time y tr?ete lineas hasta que llegues a end"
+En realidad debe ser bastante f?cil, todas las tablas empiezan con time y
+acaban con end y tienen el mismo numero de filas.
+He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+cuantas lineas leer pero no donde empezar... creo.
+?Alguna pista de por donde puedo empezar a mirar?
+
+Muchas gracias.
+
+
+--
+Jaume Tormo.
+https://es.linkedin.com/in/jaumetormo
+https://acercad.wordpress.com/
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com  Tue Feb 12 19:43:42 2019
+From: j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com (Paulina Jara Armijo)
+Date: Tue, 12 Feb 2019 19:43:42 +0100
+Subject: [R-es] Grafico barras
+Message-ID: <CAB-To0S6kO3jq0xGbzTYATqS7=W5rWVLnQ+oekZ-4G-ki1zZxA@mail.gmail.com>
+
+Buenas , alguien sabe como puedo mostrar solo los 5 valores mas altos en un
+gráfico de barras en R, hasta ahora he hecho:
+
+
+ggplot(data=df_nuevo, aes(x=District, y=N)) + geom_bar(stat="identity")
+
+Muchas gracias
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Tue Feb 12 20:01:30 2019
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino De La Cruz Rot)
+Date: Tue, 12 Feb 2019 19:01:30 +0000
+Subject: [R-es] Leer un txt a trozos
+In-Reply-To: <BN7PR08MB414795A144AFC728262327F2EB650@BN7PR08MB4147.namprd08.prod.outlook.com>
+References: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+ <BN7PR08MB414795A144AFC728262327F2EB650@BN7PR08MB4147.namprd08.prod.outlook.com>
+Message-ID: <e8340d43-ddf9-e82e-d8f9-8f83a369e4ef@urjc.es>
+
+Hola:
+Yo haría algo basado en esto. Obviamente habría que tunearlo pero no 
+sería muy complicado
+
+texto<- scan("texto.txt", what="character")
+
+times<-grep("time", texto)
+ends<- grep("end", texto)
+for ( i in 1: length(times))
+  print(matrix(texto[(times[i]+2):(ends[i]-1)], nc=4, byrow=T))
+
+
+
+Saudos,
+
+Marcelino
+
+El 12/02/2019 a las 19:33, Javier Nieto escribió:
+> Hola desconozco como hacer eso en R. Yo lo har?a editando el archivo por fuera utilizando sed para eliminar los nombres de columnas, los time #, los end y finalmente las l?neas en blanco, despu?s lo leer?a en R con read.csv
+>
+> Saludos
+> ________________________________
+> De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Jaume Tormo <jautorbla en gmail.com>
+> Enviado: martes, 12 de febrero de 2019 12:16 p. m.
+> Para: r-help-es en r-project.org
+> Asunto: [R-es] Leer un txt a trozos
+>
+> Estimad en s eRRer en s,
+>
+> Tengo un txt que quiero importar a R.
+> Pero no tiene un formato adecuado para usar cosas normales, como por
+> ejemplo read.csv()
+> El formato es algo as?:
+> time 1
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 2
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 3
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> Lo que me gustar?a decirle a R es "ves a donde pone time y tr?ete X lineas"
+> o "ves a donde pone time y tr?ete lineas hasta que llegues a end"
+> En realidad debe ser bastante f?cil, todas las tablas empiezan con time y
+> acaban con end y tienen el mismo numero de filas.
+> He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+> cuantas lineas leer pero no donde empezar... creo.
+> ?Alguna pista de por donde puedo empezar a mirar?
+>
+> Muchas gracias.
+>
+>
+> --
+> Jaume Tormo.
+> https://es.linkedin.com/in/jaumetormo
+> https://acercad.wordpress.com/
+>
+>          [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Feb 12 21:47:56 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 12 Feb 2019 17:47:56 -0300
+Subject: [R-es] Grafico barras
+In-Reply-To: <CAB-To0S6kO3jq0xGbzTYATqS7=W5rWVLnQ+oekZ-4G-ki1zZxA@mail.gmail.com>
+References: <CAB-To0S6kO3jq0xGbzTYATqS7=W5rWVLnQ+oekZ-4G-ki1zZxA@mail.gmail.com>
+Message-ID: <CAHo_aERyPEmE7xcOCBr3bLDS6CK9AwRAoHx1-kCNzVETmH-fRA@mail.gmail.com>
+
+Estimada Paulina
+
+header(datos)
+
+Javier Rubén Marcuzzi
+
+El mar., 12 feb. 2019 a las 15:44, Paulina Jara Armijo (<
+jara.armijo.paulina en gmail.com>) escribió:
+
+> Buenas , alguien sabe como puedo mostrar solo los 5 valores mas altos en un
+> gráfico de barras en R, hasta ahora he hecho:
+>
+>
+> ggplot(data=df_nuevo, aes(x=District, y=N)) + geom_bar(stat="identity")
+>
+> Muchas gracias
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From m@c_j@v| @end|ng |rom hotm@||@com  Tue Feb 12 21:54:29 2019
+From: m@c_j@v| @end|ng |rom hotm@||@com (Javier Nieto)
+Date: Tue, 12 Feb 2019 20:54:29 +0000
+Subject: [R-es] Grafico barras
+In-Reply-To: <CAHo_aERyPEmE7xcOCBr3bLDS6CK9AwRAoHx1-kCNzVETmH-fRA@mail.gmail.com>
+References: <CAB-To0S6kO3jq0xGbzTYATqS7=W5rWVLnQ+oekZ-4G-ki1zZxA@mail.gmail.com>,
+ <CAHo_aERyPEmE7xcOCBr3bLDS6CK9AwRAoHx1-kCNzVETmH-fRA@mail.gmail.com>
+Message-ID: <BN7PR08MB4147FC383AED2EBBC422E1C5EB650@BN7PR08MB4147.namprd08.prod.outlook.com>
+
+Hola
+
+Deber?as ordenar los datos y luego head(datos, 5)
+
+
+Saludos
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>
+Enviado: martes, 12 de febrero de 2019 02:47 p. m.
+Para: Paulina Jara Armijo
+CC: Lista R
+Asunto: Re: [R-es] Grafico barras
+
+Estimada Paulina
+
+header(datos)
+
+Javier Rub?n Marcuzzi
+
+El mar., 12 feb. 2019 a las 15:44, Paulina Jara Armijo (<
+jara.armijo.paulina en gmail.com>) escribi?:
+
+> Buenas , alguien sabe como puedo mostrar solo los 5 valores mas altos en un
+> gr?fico de barras en R, hasta ahora he hecho:
+>
+>
+> ggplot(data=df_nuevo, aes(x=District, y=N)) + geom_bar(stat="identity")
+>
+> Muchas gracias
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Tue Feb 12 22:27:51 2019
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric)
+Date: Tue, 12 Feb 2019 18:27:51 -0300
+Subject: [R-es] Leer un txt a trozos
+In-Reply-To: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+References: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+Message-ID: <8682a6f7-5283-0af0-3893-0b67fbba565c@gmail.com>
+
+Si importas esa tabla de datos en una planilla electrónica y ordenas por 
+la primera columna, fácilmente puedes eliminar todos los time X, end y 
+nombres de columna y luego importar todos los datos juntos de la forma 
+normal en R. Me ha tocado hacerlo muchas veces y es lo mas eficiente. Lo 
+otro es hacer un pequeño loop en R pero eso le toma muchos mas tiempo a 
+R ejecutarlo que a ti hacerlo a mano.
+
+Saludos !!
+
+Eric.
+
+
+
+On 12/02/2019 15:16, Jaume Tormo wrote:
+> Estimad en s eRRer en s,
+>
+> Tengo un txt que quiero importar a R.
+> Pero no tiene un formato adecuado para usar cosas normales, como por
+> ejemplo read.csv()
+> El formato es algo así:
+> time 1
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 2
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 3
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> Lo que me gustaría decirle a R es "ves a donde pone time y tráete X lineas"
+> o "ves a donde pone time y tráete lineas hasta que llegues a end"
+> En realidad debe ser bastante fácil, todas las tablas empiezan con time y
+> acaban con end y tienen el mismo numero de filas.
+> He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+> cuantas lineas leer pero no donde empezar... creo.
+> ¿Alguna pista de por donde puedo empezar a mirar?
+>
+> Muchas gracias.
+>
+>
+
+
+From m@c_j@v| @end|ng |rom hotm@||@com  Tue Feb 12 22:47:08 2019
+From: m@c_j@v| @end|ng |rom hotm@||@com (Javier Nieto)
+Date: Tue, 12 Feb 2019 21:47:08 +0000
+Subject: [R-es] Leer un txt a trozos
+In-Reply-To: <8682a6f7-5283-0af0-3893-0b67fbba565c@gmail.com>
+References: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>,
+ <8682a6f7-5283-0af0-3893-0b67fbba565c@gmail.com>
+Message-ID: <BN7PR08MB4147A9BCB23FEA368E54ECB9EB650@BN7PR08MB4147.namprd08.prod.outlook.com>
+
+Aunque prefiero desde un terminal con sed, otra forma de hacerlo sin loops en R ser?a as?:
+
+file <- "texto.txt"
+
+my.Data <- readChar(file, file.info(file)$size)
+
+my.Data <- gsub("(col1 col2 col3 col4\r\n)+", "", my.Data)
+my.Data <- gsub("time [0-9]+\r\n", "", my.Data)
+my.Data <- gsub("end\r\n|end$", "", my.Data)
+my.Data <- gsub("(\r\n)$", "", my.Data)
+my.Data <- gsub("^$\r\n", "", my.Data)
+my.Data <- gsub("(\r\n)+", "\n", my.Data)
+
+
+my.Data <- read.table(text = my.Data, sep = " ", header = F, stringsAsFactors = F)
+names(my.Data) <- c("col1", "col2", "col3", "col4")
+
+my.Data
+
+S?lo debes tener cuidado con los saltos de l?nea y retorno de carro as? como del separador de tus columnas.
+
+Saludos
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Eric <ericconchamunoz en gmail.com>
+Enviado: martes, 12 de febrero de 2019 03:27 p. m.
+Para: Jaume Tormo; r-help-es en r-project.org
+Asunto: Re: [R-es] Leer un txt a trozos
+
+Si importas esa tabla de datos en una planilla electr?nica y ordenas por
+la primera columna, f?cilmente puedes eliminar todos los time X, end y
+nombres de columna y luego importar todos los datos juntos de la forma
+normal en R. Me ha tocado hacerlo muchas veces y es lo mas eficiente. Lo
+otro es hacer un peque?o loop en R pero eso le toma muchos mas tiempo a
+R ejecutarlo que a ti hacerlo a mano.
+
+Saludos !!
+
+Eric.
+
+
+
+On 12/02/2019 15:16, Jaume Tormo wrote:
+> Estimad en s eRRer en s,
+>
+> Tengo un txt que quiero importar a R.
+> Pero no tiene un formato adecuado para usar cosas normales, como por
+> ejemplo read.csv()
+> El formato es algo as?:
+> time 1
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 2
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 3
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> Lo que me gustar?a decirle a R es "ves a donde pone time y tr?ete X lineas"
+> o "ves a donde pone time y tr?ete lineas hasta que llegues a end"
+> En realidad debe ser bastante f?cil, todas las tablas empiezan con time y
+> acaban con end y tienen el mismo numero de filas.
+> He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+> cuantas lineas leer pero no donde empezar... creo.
+> ?Alguna pista de por donde puedo empezar a mirar?
+>
+> Muchas gracias.
+>
+>
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Feb 12 23:37:34 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 12 Feb 2019 23:37:34 +0100
+Subject: [R-es] Grafico barras
+In-Reply-To: <CAB-To0S6kO3jq0xGbzTYATqS7=W5rWVLnQ+oekZ-4G-ki1zZxA@mail.gmail.com>
+References: <CAB-To0S6kO3jq0xGbzTYATqS7=W5rWVLnQ+oekZ-4G-ki1zZxA@mail.gmail.com>
+Message-ID: <CAOKbq8j58j8UQqjDvB4iBBRg-OaDPz5Bpu3X3i7E8jKTdLgGGg@mail.gmail.com>
+
+Hola,
+
+Si nos puedes pasar un ejemplo de los datos que tienes te lo podemos
+precisar mejor.
+
+   - Si "District" es un número, seguramente te está ordenando el eje "X"
+   por orden, de mayor a mayor independientemente del valor de "N". En este
+   caso, tienes que transformar "District" a un factor y como factor,
+   ordenarle de acuerdo al valor de "N". Cuando tienes una variable "factor"
+   en R, estableces un orden entre cada factor.
+   - Y si "District" es un vector con elementos que son strings, pues algo
+   parecido a lo anterior, los conviertes en factor y estableces un orden de
+   acuerdo al valor de N.
+
+La secuencia que debes de seguir es:
+
+*#------------------------------*
+*df_orden <- df_nuevo %>% arrange(desc(N))*
+
+*# Defino la nueva variable "newDistrict" que es un factor ordenado de
+acuerdo a como queda ordenado df_orden$District*
+
+*df_orden$newDistrict <- as.factor(df_orden$District, labels =
+df_orden$District, levels = df_orden$District)*
+*ggplot(df_orden, aes(x=newDistrict, N)) + geom_bar(stat='identity')*
+*#------------------------------*
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El mar., 12 feb. 2019 a las 19:44, Paulina Jara Armijo (<
+jara.armijo.paulina en gmail.com>) escribió:
+
+> Buenas , alguien sabe como puedo mostrar solo los 5 valores mas altos en un
+> gráfico de barras en R, hasta ahora he hecho:
+>
+>
+> ggplot(data=df_nuevo, aes(x=District, y=N)) + geom_bar(stat="identity")
+>
+> Muchas gracias
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Wed Feb 13 08:45:57 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Wed, 13 Feb 2019 08:45:57 +0100
+Subject: [R-es] =?utf-8?q?Ma=C3=B1ana_jueves_14-febrero_=22Reuni=C3=B3n_d?=
+	=?utf-8?q?el_Grupo_de_R_de_Madrid=22=2E=2E=2E?=
+Message-ID: <CAOKbq8jvKxTGMGkhyWj70SVnA-U7N52dVZLDeSJ1cBLn5U1haQ@mail.gmail.com>
+
+Buenas a todos,
+
+Para los que quieran/puedan asistir:
+
+https://www.meetup.com/es-ES/Grupo-de-Usuarios-de-R-de-Madrid/events/258842771/
+
+Gracias!
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From @nton|o@z@mor@2 @end|ng |rom um@e@  Wed Feb 13 10:37:49 2019
+From: @nton|o@z@mor@2 @end|ng |rom um@e@ (Antonio Zamora)
+Date: Wed, 13 Feb 2019 09:37:49 +0000
+Subject: [R-es] =?windows-1252?q?Ayuda_para_c=E1lculo_de_=22dominancia=22?=
+In-Reply-To: <AM6PR02MB3639362C11BA4863510F1D17F4640@AM6PR02MB3639.eurprd02.prod.outlook.com>
+References: <AM6PR02MB3639362C11BA4863510F1D17F4640@AM6PR02MB3639.eurprd02.prod.outlook.com>
+Message-ID: <AM6PR02MB3639E822C6A1B18D9B8D38E1F4660@AM6PR02MB3639.eurprd02.prod.outlook.com>
+
+Estimados compa?er en s,
+
+Me pongo en contacto con vosotr en s para ver si pod?is ayudarme con un problema que se me plantea?
+
+Teniendo un data.frame compuesto por observaciones (filas) y variables (columnas), necesitar?a conocer el n?mero m?nimo de variables que explican al menos el 90% del sumatorio de cada una de mis observaciones (podr?amos entender esta variable generada como "dominancia").
+
+
+Os adjunto una tabla que puede ayudar a entender mi cuesti?n:
+
+N? OBSR.
+
+
+VAR1
+
+
+VAR2
+
+
+VAR3
+
+
+VAR4
+
+
+VAR5
+
+
+VAR6
+
+
+Sumatorio
+
+
+N? VAR (>90%)
+
+
+OBS_1
+
+
+47
+
+
+28
+
+
+2
+
+
+14
+
+
+9
+
+
+1
+
+
+100
+
+
+3
+
+
+OBS_2
+
+
+15
+
+
+16
+
+
+64
+
+
+2
+
+
+0
+
+
+3
+
+
+100
+
+
+3
+
+
+OBS_3
+
+
+38
+
+
+2
+
+
+17
+
+
+11
+
+
+22
+
+
+10
+
+
+100
+
+
+5
+
+
+OBS_4
+
+
+25
+
+
+25
+
+
+35
+
+
+12
+
+
+2
+
+
+1
+
+
+100
+
+
+4
+
+
+OBS_?n?
+
+
+?
+
+
+?
+
+
+?
+
+
+?
+
+
+?
+
+
+?
+
+
+?
+
+
+?
+
+
+
+El resultado que busco ser?a la columna ?N? VAR (>90)?, es decir, el n?mero m?nimos de variables que necesitamos tener en cuenta para al menos explicar el 90% de cada observaci?n.
+
+?Gracias de antemano, buen d?a!
+
+Antonio Zamora
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed Feb 13 13:17:06 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 13 Feb 2019 09:17:06 -0300
+Subject: [R-es] Leer un txt a trozos
+In-Reply-To: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+References: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+Message-ID: <CAHo_aEQH1KAACzmtB8BH6W=mCBP9gTTOt_Rp4RuRJOpz6hmebQ@mail.gmail.com>
+
+Estimado Jaume Tormo
+
+Leí algunas respuestas, con todas hay que tener mucho cuidado, no por la
+respuesta en sí, sino por como están los datos, porque en el texto por ahí
+hay alguna tabulación, otro espacio, algo que al ojo humano no se ve pero
+que está en el código y al procesar aparecen errores, o se procesa con
+error no visible destruyendo los datos originales.
+
+Yo desconozco cuántos datos tiene, pero, personalmente no me gusta
+automatizar la toda de datos desde archivos de texto cuándo sospecho que
+algo no puede estar estandarizado.
+
+Javier Rubén Marcuzzi
+
+El mar., 12 feb. 2019 a las 15:16, Jaume Tormo (<jautorbla en gmail.com>)
+escribió:
+
+> Estimad en s eRRer en s,
+>
+> Tengo un txt que quiero importar a R.
+> Pero no tiene un formato adecuado para usar cosas normales, como por
+> ejemplo read.csv()
+> El formato es algo así:
+> time 1
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 2
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 3
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> Lo que me gustaría decirle a R es "ves a donde pone time y tráete X lineas"
+> o "ves a donde pone time y tráete lineas hasta que llegues a end"
+> En realidad debe ser bastante fácil, todas las tablas empiezan con time y
+> acaban con end y tienen el mismo numero de filas.
+> He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+> cuantas lineas leer pero no donde empezar... creo.
+> ¿Alguna pista de por donde puedo empezar a mirar?
+>
+> Muchas gracias.
+>
+>
+> --
+> Jaume Tormo.
+> https://es.linkedin.com/in/jaumetormo
+> https://acercad.wordpress.com/
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@utorb|@ @end|ng |rom gm@||@com  Fri Feb 15 18:26:33 2019
+From: j@utorb|@ @end|ng |rom gm@||@com (Jaume Tormo)
+Date: Fri, 15 Feb 2019 18:26:33 +0100
+Subject: [R-es] Leer un txt a trozos
+In-Reply-To: <CAHo_aEQH1KAACzmtB8BH6W=mCBP9gTTOt_Rp4RuRJOpz6hmebQ@mail.gmail.com>
+References: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+ <CAHo_aEQH1KAACzmtB8BH6W=mCBP9gTTOt_Rp4RuRJOpz6hmebQ@mail.gmail.com>
+Message-ID: <CAP3FtZiD7=fsLBsZNXQuQ3yTxkK78sK2cassuJdVrbZbQiEG3Q@mail.gmail.com>
+
+Muchísimas gracias a todos.
+
+Ya tengo por donde empezar, a ver si cuando acabe os pongo al día.
+
+Jaume.
+
+El mié., 13 feb. 2019 a las 13:17, Javier Marcuzzi (<
+javier.ruben.marcuzzi en gmail.com>) escribió:
+
+> Estimado Jaume Tormo
+>
+> Leí algunas respuestas, con todas hay que tener mucho cuidado, no por la
+> respuesta en sí, sino por como están los datos, porque en el texto por ahí
+> hay alguna tabulación, otro espacio, algo que al ojo humano no se ve pero
+> que está en el código y al procesar aparecen errores, o se procesa con
+> error no visible destruyendo los datos originales.
+>
+> Yo desconozco cuántos datos tiene, pero, personalmente no me gusta
+> automatizar la toda de datos desde archivos de texto cuándo sospecho que
+> algo no puede estar estandarizado.
+>
+> Javier Rubén Marcuzzi
+>
+> El mar., 12 feb. 2019 a las 15:16, Jaume Tormo (<jautorbla en gmail.com>)
+> escribió:
+>
+>> Estimad en s eRRer en s,
+>>
+>> Tengo un txt que quiero importar a R.
+>> Pero no tiene un formato adecuado para usar cosas normales, como por
+>> ejemplo read.csv()
+>> El formato es algo así:
+>> time 1
+>> col1 col2 col3 col4
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> end
+>>
+>> time 2
+>> col1 col2 col3 col4
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> end
+>>
+>> time 3
+>> col1 col2 col3 col4
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> dato dato dato dato
+>> end
+>>
+>> Lo que me gustaría decirle a R es "ves a donde pone time y tráete X
+>> lineas"
+>> o "ves a donde pone time y tráete lineas hasta que llegues a end"
+>> En realidad debe ser bastante fácil, todas las tablas empiezan con time y
+>> acaban con end y tienen el mismo numero de filas.
+>> He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+>> cuantas lineas leer pero no donde empezar... creo.
+>> ¿Alguna pista de por donde puedo empezar a mirar?
+>>
+>> Muchas gracias.
+>>
+>>
+>> --
+>> Jaume Tormo.
+>> https://es.linkedin.com/in/jaumetormo
+>> https://acercad.wordpress.com/
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+-- 
+Jaume Tormo.
+https://es.linkedin.com/in/jaumetormo
+https://acercad.wordpress.com/
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Feb 16 08:51:01 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 16 Feb 2019 08:51:01 +0100
+Subject: [R-es] 
+	=?utf-8?q?Ma=C3=B1ana_jueves_14-febrero_=22Reuni=C3=B3n_d?=
+	=?utf-8?q?el_Grupo_de_R_de_Madrid=22=2E=2E=2E?=
+In-Reply-To: <CAOKbq8jvKxTGMGkhyWj70SVnA-U7N52dVZLDeSJ1cBLn5U1haQ@mail.gmail.com>
+References: <CAOKbq8jvKxTGMGkhyWj70SVnA-U7N52dVZLDeSJ1cBLn5U1haQ@mail.gmail.com>
+Message-ID: <CAOKbq8gXKvBsxzvQC3Y0GTOZi4yQiTrbRfnaDf+wdDCuPmU9kg@mail.gmail.com>
+
+Buenas a todos,
+
+Gracias a todos los que pudieron venir a la reunión y a José Luis por  su
+presentación.
+El video y la presentación ya están disponibles:
+
+http://madrid.r-es.org/58-jueves-14-de-febrero-2019/
+
+Gracias,
+Carlos.
+
+El mié., 13 feb. 2019 a las 8:45, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Buenas a todos,
+>
+> Para los que quieran/puedan asistir:
+>
+>
+> https://www.meetup.com/es-ES/Grupo-de-Usuarios-de-R-de-Madrid/events/258842771/
+>
+> Gracias!
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com  Sat Feb 16 13:54:09 2019
+From: j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com (Paulina Jara Armijo)
+Date: Sat, 16 Feb 2019 13:54:09 +0100
+Subject: [R-es] Duda error sintaxis
+Message-ID: <CAB-To0TpNmKLV4sqLPSYYqD=E0GRZJA=MgYntWmHd9c_09jcRQ@mail.gmail.com>
+
+ Buenas tardes chicos, estoy intentando hacer un gráfico que resuma para
+cada dia de la semana la información de algunos distritos específicos de
+los que contiene mi variable, ejecuto esta sintaxis pero me da un error
+
+Error: Mapping should be created with `aes() or `aes_()`.
+
+Alguien me puede orientar sobre que estoy haciendo mal, llevo mucho rato
+atascada.
+ Muchas gracias
+
+df_nuevofinal %>% filter( District == "University" | District == "Boyer" |
+District == "Parc" | District == "Berri1") %>%
+  group_by(week_day) %>%  ggplot(df_nuevofinal,aes (x=week_day,
+y=District)) +
+geom_col()
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Sat Feb 16 14:25:09 2019
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Sat, 16 Feb 2019 07:25:09 -0600
+Subject: [R-es] Duda error sintaxis
+In-Reply-To: <CAB-To0TpNmKLV4sqLPSYYqD=E0GRZJA=MgYntWmHd9c_09jcRQ@mail.gmail.com>
+References: <CAB-To0TpNmKLV4sqLPSYYqD=E0GRZJA=MgYntWmHd9c_09jcRQ@mail.gmail.com>
+Message-ID: <CABkCotQbH2+asNRHDzpH+ijYAqQFgsQ1QyNXLvrMmCj6VYC9aQ@mail.gmail.com>
+
+Hola Paulina,
+
+No me puse a explorar mucho sobre tu código, pero tu problema creo que es
+el uso de pipes con ggplot2?  Ggplot2 no funciona con pipes.  Si eso es lo
+que quieres tienes que hacer uso de paquetes que posibiliten el uso de
+pipes con ggplot2.  Ha habido algunos intentos para que eso sea posible.
+
+Manuel
+
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=icon>
+Virus-free.
+www.avast.com
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=link>
+<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+
+El sáb., 16 feb. 2019 a las 6:54, Paulina Jara Armijo (<
+jara.armijo.paulina en gmail.com>) escribió:
+
+>  Buenas tardes chicos, estoy intentando hacer un gráfico que resuma para
+> cada dia de la semana la información de algunos distritos específicos de
+> los que contiene mi variable, ejecuto esta sintaxis pero me da un error
+>
+> Error: Mapping should be created with `aes() or `aes_()`.
+>
+> Alguien me puede orientar sobre que estoy haciendo mal, llevo mucho rato
+> atascada.
+>  Muchas gracias
+>
+> df_nuevofinal %>% filter( District == "University" | District == "Boyer" |
+> District == "Parc" | District == "Berri1") %>%
+>   group_by(week_day) %>%  ggplot(df_nuevofinal,aes (x=week_day,
+> y=District)) +
+> geom_col()
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+*Manuel Spínola, Ph.D.*
+Instituto Internacional en Conservación y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Teléfono: (506) 8706 - 4662
+Personal website: Lobito de río <https://sites.google.com/site/lobitoderio/>
+Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+
+	[[alternative HTML version deleted]]
+
+
+From |jro@r @end|ng |rom hotm@||@com  Sat Feb 16 14:27:41 2019
+From: |jro@r @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Francisco_Rodr=EDguez?=)
+Date: Sat, 16 Feb 2019 13:27:41 +0000
+Subject: [R-es] Duda error sintaxis
+In-Reply-To: <CABkCotQbH2+asNRHDzpH+ijYAqQFgsQ1QyNXLvrMmCj6VYC9aQ@mail.gmail.com>
+References: <CAB-To0TpNmKLV4sqLPSYYqD=E0GRZJA=MgYntWmHd9c_09jcRQ@mail.gmail.com>,
+ <CABkCotQbH2+asNRHDzpH+ijYAqQFgsQ1QyNXLvrMmCj6VYC9aQ@mail.gmail.com>
+Message-ID: <PR1PR05MB5481114F90228B0DB25F7AA4CD610@PR1PR05MB5481.eurprd05.prod.outlook.com>
+
+Creo que con plotly es m?s sencillo y el resultado va a ser mejor y admite dplyr
+
+
+
+Enviado de Samsung Mobile
+
+
+-------- Mensaje original --------
+De: Manuel Sp?nola <mspinola10 en gmail.com>
+Fecha: 16/2/19 14:25 (GMT+01:00)
+Para: Paulina Jara Armijo <jara.armijo.paulina en gmail.com>
+Cc: Lista R <r-help-es en r-project.org>
+Asunto: Re: [R-es] Duda error sintaxis
+
+Hola Paulina,
+
+No me puse a explorar mucho sobre tu c?digo, pero tu problema creo que es
+el uso de pipes con ggplot2?  Ggplot2 no funciona con pipes.  Si eso es lo
+que quieres tienes que hacer uso de paquetes que posibiliten el uso de
+pipes con ggplot2.  Ha habido algunos intentos para que eso sea posible.
+
+Manuel
+
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=icon>
+Virus-free.
+www.avast.com<http://www.avast.com>
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail&utm_term=link>
+<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+
+El s?b., 16 feb. 2019 a las 6:54, Paulina Jara Armijo (<
+jara.armijo.paulina en gmail.com>) escribi?:
+
+>  Buenas tardes chicos, estoy intentando hacer un gr?fico que resuma para
+> cada dia de la semana la informaci?n de algunos distritos espec?ficos de
+> los que contiene mi variable, ejecuto esta sintaxis pero me da un error
+>
+> Error: Mapping should be created with `aes() or `aes_()`.
+>
+> Alguien me puede orientar sobre que estoy haciendo mal, llevo mucho rato
+> atascada.
+>  Muchas gracias
+>
+> df_nuevofinal %>% filter( District == "University" | District == "Boyer" |
+> District == "Parc" | District == "Berri1") %>%
+>   group_by(week_day) %>%  ggplot(df_nuevofinal,aes (x=week_day,
+> y=District)) +
+> geom_col()
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+--
+*Manuel Sp?nola, Ph.D.*
+Instituto Internacional en Conservaci?n y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Tel?fono: (506) 8706 - 4662
+Personal website: Lobito de r?o <https://sites.google.com/site/lobitoderio/>
+Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From v|opez|o @end|ng |rom ucm@e@  Sat Feb 16 15:09:52 2019
+From: v|opez|o @end|ng |rom ucm@e@ (Victoria Lopez)
+Date: Sat, 16 Feb 2019 15:09:52 +0100
+Subject: [R-es] convertir char a double
+Message-ID: <CALhtgR1BF_5Ug6rqzcZ+VewicBBVF956+0OOgeyceOWbH3vABg@mail.gmail.com>
+
+Hola a todos,
+no acierto a convertir una cadena "6,3" en el double 6.3 sin perder la
+parte decimal.
+Me sirve también que desde el csv lo lea como double, pero lo convierte
+siempre a factor y desde ahi lo paso a caracter porque creo que será más
+facil.
+El caso es que con as.double el resultado sale redondeado y no veo cómo
+recuperar los decimales.
+
+Gracias!!
+
+
+*Victoria *
+
+	[[alternative HTML version deleted]]
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Sat Feb 16 15:19:44 2019
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Sat, 16 Feb 2019 14:19:44 +0000 (UTC)
+Subject: [R-es] Duda error sintaxis
+In-Reply-To: <CAB-To0TpNmKLV4sqLPSYYqD=E0GRZJA=MgYntWmHd9c_09jcRQ@mail.gmail.com>
+References: <CAB-To0TpNmKLV4sqLPSYYqD=E0GRZJA=MgYntWmHd9c_09jcRQ@mail.gmail.com>
+Message-ID: <388549236.303849.1550326785010@mail.yahoo.com>
+
+Holano conocemos tu dataset, pero yo creo que si aplicas el gráfico de esta forma te debería ir bien:
+
+p <- ggplot(filter(df, District %in%  c("University","Boyer","Parc", "Berri1")),    aes (x=week_day, y=District)) +geom_col()
+
+p
+
+No me queda muy claro porque haces el   group_by(week_day)  antes del ggplot.      De: Paulina Jara Armijo <jara.armijo.paulina en gmail.com>
+ Para: Lista R <r-help-es en r-project.org> 
+ Enviado: Sábado 16 de febrero de 2019 13:54
+ Asunto: [R-es] Duda error sintaxis
+   
+ Buenas tardes chicos, estoy intentando hacer un gráfico que resuma para
+cada dia de la semana la información de algunos distritos específicos de
+los que contiene mi variable, ejecuto esta sintaxis pero me da un error
+
+Error: Mapping should be created with `aes() or `aes_()`.
+
+Alguien me puede orientar sobre que estoy haciendo mal, llevo mucho rato
+atascada.
+ Muchas gracias
+
+df_nuevofinal %>% filter( District == "University" | District == "Boyer" |
+District == "Parc" | District == "Berri1") %>%
+  group_by(week_day) %>%  ggplot(df_nuevofinal,aes (x=week_day,
+y=District)) +
+geom_col()
+
+    [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+   
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Feb 16 15:48:31 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 16 Feb 2019 15:48:31 +0100
+Subject: [R-es] convertir char a double
+In-Reply-To: <CALhtgR1BF_5Ug6rqzcZ+VewicBBVF956+0OOgeyceOWbH3vABg@mail.gmail.com>
+References: <CALhtgR1BF_5Ug6rqzcZ+VewicBBVF956+0OOgeyceOWbH3vABg@mail.gmail.com>
+Message-ID: <CAOKbq8h5XP1wvwwoBvNhrji9vZ1HffDJffiPsTmhUr06eRQF5g@mail.gmail.com>
+
+Hola Victoria,
+
+Quizás sea mejor que en la lectura del csv indiques que el separador de
+decimales  es la "," y no el ".".
+Esto se especifica con el parámetro "dec", tendría que ser entonces:
+*dec=","*
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El sáb., 16 feb. 2019 a las 15:10, Victoria Lopez (<vlopezlo en ucm.es>)
+escribió:
+
+> Hola a todos,
+> no acierto a convertir una cadena "6,3" en el double 6.3 sin perder la
+> parte decimal.
+> Me sirve también que desde el csv lo lea como double, pero lo convierte
+> siempre a factor y desde ahi lo paso a caracter porque creo que será más
+> facil.
+> El caso es que con as.double el resultado sale redondeado y no veo cómo
+> recuperar los decimales.
+>
+> Gracias!!
+>
+>
+> *Victoria *
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com  Sat Feb 16 18:47:48 2019
+From: j@r@@@rm|jo@p@u||n@ @end|ng |rom gm@||@com (Paulina Jara Armijo)
+Date: Sat, 16 Feb 2019 18:47:48 +0100
+Subject: [R-es] Duda error sintaxis
+In-Reply-To: <388549236.303849.1550326785010@mail.yahoo.com>
+References: <CAB-To0TpNmKLV4sqLPSYYqD=E0GRZJA=MgYntWmHd9c_09jcRQ@mail.gmail.com>
+ <388549236.303849.1550326785010@mail.yahoo.com>
+Message-ID: <CAB-To0TtdCp3Lb0YJAMHOn9eDz3PUg3OfkOP5hzwhWoZFDu+KA@mail.gmail.com>
+
+Vale. ¡Muchas gracias!
+
+El sáb., 16 feb. 2019 a las 15:19, jose luis (<pepeceb en yahoo.es>) escribió:
+
+> Hola
+> no conocemos tu dataset, pero yo creo que si aplicas el gráfico de esta
+> forma te debería ir bien:
+>
+>
+> *p <- ggplot(filter(df, District %in%
+> c("University","Boyer","Parc", "Berri1")),*
+> *    aes (x=week_day, y=District)) +*
+>
+> *geom_col()*
+>
+> *p*
+>
+> No me queda muy claro porque haces el   group_by(week_day)  antes del
+> ggplot.
+> ------------------------------
+> *De:* Paulina Jara Armijo <jara.armijo.paulina en gmail.com>
+> *Para:* Lista R <r-help-es en r-project.org>
+> *Enviado:* Sábado 16 de febrero de 2019 13:54
+> *Asunto:* [R-es] Duda error sintaxis
+>
+> Buenas tardes chicos, estoy intentando hacer un gráfico que resuma para
+> cada dia de la semana la información de algunos distritos específicos de
+> los que contiene mi variable, ejecuto esta sintaxis pero me da un error
+>
+> Error: Mapping should be created with `aes() or `aes_()`.
+>
+> Alguien me puede orientar sobre que estoy haciendo mal, llevo mucho rato
+> atascada.
+> Muchas gracias
+>
+> df_nuevofinal %>% filter( District == "University" | District == "Boyer" |
+> District == "Parc" | District == "Berri1") %>%
+>   group_by(week_day) %>%  ggplot(df_nuevofinal,aes (x=week_day,
+> y=District)) +
+> geom_col()
+>
+>     [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sun Feb 17 22:19:07 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sun, 17 Feb 2019 18:19:07 -0300
+Subject: [R-es] convertir char a double
+In-Reply-To: <CAOKbq8h5XP1wvwwoBvNhrji9vZ1HffDJffiPsTmhUr06eRQF5g@mail.gmail.com>
+References: <CALhtgR1BF_5Ug6rqzcZ+VewicBBVF956+0OOgeyceOWbH3vABg@mail.gmail.com>
+ <CAOKbq8h5XP1wvwwoBvNhrji9vZ1HffDJffiPsTmhUr06eRQF5g@mail.gmail.com>
+Message-ID: <CAHo_aEQB_aD+K3ZysZhBCBKTcktg0j-4x_=aKh+Rn5oHfiDV5w@mail.gmail.com>
+
+Estimada Victoria López
+
+Lo que dice Carlos está bien, el problema suele estar en los tipos de datos
+de un lenguaje informático a otro, yo en lo personal para aprender y luego
+durante mucho tiempo y aún hoy luego de varios años con R, se escribir
+str(mis_datos), porque me pasó muchas veces el pensar que estaba en un tipo
+de dato cuándo en realidad estaba en otro.
+
+Javier Rubén Marcuzzi
+
+El sáb., 16 feb. 2019 a las 11:49, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola Victoria,
+>
+> Quizás sea mejor que en la lectura del csv indiques que el separador de
+> decimales  es la "," y no el ".".
+> Esto se especifica con el parámetro "dec", tendría que ser entonces:
+> *dec=","*
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El sáb., 16 feb. 2019 a las 15:10, Victoria Lopez (<vlopezlo en ucm.es>)
+> escribió:
+>
+> > Hola a todos,
+> > no acierto a convertir una cadena "6,3" en el double 6.3 sin perder la
+> > parte decimal.
+> > Me sirve también que desde el csv lo lea como double, pero lo convierte
+> > siempre a factor y desde ahi lo paso a caracter porque creo que será más
+> > facil.
+> > El caso es que con as.double el resultado sale redondeado y no veo cómo
+> > recuperar los decimales.
+> >
+> > Gracias!!
+> >
+> >
+> > *Victoria *
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@utorb|@ @end|ng |rom gm@||@com  Mon Feb 18 18:51:59 2019
+From: j@utorb|@ @end|ng |rom gm@||@com (Jaume Tormo)
+Date: Mon, 18 Feb 2019 18:51:59 +0100
+Subject: [R-es] Leer un txt a trozos
+In-Reply-To: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+References: <CAP3FtZj3zdB3eqLOYE=hE079rBrpKQKJUGApXP0B8BnXz9DFKw@mail.gmail.com>
+Message-ID: <CAP3FtZhTWhFv5CA-r2x7_HrWAV7zNj6DEcECLFAn9Zw7P3jPLA@mail.gmail.com>
+
+Hola a todos,
+
+Muchas gracias a todos por la ayuda. Marcelino, tu idea ha sido la clave.
+A falta de alguna comprobación os pego aquí el script que he hecho...
+parece que funciona.
+Por si le sirve a alguien, los datos son el output de hydrus 1D (
+https://www.pc-progress.com/en/Default.aspx?hydrus-1d)
+El archivo original lo podéis ver aquí:
+https://www.dropbox.com/s/41b5wexpjdnztm9/Nod_Inf.out?dl=0
+
+SCRIPT:
+## **** recuerda quitar a mano las unidades en el archivo de texto ****
+
+file<-"/home/jaume/Dropbox/FEINA/tasca_WTAM/models_sol/Hydrus/ModelDmoret_20190212/JAume/Nod_Inf.out.proves"
+## cargar los datos
+  texto <- scan(file, what ="character") #hace un vector de strings, un
+elemento por string
+  texto <- texto[c(26:length(texto))]    #quitamos la cabecera
+  head(texto)
+## marcar los time y end
+  times <- grep("Time:",texto)  #posición de los time
+  ends  <- grep("end",texto)    #posición de los end
+  head(times);head(ends)        #comprobar
+  head(texto)
+## creamos la matriz para guardar
+  matriufinal<-matrix(c(1:12),nrow=1)
+  #rbind(matriufinal,c(1,2,3,4,5,6,7,8,9,10,11,12))
+## empieza
+  for ( i in 1:length(times)){
+    #i<-1
+  ## sacar la matriz para cada time
+    inici<-times[i]+2               #lugar donde empieza la matriz
+    final<-ends[i]-1                #lugar donde acaba la matriz
+    troç<-texto[c(inici:final)]     #texto de la primera matriz guardado
+como troç
+    head(troç,11);tail(troç,11)     #comprobar
+    m<-matrix(troç,nc=11,byrow = T) #hacemos la matriz
+  ## primera fila con nombres de columna
+    colnames(m)<-m[1,]            # ponemos el nombre
+    m<-m[-1,]                     # Borramos la fila de nombres
+  ## añadir columna diciendo el timepo (Time)
+    m<-cbind(m,rep(i-1,nrow(m)))
+    colnames(m)[12]<-"time"
+  ## añadirlo a la matriz final
+    matriufinal<-rbind(matriufinal,m)
+  }
+## convertirlo en dataframe
+  dades.m<-matriufinal
+  # quitarar la primera columna que habiamo puesto al crear la matriz de
+guardar
+    dades.m<-dades.m[-1,]
+  # convertir en numérico
+    mode(dades.m)<-"numeric"
+  #convertir en dataframe
+    dades<-as.data.frame(dades.m)
+
+Jaume.
+
+
+El mar., 12 feb. 2019 a las 19:16, Jaume Tormo (<jautorbla en gmail.com>)
+escribió:
+
+> Estimad en s eRRer en s,
+>
+> Tengo un txt que quiero importar a R.
+> Pero no tiene un formato adecuado para usar cosas normales, como por
+> ejemplo read.csv()
+> El formato es algo así:
+> time 1
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 2
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> time 3
+> col1 col2 col3 col4
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> dato dato dato dato
+> end
+>
+> Lo que me gustaría decirle a R es "ves a donde pone time y tráete X
+> lineas" o "ves a donde pone time y tráete lineas hasta que llegues a end"
+> En realidad debe ser bastante fácil, todas las tablas empiezan con time y
+> acaban con end y tienen el mismo numero de filas.
+> He estado mirando readPlain(), scan(), readfile()... pero le puedes decir
+> cuantas lineas leer pero no donde empezar... creo.
+> ¿Alguna pista de por donde puedo empezar a mirar?
+>
+> Muchas gracias.
+>
+>
+> --
+> Jaume Tormo.
+> https://es.linkedin.com/in/jaumetormo
+> https://acercad.wordpress.com/
+>
+
+
+-- 
+Jaume Tormo.
+https://es.linkedin.com/in/jaumetormo
+https://acercad.wordpress.com/
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Mon Feb 18 19:03:30 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Mon, 18 Feb 2019 19:03:30 +0100
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+Message-ID: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+
+
+Buenas tardes, tengo un loop que hace un árbol de clasificación cada  
+vez y va creando un vector con una predicción que hace. Son 4  
+categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la  
+categoría predicha me añade al vector el nº (del 1 al 4) al que  
+corresponde esa categoría. Supongo que se puede hacer que añada la  
+categoría (la letra), pero no sé cómo.
+
+preds <- {}
+
+for (i in 1:nrow(data)) {
+
+   training <- data[-i, ]
+
+   fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+
+   Pred <- predict(fitrp,data[i,], type="class")
+
+   preds[i] <- Pred
+
+}
+
+Gracias como siempre,
+Manuel
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Mon Feb 18 19:33:04 2019
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Mon, 18 Feb 2019 13:33:04 -0500
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+In-Reply-To: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+References: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+Message-ID: <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+
+Estimado Manuel,
+
+Debes definir ecsta como factor usando, por ejemplo,
+
+factor(ecsta, levels = ...)
+
+antes de ajustar el modelo.
+
+Dale una mirada a
+
+?factor
+
+para má detalles.
+
+Saludos,
+Jorge.-
+
+El El lun, 18 de feb. de 2019 a las 1:03 p. m., Manuel Mendoza <
+mmendoza en mncn.csic.es> escribió:
+
+>
+> Buenas tardes, tengo un loop que hace un árbol de clasificación cada
+> vez y va creando un vector con una predicción que hace. Son 4
+> categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la
+> categoría predicha me añade al vector el nº (del 1 al 4) al que
+> corresponde esa categoría. Supongo que se puede hacer que añada la
+> categoría (la letra), pero no sé cómo.
+>
+> preds <- {}
+>
+> for (i in 1:nrow(data)) {
+>
+>    training <- data[-i, ]
+>
+>    fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+>
+>    Pred <- predict(fitrp,data[i,], type="class")
+>
+>    preds[i] <- Pred
+>
+> }
+>
+> Gracias como siempre,
+> Manuel
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> .
+>
+> --
+> Dr Manuel Mendoza
+> Department of Biogeography and Global Change
+> National Museum of Natural Science (MNCN)
+> Spanish Scientific Council (CSIC)
+> C/ Serrano 115bis, 28006 MADRID
+> Spain
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+-- 
+Sent from my phone. Please excuse my brevity and misspelling.
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Mon Feb 18 23:39:00 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Mon, 18 Feb 2019 23:39:00 +0100
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+In-Reply-To: <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+References: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+ <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+Message-ID: <20190218233900.Horde.z7_EDMlvvzjbbC6TErQfQGr@webmail.csic.es>
+
+Gracias Jorge. No entiendo bien; la variable objetivo es ya factor. El  
+árbol me la predice bien, como factor, también. Es al ir construyendo  
+el vector que lo anota con un nº, según de cuál de las 4 categorías se  
+trate.
+
+
+Quoting Jorge I Velez <jorgeivanvelez en gmail.com>:
+
+> Estimado Manuel,
+>
+> Debes definir ecsta como factor usando, por ejemplo,
+>
+> factor(ecsta, levels = ...)
+>
+> antes de ajustar el modelo.
+>
+> Dale una mirada a
+>
+> ?factor
+>
+> para má detalles.
+>
+> Saludos,
+> Jorge.-
+>
+> El El lun, 18 de feb. de 2019 a las 1:03 p. m., Manuel Mendoza <
+> mmendoza en mncn.csic.es> escribió:
+>
+>>
+>> Buenas tardes, tengo un loop que hace un árbol de clasificación cada
+>> vez y va creando un vector con una predicción que hace. Son 4
+>> categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la
+>> categoría predicha me añade al vector el nº (del 1 al 4) al que
+>> corresponde esa categoría. Supongo que se puede hacer que añada la
+>> categoría (la letra), pero no sé cómo.
+>>
+>> preds <- {}
+>>
+>> for (i in 1:nrow(data)) {
+>>
+>>    training <- data[-i, ]
+>>
+>>    fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+>>
+>>    Pred <- predict(fitrp,data[i,], type="class")
+>>
+>>    preds[i] <- Pred
+>>
+>> }
+>>
+>> Gracias como siempre,
+>> Manuel
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> .
+>>
+>> --
+>> Dr Manuel Mendoza
+>> Department of Biogeography and Global Change
+>> National Museum of Natural Science (MNCN)
+>> Spanish Scientific Council (CSIC)
+>> C/ Serrano 115bis, 28006 MADRID
+>> Spain
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+> --
+> Sent from my phone. Please excuse my brevity and misspelling.
+
+
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From @nton|orodr|guez@ndre@70 @end|ng |rom gm@||@com  Tue Feb 19 09:51:18 2019
+From: @nton|orodr|guez@ndre@70 @end|ng |rom gm@||@com (Antonio Rodriguez Andres)
+Date: Tue, 19 Feb 2019 09:51:18 +0100
+Subject: [R-es] Cambiar el formato de datos
+Message-ID: <CAPr+-cN6hfywLYbUx31G7rdnTZ4H0v5-uabTM_GnGwVknWezXQ@mail.gmail.com>
+
+Estimados miembros de la comunidad de R
+
+Tengo el siguiente formato en un fichero csv que corresponde a datos de la
+población para un conjunto de países y para un rango amplio de años.
+
+Pais         1960    1961  1962  1963
+Albania    vvvvv    vvvv
+Algeria     vvvvv      vvvv
+
+Me gustaría pasarlo a la siguiente forma
+Pais       Año     Poblacion
+Albania   1960    vvv
+Albania    1961   vvvv
+Albania    1962
+Albania    1963
+Algeria     1960
+.....etc
+
+Alguna pista de como implementarlo en R. Muchas gracias de antemano
+
+Saludos
+
+Antonio
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Feb 19 12:12:55 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 19 Feb 2019 08:12:55 -0300
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+In-Reply-To: <20190218233900.Horde.z7_EDMlvvzjbbC6TErQfQGr@webmail.csic.es>
+References: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+ <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+ <20190218233900.Horde.z7_EDMlvvzjbbC6TErQfQGr@webmail.csic.es>
+Message-ID: <CAHo_aETGfNhmXztKs9ij_cqAjfL0f3O1hVi5Xor_1u4yOpf7Kg@mail.gmail.com>
+
+Estimado Manuel Mendoza
+
+Con sus datos y a modo de curiosidad, ¿que pasa en  training <- data[-i, ]?
+
+Javier Rubén Marcuzzi
+
+El lun., 18 feb. 2019 a las 19:39, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+escribió:
+
+> Gracias Jorge. No entiendo bien; la variable objetivo es ya factor. El
+> árbol me la predice bien, como factor, también. Es al ir construyendo
+> el vector que lo anota con un nº, según de cuál de las 4 categorías se
+> trate.
+>
+>
+> Quoting Jorge I Velez <jorgeivanvelez en gmail.com>:
+>
+> > Estimado Manuel,
+> >
+> > Debes definir ecsta como factor usando, por ejemplo,
+> >
+> > factor(ecsta, levels = ...)
+> >
+> > antes de ajustar el modelo.
+> >
+> > Dale una mirada a
+> >
+> > ?factor
+> >
+> > para má detalles.
+> >
+> > Saludos,
+> > Jorge.-
+> >
+> > El El lun, 18 de feb. de 2019 a las 1:03 p. m., Manuel Mendoza <
+> > mmendoza en mncn.csic.es> escribió:
+> >
+> >>
+> >> Buenas tardes, tengo un loop que hace un árbol de clasificación cada
+> >> vez y va creando un vector con una predicción que hace. Son 4
+> >> categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la
+> >> categoría predicha me añade al vector el nº (del 1 al 4) al que
+> >> corresponde esa categoría. Supongo que se puede hacer que añada la
+> >> categoría (la letra), pero no sé cómo.
+> >>
+> >> preds <- {}
+> >>
+> >> for (i in 1:nrow(data)) {
+> >>
+> >>    training <- data[-i, ]
+> >>
+> >>    fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+> >>
+> >>    Pred <- predict(fitrp,data[i,], type="class")
+> >>
+> >>    preds[i] <- Pred
+> >>
+> >> }
+> >>
+> >> Gracias como siempre,
+> >> Manuel
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >> .
+> >>
+> >> --
+> >> Dr Manuel Mendoza
+> >> Department of Biogeography and Global Change
+> >> National Museum of Natural Science (MNCN)
+> >> Spanish Scientific Council (CSIC)
+> >> C/ Serrano 115bis, 28006 MADRID
+> >> Spain
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> > --
+> > Sent from my phone. Please excuse my brevity and misspelling.
+>
+>
+> --
+> Dr Manuel Mendoza
+> Department of Biogeography and Global Change
+> National Museum of Natural Science (MNCN)
+> Spanish Scientific Council (CSIC)
+> C/ Serrano 115bis, 28006 MADRID
+> Spain
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Tue Feb 19 12:35:42 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Tue, 19 Feb 2019 12:35:42 +0100
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+In-Reply-To: <CAHo_aETGfNhmXztKs9ij_cqAjfL0f3O1hVi5Xor_1u4yOpf7Kg@mail.gmail.com>
+References: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+ <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+ <20190218233900.Horde.z7_EDMlvvzjbbC6TErQfQGr@webmail.csic.es>
+ <CAHo_aETGfNhmXztKs9ij_cqAjfL0f3O1hVi5Xor_1u4yOpf7Kg@mail.gmail.com>
+Message-ID: <20190219123542.Horde.cBdFQPal5QDlzaLGfNZeUgY@webmail.csic.es>
+
+Es un leave one out. Con todas las muestras menos una se entrena el  
+algoritmo, se predice la categoría de la muestra que falta, y se añade  
+al vector, que finalmente incluye la predicción para todas las  
+muestras y sin que hayan sido utilizada para entrenar los modelos. Es  
+especialmente útil cuando hay pocas muestras y con una validación  
+cruzada k-fold, los entrenamientos se hacen con pocas muestras. Aunque  
+es una técnica común, este código lo acabo de diseñar yo, por lo que,  
+hasta que no analice los resultados no estoy seguro de que lo hace  
+bien. Supongo que sí.
+
+
+Quoting Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>:
+
+> Estimado Manuel Mendoza
+>
+> Con sus datos y a modo de curiosidad, ¿que pasa en  training <- data[-i, ]?
+>
+> Javier Rubén Marcuzzi
+>
+> El lun., 18 feb. 2019 a las 19:39, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+> escribió:
+>
+>> Gracias Jorge. No entiendo bien; la variable objetivo es ya factor. El
+>> árbol me la predice bien, como factor, también. Es al ir construyendo
+>> el vector que lo anota con un nº, según de cuál de las 4 categorías se
+>> trate.
+>>
+>>
+>> Quoting Jorge I Velez <jorgeivanvelez en gmail.com>:
+>>
+>> > Estimado Manuel,
+>> >
+>> > Debes definir ecsta como factor usando, por ejemplo,
+>> >
+>> > factor(ecsta, levels = ...)
+>> >
+>> > antes de ajustar el modelo.
+>> >
+>> > Dale una mirada a
+>> >
+>> > ?factor
+>> >
+>> > para má detalles.
+>> >
+>> > Saludos,
+>> > Jorge.-
+>> >
+>> > El El lun, 18 de feb. de 2019 a las 1:03 p. m., Manuel Mendoza <
+>> > mmendoza en mncn.csic.es> escribió:
+>> >
+>> >>
+>> >> Buenas tardes, tengo un loop que hace un árbol de clasificación cada
+>> >> vez y va creando un vector con una predicción que hace. Son 4
+>> >> categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la
+>> >> categoría predicha me añade al vector el nº (del 1 al 4) al que
+>> >> corresponde esa categoría. Supongo que se puede hacer que añada la
+>> >> categoría (la letra), pero no sé cómo.
+>> >>
+>> >> preds <- {}
+>> >>
+>> >> for (i in 1:nrow(data)) {
+>> >>
+>> >>    training <- data[-i, ]
+>> >>
+>> >>    fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+>> >>
+>> >>    Pred <- predict(fitrp,data[i,], type="class")
+>> >>
+>> >>    preds[i] <- Pred
+>> >>
+>> >> }
+>> >>
+>> >> Gracias como siempre,
+>> >> Manuel
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >> .
+>> >>
+>> >> --
+>> >> Dr Manuel Mendoza
+>> >> Department of Biogeography and Global Change
+>> >> National Museum of Natural Science (MNCN)
+>> >> Spanish Scientific Council (CSIC)
+>> >> C/ Serrano 115bis, 28006 MADRID
+>> >> Spain
+>> >>
+>> >> _______________________________________________
+>> >> R-help-es mailing list
+>> >> R-help-es en r-project.org
+>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>
+>> > --
+>> > Sent from my phone. Please excuse my brevity and misspelling.
+>>
+>>
+>> --
+>> Dr Manuel Mendoza
+>> Department of Biogeography and Global Change
+>> National Museum of Natural Science (MNCN)
+>> Spanish Scientific Council (CSIC)
+>> C/ Serrano 115bis, 28006 MADRID
+>> Spain
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+
+
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Tue Feb 19 12:41:53 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Tue, 19 Feb 2019 12:41:53 +0100
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+In-Reply-To: <CAHo_aETGfNhmXztKs9ij_cqAjfL0f3O1hVi5Xor_1u4yOpf7Kg@mail.gmail.com>
+References: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+ <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+ <20190218233900.Horde.z7_EDMlvvzjbbC6TErQfQGr@webmail.csic.es>
+ <CAHo_aETGfNhmXztKs9ij_cqAjfL0f3O1hVi5Xor_1u4yOpf7Kg@mail.gmail.com>
+Message-ID: <20190219124153.Horde.XC2EDmADxbpq-_QxiOJoL6_@webmail.csic.es>
+
+Bueno, creo que no contesté tu pregunta. Con training <- data[-i, ]  
+crea una df llamada training, sin la muestra i, que después utiliza  
+para entrenar el algoritmo.
+
+
+Quoting Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>:
+
+> Estimado Manuel Mendoza
+>
+> Con sus datos y a modo de curiosidad, ¿que pasa en  training <- data[-i, ]?
+>
+> Javier Rubén Marcuzzi
+>
+> El lun., 18 feb. 2019 a las 19:39, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+> escribió:
+>
+>> Gracias Jorge. No entiendo bien; la variable objetivo es ya factor. El
+>> árbol me la predice bien, como factor, también. Es al ir construyendo
+>> el vector que lo anota con un nº, según de cuál de las 4 categorías se
+>> trate.
+>>
+>>
+>> Quoting Jorge I Velez <jorgeivanvelez en gmail.com>:
+>>
+>> > Estimado Manuel,
+>> >
+>> > Debes definir ecsta como factor usando, por ejemplo,
+>> >
+>> > factor(ecsta, levels = ...)
+>> >
+>> > antes de ajustar el modelo.
+>> >
+>> > Dale una mirada a
+>> >
+>> > ?factor
+>> >
+>> > para má detalles.
+>> >
+>> > Saludos,
+>> > Jorge.-
+>> >
+>> > El El lun, 18 de feb. de 2019 a las 1:03 p. m., Manuel Mendoza <
+>> > mmendoza en mncn.csic.es> escribió:
+>> >
+>> >>
+>> >> Buenas tardes, tengo un loop que hace un árbol de clasificación cada
+>> >> vez y va creando un vector con una predicción que hace. Son 4
+>> >> categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la
+>> >> categoría predicha me añade al vector el nº (del 1 al 4) al que
+>> >> corresponde esa categoría. Supongo que se puede hacer que añada la
+>> >> categoría (la letra), pero no sé cómo.
+>> >>
+>> >> preds <- {}
+>> >>
+>> >> for (i in 1:nrow(data)) {
+>> >>
+>> >>    training <- data[-i, ]
+>> >>
+>> >>    fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+>> >>
+>> >>    Pred <- predict(fitrp,data[i,], type="class")
+>> >>
+>> >>    preds[i] <- Pred
+>> >>
+>> >> }
+>> >>
+>> >> Gracias como siempre,
+>> >> Manuel
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >> .
+>> >>
+>> >> --
+>> >> Dr Manuel Mendoza
+>> >> Department of Biogeography and Global Change
+>> >> National Museum of Natural Science (MNCN)
+>> >> Spanish Scientific Council (CSIC)
+>> >> C/ Serrano 115bis, 28006 MADRID
+>> >> Spain
+>> >>
+>> >> _______________________________________________
+>> >> R-help-es mailing list
+>> >> R-help-es en r-project.org
+>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>
+>> > --
+>> > Sent from my phone. Please excuse my brevity and misspelling.
+>>
+>>
+>> --
+>> Dr Manuel Mendoza
+>> Department of Biogeography and Global Change
+>> National Museum of Natural Science (MNCN)
+>> Spanish Scientific Council (CSIC)
+>> C/ Serrano 115bis, 28006 MADRID
+>> Spain
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+
+
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Feb 19 12:54:06 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 19 Feb 2019 12:54:06 +0100
+Subject: [R-es] Cambiar el formato de datos
+In-Reply-To: <CAPr+-cN6hfywLYbUx31G7rdnTZ4H0v5-uabTM_GnGwVknWezXQ@mail.gmail.com>
+References: <CAPr+-cN6hfywLYbUx31G7rdnTZ4H0v5-uabTM_GnGwVknWezXQ@mail.gmail.com>
+Message-ID: <CAOKbq8h+thx0CYc-HtXQP1ou98nLneR6aTgmmUutcsBCw6WW0Q@mail.gmail.com>
+
+Sí, tienes varias formas.
+
+Mira la función "gather()" del paquete "tidyr", es la que te va a resultar
+más fácil de usar.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El mar., 19 feb. 2019 a las 9:51, Antonio Rodriguez Andres (<
+antoniorodriguezandres70 en gmail.com>) escribió:
+
+> Estimados miembros de la comunidad de R
+>
+> Tengo el siguiente formato en un fichero csv que corresponde a datos de la
+> población para un conjunto de países y para un rango amplio de años.
+>
+> Pais         1960    1961  1962  1963
+> Albania    vvvvv    vvvv
+> Algeria     vvvvv      vvvv
+>
+> Me gustaría pasarlo a la siguiente forma
+> Pais       Año     Poblacion
+> Albania   1960    vvv
+> Albania    1961   vvvv
+> Albania    1962
+> Albania    1963
+> Algeria     1960
+> .....etc
+>
+> Alguna pista de como implementarlo en R. Muchas gracias de antemano
+>
+> Saludos
+>
+> Antonio
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Feb 19 12:55:34 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 19 Feb 2019 12:55:34 +0100
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+In-Reply-To: <20190219124153.Horde.XC2EDmADxbpq-_QxiOJoL6_@webmail.csic.es>
+References: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+ <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+ <20190218233900.Horde.z7_EDMlvvzjbbC6TErQfQGr@webmail.csic.es>
+ <CAHo_aETGfNhmXztKs9ij_cqAjfL0f3O1hVi5Xor_1u4yOpf7Kg@mail.gmail.com>
+ <20190219124153.Horde.XC2EDmADxbpq-_QxiOJoL6_@webmail.csic.es>
+Message-ID: <CAOKbq8gKJ3ySD9CoM8De2j8-3GHkBg-V1fba3odKOfZVp2PYog@mail.gmail.com>
+
+Es una forma de hacer el LOOV (Leave One Out Validation).
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El mar., 19 feb. 2019 a las 12:45, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+escribió:
+
+> Bueno, creo que no contesté tu pregunta. Con training <- data[-i, ]
+> crea una df llamada training, sin la muestra i, que después utiliza
+> para entrenar el algoritmo.
+>
+>
+> Quoting Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>:
+>
+> > Estimado Manuel Mendoza
+> >
+> > Con sus datos y a modo de curiosidad, ¿que pasa en  training <- data[-i,
+> ]?
+> >
+> > Javier Rubén Marcuzzi
+> >
+> > El lun., 18 feb. 2019 a las 19:39, Manuel Mendoza (<
+> mmendoza en mncn.csic.es>)
+> > escribió:
+> >
+> >> Gracias Jorge. No entiendo bien; la variable objetivo es ya factor. El
+> >> árbol me la predice bien, como factor, también. Es al ir construyendo
+> >> el vector que lo anota con un nº, según de cuál de las 4 categorías se
+> >> trate.
+> >>
+> >>
+> >> Quoting Jorge I Velez <jorgeivanvelez en gmail.com>:
+> >>
+> >> > Estimado Manuel,
+> >> >
+> >> > Debes definir ecsta como factor usando, por ejemplo,
+> >> >
+> >> > factor(ecsta, levels = ...)
+> >> >
+> >> > antes de ajustar el modelo.
+> >> >
+> >> > Dale una mirada a
+> >> >
+> >> > ?factor
+> >> >
+> >> > para má detalles.
+> >> >
+> >> > Saludos,
+> >> > Jorge.-
+> >> >
+> >> > El El lun, 18 de feb. de 2019 a las 1:03 p. m., Manuel Mendoza <
+> >> > mmendoza en mncn.csic.es> escribió:
+> >> >
+> >> >>
+> >> >> Buenas tardes, tengo un loop que hace un árbol de clasificación cada
+> >> >> vez y va creando un vector con una predicción que hace. Son 4
+> >> >> categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la
+> >> >> categoría predicha me añade al vector el nº (del 1 al 4) al que
+> >> >> corresponde esa categoría. Supongo que se puede hacer que añada la
+> >> >> categoría (la letra), pero no sé cómo.
+> >> >>
+> >> >> preds <- {}
+> >> >>
+> >> >> for (i in 1:nrow(data)) {
+> >> >>
+> >> >>    training <- data[-i, ]
+> >> >>
+> >> >>    fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+> >> >>
+> >> >>    Pred <- predict(fitrp,data[i,], type="class")
+> >> >>
+> >> >>    preds[i] <- Pred
+> >> >>
+> >> >> }
+> >> >>
+> >> >> Gracias como siempre,
+> >> >> Manuel
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >> .
+> >> >>
+> >> >> --
+> >> >> Dr Manuel Mendoza
+> >> >> Department of Biogeography and Global Change
+> >> >> National Museum of Natural Science (MNCN)
+> >> >> Spanish Scientific Council (CSIC)
+> >> >> C/ Serrano 115bis, 28006 MADRID
+> >> >> Spain
+> >> >>
+> >> >> _______________________________________________
+> >> >> R-help-es mailing list
+> >> >> R-help-es en r-project.org
+> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >> >>
+> >> > --
+> >> > Sent from my phone. Please excuse my brevity and misspelling.
+> >>
+> >>
+> >> --
+> >> Dr Manuel Mendoza
+> >> Department of Biogeography and Global Change
+> >> National Museum of Natural Science (MNCN)
+> >> Spanish Scientific Council (CSIC)
+> >> C/ Serrano 115bis, 28006 MADRID
+> >> Spain
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+>
+>
+> --
+> Dr Manuel Mendoza
+> Department of Biogeography and Global Change
+> National Museum of Natural Science (MNCN)
+> Spanish Scientific Council (CSIC)
+> C/ Serrano 115bis, 28006 MADRID
+> Spain
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Tue Feb 19 13:21:38 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Tue, 19 Feb 2019 13:21:38 +0100
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+In-Reply-To: <CAOKbq8gKJ3ySD9CoM8De2j8-3GHkBg-V1fba3odKOfZVp2PYog@mail.gmail.com>
+References: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+ <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+ <20190218233900.Horde.z7_EDMlvvzjbbC6TErQfQGr@webmail.csic.es>
+ <CAHo_aETGfNhmXztKs9ij_cqAjfL0f3O1hVi5Xor_1u4yOpf7Kg@mail.gmail.com>
+ <20190219124153.Horde.XC2EDmADxbpq-_QxiOJoL6_@webmail.csic.es>
+ <CAOKbq8gKJ3ySD9CoM8De2j8-3GHkBg-V1fba3odKOfZVp2PYog@mail.gmail.com>
+Message-ID: <20190219132138.Horde.qEW_zuBy9zte_gzQ85KoFJf@webmail.csic.es>
+
+Hola Carlos ¿sabes tú qué se puede hacer para que añada la categoría  
+en vez del nº al que corresponde?
+
+
+Quoting Carlos Ortega <cof en qualityexcellence.es>:
+
+> Es una forma de hacer el LOOV (Leave One Out Validation).
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mar., 19 feb. 2019 a las 12:45, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+> escribió:
+>
+>> Bueno, creo que no contesté tu pregunta. Con training <- data[-i, ]
+>> crea una df llamada training, sin la muestra i, que después utiliza
+>> para entrenar el algoritmo.
+>>
+>>
+>> Quoting Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>:
+>>
+>> > Estimado Manuel Mendoza
+>> >
+>> > Con sus datos y a modo de curiosidad, ¿que pasa en  training <- data[-i,
+>> ]?
+>> >
+>> > Javier Rubén Marcuzzi
+>> >
+>> > El lun., 18 feb. 2019 a las 19:39, Manuel Mendoza (<
+>> mmendoza en mncn.csic.es>)
+>> > escribió:
+>> >
+>> >> Gracias Jorge. No entiendo bien; la variable objetivo es ya factor. El
+>> >> árbol me la predice bien, como factor, también. Es al ir construyendo
+>> >> el vector que lo anota con un nº, según de cuál de las 4 categorías se
+>> >> trate.
+>> >>
+>> >>
+>> >> Quoting Jorge I Velez <jorgeivanvelez en gmail.com>:
+>> >>
+>> >> > Estimado Manuel,
+>> >> >
+>> >> > Debes definir ecsta como factor usando, por ejemplo,
+>> >> >
+>> >> > factor(ecsta, levels = ...)
+>> >> >
+>> >> > antes de ajustar el modelo.
+>> >> >
+>> >> > Dale una mirada a
+>> >> >
+>> >> > ?factor
+>> >> >
+>> >> > para má detalles.
+>> >> >
+>> >> > Saludos,
+>> >> > Jorge.-
+>> >> >
+>> >> > El El lun, 18 de feb. de 2019 a las 1:03 p. m., Manuel Mendoza <
+>> >> > mmendoza en mncn.csic.es> escribió:
+>> >> >
+>> >> >>
+>> >> >> Buenas tardes, tengo un loop que hace un árbol de clasificación cada
+>> >> >> vez y va creando un vector con una predicción que hace. Son 4
+>> >> >> categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la
+>> >> >> categoría predicha me añade al vector el nº (del 1 al 4) al que
+>> >> >> corresponde esa categoría. Supongo que se puede hacer que añada la
+>> >> >> categoría (la letra), pero no sé cómo.
+>> >> >>
+>> >> >> preds <- {}
+>> >> >>
+>> >> >> for (i in 1:nrow(data)) {
+>> >> >>
+>> >> >>    training <- data[-i, ]
+>> >> >>
+>> >> >>    fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+>> >> >>
+>> >> >>    Pred <- predict(fitrp,data[i,], type="class")
+>> >> >>
+>> >> >>    preds[i] <- Pred
+>> >> >>
+>> >> >> }
+>> >> >>
+>> >> >> Gracias como siempre,
+>> >> >> Manuel
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >>
+>> >> >> .
+>> >> >>
+>> >> >> --
+>> >> >> Dr Manuel Mendoza
+>> >> >> Department of Biogeography and Global Change
+>> >> >> National Museum of Natural Science (MNCN)
+>> >> >> Spanish Scientific Council (CSIC)
+>> >> >> C/ Serrano 115bis, 28006 MADRID
+>> >> >> Spain
+>> >> >>
+>> >> >> _______________________________________________
+>> >> >> R-help-es mailing list
+>> >> >> R-help-es en r-project.org
+>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >> >>
+>> >> > --
+>> >> > Sent from my phone. Please excuse my brevity and misspelling.
+>> >>
+>> >>
+>> >> --
+>> >> Dr Manuel Mendoza
+>> >> Department of Biogeography and Global Change
+>> >> National Museum of Natural Science (MNCN)
+>> >> Spanish Scientific Council (CSIC)
+>> >> C/ Serrano 115bis, 28006 MADRID
+>> >> Spain
+>> >>
+>> >> _______________________________________________
+>> >> R-help-es mailing list
+>> >> R-help-es en r-project.org
+>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>
+>>
+>>
+>> --
+>> Dr Manuel Mendoza
+>> Department of Biogeography and Global Change
+>> National Museum of Natural Science (MNCN)
+>> Spanish Scientific Council (CSIC)
+>> C/ Serrano 115bis, 28006 MADRID
+>> Spain
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+
+
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From @nton|orodr|guez@ndre@70 @end|ng |rom gm@||@com  Tue Feb 19 13:31:00 2019
+From: @nton|orodr|guez@ndre@70 @end|ng |rom gm@||@com (Antonio Rodriguez Andres)
+Date: Tue, 19 Feb 2019 13:31:00 +0100
+Subject: [R-es] Cambiar el formato de datos
+In-Reply-To: <CAOKbq8h+thx0CYc-HtXQP1ou98nLneR6aTgmmUutcsBCw6WW0Q@mail.gmail.com>
+References: <CAPr+-cN6hfywLYbUx31G7rdnTZ4H0v5-uabTM_GnGwVknWezXQ@mail.gmail.com>
+ <CAOKbq8h+thx0CYc-HtXQP1ou98nLneR6aTgmmUutcsBCw6WW0Q@mail.gmail.com>
+Message-ID: <CAPr+-cMFJq_S12ed2TEST6L+pvOuXEXBKvzzwJDykR0HZj+vgQ@mail.gmail.com>
+
+> gather(pobla, key = year, value = totpop, year60:year63)
+
+    Country   year   totpop
+1  Afghanistan year60  8996351
+2      Albania year60  1608800
+3      Algeria year60 11124888
+4      Andorra year60    13411
+
+Gracias Carlos
+
+Antonio
+
+On Tue, 19 Feb 2019 at 12:54, Carlos Ortega <cof en qualityexcellence.es>
+wrote:
+
+> Sí, tienes varias formas.
+>
+> Mira la función "gather()" del paquete "tidyr", es la que te va a resultar
+> más fácil de usar.
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mar., 19 feb. 2019 a las 9:51, Antonio Rodriguez Andres (<
+> antoniorodriguezandres70 en gmail.com>) escribió:
+>
+>> Estimados miembros de la comunidad de R
+>>
+>> Tengo el siguiente formato en un fichero csv que corresponde a datos de la
+>> población para un conjunto de países y para un rango amplio de años.
+>>
+>> Pais         1960    1961  1962  1963
+>> Albania    vvvvv    vvvv
+>> Algeria     vvvvv      vvvv
+>>
+>> Me gustaría pasarlo a la siguiente forma
+>> Pais       Año     Poblacion
+>> Albania   1960    vvv
+>> Albania    1961   vvvv
+>> Albania    1962
+>> Albania    1963
+>> Algeria     1960
+>> .....etc
+>>
+>> Alguna pista de como implementarlo en R. Muchas gracias de antemano
+>>
+>> Saludos
+>>
+>> Antonio
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+
+Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+SAGE journal)
+
+http://elr.sagepub.com/
+
+Member, Editorial Committee, African Journal of Economic and Management
+Studies
+
+http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+
+https://www.researchgate.net/profile/Antonio_Andres (Research Gate profile)
+
+	[[alternative HTML version deleted]]
+
+
+From @nton|orodr|guez@ndre@70 @end|ng |rom gm@||@com  Tue Feb 19 13:46:50 2019
+From: @nton|orodr|guez@ndre@70 @end|ng |rom gm@||@com (Antonio Rodriguez Andres)
+Date: Tue, 19 Feb 2019 13:46:50 +0100
+Subject: [R-es] Cambiar el formato de datos
+In-Reply-To: <CAPr+-cMFJq_S12ed2TEST6L+pvOuXEXBKvzzwJDykR0HZj+vgQ@mail.gmail.com>
+References: <CAPr+-cN6hfywLYbUx31G7rdnTZ4H0v5-uabTM_GnGwVknWezXQ@mail.gmail.com>
+ <CAOKbq8h+thx0CYc-HtXQP1ou98nLneR6aTgmmUutcsBCw6WW0Q@mail.gmail.com>
+ <CAPr+-cMFJq_S12ed2TEST6L+pvOuXEXBKvzzwJDykR0HZj+vgQ@mail.gmail.com>
+Message-ID: <CAPr+-cP=w7+iCRF7BvaAgb7tyAH9vNyDyE4ovS0UNCabMG17fA@mail.gmail.com>
+
+Carlos, para poner despues del gather, las observaciones e Afganistan para
+todos los años consecutivos, alguna pista?
+
+Afghanistan year60  8996351
+2      Albania year60  1608800
+3      Algeria year60 11124888
+4      Andorra year60    13411
+5       Angola year60  5643182
+6  Afghanistan year61  9166764
+7      Albania year61  1659800
+
+On Tue, 19 Feb 2019 at 13:31, Antonio Rodriguez Andres <
+antoniorodriguezandres70 en gmail.com> wrote:
+
+> > gather(pobla, key = year, value = totpop, year60:year63)
+>
+>     Country   year   totpop
+> 1  Afghanistan year60  8996351
+> 2      Albania year60  1608800
+> 3      Algeria year60 11124888
+> 4      Andorra year60    13411
+>
+> Gracias Carlos
+>
+> Antonio
+>
+> On Tue, 19 Feb 2019 at 12:54, Carlos Ortega <cof en qualityexcellence.es>
+> wrote:
+>
+>> Sí, tienes varias formas.
+>>
+>> Mira la función "gather()" del paquete "tidyr", es la que te va a
+>> resultar más fácil de usar.
+>>
+>> Gracias,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>> El mar., 19 feb. 2019 a las 9:51, Antonio Rodriguez Andres (<
+>> antoniorodriguezandres70 en gmail.com>) escribió:
+>>
+>>> Estimados miembros de la comunidad de R
+>>>
+>>> Tengo el siguiente formato en un fichero csv que corresponde a datos de
+>>> la
+>>> población para un conjunto de países y para un rango amplio de años.
+>>>
+>>> Pais         1960    1961  1962  1963
+>>> Albania    vvvvv    vvvv
+>>> Algeria     vvvvv      vvvv
+>>>
+>>> Me gustaría pasarlo a la siguiente forma
+>>> Pais       Año     Poblacion
+>>> Albania   1960    vvv
+>>> Albania    1961   vvvv
+>>> Albania    1962
+>>> Albania    1963
+>>> Algeria     1960
+>>> .....etc
+>>>
+>>> Alguna pista de como implementarlo en R. Muchas gracias de antemano
+>>>
+>>> Saludos
+>>>
+>>> Antonio
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>
+>
+> --
+>
+> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+> SAGE journal)
+>
+> http://elr.sagepub.com/
+>
+> Member, Editorial Committee, African Journal of Economic and Management
+> Studies
+>
+>
+> http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+>
+> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+> profile)
+>
+>
+>
+
+-- 
+
+Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+SAGE journal)
+
+http://elr.sagepub.com/
+
+Member, Editorial Committee, African Journal of Economic and Management
+Studies
+
+http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+
+https://www.researchgate.net/profile/Antonio_Andres (Research Gate profile)
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Feb 19 14:15:01 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 19 Feb 2019 14:15:01 +0100
+Subject: [R-es] =?utf-8?q?crear_un_vector_con_las_categor=C3=ADas?=
+In-Reply-To: <20190219132138.Horde.qEW_zuBy9zte_gzQ85KoFJf@webmail.csic.es>
+References: <20190218190330.Horde.5ywdnsBumZJYE8MMoK7aaDh@webmail.csic.es>
+ <CAKL8G3E2+4t8KQkU4+ATFgvZ4ySfd-df=OUDWEYQ+JvEXPTO7A@mail.gmail.com>
+ <20190218233900.Horde.z7_EDMlvvzjbbC6TErQfQGr@webmail.csic.es>
+ <CAHo_aETGfNhmXztKs9ij_cqAjfL0f3O1hVi5Xor_1u4yOpf7Kg@mail.gmail.com>
+ <20190219124153.Horde.XC2EDmADxbpq-_QxiOJoL6_@webmail.csic.es>
+ <CAOKbq8gKJ3ySD9CoM8De2j8-3GHkBg-V1fba3odKOfZVp2PYog@mail.gmail.com>
+ <20190219132138.Horde.qEW_zuBy9zte_gzQ85KoFJf@webmail.csic.es>
+Message-ID: <CAOKbq8jg6V54Zzu57DqH-TPqfVjgg5MD6kkuxZdi33qHx9LvqA@mail.gmail.com>
+
+Ah, me acabo de dar cuenta que ya habías respondido a lo del LOOV...
+Sí, para guardar la categoría simplemente tienes que guardar la predicción
+como "character()".
+
+Como ejemplo:
+
+#--------------------
+library(rpart)
+data <- iris
+
+preds <- {}
+
+for (i in 1:nrow(data)) {
+  print(i)
+  training <- data[-i, ]
+
+  fitrp <- rpart(Species ~ .,data=training, cp=0)
+
+  Pred <- predict(fitrp,data[i,], type="class")
+
+  preds[i] <- *as.character*(Pred)
+
+}
+#-------------------
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El mar., 19 feb. 2019 a las 13:21, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+escribió:
+
+> Hola Carlos ¿sabes tú qué se puede hacer para que añada la categoría
+> en vez del nº al que corresponde?
+>
+>
+> Quoting Carlos Ortega <cof en qualityexcellence.es>:
+>
+> > Es una forma de hacer el LOOV (Leave One Out Validation).
+> >
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+> > El mar., 19 feb. 2019 a las 12:45, Manuel Mendoza (<
+> mmendoza en mncn.csic.es>)
+> > escribió:
+> >
+> >> Bueno, creo que no contesté tu pregunta. Con training <- data[-i, ]
+> >> crea una df llamada training, sin la muestra i, que después utiliza
+> >> para entrenar el algoritmo.
+> >>
+> >>
+> >> Quoting Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>:
+> >>
+> >> > Estimado Manuel Mendoza
+> >> >
+> >> > Con sus datos y a modo de curiosidad, ¿que pasa en  training <-
+> data[-i,
+> >> ]?
+> >> >
+> >> > Javier Rubén Marcuzzi
+> >> >
+> >> > El lun., 18 feb. 2019 a las 19:39, Manuel Mendoza (<
+> >> mmendoza en mncn.csic.es>)
+> >> > escribió:
+> >> >
+> >> >> Gracias Jorge. No entiendo bien; la variable objetivo es ya factor.
+> El
+> >> >> árbol me la predice bien, como factor, también. Es al ir construyendo
+> >> >> el vector que lo anota con un nº, según de cuál de las 4 categorías
+> se
+> >> >> trate.
+> >> >>
+> >> >>
+> >> >> Quoting Jorge I Velez <jorgeivanvelez en gmail.com>:
+> >> >>
+> >> >> > Estimado Manuel,
+> >> >> >
+> >> >> > Debes definir ecsta como factor usando, por ejemplo,
+> >> >> >
+> >> >> > factor(ecsta, levels = ...)
+> >> >> >
+> >> >> > antes de ajustar el modelo.
+> >> >> >
+> >> >> > Dale una mirada a
+> >> >> >
+> >> >> > ?factor
+> >> >> >
+> >> >> > para má detalles.
+> >> >> >
+> >> >> > Saludos,
+> >> >> > Jorge.-
+> >> >> >
+> >> >> > El El lun, 18 de feb. de 2019 a las 1:03 p. m., Manuel Mendoza <
+> >> >> > mmendoza en mncn.csic.es> escribió:
+> >> >> >
+> >> >> >>
+> >> >> >> Buenas tardes, tengo un loop que hace un árbol de clasificación
+> cada
+> >> >> >> vez y va creando un vector con una predicción que hace. Son 4
+> >> >> >> categorías (pongamos a, b, c y d), pero en vez de ir añadiendo la
+> >> >> >> categoría predicha me añade al vector el nº (del 1 al 4) al que
+> >> >> >> corresponde esa categoría. Supongo que se puede hacer que añada la
+> >> >> >> categoría (la letra), pero no sé cómo.
+> >> >> >>
+> >> >> >> preds <- {}
+> >> >> >>
+> >> >> >> for (i in 1:nrow(data)) {
+> >> >> >>
+> >> >> >>    training <- data[-i, ]
+> >> >> >>
+> >> >> >>    fitrp <- rpart(ecsta ~ .,data=training, cp=0)
+> >> >> >>
+> >> >> >>    Pred <- predict(fitrp,data[i,], type="class")
+> >> >> >>
+> >> >> >>    preds[i] <- Pred
+> >> >> >>
+> >> >> >> }
+> >> >> >>
+> >> >> >> Gracias como siempre,
+> >> >> >> Manuel
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >> .
+> >> >> >>
+> >> >> >> --
+> >> >> >> Dr Manuel Mendoza
+> >> >> >> Department of Biogeography and Global Change
+> >> >> >> National Museum of Natural Science (MNCN)
+> >> >> >> Spanish Scientific Council (CSIC)
+> >> >> >> C/ Serrano 115bis, 28006 MADRID
+> >> >> >> Spain
+> >> >> >>
+> >> >> >> _______________________________________________
+> >> >> >> R-help-es mailing list
+> >> >> >> R-help-es en r-project.org
+> >> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >> >> >>
+> >> >> > --
+> >> >> > Sent from my phone. Please excuse my brevity and misspelling.
+> >> >>
+> >> >>
+> >> >> --
+> >> >> Dr Manuel Mendoza
+> >> >> Department of Biogeography and Global Change
+> >> >> National Museum of Natural Science (MNCN)
+> >> >> Spanish Scientific Council (CSIC)
+> >> >> C/ Serrano 115bis, 28006 MADRID
+> >> >> Spain
+> >> >>
+> >> >> _______________________________________________
+> >> >> R-help-es mailing list
+> >> >> R-help-es en r-project.org
+> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >> >>
+> >>
+> >>
+> >> --
+> >> Dr Manuel Mendoza
+> >> Department of Biogeography and Global Change
+> >> National Museum of Natural Science (MNCN)
+> >> Spanish Scientific Council (CSIC)
+> >> C/ Serrano 115bis, 28006 MADRID
+> >> Spain
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+> >
+> > --
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+>
+>
+> --
+> Dr Manuel Mendoza
+> Department of Biogeography and Global Change
+> National Museum of Natural Science (MNCN)
+> Spanish Scientific Council (CSIC)
+> C/ Serrano 115bis, 28006 MADRID
+> Spain
+>
+>
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Feb 19 14:17:20 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 19 Feb 2019 14:17:20 +0100
+Subject: [R-es] Cambiar el formato de datos
+In-Reply-To: <CAPr+-cP=w7+iCRF7BvaAgb7tyAH9vNyDyE4ovS0UNCabMG17fA@mail.gmail.com>
+References: <CAPr+-cN6hfywLYbUx31G7rdnTZ4H0v5-uabTM_GnGwVknWezXQ@mail.gmail.com>
+ <CAOKbq8h+thx0CYc-HtXQP1ou98nLneR6aTgmmUutcsBCw6WW0Q@mail.gmail.com>
+ <CAPr+-cMFJq_S12ed2TEST6L+pvOuXEXBKvzzwJDykR0HZj+vgQ@mail.gmail.com>
+ <CAPr+-cP=w7+iCRF7BvaAgb7tyAH9vNyDyE4ovS0UNCabMG17fA@mail.gmail.com>
+Message-ID: <CAOKbq8hRYX1zPmaj3zHwAG9U+Wxv-mqsen-AO3ibSyqudEDT4g@mail.gmail.com>
+
+Después del "gather()" puedes hacer un "arrange()" que es una ordenación. Y
+dentro de "arrange()" le indicas la variable por la que ordenas (no hacen
+falta comillas)...
+Lo ordenará alfabéticamente.
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El mar., 19 feb. 2019 a las 13:47, Antonio Rodriguez Andres (<
+antoniorodriguezandres70 en gmail.com>) escribió:
+
+> Carlos, para poner despues del gather, las observaciones e Afganistan para
+> todos los años consecutivos, alguna pista?
+>
+> Afghanistan year60  8996351
+> 2      Albania year60  1608800
+> 3      Algeria year60 11124888
+> 4      Andorra year60    13411
+> 5       Angola year60  5643182
+> 6  Afghanistan year61  9166764
+> 7      Albania year61  1659800
+>
+> On Tue, 19 Feb 2019 at 13:31, Antonio Rodriguez Andres <
+> antoniorodriguezandres70 en gmail.com> wrote:
+>
+>> > gather(pobla, key = year, value = totpop, year60:year63)
+>>
+>>     Country   year   totpop
+>> 1  Afghanistan year60  8996351
+>> 2      Albania year60  1608800
+>> 3      Algeria year60 11124888
+>> 4      Andorra year60    13411
+>>
+>> Gracias Carlos
+>>
+>> Antonio
+>>
+>> On Tue, 19 Feb 2019 at 12:54, Carlos Ortega <cof en qualityexcellence.es>
+>> wrote:
+>>
+>>> Sí, tienes varias formas.
+>>>
+>>> Mira la función "gather()" del paquete "tidyr", es la que te va a
+>>> resultar más fácil de usar.
+>>>
+>>> Gracias,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>> El mar., 19 feb. 2019 a las 9:51, Antonio Rodriguez Andres (<
+>>> antoniorodriguezandres70 en gmail.com>) escribió:
+>>>
+>>>> Estimados miembros de la comunidad de R
+>>>>
+>>>> Tengo el siguiente formato en un fichero csv que corresponde a datos de
+>>>> la
+>>>> población para un conjunto de países y para un rango amplio de años.
+>>>>
+>>>> Pais         1960    1961  1962  1963
+>>>> Albania    vvvvv    vvvv
+>>>> Algeria     vvvvv      vvvv
+>>>>
+>>>> Me gustaría pasarlo a la siguiente forma
+>>>> Pais       Año     Poblacion
+>>>> Albania   1960    vvv
+>>>> Albania    1961   vvvv
+>>>> Albania    1962
+>>>> Albania    1963
+>>>> Algeria     1960
+>>>> .....etc
+>>>>
+>>>> Alguna pista de como implementarlo en R. Muchas gracias de antemano
+>>>>
+>>>> Saludos
+>>>>
+>>>> Antonio
+>>>>
+>>>>         [[alternative HTML version deleted]]
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>>>
+>>> --
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>
+>>
+>> --
+>>
+>> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+>> SAGE journal)
+>>
+>> http://elr.sagepub.com/
+>>
+>> Member, Editorial Committee, African Journal of Economic and Management
+>> Studies
+>>
+>>
+>> http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+>>
+>> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+>> profile)
+>>
+>>
+>>
+>
+> --
+>
+> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+> SAGE journal)
+>
+> http://elr.sagepub.com/
+>
+> Member, Editorial Committee, African Journal of Economic and Management
+> Studies
+>
+>
+> http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+>
+> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+> profile)
+>
+>
+>
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From @nton|orodr|guez@ndre@70 @end|ng |rom gm@||@com  Tue Feb 19 15:16:02 2019
+From: @nton|orodr|guez@ndre@70 @end|ng |rom gm@||@com (Antonio Rodriguez Andres)
+Date: Tue, 19 Feb 2019 15:16:02 +0100
+Subject: [R-es] Cambiar el formato de datos
+In-Reply-To: <CAOKbq8hRYX1zPmaj3zHwAG9U+Wxv-mqsen-AO3ibSyqudEDT4g@mail.gmail.com>
+References: <CAPr+-cN6hfywLYbUx31G7rdnTZ4H0v5-uabTM_GnGwVknWezXQ@mail.gmail.com>
+ <CAOKbq8h+thx0CYc-HtXQP1ou98nLneR6aTgmmUutcsBCw6WW0Q@mail.gmail.com>
+ <CAPr+-cMFJq_S12ed2TEST6L+pvOuXEXBKvzzwJDykR0HZj+vgQ@mail.gmail.com>
+ <CAPr+-cP=w7+iCRF7BvaAgb7tyAH9vNyDyE4ovS0UNCabMG17fA@mail.gmail.com>
+ <CAOKbq8hRYX1zPmaj3zHwAG9U+Wxv-mqsen-AO3ibSyqudEDT4g@mail.gmail.com>
+Message-ID: <CAPr+-cMsW1k--EQGkhN1j5FA6cYXDb14PAgw5PLfkbjxJzwbSA@mail.gmail.com>
+
+ Gracias, ya lo tengo
+
+gather(pobla, key = year, value = totpop, year60:year63) %>%
++   arrange(Country)
+       Country   year   totpop
+1  Afghanistan year60  8996351
+2  Afghanistan year61  9166764
+3  Afghanistan year62  9345868
+4  Afghanistan year63  9533954
+
+On Tue, 19 Feb 2019 at 14:17, Carlos Ortega <cof en qualityexcellence.es>
+wrote:
+
+> Después del "gather()" puedes hacer un "arrange()" que es una ordenación.
+> Y dentro de "arrange()" le indicas la variable por la que ordenas (no hacen
+> falta comillas)...
+> Lo ordenará alfabéticamente.
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mar., 19 feb. 2019 a las 13:47, Antonio Rodriguez Andres (<
+> antoniorodriguezandres70 en gmail.com>) escribió:
+>
+>> Carlos, para poner despues del gather, las observaciones e Afganistan
+>> para todos los años consecutivos, alguna pista?
+>>
+>> Afghanistan year60  8996351
+>> 2      Albania year60  1608800
+>> 3      Algeria year60 11124888
+>> 4      Andorra year60    13411
+>> 5       Angola year60  5643182
+>> 6  Afghanistan year61  9166764
+>> 7      Albania year61  1659800
+>>
+>> On Tue, 19 Feb 2019 at 13:31, Antonio Rodriguez Andres <
+>> antoniorodriguezandres70 en gmail.com> wrote:
+>>
+>>> > gather(pobla, key = year, value = totpop, year60:year63)
+>>>
+>>>     Country   year   totpop
+>>> 1  Afghanistan year60  8996351
+>>> 2      Albania year60  1608800
+>>> 3      Algeria year60 11124888
+>>> 4      Andorra year60    13411
+>>>
+>>> Gracias Carlos
+>>>
+>>> Antonio
+>>>
+>>> On Tue, 19 Feb 2019 at 12:54, Carlos Ortega <cof en qualityexcellence.es>
+>>> wrote:
+>>>
+>>>> Sí, tienes varias formas.
+>>>>
+>>>> Mira la función "gather()" del paquete "tidyr", es la que te va a
+>>>> resultar más fácil de usar.
+>>>>
+>>>> Gracias,
+>>>> Carlos Ortega
+>>>> www.qualityexcellence.es
+>>>>
+>>>> El mar., 19 feb. 2019 a las 9:51, Antonio Rodriguez Andres (<
+>>>> antoniorodriguezandres70 en gmail.com>) escribió:
+>>>>
+>>>>> Estimados miembros de la comunidad de R
+>>>>>
+>>>>> Tengo el siguiente formato en un fichero csv que corresponde a datos
+>>>>> de la
+>>>>> población para un conjunto de países y para un rango amplio de años.
+>>>>>
+>>>>> Pais         1960    1961  1962  1963
+>>>>> Albania    vvvvv    vvvv
+>>>>> Algeria     vvvvv      vvvv
+>>>>>
+>>>>> Me gustaría pasarlo a la siguiente forma
+>>>>> Pais       Año     Poblacion
+>>>>> Albania   1960    vvv
+>>>>> Albania    1961   vvvv
+>>>>> Albania    1962
+>>>>> Albania    1963
+>>>>> Algeria     1960
+>>>>> .....etc
+>>>>>
+>>>>> Alguna pista de como implementarlo en R. Muchas gracias de antemano
+>>>>>
+>>>>> Saludos
+>>>>>
+>>>>> Antonio
+>>>>>
+>>>>>         [[alternative HTML version deleted]]
+>>>>>
+>>>>> _______________________________________________
+>>>>> R-help-es mailing list
+>>>>> R-help-es en r-project.org
+>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>
+>>>>
+>>>>
+>>>> --
+>>>> Saludos,
+>>>> Carlos Ortega
+>>>> www.qualityexcellence.es
+>>>>
+>>>
+>>>
+>>> --
+>>>
+>>> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+>>> SAGE journal)
+>>>
+>>> http://elr.sagepub.com/
+>>>
+>>> Member, Editorial Committee, African Journal of Economic and Management
+>>> Studies
+>>>
+>>>
+>>> http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+>>>
+>>> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+>>> profile)
+>>>
+>>>
+>>>
+>>
+>> --
+>>
+>> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+>> SAGE journal)
+>>
+>> http://elr.sagepub.com/
+>>
+>> Member, Editorial Committee, African Journal of Economic and Management
+>> Studies
+>>
+>>
+>> http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+>>
+>> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+>> profile)
+>>
+>>
+>>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+
+Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+SAGE journal)
+
+http://elr.sagepub.com/
+
+Member, Editorial Committee, African Journal of Economic and Management
+Studies
+
+http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+
+https://www.researchgate.net/profile/Antonio_Andres (Research Gate profile)
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Feb 19 15:47:57 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 19 Feb 2019 15:47:57 +0100
+Subject: [R-es] Cambiar el formato de datos
+In-Reply-To: <CAPr+-cMsW1k--EQGkhN1j5FA6cYXDb14PAgw5PLfkbjxJzwbSA@mail.gmail.com>
+References: <CAPr+-cN6hfywLYbUx31G7rdnTZ4H0v5-uabTM_GnGwVknWezXQ@mail.gmail.com>
+ <CAOKbq8h+thx0CYc-HtXQP1ou98nLneR6aTgmmUutcsBCw6WW0Q@mail.gmail.com>
+ <CAPr+-cMFJq_S12ed2TEST6L+pvOuXEXBKvzzwJDykR0HZj+vgQ@mail.gmail.com>
+ <CAPr+-cP=w7+iCRF7BvaAgb7tyAH9vNyDyE4ovS0UNCabMG17fA@mail.gmail.com>
+ <CAOKbq8hRYX1zPmaj3zHwAG9U+Wxv-mqsen-AO3ibSyqudEDT4g@mail.gmail.com>
+ <CAPr+-cMsW1k--EQGkhN1j5FA6cYXDb14PAgw5PLfkbjxJzwbSA@mail.gmail.com>
+Message-ID: <CAOKbq8icMXRgP5-=Thk=YDKb34Whfdbeg5MgiMt4zFVRS_3YDg@mail.gmail.com>
+
+Me alegro!
+
+El mar., 19 feb. 2019 a las 15:16, Antonio Rodriguez Andres (<
+antoniorodriguezandres70 en gmail.com>) escribió:
+
+>  Gracias, ya lo tengo
+>
+> gather(pobla, key = year, value = totpop, year60:year63) %>%
+> +   arrange(Country)
+>        Country   year   totpop
+> 1  Afghanistan year60  8996351
+> 2  Afghanistan year61  9166764
+> 3  Afghanistan year62  9345868
+> 4  Afghanistan year63  9533954
+>
+> On Tue, 19 Feb 2019 at 14:17, Carlos Ortega <cof en qualityexcellence.es>
+> wrote:
+>
+>> Después del "gather()" puedes hacer un "arrange()" que es una ordenación.
+>> Y dentro de "arrange()" le indicas la variable por la que ordenas (no hacen
+>> falta comillas)...
+>> Lo ordenará alfabéticamente.
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>> El mar., 19 feb. 2019 a las 13:47, Antonio Rodriguez Andres (<
+>> antoniorodriguezandres70 en gmail.com>) escribió:
+>>
+>>> Carlos, para poner despues del gather, las observaciones e Afganistan
+>>> para todos los años consecutivos, alguna pista?
+>>>
+>>> Afghanistan year60  8996351
+>>> 2      Albania year60  1608800
+>>> 3      Algeria year60 11124888
+>>> 4      Andorra year60    13411
+>>> 5       Angola year60  5643182
+>>> 6  Afghanistan year61  9166764
+>>> 7      Albania year61  1659800
+>>>
+>>> On Tue, 19 Feb 2019 at 13:31, Antonio Rodriguez Andres <
+>>> antoniorodriguezandres70 en gmail.com> wrote:
+>>>
+>>>> > gather(pobla, key = year, value = totpop, year60:year63)
+>>>>
+>>>>     Country   year   totpop
+>>>> 1  Afghanistan year60  8996351
+>>>> 2      Albania year60  1608800
+>>>> 3      Algeria year60 11124888
+>>>> 4      Andorra year60    13411
+>>>>
+>>>> Gracias Carlos
+>>>>
+>>>> Antonio
+>>>>
+>>>> On Tue, 19 Feb 2019 at 12:54, Carlos Ortega <cof en qualityexcellence.es>
+>>>> wrote:
+>>>>
+>>>>> Sí, tienes varias formas.
+>>>>>
+>>>>> Mira la función "gather()" del paquete "tidyr", es la que te va a
+>>>>> resultar más fácil de usar.
+>>>>>
+>>>>> Gracias,
+>>>>> Carlos Ortega
+>>>>> www.qualityexcellence.es
+>>>>>
+>>>>> El mar., 19 feb. 2019 a las 9:51, Antonio Rodriguez Andres (<
+>>>>> antoniorodriguezandres70 en gmail.com>) escribió:
+>>>>>
+>>>>>> Estimados miembros de la comunidad de R
+>>>>>>
+>>>>>> Tengo el siguiente formato en un fichero csv que corresponde a datos
+>>>>>> de la
+>>>>>> población para un conjunto de países y para un rango amplio de años.
+>>>>>>
+>>>>>> Pais         1960    1961  1962  1963
+>>>>>> Albania    vvvvv    vvvv
+>>>>>> Algeria     vvvvv      vvvv
+>>>>>>
+>>>>>> Me gustaría pasarlo a la siguiente forma
+>>>>>> Pais       Año     Poblacion
+>>>>>> Albania   1960    vvv
+>>>>>> Albania    1961   vvvv
+>>>>>> Albania    1962
+>>>>>> Albania    1963
+>>>>>> Algeria     1960
+>>>>>> .....etc
+>>>>>>
+>>>>>> Alguna pista de como implementarlo en R. Muchas gracias de antemano
+>>>>>>
+>>>>>> Saludos
+>>>>>>
+>>>>>> Antonio
+>>>>>>
+>>>>>>         [[alternative HTML version deleted]]
+>>>>>>
+>>>>>> _______________________________________________
+>>>>>> R-help-es mailing list
+>>>>>> R-help-es en r-project.org
+>>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>>
+>>>>>
+>>>>>
+>>>>> --
+>>>>> Saludos,
+>>>>> Carlos Ortega
+>>>>> www.qualityexcellence.es
+>>>>>
+>>>>
+>>>>
+>>>> --
+>>>>
+>>>> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+>>>> SAGE journal)
+>>>>
+>>>> http://elr.sagepub.com/
+>>>>
+>>>> Member, Editorial Committee, African Journal of Economic and Management
+>>>> Studies
+>>>>
+>>>>
+>>>> http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+>>>>
+>>>> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+>>>> profile)
+>>>>
+>>>>
+>>>>
+>>>
+>>> --
+>>>
+>>> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+>>> SAGE journal)
+>>>
+>>> http://elr.sagepub.com/
+>>>
+>>> Member, Editorial Committee, African Journal of Economic and Management
+>>> Studies
+>>>
+>>>
+>>> http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+>>>
+>>> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+>>> profile)
+>>>
+>>>
+>>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>
+>
+> --
+>
+> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+> SAGE journal)
+>
+> http://elr.sagepub.com/
+>
+> Member, Editorial Committee, African Journal of Economic and Management
+> Studies
+>
+>
+> http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+>
+> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+> profile)
+>
+>
+>
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Tue Feb 19 21:14:42 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Tue, 19 Feb 2019 21:14:42 +0100
+Subject: [R-es] =?utf-8?q?Donde_puedo_encontrar_la_explicaci=C3=B3n_del_c?=
+	=?utf-8?q?ambio_en_el_calculo_de_hclust=28=2E=2E=2E=27ward=2ED2=27?=
+	=?utf-8?b?KT8=?=
+Message-ID: <CA+8ueyZukRERo+heRR7i2uywHbipiz29rkRkp+BY1FrX33rzRA@mail.gmail.com>
+
+Sabrán disculparme; no solo no encontré cómo calcular como lo hacía R
+antes, si no que no encuentro una explicación de autoridad.
+Si encontré la mención al cambio... además del propio cambio. Pero, digo,
+habrá algún sitio o foro en el que un montón de matemáticos que saben una
+barbaridad y hablan de tal manera que yo no entiendo, diran algo así como
+"no, che, eso no está bien así, hay que hacerlo asá" y otro señor le
+contestará "mira vos que tenés razón; vamos a cambiar la implementación..."
+
+¿Eso en donde está?
+
+Disculparán la letrología y blablandeces. Pretenciones didácticas
+
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Feb 19 21:28:40 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 19 Feb 2019 17:28:40 -0300
+Subject: [R-es] 
+	=?utf-8?q?Donde_puedo_encontrar_la_explicaci=C3=B3n_del_c?=
+	=?utf-8?q?ambio_en_el_calculo_de_hclust=28=2E=2E=2E=27ward=2ED2=27?=
+	=?utf-8?b?KT8=?=
+In-Reply-To: <CA+8ueyZukRERo+heRR7i2uywHbipiz29rkRkp+BY1FrX33rzRA@mail.gmail.com>
+References: <CA+8ueyZukRERo+heRR7i2uywHbipiz29rkRkp+BY1FrX33rzRA@mail.gmail.com>
+Message-ID: <CAHo_aETC8dynm4XEJrwis8i62sBzGTjmvUczwdTXKMwB43dpiw@mail.gmail.com>
+
+Estimado Juan Abasolo
+
+No conozco el cambio que menciona pero supe buscar como se hacían ciertas
+cosas con R, y la verdad que esto fue una de las mejores inversiones que
+realicé con mi tiempo, porque la librería en cuestión dejó de ser
+mantenida, pero gracias a investigar el código pude obtener lo que yo
+necesitaba y luego mejorarlo según mis necesidades.
+
+Para su caso sería leer desde
+https://cran.r-project.org/web/packages/fastcluster/fastcluster.pdf
+
+Si es justo este su requerimiento busque en
+https://cran.r-project.org/web/packages/fastcluster/ donde está el código
+fuente
+Package source: fastcluster_1.1.25.tar.gz
+<https://cran.r-project.org/src/contrib/fastcluster_1.1.25.tar.gz>
+
+Ahí encontrará la forma que el autor utilizó para sus cálculos en R,
+lógicamente, descomprimiendo y entrando en el código.
+
+Javier Rubén Marcuzzi
+
+El mar., 19 feb. 2019 a las 17:15, Juan Abasolo (<juan.abasolo en ehu.eus>)
+escribió:
+
+> Sabrán disculparme; no solo no encontré cómo calcular como lo hacía R
+> antes, si no que no encuentro una explicación de autoridad.
+> Si encontré la mención al cambio... además del propio cambio. Pero, digo,
+> habrá algún sitio o foro en el que un montón de matemáticos que saben una
+> barbaridad y hablan de tal manera que yo no entiendo, diran algo así como
+> "no, che, eso no está bien así, hay que hacerlo asá" y otro señor le
+> contestará "mira vos que tenés razón; vamos a cambiar la implementación..."
+>
+> ¿Eso en donde está?
+>
+> Disculparán la letrología y blablandeces. Pretenciones didácticas
+>
+>
+> --
+> Juan Abasolo
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Tue Feb 19 22:09:17 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Tue, 19 Feb 2019 22:09:17 +0100
+Subject: [R-es] 
+	=?utf-8?q?Donde_puedo_encontrar_la_explicaci=C3=B3n_del_c?=
+	=?utf-8?q?ambio_en_el_calculo_de_hclust=28=2E=2E=2E=27ward=2ED2=27?=
+	=?utf-8?b?KT8=?=
+In-Reply-To: <CAHo_aETC8dynm4XEJrwis8i62sBzGTjmvUczwdTXKMwB43dpiw@mail.gmail.com>
+References: <CA+8ueyZukRERo+heRR7i2uywHbipiz29rkRkp+BY1FrX33rzRA@mail.gmail.com>
+ <CAHo_aETC8dynm4XEJrwis8i62sBzGTjmvUczwdTXKMwB43dpiw@mail.gmail.com>
+Message-ID: <CA+8ueyZA6hPT-DEUAti+FTPsnceWR1yZwQ9M2xJGLCG8KkUxHg@mail.gmail.com>
+
+Muchas gracias por la ayuda, Javier.
+Pero ahora ya descarté lo de intentar recuperar el sistema anterior. Lo que
+quiero es poder presentar argumentos de autoridad para mostrar que éste
+nuevo método es mejor.
+No el solo el argumento del autor; tiene que haber una razón de peso para
+que de repente en CRAN hayan dicho "así sí" y "así ahora ya no".
+Probablemente sea una razón más ámplia inclusive que CRAN. No se si SPSS,
+SAS o quién más haya cambiado el modo de calcular; pero entiendo que
+semejante cambio tiene que haber levantado polvo, opiniones, debate y,
+entre todo eso, habrá algun autoridad que
+ marque el antes y después con sus opiniones/saberes.
+
+Hau idatzi du Javier Marcuzzi (javier.ruben.marcuzzi en gmail.com)
+erabiltzaileak (2019 ots. 19, ar. (21:29)):
+
+> Estimado Juan Abasolo
+>
+> No conozco el cambio que menciona pero supe buscar como se hacían ciertas
+> cosas con R, y la verdad que esto fue una de las mejores inversiones que
+> realicé con mi tiempo, porque la librería en cuestión dejó de ser
+> mantenida, pero gracias a investigar el código pude obtener lo que yo
+> necesitaba y luego mejorarlo según mis necesidades.
+>
+> Para su caso sería leer desde
+> https://cran.r-project.org/web/packages/fastcluster/fastcluster.pdf
+>
+> Si es justo este su requerimiento busque en
+> https://cran.r-project.org/web/packages/fastcluster/ donde está el código
+> fuente
+> Package source: fastcluster_1.1.25.tar.gz
+> <https://cran.r-project.org/src/contrib/fastcluster_1.1.25.tar.gz>
+>
+> Ahí encontrará la forma que el autor utilizó para sus cálculos en R,
+> lógicamente, descomprimiendo y entrando en el código.
+>
+> Javier Rubén Marcuzzi
+>
+> El mar., 19 feb. 2019 a las 17:15, Juan Abasolo (<juan.abasolo en ehu.eus>)
+> escribió:
+>
+>> Sabrán disculparme; no solo no encontré cómo calcular como lo hacía R
+>> antes, si no que no encuentro una explicación de autoridad.
+>> Si encontré la mención al cambio... además del propio cambio. Pero, digo,
+>> habrá algún sitio o foro en el que un montón de matemáticos que saben una
+>> barbaridad y hablan de tal manera que yo no entiendo, diran algo así como
+>> "no, che, eso no está bien así, hay que hacerlo asá" y otro señor le
+>> contestará "mira vos que tenés razón; vamos a cambiar la
+>> implementación..."
+>>
+>> ¿Eso en donde está?
+>>
+>> Disculparán la letrología y blablandeces. Pretenciones didácticas
+>>
+>>
+>> --
+>> Juan Abasolo
+>>
+>> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+>> Bilboko Hezkuntza Fakultatea
+>> Euskal Herriko Unibertsitatea
+>> UPV/EHU
+>>
+>> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>>
+>> T: (+34) 94 601 7567
+>> Telegram: @JuanAbasolo
+>> Skype: abasolo72
+>>
+>> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Feb 19 22:25:36 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 19 Feb 2019 18:25:36 -0300
+Subject: [R-es] 
+	=?utf-8?q?Donde_puedo_encontrar_la_explicaci=C3=B3n_del_c?=
+	=?utf-8?q?ambio_en_el_calculo_de_hclust=28=2E=2E=2E=27ward=2ED2=27?=
+	=?utf-8?b?KT8=?=
+In-Reply-To: <CA+8ueyZA6hPT-DEUAti+FTPsnceWR1yZwQ9M2xJGLCG8KkUxHg@mail.gmail.com>
+References: <CA+8ueyZukRERo+heRR7i2uywHbipiz29rkRkp+BY1FrX33rzRA@mail.gmail.com>
+ <CAHo_aETC8dynm4XEJrwis8i62sBzGTjmvUczwdTXKMwB43dpiw@mail.gmail.com>
+ <CA+8ueyZA6hPT-DEUAti+FTPsnceWR1yZwQ9M2xJGLCG8KkUxHg@mail.gmail.com>
+Message-ID: <CAHo_aETpKgwbYeTo9VD87CXomRz9CRapN4OANy+3bQAK7jBWXw@mail.gmail.com>
+
+Estimado Juan
+
+Entiendo lo que necesita, hay dos caminos, por un lado ver la versión
+anterior de R (librería en cuestión) y leer en el código fuente que
+generalmente tienen comentarios, y por el otro la consulta a
+https://www.sciencedirect.com/ , https://www.researchgate.net/, etc.
+
+Esos dos caminos lo llevan a una cantidad de información calificada para
+discutir a cualquier nivel.
+
+Javier Rubén Marcuzzi
+
+El mar., 19 feb. 2019 a las 18:09, Juan Abasolo (<juan.abasolo en ehu.eus>)
+escribió:
+
+> Muchas gracias por la ayuda, Javier.
+> Pero ahora ya descarté lo de intentar recuperar el sistema anterior. Lo
+> que quiero es poder presentar argumentos de autoridad para mostrar que éste
+> nuevo método es mejor.
+> No el solo el argumento del autor; tiene que haber una razón de peso para
+> que de repente en CRAN hayan dicho "así sí" y "así ahora ya no".
+> Probablemente sea una razón más ámplia inclusive que CRAN. No se si SPSS,
+> SAS o quién más haya cambiado el modo de calcular; pero entiendo que
+> semejante cambio tiene que haber levantado polvo, opiniones, debate y,
+> entre todo eso, habrá algun autoridad que
+>  marque el antes y después con sus opiniones/saberes.
+>
+> Hau idatzi du Javier Marcuzzi (javier.ruben.marcuzzi en gmail.com)
+> erabiltzaileak (2019 ots. 19, ar. (21:29)):
+>
+>> Estimado Juan Abasolo
+>>
+>> No conozco el cambio que menciona pero supe buscar como se hacían ciertas
+>> cosas con R, y la verdad que esto fue una de las mejores inversiones que
+>> realicé con mi tiempo, porque la librería en cuestión dejó de ser
+>> mantenida, pero gracias a investigar el código pude obtener lo que yo
+>> necesitaba y luego mejorarlo según mis necesidades.
+>>
+>> Para su caso sería leer desde
+>> https://cran.r-project.org/web/packages/fastcluster/fastcluster.pdf
+>>
+>> Si es justo este su requerimiento busque en
+>> https://cran.r-project.org/web/packages/fastcluster/ donde está el
+>> código fuente
+>> Package source: fastcluster_1.1.25.tar.gz
+>> <https://cran.r-project.org/src/contrib/fastcluster_1.1.25.tar.gz>
+>>
+>> Ahí encontrará la forma que el autor utilizó para sus cálculos en R,
+>> lógicamente, descomprimiendo y entrando en el código.
+>>
+>> Javier Rubén Marcuzzi
+>>
+>> El mar., 19 feb. 2019 a las 17:15, Juan Abasolo (<juan.abasolo en ehu.eus>)
+>> escribió:
+>>
+>>> Sabrán disculparme; no solo no encontré cómo calcular como lo hacía R
+>>> antes, si no que no encuentro una explicación de autoridad.
+>>> Si encontré la mención al cambio... además del propio cambio. Pero, digo,
+>>> habrá algún sitio o foro en el que un montón de matemáticos que saben una
+>>> barbaridad y hablan de tal manera que yo no entiendo, diran algo así como
+>>> "no, che, eso no está bien así, hay que hacerlo asá" y otro señor le
+>>> contestará "mira vos que tenés razón; vamos a cambiar la
+>>> implementación..."
+>>>
+>>> ¿Eso en donde está?
+>>>
+>>> Disculparán la letrología y blablandeces. Pretenciones didácticas
+>>>
+>>>
+>>> --
+>>> Juan Abasolo
+>>>
+>>> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+>>> Bilboko Hezkuntza Fakultatea
+>>> Euskal Herriko Unibertsitatea
+>>> UPV/EHU
+>>>
+>>> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>>>
+>>> T: (+34) 94 601 7567
+>>> Telegram: @JuanAbasolo
+>>> Skype: abasolo72
+>>>
+>>> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>
+> --
+> Juan Abasolo
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Wed Feb 20 07:33:02 2019
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Wed, 20 Feb 2019 07:33:02 +0100
+Subject: [R-es] 
+	=?iso-8859-1?q?Donde_puedo_encontrar_la_explicaci=F3n_del?=
+	=?iso-8859-1?q?_cambio_en_el_calculo_de_hclust=28=2E=2E=2E=27ward?=
+	=?iso-8859-1?q?=2ED2=27=29=3F?=
+In-Reply-To: <CA+8ueyZukRERo+heRR7i2uywHbipiz29rkRkp+BY1FrX33rzRA@mail.gmail.com>
+References: <CA+8ueyZukRERo+heRR7i2uywHbipiz29rkRkp+BY1FrX33rzRA@mail.gmail.com>
+Message-ID: <000001d4c8e6$211c67d0$63553770$@jccm.es>
+
+Buenos días:
+En este caso, lo más rápido sería preguntar al responsable del paquete
+(Daniel Müllner <daniel en danifold.net>). Quizá antes, puedes echar un vistazo
+en http://danifold.net/fastcluster.html.
+Suerte
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Juan Abasolo
+Enviado el: martes, 19 de febrero de 2019 21:15
+Para: R-help-es <r-help-es en r-project.org>
+Asunto: [R-es] Donde puedo encontrar la explicación del cambio en el calculo
+de hclust(...'ward.D2')?
+
+Sabrán disculparme; no solo no encontré cómo calcular como lo hacía R antes,
+si no que no encuentro una explicación de autoridad.
+Si encontré la mención al cambio... además del propio cambio. Pero, digo,
+habrá algún sitio o foro en el que un montón de matemáticos que saben una
+barbaridad y hablan de tal manera que yo no entiendo, diran algo así como
+"no, che, eso no está bien así, hay que hacerlo asá" y otro señor le
+contestará "mira vos que tenés razón; vamos a cambiar la implementación..."
+
+¿Eso en donde está?
+
+Disculparán la letrología y blablandeces. Pretenciones didácticas
+
+
+--
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea Euskal Herriko Unibertsitatea UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Wed Feb 20 14:42:31 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Wed, 20 Feb 2019 14:42:31 +0100
+Subject: [R-es] 
+	=?utf-8?q?Donde_puedo_encontrar_la_explicaci=C3=B3n_del_c?=
+	=?utf-8?q?ambio_en_el_calculo_de_hclust=28=2E=2E=2E=27ward=2ED2=27?=
+	=?utf-8?b?KT8=?=
+In-Reply-To: <000001d4c8e6$211c67d0$63553770$@jccm.es>
+References: <CA+8ueyZukRERo+heRR7i2uywHbipiz29rkRkp+BY1FrX33rzRA@mail.gmail.com>
+ <000001d4c8e6$211c67d0$63553770$@jccm.es>
+Message-ID: <CA+8ueyYztjA6AvyDEOP7TCjMpED6bAiUq4OkyehG0KBbC+vLAg@mail.gmail.com>
+
+Muchas gracias, Isidro y Javier;
+Lo que me proponés, Javier, estaría muy bien si yo fuera capaz de discutir
+a algún nivel en inglés. Mi producción anglófona es tan lamentable como
+lamentable es el traductor que use.
+Por otro lado, quiero saber lo que se haya dicho, más que que me cuenten lo
+que ya está contado.
+
+El paquete que decís, Isidro, también lo probé (nanai). Es una librería
+aparte, el que cambiaron, entiendo, es el propio hclust(x, method =
+'ward.D') de R base. Por eso presupongo que en algún lado habrá todo un
+discurso bastante matizado y rico.
+
+Que sigan con buena jornada
+
+Juan
+
+
+Hau idatzi du Isidro Hidalgo Arellano (ihidalgo en jccm.es) erabiltzaileak
+(2019 ots. 20, az. (07:44)):
+
+> Buenos días:
+> En este caso, lo más rápido sería preguntar al responsable del paquete
+> (Daniel Müllner <daniel en danifold.net>). Quizá antes, puedes echar un
+> vistazo
+> en http://danifold.net/fastcluster.html.
+> Suerte
+>
+> Isidro Hidalgo Arellano
+> Observatorio del Mercado de Trabajo
+> Consejería de Economía, Empresas y Empleo
+> http://www.castillalamancha.es/
+>
+>
+> -----Mensaje original-----
+> De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Juan Abasolo
+> Enviado el: martes, 19 de febrero de 2019 21:15
+> Para: R-help-es <r-help-es en r-project.org>
+> Asunto: [R-es] Donde puedo encontrar la explicación del cambio en el
+> calculo
+> de hclust(...'ward.D2')?
+>
+> Sabrán disculparme; no solo no encontré cómo calcular como lo hacía R
+> antes,
+> si no que no encuentro una explicación de autoridad.
+> Si encontré la mención al cambio... además del propio cambio. Pero, digo,
+> habrá algún sitio o foro en el que un montón de matemáticos que saben una
+> barbaridad y hablan de tal manera que yo no entiendo, diran algo así como
+> "no, che, eso no está bien así, hay que hacerlo asá" y otro señor le
+> contestará "mira vos que tenés razón; vamos a cambiar la implementación..."
+>
+> ¿Eso en donde está?
+>
+> Disculparán la letrología y blablandeces. Pretenciones didácticas
+>
+>
+> --
+> Juan Abasolo
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea Euskal Herriko Unibertsitatea UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Fri Feb 22 14:45:22 2019
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Fri, 22 Feb 2019 13:45:22 +0000
+Subject: [R-es] App propia en Shinyproxy
+Message-ID: <DBBPR04MB6090EDDD4E300BA70E09E512CC7F0@DBBPR04MB6090.eurprd04.prod.outlook.com>
+
+Buenas
+
+No tengo muy claro como puedo hacer en shinyproxy para:
+
+
+  *   Que la gente se loguee usando una base de datos sql donde el usuario y pass estan en una tabla en concreto de una bd
+  *   Desplegar mi propia aplicacion dentro de shinyproxy. ?Tengo que meter un contenedor propio de docker?
+
+
+Gracias!!
+Jes?s
+
+	[[alternative HTML version deleted]]
+
+

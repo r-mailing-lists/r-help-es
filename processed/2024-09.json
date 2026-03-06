@@ -1,0 +1,120 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2024-09",
+  "messages": [
+    {
+      "id": "msg-e5bbb324a41b",
+      "message_id": "<CAOKbq8jxWamy8XwBo1OKHebqXc2t_NB81ZJwHa6a-YnJOGtEEQ@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2024-09-23T15:15:33+02:00",
+      "subject": "[R-es] 91 - Reunión Grupo de R -Madrid: Jueves 26 de septiembre de 2024",
+      "subject_clean": "[R-es] 91 - Reunión Grupo de R -Madrid: Jueves 26 de septiembre de 2024",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Â¿QuÃ© tal?\n\nEl prÃ³ximo jueves (26 de septiembre), volvemos con una nueva sesiÃ³n del\n\"Grupo de R de Madrid\".\n\nContaremos con Francisco J. Rodriguez (habitual en esta lista) que nos\ncontarÃ¡ como usar R para realizar diferentes cÃ¡lculos astronÃ³micos sobre la\nLuna.\n\nEl detalle de la agenda lo podÃ©is encontrar aquÃ­:\n\n   -\n   https://www.meetup.com/es-ES/grupo-de-usuarios-de-r-de-madrid/events/303565377/\n\nEste evento serÃ¡ tanto presencial como online (Zoom).\n\nOs esperamos!.\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Â¿QuÃ© tal?\n\nEl prÃ³ximo jueves (26 de septiembre), volvemos con una nueva sesiÃ³n del\n\"Grupo de R de Madrid\".\n\nContaremos con Francisco J. Rodriguez (habitual en esta lista) que nos\ncontarÃ¡ como usa",
+      "thread_id": "thread-e5bbb324a41b",
+      "thread_depth": 0,
+      "month": "2024-09"
+    },
+    {
+      "id": "msg-4e39e4a3df4f",
+      "message_id": "<PAXPR08MB66065622003DCE3162C389CECC682@PAXPR08MB6606.eurprd08.prod.outlook.com>",
+      "from_name": "Isidro Hidalgo Arellano",
+      "from_email_hash": "0724e196ab2f30e611934ecd7dc684176bcc11dd0a1132c7992011a16f84412a",
+      "date": "2024-09-24T10:44:07Z",
+      "subject": "[R-es] Provincia y municipio en Shiny",
+      "subject_clean": "[R-es] Provincia y municipio en Shiny",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Queridos colegas:\n?Qu? funci?n tengo que utilizar para, en la interfaz de usuario de un Shiny, una vez seleccionada una provincia de una lista, elegir un municipio de otra lista (filtrados los de la provincia elegida)?\n?C?mo se puede hacer ese filtro? Seguro que es una chorrada, pero no doy con ello... estoy medio aterrizando en Shiny...\nMil gracias\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nJunta de Comunidades de Castilla - La Mancha\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Queridos colegas:\n?Qu? funci?n tengo que utilizar para, en la interfaz de usuario de un Shiny, una vez seleccionada una provincia de una lista, elegir un municipio de otra lista (filtrados los de la p",
+      "thread_id": "thread-4e39e4a3df4f",
+      "thread_depth": 0,
+      "month": "2024-09"
+    },
+    {
+      "id": "msg-9bd7364fa2b1",
+      "message_id": "<6065cb0d3b7b4eb9bad80ae570ec387b@sergas.es>",
+      "from_name": "miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es",
+      "from_email_hash": "3e7f48d203e35c3c83ba9900d8200246b42ac0399e548121b3efe8219cdc7437",
+      "date": "2024-09-24T11:03:27Z",
+      "subject": "[R-es] Provincia y municipio en Shiny",
+      "subject_clean": "[R-es] Provincia y municipio en Shiny",
+      "in_reply_to": "<PAXPR08MB66065622003DCE3162C389CECC682@PAXPR08MB6606.eurprd08.prod.outlook.com>",
+      "references": [
+        "<PAXPR08MB66065622003DCE3162C389CECC682@PAXPR08MB6606.eurprd08.prod.outlook.com>"
+      ],
+      "body_plain": "Hola Isidrio.\n\n\nA ver si te vale algo como esto.....\n\n\nserver <- function(input, output, session) {\n\n  observe({\n    req(input$provincia)\n    municipios <- data %>%\n      filter(Provincia == input$provincia) %>%\n      pull(Municipio) %>%\n      unique() %>%\n      sort()\n\n    updateSelectInput(session, \"Municipio\", choices = c(\"\", municipios))\n  })\n\n\n# [ ... resto del cÃ³digo ... ]\n\n}\n\nNota: antes hago algo de \"limpieza\" como, por ejemplo, pasar los nombres de las provincias a minÃºsculas y quedarme con valores Ãºnicos\n\ndata$Provincia <- tolower(data$Provincia)\nunique_provincias <- unique(data$Provincia)\n\n\nTengo algo parecido programado aquÃ­: https://melisagal.shinyapps.io/ANALITICAS_ZB/\n(es un visor sencillo de los resultados analÃ­ticos de las playas de Galicia)\n\nSe puede acceder desde aquÃ­:\nhttps://www.sergas.es/Saude-publica/Praias\n(casi al final de la pÃ¡gina)\n\n\n* Si necesitas el cÃ³digo completo dÃ­melo.\n\n\nUn saludo,\nMiguel.\n\n\n\n\n________________________________\nDe: R-help-es <r-help-es-bounces en r-project.org> en nombre de Isidro Hidalgo Arellano via R-help-es <r-help-es en r-project.org>\nEnviado: martes, 24 de septiembre de 2024 12:44\nPara: r-help-es\nAsunto: [R-es] Provincia y municipio en Shiny\n\nQueridos colegas:\n?Qu? funci?n tengo que utilizar para, en la interfaz de usuario de un Shiny, una vez seleccionada una provincia de una lista, elegir un municipio de otra lista (filtrados los de la provincia elegida)?\n?C?mo se puede hacer ese filtro? Seguro que es una chorrada, pero no doy con ello... estoy medio aterrizando en Shiny...\nMil gracias\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nJunta de Comunidades de Castilla - La Mancha\n\n\n\n        [[alternative HTML version deleted]]\n\n\n________________________________\n\nNota: A informaciÃ³n contida nesta mensaxe e os seus posibles documentos adxuntos Ã© privada e confidencial e estÃ¡ dirixida Ãºnicamente Ã³ seu destinatario/a. Se vostede non Ã© o/a destinatario/a orixinal desta mensaxe, por favor elimÃ­nea. A distribuciÃ³n ou copia desta mensaxe non estÃ¡ autorizada.\n\nNota: La informaciÃ³n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y estÃ¡ dirigida Ãºnicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimÃ­nelo. La distribuciÃ³n o copia de este mensaje no estÃ¡ autorizada.\n\nSee more languages: http://www.sergas.es/aviso-confidencialidad\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Isidrio.\n\n\nA ver si te vale algo como esto.....\n\n\nserver <- function(input, output, session) {\n\n  observe({\n    req(input$provincia)\n    municipios <- data %>%\n      filter(Provincia == input$pro",
+      "thread_id": "thread-4e39e4a3df4f",
+      "thread_depth": 1,
+      "month": "2024-09"
+    },
+    {
+      "id": "msg-a0f0779de1b6",
+      "message_id": "<D2B35BCB-E319-4BC3-BC33-F18C2060DBD0@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2024-09-24T13:05:11+02:00",
+      "subject": "[R-es] Provincia y municipio en Shiny",
+      "subject_clean": "[R-es] Provincia y municipio en Shiny",
+      "in_reply_to": "<PAXPR08MB66065622003DCE3162C389CECC682@PAXPR08MB6606.eurprd08.prod.outlook.com>",
+      "references": [
+        "<PAXPR08MB66065622003DCE3162C389CECC682@PAXPR08MB6606.eurprd08.prod.outlook.com>"
+      ],
+      "body_plain": "Isidro:\n\nLa segunda lista se tiene que generar en el server con el filtro que quieras:\n\n- En UI, creas un elemento uiOutput, por ejemplo con id = id1\n- TendrÃ¡s la lista de provincias en otro input, por ejemplo con id = id0\n- En Server, lo renderizas con output$id1 <- renderUI()\n- Este renderUI devuelve la lista de municipios ya filtrada, usando el filtro de input$id0\n\nAquÃ­ lo explica Hadley mejor que yo: https://mastering-shiny.org/action-dynamic.html#programming-ui\n\nUn saludo,\n\nEmilio L. Cano\nhttp://emilio.lcano.com \n\n\n\n\n> El 24 sept 2024, a las 12:44, Isidro Hidalgo Arellano via R-help-es <r-help-es en r-project.org> escribiÃ³:\n> \n> Queridos colegas:\n> ?Qu? funci?n tengo que utilizar para, en la interfaz de usuario de un Shiny, una vez seleccionada una provincia de una lista, elegir un municipio de otra lista (filtrados los de la provincia elegida)?\n> ?C?mo se puede hacer ese filtro? Seguro que es una chorrada, pero no doy con ello... estoy medio aterrizando en Shiny...\n> Mil gracias\n> \n> Isidro Hidalgo Arellano\n> Observatorio del Mercado de Trabajo\n> Junta de Comunidades de Castilla - La Mancha\n> \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Isidro:\n\nLa segunda lista se tiene que generar en el server con el filtro que quieras:\n\n- En UI, creas un elemento uiOutput, por ejemplo con id = id1\n- TendrÃ¡s la lista de provincias en otro input, p",
+      "thread_id": "thread-4e39e4a3df4f",
+      "thread_depth": 1,
+      "month": "2024-09"
+    },
+    {
+      "id": "msg-02e4197b49bd",
+      "message_id": "<PAXPR08MB660643A6B6C6849C736DC4DCCC682@PAXPR08MB6606.eurprd08.prod.outlook.com>",
+      "from_name": "Isidro Hidalgo Arellano",
+      "from_email_hash": "0724e196ab2f30e611934ecd7dc684176bcc11dd0a1132c7992011a16f84412a",
+      "date": "2024-09-24T11:07:30Z",
+      "subject": "[R-es] Provincia y municipio en Shiny",
+      "subject_clean": "[R-es] Provincia y municipio en Shiny",
+      "in_reply_to": "<D2B35BCB-E319-4BC3-BC33-F18C2060DBD0@gmail.com>",
+      "references": [
+        "<PAXPR08MB66065622003DCE3162C389CECC682@PAXPR08MB6606.eurprd08.prod.outlook.com>",
+        "<D2B35BCB-E319-4BC3-BC33-F18C2060DBD0@gmail.com>"
+      ],
+      "body_plain": "Perfecto. Â¡Gracias a los dos!\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nJunta de Comunidades de Castilla ? La Mancha\n\nDe: Emilio L. Cano <emilopezcano en gmail.com>\nEnviado el: martes, 24 de septiembre de 2024 13:05\nPara: Isidro Hidalgo Arellano <ihidalgo en jccm.es>\nCC: r-help-es <r-help-es en r-project.org>\nAsunto: Re: [R-es] Provincia y municipio en Shiny\n\nIsidro:\n\nLa segunda lista se tiene que generar en el server con el filtro que quieras:\n\n- En UI, creas un elemento uiOutput, por ejemplo con id = id1\n- TendrÃ¡s la lista de provincias en otro input, por ejemplo con id = id0\n- En Server, lo renderizas con output$id1 <- renderUI()\n- Este renderUI devuelve la lista de municipios ya filtrada, usando el filtro de input$id0\n\nAquÃ­ lo explica Hadley mejor que yo: https://mastering-shiny.org/action-dynamic.html#programming-ui\n\nUn saludo,\n\nEmilio L. Cano\nhttp://secure-web.cisco.com/1lCb9N1CId0q09H9KhHZnQpcyqYf283imSzCfMGlxcdhDELkZjwtS2VO6-x9OnOM19foKEjVbszhVUmoaNAyD1vkLlM3b7PR_iPpl7nboy1ED6Bu12gChACIlVQxgWkO92UAr9GKp2PO4zK79bY1Zs-HQjPFCE73mZBaAj-iPRWS_y_TNPutUgHWyoqW7CpVocfLu3rueEzC2tx-H0ERj33VzSoJ5QhgM0cv7_1e4cPMA1dwb342484pQ_ktEUQY1sR3SHDFSWyr3mKiej5xfkyehSqpdiui3J2oEzmQo7SPyMnQ_2QEcUM3OnTnx8YZ6UOawviN9lZkYmDPbm8vvQA/http%3A%2F%2Femilio.lcano.com%26nbsp;\n\n\n\n\n\nEl 24 sept 2024, a las 12:44, Isidro Hidalgo Arellano via R-help-es <r-help-es en r-project.org<mailto:r-help-es en r-project.org>> escribiÃ³:\n\nQueridos colegas:\n?Qu? funci?n tengo que utilizar para, en la interfaz de usuario de un Shiny, una vez seleccionada una provincia de una lista, elegir un municipio de otra lista (filtrados los de la provincia elegida)?\n?C?mo se puede hacer ese filtro? Seguro que es una chorrada, pero no doy con ello... estoy medio aterrizando en Shiny...\nMil gracias\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nJunta de Comunidades de Castilla - La Mancha\n\n\n\n               [[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org<mailto:R-help-es en r-project.org>\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Perfecto. Â¡Gracias a los dos!\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nJunta de Comunidades de Castilla ? La Mancha\n\nDe: Emilio L. Cano <emilopezcano en gmail.com>\nEnviado el: mar",
+      "thread_id": "thread-4e39e4a3df4f",
+      "thread_depth": 2,
+      "month": "2024-09"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-e5bbb324a41b",
+      "subject": "[R-es] 91 - Reunión Grupo de R -Madrid: Jueves 26 de septiembre de 2024",
+      "message_count": 1,
+      "participants": [
+        "Carlos Ortega"
+      ],
+      "started": "2024-09-23T15:15:33+02:00",
+      "last_reply": "2024-09-23T15:15:33+02:00",
+      "root_message_id": "msg-e5bbb324a41b"
+    },
+    {
+      "id": "thread-4e39e4a3df4f",
+      "subject": "[R-es] Provincia y municipio en Shiny",
+      "message_count": 4,
+      "participants": [
+        "Emilio L. Cano",
+        "Isidro Hidalgo Arellano",
+        "miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es"
+      ],
+      "started": "2024-09-24T10:44:07+00:00",
+      "last_reply": "2024-09-24T11:07:30+00:00",
+      "root_message_id": "msg-4e39e4a3df4f"
+    }
+  ]
+}

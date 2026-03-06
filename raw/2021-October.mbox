@@ -1,0 +1,1709 @@
+From ju@m@d|@@ @end|ng |rom gm@||@com  Wed Oct  6 20:16:22 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Wed, 6 Oct 2021 15:16:22 -0300
+Subject: [R-es] =?utf-8?q?Respuestas_m=C3=BAltiples_en_una_sola_columna?=
+Message-ID: <CAOF0weEOotwRaE3mP8piVv9VyrTb7286JFX47-7rwG4bHE-fDg@mail.gmail.com>
+
+Hola, cómo andan!
+
+Tengo una base de una encuesta sobre formación profesional realizada a un
+conjunto de empleados de una institución.
+
+Una de las preguntas es de respuesta múltiple, eje_tem_1,eje_tem_2,
+eje_tem_3....hasta eje_tem_17.
+
+Necesitaría que las respuestas de cada persona que están en esas distintas
+columnas (eje_tem a eje_tem_17) queden en una misma columna, y asimismo que
+se repita el "ID" y el "area_pertenencia" tantas veces como opciones haya
+marcado cada caso/persona/"ID".
+
+Estuve intentando con pivot_longer pero sin resultados!
+
+Actualmente está así
+
+*id  | eje_tem_1  | eje_tem_2 | eje_tem_3  | eje_tem_4    area*
+1     rh                  sist               comun            filos
+     admin
+2     rh                  arte
+           medic
+3     sist                matem         empre             comun
+ asist
+4     arte               matem         empre              sist
+asist
+
+Y necesitaría que quede así:
+
+*id  |  ejes    |  area*
+1     rh           admin
+1     sist         admin
+1     comun    admin
+1     filos        admin
+1     admin     admin
+2      rh           medic
+2     arte         medic
+..      ....             .....
+
+Adjunto un recorte de la base!
+
+Muchas gracias!
+
+Saludos, Juan.
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211006/a30a4cc6/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Ejes formativos.xlsx
+Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Size: 10885 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211006/a30a4cc6/attachment.xlsx>
+
+From jo@e|u|@pedromendez @end|ng |rom c|enc|@@@un@m@mx  Wed Oct  6 20:48:11 2021
+From: jo@e|u|@pedromendez @end|ng |rom c|enc|@@@un@m@mx (=?UTF-8?B?Sm9zw6kgTHVpcyBQZWRybyBNw6luZGV6?=)
+Date: Wed, 6 Oct 2021 13:48:11 -0500
+Subject: [R-es] 
+ =?utf-8?q?Respuestas_m=C3=BAltiples_en_una_sola_columna?=
+In-Reply-To: <CAOF0weEOotwRaE3mP8piVv9VyrTb7286JFX47-7rwG4bHE-fDg@mail.gmail.com>
+References: <CAOF0weEOotwRaE3mP8piVv9VyrTb7286JFX47-7rwG4bHE-fDg@mail.gmail.com>
+Message-ID: <CAJB8QNi6pH801EV9yDK9brK2mgcH8AeX9Bjsza2tJjPOFQD7KA@mail.gmail.com>
+
+Buenas tardes,
+
+En mi caso funciona bien usando pivot_longer, pero guardé la información en
+csv para leerlo con vroom.
+
+base <- vroom("ruta/Ejes formativos.csv",
+              col_types = str_c(rep("c",19)))
+
+base %>%
+ pivot_longer(-c(ID,area_pertenencia),"pregunta")
+
+[image: image.png]
+
+Saludos
+
+
+
+El mié, 6 oct 2021 a las 13:17, juan manuel dias (<juamadias en gmail.com>)
+escribió:
+
+> Hola, cómo andan!
+>
+> Tengo una base de una encuesta sobre formación profesional realizada a un
+> conjunto de empleados de una institución.
+>
+> Una de las preguntas es de respuesta múltiple, eje_tem_1,eje_tem_2,
+> eje_tem_3....hasta eje_tem_17.
+>
+> Necesitaría que las respuestas de cada persona que están en esas distintas
+> columnas (eje_tem a eje_tem_17) queden en una misma columna, y asimismo que
+> se repita el "ID" y el "area_pertenencia" tantas veces como opciones haya
+> marcado cada caso/persona/"ID".
+>
+> Estuve intentando con pivot_longer pero sin resultados!
+>
+> Actualmente está así
+>
+> *id  | eje_tem_1  | eje_tem_2 | eje_tem_3  | eje_tem_4    area*
+> 1     rh                  sist               comun            filos
+>      admin
+> 2     rh                  arte
+>              medic
+> 3     sist                matem         empre             comun
+>  asist
+> 4     arte               matem         empre              sist
+>   asist
+>
+> Y necesitaría que quede así:
+>
+> *id  |  ejes    |  area*
+> 1     rh           admin
+> 1     sist         admin
+> 1     comun    admin
+> 1     filos        admin
+> 1     admin     admin
+> 2      rh           medic
+> 2     arte         medic
+> ..      ....             .....
+>
+> Adjunto un recorte de la base!
+>
+> Muchas gracias!
+>
+> Saludos, Juan.
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211006/cf49ce08/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 39269 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211006/cf49ce08/attachment-0001.png>
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Oct  7 04:40:35 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Wed, 6 Oct 2021 23:40:35 -0300
+Subject: [R-es] 
+ =?utf-8?q?Respuestas_m=C3=BAltiples_en_una_sola_columna?=
+In-Reply-To: <CAOKbq8g3xieD5QnXQH3tQN6kh+apA1XDTZYxRk52JKC0hhY5Cg@mail.gmail.com>
+References: <CAOF0weEOotwRaE3mP8piVv9VyrTb7286JFX47-7rwG4bHE-fDg@mail.gmail.com>
+ <CAOKbq8g3xieD5QnXQH3tQN6kh+apA1XDTZYxRk52JKC0hhY5Cg@mail.gmail.com>
+Message-ID: <CAOF0weGYmbnic4d7ozEtkt_vk020A72Q3gA_Qq3tMJXXXsqOrA@mail.gmail.com>
+
+Muchas gracias a ambos!
+
+El mié., 6 de octubre de 2021 15:52, Carlos Ortega <cof en qualityexcellence.es>
+escribió:
+
+> Hola,
+>
+> Sí, otra alternativa para dejarlo como has comentado y leyendo
+> directamente de Excel...
+>
+> #---------------
+>
+> library(dplyr)
+> library(tidyr)
+> library(readr)
+> library(readxl)
+>
+> datin <- read_excel("Ejes formativos.xlsx")
+>
+> datin_long <- datin %>%
+>   pivot_longer(
+>     cols = starts_with("eje"),
+>     values_to = "ejes"
+>   ) %>%
+>   rename( area = area_pertenencia) %>%
+>   select(-name) %>%
+>   relocate(ejes, .before = area)
+>
+> #---------------
+>
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mié, 6 oct 2021 a las 20:17, juan manuel dias (<juamadias en gmail.com>)
+> escribió:
+>
+>> Hola, cómo andan!
+>>
+>> Tengo una base de una encuesta sobre formación profesional realizada a un
+>> conjunto de empleados de una institución.
+>>
+>> Una de las preguntas es de respuesta múltiple, eje_tem_1,eje_tem_2,
+>> eje_tem_3....hasta eje_tem_17.
+>>
+>> Necesitaría que las respuestas de cada persona que están en esas
+>> distintas columnas (eje_tem a eje_tem_17) queden en una misma columna, y
+>> asimismo que se repita el "ID" y el "area_pertenencia" tantas veces como
+>> opciones haya marcado cada caso/persona/"ID".
+>>
+>> Estuve intentando con pivot_longer pero sin resultados!
+>>
+>> Actualmente está así
+>>
+>> *id  | eje_tem_1  | eje_tem_2 | eje_tem_3  | eje_tem_4    area*
+>> 1     rh                  sist               comun            filos
+>>        admin
+>> 2     rh                  arte
+>>              medic
+>> 3     sist                matem         empre             comun
+>>  asist
+>> 4     arte               matem         empre              sist
+>>   asist
+>>
+>> Y necesitaría que quede así:
+>>
+>> *id  |  ejes    |  area*
+>> 1     rh           admin
+>> 1     sist         admin
+>> 1     comun    admin
+>> 1     filos        admin
+>> 1     admin     admin
+>> 2      rh           medic
+>> 2     arte         medic
+>> ..      ....             .....
+>>
+>> Adjunto un recorte de la base!
+>>
+>> Muchas gracias!
+>>
+>> Saludos, Juan.
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Thu Oct  7 08:29:56 2021
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Thu, 7 Oct 2021 08:29:56 +0200
+Subject: [R-es] 
+ =?utf-8?q?Respuestas_m=C3=BAltiples_en_una_sola_columna?=
+In-Reply-To: <CAOF0weGYmbnic4d7ozEtkt_vk020A72Q3gA_Qq3tMJXXXsqOrA@mail.gmail.com>
+References: <CAOF0weEOotwRaE3mP8piVv9VyrTb7286JFX47-7rwG4bHE-fDg@mail.gmail.com>
+ <CAOKbq8g3xieD5QnXQH3tQN6kh+apA1XDTZYxRk52JKC0hhY5Cg@mail.gmail.com>
+ <CAOF0weGYmbnic4d7ozEtkt_vk020A72Q3gA_Qq3tMJXXXsqOrA@mail.gmail.com>
+Message-ID: <3a694665-4d4f-f204-33de-41e7567c1fae@urjc.es>
+
+Hola:
+Otra posibilidad sería la que aparece a continuación.
+Saludos,
+Marcelino
+
+library(readxl)
+library(reshape2)
+datin <- read_excel("Ejes formativos.xlsx")
+datin_long <- melt(datin, id.vars=c("ID", "area_pertenencia"))[,c("ID", 
+"value", "area_pertenencia")]
+names(datin_long) <- c("ID", "ejes", "area")
+datin_long <- datin_long[!is.na(datin_long$ejes),]
+
+
+
+
+
+El 07/10/2021 a las 4:40, juan manuel dias escribió:
+> Muchas gracias a ambos!
+>
+> El mié., 6 de octubre de 2021 15:52, Carlos Ortega <cof en qualityexcellence.es>
+> escribió:
+>
+>> Hola,
+>>
+>> Sí, otra alternativa para dejarlo como has comentado y leyendo
+>> directamente de Excel...
+>>
+>> #---------------
+>>
+>> library(dplyr)
+>> library(tidyr)
+>> library(readr)
+>> library(readxl)
+>>
+>> datin <- read_excel("Ejes formativos.xlsx")
+>>
+>> datin_long <- datin %>%
+>>    pivot_longer(
+>>      cols = starts_with("eje"),
+>>      values_to = "ejes"
+>>    ) %>%
+>>    rename( area = area_pertenencia) %>%
+>>    select(-name) %>%
+>>    relocate(ejes, .before = area)
+>>
+>> #---------------
+>>
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>> El mié, 6 oct 2021 a las 20:17, juan manuel dias (<juamadias en gmail.com>)
+>> escribió:
+>>
+>>> Hola, cómo andan!
+>>>
+>>> Tengo una base de una encuesta sobre formación profesional realizada a un
+>>> conjunto de empleados de una institución.
+>>>
+>>> Una de las preguntas es de respuesta múltiple, eje_tem_1,eje_tem_2,
+>>> eje_tem_3....hasta eje_tem_17.
+>>>
+>>> Necesitaría que las respuestas de cada persona que están en esas
+>>> distintas columnas (eje_tem a eje_tem_17) queden en una misma columna, y
+>>> asimismo que se repita el "ID" y el "area_pertenencia" tantas veces como
+>>> opciones haya marcado cada caso/persona/"ID".
+>>>
+>>> Estuve intentando con pivot_longer pero sin resultados!
+>>>
+>>> Actualmente está así
+>>>
+>>> *id  | eje_tem_1  | eje_tem_2 | eje_tem_3  | eje_tem_4    area*
+>>> 1     rh                  sist               comun            filos
+>>>         admin
+>>> 2     rh                  arte
+>>>               medic
+>>> 3     sist                matem         empre             comun
+>>>   asist
+>>> 4     arte               matem         empre              sist
+>>>    asist
+>>>
+>>> Y necesitaría que quede así:
+>>>
+>>> *id  |  ejes    |  area*
+>>> 1     rh           admin
+>>> 1     sist         admin
+>>> 1     comun    admin
+>>> 1     filos        admin
+>>> 1     admin     admin
+>>> 2      rh           medic
+>>> 2     arte         medic
+>>> ..      ....             .....
+>>>
+>>> Adjunto un recorte de la base!
+>>>
+>>> Muchas gracias!
+>>>
+>>> Saludos, Juan.
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> .
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From w|||kmpz @end|ng |rom gm@||@com  Sun Oct 10 19:24:28 2021
+From: w|||kmpz @end|ng |rom gm@||@com (william felipe campos perez)
+Date: Sun, 10 Oct 2021 12:24:28 -0500
+Subject: [R-es] Error Minfactor
+Message-ID: <CA+rey_iMaTv2432TOjbNLY1P1QXx8yfvrWsGP+UAD0QCAKn8tg@mail.gmail.com>
+
+Buenas tardes, presento inconvenientes ajustar el modelo de crecimiento de
+Gompertz, le doy unos valores iniciales y me arroja el siguiente error: Warning
+message:
+In nls(IPA ~ (b0 * MC * log(b1/MC)), data = datos, start = list(b0 = 0.06,
+ :
+  step factor 0.000488281 reduced below 'minFactor' of 0.000976562
+
+El código es el siguiente
+
+install.packages("readxl")
+library(readxl)
+
+datos <- read_excel("CC.xlsx")
+datos
+
+install.packages("nls2")
+library(nls2)
+install.packages("proto")
+library(proto)
+install.packages("nlstools")
+library(nlstools)
+library(nlsMicrobio)
+
+control=nls.control(warnOnly = TRUE)
+modelgmp <- nls(IPA ~ (b0*MC*log(b1/MC)), data=datos,
+start=list(b0=0.06,b1=100), control=control, trace=T)
+summary(modelgmp)
+
+los datos son:
+ MC   IPA
+   <dbl> <dbl>
+ 1  12.5  9.50
+ 2  17.5 13.3
+ 3  22.5 22.5
+ 4  27.5 25.3
+ 5  32.5 34.6
+ 6  37.5 41.4
+ 7  42.5 54.3
+ 8  47.5 62.4
+ 9  52.5 63.8
+10  57.5 56.9
+
+Muchas gracias
+
+	[[alternative HTML version deleted]]
+
+
+From w|||kmpz @end|ng |rom gm@||@com  Sun Oct 10 19:27:57 2021
+From: w|||kmpz @end|ng |rom gm@||@com (william felipe campos perez)
+Date: Sun, 10 Oct 2021 12:27:57 -0500
+Subject: [R-es] Error singular gradient
+Message-ID: <CA+rey_hfTgSsNcvXJfLKF5rJw+AvAvVC3KJk-xf5WXBpfUY3dA@mail.gmail.com>
+
+Buenas noches, actualmente presento el error de singular gradient al tratar
+de ajustar el modelo de crecimiento de Von Bertalanffy para ejercicio
+forestal.
+
+el codigo es el siguiente
+install.packages("readxl")
+library(readxl)
+
+datos <- read_excel("CC.xlsx")
+datos
+
+install.packages("nls2")
+library(nls2)
+install.packages("proto")
+library(proto)
+install.packages("nlstools")
+library(nlstools)
+library(nlsMicrobio)
+
+control=nls.control(maxiter=1000)
+modelVB <- nls(IPA ~ (b0*MC^b1)+b2*MC, data=datos,
+start=list(b0=1,b1=0.5,b2=2), control=control, trace=T)
+summary(modelVB)
+
+los datos los siguientes
+
+ MC   IPA
+   <dbl> <dbl>
+ 1  12.5  9.50
+ 2  17.5 13.3
+ 3  22.5 22.5
+ 4  27.5 25.3
+ 5  32.5 34.6
+ 6  37.5 41.4
+ 7  42.5 54.3
+ 8  47.5 62.4
+ 9  52.5 63.8
+10  57.5 56.9
+
+Muchas gracias
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Mon Oct 11 20:42:16 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Mon, 11 Oct 2021 20:42:16 +0200
+Subject: [R-es] gbm y unbalanced data
+Message-ID: <CAF3uytXUkjO--MTJWRr8yBOdQ=9RZ2bxBpq1vu+hNkLudu4kwQ@mail.gmail.com>
+
+Muy buenas, tengo una base de datos descompensada, en la que las ausencias
+(0) de ptyrup (una especie) son unas 3.5 veces más frecuentes que las
+presencias (1). De acuerdo a la documentación de gbm, weights es un vector
+opcional de pesos a utilizar en el proceso de ajuste. Utilizo:
+
+data$weights <- ifelse(data$ptyrup == 0, 1, 3.5)
+
+fitgbm <- gbm(ptyrup ~. -weights, data=data,
+distribution="bernoulli", weights = weights,
+              cv.folds=5, n.trees=5000, verbose=F)
+
+kappa sale distinto, pero  weights  no tiene el efecto esperado.
+
+Supongo que mi interpretación de lo que dice la documentación es
+incorrecta. ¿Sabe alguien si existe una forma directa de ponderar alguna de
+las categorías? Algo como weights con rpart, sampsize con RF o
+scale_pos_weight con
+XgBoost. Remuestreo y cosas así no me sirven en este caso.
+
+Gracias, como siempre,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Tue Oct 12 17:27:55 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 12 Oct 2021 12:27:55 -0300
+Subject: [R-es] =?utf-8?q?Eliminar_todos_los_caracteres_despu=C3=A9s_de_u?=
+	=?utf-8?q?n_espacio_en_blanco?=
+Message-ID: <CAOF0weHhbt_scW0DByoJ2keYumnLLJJVcx5rxRj27WQ3W0uKzA@mail.gmail.com>
+
+Hola, como andan!
+Tengo una variable con fechas que están en formato cadena y se me complica
+para trabajarlas directamente con lubridate, antes tengo que hacerle unos
+retoques y necesitaría eliminar todo lo que aparece después del espacio en
+blanco....es decir eliminar horas minutos segundos y p.m. am.
+Se les ocurre como hacer?
+Muchas gracias! Juan.
+
+7/6/2020 7:55:38 p.m.
+7/3/2020 1:08:36 p.m.
+7/3/2020 6:08:35 p.m.
+6/1/2020 1:15:19 p.m.
+7/8/2020 7:18:26 p.m.
+8/6/2020 5:59:32 p.m.
+9/1/2020 5:40:57 p.m.
+
+	[[alternative HTML version deleted]]
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Tue Oct 12 17:44:27 2021
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Tue, 12 Oct 2021 15:44:27 +0000 (UTC)
+Subject: [R-es] 
+ =?utf-8?q?Eliminar_todos_los_caracteres_despu=C3=A9s_de_u?=
+ =?utf-8?q?n_espacio_en_blanco?=
+In-Reply-To: <CAOF0weHhbt_scW0DByoJ2keYumnLLJJVcx5rxRj27WQ3W0uKzA@mail.gmail.com>
+References: <CAOF0weHhbt_scW0DByoJ2keYumnLLJJVcx5rxRj27WQ3W0uKzA@mail.gmail.com>
+Message-ID: <485706553.2963269.1634053467038@mail.yahoo.com>
+
+ ¿asi te valdria?
+
+datos$FECHA <- as.Date(datos$FECHA, format = "%d/%m/%Y")
+
+    En martes, 12 de octubre de 2021 17:28:28 CEST, juan manuel dias <juamadias en gmail.com> escribió:  
+ 
+ Hola, como andan!
+Tengo una variable con fechas que están en formato cadena y se me complica
+para trabajarlas directamente con lubridate, antes tengo que hacerle unos
+retoques y necesitaría eliminar todo lo que aparece después del espacio en
+blanco....es decir eliminar horas minutos segundos y p.m. am.
+Se les ocurre como hacer?
+Muchas gracias! Juan.
+
+7/6/2020 7:55:38 p.m.
+7/3/2020 1:08:36 p.m.
+7/3/2020 6:08:35 p.m.
+6/1/2020 1:15:19 p.m.
+7/8/2020 7:18:26 p.m.
+8/6/2020 5:59:32 p.m.
+9/1/2020 5:40:57 p.m.
+
+    [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+  
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Tue Oct 12 18:19:48 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 12 Oct 2021 13:19:48 -0300
+Subject: [R-es] 
+	=?utf-8?q?Eliminar_todos_los_caracteres_despu=C3=A9s_de_u?=
+	=?utf-8?q?n_espacio_en_blanco?=
+In-Reply-To: <485706553.2963269.1634053467038@mail.yahoo.com>
+References: <CAOF0weHhbt_scW0DByoJ2keYumnLLJJVcx5rxRj27WQ3W0uKzA@mail.gmail.com>
+ <485706553.2963269.1634053467038@mail.yahoo.com>
+Message-ID: <CAOF0weGvNerZxt_+Q6i8pVJp6JXjATL7G4r-5DMaX+4qT+Uv9A@mail.gmail.com>
+
+Hola José, como andas!
+
+Por alguna razón me trae algún problema hacerlo de ese modo....lo que venía
+haciendo es dejar las cadenas en
+
+7/6/2020
+7/3/2020
+
+Y luego con lubridate resolvía de este modo...
+
+movimientos.exp$`Fecha de caratulación`<-
+lubridate::mdy(movimientos.exp$`Fecha de caratulación`)
+
+Por eso necesito primero limpiar la cadena...sacando todo lo que sigue al
+espacio.
+
+Muchas gracias!
+
+El mar, 12 oct 2021 a las 12:44, jose luis (<pepeceb en yahoo.es>) escribió:
+
+> ¿asi te valdria?
+>
+> datos$FECHA <- as.Date(datos$FECHA, format = "%d/%m/%Y")
+>
+> En martes, 12 de octubre de 2021 17:28:28 CEST, juan manuel dias <
+> juamadias en gmail.com> escribió:
+>
+>
+> Hola, como andan!
+> Tengo una variable con fechas que están en formato cadena y se me complica
+> para trabajarlas directamente con lubridate, antes tengo que hacerle unos
+> retoques y necesitaría eliminar todo lo que aparece después del espacio en
+> blanco....es decir eliminar horas minutos segundos y p.m. am.
+> Se les ocurre como hacer?
+> Muchas gracias! Juan.
+>
+> 7/6/2020 7:55:38 p.m.
+> 7/3/2020 1:08:36 p.m.
+> 7/3/2020 6:08:35 p.m.
+> 6/1/2020 1:15:19 p.m.
+> 7/8/2020 7:18:26 p.m.
+> 8/6/2020 5:59:32 p.m.
+> 9/1/2020 5:40:57 p.m.
+>
+>     [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From r-uc@ @end|ng |rom uc@@e@  Tue Oct 12 18:42:05 2021
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Tue, 12 Oct 2021 18:42:05 +0200
+Subject: [R-es] 
+ =?iso-8859-1?q?Eliminar_todos_los_caracteres_despu=E9s_de?=
+ =?iso-8859-1?q?_un_espacio_en_blanco?=
+In-Reply-To: <CAOF0weGvNerZxt_+Q6i8pVJp6JXjATL7G4r-5DMaX+4qT+Uv9A@mail.gmail.com>
+References: <CAOF0weHhbt_scW0DByoJ2keYumnLLJJVcx5rxRj27WQ3W0uKzA@mail.gmail.com>
+ <485706553.2963269.1634053467038@mail.yahoo.com>
+ <CAOF0weGvNerZxt_+Q6i8pVJp6JXjATL7G4r-5DMaX+4qT+Uv9A@mail.gmail.com>
+Message-ID: <0c6795e9bd00196b1512a1f457519574cbfe7e6c.camel@uca.es>
+
+Buenas, Juan:
+
+A ver si esto te sirve:
+a <- c("7/6/2020 7:55:38 p.m.", "7/3/2020 1:08:36 p.m.", "7/3/2020
+6:08:35 p.m.")
+f <- function(x) {
+    strsplit(x, " ")[[1]][1]
+}
+unlist(lapply(a, f))
+
+[1] "7/6/2020" "7/3/2020" "7/3/2020"
+
+Un saludo
+
+El mar, 12-10-2021 a las 13:19 -0300, juan manuel dias escribió:
+> Hola José, como andas!
+> 
+> Por alguna razón me trae algún problema hacerlo de ese modo....lo que
+> venía
+> haciendo es dejar las cadenas en
+> 
+> 7/6/2020
+> 7/3/2020
+> 
+> Y luego con lubridate resolvía de este modo...
+> 
+> movimientos.exp$`Fecha de caratulación`<-
+> lubridate::mdy(movimientos.exp$`Fecha de caratulación`)
+> 
+> Por eso necesito primero limpiar la cadena...sacando todo lo que
+> sigue al
+> espacio.
+> 
+> Muchas gracias!
+> 
+> El mar, 12 oct 2021 a las 12:44, jose luis (<pepeceb en yahoo.es>)
+> escribió:
+> 
+> > ¿asi te valdria?
+> > 
+> > datos$FECHA <- as.Date(datos$FECHA, format = "%d/%m/%Y")
+> > 
+> > En martes, 12 de octubre de 2021 17:28:28 CEST, juan manuel dias <
+> > juamadias en gmail.com> escribió:
+> > 
+> > 
+> > Hola, como andan!
+> > Tengo una variable con fechas que están en formato cadena y se me
+> > complica
+> > para trabajarlas directamente con lubridate, antes tengo que
+> > hacerle unos
+> > retoques y necesitaría eliminar todo lo que aparece después del
+> > espacio en
+> > blanco....es decir eliminar horas minutos segundos y p.m. am.
+> > Se les ocurre como hacer?
+> > Muchas gracias! Juan.
+> > 
+> > 7/6/2020 7:55:38 p.m.
+> > 7/3/2020 1:08:36 p.m.
+> > 7/3/2020 6:08:35 p.m.
+> > 6/1/2020 1:15:19 p.m.
+> > 7/8/2020 7:18:26 p.m.
+> > 8/6/2020 5:59:32 p.m.
+> > 9/1/2020 5:40:57 p.m.
+> > 
+> >     [[alternative HTML version deleted]]
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> > 
+> 
+>         [[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Tue Oct 12 20:07:02 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 12 Oct 2021 15:07:02 -0300
+Subject: [R-es] 
+	=?utf-8?q?Eliminar_todos_los_caracteres_despu=C3=A9s_de_u?=
+	=?utf-8?q?n_espacio_en_blanco?=
+In-Reply-To: <0c6795e9bd00196b1512a1f457519574cbfe7e6c.camel@uca.es>
+References: <CAOF0weHhbt_scW0DByoJ2keYumnLLJJVcx5rxRj27WQ3W0uKzA@mail.gmail.com>
+ <485706553.2963269.1634053467038@mail.yahoo.com>
+ <CAOF0weGvNerZxt_+Q6i8pVJp6JXjATL7G4r-5DMaX+4qT+Uv9A@mail.gmail.com>
+ <0c6795e9bd00196b1512a1f457519574cbfe7e6c.camel@uca.es>
+Message-ID: <CAOF0weHU=eAChLnMqRWsYUhiWgpeSWn1fLUnhh_EaiJPnF0ryA@mail.gmail.com>
+
+Hola, muchas gracias!
+Funcionó perfecto!
+Saludos, Juan.
+
+El mar, 12 oct 2021 a las 13:48, Proyecto R-UCA (<r-uca en uca.es>) escribió:
+
+> Buenas, Juan:
+>
+> A ver si esto te sirve:
+> a <- c("7/6/2020 7:55:38 p.m.", "7/3/2020 1:08:36 p.m.", "7/3/2020
+> 6:08:35 p.m.")
+> f <- function(x) {
+>     strsplit(x, " ")[[1]][1]
+> }
+> unlist(lapply(a, f))
+>
+> [1] "7/6/2020" "7/3/2020" "7/3/2020"
+>
+> Un saludo
+>
+> El mar, 12-10-2021 a las 13:19 -0300, juan manuel dias escribió:
+> > Hola José, como andas!
+> >
+> > Por alguna razón me trae algún problema hacerlo de ese modo....lo que
+> > venía
+> > haciendo es dejar las cadenas en
+> >
+> > 7/6/2020
+> > 7/3/2020
+> >
+> > Y luego con lubridate resolvía de este modo...
+> >
+> > movimientos.exp$`Fecha de caratulación`<-
+> > lubridate::mdy(movimientos.exp$`Fecha de caratulación`)
+> >
+> > Por eso necesito primero limpiar la cadena...sacando todo lo que
+> > sigue al
+> > espacio.
+> >
+> > Muchas gracias!
+> >
+> > El mar, 12 oct 2021 a las 12:44, jose luis (<pepeceb en yahoo.es>)
+> > escribió:
+> >
+> > > ¿asi te valdria?
+> > >
+> > > datos$FECHA <- as.Date(datos$FECHA, format = "%d/%m/%Y")
+> > >
+> > > En martes, 12 de octubre de 2021 17:28:28 CEST, juan manuel dias <
+> > > juamadias en gmail.com> escribió:
+> > >
+> > >
+> > > Hola, como andan!
+> > > Tengo una variable con fechas que están en formato cadena y se me
+> > > complica
+> > > para trabajarlas directamente con lubridate, antes tengo que
+> > > hacerle unos
+> > > retoques y necesitaría eliminar todo lo que aparece después del
+> > > espacio en
+> > > blanco....es decir eliminar horas minutos segundos y p.m. am.
+> > > Se les ocurre como hacer?
+> > > Muchas gracias! Juan.
+> > >
+> > > 7/6/2020 7:55:38 p.m.
+> > > 7/3/2020 1:08:36 p.m.
+> > > 7/3/2020 6:08:35 p.m.
+> > > 6/1/2020 1:15:19 p.m.
+> > > 7/8/2020 7:18:26 p.m.
+> > > 8/6/2020 5:59:32 p.m.
+> > > 9/1/2020 5:40:57 p.m.
+> > >
+> > >     [[alternative HTML version deleted]]
+> > >
+> > > _______________________________________________
+> > > R-help-es mailing list
+> > > R-help-es en r-project.org
+> > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> > >
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Oct 14 18:39:50 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Thu, 14 Oct 2021 13:39:50 -0300
+Subject: [R-es] separadores de miles.
+Message-ID: <CAOF0weFshp64bpD2n4TcjjiqrmM8Aii7TrNhWKr5syetE7H9rQ@mail.gmail.com>
+
+Hola. Como andan!
+Consulta, del siguiente data frame la columna "importe $" es de tipo
+numérico y querría que siga siendo numérica pero agregando separadores de
+miles.
+
+Proveedores                                `Importe en $` Porcentaje
+  <chr>                                               <dbl>      <dbl>
+1 ORIEN SA                              336970003          14
+2 JANSSEN CILAG                  111731380            5
+3 MANFREY COOP                 123691353            5
+4 Otros                                      1816210357.        72
+
+Por ejemplo, que 123691353 pase a 123.691.353.
+
+Cuándo hago esto:
+
+tabla.prov.sort$`Importe en $` <- format(tabla.prov.sort$`Importe en $`,
+big.mark = ".")
+class(tabla.prov.sort$`Importe en $`)
+[1] "character"
+
+Y si hago esto:
+
+tabla.prov.sort$`Importe en $` <-
+as.numeric(format(tabla.prov.sort$`Importe en $`, big.mark = "."))
+
+Warning message:
+NAs introducidos por coerción
+
+Se les ocurre como hacer?
+
+Muchas gracias!
+
+Saludos, Juan.
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Oct 14 18:50:16 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Thu, 14 Oct 2021 13:50:16 -0300
+Subject: [R-es] 
+	=?utf-8?q?Eliminar_todos_los_caracteres_despu=C3=A9s_de_u?=
+	=?utf-8?q?n_espacio_en_blanco?=
+In-Reply-To: <CAOKbq8hGqrJmW9J7uVYHSjq+3j0MwFwhXOZO8fdo+Q8oFeWRwA@mail.gmail.com>
+References: <CAOF0weHhbt_scW0DByoJ2keYumnLLJJVcx5rxRj27WQ3W0uKzA@mail.gmail.com>
+ <485706553.2963269.1634053467038@mail.yahoo.com>
+ <CAOF0weGvNerZxt_+Q6i8pVJp6JXjATL7G4r-5DMaX+4qT+Uv9A@mail.gmail.com>
+ <0c6795e9bd00196b1512a1f457519574cbfe7e6c.camel@uca.es>
+ <CAOF0weHU=eAChLnMqRWsYUhiWgpeSWn1fLUnhh_EaiJPnF0ryA@mail.gmail.com>
+ <CAOKbq8hGqrJmW9J7uVYHSjq+3j0MwFwhXOZO8fdo+Q8oFeWRwA@mail.gmail.com>
+Message-ID: <CAOF0weE=iMkuhE1AuiiHwBnDkKSaNsTT-ad1Lf7v=nOn=yqxUw@mail.gmail.com>
+
+Muy buena también! gracias Carlos!
+
+El mié, 13 oct 2021 a las 3:58, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola,
+>
+> Aún cerrada la duda, dejo aquí otra posible alternativa:
+>
+> #---------------
+>
+> > library(stringr)
+> > a <- c("7/6/2020 7:55:38 p.m.", "7/3/2020 1:08:36 p.m.", "7/3/2020
+> 6:08:35 p.m.")
+> > mis_fechas <- word(a, 1, sep = fixed(" "))
+> > mis_fechas
+> [1] "7/6/2020" "7/3/2020" "7/3/2020"
+> >
+>
+> #---------------
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mar, 12 oct 2021 a las 20:07, juan manuel dias (<juamadias en gmail.com>)
+> escribió:
+>
+>> Hola, muchas gracias!
+>> Funcionó perfecto!
+>> Saludos, Juan.
+>>
+>> El mar, 12 oct 2021 a las 13:48, Proyecto R-UCA (<r-uca en uca.es>)
+>> escribió:
+>>
+>> > Buenas, Juan:
+>> >
+>> > A ver si esto te sirve:
+>> > a <- c("7/6/2020 7:55:38 p.m.", "7/3/2020 1:08:36 p.m.", "7/3/2020
+>> > 6:08:35 p.m.")
+>> > f <- function(x) {
+>> >     strsplit(x, " ")[[1]][1]
+>> > }
+>> > unlist(lapply(a, f))
+>> >
+>> > [1] "7/6/2020" "7/3/2020" "7/3/2020"
+>> >
+>> > Un saludo
+>> >
+>> > El mar, 12-10-2021 a las 13:19 -0300, juan manuel dias escribió:
+>> > > Hola José, como andas!
+>> > >
+>> > > Por alguna razón me trae algún problema hacerlo de ese modo....lo que
+>> > > venía
+>> > > haciendo es dejar las cadenas en
+>> > >
+>> > > 7/6/2020
+>> > > 7/3/2020
+>> > >
+>> > > Y luego con lubridate resolvía de este modo...
+>> > >
+>> > > movimientos.exp$`Fecha de caratulación`<-
+>> > > lubridate::mdy(movimientos.exp$`Fecha de caratulación`)
+>> > >
+>> > > Por eso necesito primero limpiar la cadena...sacando todo lo que
+>> > > sigue al
+>> > > espacio.
+>> > >
+>> > > Muchas gracias!
+>> > >
+>> > > El mar, 12 oct 2021 a las 12:44, jose luis (<pepeceb en yahoo.es>)
+>> > > escribió:
+>> > >
+>> > > > ¿asi te valdria?
+>> > > >
+>> > > > datos$FECHA <- as.Date(datos$FECHA, format = "%d/%m/%Y")
+>> > > >
+>> > > > En martes, 12 de octubre de 2021 17:28:28 CEST, juan manuel dias <
+>> > > > juamadias en gmail.com> escribió:
+>> > > >
+>> > > >
+>> > > > Hola, como andan!
+>> > > > Tengo una variable con fechas que están en formato cadena y se me
+>> > > > complica
+>> > > > para trabajarlas directamente con lubridate, antes tengo que
+>> > > > hacerle unos
+>> > > > retoques y necesitaría eliminar todo lo que aparece después del
+>> > > > espacio en
+>> > > > blanco....es decir eliminar horas minutos segundos y p.m. am.
+>> > > > Se les ocurre como hacer?
+>> > > > Muchas gracias! Juan.
+>> > > >
+>> > > > 7/6/2020 7:55:38 p.m.
+>> > > > 7/3/2020 1:08:36 p.m.
+>> > > > 7/3/2020 6:08:35 p.m.
+>> > > > 6/1/2020 1:15:19 p.m.
+>> > > > 7/8/2020 7:18:26 p.m.
+>> > > > 8/6/2020 5:59:32 p.m.
+>> > > > 9/1/2020 5:40:57 p.m.
+>> > > >
+>> > > >     [[alternative HTML version deleted]]
+>> > > >
+>> > > > _______________________________________________
+>> > > > R-help-es mailing list
+>> > > > R-help-es en r-project.org
+>> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> > > >
+>> > >
+>> > >         [[alternative HTML version deleted]]
+>> > >
+>> > > _______________________________________________
+>> > > R-help-es mailing list
+>> > > R-help-es en r-project.org
+>> > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From jcm|d @end|ng |rom c@rmon@roch@@com  Thu Oct 14 18:51:38 2021
+From: jcm|d @end|ng |rom c@rmon@roch@@com (JCMld)
+Date: Thu, 14 Oct 2021 18:51:38 +0200
+Subject: [R-es] separadores de miles.
+In-Reply-To: <CAOF0weFshp64bpD2n4TcjjiqrmM8Aii7TrNhWKr5syetE7H9rQ@mail.gmail.com>
+References: <CAOF0weFshp64bpD2n4TcjjiqrmM8Aii7TrNhWKr5syetE7H9rQ@mail.gmail.com>
+Message-ID: <005e01d7c11b$c20d5390$4627fab0$@carmonarocha.com>
+
+Hola Juan Manuel,
+
+Si el dato es numérico no puede guardarse con separadores, a no ser que lo
+convirtieras a character, ya que el separador es un tema de formato de
+salida.
+
+Entonces tienes 2 opciones, o lo guardas como numérico, pero a la hora de
+presentarlo lo imprimes con la función format, o bien lo conviertes a
+character con la misma función.
+
+Me explico:
+
+> a<-10023.2
+> a
+[1] 10023.2
+> format(a,decimal.mark = ",",big.mark = ".")
+[1] "10.023,2"
+> 
+> b<-123691353
+> 
+> format(b,decimal.mark = ",",big.mark = ".")
+[1] "123.691.353"
+
+
+Saludos,
+Juan
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de juan manuel
+dias
+Enviado el: jueves, 14 de octubre de 2021 18:40
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] separadores de miles.
+
+Hola. Como andan!
+Consulta, del siguiente data frame la columna "importe $" es de tipo
+numérico y querría que siga siendo numérica pero agregando separadores de
+miles.
+
+Proveedores                                `Importe en $` Porcentaje
+  <chr>                                               <dbl>      <dbl>
+1 ORIEN SA                              336970003          14
+2 JANSSEN CILAG                  111731380            5
+3 MANFREY COOP                 123691353            5
+4 Otros                                      1816210357.        72
+
+Por ejemplo, que 123691353 pase a 123.691.353.
+
+Cuándo hago esto:
+
+tabla.prov.sort$`Importe en $` <- format(tabla.prov.sort$`Importe en $`,
+big.mark = ".") class(tabla.prov.sort$`Importe en $`) [1] "character"
+
+Y si hago esto:
+
+tabla.prov.sort$`Importe en $` <-
+as.numeric(format(tabla.prov.sort$`Importe en $`, big.mark = "."))
+
+Warning message:
+NAs introducidos por coerción
+
+Se les ocurre como hacer?
+
+Muchas gracias!
+
+Saludos, Juan.
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Oct 14 20:45:10 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Thu, 14 Oct 2021 15:45:10 -0300
+Subject: [R-es] separadores de miles.
+In-Reply-To: <005e01d7c11b$c20d5390$4627fab0$@carmonarocha.com>
+References: <CAOF0weFshp64bpD2n4TcjjiqrmM8Aii7TrNhWKr5syetE7H9rQ@mail.gmail.com>
+ <005e01d7c11b$c20d5390$4627fab0$@carmonarocha.com>
+Message-ID: <CAOF0weG7uTjo+Dx4gvJAFPiC7-2b7nWJAqCLfykDezj_6OLo_g@mail.gmail.com>
+
+Claro entiendo! ...en algunos casos pude guardar como character y mostrar
+la los números con los separadores, pero hay tablas donde necesito además
+de mostrar el número hacer un gráfico con esa misma variable...pero cuándo
+modifico a character "monto total de la factura" me arroja error porque no
+puede hacer el gráfico de barras al no ser numérica!
+Alguien sabe como resolver esto?
+
+
+[image: image.png]
+
+El jue, 14 oct 2021 a las 13:51, JCMld (<jcmld en carmonarocha.com>) escribió:
+
+> Hola Juan Manuel,
+>
+> Si el dato es numérico no puede guardarse con separadores, a no ser que lo
+> convirtieras a character, ya que el separador es un tema de formato de
+> salida.
+>
+> Entonces tienes 2 opciones, o lo guardas como numérico, pero a la hora de
+> presentarlo lo imprimes con la función format, o bien lo conviertes a
+> character con la misma función.
+>
+> Me explico:
+>
+> > a<-10023.2
+> > a
+> [1] 10023.2
+> > format(a,decimal.mark = ",",big.mark = ".")
+> [1] "10.023,2"
+> >
+> > b<-123691353
+> >
+> > format(b,decimal.mark = ",",big.mark = ".")
+> [1] "123.691.353"
+>
+>
+> Saludos,
+> Juan
+>
+> -----Mensaje original-----
+> De: R-help-es <r-help-es-bounces en r-project.org> En nombre de juan manuel
+> dias
+> Enviado el: jueves, 14 de octubre de 2021 18:40
+> Para: Lista R <r-help-es en r-project.org>
+> Asunto: [R-es] separadores de miles.
+>
+> Hola. Como andan!
+> Consulta, del siguiente data frame la columna "importe $" es de tipo
+> numérico y querría que siga siendo numérica pero agregando separadores de
+> miles.
+>
+> Proveedores                                `Importe en $` Porcentaje
+>   <chr>                                               <dbl>      <dbl>
+> 1 ORIEN SA                              336970003          14
+> 2 JANSSEN CILAG                  111731380            5
+> 3 MANFREY COOP                 123691353            5
+> 4 Otros                                      1816210357.        72
+>
+> Por ejemplo, que 123691353 pase a 123.691.353.
+>
+> Cuándo hago esto:
+>
+> tabla.prov.sort$`Importe en $` <- format(tabla.prov.sort$`Importe en $`,
+> big.mark = ".") class(tabla.prov.sort$`Importe en $`) [1] "character"
+>
+> Y si hago esto:
+>
+> tabla.prov.sort$`Importe en $` <-
+> as.numeric(format(tabla.prov.sort$`Importe en $`, big.mark = "."))
+>
+> Warning message:
+> NAs introducidos por coerción
+>
+> Se les ocurre como hacer?
+>
+> Muchas gracias!
+>
+> Saludos, Juan.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211014/091325ee/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 13861 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211014/091325ee/attachment-0001.png>
+
+From jcm|d @end|ng |rom c@rmon@roch@@com  Thu Oct 14 22:29:50 2021
+From: jcm|d @end|ng |rom c@rmon@roch@@com (JCMld)
+Date: Thu, 14 Oct 2021 22:29:50 +0200
+Subject: [R-es] separadores de miles.
+In-Reply-To: <CAOF0weG7uTjo+Dx4gvJAFPiC7-2b7nWJAqCLfykDezj_6OLo_g@mail.gmail.com>
+References: <CAOF0weFshp64bpD2n4TcjjiqrmM8Aii7TrNhWKr5syetE7H9rQ@mail.gmail.com>
+ <005e01d7c11b$c20d5390$4627fab0$@carmonarocha.com>
+ <CAOF0weG7uTjo+Dx4gvJAFPiC7-2b7nWJAqCLfykDezj_6OLo_g@mail.gmail.com>
+Message-ID: <006901d7c13a$3dcf78f0$b96e6ad0$@carmonarocha.com>
+
+Quizás podrías tener 2 columnas, una numérica sobre la que se base el gráfico y otra tipo carácter, con los separadores para cuando necesites usar esa presentación.
+
+Saludos,
+
+Juan
+
+ 
+
+ 
+
+De: juan manuel dias <juamadias en gmail.com> 
+Enviado el: jueves, 14 de octubre de 2021 20:45
+Para: JCMld <jcmld en carmonarocha.com>
+CC: Lista R <r-help-es en r-project.org>
+Asunto: Re: [R-es] separadores de miles.
+
+ 
+
+Claro entiendo! ...en algunos casos pude guardar como character y mostrar la los números con los separadores, pero hay tablas donde necesito además de mostrar el número hacer un gráfico con esa misma variable...pero cuándo modifico a character "monto total de la factura" me arroja error porque no puede hacer el gráfico de barras al no ser numérica!
+
+Alguien sabe como resolver esto? 
+
+ 
+
+ 
+
+
+
+ 
+
+El jue, 14 oct 2021 a las 13:51, JCMld (<jcmld en carmonarocha.com <mailto:jcmld en carmonarocha.com> >) escribió:
+
+Hola Juan Manuel,
+
+Si el dato es numérico no puede guardarse con separadores, a no ser que lo
+convirtieras a character, ya que el separador es un tema de formato de
+salida.
+
+Entonces tienes 2 opciones, o lo guardas como numérico, pero a la hora de
+presentarlo lo imprimes con la función format, o bien lo conviertes a
+character con la misma función.
+
+Me explico:
+
+> a<-10023.2
+> a
+[1] 10023.2
+> format(a,decimal.mark = ",",big.mark = ".")
+[1] "10.023,2"
+> 
+> b<-123691353
+> 
+> format(b,decimal.mark = ",",big.mark = ".")
+[1] "123.691.353"
+
+
+Saludos,
+Juan
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org <mailto:r-help-es-bounces en r-project.org> > En nombre de juan manuel
+dias
+Enviado el: jueves, 14 de octubre de 2021 18:40
+Para: Lista R <r-help-es en r-project.org <mailto:r-help-es en r-project.org> >
+Asunto: [R-es] separadores de miles.
+
+Hola. Como andan!
+Consulta, del siguiente data frame la columna "importe $" es de tipo
+numérico y querría que siga siendo numérica pero agregando separadores de
+miles.
+
+Proveedores                                `Importe en $` Porcentaje
+  <chr>                                               <dbl>      <dbl>
+1 ORIEN SA                              336970003          14
+2 JANSSEN CILAG                  111731380            5
+3 MANFREY COOP                 123691353            5
+4 Otros                                      1816210357.        72
+
+Por ejemplo, que 123691353 pase a 123.691.353.
+
+Cuándo hago esto:
+
+tabla.prov.sort$`Importe en $` <- format(tabla.prov.sort$`Importe en $`,
+big.mark = ".") class(tabla.prov.sort$`Importe en $`) [1] "character"
+
+Y si hago esto:
+
+tabla.prov.sort$`Importe en $` <-
+as.numeric(format(tabla.prov.sort$`Importe en $`, big.mark = "."))
+
+Warning message:
+NAs introducidos por coerción
+
+Se les ocurre como hacer?
+
+Muchas gracias!
+
+Saludos, Juan.
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org <mailto:R-help-es en r-project.org> 
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211014/7cdea748/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 13861 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211014/7cdea748/attachment-0001.png>
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Fri Oct 22 07:49:28 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Fri, 22 Oct 2021 07:49:28 +0200
+Subject: [R-es] =?utf-8?q?Error_al_cargar_paquetes_despu=C3=A9s_de_reinst?=
+	=?utf-8?q?alar_R_y_Rstudio_=28Urgente=29?=
+Message-ID: <CAF3uytVt-rJUr6jduK7PfL56d=aRvcJSYL9LpEGbyPCCPdTCOA@mail.gmail.com>
+
+Buenos días, después de reinstalar R y Rstudio me da este error:
+
+Error: package or namespace load failed for ?ggplot2? in library.dynam(lib,
+package, package.lib):
+ DLL ?rlang? not found: maybe not installed for this architecture?
+In addition: Warning message:
+package ?ggplot2? was built under R version 4.0.5
+
+Lo ideal sería recuperar cómo estaba todo ayer tarde, pero supongo que ya
+no se puede.
+
+Gracias por ayudarme cuanto antes, puesto que esta tarde tengo un curso.
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Fri Oct 22 08:08:34 2021
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Fri, 22 Oct 2021 08:08:34 +0200
+Subject: [R-es] 
+ =?utf-8?q?Error_al_cargar_paquetes_despu=C3=A9s_de_reinst?=
+ =?utf-8?q?alar_R_y_Rstudio_=28Urgente=29?=
+In-Reply-To: <CAF3uytVt-rJUr6jduK7PfL56d=aRvcJSYL9LpEGbyPCCPdTCOA@mail.gmail.com>
+References: <CAF3uytVt-rJUr6jduK7PfL56d=aRvcJSYL9LpEGbyPCCPdTCOA@mail.gmail.com>
+Message-ID: <c89ada08-5696-3508-fb79-70fef3ed7d24@urjc.es>
+
+Hola:
+Vas a tener que ir actualizando todos los paquetes para los que te de 
+error al cargar, es decir:
+
+install.packages("rlang", dependencies =TRUE)
+
+Suerte!
+Marcelino
+
+El 22/10/2021 a las 7:49, Manuel Mendoza escribió:
+> Buenos días, después de reinstalar R y Rstudio me da este error:
+>
+> Error: package or namespace load failed for ?ggplot2? in library.dynam(lib,
+> package, package.lib):
+>   DLL ?rlang? not found: maybe not installed for this architecture?
+> In addition: Warning message:
+> package ?ggplot2? was built under R version 4.0.5
+>
+> Lo ideal sería recuperar cómo estaba todo ayer tarde, pero supongo que ya
+> no se puede.
+>
+> Gracias por ayudarme cuanto antes, puesto que esta tarde tengo un curso.
+> Manuel
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> .
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri Oct 22 08:51:24 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 22 Oct 2021 08:51:24 +0200
+Subject: [R-es] 
+ =?utf-8?q?Error_al_cargar_paquetes_despu=C3=A9s_de_reinst?=
+ =?utf-8?q?alar_R_y_Rstudio_=28Urgente=29?=
+In-Reply-To: <CAF3uytVt-rJUr6jduK7PfL56d=aRvcJSYL9LpEGbyPCCPdTCOA@mail.gmail.com>
+References: <CAF3uytVt-rJUr6jduK7PfL56d=aRvcJSYL9LpEGbyPCCPdTCOA@mail.gmail.com>
+Message-ID: <5D6CB168-8AD4-4A46-BB7D-1B3D612E4604@gmail.com>
+
+Manuel,
+
+Yo cuando actualizo me gusta empezar de cero, en vez de ?como estaba ayer tarde?. No obstante hay formas de hacerlo, básicamente copiar todos los directorios de paquetes de la versión anterior en la carpeta de paquetes de la versión nueva, y hacer un update.packages con el argumento adecuado para que compruebe la versión.
+
+Dicho esto, el error que te sale puede ser porque estás intentando instalar el paquete desde los fuentes y tiene que compilar. En RStudio, al instalar paquetes si detecta una versión más actual pero que necesita compilación, nos pregunta si queremos instalar la más reciente. Si le decimos que sí, pero no tenemos las herramientas de desarrollo, entonces no puede instalarla. Si te hace esa pregunta, mejor responde No y así no te dará error al instalar paquetes.
+
+Un saludo,
+Emilio
+
+Emilio L. Cano
+http://emilio.lcano.com 
+
+
+
+
+> El 22 oct 2021, a las 7:49, Manuel Mendoza <mmendoza en fulbrightmail.org> escribió:
+> 
+> Buenos días, después de reinstalar R y Rstudio me da este error:
+> 
+> Error: package or namespace load failed for ?ggplot2? in library.dynam(lib,
+> package, package.lib):
+> DLL ?rlang? not found: maybe not installed for this architecture?
+> In addition: Warning message:
+> package ?ggplot2? was built under R version 4.0.5
+> 
+> Lo ideal sería recuperar cómo estaba todo ayer tarde, pero supongo que ya
+> no se puede.
+> 
+> Gracias por ayudarme cuanto antes, puesto que esta tarde tengo un curso.
+> Manuel
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Fri Oct 22 10:01:12 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Fri, 22 Oct 2021 10:01:12 +0200
+Subject: [R-es] 
+	=?utf-8?q?Error_al_cargar_paquetes_despu=C3=A9s_de_reinst?=
+	=?utf-8?q?alar_R_y_Rstudio_=28Urgente=29?=
+In-Reply-To: <CAOKbq8i=1cp1ikzkkv1pVdb1tTa1z4Ry5uCPhXS1OONWhmEyyg@mail.gmail.com>
+References: <CAF3uytVt-rJUr6jduK7PfL56d=aRvcJSYL9LpEGbyPCCPdTCOA@mail.gmail.com>
+ <5D6CB168-8AD4-4A46-BB7D-1B3D612E4604@gmail.com>
+ <CAOKbq8i=1cp1ikzkkv1pVdb1tTa1z4Ry5uCPhXS1OONWhmEyyg@mail.gmail.com>
+Message-ID: <CAF3uytVW-0_-+bqD2X31mZrTmJK1V0UizCm0K1L8pwWKhJfz8g@mail.gmail.com>
+
+Gracias Carlos, estaba a punto de escribirte para decirte que todo parece
+resuelto. Al reiniciar el ordenador, Microsoft me ha preguntado si quería
+recomponer Onedrive, o algo así. Ha hecho no sé qué en 14 pasos, y todo
+parece estar ya normal. ¡Me he agobiado un montón!
+Gracias de nuevo,
+Manuel
+
+El vie, 22 oct 2021 a las 9:51, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola,
+>
+> Creo que el error que tienes, supongo que estás en Windows, es que no has
+> instalado las RTools...
+>
+> La secuencia de instalación que te sugiero es esta:
+> 1. RTools.
+> 2. R
+> 3. RStudio
+>
+> Saludos,
+> Carlos Ortega.
+> www.qualityexcellence.es
+>
+> El vie, 22 oct 2021 a las 8:52, Emilio L. Cano (<emilopezcano en gmail.com>)
+> escribió:
+>
+>> Manuel,
+>>
+>> Yo cuando actualizo me gusta empezar de cero, en vez de ?como estaba ayer
+>> tarde?. No obstante hay formas de hacerlo, básicamente copiar todos los
+>> directorios de paquetes de la versión anterior en la carpeta de paquetes de
+>> la versión nueva, y hacer un update.packages con el argumento adecuado para
+>> que compruebe la versión.
+>>
+>> Dicho esto, el error que te sale puede ser porque estás intentando
+>> instalar el paquete desde los fuentes y tiene que compilar. En RStudio, al
+>> instalar paquetes si detecta una versión más actual pero que necesita
+>> compilación, nos pregunta si queremos instalar la más reciente. Si le
+>> decimos que sí, pero no tenemos las herramientas de desarrollo, entonces no
+>> puede instalarla. Si te hace esa pregunta, mejor responde No y así no te
+>> dará error al instalar paquetes.
+>>
+>> Un saludo,
+>> Emilio
+>>
+>> Emilio L. Cano
+>> http://emilio.lcano.com
+>>
+>>
+>>
+>>
+>> > El 22 oct 2021, a las 7:49, Manuel Mendoza <mmendoza en fulbrightmail.org>
+>> escribió:
+>> >
+>> > Buenos días, después de reinstalar R y Rstudio me da este error:
+>> >
+>> > Error: package or namespace load failed for ?ggplot2? in
+>> library.dynam(lib,
+>> > package, package.lib):
+>> > DLL ?rlang? not found: maybe not installed for this architecture?
+>> > In addition: Warning message:
+>> > package ?ggplot2? was built under R version 4.0.5
+>> >
+>> > Lo ideal sería recuperar cómo estaba todo ayer tarde, pero supongo que
+>> ya
+>> > no se puede.
+>> >
+>> > Gracias por ayudarme cuanto antes, puesto que esta tarde tengo un curso.
+>> > Manuel
+>> >
+>> >       [[alternative HTML version deleted]]
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From c@r|o@@@nto@@c@m @end|ng |rom gm@||@com  Sun Oct 31 12:40:31 2021
+From: c@r|o@@@nto@@c@m @end|ng |rom gm@||@com (Carlos Santos)
+Date: Sun, 31 Oct 2021 12:40:31 +0100
+Subject: [R-es] Error in { : task 1 failed - "subscript out of bounds"
+Message-ID: <CAASO=wDd+CVKYMhWa7ns+V7Op6s+w-8mFUdnm=SUR39jsZ8gmw@mail.gmail.com>
+
+Hola, cono estan
+
+Estoy haciendo un package y resulta que un bucle foreach, me da el error
+de  subscript out of bounds, cuando le incluyo dentro del package el import
+de las librerias
+
+@ importFrom stats dist filter
+
+Pero si no le incluyo el import, entonces el bucle funciona correctamente.
+el problema es que si no le incluyo el importfrom correspondiente de esas
+librerias, entonces al chequear el pakcage salen NOTES de que seria bueno
+incluirlas.
+
+Y en este punto, estoy perdido por mas que leo el bucle, a ver si alguien
+me da luz en esta oscuridad en la que me encuentro.
+
+Muchas gracias a todos, un saludo cordial
+
+les incluyo el bucle:
+
+ results1 <- foreach(i=1:rr, .combine = "c", .packages=c("foreach", "irr",
+"magrittr", "stats", "dplyr")) %dopar% {
+    smc <- sum(data3[i,1:rr]==max(data3[i,1:rr]))
+    RECEPTOR <- as.data.frame(matrix(0, ncol=2, nrow = smc))
+    EMISOR <- data2[i,1]
+    RECEPTOR[,1] <- data2[which(as.vector(data3[i,])==max(data3[i,])),1]  #
+cluster receptores con mayor coincidencia
+    for (y in smc) {
+      RECEPTOR[y,2] <- data1[1:numvar+1] %>% filter(data1$Clus.Multi.OPTIMO
+%in% c(EMISOR,RECEPTOR[y,1])) %>%
+        head() %>% kappam.fleiss() %$% value + 1
+    }
+    data4[i,1] <- as.numeric(which(data2[,1] ==
+RECEPTOR[which.max(RECEPTOR[,2]),1]))[1]
+  }
+
+	[[alternative HTML version deleted]]
+
+
+From c@r|o@@@nto@@c@m @end|ng |rom gm@||@com  Sun Oct 31 18:37:57 2021
+From: c@r|o@@@nto@@c@m @end|ng |rom gm@||@com (Carlos Santos)
+Date: Sun, 31 Oct 2021 18:37:57 +0100
+Subject: [R-es] Error subscript out of bounds
+Message-ID: <CAASO=wBMm_4P1oQmgwpgNzmZm903MjnhY5vbKz+LpVMsNvh-fA@mail.gmail.com>
+
+Hola a todos,
+
+Estoy haciendo un package y resulta que un bucle foreach, me da el error
+de  subscript out of bounds, cuando le incluyo dentro del package el import
+de las librerias
+
+@ importFrom stats dist filter
+
+Pero si no le incluyo el import, entonces el bucle funciona correctamente.
+el problema es que si no le incluyo el importfrom correspondiente de esas
+librerias, entonces al chequear el pakcage salen NOTES de que seria bueno
+incluirlas.
+
+Y en este punto, estoy perdido por mas que leo el bucle, a ver si alguien
+me da luz en esta oscuridad en la que me encuentro.
+
+Muchas gracias a todos, un saludo cordial
+
+les incluyo el bucle:
+
+ results1 <- foreach(i=1:rr, .combine = "c", .packages=c("foreach", "irr",
+"magrittr", "stats", "dplyr")) %dopar% {
+    smc <- sum(data3[i,1:rr]==max(data3[i,1:rr]))
+    RECEPTOR <- as.data.frame(matrix(0, ncol=2, nrow = smc))
+    EMISOR <- data2[i,1]
+    RECEPTOR[,1] <- data2[which(as.vector(data3[i,])==max(data3[i,])),1]  #
+cluster receptores con mayor coincidencia
+    for (y in smc) {
+      RECEPTOR[y,2] <- data1[1:numvar+1] %>% filter(data1$Clus.Multi.OPTIMO
+%in% c(EMISOR,RECEPTOR[y,1])) %>%
+        head() %>% kappam.fleiss() %$% value + 1
+    }
+    data4[i,1] <- as.numeric(which(data2[,1] ==
+RECEPTOR[which.max(RECEPTOR[,2]),1]))[1]
+  }
+
+	[[alternative HTML version deleted]]
+
+

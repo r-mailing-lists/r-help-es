@@ -1,0 +1,5124 @@
+From mfrosabal en uci.cu  Mon Nov  1 20:34:55 2010
+From: mfrosabal en uci.cu (Maikel (UCI-2009))
+Date: Mon, 1 Nov 2010 14:34:55 -0500 (CST)
+Subject: [R-es] Rendimiento del R
+In-Reply-To: <869565493.20439651288639800832.JavaMail.root@ucimail4.uci.cu>
+Message-ID: <55591901.20443881288640095740.JavaMail.root@ucimail4.uci.cu>
+
+Ante todo un saludo a toda la comunidad, en estos momentos me encuentro enfrascado en la investigación de algunas características del R. Le escribo para que me den la opinión que tienen acerca de la cantidad de volumen de datos que soporta el R, si para cierta cantidad de datos deja de funcionar o eso es insignificante para el. Espero que me ayuden con esto, ah en caso de que R no soporte determinada cantidad de datos, podría Pl/R soportarlo o este presenta este mismo problema?
+
+
+From cgb en datanalytics.com  Tue Nov  2 10:17:55 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 2 Nov 2010 10:17:55 +0100
+Subject: [R-es] matrices
+In-Reply-To: <4ccb826f.ca05ec0a.01f2.ffff99e4@mx.google.com>
+References: <4ccb826f.ca05ec0a.01f2.ffff99e4@mx.google.com>
+Message-ID: <AANLkTi=quK+XaW=Gt4adSUcgpHorY9gZ=ADW874-gHFD@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Creo que la expresión que quieres es ésta:
+
+vii <-  t(ti) %*% G %*% ti
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 30 de octubre de 2010 04:26, Javier Marcuzzi
+<javier.ruben.marcuzzi en gmail.com> escribió:
+> Hola a todos, les consulto algo fácil, pero no me doy cuenta.
+>
+>
+>
+> Estoy siguiendo un ejemplo de un libro, pero no llego al resultado con R.
+>
+>
+>
+> Lo escribo el problema en Word para usar el editor de ecuaciones, porque es
+> tan sencillo que mi error es increíble.
+>
+>
+>
+> El código en R son solo 3 renglones.
+>
+>
+>
+> Javier
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From coforfe en gmail.com  Tue Nov  2 12:08:20 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Tue, 2 Nov 2010 12:08:20 +0100
+Subject: [R-es] Rendimiento del R
+In-Reply-To: <55591901.20443881288640095740.JavaMail.root@ucimail4.uci.cu>
+References: <869565493.20439651288639800832.JavaMail.root@ucimail4.uci.cu>
+	<55591901.20443881288640095740.JavaMail.root@ucimail4.uci.cu>
+Message-ID: <AANLkTi=LQF43ropWe0NoSDUQVv51UKvn5PpSjJVAp0g+@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101102/c884d1ab/attachment.pl>
+
+From mfrosabal en uci.cu  Tue Nov  2 20:03:05 2010
+From: mfrosabal en uci.cu (Maikel (UCI-2009))
+Date: Tue, 2 Nov 2010 14:03:05 -0500 (CST)
+Subject: [R-es] Rendimiento del R
+In-Reply-To: <857602628.21144611288724478248.JavaMail.root@ucimail4.uci.cu>
+Message-ID: <777848741.21146031288724585655.JavaMail.root@ucimail4.uci.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101102/8bf97da6/attachment.pl>
+
+From cgb en datanalytics.com  Tue Nov  2 20:20:02 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 2 Nov 2010 20:20:02 +0100
+Subject: [R-es] Rendimiento del R
+In-Reply-To: <777848741.21146031288724585655.JavaMail.root@ucimail4.uci.cu>
+References: <857602628.21144611288724478248.JavaMail.root@ucimail4.uci.cu>
+	<777848741.21146031288724585655.JavaMail.root@ucimail4.uci.cu>
+Message-ID: <AANLkTinr-x6=wnDJFWkkuG8HxfNbCRxNkYBtsrvU+02G@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Hace mucho que no toco PL/R, pero no creo que ganes demasiado con él
+en término de capacidad de proceso. Usando PL/R tu motor (el programa
+que va a hacer los cálculos) será R, no Postgres.
+
+En la documentación de PL/R aparece este ejemplo:
+
+CREATE TABLE emp (name text, age int, salary numeric(10,2));
+INSERT INTO emp VALUES ('Joe', 41, 250000.00);
+INSERT INTO emp VALUES ('Jim', 25, 120000.00);
+INSERT INTO emp VALUES ('Jon', 35, 50000.00);
+
+
+CREATE OR REPLACE FUNCTION overpaid (emp) RETURNS bool AS '
+    if (200000 < arg1$salary) {
+        return(TRUE)
+    }
+    if (arg1$age < 30 && 100000 < arg1$salary) {
+        return(TRUE)
+    }
+    return(FALSE)
+' LANGUAGE 'plr';
+
+
+SELECT name, overpaid(emp) FROM emp;
+ name | overpaid
+------+----------
+ Joe  | t
+ Jim  | t
+ Jon  | f
+(3 rows)
+
+
+Si te das cuenta, en la definición de la función (de R) la tabla de
+origen se convierte en un DF de R. Me extrañaría mucho que la
+implementación interna fuese muy distinta de:
+
+1) Transforma la tabla en un df de R.
+2) Opera con R (en memoria y con las consabidas limitaciones).
+3) Vuelca el resultado a Postgres como una tabla.
+
+Igual no es así. Pero podías hacer la prueba con una tabla grande
+midiendo el uso de memoria del proceso R (para eso usas Linux, ¿no?)
+para ver si es cierto.
+
+Lo que sí que puedes hacer es usar Postgres para agregar y preparar
+datos que luego exportes a R.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+El día 2 de noviembre de 2010 20:03, Maikel (UCI-2009)
+<mfrosabal en uci.cu> escribió:
+> El SO que utilizo es Linux, Ubuntu 10.04, Motherboard P5LD2, RAM 1GB, micro P-30. Realmente quiero saber si el PL/R, lenguaje procedural que se le puede añadir al gestor de base de datos PostgreSQL es mejor en cuanto rendimiento y soporte de datos que el R. Según lo que he visto PL/R utiliza el interprete de R, por tanto si R no soporta una gran cantidad de datos entonces PL/R tampoco lo soporta, que creen ustedes. Para lo que quiero hacer, se que usar PL/R me mejoraría en tiempo de respuesta a la hora de dar los resultados porque lo hago directamente desde el gestor, pero sigue el problema de la cantidad de los datos. Como pudiera resolver este problema, imaginense una base de datos con más de 1 millon de datos. Estaré al tanto de cualquier sugerencia, gracias.
+> ----- Mensaje original -----
+> De: "Carlos Ortega" <coforfe en gmail.com>
+> Para: "Ing. Maikel Rosabal" <mfrosabal en uci.cu>
+> CC: r-help-es en r-project.org
+> Enviados: Martes, 2 de Noviembre 2010 6:08:20 (GMT-0500) Auto-Detected
+> Asunto: Re: [R-es] Rendimiento del R
+>
+> Hola Maikel,
+>
+>
+> Hay múltiples hilos en el R-Help (Inglés) sobre este tema.
+> Incluso en las "FAQ" que acompañan a cada liberación.
+>
+>
+> Para empezar sería conveniente saber sobre qué plataforma (SO, tipo de hardware que tienes, etc) quieres hacer tu análisis, pruebas, etc.
+>
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> 2010/11/1 Maikel (UCI-2009) < mfrosabal en uci.cu >
+>
+>
+> Ante todo un saludo a toda la comunidad, en estos momentos me encuentro enfrascado en la investigación de algunas características del R. Le escribo para que me den la opinión que tienen acerca de la cantidad de volumen de datos que soporta el R, si para cierta cantidad de datos deja de funcionar o eso es insignificante para el. Espero que me ayuden con esto, ah en caso de que R no soporte determinada cantidad de datos, podría Pl/R soportarlo o este presenta este mismo problema?
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue Nov  2 20:24:06 2010
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 2 Nov 2010 20:24:06 +0100
+Subject: [R-es] Rendimiento del R
+In-Reply-To: <777848741.21146031288724585655.JavaMail.root@ucimail4.uci.cu>
+References: <857602628.21144611288724478248.JavaMail.root@ucimail4.uci.cu>,
+	<777848741.21146031288724585655.JavaMail.root@ucimail4.uci.cu>
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943771938245204@ASSCCEVS02.sergas.local>
+
+Hola Maikel.
+
+Por lo que cuentas, quien realiza el trabajo de gestión de los datos es el PostgreSQL. Aunque utilices otro lenguaje para realizar las consultas, el "gestor" seguirìa siendo el mismo....  es eso lo que quieres hacer? o quieres sustituir al PosgreSQL por R como gestor? (cosa que me parece descabellada).
+
+Un Saludo,
+Miguel.
+
+
+
+________________________________________
+De: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] En nombre de Maikel (UCI-2009) [mfrosabal en uci.cu]
+Enviado el: martes, 02 de noviembre de 2010 20:03
+Para: Carlos Ortega
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] Rendimiento del R
+
+El SO que utilizo es Linux, Ubuntu 10.04, Motherboard P5LD2, RAM 1GB, micro P-30. Realmente quiero saber si el PL/R, lenguaje procedural que se le puede añadir al gestor de base de datos PostgreSQL es mejor en cuanto rendimiento y soporte de datos que el R. Según lo que he visto PL/R utiliza el interprete de R, por tanto si R no soporta una gran cantidad de datos entonces PL/R tampoco lo soporta, que creen ustedes. Para lo que quiero hacer, se que usar PL/R me mejoraría en tiempo de respuesta a la hora de dar los resultados porque lo hago directamente desde el gestor, pero sigue el problema de la cantidad de los datos. Como pudiera resolver este problema, imaginense una base de datos con más de 1 millon de datos. Estaré al tanto de cualquier sugerencia, gracias.
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada. 
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm 
+
+XACOBEO 2010: http://www.xacobeo.org
+
+
+From mfrosabal en uci.cu  Tue Nov  2 20:43:48 2010
+From: mfrosabal en uci.cu (Maikel (UCI-2009))
+Date: Tue, 2 Nov 2010 14:43:48 -0500 (CST)
+Subject: [R-es] Rendimiento del R
+In-Reply-To: <126382194.21174491288726875427.JavaMail.root@ucimail4.uci.cu>
+Message-ID: <849004138.21176761288727028670.JavaMail.root@ucimail4.uci.cu>
+
+A ver, parece que no me expliqué bien, o no me hice entender. Resulta que tenemos un servidor que permite generar reportes desde el punto de vista estadístico. Funciona de la siguiente manera, nuestro servidor le envía un fichero al R con las ordenes necesarias para que ejecute cierta y determinada función estadistica. El R retorna luego de efectuar la operación el resultado final. Que sucede que haciendo esto hay mucho tráfico de envía de información y lo hace más lento. Ahora PL/R reconoce lenguaje R entonces podemos hacerlo directo al gestor y asi lograriamos mayor rendimiento. Algo que no dije del R y es que para inmensas cantidades de datos no es ideal, entonces creo que el PL/R tampoco lo es pero esto ultimo no lo he probado y por eso lo consulto con ustedes.
+----- Mensaje original -----
+De: "miguel angel rodriguez muinos" <miguel.angel.rodriguez.muinos en sergas.es>
+Para: mfrosabal en uci.cu, coforfe en gmail.com
+CC: r-help-es en r-project.org
+Enviados: Martes, 2 de Noviembre 2010 14:24:06 (GMT-0500) Auto-Detected
+Asunto: RE: [R-es] Rendimiento del R
+
+Hola Maikel.
+
+Por lo que cuentas, quien realiza el trabajo de gestión de los datos es el PostgreSQL. Aunque utilices otro lenguaje para realizar las consultas, el "gestor" seguirìa siendo el mismo....  es eso lo que quieres hacer? o quieres sustituir al PosgreSQL por R como gestor? (cosa que me parece descabellada).
+
+Un Saludo,
+Miguel.
+
+
+
+________________________________________
+De: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] En nombre de Maikel (UCI-2009) [mfrosabal en uci.cu]
+Enviado el: martes, 02 de noviembre de 2010 20:03
+Para: Carlos Ortega
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] Rendimiento del R
+
+El SO que utilizo es Linux, Ubuntu 10.04, Motherboard P5LD2, RAM 1GB, micro P-30. Realmente quiero saber si el PL/R, lenguaje procedural que se le puede añadir al gestor de base de datos PostgreSQL es mejor en cuanto rendimiento y soporte de datos que el R. Según lo que he visto PL/R utiliza el interprete de R, por tanto si R no soporta una gran cantidad de datos entonces PL/R tampoco lo soporta, que creen ustedes. Para lo que quiero hacer, se que usar PL/R me mejoraría en tiempo de respuesta a la hora de dar los resultados porque lo hago directamente desde el gestor, pero sigue el problema de la cantidad de los datos. Como pudiera resolver este problema, imaginense una base de datos con más de 1 millon de datos. Estaré al tanto de cualquier sugerencia, gracias.
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada. 
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm 
+
+XACOBEO 2010: http://www.xacobeo.org
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue Nov  2 20:56:14 2010
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 2 Nov 2010 20:56:14 +0100
+Subject: [R-es] Rendimiento del R
+In-Reply-To: <849004138.21176761288727028670.JavaMail.root@ucimail4.uci.cu>
+References: <126382194.21174491288726875427.JavaMail.root@ucimail4.uci.cu>,
+	<849004138.21176761288727028670.JavaMail.root@ucimail4.uci.cu>
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943771938245206@ASSCCEVS02.sergas.local>
+
+Ok, Maikel.
+
+Ahora tengo claro lo que pretendes hacer (siento no haberte entendido antes).
+.... creo que una lectura a esto puede darte alguna pista...
+http://blog.credativ.com/en/2010/07/postgresql-topic-of-the-day---advanced-analytics.html
+
+Un Saludo,
+Miguel.
+
+
+________________________________________
+De: Maikel (UCI-2009) [mfrosabal en uci.cu]
+Enviado el: martes, 02 de noviembre de 2010 20:43
+Para: Rodríguez Muíños, Miguel Ángel
+CC: r-help-es en r-project.org; coforfe en gmail.com
+Asunto: Re: [R-es] Rendimiento del R
+
+A ver, parece que no me expliqué bien, o no me hice entender. Resulta que tenemos un servidor que permite generar reportes desde el punto de vista estadístico. Funciona de la siguiente manera, nuestro servidor le envía un fichero al R con las ordenes necesarias para que ejecute cierta y determinada función estadistica. El R retorna luego de efectuar la operación el resultado final. Que sucede que haciendo esto hay mucho tráfico de envía de información y lo hace más lento. Ahora PL/R reconoce lenguaje R entonces podemos hacerlo directo al gestor y asi lograriamos mayor rendimiento. Algo que no dije del R y es que para inmensas cantidades de datos no es ideal, entonces creo que el PL/R tampoco lo es pero esto ultimo no lo he probado y por eso lo consulto con ustedes.
+
+
+
+
+
+
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada. 
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm 
+
+XACOBEO 2010: http://www.xacobeo.org
+
+
+From cgb en datanalytics.com  Tue Nov  2 23:29:29 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Tue, 02 Nov 2010 23:29:29 +0100
+Subject: [R-es] =?iso-8859-1?q?Una_gu=EDa_de_estilo_para_programar_en_R=2E?=
+ =?iso-8859-1?q?=2E=2E_=BFcomentarios=3F?=
+Message-ID: <4CD090C9.5060705@datanalytics.com>
+
+Hola, ¿qué tal?
+
+Hace poco vi que Google había hecho pública su guía de estilo interna 
+para programar en R:
+
+http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html
+
+Me tomé la libertad de traducirla:
+
+http://datanalytics.com/guia_estilo_r.html
+
+Cuanto más pienso en ella, más carencias veo. Escribí sobre ello en mi 
+blog ( 
+http://www.datanalytics.com/blog/2010/11/01/una-propuesta-de-guia-de-estilo-de-r/ 
+). Las dos pegas principales que le veo son:
+
+1) Que no hace mención a los paquetes (y cómo pueden utilizarse para 
+gestionar la documentación de las funciones, etc.).
+
+2) Que parece una traslación directa de una guía de estilo de Python o 
+Java, ignorando (algunas) particularidades específicas de R.
+
+Creo que disponer de una buena guía de estilo es importante a la hora de 
+elaborar código en equipo. Por eso quiero plantear las siguientes dos 
+preguntas en la lista:
+
+1) ¿Echáis algo de menos en la guía de Google? ¿Omite algo relevante? 
+¿Qué experiencia tenéis al respecto? ¿Cuál es la mejor política a la 
+hora de diseñar paquetes?
+
+2) ¿Habría alguien interesado en colaborar para recoger estas nuevas 
+propuestas y mantener una propuesta de guía de estilo de R que pueda 
+servir a grupos de programadores?
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From krcabrer en une.net.co  Wed Nov  3 06:12:13 2010
+From: krcabrer en une.net.co (Kenneth Roy Cabrera Torres)
+Date: Wed, 03 Nov 2010 00:12:13 -0500
+Subject: [R-es]
+ =?iso-8859-1?q?Una_gu=EDa_de_estilo_para_programar_en_R=2E?=
+ =?iso-8859-1?q?=2E=2E_=BFcomentarios=3F?=
+In-Reply-To: <4CD090C9.5060705@datanalytics.com>
+References: <4CD090C9.5060705@datanalytics.com>
+Message-ID: <1288761133.13276.29.camel@kenneth-desktop>
+
+Respetado Carlos J.
+
+Excelente tu propuesta sobre el estilo de programación en R.
+
+Me parece que vale la pena pensar en algunos aspecto que podría ayudar
+a los programadores en R a unificar el estilo para facilitar la lectura
+de código escrito en R.
+
+Algunas ideas que se me vienen a la cabeza y son para debatirlas y
+llegar a un acuerdo que nos beneficie a todos.
+
+1. De las recomendaciones que se hace sobre el uso de variables
+utilizando el punto me aparto de ese criterio debido a que el punto se
+utiliza también como identificador de métodos en el sistema S3 y podría
+dar lugar a mal entendidos.
+
+2. Con respecto a la extensión de los scripts en R, preferiría la
+extensión ".r", porque muchas veces comparto archivos tanto en windows
+como en linux y como windows no distingue entre minúsculas y mayúsculas
+en los nombres de los archivos produce problemas en sincronizadores como
+dropbox.
+
+3. Me gusta más el estilo "nomVar" para nombres de variables que el de
+"nom.Var", y prefiero formas cortas y no tan largas como
+"CalculateAveClicks" tanto en funciones como variables, por eso para
+la función preferiría "CalcAveClks" por ejemplo.
+
+4. Incluiría en la distribución general después de los comandos source y
+library un campo para definir configuraciones generales como parámetros
+del "par.settings", "paletas de colores", grupos de símbolos "pch",
+"par" de gráficos, etc.
+
+5. Si algún archivo será mas adelante utilizado como "source" por otro
+programa cambiar los "library" por "require", para ahorrar tiempo al
+llamar a paquetes.
+
+6. Para hacer más universal los paquetes se recomendaría tener nombres
+de funciones en inglés, solo que fácilmente el nombre de la función
+podría entrar en conflicto con los nombres de otras funciones en
+otro paquete. ¿Qué recomiendan que podemos hacer en este caso?
+
+Seguimos en contacto y proponiendo algunas soluciones.
+
+Kenneth
+
+
+From jojeda en unizar.es  Wed Nov  3 11:03:50 2010
+From: jojeda en unizar.es (Jorge Luis Ojeda Cabrera)
+Date: Wed, 03 Nov 2010 11:03:50 +0100
+Subject: [R-es] =?iso-8859-1?q?Felicitaci=F3n_Gil_Bellosta?=
+Message-ID: <4CD13386.8070504@unizar.es>
+
+Acabo de revisar la lista, y me gustaría añadir mis felicitaciones a . 
+Gil Bellosta (datanalytics) por el trabajo para el concurso "IEEE ICDM 
+Contest: TomTom Traffic Prediction for Intelligent GPS Navigation".
+
+Saludos, Jorge
+
+
+From jomopo en gmail.com  Wed Nov  3 11:25:55 2010
+From: jomopo en gmail.com (=?ISO-8859-1?Q?Josu=E9_Polanco?=)
+Date: Wed, 3 Nov 2010 11:25:55 +0100
+Subject: [R-es] II Jornadas... GNU Octave, software comercial?????
+Message-ID: <AANLkTi=c7MFeSoG1cV3zuPyQ3AHq+tz7OrZdGCyBkdvN@mail.gmail.com>
+
+Hola a todos,
+
+Perfecto, muchas gracias por la invitación y estoy seguro que será un exito!
+
+Sin embargo, tengo un comentario con lo que respecta al documento de
+la invitación
+
+http://epm.uniovi.es/actividades/-/asset_publisher/0012/content/ii-jornadas-de-usuarios-de-r-en-castellano;jsessionid=1D9F8322698F3705EE4F9C5CCFFE121F?redirect=%2F
+
+o en el pdf
+
+
+En el tercer parrafo, donde dice: ".... que compite con programas
+comerciales como: GNU Octave, Matlab, S-Plus, etc."
+
+en mi opinion no veo claro que GNU Octave pueda ser considerado como
+"comercial" (aunque pueda utilizarse en aplicaciones comerciales,
+recordemos que existe software libre o de código abierto de tipo
+"comercial"*), GNU Octave es software libre**  (y menos privativo,
+pues tiene un licenciamiento GPL*). Por tanto, no pertenece al grupo
+"Matlab, S-Plus, SPSS, etc." que si son software comercial y privativo
+(por sus tipos de licencias*) hasta donde tengo entendido!
+
+saludos y nos vemos en las jornadas,
+
+--
+Josué Polanco
+
+*http://www.gnu.org/philosophy/categories.es.html#commercialSoftware
+** GNU Octave es parte del proyecto GNU,
+http://www.gnu.org/software/octave/about.html
+
+
+
+
+
+2010/10/28 Belén Prendes <mbprendes en uniovi.es>:
+>
+> Estimados usuarios de R
+>
+>  Ya es posible inscribirse on-line en las II Jornadas de R, bien a través de
+> la página de la Escuela Politécnica de Mieres (http://epm.uniovi.es/inicio
+> ), pinchando sobre el evento correspondiente, o bien a través de la
+> siguiente dirección:
+>
+> http://epm.uniovi.es/actividades/-/asset_publisher/0012/content/ii-jornadas-
+> de-usuarios-de-r-en-castellano?redirect=%2Finicio
+>
+>
+> Saludos a todos y nos vemos en Mieres
+>
+>
+>
+> María Belén Prendes Gero
+> Subdirectora de la Escuela Politécnica de Mieres
+> subdirepm3 en uniovi.es
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> Marma Belin Prendes Gero
+>
+> Department of Construction and Production Engineering
+>
+> University of Oviedo
+>
+> Spain
+>
+>
+>
+> phone: +34 985 458 018
+>
+> e-mail: mbprendes en uniovi.es
+>
+>
+>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+
+-- 
+Josué Mosés Polanco Martínez
+Correo-e alternativo jomopo en linuxmail.org
+----
+It is a wasted day unless you have learned something new and made
+someone smile -Mark Weingartz.
+
+
+From pepeceb en yahoo.es  Wed Nov  3 13:29:54 2010
+From: pepeceb en yahoo.es (jose cebrian)
+Date: Wed, 3 Nov 2010 12:29:54 +0000 (GMT)
+Subject: [R-es] data frame
+Message-ID: <578659.63133.qm@web29603.mail.ird.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101103/c2af76a1/attachment.pl>
+
+From cgb en datanalytics.com  Wed Nov  3 17:03:46 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 3 Nov 2010 17:03:46 +0100
+Subject: [R-es] data frame
+In-Reply-To: <578659.63133.qm@web29603.mail.ird.yahoo.com>
+References: <578659.63133.qm@web29603.mail.ird.yahoo.com>
+Message-ID: <AANLkTikOYWfJcy+o6VXGk-KMPWtd0LTj-hEa79QM+TmP@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Tendrás que cargar los datos con un comando algo así como
+
+peces <- read.csv( "mi_fichero.csv", header = T )
+
+y luego
+
+tallas <- peces$TALLA
+
+Mira la ayuda de read.csv y read.table:
+
+?read.csv
+?read.table
+
+Los documetos
+
+http://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf
+http://cran.r-project.org/doc/contrib/rdebuts_es.pdf
+http://cran.r-project.org/doc/contrib/curso-R.Diaz-Uriarte.pdf
+
+pueden venirte muy bien para aprender las cosas más básicas.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 3 de noviembre de 2010 13:29, jose cebrian <pepeceb en yahoo.es> escribió:
+>  Hola a todos
+> soy nuevo en este foro y tambien en el uso de R. Mi duda es la siguiente. Tengo un archivo csv con muestreos de peces, tal que asi es la cabecera:
+>
+>
+>
+>
+>  ESPECIE
+>  P.MUE.DES
+>    TALLA
+>  EJEMPLARES
+>
+>
+>  L. piscatorius
+>  7.37
+>  39
+>  2
+>
+>
+>  L. piscatorius
+>  7.37
+>  53
+>  1
+>
+>
+>  L. piscatorius
+>  7.37
+>  49
+>  1
+>
+>
+>  L. piscatorius
+>  7.37
+>  47
+>  1
+>
+>
+>  L. piscatorius
+>  7.37
+>  45
+>  1
+>
+>
+>  L. piscatorius
+>  9.48
+>  55
+>  2
+>
+>
+>  L. piscatorius
+>  9.48
+>  56
+>  1
+>
+>
+>  L. piscatorius
+>  9.48
+>  51
+>  1
+>
+>
+>  L. piscatorius
+>  9.48
+>  50
+>  1
+>
+>
+>  L. piscatorius
+>  7.02
+>  69
+>  1
+>
+>
+>  L. piscatorius
+>  7.02
+>  64
+>  1
+>
+>
+>  L. budegassa
+>  19.26
+>  34
+>  9
+>
+>
+> y asi sucesivamente.
+> Quiero hallar la talla media del muestreo, pero no se como desagragar las tallas. Supongo que será una pregunta muy sencilla para la mayoria, pero yo estoy atascado. Os agradezco la ayuda.
+>
+>
+>
+>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From jojeda en unizar.es  Thu Nov  4 11:10:31 2010
+From: jojeda en unizar.es (Jorge Luis Ojeda Cabrera)
+Date: Thu, 04 Nov 2010 11:10:31 +0100
+Subject: [R-es]
+ =?iso-8859-1?q?Una_gu=EDa_de_estilo_para_programar_en_R=2E?=
+ =?iso-8859-1?q?=2E=2E_=BFcomentarios=3F?=
+In-Reply-To: <4CD090C9.5060705@datanalytics.com>
+References: <4CD090C9.5060705@datanalytics.com>
+Message-ID: <4CD28697.9070303@unizar.es>
+
+En mi opinión, y de cara a compartir el código, las guías de estilo son 
+FUNDAMENTALES. Ahora bien, creo que deben ser lo más breves posibles: 
+minimalistas. La idea es que no sea necesario tener en cuenta muchas 
+reglas. Respecto de los nombres de objetos, creo que salvo reglas muy 
+generales, y que tengan en cuenta particularidades de la sintaxis, es
+mejor que cada proyecto defina y determine su propia nomenclatura.
+
+
+Le he echado un vistazo a la guía y me parece Ok, quizás un poco extensa 
+en los que a combinación de indentado y contrucción de bloques,
+pero es muy complicado y pesado ser exhaustivo.
+
+
+Bajo mi punto de vista, y además de nombre de ficheros, variables, 
+etc..., incluye los aspectos más importantes, que creo son:
+  - Indentado: fundamental para leer código, me gusta lo del doble esp.
+  - Construcción de bloques: generalmente los abro y se cierro en lineas
+    nuevas, pero es cierto que resulta mejor como se indica en la guía.
+    OBS: Creo que se debería considerar el que los bloques de
+    definición de funciones se abran y cierren en lineas nuevas.
+  - Formato de comentarios, de TODOs, documentación propia para la
+    definición de las funciones.
+    OBS: Quizás puede resultar interesante incluir como cabecera del
+    fichero unos comentarios(en un formato determinado) indicando Autor,
+    Copyright, descripción con la finalidad del código,...
+
+Saludos, Jorge.
+
+
+
+El 02/11/10 23:29, Carlos J. Gil Bellosta escribió:
+> Hola, ¿qué tal?
+>
+> Hace poco vi que Google había hecho pública su guía de estilo interna
+> para programar en R:
+>
+> http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html
+>
+> Me tomé la libertad de traducirla:
+>
+> http://datanalytics.com/guia_estilo_r.html
+>
+> Cuanto más pienso en ella, más carencias veo. Escribí sobre ello en mi
+> blog (
+> http://www.datanalytics.com/blog/2010/11/01/una-propuesta-de-guia-de-estilo-de-r/
+> ). Las dos pegas principales que le veo son:
+>
+> 1) Que no hace mención a los paquetes (y cómo pueden utilizarse para
+> gestionar la documentación de las funciones, etc.).
+>
+> 2) Que parece una traslación directa de una guía de estilo de Python o
+> Java, ignorando (algunas) particularidades específicas de R.
+>
+> Creo que disponer de una buena guía de estilo es importante a la hora de
+> elaborar código en equipo. Por eso quiero plantear las siguientes dos
+> preguntas en la lista:
+>
+> 1) ¿Echáis algo de menos en la guía de Google? ¿Omite algo relevante?
+> ¿Qué experiencia tenéis al respecto? ¿Cuál es la mejor política a la
+> hora de diseñar paquetes?
+>
+> 2) ¿Habría alguien interesado en colaborar para recoger estas nuevas
+> propuestas y mantener una propuesta de guía de estilo de R que pueda
+> servir a grupos de programadores?
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From r-uca en uca.es  Thu Nov  4 11:29:23 2010
+From: r-uca en uca.es (r-uca)
+Date: Thu, 04 Nov 2010 11:29:23 +0100
+Subject: [R-es]
+ =?iso-8859-1?q?Una_gu=EDa_de_estilo_para_programar_en_R=2E?=
+ =?iso-8859-1?q?=2E=2E_=BFcomentarios=3F?=
+In-Reply-To: <4CD28697.9070303@unizar.es>
+References: <4CD090C9.5060705@datanalytics.com> <4CD28697.9070303@unizar.es>
+Message-ID: <1288866563.12027.1.camel@pcmat36>
+
+A mi personalmente me ha chocado mucho la recomendación de no usar
+clases S4.
+
+Para la creación el paquete orloca estuve mirando el tema de las clases
+y por lo que leí había entendido que las clases S3 estaban en vías de
+"desaparación".
+
+¿Qué opináis al respecto?
+
+Saludos.
+
+-- 
+===
+Proyecto R-UCA
+http://knuth.uca.es/R
+r-uca en uca.es
+Manuel Muñoz Márquez
+===
+
+
+From cgb en datanalytics.com  Thu Nov  4 17:42:12 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 4 Nov 2010 17:42:12 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Una_gu=EDa_de_estilo_para_programar_en_R=2E?=
+	=?iso-8859-1?q?=2E=2E_=BFcomentarios=3F?=
+In-Reply-To: <1288866563.12027.1.camel@pcmat36>
+References: <4CD090C9.5060705@datanalytics.com> <4CD28697.9070303@unizar.es>
+	<1288866563.12027.1.camel@pcmat36>
+Message-ID: <AANLkTi=pmOa=oe+c2rDQBaPtVHYUcQEk4YRmLTUt_8Xm@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Pues sobre las clases S4 no tengo tanta experiencia. Como usuario,
+trabajé bastante en su día cuando utilizaba Bioconductor. Y como
+desarrollador, construí un paquete en el que definía una clase de ese
+tipo.
+
+Fue una experiencia bastante frustrante: mis cañonazos malhirieron la
+mosca paro no la mataron del todo. En la versión final del paquete se
+cayó la clase S4. Y, personalmente, trataré de evitarlas en la medida
+de lo posible. En eso convenimos Google y yo.
+
+Recuerdo que durante mi periodo de máxima frustración hablé con Ramón
+Díaz Uriarte que, si no recuerdo mal, me desaconsejó su uso. Y me
+comentó que había algún/os peso/s pesado/s de R que se habían
+pronunciado en el mismo sentido. No sé si tendrá algo que añadir (y si
+he errado en el sentido de la cita, espero que no se lo tenga
+demasiado en cuenta a mi floja memoria).
+
+Creo que las clases S3 están para quedarse. No sé hasta qué punto la
+complejidad añadida que supone el uso de clases S4 van a contribuir a
+su popularización. Además, existen alternativas a las clases S3 y S4
+(p.e., http://cran.r-project.org/web/packages/proto/) que bien
+pudieran imponerse. De hecho, "proto" es el motor del "paquete
+revelación" de R que es ggplot2.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 4 de noviembre de 2010 11:29, r-uca <r-uca en uca.es> escribió:
+> A mi personalmente me ha chocado mucho la recomendación de no usar
+> clases S4.
+>
+> Para la creación el paquete orloca estuve mirando el tema de las clases
+> y por lo que leí había entendido que las clases S3 estaban en vías de
+> "desaparación".
+>
+> ¿Qué opináis al respecto?
+>
+> Saludos.
+>
+> --
+> ===
+> Proyecto R-UCA
+> http://knuth.uca.es/R
+> r-uca en uca.es
+> Manuel Muñoz Márquez
+> ===
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From rdiaz02 en gmail.com  Fri Nov  5 13:11:15 2010
+From: rdiaz02 en gmail.com (Ramon Diaz-Uriarte)
+Date: Fri, 5 Nov 2010 13:11:15 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Una_gu=EDa_de_estilo_para_programar_en_R=2E?=
+	=?iso-8859-1?q?=2E=2E_=BFcomentarios=3F?=
+In-Reply-To: <AANLkTi=pmOa=oe+c2rDQBaPtVHYUcQEk4YRmLTUt_8Xm@mail.gmail.com>
+References: <4CD090C9.5060705@datanalytics.com> <4CD28697.9070303@unizar.es>
+	<1288866563.12027.1.camel@pcmat36>
+	<AANLkTi=pmOa=oe+c2rDQBaPtVHYUcQEk4YRmLTUt_8Xm@mail.gmail.com>
+Message-ID: <AANLkTinSBjxPvxr4bvqjnbJPDFTqSD-4br7CBPt_YCh-@mail.gmail.com>
+
+2010/11/4 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+> Hola, ¿qué tal?
+>
+> Pues sobre las clases S4 no tengo tanta experiencia. Como usuario,
+> trabajé bastante en su día cuando utilizaba Bioconductor. Y como
+> desarrollador, construí un paquete en el que definía una clase de ese
+> tipo.
+>
+> Fue una experiencia bastante frustrante: mis cañonazos malhirieron la
+> mosca paro no la mataron del todo. En la versión final del paquete se
+> cayó la clase S4. Y, personalmente, trataré de evitarlas en la medida
+> de lo posible. En eso convenimos Google y yo.
+>
+> Recuerdo que durante mi periodo de máxima frustración hablé con Ramón
+> Díaz Uriarte que, si no recuerdo mal, me desaconsejó su uso. Y me
+> comentó que había algún/os peso/s pesado/s de R que se habían
+> pronunciado en el mismo sentido. No sé si tendrá algo que añadir (y si
+> he errado en el sentido de la cita, espero que no se lo tenga
+> demasiado en cuenta a mi floja memoria).
+>
+
+
+La memoria de Carlos (al menos en este punto) anda perfectamente ;-).
+
+
+
+Pego aquí algunos enlaces que tengo al respecto:
+
+http://article.gmane.org/gmane.comp.lang.r.general/159123/match=s4+vs+s3
+
+http://www.mail-archive.com/r-devel en r-project.org/msg10977.html
+
+http://osdir.com/ml/lang.r.devel/2007-02/msg00149.html
+
+http://tolstoy.newcastle.edu.au/R/e4/devel/08/01/0064.html
+
+http://tolstoy.newcastle.edu.au/R/e6/help/09/02/4595.html
+
+http://search.gmane.org/search.php?group=gmane.comp.lang.r.general&query=s4+vs+s3
+
+
+
+Hay comentarios de Frank Harell, Brian Ripley, Terry Therneau, etc. El
+último enlace, en particular, es de un largo thread. Dicho lo
+anterior, hay otros que prefieren con mucho S4 (ej., veanse libros de
+R. Gentleman y J. Chambers), y S4 es el tipo de OOP "oficial" de
+BioConductor. Pero si uno revisa los archivos de BioC (hace más de 5
+años?), verá que no todo el mundo (incluyendo algunos nombres
+ilustres) era entusiasta de S4.
+
+
+Personalmente, yo evito las clases S4 por las razones que comenta
+Carlos y las que figuran en el thread anterior. Nunca he entendido qué
+me aportarían (pero sí veo lo que me quitarían y los problemas que me
+añadirían).
+
+
+
+R.
+
+
+
+
+> Creo que las clases S3 están para quedarse. No sé hasta qué punto la
+> complejidad añadida que supone el uso de clases S4 van a contribuir a
+> su popularización. Además, existen alternativas a las clases S3 y S4
+> (p.e., http://cran.r-project.org/web/packages/proto/) que bien
+> pudieran imponerse. De hecho, "proto" es el motor del "paquete
+> revelación" de R que es ggplot2.
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+>
+> El día 4 de noviembre de 2010 11:29, r-uca <r-uca en uca.es> escribió:
+>> A mi personalmente me ha chocado mucho la recomendación de no usar
+>> clases S4.
+>>
+>> Para la creación el paquete orloca estuve mirando el tema de las clases
+>> y por lo que leí había entendido que las clases S3 estaban en vías de
+>> "desaparación".
+>>
+>> ¿Qué opináis al respecto?
+>>
+>> Saludos.
+>>
+>> --
+>> ===
+>> Proyecto R-UCA
+>> http://knuth.uca.es/R
+>> r-uca en uca.es
+>> Manuel Muñoz Márquez
+>> ===
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Ramon Diaz-Uriarte
+Structural Biology and Biocomputing Programme
+Spanish National Cancer Centre (CNIO)
+http://ligarto.org/rdiaz
+Phone: +34-91-732-8000 ext. 3019
+Fax: +-34-91-224-6972
+
+
+From guivivi en alumni.uv.es  Fri Nov  5 17:47:40 2010
+From: guivivi en alumni.uv.es (guivivi en alumni.uv.es)
+Date: Fri, 5 Nov 2010 17:47:40 +0100 (CET)
+Subject: [R-es] Legend para varios gr=?US-ASCII?Q?=E1?=ficos
+Message-ID: <2277953724guivivi@alumni.uv.es>
+
+Hola a todos,
+
+Mi pregunta es si hay alguna manera (sencilla/rápida o no) de colocar
+una leyenda común para dos gráficos colocados en paralelo con
+par(mfrow=c(1,2)).
+
+He probado con par(xpd=NA) y con par("usr") pero no encuentro la solución.
+Está claro que podría poner la misma leyenda para cada gráfica, pero
+quedaría mejor con una global para ambos.
+
+Muchas gracias de antemano por la ayuda.
+
+Un saludo,
+
+Guillermo
+
+
+From jorgeivanvelez en gmail.com  Fri Nov  5 18:02:45 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 5 Nov 2010 13:02:45 -0400
+Subject: [R-es] =?iso-8859-1?q?Legend_para_varios_gr=E1ficos?=
+In-Reply-To: <2277953724guivivi@alumni.uv.es>
+References: <2277953724guivivi@alumni.uv.es>
+Message-ID: <AANLkTim_e6nUSCbHvTw=rMJMBAs2RoNUmxAOYFb_hZ=0@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101105/b2f1d96e/attachment.pl>
+
+From xaviblas en gmail.com  Fri Nov  5 18:05:40 2010
+From: xaviblas en gmail.com (Xavi de Blas)
+Date: Fri, 5 Nov 2010 18:05:40 +0100
+Subject: [R-es] =?iso-8859-1?q?Legend_para_varios_gr=E1ficos?=
+In-Reply-To: <2277953724guivivi@alumni.uv.es>
+References: <2277953724guivivi@alumni.uv.es>
+Message-ID: <AANLkTi=-bAiY26qjDkiXb0oWdQH3oo2idC1F9hruOKbi@mail.gmail.com>
+
+Aqui está el código
+
+como ves, lo crucial es el new
+
+Saludos
+
+
+png(filename = '3_2-pastis-castella.png'
+ , width = 500, height = 500, units = 'px'
+ , pointsize = 12, bg = 'white', res = NA)
+par(mfrow=c(2,2),mar=c(0,4,4,2),oma=c(1,1,8,1),mex=.3)
+par(mfrow=c(2,2),mar=c(0,4,4,2),oma=c(1,1,8,1),mex=.3)
+a<-c(34.11, 65.89)
+b<-c(22.2, 77.8)
+c<-c(31.5, 68.5)
+d<-c(31.03, 68.97)
+names(a)=paste(round(a,1),"%")
+names(b)=paste(round(b,1),"%")
+names(c)=paste(round(c,1),"%")
+names(d)=paste(round(d,1),"%")
+colors=col=c(topo.colors(4)[3],topo.colors(4)[4])
+pie(a,col=colors, main="1997")
+pie(b,col=colors, main="1995")
+pie(c,col=colors, main="1993")
+pie(d,col=colors, main="1991")
+par(new=T, mfrow=c(1,1), mar=c(0,4,2,2), oma=c(1,1,0,1))
+plot(-1,type="n",axes=F,xlab='',ylab='')
+title(main="Porcentaje de ....")
+legend('center', legend=c("xxxxx","yyyyy"), pch=19, col=colors,cex=1)
+dev.off()
+
+
+
+
+
+
+2010/11/5  <guivivi en alumni.uv.es>:
+> Hola a todos,
+>
+> Mi pregunta es si hay alguna manera (sencilla/rápida o no) de colocar
+> una leyenda común para dos gráficos colocados en paralelo con
+> par(mfrow=c(1,2)).
+>
+> He probado con par(xpd=NA) y con par("usr") pero no encuentro la solución.
+> Está claro que podría poner la misma leyenda para cada gráfica, pero
+> quedaría mejor con una global para ambos.
+>
+> Muchas gracias de antemano por la ayuda.
+>
+> Un saludo,
+>
+> Guillermo
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From guivivi en alumni.uv.es  Fri Nov  5 18:12:34 2010
+From: guivivi en alumni.uv.es (guivivi en alumni.uv.es)
+Date: Fri, 5 Nov 2010 18:12:34 +0100 (CET)
+Subject: [R-es] __Legend_para_varios_gr=?US-ASCII?Q?=E1?=ficos
+In-Reply-To: <AANLkTi=-bAiY26qjDkiXb0oWdQH3oo2idC1F9hruOKbi@mail.gmail.com>
+References: <AANLkTi=-bAiY26qjDkiXb0oWdQH3oo2idC1F9hruOKbi@mail.gmail.com>
+Message-ID: <4525584776guivivi@alumni.uv.es>
+
+Muchas gracias por las respuestas tan inmediatas.
+
+Voy a probar todo lo que sugerís y os comentaré los resultados.
+
+Gracias de nuevo.
+
+Un saludo,
+
+Guillermo
+
+> Aqui está el código
+> 
+> como ves, lo crucial es el new
+> 
+> Saludos
+> 
+> 
+> png(filename = '3_2-pastis-castella.png'
+>  , width = 500, height = 500, units = 'px'
+>  , pointsize = 12, bg = 'white', res = NA)
+> par(mfrow=c(2,2),mar=c(0,4,4,2),oma=c(1,1,8,1),mex=.3)
+> par(mfrow=c(2,2),mar=c(0,4,4,2),oma=c(1,1,8,1),mex=.3)
+> a<-c(34.11, 65.89)
+> b<-c(22.2, 77.8)
+> c<-c(31.5, 68.5)
+> d<-c(31.03, 68.97)
+> names(a)=paste(round(a,1),"%")
+> names(b)=paste(round(b,1),"%")
+> names(c)=paste(round(c,1),"%")
+> names(d)=paste(round(d,1),"%")
+> colors=col=c(topo.colors(4)[3],topo.colors(4)[4])
+> pie(a,col=colors, main="1997")
+> pie(b,col=colors, main="1995")
+> pie(c,col=colors, main="1993")
+> pie(d,col=colors, main="1991")
+> par(new=T, mfrow=c(1,1), mar=c(0,4,2,2), oma=c(1,1,0,1))
+> plot(-1,type="n",axes=F,xlab='',ylab='')
+> title(main="Porcentaje de ....")
+> legend('center', legend=c("xxxxx","yyyyy"), pch=19, col=colors,cex=1)
+> dev.off()
+> 
+> 
+> 
+> 
+> 
+> 
+> 2010/11/5  <guivivi en alumni.uv.es>:
+> > Hola a todos,
+> >
+> > Mi pregunta es si hay alguna manera (sencilla/rápida o no) de colocar
+> > una leyenda común para dos gráficos colocados en paralelo con
+> > par(mfrow=c(1,2)).
+> >
+> > He probado con par(xpd=NA) y con par("usr") pero no encuentro la
+solución.
+> > Está claro que podría poner la misma leyenda para cada gráfica, pero
+> > quedaría mejor con una global para ambos.
+> >
+> > Muchas gracias de antemano por la ayuda.
+> >
+> > Un saludo,
+> >
+> > Guillermo
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> 
+> 
+
+
+From jgil en edu.uned.es  Fri Nov  5 18:18:45 2010
+From: jgil en edu.uned.es (Juan Antonio Gil Pascual)
+Date: Fri, 05 Nov 2010 18:18:45 +0100
+Subject: [R-es] etiquetas de variables
+Message-ID: <4CD43C75.4040902@edu.uned.es>
+
+Estimados compañeros tengo una duda, que quizás sea trivial pero que no 
+tengo solución: ¿se puede sacar los resultados descriptivos de una 
+variable, no por el nombre de la misma sino por la etiqueta de la ésta?, 
+Por ejemplo, en un cuestionario en lugar de sacar el resultado del item1 
+expresar el resultado teniendo como cabecera su etiqueta.
+
+Un cordial saludo,
+
+Juan
+
+-- 
+=========================================================
+Juan Antonio Gil Pascual
+Prof. Titular de Métodos de Investigación en Educación
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+U.N.E.D.
+Fac. de Educación
+Dpto. MIDE I
+Pº Senda del Rey,7 desp. 122
+28040 MADRID
+Tel. 91 398 72 79
+Fax. 91 398 72 88
+
+
+Antes de imprimir este correo piense bien si es necesario hacerlo: El medioambiente es cosa de todos
+
+
+From guivivi en alumni.uv.es  Fri Nov  5 18:21:54 2010
+From: guivivi en alumni.uv.es (guivivi en alumni.uv.es)
+Date: Fri, 5 Nov 2010 18:21:54 +0100 (CET)
+Subject: [R-es] __Legend_para_varios_gr=?US-ASCII?Q?=E1?=ficos
+Message-ID: <4857856679guivivi@alumni.uv.es>
+
+Hola a todos, en efecto, lo crucial es el new, he utilizado estas líneas
+para mi código:
+
+par(new=T, mfrow=c(1,1), mar=c(0,4,2,2), oma=c(1,1,0,1))
+plot(-1,type="n",axes=F,xlab='',ylab='')
+legend("top",legend=c("N(0,1)","t(df=3)","Cauchy","t(df=1)"),fill=c("green","red","orange","steelblue"),cex=0.5)
+
+y ya aparece la leyenda donde yo quería.
+
+¡Muchas gracias!
+
+Guillermo
+
+
+
+> Aqui está el código
+> 
+> como ves, lo crucial es el new
+> 
+> Saludos
+> 
+> 
+> png(filename = '3_2-pastis-castella.png'
+>  , width = 500, height = 500, units = 'px'
+>  , pointsize = 12, bg = 'white', res = NA)
+> par(mfrow=c(2,2),mar=c(0,4,4,2),oma=c(1,1,8,1),mex=.3)
+> par(mfrow=c(2,2),mar=c(0,4,4,2),oma=c(1,1,8,1),mex=.3)
+> a<-c(34.11, 65.89)
+> b<-c(22.2, 77.8)
+> c<-c(31.5, 68.5)
+> d<-c(31.03, 68.97)
+> names(a)=paste(round(a,1),"%")
+> names(b)=paste(round(b,1),"%")
+> names(c)=paste(round(c,1),"%")
+> names(d)=paste(round(d,1),"%")
+> colors=col=c(topo.colors(4)[3],topo.colors(4)[4])
+> pie(a,col=colors, main="1997")
+> pie(b,col=colors, main="1995")
+> pie(c,col=colors, main="1993")
+> pie(d,col=colors, main="1991")
+> par(new=T, mfrow=c(1,1), mar=c(0,4,2,2), oma=c(1,1,0,1))
+> plot(-1,type="n",axes=F,xlab='',ylab='')
+> title(main="Porcentaje de ....")
+> legend('center', legend=c("xxxxx","yyyyy"), pch=19, col=colors,cex=1)
+> dev.off()
+> 
+> 
+> 
+> 
+> 
+> 
+> 2010/11/5  <guivivi en alumni.uv.es>:
+> > Hola a todos,
+> >
+> > Mi pregunta es si hay alguna manera (sencilla/rápida o no) de colocar
+> > una leyenda común para dos gráficos colocados en paralelo con
+> > par(mfrow=c(1,2)).
+> >
+> > He probado con par(xpd=NA) y con par("usr") pero no encuentro la
+solución.
+> > Está claro que podría poner la misma leyenda para cada gráfica, pero
+> > quedaría mejor con una global para ambos.
+> >
+> > Muchas gracias de antemano por la ayuda.
+> >
+> > Un saludo,
+> >
+> > Guillermo
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> 
+> 
+
+
+From xaviblas en gmail.com  Fri Nov  5 18:27:17 2010
+From: xaviblas en gmail.com (Xavi de Blas)
+Date: Fri, 5 Nov 2010 18:27:17 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?=5F=5FLegend=5Fpara=5Fvarios=5Fgr=E1ficos?=
+In-Reply-To: <4857856679guivivi@alumni.uv.es>
+References: <4857856679guivivi@alumni.uv.es>
+Message-ID: <AANLkTin2gP4-bF=qocgeEnokVQVdnd9NN2ZN88fB3X2U@mail.gmail.com>
+
+Dos de esas líneas son literales mías,
+
+¿Estás seguro que puedes usarlas sin que te demande?
+
+¿Cuál es la licencia del código que se cuelga en la lista?
+
+Fuera coñas, ningún problema, faltaría más, tranquilo, las pongo al
+servicio del mundo entero a cambio de alguna cerveza en Oviedo ;)
+
+Aprovecho para comentar que esto habrá que tenerlo en cuenta en el
+código que se cuelgue por parte de los usuarios en la futura web.
+
+Saludos
+
+
+
+
+2010/11/5  <guivivi en alumni.uv.es>:
+> Hola a todos, en efecto, lo crucial es el new, he utilizado estas líneas
+> para mi código:
+>
+> par(new=T, mfrow=c(1,1), mar=c(0,4,2,2), oma=c(1,1,0,1))
+> plot(-1,type="n",axes=F,xlab='',ylab='')
+> legend("top",legend=c("N(0,1)","t(df=3)","Cauchy","t(df=1)"),fill=c("green","red","orange","steelblue"),cex=0.5)
+>
+> y ya aparece la leyenda donde yo quería.
+>
+> ¡Muchas gracias!
+>
+> Guillermo
+>
+>
+>
+>> Aqui está el código
+>>
+>> como ves, lo crucial es el new
+>>
+>> Saludos
+>>
+>>
+>> png(filename = '3_2-pastis-castella.png'
+>>  , width = 500, height = 500, units = 'px'
+>>  , pointsize = 12, bg = 'white', res = NA)
+>> par(mfrow=c(2,2),mar=c(0,4,4,2),oma=c(1,1,8,1),mex=.3)
+>> par(mfrow=c(2,2),mar=c(0,4,4,2),oma=c(1,1,8,1),mex=.3)
+>> a<-c(34.11, 65.89)
+>> b<-c(22.2, 77.8)
+>> c<-c(31.5, 68.5)
+>> d<-c(31.03, 68.97)
+>> names(a)=paste(round(a,1),"%")
+>> names(b)=paste(round(b,1),"%")
+>> names(c)=paste(round(c,1),"%")
+>> names(d)=paste(round(d,1),"%")
+>> colors=col=c(topo.colors(4)[3],topo.colors(4)[4])
+>> pie(a,col=colors, main="1997")
+>> pie(b,col=colors, main="1995")
+>> pie(c,col=colors, main="1993")
+>> pie(d,col=colors, main="1991")
+>> par(new=T, mfrow=c(1,1), mar=c(0,4,2,2), oma=c(1,1,0,1))
+>> plot(-1,type="n",axes=F,xlab='',ylab='')
+>> title(main="Porcentaje de ....")
+>> legend('center', legend=c("xxxxx","yyyyy"), pch=19, col=colors,cex=1)
+>> dev.off()
+>>
+>>
+>>
+>>
+>>
+>>
+>> 2010/11/5  <guivivi en alumni.uv.es>:
+>> > Hola a todos,
+>> >
+>> > Mi pregunta es si hay alguna manera (sencilla/rápida o no) de colocar
+>> > una leyenda común para dos gráficos colocados en paralelo con
+>> > par(mfrow=c(1,2)).
+>> >
+>> > He probado con par(xpd=NA) y con par("usr") pero no encuentro la
+> solución.
+>> > Está claro que podría poner la misma leyenda para cada gráfica, pero
+>> > quedaría mejor con una global para ambos.
+>> >
+>> > Muchas gracias de antemano por la ayuda.
+>> >
+>> > Un saludo,
+>> >
+>> > Guillermo
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>>
+>>
+>
+>
+>
+
+
+From jocana en ub.edu  Fri Nov  5 19:43:09 2010
+From: jocana en ub.edu (=?iso-8859-1?Q?Jordi_Oca=F1a?=)
+Date: Fri, 05 Nov 2010 19:43:09 +0100
+Subject: [R-es] =?iso-8859-1?q?Una_gu=EDa_de_estilo_para_programar_en_R=2E?=
+	=?iso-8859-1?q?=2E=2E?=
+Message-ID: <E7577C0020964457BD7F9315251532B4@renting13>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101105/75e07410/attachment.pl>
+
+From cpfuenmayor en hotmail.com  Sat Nov  6 16:27:21 2010
+From: cpfuenmayor en hotmail.com (Patricio Fuenmayor Viteri)
+Date: Sat, 6 Nov 2010 15:27:21 +0000
+Subject: [R-es] =?iso-8859-1?q?Argumento_s=F3lido=2E=2E=2E?=
+Message-ID: <COL121-W270B08352A16DEFBEFBDD2AC4D0@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101106/ba00cd3c/attachment.pl>
+
+From coforfe en gmail.com  Sat Nov  6 16:40:51 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sat, 6 Nov 2010 16:40:51 +0100
+Subject: [R-es] etiquetas de variables
+In-Reply-To: <4CD43C75.4040902@edu.uned.es>
+References: <4CD43C75.4040902@edu.uned.es>
+Message-ID: <AANLkTinVjiZeQNi-FeNf+LbR9pso8_k+qF=LfnbnxXNO@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101106/7a0e14ba/attachment.pl>
+
+From coforfe en gmail.com  Sat Nov  6 16:48:01 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sat, 6 Nov 2010 16:48:01 +0100
+Subject: [R-es] etiquetas de variables
+In-Reply-To: <AANLkTinVjiZeQNi-FeNf+LbR9pso8_k+qF=LfnbnxXNO@mail.gmail.com>
+References: <4CD43C75.4040902@edu.uned.es>
+	<AANLkTinVjiZeQNi-FeNf+LbR9pso8_k+qF=LfnbnxXNO@mail.gmail.com>
+Message-ID: <AANLkTimzWVcNfrjmWW5YciE5568nTd=v40tUgKu78a0Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101106/69d7f3ba/attachment.pl>
+
+From coforfe en gmail.com  Sat Nov  6 17:03:06 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sat, 6 Nov 2010 17:03:06 +0100
+Subject: [R-es] =?iso-8859-1?q?Argumento_s=F3lido=2E=2E=2E?=
+In-Reply-To: <COL121-W270B08352A16DEFBEFBDD2AC4D0@phx.gbl>
+References: <COL121-W270B08352A16DEFBEFBDD2AC4D0@phx.gbl>
+Message-ID: <AANLkTi=hzyq8gVzYX2tPySweuk8YYHnfm95O99d3xVEG@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101106/3d18a423/attachment.pl>
+
+From coforfe en gmail.com  Sat Nov  6 17:08:35 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sat, 6 Nov 2010 17:08:35 +0100
+Subject: [R-es] Medias repetidas VS. serie temporal
+In-Reply-To: <AANLkTikxtOx=yhTeftOHBFF6G52eCFh1M8tWxrVjnxeq@mail.gmail.com>
+References: <AANLkTikxtOx=yhTeftOHBFF6G52eCFh1M8tWxrVjnxeq@mail.gmail.com>
+Message-ID: <AANLkTimdVPa_-wRmKukN8vAhi0ZjBA8-2eia=0xLPLJr@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101106/52457a45/attachment.pl>
+
+From cgb en datanalytics.com  Sat Nov  6 18:23:59 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Sat, 06 Nov 2010 18:23:59 +0100
+Subject: [R-es]
+ =?windows-1252?q?Una_gu=EDa_de_estilo_para_programar_en_R?=
+ =?windows-1252?q?=2E=2E=2E?=
+In-Reply-To: <E7577C0020964457BD7F9315251532B4@renting13>
+References: <E7577C0020964457BD7F9315251532B4@renting13>
+Message-ID: <4CD58F2F.9090009@datanalytics.com>
+
+Hola, ¿qué tal?
+
+Gracias a todos por los comentarios de este hilo.
+
+Lo que parece claro es:
+
+1) Que no existe una guía de estilo "urbi et orbi", no obstante lo cual,
+
+2) es importante que grupos locales de desarrolladores se atengan a una 
+debidamente explicitada.
+
+Una cosa que echo de menos en ésta (la de Google) y otras guías de 
+estilo que he visto es que no se toman la molestia de distinguir 
+explícitamente entre:
+
+1) Las normas que responden a motivos objetivos (p.e., usar siempre 
+espacios (¡o tabuladores!) a la hora de indentar (¡pero nunca 
+mezclarlos!)), que debieran razonarse en algún punto.
+
+2) Las normas que responden únicamente a una cuestión de convención 
+(p.e., indentar con N espacios).
+
+Lo más parecido a una guía "urbi et orbi" sería una en la que las normas 
+de tipo (1) fuesen fijas y las distintas alternativas para las normas de 
+tipo (2) apareciesen enumeradas para que los distintos grupos de 
+desarrolladores pudiesen decantarse por alguna (y seguirlas de ahí en 
+adelante a rajatabla).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+On 11/05/2010 07:43 PM, Jordi Ocaña wrote:
+> Hola,
+>
+> He seguido con interés el mensaje de Carlos sobre la guía de estilo para
+> programar en R aparecida en Google y las reacciones que ha generado.
+>
+>
+>
+> En líneas generales creo que la guía Google es bastante floja, estoy de
+> acuerdo con la mayoría de comentarios iniciales de Carlos y en particular
+> con el hecho de que no trata en absoluto (ni lógicamente promueve) la
+> creación de packages. Otro aspecto débil de esta guía es la falta casi
+> absoluta de motivación de sus propuestas. Creo que es muy superior otra
+> propuesta más antigua, citada en la propia guía de Google:
+> http://www.maths.lth.se/help/R/RCC/.
+>
+>
+>
+> Algunos puntos concretos sobre los que quisiera opinar son:
+>
+> a) Nombres de variables: promueve el formato ?palabra.otrapalabra? y
+> desaconseja ?palabraOtrapalabra?. Como es habitual en esta guía, no explica
+> las razones. En mi opinión ambas estrategias deberían ser perfectamente
+> admisibles, la primera dada su gran ?tradición R? y la segunda dadp que
+> también es muy común en otros lenguajes (y también en R). Ambas son
+> altamente expresivas, aunque yo prefiero la segunda.
+>
+> b) Nombres de funciones: no encuentro muy razonable que tengan que empezar
+> por una letra mayúscula. Puede ser simplemente una cuestión de gustos, pero,
+> por ejemplo, reservaría el consejo para los nombres de clases, especialmente
+> las clases S4.
+>
+> c) Constantes: ?kNombre? creo que es de risa como criterio general, no niego
+> que pueda ser útil a nivel de un programa concreto o de algún grupo de
+> trabajo.
+>
+> d) Clases S4: desaconseja su uso, al menos en la tabla de contenido de la
+> guía. Al leer el apartado correspondiente se puede ver que el tema está algo
+> más matizado. En mi opinión el sistema de clases S4 tiene sus puntos fuertes
+> y sus puntos débiles, como casi todo, pero creo que es francamente mejor
+> para proyectos de una cierta envergadura, donde su mayor complejidad
+> representa una inversión que vale la pena. Yo lo empleo regularmente y estoy
+> satisfecho. De lo que se trata es de saber emplear R de forma razonable, no
+> de matar moscas a cañonazos. En el caso de considerar que el esfuerzo de
+> aprendizaje de S4 pueda valer la pena, aconsejo una visita a esta página
+> Web: http://christophe.genolini.free.fr/.
+>
+>
+>
+> Tener una guía de estilo R puede ser útil siempre que se emplee
+> razonablemente y con un cierto espíritu crítico. Por ejemplo supeditándola a
+> criterios más específicos que hayan funcionado bien dentro de un grupo de
+> trabajo. Me parece interesante tratar el tema e incluso intentar tener una
+> guía de nuestra comunidad, aunque no partiría de la propuesta de Google,
+> mejor sugiero la que os comento más arriba como punto de partida.
+>
+>
+>
+> Saludos cordiales,
+>
+> Jordi Ocaña Rebull
+>
+> Departament d'Estadística
+>
+> Universitat de Barcelona
+>
+>
+>
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jgil en edu.uned.es  Sun Nov  7 09:53:06 2010
+From: jgil en edu.uned.es (Juan Antonio Gil Pascual)
+Date: Sun, 07 Nov 2010 09:53:06 +0100
+Subject: [R-es] etiquetas de variables
+In-Reply-To: <AANLkTimzWVcNfrjmWW5YciE5568nTd=v40tUgKu78a0Q@mail.gmail.com>
+References: <4CD43C75.4040902@edu.uned.es>	<AANLkTinVjiZeQNi-FeNf+LbR9pso8_k+qF=LfnbnxXNO@mail.gmail.com>
+	<AANLkTimzWVcNfrjmWW5YciE5568nTd=v40tUgKu78a0Q@mail.gmail.com>
+Message-ID: <4CD668F2.3040108@edu.uned.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101107/4b79da7e/attachment.pl>
+
+From jgil en edu.uned.es  Sun Nov  7 10:09:22 2010
+From: jgil en edu.uned.es (Juan Antonio Gil Pascual)
+Date: Sun, 07 Nov 2010 10:09:22 +0100
+Subject: [R-es] etiquetas de variables
+In-Reply-To: <20101106002336.5xoyq3zu80owwosk@webcartero01.uc3m.es>
+References: <4CD43C75.4040902@edu.uned.es>	<20101105200122.7zmf3j8s8w0ks8gw@webcartero01.uc3m.es>	<4CD457CF.9080105@edu.uned.es>
+	<20101106002336.5xoyq3zu80owwosk@webcartero01.uc3m.es>
+Message-ID: <4CD66CC2.3030307@edu.uned.es>
+
+Hola J.Miguel tiene muy buena pinta el memisc lo probaré.
+
+Muchas gracias.
+
+Juan
+
+
+El 06/11/2010 0:23, J. Miguel Marin escribió:
+> Hola Juan
+>
+> echa un ojo a memisc
+> http://cran.r-project.org/web/packages/memisc/index.html
+>
+> a lo mejor hace lo que buscas. Pero no la he probado :-/
+>
+>
+>> Hola J.Miguel querido amigo no es esa mi duda. Mi problema viene 
+>> porque SPSS saca los resultados descriptivos de cualquier variable no 
+>> con el nombre de la variable sino con la etiqueta de la misma y no he 
+>> visto en R nada que haga algo similar.
+>>
+>> Un abrazo,
+>>
+>> Juan
+>>
+>>
+>> El 05/11/2010 20:01, J. Miguel Marin escribió:
+>>> Hola Juan,
+>>>
+>>> me alegro de saber de ti.
+>>>
+>>> Si lo que preguntas se relaciona con un plot por ejemplo bastaría 
+>>> hacer algo así con "xlab" e "ylab":
+>>>
+>>> plot(edad,predi,type="l",xlab="age",ylim=c(0.03,0.32),ylab="Discapacity", 
+>>> main="Men")
+>>>
+>>> Y si quieres poner etiquetas por cualquier lado con el ratón:
+>>>
+>>> # Poner etiquetas en algún lado por alli con el raton...
+>>> plot(rnorm(100))
+>>> legend(locator(1), "no semos nadie", cex=0.7, bty="n")
+>>>
+>>> Pero no sé si esto era lo que preguntabas... :-/
+>>>
+>>> Y cuídate
+>>>
+>>>> Estimados compañeros tengo una duda, que quizás sea trivial pero 
+>>>> que no tengo solución: ¿se puede sacar los resultados descriptivos 
+>>>> de una variable, no por el nombre de la misma sino por la etiqueta 
+>>>> de la ésta?, Por ejemplo, en un cuestionario en lugar de sacar el 
+>>>> resultado del item1 expresar el resultado teniendo como cabecera su 
+>>>> etiqueta.
+>>>>
+>>>> Un cordial saludo,
+>>>>
+>>>> Juan
+>>>>
+>>>> -- 
+>>>> =========================================================
+>>>> Juan Antonio Gil Pascual
+>>>> Prof. Titular de Métodos de Investigación en Educación
+>>>> correo: jgil en edu.uned.es
+>>>> web: www.uned.es/personal/jgil
+>>>>
+>>>> U.N.E.D.
+>>>> Fac. de Educación
+>>>> Dpto. MIDE I
+>>>> Pº Senda del Rey,7 desp. 122
+>>>> 28040 MADRID
+>>>> Tel. 91 398 72 79
+>>>> Fax. 91 398 72 88
+>>>>
+>>>>
+>>>> Antes de imprimir este correo piense bien si es necesario hacerlo: 
+>>>> El medioambiente es cosa de todos
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>>>
+>>>
+>>>
+>>> jm~
+>>>
+>>> _______________________________
+>>>
+>>>        J. Miguel Marin
+>>>
+>>> http://www.est.uc3m.es/jmmarin
+>>>
+>>>    Dep. of Statistics
+>>> University Carlos III of Madrid
+>>>        Spain (E.U.)
+>>> _______________________________
+>>>
+>>>
+>>>
+>>
+>> -- 
+>> =========================================================
+>> Juan Antonio Gil Pascual
+>> Prof. Titular de Métodos de Investigación en Educación
+>> correo: jgil en edu.uned.es
+>> web: www.uned.es/personal/jgil
+>>
+>> U.N.E.D.
+>> Fac. de Educación
+>> Dpto. MIDE I
+>> Pº Senda del Rey,7 desp. 122
+>> 28040 MADRID
+>> Tel. 91 398 72 79
+>> Fax. 91 398 72 88
+>>
+>>
+>> Antes de imprimir este correo piense bien si es necesario hacerlo: El 
+>> medioambiente es cosa de todos
+>>
+>>
+>
+>
+>
+>
+> jm~
+>
+> _______________________________
+>
+>        J. Miguel Marin
+>
+> http://www.est.uc3m.es/jmmarin
+>
+>    Dep. of Statistics
+> University Carlos III of Madrid
+>        Spain (E.U.)
+> _______________________________
+>
+>
+>
+
+-- 
+=========================================================
+Juan Antonio Gil Pascual
+Prof. Titular de Métodos de Investigación en Educación
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+U.N.E.D.
+Fac. de Educación
+Dpto. MIDE I
+Pº Senda del Rey,7 desp. 122
+28040 MADRID
+Tel. 91 398 72 79
+Fax. 91 398 72 88
+
+
+Antes de imprimir este correo piense bien si es necesario hacerlo: El medioambiente es cosa de todos
+
+
+From jmmarin en est-econ.uc3m.es  Sun Nov  7 11:09:42 2010
+From: jmmarin en est-econ.uc3m.es (J. Miguel Marin)
+Date: Sun, 07 Nov 2010 11:09:42 +0100
+Subject: [R-es] Cambio de idioma en pantalla de R
+Message-ID: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+
+
+Hola,
+
+me gustaría saber si se puede cambiar el idioma de la pantalla de R de 
+una manera más o menos fácil. Sé hacerlo para que salga en inglés, pero 
+me interesarían otros idiomas como italiano o alemán (incluso chino).
+
+Aunque ésta sea una duda algo paradójica en una lista para R en 
+español, está originada por asuntos de docencia, porque tengo alumnos 
+de varias nacionalidades en un curso de máster.
+
+Y saludos a tod en s
+
+jm~
+
+_______________________________
+
+        J. Miguel Marin
+
+http://www.est.uc3m.es/jmmarin
+
+    Dep. of Statistics
+University Carlos III of Madrid
+        Spain (E.U.)
+
+
+From coforfe en gmail.com  Sun Nov  7 19:11:41 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sun, 7 Nov 2010 19:11:41 +0100
+Subject: [R-es] etiquetas de variables
+In-Reply-To: <4CD668F2.3040108@edu.uned.es>
+References: <4CD43C75.4040902@edu.uned.es>
+	<AANLkTinVjiZeQNi-FeNf+LbR9pso8_k+qF=LfnbnxXNO@mail.gmail.com>
+	<AANLkTimzWVcNfrjmWW5YciE5568nTd=v40tUgKu78a0Q@mail.gmail.com>
+	<4CD668F2.3040108@edu.uned.es>
+Message-ID: <AANLkTikZZFtJMikOCDDu+XPVk5v=8kCK7Twutob57RRq@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101107/742d9764/attachment.pl>
+
+From coforfe en gmail.com  Sun Nov  7 19:16:31 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sun, 7 Nov 2010 19:16:31 +0100
+Subject: [R-es] Cambio de idioma en pantalla de R
+In-Reply-To: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+References: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+Message-ID: <AANLkTik5B3V5xn9EJ8XY-5ydDY+QpiqteNyh+5yUdoCT@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101107/a572c4d3/attachment.pl>
+
+From cpfuenmayor en hotmail.com  Sun Nov  7 23:45:55 2010
+From: cpfuenmayor en hotmail.com (Patricio Fuenmayor Viteri)
+Date: Sun, 7 Nov 2010 22:45:55 +0000
+Subject: [R-es] =?iso-8859-1?q?Argumento_s=F3lido=2E=2E=2E?=
+In-Reply-To: <AANLkTi=hzyq8gVzYX2tPySweuk8YYHnfm95O99d3xVEG@mail.gmail.com>
+References: <COL121-W270B08352A16DEFBEFBDD2AC4D0@phx.gbl>,
+	<AANLkTi=hzyq8gVzYX2tPySweuk8YYHnfm95O99d3xVEG@mail.gmail.com>
+Message-ID: <COL121-W3399E55F3D3D64CD0BA2FFAC4E0@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101107/6ff639e2/attachment.pl>
+
+From jmmarin en est-econ.uc3m.es  Sun Nov  7 23:52:46 2010
+From: jmmarin en est-econ.uc3m.es (J. Miguel Marin)
+Date: Sun, 07 Nov 2010 23:52:46 +0100
+Subject: [R-es] Cambio de idioma en pantalla de R
+In-Reply-To: <AANLkTik5B3V5xn9EJ8XY-5ydDY+QpiqteNyh+5yUdoCT@mail.gmail.com>
+References: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+	<AANLkTik5B3V5xn9EJ8XY-5ydDY+QpiqteNyh+5yUdoCT@mail.gmail.com>
+Message-ID: <20101107235246.rq4xi0ciioocogk0@webcartero01.uc3m.es>
+
+Hola,
+uso windows. Me temo que esa solución nunca ha funcionado. Sólo admite 
+el paso a inglés. En el R-faq habla sobre el asunto pero me resulta muy 
+confuso y parece que está relacionado con la versión de windows en la 
+que corre R. Hay una parrafada sobre fuentes en la que me pierdo.
+
+> Hola,
+>
+> No sé si estás usando Windows o Linux...
+>
+> En Windows: Editar-> Preferencias de la interfaz gráfica
+> En el formulario que aparece, hay un textbox donde se puede indicar el
+> "Language for menus and messages"...
+>
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> 2010/11/7 J. Miguel Marin <jmmarin en est-econ.uc3m.es>
+>
+>>
+>> Hola,
+>>
+>> me gustaría saber si se puede cambiar el idioma de la pantalla de R de una
+>> manera más o menos fácil. Sé hacerlo para que salga en inglés, pero me
+>> interesarían otros idiomas como italiano o alemán (incluso chino).
+>>
+>> Aunque ésta sea una duda algo paradójica en una lista para R en español,
+>> está originada por asuntos de docencia, porque tengo alumnos de varias
+>> nacionalidades en un curso de máster.
+>>
+>> Y saludos a tod en s
+>>
+>> jm~
+>>
+>> _______________________________
+>>
+>>       J. Miguel Marin
+>>
+>> http://www.est.uc3m.es/jmmarin
+>>
+>>   Dep. of Statistics
+>> University Carlos III of Madrid
+>>       Spain (E.U.)
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+
+
+
+jm~
+
+_______________________________
+
+        J. Miguel Marin
+
+http://www.est.uc3m.es/jmmarin
+
+    Dep. of Statistics
+University Carlos III of Madrid
+        Spain (E.U.)
+
+
+From coforfe en gmail.com  Mon Nov  8 00:38:34 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Mon, 8 Nov 2010 00:38:34 +0100
+Subject: [R-es] Cambio de idioma en pantalla de R
+In-Reply-To: <20101107235246.rq4xi0ciioocogk0@webcartero01.uc3m.es>
+References: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+	<AANLkTik5B3V5xn9EJ8XY-5ydDY+QpiqteNyh+5yUdoCT@mail.gmail.com>
+	<20101107235246.rq4xi0ciioocogk0@webcartero01.uc3m.es>
+Message-ID: <AANLkTiktqUnHQjhdKAYLXLodTkmC2YDmfXkVZcYZJS8Z@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101108/91bacbc1/attachment.pl>
+
+From jmmarin en est-econ.uc3m.es  Mon Nov  8 11:06:37 2010
+From: jmmarin en est-econ.uc3m.es (J. Miguel Marin)
+Date: Mon, 08 Nov 2010 11:06:37 +0100
+Subject: [R-es] Cambio de idioma en pantalla de R
+In-Reply-To: <AANLkTiktqUnHQjhdKAYLXLodTkmC2YDmfXkVZcYZJS8Z@mail.gmail.com>
+References: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+	<AANLkTik5B3V5xn9EJ8XY-5ydDY+QpiqteNyh+5yUdoCT@mail.gmail.com>
+	<20101107235246.rq4xi0ciioocogk0@webcartero01.uc3m.es>
+	<AANLkTiktqUnHQjhdKAYLXLodTkmC2YDmfXkVZcYZJS8Z@mail.gmail.com>
+Message-ID: <20101108110637.zfa1gapioo8wow4w@webcartero01.uc3m.es>
+
+Hola,
+aunque cambies el idioma en Rconsole y los sustituyas por alemán o 
+cualquier otro lo único que hace es poner el menú en inglés.
+
+La opción de cambiar la instalación desde el principio, si he entendido 
+el R-faq, tampoco funcionaría porque está atada a la versión de windows 
+y a sus fuentes instaladas. En cualquier caso es algo complicado 
+instalar varias versiones de un mismo programa en un servidor, me 
+regañarían bastante por intentar hacerlo...
+
+Pero no deja de ser un problema menor el asunto. Continuaré con la 
+versión inglesa que parece ser la versión estándar de lingua franca.
+O sea que no te quiero molestar más.
+Y gracias
+
+> Hola,
+>
+> He intentado modificar vía ese formulario y no he podido grabar el cambio
+> del lenguage en el Rconsole.
+> El Rconsole es el fichero a modificar, en mi equipo está aquí: C:\Program
+> Files\R\R-2.11.1\etc
+>
+> El cambio afectará a los mensajes, pero no se indica que también para los
+> menus.
+> Para los menus, entiendo que se obtiene en el momento de la instalación
+> eligiendo el lenguage que se quiere.
+> ¿Has probado a instalar una versión en otro idioma?
+>
+> Saludos,
+> Carlos.
+>
+>
+> 2010/11/7 J. Miguel Marin <jmmarin en est-econ.uc3m.es>
+>
+>> Hola,
+>> uso windows. Me temo que esa solución nunca ha funcionado. Sólo admite el
+>> paso a inglés. En el R-faq habla sobre el asunto pero me resulta muy confuso
+>> y parece que está relacionado con la versión de windows en la que corre R.
+>> Hay una parrafada sobre fuentes en la que me pierdo.
+>>
+>>
+>>  Hola,
+>>>
+>>> No sé si estás usando Windows o Linux...
+>>>
+>>> En Windows: Editar-> Preferencias de la interfaz gráfica
+>>> En el formulario que aparece, hay un textbox donde se puede indicar el
+>>> "Language for menus and messages"...
+>>>
+>>>
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>> 2010/11/7 J. Miguel Marin <jmmarin en est-econ.uc3m.es>
+>>>
+>>>
+>>>> Hola,
+>>>>
+>>>> me gustaría saber si se puede cambiar el idioma de la pantalla de R de
+>>>> una
+>>>> manera más o menos fácil. Sé hacerlo para que salga en inglés, pero me
+>>>> interesarían otros idiomas como italiano o alemán (incluso chino).
+>>>>
+>>>> Aunque ésta sea una duda algo paradójica en una lista para R en español,
+>>>> está originada por asuntos de docencia, porque tengo alumnos de varias
+>>>> nacionalidades en un curso de máster.
+>>>>
+>>>> Y saludos a tod en s
+>>>>
+>>>> jm~
+>>>>
+>>>> _______________________________
+>>>>
+>>>>      J. Miguel Marin
+>>>>
+>>>> http://www.est.uc3m.es/jmmarin
+>>>>
+>>>>  Dep. of Statistics
+>>>> University Carlos III of Madrid
+>>>>      Spain (E.U.)
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>>
+>>>
+>>
+>>
+>>
+>> jm~
+>>
+>> _______________________________
+>>
+>>       J. Miguel Marin
+>>
+>> http://www.est.uc3m.es/jmmarin
+>>
+>>   Dep. of Statistics
+>> University Carlos III of Madrid
+>>       Spain (E.U.)
+>> _______________________________
+>>
+>>
+>>
+>
+
+
+
+
+jm~
+
+_______________________________
+
+        J. Miguel Marin
+
+http://www.est.uc3m.es/jmmarin
+
+    Dep. of Statistics
+University Carlos III of Madrid
+        Spain (E.U.)
+
+
+From r-uca en uca.es  Mon Nov  8 11:06:53 2010
+From: r-uca en uca.es (r-uca)
+Date: Mon, 08 Nov 2010 11:06:53 +0100
+Subject: [R-es] Cambio de idioma en pantalla de R
+In-Reply-To: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+References: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+Message-ID: <1289210813.3398.1.camel@pcmat36>
+
+Hola,
+
+
+El dom, 07-11-2010 a las 11:09 +0100, J. Miguel Marin escribió:
+> Hola,
+> 
+> me gustaría saber si se puede cambiar el idioma de la pantalla de R de 
+> una manera más o menos fácil. Sé hacerlo para que salga en inglés, pero 
+> me interesarían otros idiomas como italiano o alemán (incluso chino).
+
+Hace poco hemos tenido problemas con algunos alumnos y algunas versiones
+de "sistemas operativos", la solución que hemos encontrado está
+publicada en 
+http://knuth.uca.es/moodle/mod/forum/discuss.php?d=665
+
+Saludos.
+
+-- 
+===
+Proyecto R-UCA
+http://knuth.uca.es/R
+r-uca en uca.es
+Manuel Muñoz Márquez
+===
+
+
+From klangohr en imim.es  Mon Nov  8 11:35:31 2010
+From: klangohr en imim.es (LANGOHR, KLAUS)
+Date: Mon, 8 Nov 2010 11:35:31 +0100
+Subject: [R-es] etiquetas de variables
+In-Reply-To: <4CD66CC2.3030307@edu.uned.es>
+References: <4CD43C75.4040902@edu.uned.es>
+	<20101105200122.7zmf3j8s8w0ks8gw@webcartero01.uc3m.es>
+	<4CD457CF.9080105@edu.uned.es>
+	<20101106002336.5xoyq3zu80owwosk@webcartero01.uc3m.es>,
+	<4CD66CC2.3030307@edu.uned.es>
+Message-ID: <BB3B87345736EE45843CC0ADF9EEEB0D2AE8A139C6@hermes2.imim.es>
+
+Hola Juan,
+Yo suelo utilizar las funciones Label y label del paquete Hmisc. Un ejemplo:
+
+library(Hmisc)
+dat<-data.frame(x=rnorm(10),y=rchisq(10,1))
+label(dat$x)<-'Datos de una distribución normal'
+label(dat$y)<-'Datos de una chi-cuadrada'
+Label(dat)
+label(dat$x)
+
+Además, si usas la función spss.get (del mismo paquete) para importar datos desde SPSS, se importan todas las etiquetas desde SPSS y las puedes extraer justo con Label y label.
+
+Espero que te sea de utilidad.
+
+Klaus.
+
+________________________________________
+Von: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] im Auftrag von Juan Antonio Gil Pascual [jgil en edu.uned.es]
+Gesendet: Sonntag, 7. November 2010 10:09
+An: J. Miguel Marin
+Cc: r-help-es en r-project.org
+Betreff: Re: [R-es] etiquetas de variables
+
+Hola J.Miguel tiene muy buena pinta el memisc lo probaré.
+
+Muchas gracias.
+
+Juan
+
+
+El 06/11/2010 0:23, J. Miguel Marin escribió:
+> Hola Juan
+>
+> echa un ojo a memisc
+> http://cran.r-project.org/web/packages/memisc/index.html
+>
+> a lo mejor hace lo que buscas. Pero no la he probado :-/
+>
+>
+>> Hola J.Miguel querido amigo no es esa mi duda. Mi problema viene
+>> porque SPSS saca los resultados descriptivos de cualquier variable no
+>> con el nombre de la variable sino con la etiqueta de la misma y no he
+>> visto en R nada que haga algo similar.
+>>
+>> Un abrazo,
+>>
+>> Juan
+>>
+>>
+>> El 05/11/2010 20:01, J. Miguel Marin escribió:
+>>> Hola Juan,
+>>>
+>>> me alegro de saber de ti.
+>>>
+>>> Si lo que preguntas se relaciona con un plot por ejemplo bastaría
+>>> hacer algo así con "xlab" e "ylab":
+>>>
+>>> plot(edad,predi,type="l",xlab="age",ylim=c(0.03,0.32),ylab="Discapacity",
+>>> main="Men")
+>>>
+>>> Y si quieres poner etiquetas por cualquier lado con el ratón:
+>>>
+>>> # Poner etiquetas en algún lado por alli con el raton...
+>>> plot(rnorm(100))
+>>> legend(locator(1), "no semos nadie", cex=0.7, bty="n")
+>>>
+>>> Pero no sé si esto era lo que preguntabas... :-/
+>>>
+>>> Y cuídate
+>>>
+>>>> Estimados compañeros tengo una duda, que quizás sea trivial pero
+>>>> que no tengo solución: ¿se puede sacar los resultados descriptivos
+>>>> de una variable, no por el nombre de la misma sino por la etiqueta
+>>>> de la ésta?, Por ejemplo, en un cuestionario en lugar de sacar el
+>>>> resultado del item1 expresar el resultado teniendo como cabecera su
+>>>> etiqueta.
+>>>>
+>>>> Un cordial saludo,
+>>>>
+>>>> Juan
+>>>>
+>>>> --
+>>>> =========================================================
+>>>> Juan Antonio Gil Pascual
+>>>> Prof. Titular de Métodos de Investigación en Educación
+>>>> correo: jgil en edu.uned.es
+>>>> web: www.uned.es/personal/jgil
+>>>>
+>>>> U.N.E.D.
+>>>> Fac. de Educación
+>>>> Dpto. MIDE I
+>>>> Pº Senda del Rey,7 desp. 122
+>>>> 28040 MADRID
+>>>> Tel. 91 398 72 79
+>>>> Fax. 91 398 72 88
+>>>>
+>>>>
+>>>> Antes de imprimir este correo piense bien si es necesario hacerlo:
+>>>> El medioambiente es cosa de todos
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>>>
+>>>
+>>>
+>>> jm~
+>>>
+>>> _______________________________
+>>>
+>>>        J. Miguel Marin
+>>>
+>>> http://www.est.uc3m.es/jmmarin
+>>>
+>>>    Dep. of Statistics
+>>> University Carlos III of Madrid
+>>>        Spain (E.U.)
+>>> _______________________________
+>>>
+>>>
+>>>
+>>
+>> --
+>> =========================================================
+>> Juan Antonio Gil Pascual
+>> Prof. Titular de Métodos de Investigación en Educación
+>> correo: jgil en edu.uned.es
+>> web: www.uned.es/personal/jgil
+>>
+>> U.N.E.D.
+>> Fac. de Educación
+>> Dpto. MIDE I
+>> Pº Senda del Rey,7 desp. 122
+>> 28040 MADRID
+>> Tel. 91 398 72 79
+>> Fax. 91 398 72 88
+>>
+>>
+>> Antes de imprimir este correo piense bien si es necesario hacerlo: El
+>> medioambiente es cosa de todos
+>>
+>>
+>
+>
+>
+>
+> jm~
+>
+> _______________________________
+>
+>        J. Miguel Marin
+>
+> http://www.est.uc3m.es/jmmarin
+>
+>    Dep. of Statistics
+> University Carlos III of Madrid
+>        Spain (E.U.)
+> _______________________________
+>
+>
+>
+
+--
+=========================================================
+Juan Antonio Gil Pascual
+Prof. Titular de Métodos de Investigación en Educación
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+U.N.E.D.
+Fac. de Educación
+Dpto. MIDE I
+Pº Senda del Rey,7 desp. 122
+28040 MADRID
+Tel. 91 398 72 79
+Fax. 91 398 72 88
+
+
+Antes de imprimir este correo piense bien si es necesario hacerlo: El medioambiente es cosa de todos
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+From jmmarin en est-econ.uc3m.es  Mon Nov  8 14:53:23 2010
+From: jmmarin en est-econ.uc3m.es (J. Miguel Marin)
+Date: Mon, 08 Nov 2010 14:53:23 +0100
+Subject: [R-es] Cambio de idioma en pantalla de R
+In-Reply-To: <1289210813.3398.1.camel@pcmat36>
+References: <20101107110942.t9x4gkei5ccgs4k4@webcartero01.uc3m.es>
+	<1289210813.3398.1.camel@pcmat36>
+Message-ID: <20101108145323.6r49u86lc000c8w4@webcartero01.uc3m.es>
+
+Hola,
+la verdad es que no me funciona :-(
+De todos modos parece que la solución está más relacionada con obtener 
+el menú en castellano, no tanto en otros idiomas. Per en castellano 
+(por lo menos desde un windows en ese idioma) siempre se instala por 
+defecto. Sería interesante saber si alguien lo tiene instalado en 
+catalán y saber cómo se comporta la instalación (R tiene una versión en 
+catalán).
+
+
+> Hola,
+>
+>
+> El dom, 07-11-2010 a las 11:09 +0100, J. Miguel Marin escribió:
+>> Hola,
+>>
+>> me gustaría saber si se puede cambiar el idioma de la pantalla de R de
+>> una manera más o menos fácil. Sé hacerlo para que salga en inglés, pero
+>> me interesarían otros idiomas como italiano o alemán (incluso chino).
+>
+> Hace poco hemos tenido problemas con algunos alumnos y algunas versiones
+> de "sistemas operativos", la solución que hemos encontrado está
+> publicada en
+> http://knuth.uca.es/moodle/mod/forum/discuss.php?d=665
+>
+> Saludos.
+>
+> --
+> ===
+> Proyecto R-UCA
+> http://knuth.uca.es/R
+> r-uca en uca.es
+> Manuel Muñoz Márquez
+> ===
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+
+jm~
+
+_______________________________
+
+        J. Miguel Marin
+
+http://www.est.uc3m.es/jmmarin
+
+    Dep. of Statistics
+University Carlos III of Madrid
+        Spain (E.U.)
+
+
+From evion12000 en gmail.com  Tue Nov  9 04:04:27 2010
+From: evion12000 en gmail.com (David Mendez)
+Date: Mon, 8 Nov 2010 22:34:27 -0430
+Subject: [R-es] =?iso-8859-1?q?Preservar_el_nombre_de_un_nodo_en_una_lista?=
+	=?iso-8859-1?q?_despu=E9s_de_unir_dos_listas_diferentes?=
+Message-ID: <AANLkTi=sGiV4b9sFRQcm=0f-L0mofsx=MR+fGV6nNynk@mail.gmail.com>
+
+Pregunta básica sobre listas, tengo dos listas: anoml (compuesta por
+67 dataframes)  y datos (67 vectores)
+
+> str(anoml)
+List of 67
+$ Anom_e1751: num [1:456] -0.874 -0.874 -0.874 -0.874 -0.66 ...
+$ Anom_e1756: num [1:456] -0.984 -0.984 -0.984 -0.874 -0.464 ...
+$ Anom_e1773: num [1:456] -0.875 -0.95 -0.95 -0.838 -0.727 ...
+...
+str(datos)
+List of 67
+$ e1751.PtoLaCruz.cr.txt          :'data.frame': 456 obs. of  4 variables:
+ ..$ A  : int [1:456] 1960 1960 1960 1960 1960 1960 1960 1960 1960 1960 ...
+ ..$ M  : int [1:456] 1 2 3 4 5 6 7 8 9 10 ...
+ ..$ PRE: num [1:456] 0 0 0 0 10.6 ...
+ ..$ COD: Factor w/ 2 levels "FE","O": 2 2 2 2 2 2 2 2 2 2 ...
+$ e1756.ChaparroC.cr.txt          :'data.frame': 456 obs. of  4 variables:
+ ..$ A  : int [1:456] 1960 1960 1960 1960 1960 1960 1960 1960 1960 1960 ...
+ ..$ M  : int [1:456] 1 2 3 4 5 6 7 8 9 10 ...
+ ..$ PRE: num [1:456] 0 0 0 8.4 39.7 ...
+ ..$ COD: Factor w/ 2 levels "FE","O": 2 2 2 2 2 2 2 2 2 2 ...
+
+Se me ha ocurrido unirlas y les aplique
+
+datoAnom <- mapply(cbind, datos, anoml, SIMPLIFY=F)
+
+que efectivamente me  dió:
+
+str(datoAnom)
+List of 67
+$ e1751.PtoLaCruz.cr.txt          :'data.frame': 456 obs. of  5 variables:
+ ..$ A               : int [1:456] 1960 1960 1960 1960 1960 1960 1960
+1960 1960 1960 ...
+ ..$ M               : int [1:456] 1 2 3 4 5 6 7 8 9 10 ...
+ ..$ PRE             : num [1:456] 0 0 0 0 10.6 ...
+ ..$ COD             : Factor w/ 2 levels "FE","O": 2 2 2 2 2 2 2 2 2 2 ...
+ ..$ dots[[2L]][[1L]]: num [1:456] -0.874 -0.874 -0.874 -0.874 -0.66 ...
+$ e1756.ChaparroC.cr.txt          :'data.frame': 456 obs. of  5 variables:
+ ..$ A               : int [1:456] 1960 1960 1960 1960 1960 1960 1960
+1960 1960 1960 ...
+ ..$ M               : int [1:456] 1 2 3 4 5 6 7 8 9 10 ...
+ ..$ PRE             : num [1:456] 0 0 0 8.4 39.7 ...
+ ..$ COD             : Factor w/ 2 levels "FE","O": 2 2 2 2 2 2 2 2 2 2 ...
+ ..$ dots[[2L]][[2L]]: num [1:456] -0.984 -0.984 -0.984 -0.874 -0.464 ...
+
+El problema es que los nombres originales de la primera lista (Ej.
+$Anom_e1751) han cambiado por las dimensiones de (..$
+dots[[2L]][[2L]]) pero deseo conservarlos como se encontraban
+originalmente, ¿Qué debo hacer para evitar esto? de modo que el
+resultado luzca así:
+
+$ e1751.PtoLaCruz.cr.txt          :'data.frame': 456 obs. of  5 variables:
+ ..$ A               : int [1:456] 1960 1960 1960 1960 1960 1960 1960
+1960 1960 1960 ...
+ ..$ M               : int [1:456] 1 2 3 4 5 6 7 8 9 10 ...
+ ..$ PRE             : num [1:456] 0 0 0 0 10.6 ...
+ ..$ COD             : Factor w/ 2 levels "FE","O": 2 2 2 2 2 2 2 2 2 2 ...
+ ..$ $ Anom_e1751: num [1:456] -0.874 -0.874 -0.874 -0.874 -0.66 ...
+--
+David Méndez
+
+If geography is prose, maps are iconography.
+Lennart Meri
+
+
+From cpfuenmayor en hotmail.com  Fri Nov 12 20:26:51 2010
+From: cpfuenmayor en hotmail.com (Patricio Fuenmayor Viteri)
+Date: Fri, 12 Nov 2010 19:26:51 +0000
+Subject: [R-es] boxplots bidimensionales
+Message-ID: <COL121-W191DD955C0E0C43DBB9C93AC330@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101112/32165d60/attachment.pl>
+
+From cgb en datanalytics.com  Fri Nov 12 20:31:29 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Fri, 12 Nov 2010 20:31:29 +0100
+Subject: [R-es] boxplots bidimensionales
+In-Reply-To: <COL121-W191DD955C0E0C43DBB9C93AC330@phx.gbl>
+References: <COL121-W191DD955C0E0C43DBB9C93AC330@phx.gbl>
+Message-ID: <AANLkTin5yTbKOPiCe0g+cucFVhMVt4avgBJ9uCvvvca8@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Creo que buscas esto:
+
+http://addictedtor.free.fr/graphiques/
+
+(Posible y más concretamente, esto:
+http://addictedtor.free.fr/graphiques/RGraphGallery.php?graph=112 )
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalyltics.com
+
+El día 12 de noviembre de 2010 20:26, Patricio Fuenmayor Viteri
+<cpfuenmayor en hotmail.com> escribió:
+>
+> Hola a todos.
+> Estoy tratando de visualizar unos datos en dos dimensiones, pero quiero enfatizar la dispersión o variablilidad. La figura que mas se acopla a mi necesidad es el boxplot,
+> pero necesito mostrar una especie de boxplot bidimensional. Se que existe esto, porque lo vi en algún lado, el problema es que no recuerdo donde. La figura que busco es algo asi, ya que no se como explicarla del todo:
+> q%
+> ^
+> |                                        |
+> |                                        |
+> |                                ----| x  |---
+> |         |                              |
+> |     --|x|--                          |
+> |         |
+> |----------------------------------------------------->  p
+>
+> Con un ejemplo: tengo los precios de un producto y la participacion del total del mercado de 2 empresas que comercializan ese producto.
+> los datos son diarios, y la idea es mostrar un comportamiento semanal o mensual de las 2 empresas en el plano participación vs precio.
+> La idea es mostrar el comportamiento de la variablilidad de las dos empresas tanto en precio como en participación.
+> Gracias por la ayuda o si tienen alguna sugerencia.
+>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From mauro8824 en gmail.com  Fri Nov 12 22:04:03 2010
+From: mauro8824 en gmail.com (Carlos Mauricio camelo charry)
+Date: Fri, 12 Nov 2010 16:04:03 -0500
+Subject: [R-es] sobre matrices
+Message-ID: <AANLkTi=uHjYBrW=vQcx43-UHQOKvKdj06BPtGNM20S+d@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101112/c17ada5a/attachment.pl>
+
+From coforfe en gmail.com  Fri Nov 12 22:12:57 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Fri, 12 Nov 2010 22:12:57 +0100
+Subject: [R-es] sobre matrices
+In-Reply-To: <AANLkTi=uHjYBrW=vQcx43-UHQOKvKdj06BPtGNM20S+d@mail.gmail.com>
+References: <AANLkTi=uHjYBrW=vQcx43-UHQOKvKdj06BPtGNM20S+d@mail.gmail.com>
+Message-ID: <AANLkTi=LSdS-njNAm1MkV_u=zRDNiZoaKis6N12d72Xw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101112/bd5ec1bb/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Fri Nov 12 22:14:13 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 12 Nov 2010 16:14:13 -0500
+Subject: [R-es] sobre matrices
+In-Reply-To: <AANLkTi=uHjYBrW=vQcx43-UHQOKvKdj06BPtGNM20S+d@mail.gmail.com>
+References: <AANLkTi=uHjYBrW=vQcx43-UHQOKvKdj06BPtGNM20S+d@mail.gmail.com>
+Message-ID: <AANLkTin9WAVdJc7iewM4zTCX0CNWcFgrwSKAyWgpXLgd@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101112/07d9b956/attachment.pl>
+
+From mbprendes en uniovi.es  Mon Nov 15 09:56:48 2010
+From: mbprendes en uniovi.es (=?iso-8859-1?Q?Bel=E9n_Prendes?=)
+Date: Mon, 15 Nov 2010 09:56:48 +0100
+Subject: [R-es] II Jornadas
+Message-ID: <006801cb84a3$09b3b8e0$1d1b2aa0$@es>
+
+
+Estimados usuarios de R
+
+ Se ha ampliado el plazo de recepción de resúmenes hasta el viernes día 19
+de Noviembre.
+Recordad que tanto el envío de resúmenes como la inscripción a las II
+Jornadas de R, se debe realizar a través de la página de la Escuela
+Politécnica de Mieres (http://epm.uniovi.es/inicio ), pinchando sobre el
+evento correspondiente, o bien a través de la siguiente dirección:
+
+http://epm.uniovi.es/actividades/-/asset_publisher/0012/content/ii-jornadas-
+de-usuarios-de-r-en-castellano?redirect=%2Finicio
+
+
+
+Saludos a todos y nos vemos en Mieres
+
+
+María Belén Prendes Gero
+Subdirectora de la Escuela Politécnica de Mieres subdirepm3 en uniovi.es
+
+
+From javi.martinez.lopez en gmail.com  Mon Nov 15 19:30:03 2010
+From: javi.martinez.lopez en gmail.com (Javier Martinez)
+Date: Mon, 15 Nov 2010 19:30:03 +0100
+Subject: [R-es] =?iso-8859-1?q?Duda_sobre_la_aplicaci=F3n_de_modelos_mixto?=
+	=?iso-8859-1?q?s?=
+Message-ID: <AANLkTi=McT-uduocPA7eo6V5BvGBnq_3OhOYiHGm0YbD@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101115/ea4d0d46/attachment.pl>
+
+From onunez en iberstat.es  Mon Nov 15 19:44:37 2010
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Mon, 15 Nov 2010 19:44:37 +0100
+Subject: [R-es]
+ =?iso-8859-1?q?Duda_sobre_la_aplicaci=F3n_de_modelos_mixto?=
+ =?iso-8859-1?q?s?=
+In-Reply-To: <AANLkTi=McT-uduocPA7eo6V5BvGBnq_3OhOYiHGm0YbD@mail.gmail.com>
+References: <AANLkTi=McT-uduocPA7eo6V5BvGBnq_3OhOYiHGm0YbD@mail.gmail.com>
+Message-ID: <D63B6234-8808-4A37-8721-DDD97BAB4921@iberstat.es>
+
+Javier,
+
+para ajustar una recta necesitas al menos 3 puntos.
+Si sólo tienes dos puntos, tu ajuste es artificialmente perfecto, y  
+no puedes evaluar la varianza residual.
+Lo cual suele generar intervalos de confianza mal definidos en los  
+paquetes estadísticos.
+Por lo tanto, te aconsejo utilizar un modelo sin pendiente.
+Un saludo. Olivier
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 15/11/2010, a las 19:30, Javier Martinez escribió:
+
+> Estimados colisteros,
+>
+> estudio la relación entre la frecuencia de aparición de especies  
+> vegetales
+> típicas de humedales con los usos del suelo circundantes a los  
+> mismos, y
+> para ello uso datos de un estudio temporal de vegetación en  
+> humedales, por
+> lo que los éstos no son completamente independientes sino que están
+> agrupados en base a cada humedal. He usado modelos mixtos  
+> generalizados,
+> concretamente la función "glmer" del paquete "lme4" con la familia  
+> binomial,
+> aunque sólo cuento con dos años de estudio, o sea dos puntos por cada
+> humedal. La relación que presentan cada especie y uso de suelo es
+> consistente entre humedales y los modelos obtenidos son significativos
+> considerando tanto el intercepto de cada humedal, como éste junto  
+> con la
+> pendiente como variables aleatorias, pero el intervalo de  
+> confianza  de las
+> predicciones "de la población" es muy alto porque cada humedal  
+> presenta unos
+> rangos y "pendiente" (si se puede llamar así con sólo dos puntos) muy
+> distinta. En ese sentido no sé si estos modelos están bien  
+> planteados así, y
+> si serán realmente útiles para mi propósito, que es conocer la  
+> relación
+> general entre las variables de uso y de vegetación. ¿Alguien tiene 
+> alguna
+> experiencia con datos similares?
+>
+> Gracias!
+>
+> Javier
+>
+> ---
+> Javier Martínez López
+> Departmento de Ecología e Hidrología
+> Facultad de Biología
+> Universidad de Murcia
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From javi.martinez.lopez en gmail.com  Mon Nov 15 20:35:37 2010
+From: javi.martinez.lopez en gmail.com (Javier Martinez)
+Date: Mon, 15 Nov 2010 20:35:37 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Duda_sobre_la_aplicaci=F3n_de_modelos_mixto?=
+	=?iso-8859-1?q?s?=
+In-Reply-To: <D63B6234-8808-4A37-8721-DDD97BAB4921@iberstat.es>
+References: <AANLkTi=McT-uduocPA7eo6V5BvGBnq_3OhOYiHGm0YbD@mail.gmail.com>
+	<D63B6234-8808-4A37-8721-DDD97BAB4921@iberstat.es>
+Message-ID: <AANLkTimywqOPnQ3j7OAhYFjvtqd6ypPf-Gof9NOCM16L@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101115/bb962ee2/attachment.pl>
+
+From onunez en iberstat.es  Mon Nov 15 20:52:55 2010
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Mon, 15 Nov 2010 20:52:55 +0100
+Subject: [R-es]
+ =?iso-8859-1?q?Duda_sobre_la_aplicaci=F3n_de_modelos_mixto?=
+ =?iso-8859-1?q?s?=
+In-Reply-To: <AANLkTimywqOPnQ3j7OAhYFjvtqd6ypPf-Gof9NOCM16L@mail.gmail.com>
+References: <AANLkTi=McT-uduocPA7eo6V5BvGBnq_3OhOYiHGm0YbD@mail.gmail.com>
+	<D63B6234-8808-4A37-8721-DDD97BAB4921@iberstat.es>
+	<AANLkTimywqOPnQ3j7OAhYFjvtqd6ypPf-Gof9NOCM16L@mail.gmail.com>
+Message-ID: <D1599AAA-21D1-4E9F-A5D4-79DEBBB5A016@iberstat.es>
+
+Javier,
+
+me refiero a que en el modelo intra-humedal, el termino aleatorio sea  
+sólo la constante.
+En otras palabra, si la j-esima observación (j=1,2) sobre el i-esimo  
+humedal es Y_ij , tu modelo debería ser
+
+E(Y_ij | a_i ) = g( a_i + b*X_ij),
+
+donde a_i es un termino que varía de manera aleatoria de un humedal  
+atro,
+b es la pendiente común a todos los humedales,
+los X_ij son variables explicativas,
+y g es la función de vinculo del modelo lineal generalizado.
+
+Un saludo. Olivier
+
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 15/11/2010, a las 20:35, Javier Martinez escribió:
+
+> Hola Olivier, ¿te refieres a poner la variable independiente en el  
+> modelo como constante (~1) o a no incluir dicha variable en los  
+> términos aleatorios?
+>
+> Gracias y saludos,
+>
+> Javier
+>
+> 2010/11/15 Olivier Nuñez <onunez en iberstat.es>
+> Javier,
+>
+> para ajustar una recta necesitas al menos 3 puntos.
+> Si sólo tienes dos puntos, tu ajuste es artificialmente perfecto, y  
+> no puedes evaluar la varianza residual.
+> Lo cual suele generar intervalos de confianza mal definidos en los  
+> paquetes estadísticos.
+> Por lo tanto, te aconsejo utilizar un modelo sin pendiente.
+> Un saludo. Olivier
+> -- ____________________________________
+>
+> Olivier G. Nuñez
+> Email: onunez en iberstat.es
+> Tel : +34 663 03 69 09
+> Web: http://www.iberstat.es
+>
+> ____________________________________
+>
+>
+>
+>
+> El 15/11/2010, a las 19:30, Javier Martinez escribió:
+>
+> Estimados colisteros,
+>
+> estudio la relación entre la frecuencia de aparición de especies  
+> vegetales
+> típicas de humedales con los usos del suelo circundantes a los  
+> mismos, y
+> para ello uso datos de un estudio temporal de vegetación en  
+> humedales, por
+> lo que los éstos no son completamente independientes sino que están
+> agrupados en base a cada humedal. He usado modelos mixtos  
+> generalizados,
+> concretamente la función "glmer" del paquete "lme4" con la familia  
+> binomial,
+> aunque sólo cuento con dos años de estudio, o sea dos puntos por cada
+> humedal. La relación que presentan cada especie y uso de suelo es
+> consistente entre humedales y los modelos obtenidos son significativos
+> considerando tanto el intercepto de cada humedal, como éste junto  
+> con la
+> pendiente como variables aleatorias, pero el intervalo de  
+> confianza  de las
+> predicciones "de la población" es muy alto porque cada humedal  
+> presenta unos
+> rangos y "pendiente" (si se puede llamar así con sólo dos puntos) muy
+> distinta. En ese sentido no sé si estos modelos están bien  
+> planteados así, y
+> si serán realmente útiles para mi propósito, que es conocer la  
+> relación
+> general entre las variables de uso y de vegetación. ¿Alguien tiene 
+> alguna
+> experiencia con datos similares?
+>
+> Gracias!
+>
+> Javier
+>
+> ---
+> Javier Martínez López
+> Departmento de Ecología e Hidrología
+> Facultad de Biología
+> Universidad de Murcia
+>
+>        [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From javi.martinez.lopez en gmail.com  Tue Nov 16 10:30:09 2010
+From: javi.martinez.lopez en gmail.com (Javier Martinez)
+Date: Tue, 16 Nov 2010 10:30:09 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Duda_sobre_la_aplicaci=F3n_de_modelos_mixto?=
+	=?iso-8859-1?q?s?=
+In-Reply-To: <D1599AAA-21D1-4E9F-A5D4-79DEBBB5A016@iberstat.es>
+References: <AANLkTi=McT-uduocPA7eo6V5BvGBnq_3OhOYiHGm0YbD@mail.gmail.com>
+	<D63B6234-8808-4A37-8721-DDD97BAB4921@iberstat.es>
+	<AANLkTimywqOPnQ3j7OAhYFjvtqd6ypPf-Gof9NOCM16L@mail.gmail.com>
+	<D1599AAA-21D1-4E9F-A5D4-79DEBBB5A016@iberstat.es>
+Message-ID: <AANLkTinLyzZ977VPNUu87d6dHxRbTqRKA=tLzoAV3Tse@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101116/4c20fa3f/attachment.pl>
+
+From r.user.spain en gmail.com  Tue Nov 16 17:57:38 2010
+From: r.user.spain en gmail.com (Usuario R)
+Date: Tue, 16 Nov 2010 17:57:38 +0100
+Subject: [R-es] =?iso-8859-1?q?Oferta_trabajo_online_=28Ingl=E9s=29?=
+Message-ID: <AANLkTimceUNYBPjoB0zc1kLUhQ6F4kh9PSAE6e9yJ8ZL@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101116/10ad2aa0/attachment.pl>
+
+From Jose en erini.ac.uk  Wed Nov 17 00:02:09 2010
+From: Jose en erini.ac.uk (Jose Iparraguirre D'Elia)
+Date: Tue, 16 Nov 2010 23:02:09 -0000
+Subject: [R-es] Estimador VARHAC
+Message-ID: <C9328F0EEDC3BC439FDABD12060E91090E2EAB@erini1.ERINI.local>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101116/6b0750ff/attachment.pl>
+
+From jgil en edu.uned.es  Wed Nov 17 10:31:28 2010
+From: jgil en edu.uned.es (Juan Antonio Gil Pascual)
+Date: Wed, 17 Nov 2010 10:31:28 +0100
+Subject: [R-es] =?iso-8859-1?q?duda_de_tm_para_espa=F1ol?=
+Message-ID: <4CE3A0F0.8000600@edu.uned.es>
+
+Estimados compañeros estoy haciendo análisis de contenido y quería saber 
+si alguno de vosotros habeís trabajado con el módulo tm y con textos en 
+español porque a mi aunque en el corpus ponga spanish no coge ni acentos 
+ni ñ y luego no puedo sacar los términos y su frecuencia.
+
+Un cordial saludo,
+
+
+Juan
+
+
+From jgil en edu.uned.es  Wed Nov 17 11:45:30 2010
+From: jgil en edu.uned.es (Juan Antonio Gil Pascual)
+Date: Wed, 17 Nov 2010 11:45:30 +0100
+Subject: [R-es] =?utf-8?q?duda_de_tm_para_espa=C3=B1ol?=
+In-Reply-To: <1289986569.2656.4.camel@pcmat36>
+References: <4CE3A0F0.8000600@edu.uned.es> <1289986569.2656.4.camel@pcmat36>
+Message-ID: <4CE3B24A.2080401@edu.uned.es>
+
+Hola Manuel el juego de caracteres que indica el manual es un ISO 639-2 
+pero no encuentro la forma de pasar el texto a este juego de caracteres. 
+Además ignoro si con esto solucionaré el problema.
+
+Un saludo,
+
+Juan
+
+El 17/11/2010 10:36, r-uca escribió:
+> El mié, 17-11-2010 a las 10:31 +0100, Juan Antonio Gil Pascual escribió:
+>> Estimados compañeros estoy haciendo análisis de contenido y quería saber
+>> si alguno de vosotros habeís trabajado con el módulo tm y con textos en
+>> español porque a mi aunque en el corpus ponga spanish no coge ni acentos
+>> ni ñ y luego no puedo sacar los términos y su frecuencia.
+>>
+> Puede tener que ver con el juego de caracteres que estés usando para
+> entrar los textos. Mira la documentación del paquete al respecto.
+>
+> Saludos.
+>
+
+
+From coforfe en gmail.com  Wed Nov 17 14:27:42 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Wed, 17 Nov 2010 14:27:42 +0100
+Subject: [R-es] Estimador VARHAC
+In-Reply-To: <C9328F0EEDC3BC439FDABD12060E91090E2EAB@erini1.ERINI.local>
+References: <C9328F0EEDC3BC439FDABD12060E91090E2EAB@erini1.ERINI.local>
+Message-ID: <AANLkTimK2uV31uVMxm_8MHy3pTEiyHJMhDBFUOYTztY9@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101117/a8d6cdbe/attachment.pl>
+
+From jojeda en unizar.es  Wed Nov 17 17:39:15 2010
+From: jojeda en unizar.es (Jorge Luis Ojeda Cabrera)
+Date: Wed, 17 Nov 2010 17:39:15 +0100
+Subject: [R-es] =?iso-8859-1?q?duda_de_tm_para_espa=F1ol?=
+In-Reply-To: <4CE3B24A.2080401@edu.uned.es>
+References: <4CE3A0F0.8000600@edu.uned.es> <1289986569.2656.4.camel@pcmat36>
+	<4CE3B24A.2080401@edu.uned.es>
+Message-ID: <4CE40533.20108@unizar.es>
+
+Cuidado, ISO 639-2 es un código para determinar nombres de lenguajes.
+Mira a ver en qué código tienes los ficheros de los documentos que 
+quieres analizar (usa el comando file en un unix o linux). Posiblemente 
+no sea el que admite tm por defecto. Hay comandos tm que permite fijar 
+la codificación (encoding).
+
+Saludos, Jorge.
+
+
+
+
+El 17/11/10 11:45, Juan Antonio Gil Pascual escribió:
+> Hola Manuel el juego de caracteres que indica el manual es un ISO 639-2
+> pero no encuentro la forma de pasar el texto a este juego de caracteres.
+> Además ignoro si con esto solucionaré el problema.
+>
+> Un saludo,
+>
+> Juan
+>
+> El 17/11/2010 10:36, r-uca escribió:
+>> El mié, 17-11-2010 a las 10:31 +0100, Juan Antonio Gil Pascual escribió:
+>>> Estimados compañeros estoy haciendo análisis de contenido y quería saber
+>>> si alguno de vosotros habeís trabajado con el módulo tm y con textos en
+>>> español porque a mi aunque en el corpus ponga spanish no coge ni acentos
+>>> ni ñ y luego no puedo sacar los términos y su frecuencia.
+>>>
+>> Puede tener que ver con el juego de caracteres que estés usando para
+>> entrar los textos. Mira la documentación del paquete al respecto.
+>>
+>> Saludos.
+>>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From lacruz en unizar.es  Thu Nov 18 12:10:39 2010
+From: lacruz en unizar.es (Beatriz Lacruz)
+Date: Thu, 18 Nov 2010 12:10:39 +0100
+Subject: [R-es] =?iso-8859-1?q?Diagramas_de_caja_=28box_plot=29_seg=FAn_lo?=
+	=?iso-8859-1?q?s_valores_de_un_factor?=
+References: <4CE3A0F0.8000600@edu.uned.es>
+	<1289986569.2656.4.camel@pcmat36><4CE3B24A.2080401@edu.uned.es>
+	<4CE40533.20108@unizar.es>
+Message-ID: <2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a>
+
+Hola,
+
+Estoy intentando dibujar un diagrama de caja según los valores de una 
+variable de tipo factor para un subconjuntos de los datos de un archivo. Uso 
+esta orden
+
+boxplot(var1~factor1, ylab="var1", xlab="factor1", data=FicheroDatos, 
+subset=factor2=="Categoria1")
+
+donde
+var1 es una variable numerica
+factor1 es una variable categorica (tipo caracter) que tiene muchas 
+categorias distintas (pero solo 8 en el subconjunto de datos que cumple la 
+condicion factor2=="Categoria1")
+factor2 es una variable categorica (tipo caracter) con 13 categorias 
+distintas y a mi solo me interesa analizar los datos de la categoria1.
+
+El problema es que en el diagrama de caja resultante aparece la variable 
+factor1 con todas sus categorías posibles que son muchas (mas de 30) en vez 
+de dejarme solo las 8 que tienen los datos del subconjunto 
+subset=factor2=="Categoria1".
+
+¿Alguien sabe como decirle a R que se olvide del resto de las categorias?
+
+Gracias anticipadas,
+
+Beatriz Lacruz Casaucau
+______________________________________________________
+
+Universidad de Zaragoza
+Departamento de Métodos Estadísticos
+Edificio de Matemáticas, 3ª planta
+Pedro Cerbuna, 12
+50009 Zaragoza (Spain)
+
+Tel. 976 76 10 00 Ext. 3245
+Fax. 976 76 11 15
+
+http://metodosestadisticos.unizar.es/personales/lacruz/
+
+
+From coforfe en gmail.com  Thu Nov 18 12:18:38 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Thu, 18 Nov 2010 12:18:38 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Diagramas_de_caja_=28box_plot=29_seg=FAn_lo?=
+	=?iso-8859-1?q?s_valores_de_un_factor?=
+In-Reply-To: <2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a>
+References: <4CE3A0F0.8000600@edu.uned.es> <1289986569.2656.4.camel@pcmat36>
+	<4CE3B24A.2080401@edu.uned.es> <4CE40533.20108@unizar.es>
+	<2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a>
+Message-ID: <AANLkTim4WPjXdxVzpuFib-U617HF0QHhYZaoGwvYm=z3@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101118/36569f07/attachment.pl>
+
+From coforfe en gmail.com  Thu Nov 18 12:26:42 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Thu, 18 Nov 2010 12:26:42 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Diagramas_de_caja_=28box_plot=29_seg=FAn_lo?=
+	=?iso-8859-1?q?s_valores_de_un_factor?=
+In-Reply-To: <AANLkTim4WPjXdxVzpuFib-U617HF0QHhYZaoGwvYm=z3@mail.gmail.com>
+References: <4CE3A0F0.8000600@edu.uned.es> <1289986569.2656.4.camel@pcmat36>
+	<4CE3B24A.2080401@edu.uned.es> <4CE40533.20108@unizar.es>
+	<2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a>
+	<AANLkTim4WPjXdxVzpuFib-U617HF0QHhYZaoGwvYm=z3@mail.gmail.com>
+Message-ID: <AANLkTinhSh2G-FM0b9Em=qO-MUS9e5d-S1MYqoaHJf+r@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101118/b36f8642/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Thu Nov 18 14:36:15 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Thu, 18 Nov 2010 08:36:15 -0500
+Subject: [R-es]
+	=?iso-8859-1?q?Diagramas_de_caja_=28box_plot=29_seg=FAn_lo?=
+	=?iso-8859-1?q?s_valores_de_un_factor?=
+In-Reply-To: <2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a>
+References: <4CE3A0F0.8000600@edu.uned.es> <1289986569.2656.4.camel@pcmat36>
+	<4CE3B24A.2080401@edu.uned.es> <4CE40533.20108@unizar.es>
+	<2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a>
+Message-ID: <AANLkTin1rCcnSJB-zqwABE-z52s=qyBS3p_c4=S-NAZA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101118/a2263f13/attachment.pl>
+
+From cgb en datanalytics.com  Thu Nov 18 14:41:16 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 18 Nov 2010 14:41:16 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Diagramas_de_caja_=28box_plot=29_seg=FAn_lo?=
+	=?iso-8859-1?q?s_valores_de_un_factor?=
+In-Reply-To: <AANLkTin1rCcnSJB-zqwABE-z52s=qyBS3p_c4=S-NAZA@mail.gmail.com>
+References: <4CE3A0F0.8000600@edu.uned.es> <1289986569.2656.4.camel@pcmat36>
+	<4CE3B24A.2080401@edu.uned.es> <4CE40533.20108@unizar.es>
+	<2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a>
+	<AANLkTin1rCcnSJB-zqwABE-z52s=qyBS3p_c4=S-NAZA@mail.gmail.com>
+Message-ID: <AANLkTi=b0v6HyKBPAaqSLr38K_97d4ez5okTB-6XB3c3@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Abundando en la respuesta de Jorge, compárense:
+
+boxplot(Sepal.Length ~ factor( Species ), data = subset( iris, Species
+== 'virginica'))
+boxplot(Sepal.Length ~ Species, data = subset( iris, Species == 'virginica'))
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 18 de noviembre de 2010 14:36, Jorge Ivan Velez
+<jorgeivanvelez en gmail.com> escribió:
+> Buenos dias Beatriz,
+>
+> El comportamiento que observa tiene que ver con que la variables es un
+> factor y aun cuando selecciones un subconjunto de el, sus niveles se
+> mantienen:
+>
+>   # nota que Species tiene 3 niveles
+>
+> with(iris, levels(Species))
+>
+>
+> # esto ilustra tu problema
+>
+> with(iris, boxplot(Sepal.Length ~ Species, data = iris, subset = Species ==
+> 'virginica'))
+>
+>
+> # una posible solucion
+>
+> boxplot(iris[iris$Species == 'virginica',]$Sepal.Length)
+>
+> Un saludo,
+> Jorge Ivan Velez
+>
+>
+> 2010/11/18 Beatriz Lacruz <>
+>
+>> Hola,
+>>
+>> Estoy intentando dibujar un diagrama de caja según los valores de una
+>> variable de tipo factor para un subconjuntos de los datos de un archivo. Uso
+>> esta orden
+>>
+>> boxplot(var1~factor1, ylab="var1", xlab="factor1", data=FicheroDatos,
+>> subset=factor2=="Categoria1")
+>>
+>> donde
+>> var1 es una variable numerica
+>> factor1 es una variable categorica (tipo caracter) que tiene muchas
+>> categorias distintas (pero solo 8 en el subconjunto de datos que cumple la
+>> condicion factor2=="Categoria1")
+>> factor2 es una variable categorica (tipo caracter) con 13 categorias
+>> distintas y a mi solo me interesa analizar los datos de la categoria1.
+>>
+>> El problema es que en el diagrama de caja resultante aparece la variable
+>> factor1 con todas sus categorías posibles que son muchas (mas de 30) en vez
+>> de dejarme solo las 8 que tienen los datos del subconjunto
+>> subset=factor2=="Categoria1".
+>>
+>> ¿Alguien sabe como decirle a R que se olvide del resto de las categorias?
+>>
+>> Gracias anticipadas,
+>>
+>> Beatriz Lacruz Casaucau
+>> ______________________________________________________
+>>
+>> Universidad de Zaragoza
+>> Departamento de Métodos Estadísticos
+>> Edificio de Matemáticas, 3ª planta
+>> Pedro Cerbuna, 12
+>> 50009 Zaragoza (Spain)
+>>
+>> Tel. 976 76 10 00 Ext. 3245
+>> Fax. 976 76 11 15
+>>
+>> http://metodosestadisticos.unizar.es/personales/lacruz/
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From klangohr en imim.es  Thu Nov 18 15:56:05 2010
+From: klangohr en imim.es (LANGOHR, KLAUS)
+Date: Thu, 18 Nov 2010 15:56:05 +0100
+Subject: [R-es]
+ =?iso-8859-1?q?Diagramas_de_caja_=28box_plot=29_seg=FAn_lo?=
+ =?iso-8859-1?q?s_valores_de_un_factor?=
+In-Reply-To: <AANLkTi=b0v6HyKBPAaqSLr38K_97d4ez5okTB-6XB3c3@mail.gmail.com>
+References: <4CE3A0F0.8000600@edu.uned.es> <1289986569.2656.4.camel@pcmat36>
+	<4CE3B24A.2080401@edu.uned.es> <4CE40533.20108@unizar.es>
+	<2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a>
+	<AANLkTin1rCcnSJB-zqwABE-z52s=qyBS3p_c4=S-NAZA@mail.gmail.com>,
+	<AANLkTi=b0v6HyKBPAaqSLr38K_97d4ez5okTB-6XB3c3@mail.gmail.com>
+Message-ID: <BB3B87345736EE45843CC0ADF9EEEB0D2AE8A139D7@hermes2.imim.es>
+
+¡Hola!
+A las soluciones ya enviadas añado una más:
+
+boxplot(Sepal.Length ~ Species[,drop=T], data = subset( iris, Species == 'virginica'))
+
+Saludos,
+
+Klaus.
+
+________________________________________
+Von: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] im Auftrag von Carlos J. Gil Bellosta  [cgb en datanalytics.com]
+Gesendet: Donnerstag, 18. November 2010 14:41
+An: Jorge Ivan Velez
+Cc: r-help-es en r-project.org
+Betreff: Re: [R-es]     Diagramas de caja (box plot) según los valores de un factor
+
+Hola, ¿qué tal?
+
+Abundando en la respuesta de Jorge, compárense:
+
+boxplot(Sepal.Length ~ factor( Species ), data = subset( iris, Species
+== 'virginica'))
+boxplot(Sepal.Length ~ Species, data = subset( iris, Species == 'virginica'))
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 18 de noviembre de 2010 14:36, Jorge Ivan Velez
+<jorgeivanvelez en gmail.com> escribió:
+> Buenos dias Beatriz,
+>
+> El comportamiento que observa tiene que ver con que la variables es un
+> factor y aun cuando selecciones un subconjunto de el, sus niveles se
+> mantienen:
+>
+>   # nota que Species tiene 3 niveles
+>
+> with(iris, levels(Species))
+>
+>
+> # esto ilustra tu problema
+>
+> with(iris, boxplot(Sepal.Length ~ Species, data = iris, subset = Species ==
+> 'virginica'))
+>
+>
+> # una posible solucion
+>
+> boxplot(iris[iris$Species == 'virginica',]$Sepal.Length)
+>
+> Un saludo,
+> Jorge Ivan Velez
+>
+>
+> 2010/11/18 Beatriz Lacruz <>
+>
+>> Hola,
+>>
+>> Estoy intentando dibujar un diagrama de caja según los valores de una
+>> variable de tipo factor para un subconjuntos de los datos de un archivo. Uso
+>> esta orden
+>>
+>> boxplot(var1~factor1, ylab="var1", xlab="factor1", data=FicheroDatos,
+>> subset=factor2=="Categoria1")
+>>
+>> donde
+>> var1 es una variable numerica
+>> factor1 es una variable categorica (tipo caracter) que tiene muchas
+>> categorias distintas (pero solo 8 en el subconjunto de datos que cumple la
+>> condicion factor2=="Categoria1")
+>> factor2 es una variable categorica (tipo caracter) con 13 categorias
+>> distintas y a mi solo me interesa analizar los datos de la categoria1.
+>>
+>> El problema es que en el diagrama de caja resultante aparece la variable
+>> factor1 con todas sus categorías posibles que son muchas (mas de 30) en vez
+>> de dejarme solo las 8 que tienen los datos del subconjunto
+>> subset=factor2=="Categoria1".
+>>
+>> ¿Alguien sabe como decirle a R que se olvide del resto de las categorias?
+>>
+>> Gracias anticipadas,
+>>
+>> Beatriz Lacruz Casaucau
+>> ______________________________________________________
+>>
+>> Universidad de Zaragoza
+>> Departamento de Métodos Estadísticos
+>> Edificio de Matemáticas, 3ª planta
+>> Pedro Cerbuna, 12
+>> 50009 Zaragoza (Spain)
+>>
+>> Tel. 976 76 10 00 Ext. 3245
+>> Fax. 976 76 11 15
+>>
+>> http://metodosestadisticos.unizar.es/personales/lacruz/
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+From jmmarin en est-econ.uc3m.es  Fri Nov 19 00:54:43 2010
+From: jmmarin en est-econ.uc3m.es (J. Miguel Marin)
+Date: Fri, 19 Nov 2010 00:54:43 +0100
+Subject: [R-es] Dudas sobre bootstrap en series temporales
+Message-ID: <20101119005443.e3e9owvxcgo4880o@webcartero01.uc3m.es>
+
+
+Hola,
+
+Estoy analizando unas series temporales y tengo dudas sobre bootstrap 
+aplicado a ellas.
+Supongamos que se tiene una serie temporal no muy larga y aplico un 
+modelo ARIMA dado. Lo que me interesa realmente es hacer unas 
+predicciones (ej. 5) y me gustaría calcular intervalos para las 
+predicciones bootstrap con boot.ci
+
+¿sería correcto lo siguiente?
+
+#................................................
+
+library(boot)
+# Supongamos que z es una serie
+z <- ts(z)
+
+defit <- function(x) {
+  fit <- arima(x, order=c(1,0,0), method="CSS-ML")  cosa <- 
+predict(fit, n.ahead=5)
+  return(c(cosa$pred[1],cosa$pred[2],cosa$pred[3],cosa$pred[4],cosa$pred[5]))
+}
+
+boo <- tsboot(z, statistic=defit, R=500, l=1, sim="fixed")
+
+boot.ci(boo, conf=0.95,type="perc", index=1)
+boot.ci(boo, conf=0.95,type="perc", index=2)
+boot.ci(boo, conf=0.95,type="perc", index=3)
+boot.ci(boo, conf=0.95,type="perc", index=4)
+boot.ci(boo, conf=0.95,type="perc", index=5)
+
+#................................................
+
+Y saludos
+
+
+jm~
+
+_______________________________
+
+        J. Miguel Marin
+
+http://www.est.uc3m.es/jmmarin
+
+    Dep. of Statistics
+University Carlos III of Madrid
+        Spain (E.U.)
+
+
+From lacruz en unizar.es  Fri Nov 19 12:47:02 2010
+From: lacruz en unizar.es (Beatriz Lacruz)
+Date: Fri, 19 Nov 2010 12:47:02 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Diagramas_de_caja_=28box_plot=29_seg=FAn_lo?=
+	=?iso-8859-1?q?s_valores_de_un_factor?=
+References: <4CE3A0F0.8000600@edu.uned.es>
+	<1289986569.2656.4.camel@pcmat36><4CE3B24A.2080401@edu.uned.es>
+	<4CE40533.20108@unizar.es><2A027651F0894AC28D0E14FA4365325A@321475b7e0e341a><AANLkTin1rCcnSJB-zqwABE-z52s=qyBS3p_c4=S-NAZA@mail.gmail.com>,
+	<AANLkTi=b0v6HyKBPAaqSLr38K_97d4ez5okTB-6XB3c3@mail.gmail.com>
+	<BB3B87345736EE45843CC0ADF9EEEB0D2AE8A139D7@hermes2.imim.es>
+Message-ID: <6CBFCFEE599B4E3E9746A627CE73890B@321475b7e0e341a>
+
+Mil gracias a todos. Tengo que manifestar que en esta lista sois realmente 
+eficientes y gratificantes.
+
+Por si a alguien le sirve de ayuda en el futuro las soluciones correctas son 
+las de Javier Muñoz y Carlos Gil.
+
+boxplot(var1~as.character(factor1), ylab="var1", xlab="factor1", 
+data=FicheroDatos,subset=factor2=="Categoria1")
+
+boxplot(var1~factor(factor1), ylab="var1", xlab="factor1", 
+data=FicheroDatos,subset=factor2=="Categoria1")
+
+Con el resto o no se olvida del resto de las categorías de Categoria1 o no 
+tiene en cuenta que se necesita considerar dos factores distintos pues el 
+fichero iris solo tiene una variable categórica.
+
+Un saludo,
+
+Beatriz Lacruz Casaucau
+______________________________________________________
+
+Universidad de Zaragoza
+Departamento de Métodos Estadísticos
+Edificio de Matemáticas, 3ª planta
+Pedro Cerbuna, 12
+50009 Zaragoza (Spain)
+
+Tel. 976 76 10 00 Ext. 3245
+Fax. 976 76 11 15
+
+http://metodosestadisticos.unizar.es/personales/lacruz/
+______________________________________________________
+----- Original Message ----- 
+From: "LANGOHR, KLAUS" <klangohr en imim.es>
+To: "Carlos J. Gil Bellosta " <cgb en datanalytics.com>; "Jorge Ivan Velez" 
+<jorgeivanvelez en gmail.com>
+Cc: <r-help-es en r-project.org>
+Sent: Thursday, November 18, 2010 3:56 PM
+Subject: Re: [R-es] Diagramas de caja (box plot) según los valores de un 
+factor
+
+
+> ¡Hola!
+> A las soluciones ya enviadas añado una más:
+>
+> boxplot(Sepal.Length ~ Species[,drop=T], data = subset( iris, Species == 
+> 'virginica'))
+>
+> Saludos,
+>
+> Klaus.
+>
+> ________________________________________
+> Von: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] im 
+> Auftrag von Carlos J. Gil Bellosta  [cgb en datanalytics.com]
+> Gesendet: Donnerstag, 18. November 2010 14:41
+> An: Jorge Ivan Velez
+> Cc: r-help-es en r-project.org
+> Betreff: Re: [R-es]     Diagramas de caja (box plot) según los valores de 
+> un factor
+>
+> Hola, ¿qué tal?
+>
+> Abundando en la respuesta de Jorge, compárense:
+>
+> boxplot(Sepal.Length ~ factor( Species ), data = subset( iris, Species
+> == 'virginica'))
+> boxplot(Sepal.Length ~ Species, data = subset( iris, Species == 
+> 'virginica'))
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> El día 18 de noviembre de 2010 14:36, Jorge Ivan Velez
+> <jorgeivanvelez en gmail.com> escribió:
+>> Buenos dias Beatriz,
+>>
+>> El comportamiento que observa tiene que ver con que la variables es un
+>> factor y aun cuando selecciones un subconjunto de el, sus niveles se
+>> mantienen:
+>>
+>>   # nota que Species tiene 3 niveles
+>>
+>> with(iris, levels(Species))
+>>
+>>
+>> # esto ilustra tu problema
+>>
+>> with(iris, boxplot(Sepal.Length ~ Species, data = iris, subset = Species 
+>> ==
+>> 'virginica'))
+>>
+>>
+>> # una posible solucion
+>>
+>> boxplot(iris[iris$Species == 'virginica',]$Sepal.Length)
+>>
+>> Un saludo,
+>> Jorge Ivan Velez
+>>
+>>
+>> 2010/11/18 Beatriz Lacruz <>
+>>
+>>> Hola,
+>>>
+>>> Estoy intentando dibujar un diagrama de caja según los valores de una
+>>> variable de tipo factor para un subconjuntos de los datos de un archivo. 
+>>> Uso
+>>> esta orden
+>>>
+>>> boxplot(var1~factor1, ylab="var1", xlab="factor1", data=FicheroDatos,
+>>> subset=factor2=="Categoria1")
+>>>
+>>> donde
+>>> var1 es una variable numerica
+>>> factor1 es una variable categorica (tipo caracter) que tiene muchas
+>>> categorias distintas (pero solo 8 en el subconjunto de datos que cumple 
+>>> la
+>>> condicion factor2=="Categoria1")
+>>> factor2 es una variable categorica (tipo caracter) con 13 categorias
+>>> distintas y a mi solo me interesa analizar los datos de la categoria1.
+>>>
+>>> El problema es que en el diagrama de caja resultante aparece la variable
+>>> factor1 con todas sus categorías posibles que son muchas (mas de 30) en 
+>>> vez
+>>> de dejarme solo las 8 que tienen los datos del subconjunto
+>>> subset=factor2=="Categoria1".
+>>>
+>>> ¿Alguien sabe como decirle a R que se olvide del resto de las 
+>>> categorias?
+>>>
+>>> Gracias anticipadas,
+>>>
+>>> Beatriz Lacruz Casaucau
+>>> ______________________________________________________
+>>>
+>>> Universidad de Zaragoza
+>>> Departamento de Métodos Estadísticos
+>>> Edificio de Matemáticas, 3ª planta
+>>> Pedro Cerbuna, 12
+>>> 50009 Zaragoza (Spain)
+>>>
+>>> Tel. 976 76 10 00 Ext. 3245
+>>> Fax. 976 76 11 15
+>>>
+>>> http://metodosestadisticos.unizar.es/personales/lacruz/
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>        [[alternative HTML version deleted]]
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From morales.economia en gmail.com  Fri Nov 19 21:48:36 2010
+From: morales.economia en gmail.com (Deybi Morales)
+Date: Fri, 19 Nov 2010 12:48:36 -0800
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_21=2C_Env=EDo_1?=
+	=?iso-8859-1?q?9?=
+In-Reply-To: <mailman.23.1290164405.24609.r-help-es@r-project.org>
+References: <mailman.23.1290164405.24609.r-help-es@r-project.org>
+Message-ID: <AANLkTikbX_dcvr7jfXif9mwGFLuTchrRwy2WM9U6KeWO@mail.gmail.com>
+
+Hola,
+
+Tengo la base de datos de un censo agropecuario el cual está en
+formato de SPSS, cuando cuando ejecuto el comando para introducirlo a
+R, despues de permanecer lento R, aparece esto:
+
+ Error: cannot allocate vector of size 1.6 Mb
+
+
+Hasta aquí llega y no introduce ninguna observación. Mi pregunta es si
+existe alguna solución, talvez aumentar la memoria de R?? Imagino que
+como ustedes han trabajado con esa magnitud de datos ya que es un
+censo, quisiera saber a qué se debe el problema.
+
+
+Saludos
+
+
+
+El 19/11/10, r-help-es-request en r-project.org
+<r-help-es-request en r-project.org> escribió:
+> Envíe los mensajes para la lista R-help-es a
+> 	r-help-es en r-project.org
+>
+> Para subscribirse o anular su subscripción a través de la WEB
+> 	https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+> 	r-help-es-request en r-project.org
+>
+> Puede contactar con el responsable de la lista escribiendo a:
+> 	r-help-es-owner en r-project.org
+>
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+>
+>
+> Asuntos del día:
+>
+>    1. Dudas sobre bootstrap en series temporales (J. Miguel Marin)
+>
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Fri, 19 Nov 2010 00:54:43 +0100
+> From: "J. Miguel Marin" <jmmarin en est-econ.uc3m.es>
+> To: R-help-es en r-project.org
+> Subject: [R-es] Dudas sobre bootstrap en series temporales
+> Message-ID: <20101119005443.e3e9owvxcgo4880o en webcartero01.uc3m.es>
+> Content-Type: text/plain;	charset=ISO-8859-1;	format="flowed"
+>
+>
+> Hola,
+>
+> Estoy analizando unas series temporales y tengo dudas sobre bootstrap
+> aplicado a ellas.
+> Supongamos que se tiene una serie temporal no muy larga y aplico un
+> modelo ARIMA dado. Lo que me interesa realmente es hacer unas
+> predicciones (ej. 5) y me gustaría calcular intervalos para las
+> predicciones bootstrap con boot.ci
+>
+> ¿sería correcto lo siguiente?
+>
+> #................................................
+>
+> library(boot)
+> # Supongamos que z es una serie
+> z <- ts(z)
+>
+> defit <- function(x) {
+>   fit <- arima(x, order=c(1,0,0), method="CSS-ML")  cosa <-
+> predict(fit, n.ahead=5)
+>
+> return(c(cosa$pred[1],cosa$pred[2],cosa$pred[3],cosa$pred[4],cosa$pred[5]))
+> }
+>
+> boo <- tsboot(z, statistic=defit, R=500, l=1, sim="fixed")
+>
+> boot.ci(boo, conf=0.95,type="perc", index=1)
+> boot.ci(boo, conf=0.95,type="perc", index=2)
+> boot.ci(boo, conf=0.95,type="perc", index=3)
+> boot.ci(boo, conf=0.95,type="perc", index=4)
+> boot.ci(boo, conf=0.95,type="perc", index=5)
+>
+> #................................................
+>
+> Y saludos
+>
+>
+> jm~
+>
+> _______________________________
+>
+>         J. Miguel Marin
+>
+> http://www.est.uc3m.es/jmmarin
+>
+>     Dep. of Statistics
+> University Carlos III of Madrid
+>         Spain (E.U.)
+>
+>
+>
+> ------------------------------
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> Fin de Resumen de R-help-es, Vol 21, Envío 19
+> *********************************************
+>
+
+
+-- 
+Deybi Morales León
+
+
+From morales.economia en gmail.com  Fri Nov 19 21:47:06 2010
+From: morales.economia en gmail.com (Deybi Morales)
+Date: Fri, 19 Nov 2010 12:47:06 -0800
+Subject: [R-es] help
+Message-ID: <AANLkTimVuZTGrFm0Jc9CiLX4QkUueMkaRW=hm=6mo96U@mail.gmail.com>
+
+Hola,
+
+Tengo la base de datos de un censo agropecuario el cual está en
+formato de SPSS, cuando cuando ejecuto el comando para introducirlo a
+R, despues de permanecer lento R, aparece esto:
+
+ Error: cannot allocate vector of size 1.6 Mb
+
+
+Hasta aquí llega y no introduce ninguna observación. Mi pregunta es si
+existe alguna solución, talvez aumentar la memoria de R?? Imagino que
+como ustedes han trabajado con esa magnitud de datos ya que es un
+censo, quisiera saber a qué se deba el problema.
+
+
+Saludos
+
+
+-- 
+Deybi Morales León
+Estudiante de Economía Aplicada
+morales.economia en gmail.com
+
+
+From jorgeivanvelez en gmail.com  Fri Nov 19 22:19:17 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 19 Nov 2010 16:19:17 -0500
+Subject: [R-es] help
+In-Reply-To: <AANLkTimVuZTGrFm0Jc9CiLX4QkUueMkaRW=hm=6mo96U@mail.gmail.com>
+References: <AANLkTimVuZTGrFm0Jc9CiLX4QkUueMkaRW=hm=6mo96U@mail.gmail.com>
+Message-ID: <AANLkTi=XMWpWyAinezBFoE+meavrruuq7ugvYEDZdZeS@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101119/9ea76d16/attachment.pl>
+
+From ana.ismi.3isa en gmail.com  Sun Nov 21 11:30:41 2010
+From: ana.ismi.3isa en gmail.com (=?iso-8859-1?Q?Jes=FAs_Armand_Calejero_Rom=E1n?=)
+Date: Sun, 21 Nov 2010 11:30:41 +0100
+Subject: [R-es] Tests incondicionados (aprox chi cuadrado y exacto de
+	Barnard)
+Message-ID: <54608CED-4288-4789-A3EA-8F6713002669@gmail.com>
+
+Un cordial saludo a todos, amigos de la lista.
+
+Necesito realizar la aproximación chi-cuadrado y el test exacto de Barnard para test incondicionados para comparación de dos proporciones independientes en una tabla 2x2
+
+La aproximación chi-cuadrado para el test condicionado se calcula con chisq.test(), ¿verdad? pero, ¿y para test incondicionado?
+
+Muchas gracias por la ayuda
+
+Jesús Armand Calejero Román
+
+
+
+Jesús Armand Calejero Román
+ana.ismi.3isa en gmail.com
+
+
+From onunez en iberstat.es  Sun Nov 21 12:09:26 2010
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Sun, 21 Nov 2010 12:09:26 +0100
+Subject: [R-es] Tests incondicionados (aprox chi cuadrado y exacto de
+	Barnard)
+In-Reply-To: <54608CED-4288-4789-A3EA-8F6713002669@gmail.com>
+References: <54608CED-4288-4789-A3EA-8F6713002669@gmail.com>
+Message-ID: <EF613E4C-C46C-4201-97C6-8F7453F9B2DA@iberstat.es>
+
+Aquí,
+
+http://www.r-statistics.com/wp-content/uploads/2010/02/Barnardtest.R.txt
+
+encontrarás un código en R para el test exacto de Barnard.
+Por otro lado, el test de Pearson (chi-cuadrado) no supone que los  
+márgenes de la tabla son fijos, por lo tanto, es en principio  
+incondicionado.
+Si quieres utilizar la corrección de continuidad de Yates en el test  
+de Pearson, especifica la opción "correct = TRUE" en la función  
+chisq.test().
+
+Un saludo. Olivier
+
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 21/11/2010, a las 11:30, Jesús Armand Calejero Román escribió:
+
+> Un cordial saludo a todos, amigos de la lista.
+>
+> Necesito realizar la aproximación chi-cuadrado y el test exacto de  
+> Barnard para test incondicionados para comparación de dos  
+> proporciones independientes en una tabla 2x2
+>
+> La aproximación chi-cuadrado para el test condicionado se calcula  
+> con chisq.test(), ¿verdad? pero, ¿y para test incondicionado?
+>
+> Muchas gracias por la ayuda
+>
+> Jesús Armand Calejero Román
+>
+>
+>
+> Jesús Armand Calejero Román
+> ana.ismi.3isa en gmail.com
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jgil en edu.uned.es  Sun Nov 21 12:35:21 2010
+From: jgil en edu.uned.es (Juan Antonio Gil Pascual)
+Date: Sun, 21 Nov 2010 12:35:21 +0100
+Subject: [R-es] problemas carga RWeka
+Message-ID: <4CE903F9.4040200@edu.uned.es>
+
+Estimados compañeros ignoro que problema tengo pero no puedo cargar 
+RWeka. Tengo la versión 2.12 de R, Windos XP y actualizado el Java 
+Virtual Machine y cuando intento la carga me da:
+
+Error in loadNamespace(i[[1L]], c(lib.loc, .libPaths())) :
+   there is no package called 'rJava'
+Error: package/namespace load failed for 'RWeka'
+
+Un cordial saludo,
+
+Juan
+
+-- 
+=========================================================
+Juan Antonio Gil Pascual
+Prof. Titular de Métodos de Investigación en Educación
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+U.N.E.D.
+Fac. de Educación
+Dpto. MIDE I
+Pº Senda del Rey,7 desp. 122
+28040 MADRID
+Tel. 91 398 72 79
+Fax. 91 398 72 88
+
+
+Antes de imprimir este correo piense bien si es necesario hacerlo: El medioambiente es cosa de todos
+
+
+From onunez en iberstat.es  Sun Nov 21 12:51:13 2010
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Sun, 21 Nov 2010 12:51:13 +0100
+Subject: [R-es] problemas carga RWeka
+In-Reply-To: <4CE903F9.4040200@edu.uned.es>
+References: <4CE903F9.4040200@edu.uned.es>
+Message-ID: <6E576CDC-0991-4214-8C5E-3D262DA1A820@iberstat.es>
+
+Pues, parece que te falta rJava.
+Para evitar este problema, incluye las dependencias en la instalación  
+con la opción "dep=TRUE" :
+
+install.packages("RWeka",dep=TRUE)
+
+Un saludo. Olivier
+
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 21/11/2010, a las 12:35, Juan Antonio Gil Pascual escribió:
+
+> Estimados compañeros ignoro que problema tengo pero no puedo cargar  
+> RWeka. Tengo la versión 2.12 de R, Windos XP y actualizado el Java  
+> Virtual Machine y cuando intento la carga me da:
+>
+> Error in loadNamespace(i[[1L]], c(lib.loc, .libPaths())) :
+>   there is no package called 'rJava'
+> Error: package/namespace load failed for 'RWeka'
+>
+> Un cordial saludo,
+>
+> Juan
+>
+> -- 
+> =========================================================
+> Juan Antonio Gil Pascual
+> Prof. Titular de Métodos de Investigación en Educación
+> correo: jgil en edu.uned.es
+> web: www.uned.es/personal/jgil
+>
+> U.N.E.D.
+> Fac. de Educación
+> Dpto. MIDE I
+> Pº Senda del Rey,7 desp. 122
+> 28040 MADRID
+> Tel. 91 398 72 79
+> Fax. 91 398 72 88
+>
+>
+> Antes de imprimir este correo piense bien si es necesario hacerlo:  
+> El medioambiente es cosa de todos
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jgil en edu.uned.es  Sun Nov 21 12:56:54 2010
+From: jgil en edu.uned.es (Juan Antonio Gil Pascual)
+Date: Sun, 21 Nov 2010 12:56:54 +0100
+Subject: [R-es] problemas carga RWeka
+In-Reply-To: <6E576CDC-0991-4214-8C5E-3D262DA1A820@iberstat.es>
+References: <4CE903F9.4040200@edu.uned.es>
+	<6E576CDC-0991-4214-8C5E-3D262DA1A820@iberstat.es>
+Message-ID: <4CE90906.3040603@edu.uned.es>
+
+Gracias Oliver , no era rJava pero si otros paquetes que se ha 
+solucionado con dep=TRUE y ya me funciona.
+
+Un cordial saludo,
+
+Juan
+
+
+El 21/11/2010 12:51, Olivier Nuñez escribió:
+> install.packages("RWeka",dep=TRUE)
+
+-- 
+=========================================================
+Juan Antonio Gil Pascual
+Prof. Titular de Métodos de Investigación en Educación
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+U.N.E.D.
+Fac. de Educación
+Dpto. MIDE I
+Pº Senda del Rey,7 desp. 122
+28040 MADRID
+Tel. 91 398 72 79
+Fax. 91 398 72 88
+
+
+Antes de imprimir este correo piense bien si es necesario hacerlo: El medioambiente es cosa de todos
+
+
+From dolors1985 en gmail.com  Mon Nov 22 10:30:59 2010
+From: dolors1985 en gmail.com (dolors giralt casellas)
+Date: Mon, 22 Nov 2010 10:30:59 +0100
+Subject: [R-es] calcular un p-valor para bootstrap
+Message-ID: <AANLkTintSrk+0u9NkPwtr9-3SOkoNP5vtjx69SYST5u9@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101122/b768b1b5/attachment.pl>
+
+From cgb en datanalytics.com  Mon Nov 22 10:51:24 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 22 Nov 2010 10:51:24 +0100
+Subject: [R-es] calcular un p-valor para bootstrap
+In-Reply-To: <AANLkTintSrk+0u9NkPwtr9-3SOkoNP5vtjx69SYST5u9@mail.gmail.com>
+References: <AANLkTintSrk+0u9NkPwtr9-3SOkoNP5vtjx69SYST5u9@mail.gmail.com>
+Message-ID: <AANLkTimypq18B4B6TSsuHd1LOwNJDvSB3E0ww_MYkmgB@mail.gmail.com>
+
+El día 22 de noviembre de 2010 10:30, dolors giralt casellas
+<dolors1985 en gmail.com> escribió:
+> Hola,
+>
+> hace unos días, cree una función similar al bootstrap. En esta función,
+> seleccionaba aleatoriamente la mitad de los pacientes de mi base de datos y
+> calculaba una chi-cuadrado para ver si había diferencias significativas
+> entre 2 variables que me interesaban. Esto lo repetía 1000 veces.
+> Mi duda es si a partir del numero de veces que me salia el test
+> significativo se puede calcular un p-valor.
+>
+> Muchas gracias
+>
+> Dolors
+
+Hola, ¿qué tal?
+
+No creo que quieras hacer eso. Creo que lo que quieres hacer es:
+
+1) Calcular el estadístico (la chi-cuadrado en tu caso) con todos tus datos.
+
+2) Repetir 1000 veces, por ejemplo, el proceso siguiente:
+
+	2a) Reordenar al azar tus datos (confundiendo las etiquetas de grupo)
+	2b) Calcular el mismo estadístico sobre estos datos "desordenados"
+
+3) Comparar el valor obtenido en (1) con los 1000 valores obtenidos en
+(2): ¿queda en un extremo? ¿queda "por la mitad"? ¿a qué percentil
+pertenece? ¿tal vez a uno por encima del 95%? Tu p-valor sería, de
+hecho, la proporción de valores de (2) que quedan por encima del valor
+obtenido en (1).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From pepeceb en yahoo.es  Tue Nov 23 10:13:09 2010
+From: pepeceb en yahoo.es (jose cebrian)
+Date: Tue, 23 Nov 2010 09:13:09 +0000 (GMT)
+Subject: [R-es] Mejorar un grafico
+Message-ID: <921885.58739.qm@web29603.mail.ird.yahoo.com>
+
+ Buenos dias a todos,
+tengo este grafico jpeg. Lo que quiero es ordenarlo en funcion del mes,  o sea que me quede enero en la primera casilla y diciembre en la ultima.
+Muchas gracias
+Jose Luis
+
+
+xyplot(ejem.medidos ~ año |  mes, groups=arte, pch=16,
+ auto.key=list(border=TRUE), par.settings = simpleTheme(pch=16), 
+  scales=list(x=list(relation='same'), y=list(relation='same')),
+ data=matriz)
+
+
+      
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101123/f51cc1cf/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: grafico.jpeg
+Type: image/jpeg
+Size: 44350 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101123/f51cc1cf/attachment-0001.jpeg>
+
+From cgb en datanalytics.com  Tue Nov 23 11:09:16 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 23 Nov 2010 11:09:16 +0100
+Subject: [R-es] Mejorar un grafico
+In-Reply-To: <921885.58739.qm@web29603.mail.ird.yahoo.com>
+References: <921885.58739.qm@web29603.mail.ird.yahoo.com>
+Message-ID: <AANLkTinwtiJvH0U9dM=EbK5o2XAmLVHwjJ+NL9OseGf8@mail.gmail.com>
+
+?reorder
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From mbprendes en uniovi.es  Tue Nov 23 14:28:45 2010
+From: mbprendes en uniovi.es (=?iso-8859-1?Q?Bel=E9n_Prendes?=)
+Date: Tue, 23 Nov 2010 14:28:45 +0100
+Subject: [R-es] II jornadas R
+Message-ID: <004201cb8b12$5a70df90$0f529eb0$@es>
+
+ 
+
+Estimados usuarios de R
+
+ 
+
+Os envío el programa de las II Jornadas de usuarios de R en castellano a
+celebrar la semana que viene.
+
+ 
+
+Saludos y nos vemos en Mieres
+
+ 
+
+ 
+
+ 
+
+María Belén Prendes Gero
+
+Subdirectora de la Escuela Politécnica de Mieres
+
+subdirepm3 en uniovi.es
+
+ 
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101123/4bdbe280/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: programacion.pdf
+Type: application/pdf
+Size: 60914 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101123/4bdbe280/attachment-0001.pdf>
+
+From subdirepm3 en uniovi.es  Tue Nov 23 14:26:10 2010
+From: subdirepm3 en uniovi.es (Subdirectora EPM)
+Date: Tue, 23 Nov 2010 14:26:10 +0100
+Subject: [R-es] II jornadas R
+Message-ID: <009001cb8b11$fe223270$fa669750$@es>
+
+Estimados usuarios de R
+
+ 
+
+Os envío el programa de las II Jornadas de usuarios de R en castellano a
+celebrar la semana que viene.
+
+ 
+
+Saludos y nos vemos en Mieres
+
+ 
+
+ 
+
+ 
+
+María Belén Prendes Gero
+
+Subdirectora de la Escuela Politécnica de Mieres
+
+subdirepm3 en uniovi.es
+
+ 
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101123/82dad97c/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: programacion.pdf
+Type: application/pdf
+Size: 60914 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101123/82dad97c/attachment-0001.pdf>
+
+From oscar.perpinan en upm.es  Tue Nov 23 21:08:24 2010
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Tue, 23 Nov 2010 21:08:24 +0100
+Subject: [R-es]
+ =?utf-8?q?Una_gu=C3=ADa_de_estilo_para_programar_en_R=2E?=
+ =?utf-8?b?Li4gwr9jb21lbnRhcmlvcz8=?=
+In-Reply-To: <4CD090C9.5060705@datanalytics.com>
+References: <4CD090C9.5060705@datanalytics.com>
+Message-ID: <20101123210824.015f42c8@upm.es>
+
+Hola,
+
+He encontrado estas R Code Conventions (basadas en un documento para Java, según parece):
+
+http://www1.maths.lth.se/help/R/RCC/
+
+y este otro documento (mucho más breve y menos estructurado): 
+
+http://www.ci.tuwien.ac.at/Conferences/useR-2004/Keynotes/Maechler.pdf
+
+Desde hace algo menos de un año utilizo Emacs Speaks Statistics (ESS) y, una vez superado el aprendizaje inicial, me resulta impresionantemente útil para construir código organizado, limpio y legible (en la medida de mis posibilidades :-)). Quizás las convenciones (en cuanto a indentado, principalmente) que emplea ESS pudiesen entrar en esta "guía de estilo".
+
+Saludos.
+
+-- 
+Oscar Perpiñán Lamigueiro
+Profesor Ayudante Doctor
+Dpto. de Ingeniería Eléctrica
+EUITI-UPM
+
+
+On Tue, 02 Nov 2010 23:29:29 +0100
+"Carlos J. Gil Bellosta" <cgb en datanalytics.com> wrote:
+
+> Hola, ¿qué tal?
+> 
+> Hace poco vi que Google había hecho pública su guía de estilo interna 
+> para programar en R:
+> 
+> http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html
+> 
+> Me tomé la libertad de traducirla:
+> 
+> http://datanalytics.com/guia_estilo_r.html
+> 
+> Cuanto más pienso en ella, más carencias veo. Escribí sobre ello en mi 
+> blog ( 
+> http://www.datanalytics.com/blog/2010/11/01/una-propuesta-de-guia-de-estilo-de-r/ 
+> ). Las dos pegas principales que le veo son:
+> 
+> 1) Que no hace mención a los paquetes (y cómo pueden utilizarse para 
+> gestionar la documentación de las funciones, etc.).
+> 
+> 2) Que parece una traslación directa de una guía de estilo de Python o 
+> Java, ignorando (algunas) particularidades específicas de R.
+> 
+> Creo que disponer de una buena guía de estilo es importante a la hora de 
+> elaborar código en equipo. Por eso quiero plantear las siguientes dos 
+> preguntas en la lista:
+> 
+> 1) ¿Echáis algo de menos en la guía de Google? ¿Omite algo relevante? 
+> ¿Qué experiencia tenéis al respecto? ¿Cuál es la mejor política a la 
+> hora de diseñar paquetes?
+> 
+> 2) ¿Habría alguien interesado en colaborar para recoger estas nuevas 
+> propuestas y mantener una propuesta de guía de estilo de R que pueda 
+> servir a grupos de programadores?
+> 
+> Un saludo,
+> 
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From oscar.perpinan en upm.es  Tue Nov 23 22:36:51 2010
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Tue, 23 Nov 2010 22:36:51 +0100
+Subject: [R-es]
+ =?utf-8?q?Una_gu=C3=ADa_de_estilo_para_programar_en_R=2E?=
+ =?utf-8?b?Li4gwr9jb21lbnRhcmlvcz8=?=
+In-Reply-To: <AANLkTinSBjxPvxr4bvqjnbJPDFTqSD-4br7CBPt_YCh-@mail.gmail.com>
+References: <4CD090C9.5060705@datanalytics.com> <4CD28697.9070303@unizar.es>
+	<1288866563.12027.1.camel@pcmat36>
+	<AANLkTi=pmOa=oe+c2rDQBaPtVHYUcQEk4YRmLTUt_8Xm@mail.gmail.com>
+	<AANLkTinSBjxPvxr4bvqjnbJPDFTqSD-4br7CBPt_YCh-@mail.gmail.com>
+Message-ID: <20101123223651.734785f1@upm.es>
+
+Hola. 
+
+Contesto sobre el correo.
+
+On Fri, 5 Nov 2010 13:11:15 +0100
+Ramon Diaz-Uriarte <rdiaz02 en gmail.com> wrote:
+
+> 2010/11/4 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+> > Fue una experiencia bastante frustrante: mis cañonazos malhirieron la
+> > mosca paro no la mataron del todo. En la versión final del paquete se
+> > cayó la clase S4. Y, personalmente, trataré de evitarlas en la medida
+> > de lo posible. En eso convenimos Google y yo.
+
+En mi opinión, el uso de S3 o S4 depende de los objetivos a conseguir. Yo he construido un paquete basado casi en su totalidad en clases y métodos S4. Partía de una versión anterior construida en S3, y me decidí a la conversión porque necesitaba trabajar con objetos complejos, y emplear métodos que fuesen capaces de reaccionar a "signatures" mixtas. Después del esfuerzo de aprendizaje y reescritura, estoy convencido de las bondades de S4, y convencido también de que las funcionalidades de la versión actual del paquete no las habría conseguido con S3 (al menos no de una forma limpia y robusta).
+
+> > Recuerdo que durante mi periodo de máxima frustración hablé con Ramón
+> > Díaz Uriarte que, si no recuerdo mal, me desaconsejó su uso. Y me
+> > comentó que había algún/os peso/s pesado/s de R que se habían
+> > pronunciado en el mismo sentido. No sé si tendrá algo que añadir (y si
+> > he errado en el sentido de la cita, espero que no se lo tenga
+> > demasiado en cuenta a mi floja memoria).
+> >
+ 
+> Pego aquí algunos enlaces que tengo al respecto:
+
+Buena lista de enlaces, muy ilustrativo. Gracias! Supongo que cada uno prestamos más atención a lo que queremos escuchar, pero después de haberme recorrido estos "thread" yo percibo una opinión ampliamente favorable hacia S4...
+ 
+> 
+> Hay comentarios de Frank Harell, Brian Ripley, Terry Therneau, etc. El
+> último enlace, en particular, es de un largo thread. Dicho lo
+> anterior, hay otros que prefieren con mucho S4 (ej., veanse libros de
+> R. Gentleman y J. Chambers), y S4 es el tipo de OOP "oficial" de
+> BioConductor. Pero si uno revisa los archivos de BioC (hace más de 5
+> años?), verá que no todo el mundo (incluyendo algunos nombres
+> ilustres) era entusiasta de S4.
+
+En la actualidad, más del 50% de los paquetes de BioC están construidos en S4: http://www.bioconductor.org/help/course-materials/2010/AdvancedR/S4InBioconductor.pdf.
+
+> > Creo que las clases S3 están para quedarse. No sé hasta qué punto la
+> > complejidad añadida que supone el uso de clases S4 van a contribuir a
+> > su popularización. Además, existen alternativas a las clases S3 y S4
+> > (p.e., http://cran.r-project.org/web/packages/proto/) que bien
+> > pudieran imponerse. 
+
+"proto" lo utilizan 11 paquetes en CRAN, y de ellos 3 están escritos por el "maintainer" de 
+"proto". No sé cual será el futuro de S4, pero teniendo en cuenta que proto empezó en el 2005, no parece una alternativa muy potente. 
+Y parece que su aplicación es más reducida: el "maintainer" de proto dice que "proto tends to apply in user interface applications" (http://tolstoy.newcastle.edu.au/R/e8/help/09/10/2601.html).
+
+
+Sea como sea, como decía al principio, opino que hay que elegir (o construir) las herramientas adecuadas para lo que se necesita, sean S3, S4 o lo que surja.
+
+Saludos.
+
+Oscar.
+
+
+From oscar.perpinan en upm.es  Tue Nov 23 23:06:01 2010
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Tue, 23 Nov 2010 23:06:01 +0100
+Subject: [R-es]
+ =?utf-8?q?Una_gu=C3=ADa_de_estilo_para_programar_en_R=2E?=
+ =?utf-8?b?Li4gwr9jb21lbnRhcmlvcz8=?=
+In-Reply-To: <AANLkTi=pmOa=oe+c2rDQBaPtVHYUcQEk4YRmLTUt_8Xm@mail.gmail.com>
+References: <4CD090C9.5060705@datanalytics.com> <4CD28697.9070303@unizar.es>
+	<1288866563.12027.1.camel@pcmat36>
+	<AANLkTi=pmOa=oe+c2rDQBaPtVHYUcQEk4YRmLTUt_8Xm@mail.gmail.com>
+Message-ID: <20101123230601.30980dda@upm.es>
+
+On Thu, 4 Nov 2010 17:42:12 +0100
+"Carlos J. Gil Bellosta " <cgb en datanalytics.com> wrote:
+> De hecho, "proto" es el motor del "paquete
+> revelación" de R que es ggplot2.
+
+...para gustos hay colores, y nunca mejor dicho en esto de las herramientas gráficas. Es verdad que "ggplot2" y su autor aparecen aquí y allá en blogs, presentaciones y cursos. Si es por esta presencia masiva, estoy de acuerdo en que es el paquete revelación. Pero, sin ánimo de abrir una guerra de opiniones y sin desmerecer sus grandes cualidades como herramienta, creo que está sobrevalorado (algunas veces parece como si R se redujese a ggplot2) y rodeado de un ambiente demasiado apasionado (http://www.r-bloggers.com/hadley-on-a-postage-stamp/). 
+
+Yo utilizo habitualmente lattice. En alguna ocasión, por curiosidad he jugueteado con ggplot2, y no he encontrado razones para utilizarlo de forma habitual. Lo cual no significa que no sean interesantes algunas de sus funciones: por ejemplo, latticeExtra ha incorporado algunas ideas en funciones como glayer o panel.smoother. 
+
+Para una comparativa (con código frio y desapasionado ;-)) puede ser útil esta cadena de 13 entradas:http://learnr.wordpress.com/2009/06/28/ggplot2-version-of-figures-in-lattice-multivariate-data-visualization-with-r-part-1/. 
+
+Saludos.
+
+Oscar.
+-- 
+Oscar Perpiñán Lamigueiro
+Profesor Ayudante Doctor
+Dpto. de Ingeniería Eléctrica
+EUITI-UPM
+
+
+From trujillo en unex.es  Wed Nov 24 15:22:40 2010
+From: trujillo en unex.es (=?ISO-8859-1?Q?Jos=E9_Trujillo_Carmona?=)
+Date: Wed, 24 Nov 2010 15:22:40 +0100
+Subject: [R-es] =?iso-8859-1?q?L=EDmites_de_confianza_de_la_mediana_en_dis?=
+ =?iso-8859-1?q?tribuciones_sim=E9tricas?=
+Message-ID: <4CED1FB0.1070500@unex.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101124/d9d008cf/attachment.pl>
+
+From coforfe en gmail.com  Wed Nov 24 15:39:39 2010
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Wed, 24 Nov 2010 15:39:39 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?L=EDmites_de_confianza_de_la_mediana_en_dis?=
+	=?iso-8859-1?q?tribuciones_sim=E9tricas?=
+In-Reply-To: <4CED1FB0.1070500@unex.es>
+References: <4CED1FB0.1070500@unex.es>
+Message-ID: <AANLkTimKgmZ86yaFMRiL+vVV2VViineYmVy+Gd12ufcv@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101124/c2cf6b18/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Wed Nov 24 15:40:22 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 24 Nov 2010 09:40:22 -0500
+Subject: [R-es]
+	=?iso-8859-1?q?L=EDmites_de_confianza_de_la_mediana_en_dis?=
+	=?iso-8859-1?q?tribuciones_sim=E9tricas?=
+In-Reply-To: <4CED1FB0.1070500@unex.es>
+References: <4CED1FB0.1070500@unex.es>
+Message-ID: <AANLkTinz91z=A76F5_aJw=yWxQb+QKn=XPky3Yp9iwEB@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101124/55269f1b/attachment.pl>
+
+From oscar.perpinan en upm.es  Wed Nov 24 21:39:37 2010
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Wed, 24 Nov 2010 21:39:37 +0100
+Subject: [R-es]
+ =?utf-8?q?L=C3=ADmites_de_confianza_de_la_mediana_en_distr?=
+ =?utf-8?q?ibuciones_sim=C3=A9tricas?=
+In-Reply-To: <AANLkTinz91z=A76F5_aJw=yWxQb+QKn=XPky3Yp9iwEB@mail.gmail.com>
+References: <4CED1FB0.1070500@unex.es>
+	<AANLkTinz91z=A76F5_aJw=yWxQb+QKn=XPky3Yp9iwEB@mail.gmail.com>
+Message-ID: <20101124213937.3e2e2b19@upm.es>
+
+Hola,
+
+Por si te interesa una generalización robusta de este test, el método de Mee (por ejemplo) (http://books.google.com/books?id=_tAJr4ooOM8C&lpg=PA174&ots=mfFzPdT7Pk&dq=mee%20wilcoxon&hl=es&pg=PA174#v=onepage&q=mee%20wilcoxon&f=false) está incluido dentro del paquete WRS (por ahora sólo en R-Forge): http://r-forge.r-project.org/projects/wrs/
+
+Saludos.
+
+Oscar.
+
+
+-- 
+Oscar Perpiñán Lamigueiro
+Profesor Ayudante Doctor
+Dpto. de Ingeniería Eléctrica
+EUITI-UPM
+On Wed, 24 Nov 2010 09:40:22 -0500
+Jorge Ivan Velez <jorgeivanvelez en gmail.com> wrote:
+
+> Buenos dias Jose,
+> 
+> La function wilcox.test si proporciona el IC que necesitas. De ?wilcox.test:
+> 
+> conf.int:   a confidence interval for the location parameter. (Only present
+> if argument conf.int = TRUE)
+> 
+> En tu caso, seria algo como
+> 
+> 
+>   wilcox.test(iris$Sepal.Width, iris$MEDIANA, alternative = 'two.sided',
+> paired = TRUE, conf.int = TRUE)
+> 
+> Wilcoxon signed rank test with continuity correction
+> 
+> data:  iris$Sepal.Width and iris$MEDIANA
+> V = 6817, p-value = 0.03015
+> alternative hypothesis: true location shift is not equal to 0
+> 95 percent confidence interval:
+>  0.04999865 0.15002894
+> sample estimates:
+> (pseudo)median
+>     0.09994806
+> 
+> Otra alternativa es usar bootstrap:
+> 
+>    require(boot)
+> 
+> b <- boot(iris$Sepal.Width, function(x, d) median(x[d]), R = 1000)
+> 
+> quantile(b$t - 2.95, probs = c(0.025, 0.975))
+> #   2.5% 97.5%
+> #   0.05  0.15
+> 
+> Un saludo,
+> Jorge
+> 
+> 
+> 2010/11/24 José Trujillo Carmona <>
+> 
+> > Por si alguno pudiera ayudarme.
+> >
+> > Al realizar el t.test para una muestra, junto con el valor de t y el
+> > p-valor, la función proporciona la estimación de la media y su INTERVALO
+> > DE CONFIANZA.
+> >
+> > Desde el punto de vista de la estadística de rangos esto se puede hacer
+> > mediante:
+> >
+> >  > iris$MEDIANA <- with(iris, 2.95)
+> >
+> >  > median(iris$Sepal.Width - iris$MEDIANA, na.rm=TRUE) # median difference
+> > [1] 0.05
+> >
+> >  > wilcox.test(iris$Sepal.Width, iris$MEDIANA,
+> > alternative='two.sided',paired=TRUE)
+> >
+> >    Wilcoxon signed rank test with continuity correction
+> >
+> > data:  iris$Sepal.Width and iris$MEDIANA
+> > V = 6817, p-value = 0.03015
+> > alternative hypothesis: true location shift is not equal to 0
+> >
+> >
+> > Ahora bien, como se puede ver la función wilcox.test no proporciona los
+> > límites de confianza de la mediana que se puede obtener a partir del
+> > test de Wilcoxon (v.g. en "Applied Nonparametric Statistics" W. W.
+> > Daniel, pp.49-56)
+> >
+> > ¿Alguien conoce algún paquete que contenga la función que busco?
+> >
+> > Muchas gracias.
+> >
+> >
+> > --
+> > _____---^---_____
+> >
+> > Univ. de Extremadura
+> > Dept. Matemáticas.
+> > Despacho B29
+> > Tf: + 34 924 289 300
+> > Ext. 86823
+> >
+> >
+> >        [[alternative HTML version deleted]]
+> >
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> >
+> 
+> 	[[alternative HTML version deleted]]
+> 
+
+
+From evion12000 en gmail.com  Thu Nov 25 11:56:28 2010
+From: evion12000 en gmail.com (=?iso-8859-1?Q?David_M=E9ndez?=)
+Date: Thu, 25 Nov 2010 06:26:28 -0430
+Subject: [R-es]
+ =?iso-8859-1?q?L=EDmites_de_confianza_de_la_mediana_en_dis?=
+ =?iso-8859-1?q?tribuciones_sim=E9tricas?=
+Message-ID: <4cee40cf.09ad960a.5f42.ffff9833@mx.google.com>
+
+
+
+Enviado desde mi HTC
+
+----- Mensaje original -----
+De: Oscar PerpiñanLamigueiro <oscar.perpinan en upm.es>
+Enviado: Miércoles, 24 de Noviembre de 2010 04:09 p.m.
+Para: trujillo en unex.es
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] Límites de confianza de la mediana en distribuciones simétricas
+
+Hola,
+
+Por si te interesa una generalización robusta de este test, el método de Mee (por ejemplo) (http://books.google.com/books?id=_tAJr4ooOM8C&lpg=PA174&ots=mfFzPdT7Pk&dq=mee%20wilcoxon&hl=es&pg=PA174#v=onepage&q=mee%20wilcoxon&f=false) está incluido dentro del paquete WRS (por ahora sólo en R-Forge): http://r-forge.r-project.org/projects/wrs/
+
+Saludos.
+
+Oscar.
+
+
+-- 
+Oscar Perpiñán Lamigueiro
+Profesor Ayudante Doctor
+Dpto. de Ingeniería Eléctrica
+EUITI-UPM
+On Wed, 24 Nov 2010 09:40:22 -0500
+Jorge Ivan Velez <jorgeivanvelez en gmail.com> wrote:
+
+> Buenos dias Jose,
+> 
+> La function wilcox.test si proporciona el IC que necesitas. De ?wilcox.test:
+> 
+> conf.int:   a confidence interval for the location parameter. (Only present
+> if argument conf.int = TRUE)
+> 
+> En tu caso, seria algo como
+> 
+> 
+>   wilcox.test(iris$Sepal.Width, iris$MEDIANA, alternative = 'two.sided',
+> paired = TRUE, conf.int = TRUE)
+> 
+> Wilcoxon signed rank test with continuity correction
+> 
+> data:  iris$Sepal.Width and iris$MEDIANA
+> V = 6817, p-value = 0.03015
+> alternative hypothesis: true location shift is not equal to 0
+> 95 percent confidence interval:
+>  0.04999865 0.15002894
+> sample estimates:
+> (pseudo)median
+>     0.09994806
+> 
+> Otra alternativa es usar bootstrap:
+> 
+>    require(boot)
+> 
+> b <- boot(iris$Sepal.Width, function(x, d) median(x[d]), R = 1000)
+> 
+> quantile(b$t - 2.95, probs = c(0.025, 0.975))
+> #   2.5% 97.5%
+> #   0.05  0.15
+> 
+> Un saludo,
+> Jorge
+> 
+> 
+> 2010/11/24 José Trujillo Carmona <>
+> 
+> > Por si alguno pudiera ayudarme.
+> >
+> > Al realizar el t.test para una muestra, junto con el valor de t y el
+> > p-valor, la función proporciona la estimación de la media y su INTERVALO
+> > DE CONFIANZA.
+> >
+> > Desde el punto de vista de la estadística de rangos esto se puede hacer
+> > mediante:
+> >
+> >  > iris$MEDIANA <- with(iris
+
+
+[No se incluye el mensaje original entero]
+
+From javisan7 en hotmail.com  Thu Nov 25 20:27:25 2010
+From: javisan7 en hotmail.com (Santiago Ramos)
+Date: Thu, 25 Nov 2010 19:27:25 +0000
+Subject: [R-es] Filtro Kalman
+Message-ID: <SNT101-W382A4CA62E65DAB853766590200@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101125/695c40bb/attachment.pl>
+
+From oscar.perpinan en upm.es  Thu Nov 25 21:10:14 2010
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Thu, 25 Nov 2010 21:10:14 +0100
+Subject: [R-es] Filtro Kalman
+In-Reply-To: <SNT101-W382A4CA62E65DAB853766590200@phx.gbl>
+References: <SNT101-W382A4CA62E65DAB853766590200@phx.gbl>
+Message-ID: <20101125211014.33e8588a@upm.es>
+
+Por ejemplo, help(KalmanLike) y para más opciones  RSiteSearch('kalman').
+
+Oscar.
+
+
+On Thu, 25 Nov 2010 19:27:25 +0000
+Santiago Ramos <javisan7 en hotmail.com> wrote:
+
+> 
+> Hola,
+> 
+> Estoy intentando implementar el filtro de Kalman para un modelo de series de tiempo que estoy haciendo, me gustaría saber si alguien me puede colaborar ya que soy principiante en R.
+> 
+> Muchas gracias!
+> 
+> Cordialmente,
+>  
+> JAVIER SANTIAGO PARRA RAMOS
+> 
+> INGENIERO DE SISTEMAS
+
+
+From kjetil1001 en gmail.com  Sat Nov 27 02:40:19 2010
+From: kjetil1001 en gmail.com (Kjetil brinchmann Halvorsen)
+Date: Fri, 26 Nov 2010 22:40:19 -0300
+Subject: [R-es] Filtro Kalman
+In-Reply-To: <20101125211014.33e8588a@upm.es>
+References: <SNT101-W382A4CA62E65DAB853766590200@phx.gbl>
+	<20101125211014.33e8588a@upm.es>
+Message-ID: <AANLkTik9_q4uVKkykKic7Fk16rtBhUjV0wrE=At5noxh@mail.gmail.com>
+
+debes mirar el paquete CRAN sspir.
+
+Kjetil
+
+2010/11/25 Oscar Perpiñan Lamigueiro <oscar.perpinan en upm.es>:
+> Por ejemplo, help(KalmanLike) y para más opciones  RSiteSearch('kalman').
+>
+> Oscar.
+>
+>
+> On Thu, 25 Nov 2010 19:27:25 +0000
+> Santiago Ramos <javisan7 en hotmail.com> wrote:
+>
+>>
+>> Hola,
+>>
+>> Estoy intentando implementar el filtro de Kalman para un modelo de series de tiempo que estoy haciendo, me gustaría saber si alguien me puede colaborar ya que soy principiante en R.
+>>
+>> Muchas gracias!
+>>
+>> Cordialmente,
+>>
+>> JAVIER SANTIAGO PARRA RAMOS
+>>
+>> INGENIERO DE SISTEMAS
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+"If you want a picture of the future - imagine a boot stamping on the
+human face - forever."
+
+George Orwell (1984)
+
+
+From mliugonzal en yahoo.es  Sun Nov 28 14:16:10 2010
+From: mliugonzal en yahoo.es (mliugonzal en yahoo.es)
+Date: Sun, 28 Nov 2010 14:16:10 +0100
+Subject: [R-es] Importar desde excel Series temporales
+In-Reply-To: <AANLkTi=PMKQj8932jy+osWTbgzJRJ_icCWDxJotjpJSA@mail.gmail.com>
+References: <AANLkTi=PMKQj8932jy+osWTbgzJRJ_icCWDxJotjpJSA@mail.gmail.com>
+Message-ID: <AANLkTikNRagenzGpkOOWgWZdOGH+HZBC8d2TDH8AVR5u@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101128/6d9426b0/attachment.pl>
+
+From grserrano en ccee.ucm.es  Sun Nov 28 20:37:56 2010
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Sun, 28 Nov 2010 20:37:56 +0100
+Subject: [R-es] Importar desde excel Series temporales
+In-Reply-To: <AANLkTim7-Sv6dZNpO2shz-FgMHaj7nQ49qNwmMWVW-ed@mail.gmail.com>
+References: <AANLkTi=PMKQj8932jy+osWTbgzJRJ_icCWDxJotjpJSA@mail.gmail.com>
+	<AANLkTikNRagenzGpkOOWgWZdOGH+HZBC8d2TDH8AVR5u@mail.gmail.com>
+	<AANLkTi=neUv-H4dx6ARYsZYo9uf6jAuxC-8Zs2NkNtxE@mail.gmail.com>
+	<AANLkTim7-Sv6dZNpO2shz-FgMHaj7nQ49qNwmMWVW-ed@mail.gmail.com>
+Message-ID: <AANLkTikDYAN9LdYemogthmmJZ0BJZ4BBiGRvoweTa92y@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101128/6d8d0106/attachment.pl>
+
+From grserrano en ccee.ucm.es  Mon Nov 29 10:06:33 2010
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Mon, 29 Nov 2010 10:06:33 +0100
+Subject: [R-es] Importar desde excel Series temporales
+In-Reply-To: <AANLkTimcZbBZT75r0Qs_JgSLQgng3z1zY1FkDtt3h8vz@mail.gmail.com>
+References: <AANLkTi=PMKQj8932jy+osWTbgzJRJ_icCWDxJotjpJSA@mail.gmail.com>
+	<AANLkTikNRagenzGpkOOWgWZdOGH+HZBC8d2TDH8AVR5u@mail.gmail.com>
+	<AANLkTi=neUv-H4dx6ARYsZYo9uf6jAuxC-8Zs2NkNtxE@mail.gmail.com>
+	<AANLkTim7-Sv6dZNpO2shz-FgMHaj7nQ49qNwmMWVW-ed@mail.gmail.com>
+	<AANLkTikDYAN9LdYemogthmmJZ0BJZ4BBiGRvoweTa92y@mail.gmail.com>
+	<AANLkTimcZbBZT75r0Qs_JgSLQgng3z1zY1FkDtt3h8vz@mail.gmail.com>
+Message-ID: <AANLkTikPv+h_odribsutywLE6XcCupXSRa1XAKycWzuE@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101129/3b145b51/attachment.pl>
+
+From cgb en datanalytics.com  Mon Nov 29 10:25:03 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 29 Nov 2010 10:25:03 +0100
+Subject: [R-es] Importar desde excel Series temporales
+In-Reply-To: <AANLkTikPv+h_odribsutywLE6XcCupXSRa1XAKycWzuE@mail.gmail.com>
+References: <AANLkTi=PMKQj8932jy+osWTbgzJRJ_icCWDxJotjpJSA@mail.gmail.com>
+	<AANLkTikNRagenzGpkOOWgWZdOGH+HZBC8d2TDH8AVR5u@mail.gmail.com>
+	<AANLkTi=neUv-H4dx6ARYsZYo9uf6jAuxC-8Zs2NkNtxE@mail.gmail.com>
+	<AANLkTim7-Sv6dZNpO2shz-FgMHaj7nQ49qNwmMWVW-ed@mail.gmail.com>
+	<AANLkTikDYAN9LdYemogthmmJZ0BJZ4BBiGRvoweTa92y@mail.gmail.com>
+	<AANLkTimcZbBZT75r0Qs_JgSLQgng3z1zY1FkDtt3h8vz@mail.gmail.com>
+	<AANLkTikPv+h_odribsutywLE6XcCupXSRa1XAKycWzuE@mail.gmail.com>
+Message-ID: <AANLkTikrNDeoa_mhBPgRRawWcuz3s+E6sqTDBV=AKpXG@mail.gmail.com>
+
+Sí, ha funcionado:
+
+http://datanalytics.com/r_blogs_mashup.html
+
+Ahí están tus entradas. He visto que hay como 30 personas que se
+descargan los RSS's con aplicaciones como las de Google (que dejan un
+rastro de accesos). No son muchas pero espero que contribuya a
+divulgar los contenidos y generar tráfico.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 29 de noviembre de 2010 10:06, Gregorio R. Serrano
+<grserrano en ccee.ucm.es> escribió:
+> Buenos días.
+>
+> Me temo que tendrás que seguir leyendo. Un data.frame ya es una lista, así
+> que
+>
+> lapply(pib[,2:59], arima, order=c(1,0,0))
+>
+> debería devolverte una lista de 58 modelos AR(1), aunque supongo que querrás
+> tomar logaritmos y diferenciar primero.
+>
+> En tu código no entiendo los paréntesis alrededor de pib en (pib)[,-1] y no
+> sé qué efecto tendrán. Además, R distingue entre mayúsculas y minúsculas,
+> así que PIB y pib son distintos. En
+> http://cran.r-project.org/other-docs.html hay mucha documentación. Entre los
+> documentos disponibles en internet para principiantes y en español (muy
+> pocos), merece la pena empezar por R para
+> principiantes<http://cran.r-project.org/doc/contrib/rdebuts_es.pdf>.
+>
+>
+> En inglés, en la dirección anterior, son recomendables:
+>
+>   - *Using R for Data Analysis and Graphics ? Introduction, Examples and
+>   Commentary* <http://cran.r-project.org/doc/contrib/usingR.pdf>, se pueden
+>   encontrar ejemplos y datos en la página del
+> autor<http://wwwmaths.anu.edu.au/%7Ejohnm/>
+>   .
+>   - *IcebreakeR*<http://cran.r-project.org/doc/contrib/Robinson-icebreaker.pdf>
+>   .
+>   - *The R Guide*<http://cran.r-project.org/doc/contrib/Owen-TheRGuide.pdf>
+>   .
+>
+> Un saludo
+> Gregorio R. Serrano
+>
+> El 28 de noviembre de 2010 23:28, Yurena Mendoza Lemes <
+> yurena.me.le en gmail.com> escribió:
+>
+>> He estado leyendo sobre las listas, y cierto que hay que me tengo que
+>> familiriarizar con ellas porque por ejemplo ahora he hecho lo siguiente:
+>> Primero indico que los datos que tengo cargados como "pib" quiero poderlos
+>> tratar como series temporales:
+>>
+>> PIB <- zooreg((pib)[,-1], start=c(1950,1), frequency=1)
+>>
+>> a continuación creo una sublista porque de las 119 series que tengo en
+>> "pib" de la 2 a la 59 los datos son variables sobre PIB y de la 60 a la 119
+>> son tasas de desempleo "ur" por ello creo las dos siguientes sublistas de
+>> "pib"
+>>
+>> Lstpib <- list(pib[,2:59])
+>>
+>> Lstur <- list(pib[,60:119])
+>>
+>> Y ahora llega el fallo, cuando le doy la orden para que me los calcules de
+>> manera separada los datos de PIB y de tasas de desempleo cuando introduzco
+>>
+>> (lista.ar <- lapply(Lstur, arima, order=c(1,0,0)))
+>>
+>> obtengo el siguiente error:
+>>
+>> ERROR:  only implemented for univariate time series
+>>
+>> ¿Sabeís que estoy haciendo mal? lo intentado como me dice el manual que
+>> debo poner subindices pero debe ser que no lo estoy haciendo bien
+>> "Lstur[1:58]"
+>>
+>> Por otro lado me surge la duda de como haría si auna determinada función
+>> que tiene por objeto analizar dos series y yo quiero que me analice el país
+>> uno de PIB y ese mismo país las tasas de desempleo es decir la serie uno de
+>> la tasa de desempleo, como debería de proceder, ¿nombrando ambas listas?
+>> ¿que subíndice debo poner?
+>>
+>> Muchas Gracias,
+>>
+>> Saludos
+>>
+>> El 28 de noviembre de 2010 20:37, Gregorio R. Serrano <
+>> grserrano en ccee.ucm.es> escribió:
+>>
+>> Debes familiarizarte con la forma de trabajar en R, que en algunos casos es
+>>> bastante distinta de los programas de econometría clásicos, en particular
+>>> con las listas y las funciones para manipularlas ?lapply y otros te serán de
+>>> ayuda.
+>>>
+>>> Sobre lo que preguntas, un ejemplo para hacerlo sin necesidad de bucle es:
+>>>
+>>> datz <- zooreg(data.frame(x=rnorm(20), y=runif(20)))
+>>> (lista.ar <- lapply(datz, arima, order=c(1,0,0)))
+>>>
+>>>
+>>> Un saludo
+>>> Gregorio R. Serrano
+>>>
+>>>
+>>> El 28 de noviembre de 2010 20:14, Yurena Mendoza Lemes <
+>>> yurena.me.le en gmail.com> escribió:
+>>>
+>>> Muchas Gracias por tu ayuda, sobre todo el ejemplo como se parece bastante
+>>>> a lo que yo pretendo a hace me ha ayudado bastante.
+>>>>
+>>>> A raíz de esto me surge una nueva duda. El nuevo objetvo de series
+>>>> temporales creados tiene una variable indice, ¿me puede servir ésta para
+>>>> realizar estimaciones de las 120 series y que me la guarde en un mismo
+>>>> "lugar" en un mismo objeto? Es decir, por ejemplo quiero estimar los modelos
+>>>> autoregresivos de mis 120 series cargadas, la "x" quiero que varie para
+>>>> abarcar las 120 series y que ese resultado sea guardado, es decir lo mismo
+>>>> que se hace con RATS o con otros programas de programacion con los Loops o
+>>>> los bucles.
+>>>> mod.ar <- linear(*x*, m = 2)
+>>>> mod.ar
+>>>>
+>>>>
+>>>> Muchas Gracias
+>>>> El 28 de noviembre de 2010 19:33, Gregorio R. Serrano <
+>>>> grserrano en ccee.ucm.es> escribió:
+>>>>
+>>>> Hola.
+>>>>>
+>>>>> Pasos a dar 1) exporta el fichero en formato .csv (aunque se pueden
+>>>>> cargar en R directamente desde Excel), 2) después cargas los datos en R con
+>>>>> read.csv (tendrás que ajustar opciones de separador y decimales) y 3) el
+>>>>> data.frame que has creado al cargar los datos lo conviertes a serie temporal
+>>>>> con ts o zoo. Puedes ver un ejemplo de los pasos 2 y 3 en:
+>>>>> http://www.grserrano.es/wp/2010/10/ejemplo-r-enlace-de-indices/
+>>>>>
+>>>>> Un saludo
+>>>>> Gregorio R. Serrano
+>>>>>
+>>>>> El 28 de noviembre de 2010 14:16, <mliugonzal en yahoo.es> escribió:
+>>>>>
+>>>>>> > Hola a tod en as a ver si me podéis ayudar:
+>>>>>> >
+>>>>>> > tengo una base de datos en excel con 120 variables y 58 observaciones
+>>>>>> para
+>>>>>> > cada una de ellas y no encuentro la manera de que reconozca la base
+>>>>>> de
+>>>>>> > manera correcta, es decir que reconozca que son 120 variables y que
+>>>>>> se trata
+>>>>>> > de series temporales. He usado el paquete ts, zoo pero tampoco así
+>>>>>> consigo
+>>>>>> > indexarlas de manera correcta.
+>>>>>> > ¿Me podéis aconsejar como proseguir?
+>>>>>> >
+>>>>>> > Gracias de antemano
+>>>>>> >
+>>>>>>
+>>>>>>        [[alternative HTML version deleted]]
+>>>>>>
+>>>>>>
+>>>>>> _______________________________________________
+>>>>>> R-help-es mailing list
+>>>>>> R-help-es en r-project.org
+>>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>>
+>>>>>>
+>>>>>
+>>>>>
+>>>>> --
+>>>>> Dr. Gregorio R. Serrano
+>>>>> Dpto. Economía Cuantitativa (UCM)
+>>>>> Voz:+34 91394 2361
+>>>>> Fax:+34 91394 2591
+>>>>> http://www.grserrano.es
+>>>>>
+>>>>
+>>>>
+>>>
+>>>
+>>> --
+>>> Dr. Gregorio R. Serrano
+>>> Dpto. Economía Cuantitativa (UCM)
+>>> Voz:+34 91394 2361
+>>> Fax:+34 91394 2591
+>>> http://www.grserrano.es
+>>>
+>>
+>>
+>
+>
+> --
+> Dr. Gregorio R. Serrano
+> Dpto. Economía Cuantitativa (UCM)
+> Voz:+34 91394 2361
+> Fax:+34 91394 2591
+> http://www.grserrano.es
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From blancoselviz en gmail.com  Mon Nov 29 15:18:13 2010
+From: blancoselviz en gmail.com (Amilcar J. Blanco S.)
+Date: Mon, 29 Nov 2010 09:48:13 -0430
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_21=2C_Env=EDo_3?=
+	=?iso-8859-1?q?1?=
+In-Reply-To: <mailman.6171.1291022741.4301.r-help-es@r-project.org>
+References: <mailman.6171.1291022741.4301.r-help-es@r-project.org>
+Message-ID: <AANLkTinz8bba_Esa5mVUymA2=hbF1ov-QvBtzL3-bUmW@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101129/6f791171/attachment.pl>
+
+From grserrano en ccee.ucm.es  Mon Nov 29 19:01:29 2010
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Mon, 29 Nov 2010 19:01:29 +0100
+Subject: [R-es] Importar desde excel Series temporales
+In-Reply-To: <AANLkTikrNDeoa_mhBPgRRawWcuz3s+E6sqTDBV=AKpXG@mail.gmail.com>
+References: <AANLkTi=PMKQj8932jy+osWTbgzJRJ_icCWDxJotjpJSA@mail.gmail.com>
+	<AANLkTikNRagenzGpkOOWgWZdOGH+HZBC8d2TDH8AVR5u@mail.gmail.com>
+	<AANLkTi=neUv-H4dx6ARYsZYo9uf6jAuxC-8Zs2NkNtxE@mail.gmail.com>
+	<AANLkTim7-Sv6dZNpO2shz-FgMHaj7nQ49qNwmMWVW-ed@mail.gmail.com>
+	<AANLkTikDYAN9LdYemogthmmJZ0BJZ4BBiGRvoweTa92y@mail.gmail.com>
+	<AANLkTimcZbBZT75r0Qs_JgSLQgng3z1zY1FkDtt3h8vz@mail.gmail.com>
+	<AANLkTikPv+h_odribsutywLE6XcCupXSRa1XAKycWzuE@mail.gmail.com>
+	<AANLkTikrNDeoa_mhBPgRRawWcuz3s+E6sqTDBV=AKpXG@mail.gmail.com>
+Message-ID: <AANLkTimnNiWB5OxYNE43mw3AyggPUoi=UV6EtRJAuyAt@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101129/69c28777/attachment.pl>
+
+From luzrom en haceb.com  Mon Nov 29 19:07:00 2010
+From: luzrom en haceb.com (Luz Elena Romero R (Pract. Calidad))
+Date: Mon, 29 Nov 2010 13:07:00 -0500
+Subject: [R-es] =?iso-8859-1?q?Regresi=F3n_log=EDsitca?=
+Message-ID: <BC51EE6145842947AFAF5FA0988218DA03992BE2@med33nt.haceb.corp>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101129/8db36339/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Mon Nov 29 19:18:12 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Mon, 29 Nov 2010 13:18:12 -0500
+Subject: [R-es] =?iso-8859-1?q?Regresi=F3n_log=EDsitca?=
+In-Reply-To: <BC51EE6145842947AFAF5FA0988218DA03992BE2@med33nt.haceb.corp>
+References: <BC51EE6145842947AFAF5FA0988218DA03992BE2@med33nt.haceb.corp>
+Message-ID: <AANLkTi=psa9Bcrz2HTpZZGgYwm6v6AGAo3odSxesN87_@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20101129/7ec6c602/attachment.pl>
+
+From klangohr en imim.es  Tue Nov 30 09:53:37 2010
+From: klangohr en imim.es (LANGOHR, KLAUS)
+Date: Tue, 30 Nov 2010 09:53:37 +0100
+Subject: [R-es] =?iso-8859-1?q?Regresi=F3n_log=EDsitca?=
+In-Reply-To: <BC51EE6145842947AFAF5FA0988218DA03992BE2@med33nt.haceb.corp>
+References: <BC51EE6145842947AFAF5FA0988218DA03992BE2@med33nt.haceb.corp>
+Message-ID: <BB3B87345736EE45843CC0ADF9EEEB0D2AE8A139E7@hermes2.imim.es>
+
+Hola Luz Elena,
+Para ajustar modelos de regresión logística puedes utilizar también la función lrm del paquete rms.
+
+Saludos,
+
+Klaus.
+
+________________________________________
+Von: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] im Auftrag von Luz Elena Romero R (Pract. Calidad) [luzrom en haceb.com]
+Gesendet: Montag, 29. November 2010 19:07
+An: r-help-es en r-project.org
+Betreff: [R-es] Regresión logísitca
+
+Buenas tardes:
+
+
+
+Quisiera saber si tienen algún código para hacer regresión logística.
+
+
+
+Muchas gracias
+
+
+AVISO LEGAL:
+La información contenida en este mensaje y en los archivos electrónicos adjuntos es confidencial y reservada, conforme a lo previsto en la Constitución y en las Políticas de Seguridad de INDUSTRIAS HACEB S.A, y está dirigida exclusivamente a su destinatario, sin la intención de que sea revelada o divulgada a otras personas. El acceso al contenido de esta comunicación por cualquier otra persona diferente al destinatario no está autorizado por INDUSTRIAS HACEB S.A. y está sancionado de acuerdo con las normas legales aplicables. El que ilícitamente sustraiga, oculte, extravíe, destruya, intercepte, controle o impida esta comunicación, antes de que llegue a su destinatario, estará sujeto a las sanciones penales correspondientes. Igualmente, incurrirá en sanciones penales el que, en provecho propio o ajeno o con perjuicio de otro, divulgue o emplee la información contenida en esta comunicación. Si por error recibe este mensaje, le solicitamos enviarlo de vuelta a INDUSTRIAS HACEB S.A. a la dirección de correo electrónico que se lo envió y borrarlo de sus archivos electrónicos o destruirlo. Las opiniones, conclusiones y otra información contenida en este correo no relacionadas con el negocio oficial de INDUSTRIAS HACEB S.A., deben entenderse como personales y de ninguna manera son avaladas por la Compañía. INDUSTRIAS HACEB S.A. no se hace responsable por la eventual transmisión de virus o programas dañinos por este conducto, y por lo tanto es responsabilidad del destinatario confirmar la existencia de este tipo de elementos al momento de recibirlo y abrirlo.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+LEGAL NOTICE:
+The information contained in this message and in any electronic files annexed thereto is confidential and privileged, as per the Colombian Constitution and the Security Politics of INDUSTRIAS HACEB S.A., and is directed exclusively to its addressee, with no intention of it being disclosed or revealed to third parties. The access to the content of this communication by any person different from its addressee is not authorized by INDUSTRIAS HACEB S.A. and shall be penalized in accordance with the applicable legal dispositions. Any person who illicitly removes, hides, distracts, destroys, intercepts, controls, or otherwise prevents this communication from arriving to its addressee, shall be subject to the appropriate criminal penalties. Likewise, criminal penalties shall be incurred by any who, either for his/her own benefit or on behalf of third parties, or with prejudice of a third party, discloses or employs the information contained in this communication. If you should happen to receive this message by mistake, please send it back to INDUSTRIAS HACEB S.A. to the same e-mail address and either delete it from your electronic files or destroy it. Opinions, conclusions and other information in this message that do not relate to the official business of INDUSTRIAS HACEB S.A., shall be understood as neither given nor endorsed by the Company. The recipient must verify the presence of possible informatic viruses in the mail or in any annex thereto, and for this reason INDUSTRIAS HACEB S.A. shall not be made liable for any damages caused by viruses transmitted hereby.
+
+
+        [[alternative HTML version deleted]]
+
+From darismendi en cmc.org.ve  Tue Nov 30 18:42:46 2010
+From: darismendi en cmc.org.ve (CMC)
+Date: Tue, 30 Nov 2010 13:12:46 -0430
+Subject: [R-es] =?iso-8859-1?q?Par=E1metro_de_Ajuste=2E?=
+Message-ID: <4CF53796.6090705@cmc.org.ve>
+
+Buenas a toda la comunidad es mi primera vez por acá y dado que estoy 
+empezando desde ya hace unas semanas atrás a trabajar con R tengo la 
+duda sobre:
+
+Cómo realizar un ajuste de datos utilizando una función cualquiera de 
+una única variable, es decir en este caso, encontrar un valor que yo 
+llamo H a partir de un ajuste por mínimos cuadrados.
+
+La idea que tengo en mente es encontrar mediante un conjunto de datos 
+experimentales el valor de la constante de Planck,usando H como 
+parámetro de ajuste mediante mínimos cuadrados para encontrar el valor 
+más óptimo.
+
+
+From cgb en datanalytics.com  Tue Nov 30 18:50:08 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 30 Nov 2010 18:50:08 +0100
+Subject: [R-es] =?iso-8859-1?q?Par=E1metro_de_Ajuste=2E?=
+In-Reply-To: <4CF53796.6090705@cmc.org.ve>
+References: <4CF53796.6090705@cmc.org.ve>
+Message-ID: <AANLkTi=7Of=hdODd5bH5FeA41FdqF2QHg69n4obFKzjN@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Sin saber mucho más sobre la forma de tu función (es decir,
+respondiendo de la manera más general posible), lo que tendrías que
+hacer es:
+
+1) Generar la función "de error" g(H) = suma( ( f(x,H) - y )^2 )  (que
+depende sólo del parámetro H).
+2) Usar la función optim para encontrar tu mínimo.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 30 de noviembre de 2010 18:42, CMC <darismendi en cmc.org.ve> escribió:
+> Buenas a toda la comunidad es mi primera vez por acá y dado que estoy
+> empezando desde ya hace unas semanas atrás a trabajar con R tengo la duda
+> sobre:
+>
+> Cómo realizar un ajuste de datos utilizando una función cualquiera de una
+> única variable, es decir en este caso, encontrar un valor que yo llamo H a
+> partir de un ajuste por mínimos cuadrados.
+>
+> La idea que tengo en mente es encontrar mediante un conjunto de datos
+> experimentales el valor de la constante de Planck,usando H como parámetro de
+> ajuste mediante mínimos cuadrados para encontrar el valor más óptimo.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+

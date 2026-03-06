@@ -1,0 +1,4857 @@
+From wilmercs en ufps.edu.co  Fri Sep  1 02:17:48 2017
+From: wilmercs en ufps.edu.co (WILMER CONTRERAS SEPULVEDA)
+Date: Thu, 31 Aug 2017 19:17:48 -0500
+Subject: [R-es] Area bajo la curva
+Message-ID: <CAOYqKJ4NLRW7maQJ+4w+cjZ+cj=ymes-KcZZ-cnk8UujD32jFA@mail.gmail.com>
+
+Buenas noches.
+
+Quisiera saber si existe una libreria o función que me calcule el área bajo
+la curva de dos vectores de números. Ademas esta debe tener en cuenta si
+existen datos faltantes o NaN.
+
+Por ejemplo calcular el área bajo la curva del vector en el eje x:
+
+x<- c(1,2,3,4,5,6,7,8,9,10)
+
+y el vector en el eje y:
+
+y<-c(0,2,15,30,50,NaN,NaN,10,2,1)
+
+
+Muchas gracias.
+
+-- 
+
+*Wilmer Contreras Sepulveda*
+
+*Grupo de Investigación en Desarrollo de Microelectronica Aplicada*
+*Universidad Francisco de Paula Santander *
+
+	[[alternative HTML version deleted]]
+
+
+From jorgeivanvelez en gmail.com  Fri Sep  1 03:42:58 2017
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Thu, 31 Aug 2017 20:42:58 -0500
+Subject: [R-es] Area bajo la curva
+In-Reply-To: <CAOYqKJ4NLRW7maQJ+4w+cjZ+cj=ymes-KcZZ-cnk8UujD32jFA@mail.gmail.com>
+References: <CAOYqKJ4NLRW7maQJ+4w+cjZ+cj=ymes-KcZZ-cnk8UujD32jFA@mail.gmail.com>
+Message-ID: <CAKL8G3HsrEyCtmd7fw7yWUXvBXDDM=TMGZ_Dwufbj9N1x=Wasg@mail.gmail.com>
+
+Buenas noches, Wilmer.
+
+Puedes intentar la aproximación sugerida en
+https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve
+
+
+## preparación
+x <- c(1,2,3,4,5,6,7,8,9,10)
+y <- c(0,2,15,30,50,NaN,NaN,10,2,1)
+d <- data.frame(x, y)
+d <- d[complete.cases(d),]
+id <- order(d$x)
+
+## cálculo
+require(zoo)
+with(d, sum(diff(x[id])*rollmean(y[id],2)))
+## [1] 169.5
+
+Espero sea de utilidad.
+Jorge.-
+
+
+2017-08-31 19:17 GMT-05:00 WILMER CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+:
+
+> Buenas noches.
+>
+> Quisiera saber si existe una libreria o función que me calcule el área bajo
+> la curva de dos vectores de números. Ademas esta debe tener en cuenta si
+> existen datos faltantes o NaN.
+>
+> Por ejemplo calcular el área bajo la curva del vector en el eje x:
+>
+> x<- c(1,2,3,4,5,6,7,8,9,10)
+>
+> y el vector en el eje y:
+>
+> y<-c(0,2,15,30,50,NaN,NaN,10,2,1)
+>
+>
+> Muchas gracias.
+>
+> --
+>
+> *Wilmer Contreras Sepulveda*
+>
+> *Grupo de Investigación en Desarrollo de Microelectronica Aplicada*
+> *Universidad Francisco de Paula Santander *
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Fri Sep  1 04:00:24 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 31 Aug 2017 23:00:24 -0300
+Subject: [R-es] Area bajo la curva
+In-Reply-To: <CAKL8G3HsrEyCtmd7fw7yWUXvBXDDM=TMGZ_Dwufbj9N1x=Wasg@mail.gmail.com>
+References: <CAOYqKJ4NLRW7maQJ+4w+cjZ+cj=ymes-KcZZ-cnk8UujD32jFA@mail.gmail.com>
+ <CAKL8G3HsrEyCtmd7fw7yWUXvBXDDM=TMGZ_Dwufbj9N1x=Wasg@mail.gmail.com>
+Message-ID: <59a8bf3a.44aa370a.6c513.fffa@mx.google.com>
+
+Estimado Wilmer Contreras Sepulveda
+
+Me parece buena la sugerencia de Jorge, hay muchas formas, yo aparte de la sugerencia que le hicieron le agrego otras dos, en cualquier buscador las palabras claves son R AUC, y el artículo https://www.r-bloggers.com/calculating-auc-the-area-under-a-roc-curve/ , lógicamente aparecerán tantas alternativas que puede llegar a confundirse respecto a cuál es conveniente para su caso.
+
+Javier Rubén Marcuzzi
+
+De: Jorge I Velez
+Enviado: jueves, 31 de agosto de 2017 22:43
+Para: WILMER CONTRERAS SEPULVEDA
+CC: R-help-es
+Asunto: Re: [R-es] Area bajo la curva
+
+Buenas noches, Wilmer.
+
+Puedes intentar la aproximación sugerida en
+https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve
+
+
+## preparación
+x <- c(1,2,3,4,5,6,7,8,9,10)
+y <- c(0,2,15,30,50,NaN,NaN,10,2,1)
+d <- data.frame(x, y)
+d <- d[complete.cases(d),]
+id <- order(d$x)
+
+## cálculo
+require(zoo)
+with(d, sum(diff(x[id])*rollmean(y[id],2)))
+## [1] 169.5
+
+Espero sea de utilidad.
+Jorge.-
+
+
+2017-08-31 19:17 GMT-05:00 WILMER CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+:
+
+> Buenas noches.
+>
+> Quisiera saber si existe una libreria o función que me calcule el área bajo
+> la curva de dos vectores de números. Ademas esta debe tener en cuenta si
+> existen datos faltantes o NaN.
+>
+> Por ejemplo calcular el área bajo la curva del vector en el eje x:
+>
+> x<- c(1,2,3,4,5,6,7,8,9,10)
+>
+> y el vector en el eje y:
+>
+> y<-c(0,2,15,30,50,NaN,NaN,10,2,1)
+>
+>
+> Muchas gracias.
+>
+> --
+>
+> *Wilmer Contreras Sepulveda*
+>
+> *Grupo de Investigación en Desarrollo de Microelectronica Aplicada*
+> *Universidad Francisco de Paula Santander *
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From antoniorodriguezandres70 en gmail.com  Fri Sep  1 10:28:03 2017
+From: antoniorodriguezandres70 en gmail.com (Antonio Rodriguez Andres)
+Date: Fri, 1 Sep 2017 10:28:03 +0200
+Subject: [R-es] Consejo
+Message-ID: <CAPr+-cNmLW2-+O-LURBOuR2xznTP6HpgBn=h-nrgy2F0AKTQjQ@mail.gmail.com>
+
+Estimados miembros de la comunidad de R
+
+Me gustaria conocer dado que estoy trabajando con datos del World Values
+Survey, y tengo que recodificar variables y manipularlas,
+por donde podria empezar a estudiar el uso de R en grandes surveys. Que
+podria comenzar a la leer.
+Su respuesta sera bienvenida
+
+saludos
+
+Antonio
+
+-- 
+
+Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+SAGE journal)
+
+http://elr.sagepub.com/
+
+Member, Editorial Committee, African Journal of Economic and Management
+Studies
+
+http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+
+https://www.researchgate.net/profile/Antonio_Andres (Research Gate profile)
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Fri Sep  1 11:31:57 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Fri, 1 Sep 2017 09:31:57 +0000
+Subject: [R-es] Area bajo la curva
+In-Reply-To: <59a8bf3a.44aa370a.6c513.fffa@mx.google.com>
+References: <CAOYqKJ4NLRW7maQJ+4w+cjZ+cj=ymes-KcZZ-cnk8UujD32jFA@mail.gmail.com>
+ <CAKL8G3HsrEyCtmd7fw7yWUXvBXDDM=TMGZ_Dwufbj9N1x=Wasg@mail.gmail.com>,
+ <59a8bf3a.44aa370a.6c513.fffa@mx.google.com>
+Message-ID: <DB6PR0801MB2085E0CE6F0A1DDD68AEDD80CC920@DB6PR0801MB2085.eurprd08.prod.outlook.com>
+
+Hay un paquete llamado flux que te permite de una manera facil elegri como calcular el area debajo de la curva, con la función auc
+
+Échale un ojo.
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>
+Enviado: viernes, 1 de septiembre de 2017 4:00
+Para: Jorge I Velez; WILMER CONTRERAS SEPULVEDA
+Cc: R-help-es
+Asunto: Re: [R-es] Area bajo la curva
+
+Estimado Wilmer Contreras Sepulveda
+
+Me parece buena la sugerencia de Jorge, hay muchas formas, yo aparte de la sugerencia que le hicieron le agrego otras dos, en cualquier buscador las palabras claves son R AUC, y el artículo https://www.r-bloggers.com/calculating-auc-the-area-under-a-roc-curve/ , lógicamente aparecerán tantas alternativas que puede llegar a confundirse respecto a cuál es conveniente para su caso.
+
+Javier Rubén Marcuzzi
+
+De: Jorge I Velez
+Enviado: jueves, 31 de agosto de 2017 22:43
+Para: WILMER CONTRERAS SEPULVEDA
+CC: R-help-es
+Asunto: Re: [R-es] Area bajo la curva
+
+Buenas noches, Wilmer.
+
+Puedes intentar la aproximación sugerida en
+https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve
+
+
+## preparación
+x <- c(1,2,3,4,5,6,7,8,9,10)
+y <- c(0,2,15,30,50,NaN,NaN,10,2,1)
+d <- data.frame(x, y)
+d <- d[complete.cases(d),]
+id <- order(d$x)
+
+## cálculo
+require(zoo)
+with(d, sum(diff(x[id])*rollmean(y[id],2)))
+## [1] 169.5
+
+Espero sea de utilidad.
+Jorge.-
+
+
+2017-08-31 19:17 GMT-05:00 WILMER CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+:
+
+> Buenas noches.
+>
+> Quisiera saber si existe una libreria o función que me calcule el área bajo
+> la curva de dos vectores de números. Ademas esta debe tener en cuenta si
+> existen datos faltantes o NaN.
+>
+> Por ejemplo calcular el área bajo la curva del vector en el eje x:
+>
+> x<- c(1,2,3,4,5,6,7,8,9,10)
+>
+> y el vector en el eje y:
+>
+> y<-c(0,2,15,30,50,NaN,NaN,10,2,1)
+>
+>
+> Muchas gracias.
+>
+> --
+>
+> *Wilmer Contreras Sepulveda*
+>
+> *Grupo de Investigación en Desarrollo de Microelectronica Aplicada*
+> *Universidad Francisco de Paula Santander *
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Fri Sep  1 14:02:02 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 1 Sep 2017 14:02:02 +0200
+Subject: [R-es] Area bajo la curva
+In-Reply-To: <DB6PR0801MB2085E0CE6F0A1DDD68AEDD80CC920@DB6PR0801MB2085.eurprd08.prod.outlook.com>
+References: <CAOYqKJ4NLRW7maQJ+4w+cjZ+cj=ymes-KcZZ-cnk8UujD32jFA@mail.gmail.com>
+ <CAKL8G3HsrEyCtmd7fw7yWUXvBXDDM=TMGZ_Dwufbj9N1x=Wasg@mail.gmail.com>
+ <59a8bf3a.44aa370a.6c513.fffa@mx.google.com>
+ <DB6PR0801MB2085E0CE6F0A1DDD68AEDD80CC920@DB6PR0801MB2085.eurprd08.prod.outlook.com>
+Message-ID: <CAOKbq8gTUqAsrDX4xqeLgAqmwtSEQWeTUZmhSuLVJhPEtCjtJQ@mail.gmail.com>
+
+Hola
+
+No es el AUC de un modelo de clasificación binaria lo que estás buscando.
+Lo que quieres es integrar, calcular el área bajo tu vector.
+
+La solución va por el lado de lo que ya te han comentado (referencia en
+StackOverflow) y se me ocurre otra alternativa visto que tu vector tiene un
+par de "NaN" que suponen un problema....
+
+
+   - Puedes interpolar esos puntos "NaN" intermedios o vaya suponer que la
+   función es simétrica y rellenarlos "a mano".
+   - Una vez interpolado, ajustarías estos puntos a una función (con un
+   polinomio sería suficiente) y
+   - Finalmente con la función "integrate()" calculas el área.
+
+[image: Imágenes integradas 1]
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 1 de septiembre de 2017, 11:31, Jesús Para Fernández <
+j.para.fernandez en hotmail.com> escribió:
+
+> Hay un paquete llamado flux que te permite de una manera facil elegri como
+> calcular el area debajo de la curva, con la función auc
+>
+> Échale un ojo.
+> ________________________________
+> De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Javier
+> Marcuzzi <javier.ruben.marcuzzi en gmail.com>
+> Enviado: viernes, 1 de septiembre de 2017 4:00
+> Para: Jorge I Velez; WILMER CONTRERAS SEPULVEDA
+> Cc: R-help-es
+> Asunto: Re: [R-es] Area bajo la curva
+>
+> Estimado Wilmer Contreras Sepulveda
+>
+> Me parece buena la sugerencia de Jorge, hay muchas formas, yo aparte de la
+> sugerencia que le hicieron le agrego otras dos, en cualquier buscador las
+> palabras claves son R AUC, y el artículo https://www.r-bloggers.com/
+> calculating-auc-the-area-under-a-roc-curve/ , lógicamente aparecerán
+> tantas alternativas que puede llegar a confundirse respecto a cuál es
+> conveniente para su caso.
+>
+> Javier Rubén Marcuzzi
+>
+> De: Jorge I Velez
+> Enviado: jueves, 31 de agosto de 2017 22:43
+> Para: WILMER CONTRERAS SEPULVEDA
+> CC: R-help-es
+> Asunto: Re: [R-es] Area bajo la curva
+>
+> Buenas noches, Wilmer.
+>
+> Puedes intentar la aproximación sugerida en
+> https://stackoverflow.com/questions/4954507/calculate-
+> the-area-under-a-curve
+>
+>
+> ## preparación
+> x <- c(1,2,3,4,5,6,7,8,9,10)
+> y <- c(0,2,15,30,50,NaN,NaN,10,2,1)
+> d <- data.frame(x, y)
+> d <- d[complete.cases(d),]
+> id <- order(d$x)
+>
+> ## cálculo
+> require(zoo)
+> with(d, sum(diff(x[id])*rollmean(y[id],2)))
+> ## [1] 169.5
+>
+> Espero sea de utilidad.
+> Jorge.-
+>
+>
+> 2017-08-31 19:17 GMT-05:00 WILMER CONTRERAS SEPULVEDA <
+> wilmercs en ufps.edu.co>
+> :
+>
+> > Buenas noches.
+> >
+> > Quisiera saber si existe una libreria o función que me calcule el área
+> bajo
+> > la curva de dos vectores de números. Ademas esta debe tener en cuenta si
+> > existen datos faltantes o NaN.
+> >
+> > Por ejemplo calcular el área bajo la curva del vector en el eje x:
+> >
+> > x<- c(1,2,3,4,5,6,7,8,9,10)
+> >
+> > y el vector en el eje y:
+> >
+> > y<-c(0,2,15,30,50,NaN,NaN,10,2,1)
+> >
+> >
+> > Muchas gracias.
+> >
+> > --
+> >
+> > *Wilmer Contreras Sepulveda*
+> >
+> > *Grupo de Investigación en Desarrollo de Microelectronica Aplicada*
+> > *Universidad Francisco de Paula Santander *
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170901/f3ccb802/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 15912 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170901/f3ccb802/attachment-0001.png>
+
+From j.para.fernandez en hotmail.com  Fri Sep  1 14:10:52 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Fri, 1 Sep 2017 12:10:52 +0000
+Subject: [R-es] Area bajo la curva
+In-Reply-To: <CAOKbq8gTUqAsrDX4xqeLgAqmwtSEQWeTUZmhSuLVJhPEtCjtJQ@mail.gmail.com>
+References: <CAOYqKJ4NLRW7maQJ+4w+cjZ+cj=ymes-KcZZ-cnk8UujD32jFA@mail.gmail.com>
+ <CAKL8G3HsrEyCtmd7fw7yWUXvBXDDM=TMGZ_Dwufbj9N1x=Wasg@mail.gmail.com>
+ <59a8bf3a.44aa370a.6c513.fffa@mx.google.com>
+ <DB6PR0801MB2085E0CE6F0A1DDD68AEDD80CC920@DB6PR0801MB2085.eurprd08.prod.outlook.com>,
+ <CAOKbq8gTUqAsrDX4xqeLgAqmwtSEQWeTUZmhSuLVJhPEtCjtJQ@mail.gmail.com>
+Message-ID: <DB6PR0801MB2085A83766BE836E848BCAA9CC920@DB6PR0801MB2085.eurprd08.prod.outlook.com>
+
+Carlos, lo que he comentado no es para el auc de la matriz binaria, calcula el área, aunque se llame auc
+________________________________
+De: Carlos Ortega <cof en qualityexcellence.es>
+Enviado: viernes, 1 de septiembre de 2017 14:02:02
+Para: WILMER CONTRERAS SEPULVEDA
+Cc: Javier Marcuzzi; Jorge I Velez; R-help-es; Jesús Para Fernández
+Asunto: Re: [R-es] Area bajo la curva
+
+Hola
+
+No es el AUC de un modelo de clasificación binaria lo que estás buscando.
+Lo que quieres es integrar, calcular el área bajo tu vector.
+
+La solución va por el lado de lo que ya te han comentado (referencia en StackOverflow) y se me ocurre otra alternativa visto que tu vector tiene un par de "NaN" que suponen un problema....
+
+
+  *   Puedes interpolar esos puntos "NaN" intermedios o vaya suponer que la función es simétrica y rellenarlos "a mano".
+  *   Una vez interpolado, ajustarías estos puntos a una función (con un polinomio sería suficiente) y
+  *   Finalmente con la función "integrate()" calculas el área.
+
+[Imágenes integradas 1]
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+El 1 de septiembre de 2017, 11:31, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+Hay un paquete llamado flux que te permite de una manera facil elegri como calcular el area debajo de la curva, con la función auc
+
+Échale un ojo.
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org<mailto:r-help-es-bounces en r-project.org>> en nombre de Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com<mailto:javier.ruben.marcuzzi en gmail.com>>
+Enviado: viernes, 1 de septiembre de 2017 4:00
+Para: Jorge I Velez; WILMER CONTRERAS SEPULVEDA
+Cc: R-help-es
+Asunto: Re: [R-es] Area bajo la curva
+
+Estimado Wilmer Contreras Sepulveda
+
+Me parece buena la sugerencia de Jorge, hay muchas formas, yo aparte de la sugerencia que le hicieron le agrego otras dos, en cualquier buscador las palabras claves son R AUC, y el artículo https://www.r-bloggers.com/calculating-auc-the-area-under-a-roc-curve/ , lógicamente aparecerán tantas alternativas que puede llegar a confundirse respecto a cuál es conveniente para su caso.
+
+Javier Rubén Marcuzzi
+
+De: Jorge I Velez
+Enviado: jueves, 31 de agosto de 2017 22:43
+Para: WILMER CONTRERAS SEPULVEDA
+CC: R-help-es
+Asunto: Re: [R-es] Area bajo la curva
+
+Buenas noches, Wilmer.
+
+Puedes intentar la aproximación sugerida en
+https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve
+
+
+## preparación
+x <- c(1,2,3,4,5,6,7,8,9,10)
+y <- c(0,2,15,30,50,NaN,NaN,10,2,1)
+d <- data.frame(x, y)
+d <- d[complete.cases(d),]
+id <- order(d$x)
+
+## cálculo
+require(zoo)
+with(d, sum(diff(x[id])*rollmean(y[id],2)))
+## [1] 169.5
+
+Espero sea de utilidad.
+Jorge.-
+
+
+2017-08-31 19:17 GMT-05:00 WILMER CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co<mailto:wilmercs en ufps.edu.co>>
+:
+
+> Buenas noches.
+>
+> Quisiera saber si existe una libreria o función que me calcule el área bajo
+> la curva de dos vectores de números. Ademas esta debe tener en cuenta si
+> existen datos faltantes o NaN.
+>
+> Por ejemplo calcular el área bajo la curva del vector en el eje x:
+>
+> x<- c(1,2,3,4,5,6,7,8,9,10)
+>
+> y el vector en el eje y:
+>
+> y<-c(0,2,15,30,50,NaN,NaN,10,2,1)
+>
+>
+> Muchas gracias.
+>
+> --
+>
+> *Wilmer Contreras Sepulveda*
+>
+> *Grupo de Investigación en Desarrollo de Microelectronica Aplicada*
+> *Universidad Francisco de Paula Santander *
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+        [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+--
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170901/a9cad4e8/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 15912 bytes
+Desc: image.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170901/a9cad4e8/attachment-0001.png>
+
+From javier.ruben.marcuzzi en gmail.com  Fri Sep  1 14:42:17 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Fri, 1 Sep 2017 09:42:17 -0300
+Subject: [R-es] Area bajo la curva
+In-Reply-To: <CAOKbq8gTUqAsrDX4xqeLgAqmwtSEQWeTUZmhSuLVJhPEtCjtJQ@mail.gmail.com>
+References: <CAOYqKJ4NLRW7maQJ+4w+cjZ+cj=ymes-KcZZ-cnk8UujD32jFA@mail.gmail.com>
+ <CAKL8G3HsrEyCtmd7fw7yWUXvBXDDM=TMGZ_Dwufbj9N1x=Wasg@mail.gmail.com>
+ <59a8bf3a.44aa370a.6c513.fffa@mx.google.com>
+ <DB6PR0801MB2085E0CE6F0A1DDD68AEDD80CC920@DB6PR0801MB2085.eurprd08.prod.outlook.com>
+ <CAOKbq8gTUqAsrDX4xqeLgAqmwtSEQWeTUZmhSuLVJhPEtCjtJQ@mail.gmail.com>
+Message-ID: <59a955ab.4d02c80a.86576.04c4@mx.google.com>
+
+Estimados
+
+Yo pienso como Carlos Ortega, sin embargo en algún momento alguien se confundió, esto continua, y hoy hay dos formas de expresar lo mismo, pero yo pienso que no es exacto, como que se utiliza como sinónimo.
+
+Voy a contar una experiencia, un profesor me contrata para realizar algunos cálculos, luego pasa el tiempo y este académico realiza un post grado, y me comenta que ahora entiende algunas cosas, y que utilizó el área bajo la curva para calcular.
+
+Pero hay algo que hacía que expresemos en dos idiomas diferentes, yo con los datos realicé una curva, luego las predicciones, busque integrales, y para cada animal para cada día y cada variable estimé lo que tendría como así también la sumatoria para los días deseados. El profesor piensa que en el cálculo del área bajo la curva tiene todas las producciones diarias de cada variable y cada animal sumadas, no realizamos una comparación más que la de esa charla, posiblemente en los números pueda llegar a dar parecido, sin embargo lo importante para mí es reconocer que se interpretan dos cosas distintas como iguales.
+
+Posiblemente hay mucho en común, en algunas áreas coincida en la práctica cuándo el modelo de la curva es simple. En la experiencia que contaba, yo le decía que el no conocía por animal, conocía el grupo, porque su curva es de todos, y en esa forma no podía determinar ni los animales mejores ni los peores. Pero ¿si no le importaba conocer por animal y solo por grupo?
+
+Javier Rubén Marcuzzi
+
+De: Carlos Ortega
+Enviado: viernes, 1 de septiembre de 2017 9:02
+Para: WILMER CONTRERAS SEPULVEDA
+CC: Javier Marcuzzi; Jorge I Velez; R-help-es; Jesús Para Fernández
+Asunto: Re: [R-es] Area bajo la curva
+
+Hola
+
+No es el AUC de un modelo de clasificación binaria lo que estás buscando.
+Lo que quieres es integrar, calcular el área bajo tu vector.
+
+La solución va por el lado de lo que ya te han comentado (referencia en StackOverflow) y se me ocurre otra alternativa visto que tu vector tiene un par de "NaN" que suponen un problema....
+
+? Puedes interpolar esos puntos "NaN" intermedios o vaya suponer que la función es simétrica y rellenarlos "a mano".
+? Una vez interpolado, ajustarías estos puntos a una función (con un polinomio sería suficiente) y
+? Finalmente con la función "integrate()" calculas el área.
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 1 de septiembre de 2017, 11:31, Jesús Para Fernández <j.para.fernandez en hotmail.com> escribió:
+Hay un paquete llamado flux que te permite de una manera facil elegri como calcular el area debajo de la curva, con la función auc
+
+Échale un ojo.
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>
+Enviado: viernes, 1 de septiembre de 2017 4:00
+Para: Jorge I Velez; WILMER CONTRERAS SEPULVEDA
+Cc: R-help-es
+Asunto: Re: [R-es] Area bajo la curva
+
+Estimado Wilmer Contreras Sepulveda
+
+Me parece buena la sugerencia de Jorge, hay muchas formas, yo aparte de la sugerencia que le hicieron le agrego otras dos, en cualquier buscador las palabras claves son R AUC, y el artículo https://www.r-bloggers.com/calculating-auc-the-area-under-a-roc-curve/ , lógicamente aparecerán tantas alternativas que puede llegar a confundirse respecto a cuál es conveniente para su caso.
+
+Javier Rubén Marcuzzi
+
+De: Jorge I Velez
+Enviado: jueves, 31 de agosto de 2017 22:43
+Para: WILMER CONTRERAS SEPULVEDA
+CC: R-help-es
+Asunto: Re: [R-es] Area bajo la curva
+
+Buenas noches, Wilmer.
+
+Puedes intentar la aproximación sugerida en
+https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve
+
+
+## preparación
+x <- c(1,2,3,4,5,6,7,8,9,10)
+y <- c(0,2,15,30,50,NaN,NaN,10,2,1)
+d <- data.frame(x, y)
+d <- d[complete.cases(d),]
+id <- order(d$x)
+
+## cálculo
+require(zoo)
+with(d, sum(diff(x[id])*rollmean(y[id],2)))
+## [1] 169.5
+
+Espero sea de utilidad.
+Jorge.-
+
+
+2017-08-31 19:17 GMT-05:00 WILMER CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+:
+
+> Buenas noches.
+>
+> Quisiera saber si existe una libreria o función que me calcule el área bajo
+> la curva de dos vectores de números. Ademas esta debe tener en cuenta si
+> existen datos faltantes o NaN.
+>
+> Por ejemplo calcular el área bajo la curva del vector en el eje x:
+>
+> x<- c(1,2,3,4,5,6,7,8,9,10)
+>
+> y el vector en el eje y:
+>
+> y<-c(0,2,15,30,50,NaN,NaN,10,2,1)
+>
+>
+> Muchas gracias.
+>
+> --
+>
+> *Wilmer Contreras Sepulveda*
+>
+> *Grupo de Investigación en Desarrollo de Microelectronica Aplicada*
+> *Universidad Francisco de Paula Santander *
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+        [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170901/19978e54/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: 45F59EDC07924EE88B6FF8B1B0F0D625.png
+Type: image/png
+Size: 9484 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170901/19978e54/attachment-0001.png>
+
+From javier.ruben.marcuzzi en gmail.com  Sat Sep  2 15:16:02 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Sat, 2 Sep 2017 10:16:02 -0300
+Subject: [R-es] Consejo
+In-Reply-To: <CAPr+-cNmLW2-+O-LURBOuR2xznTP6HpgBn=h-nrgy2F0AKTQjQ@mail.gmail.com>
+References: <CAPr+-cNmLW2-+O-LURBOuR2xznTP6HpgBn=h-nrgy2F0AKTQjQ@mail.gmail.com>
+Message-ID: <59aaaf14.879e370a.14570.41bd@mx.google.com>
+
+Estimado Antonio Rodriguez Andres
+
+Comienza por donde quieras, lee un libro general, luego otro sobre un tema específico, realiza muchos ejercicios, y luego intente manejar muchos datos, de lo contrario quedará enredado con los datos propios y las distintas alternativas que tiene R para el mismo fin. Estudie todo lo que quiera, pero yo en lo personal una gran cantidad de datos no se la doy a una persona en sus inicios, no por incapacidad de esta, sino por el peligro de una confusión en el ordenamiento y codificación, en otras palabras, hay que asegurar los cimientos del edificio, luego discutir el color de la ventana.
+
+Javier Rubén Marcuzzi
+
+De: Antonio Rodriguez Andres
+Enviado: viernes, 1 de septiembre de 2017 5:28
+Para: r-help-es
+Asunto: [R-es] Consejo
+
+Estimados miembros de la comunidad de R
+
+Me gustaria conocer dado que estoy trabajando con datos del World Values
+Survey, y tengo que recodificar variables y manipularlas,
+por donde podria empezar a estudiar el uso de R en grandes surveys. Que
+podria comenzar a la leer.
+Su respuesta sera bienvenida
+
+saludos
+
+Antonio
+
+-- 
+
+Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+SAGE journal)
+
+http://elr.sagepub.com/
+
+Member, Editorial Committee, African Journal of Economic and Management
+Studies
+
+http://emeraldgrouppublishing.com/products/journals/editorial_team.htm?id=ajems
+
+https://www.researchgate.net/profile/Antonio_Andres (Research Gate profile)
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sat Sep  2 15:25:26 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 2 Sep 2017 15:25:26 +0200
+Subject: [R-es] Consejo
+In-Reply-To: <CAPr+-cNmLW2-+O-LURBOuR2xznTP6HpgBn=h-nrgy2F0AKTQjQ@mail.gmail.com>
+References: <CAPr+-cNmLW2-+O-LURBOuR2xznTP6HpgBn=h-nrgy2F0AKTQjQ@mail.gmail.com>
+Message-ID: <CAOKbq8jppLafT5CUK7SdqM43=jXa+0625gkHPcfmW=pRnQRYbA@mail.gmail.com>
+
+Hola,
+
+Hay múltiples paquetes en R que permiten trabajar con encuestas, desde
+diseñarlas hasta analizar resultados:
+
+memisc: Tools for Management of Survey Data and the Presentation of
+Analysis Results
+https://cloud.r-project.org/web/packages/memisc/index.html
+-------------------------------------------------
+surveydata: Tools to Work with Survey Data
+https://cloud.r-project.org/web/packages/surveydata/index.html
+-------------------------------------------------
+srvyr: 'dplyr'-Like Syntax for Summary Statistics of Survey Data
+https://cloud.r-project.org/web/packages/srvyr/index.html
+-------------------------------------------------
+
+questionr: Functions to Make Surveys Processing Easier
+https://cloud.r-project.org/web/packages/questionr/index.html
+-------------------------------------------------
+svyPVpack: A package for complex surveys including plausible values
+https://cloud.r-project.org/web/packages/svyPVpack/index.html
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 1 de septiembre de 2017, 10:28, Antonio Rodriguez Andres <
+antoniorodriguezandres70 en gmail.com> escribió:
+
+> Estimados miembros de la comunidad de R
+>
+> Me gustaria conocer dado que estoy trabajando con datos del World Values
+> Survey, y tengo que recodificar variables y manipularlas,
+> por donde podria empezar a estudiar el uso de R en grandes surveys. Que
+> podria comenzar a la leer.
+> Su respuesta sera bienvenida
+>
+> saludos
+>
+> Antonio
+>
+> --
+>
+> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+> SAGE journal)
+>
+> http://elr.sagepub.com/
+>
+> Member, Editorial Committee, African Journal of Economic and Management
+> Studies
+>
+> http://emeraldgrouppublishing.com/products/journals/
+> editorial_team.htm?id=ajems
+>
+> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+> profile)
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sat Sep  2 15:29:34 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 2 Sep 2017 15:29:34 +0200
+Subject: [R-es] Consejo
+In-Reply-To: <CAOKbq8jppLafT5CUK7SdqM43=jXa+0625gkHPcfmW=pRnQRYbA@mail.gmail.com>
+References: <CAPr+-cNmLW2-+O-LURBOuR2xznTP6HpgBn=h-nrgy2F0AKTQjQ@mail.gmail.com>
+ <CAOKbq8jppLafT5CUK7SdqM43=jXa+0625gkHPcfmW=pRnQRYbA@mail.gmail.com>
+Message-ID: <CAOKbq8j2asMG_gMfpO=_3ix45KC_F0n_zvXHLwMDemrnALW3+w@mail.gmail.com>
+
+Y hasta hay una "Task View" donde se agrupan y detallan los diferentes
+paquetes para encuestas:
+
+CRAN Task View: Official Statistics & Survey Methodology
+https://cloud.r-project.org/web/views/OfficialStatistics.html
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+2017-09-02 15:25 GMT+02:00 Carlos Ortega <cof en qualityexcellence.es>:
+
+> Hola,
+>
+> Hay múltiples paquetes en R que permiten trabajar con encuestas, desde
+> diseñarlas hasta analizar resultados:
+>
+> memisc: Tools for Management of Survey Data and the Presentation of
+> Analysis Results
+> https://cloud.r-project.org/web/packages/memisc/index.html
+> -------------------------------------------------
+> surveydata: Tools to Work with Survey Data
+> https://cloud.r-project.org/web/packages/surveydata/index.html
+> -------------------------------------------------
+> srvyr: 'dplyr'-Like Syntax for Summary Statistics of Survey Data
+> https://cloud.r-project.org/web/packages/srvyr/index.html
+> -------------------------------------------------
+>
+> questionr: Functions to Make Surveys Processing Easier
+> https://cloud.r-project.org/web/packages/questionr/index.html
+> -------------------------------------------------
+> svyPVpack: A package for complex surveys including plausible values
+> https://cloud.r-project.org/web/packages/svyPVpack/index.html
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El 1 de septiembre de 2017, 10:28, Antonio Rodriguez Andres <
+> antoniorodriguezandres70 en gmail.com> escribió:
+>
+>> Estimados miembros de la comunidad de R
+>>
+>> Me gustaria conocer dado que estoy trabajando con datos del World Values
+>> Survey, y tengo que recodificar variables y manipularlas,
+>> por donde podria empezar a estudiar el uso de R en grandes surveys. Que
+>> podria comenzar a la leer.
+>> Su respuesta sera bienvenida
+>>
+>> saludos
+>>
+>> Antonio
+>>
+>> --
+>>
+>> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+>> SAGE journal)
+>>
+>> http://elr.sagepub.com/
+>>
+>> Member, Editorial Committee, African Journal of Economic and Management
+>> Studies
+>>
+>> http://emeraldgrouppublishing.com/products/journals/editoria
+>> l_team.htm?id=ajems
+>>
+>> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+>> profile)
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From antoniorodriguezandres70 en gmail.com  Sat Sep  2 19:19:51 2017
+From: antoniorodriguezandres70 en gmail.com (Antonio Rodriguez Andres)
+Date: Sat, 2 Sep 2017 19:19:51 +0200
+Subject: [R-es] Consejo
+In-Reply-To: <59aaaf14.879e370a.14570.41bd@mx.google.com>
+References: <CAPr+-cNmLW2-+O-LURBOuR2xznTP6HpgBn=h-nrgy2F0AKTQjQ@mail.gmail.com>
+ <59aaaf14.879e370a.14570.41bd@mx.google.com>
+Message-ID: <CAPr+-cMFJUWBHGtjbBFFot2dxEA3wY1dYn+CunCPMQ6tRsaDqA@mail.gmail.com>
+
+Muchas gracias, me recomienda algunos libros para comenzar.
+
+Saludos
+
+El 2/09/2017 3:16 p. m., "Javier Marcuzzi" <javier.ruben.marcuzzi en gmail.com>
+escribió:
+
+> Estimado Antonio Rodriguez Andres
+>
+>
+>
+> Comienza por donde quieras, lee un libro general, luego otro sobre un tema
+> específico, realiza muchos ejercicios, y luego intente manejar muchos
+> datos, de lo contrario quedará enredado con los datos propios y las
+> distintas alternativas que tiene R para el mismo fin. Estudie todo lo que
+> quiera, pero yo en lo personal una gran cantidad de datos no se la doy a
+> una persona en sus inicios, no por incapacidad de esta, sino por el peligro
+> de una confusión en el ordenamiento y codificación, en otras palabras, hay
+> que asegurar los cimientos del edificio, luego discutir el color de la
+> ventana.
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Antonio Rodriguez Andres <antoniorodriguezandres70 en gmail.com>
+> *Enviado: *viernes, 1 de septiembre de 2017 5:28
+> *Para: *r-help-es <r-help-es en r-project.org>
+> *Asunto: *[R-es] Consejo
+>
+>
+>
+> Estimados miembros de la comunidad de R
+>
+>
+>
+> Me gustaria conocer dado que estoy trabajando con datos del World Values
+>
+> Survey, y tengo que recodificar variables y manipularlas,
+>
+> por donde podria empezar a estudiar el uso de R en grandes surveys. Que
+>
+> podria comenzar a la leer.
+>
+> Su respuesta sera bienvenida
+>
+>
+>
+> saludos
+>
+>
+>
+> Antonio
+>
+>
+>
+> --
+>
+>
+>
+> Member, Editorial Committee, *The Economic and Labour Relations Review* (a
+>
+> SAGE journal)
+>
+>
+>
+> http://elr.sagepub.com/
+>
+>
+>
+> Member, Editorial Committee, African Journal of Economic and Management
+>
+> Studies
+>
+>
+>
+> http://emeraldgrouppublishing.com/products/journals/
+> editorial_team.htm?id=ajems
+>
+>
+>
+> https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+> profile)
+>
+>
+>
+>                 [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sat Sep  2 20:23:47 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 2 Sep 2017 20:23:47 +0200
+Subject: [R-es] Consejo
+In-Reply-To: <CAPr+-cMFJUWBHGtjbBFFot2dxEA3wY1dYn+CunCPMQ6tRsaDqA@mail.gmail.com>
+References: <CAPr+-cNmLW2-+O-LURBOuR2xznTP6HpgBn=h-nrgy2F0AKTQjQ@mail.gmail.com>
+ <59aaaf14.879e370a.14570.41bd@mx.google.com>
+ <CAPr+-cMFJUWBHGtjbBFFot2dxEA3wY1dYn+CunCPMQ6tRsaDqA@mail.gmail.com>
+Message-ID: <CAOKbq8h8M_Yi0-Y0Ht+FDHLOmS50uSn_PWZcqN6n7+PvTz1YHA@mail.gmail.com>
+
+Basados en R hay alguno:
+
+https://www.amazon.es/Complex-Surveys-Analysis-Survey-Methodology/dp/0470284307/ref=sr_1_2?ie=UTF8&qid=1504376183&sr=8-2&keywords=survey+with+R
+
+Mira en cualquier caso las referencias, bibliografía, artículos que suelen
+aparecer en la ayuda de cada paquete.
+
+También esta referencia te puede venir muy bien:
+http://blog.revolutionanalytics.com/2013/01/flowchart-how-to-learn-survey-analysis-with-r.html
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 2 de septiembre de 2017, 19:19, Antonio Rodriguez Andres <
+antoniorodriguezandres70 en gmail.com> escribió:
+
+> Muchas gracias, me recomienda algunos libros para comenzar.
+>
+> Saludos
+>
+> El 2/09/2017 3:16 p. m., "Javier Marcuzzi" <javier.ruben.marcuzzi en gmail.
+> com>
+> escribió:
+>
+> > Estimado Antonio Rodriguez Andres
+> >
+> >
+> >
+> > Comienza por donde quieras, lee un libro general, luego otro sobre un
+> tema
+> > específico, realiza muchos ejercicios, y luego intente manejar muchos
+> > datos, de lo contrario quedará enredado con los datos propios y las
+> > distintas alternativas que tiene R para el mismo fin. Estudie todo lo que
+> > quiera, pero yo en lo personal una gran cantidad de datos no se la doy a
+> > una persona en sus inicios, no por incapacidad de esta, sino por el
+> peligro
+> > de una confusión en el ordenamiento y codificación, en otras palabras,
+> hay
+> > que asegurar los cimientos del edificio, luego discutir el color de la
+> > ventana.
+> >
+> >
+> >
+> > Javier Rubén Marcuzzi
+> >
+> >
+> >
+> > *De: *Antonio Rodriguez Andres <antoniorodriguezandres70 en gmail.com>
+> > *Enviado: *viernes, 1 de septiembre de 2017 5:28
+> > *Para: *r-help-es <r-help-es en r-project.org>
+> > *Asunto: *[R-es] Consejo
+> >
+> >
+> >
+> > Estimados miembros de la comunidad de R
+> >
+> >
+> >
+> > Me gustaria conocer dado que estoy trabajando con datos del World Values
+> >
+> > Survey, y tengo que recodificar variables y manipularlas,
+> >
+> > por donde podria empezar a estudiar el uso de R en grandes surveys. Que
+> >
+> > podria comenzar a la leer.
+> >
+> > Su respuesta sera bienvenida
+> >
+> >
+> >
+> > saludos
+> >
+> >
+> >
+> > Antonio
+> >
+> >
+> >
+> > --
+> >
+> >
+> >
+> > Member, Editorial Committee, *The Economic and Labour Relations Review*
+> (a
+> >
+> > SAGE journal)
+> >
+> >
+> >
+> > http://elr.sagepub.com/
+> >
+> >
+> >
+> > Member, Editorial Committee, African Journal of Economic and Management
+> >
+> > Studies
+> >
+> >
+> >
+> > http://emeraldgrouppublishing.com/products/journals/
+> > editorial_team.htm?id=ajems
+> >
+> >
+> >
+> > https://www.researchgate.net/profile/Antonio_Andres (Research Gate
+> > profile)
+> >
+> >
+> >
+> >                 [[alternative HTML version deleted]]
+> >
+> >
+> >
+> > _______________________________________________
+> >
+> > R-help-es mailing list
+> >
+> > R-help-es en r-project.org
+> >
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> >
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From daniel.chan.e13 en gmail.com  Sun Sep  3 23:18:45 2017
+From: daniel.chan.e13 en gmail.com (Daniel Chan Espinoza)
+Date: Sun, 3 Sep 2017 16:18:45 -0500
+Subject: [R-es] Evaluar el valor p de cada factor en un modelo ZINP
+Message-ID: <2480584F-C6DF-451F-A761-CB166F6E7D5D@gmail.com>
+
+Buenas Tardes 
+
+Me gustaría saber como evaluar la significancia de cada factor, utilizando la prueba likelihood ratio (LRT), basada en la distribución de Chi2 en un modelo con inflación de ceros .
+
+
+saludos 
+
+Daniel
+
+
+From freddy.lopez.quintero en gmail.com  Mon Sep  4 01:09:10 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Sun, 3 Sep 2017 20:09:10 -0300
+Subject: [R-es] Evaluar el valor p de cada factor en un modelo ZINP
+In-Reply-To: <2480584F-C6DF-451F-A761-CB166F6E7D5D@gmail.com>
+References: <2480584F-C6DF-451F-A761-CB166F6E7D5D@gmail.com>
+Message-ID: <CALCOUqv-wrSUWMxq-_tdmQkxO8S=H8cxAnsfoiMpEZ=HutbiHQ@mail.gmail.com>
+
+?Hola Daniel.
+
+2017-09-03 18:18 GMT-03:00 Daniel Chan Espinoza <daniel.chan.e13 en gmail.com>
+
+> Me gustaría saber como evaluar la significancia de cada factor, utilizando
+> la prueba likelihood ratio (LRT), basada en la distribución de Chi2 en un
+> modelo con inflación de ceros .
+>
+
+?Mucha gente te ayudará casi con seguridad en este foro, pero es importante
+que nos muestres qué has hecho para saber por dónde comenzar o saber dónde
+estás estancado.
+
+Por ejemplo ¿estás usando una librería? En caso afirmativo, seguramente te
+arroje las verosimilitudes y esto te pueda servir más fácilmente para ir
+probando qué predictoras te son útiles y cuáles no. Si NO estás usando una
+librería, la lógica prevalece pero debes calcular las verosimilitudes de
+forma artesanal y proceder como se sugiere.
+
+Lo otro, es que, como siempre, es posible que cada uno de nosotros
+interprete diferente, y nadie quiere eso.
+
+¡Salud!
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From jbetancourt en iscmc.cmw.sld.cu  Sun Sep  3 15:29:28 2017
+From: jbetancourt en iscmc.cmw.sld.cu (jbetancourt en iscmc.cmw.sld.cu)
+Date: Sun, 3 Sep 2017 09:29:28 -0400
+Subject: [R-es] =?iso-8859-1?q?gr=E1fico?=
+Message-ID: <b97fcff04a4bb804318d380e933f3d5c.squirrel@correo.cmw.sld.cu>
+
+Estimados
+Quisiéramos que la salida final plot (z) fuera de tres colores, uno para
+cada especie, no encuentro el comando para ello. Apreciaría su ayuda
+Saludos
+Jose
+
+
+rm(list = ls())
+library(MASS)
+data(iris)
+datos <- data.frame(iris[,1:4],clase=as.vector(iris[,5]))
+head(datos)
+especies <- iris[,5] # La columna cinco se refiere a las especies(clase)
+z <- lda(clase~.,datos)
+predict(z,iris[1:4, ])$class #Para clasificar las observaciones
+Tabla <- table(iris[,5],predict(z,iris[,1:4])$class)
+Tabla
+(pred.class<-predict(z)$class) # Para clasificar las observaciones
+plot(z)
+
+
+
+--
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+From javier.ruben.marcuzzi en gmail.com  Mon Sep  4 16:36:29 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Mon, 4 Sep 2017 11:36:29 -0300
+Subject: [R-es] =?utf-8?q?gr=C3=A1fico?=
+In-Reply-To: <b97fcff04a4bb804318d380e933f3d5c.squirrel@correo.cmw.sld.cu>
+References: <b97fcff04a4bb804318d380e933f3d5c.squirrel@correo.cmw.sld.cu>
+Message-ID: <59ad64ef.0691370a.662f4.41d5@mx.google.com>
+
+Estimado José Betancourt
+
+No se que tipo de gráfico desea realizar, en la siguiente página https://www.r-bloggers.com/mastering-r-plot-part-1-colors-legends-and-lines/ hay una forma.
+
+
+
+Javier Rubén Marcuzzi
+
+De: jbetancourt en iscmc.cmw.sld.cu
+Enviado: lunes, 4 de septiembre de 2017 9:55
+Para: r-help-es en r-project.org
+Asunto: [R-es] gráfico
+
+Estimados
+Quisiéramos que la salida final plot (z) fuera de tres colores, uno para
+cada especie, no encuentro el comando para ello. Apreciaría su ayuda
+Saludos
+Jose
+
+
+rm(list = ls())
+library(MASS)
+data(iris)
+datos <- data.frame(iris[,1:4],clase=as.vector(iris[,5]))
+head(datos)
+especies <- iris[,5] # La columna cinco se refiere a las especies(clase)
+z <- lda(clase~.,datos)
+predict(z,iris[1:4, ])$class #Para clasificar las observaciones
+Tabla <- table(iris[,5],predict(z,iris[,1:4])$class)
+Tabla
+(pred.class<-predict(z)$class) # Para clasificar las observaciones
+plot(z)
+
+
+
+--
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From jorgeivanvelez en gmail.com  Mon Sep  4 16:39:16 2017
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Mon, 4 Sep 2017 09:39:16 -0500
+Subject: [R-es] =?utf-8?q?gr=C3=A1fico?=
+In-Reply-To: <b97fcff04a4bb804318d380e933f3d5c.squirrel@correo.cmw.sld.cu>
+References: <b97fcff04a4bb804318d380e933f3d5c.squirrel@correo.cmw.sld.cu>
+Message-ID: <CAKL8G3HkXHkprkvzk2UndxhNhXfGPJOvOErPx=8DoAkxyjJFZQ@mail.gmail.com>
+
+Jose,
+
+Usa
+
+plot(z, col = as.numeric(pred.class))
+
+Saludos,
+Jorge.-
+
+
+2017-09-03 8:29 GMT-05:00 <jbetancourt en iscmc.cmw.sld.cu>:
+
+> Estimados
+> Quisiéramos que la salida final plot (z) fuera de tres colores, uno para
+> cada especie, no encuentro el comando para ello. Apreciaría su ayuda
+> Saludos
+> Jose
+>
+>
+> rm(list = ls())
+> library(MASS)
+> data(iris)
+> datos <- data.frame(iris[,1:4],clase=as.vector(iris[,5]))
+> head(datos)
+> especies <- iris[,5] # La columna cinco se refiere a las especies(clase)
+> z <- lda(clase~.,datos)
+> predict(z,iris[1:4, ])$class #Para clasificar las observaciones
+> Tabla <- table(iris[,5],predict(z,iris[,1:4])$class)
+> Tabla
+> (pred.class<-predict(z)$class) # Para clasificar las observaciones
+> plot(z)
+>
+>
+>
+> --
+> Este mensaje le ha llegado mediante el servicio de correo electronico que
+> ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema
+> Nacional de Salud. La persona que envia este correo asume el compromiso de
+> usar el servicio a tales fines y cumplir con las regulaciones establecidas
+>
+> Infomed: http://www.sld.cu/
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From antony.barja8 en gmail.com  Mon Sep  4 17:13:00 2017
+From: antony.barja8 en gmail.com (ANTONY BARJA INGARUCA)
+Date: Mon, 4 Sep 2017 10:13:00 -0500
+Subject: [R-es] MaxEnt
+Message-ID: <CADE5r-2ChgXSXvGUmYGq7RHnjXPVH+LS9UgLSe611dSvOced+A@mail.gmail.com>
+
+Buenas días me gustaria saber cual es la libreria mas actual que contiene
+al algoritmo de maxima entropia que permite modelar nichos ecologicos; a su
+vez que libreria presenta mejor temática en la representacion de mapas.
+Saludos¡
+
+	[[alternative HTML version deleted]]
+
+
+From ericconchamunoz en gmail.com  Mon Sep  4 17:49:11 2017
+From: ericconchamunoz en gmail.com (eric)
+Date: Mon, 4 Sep 2017 12:49:11 -0300
+Subject: [R-es] =?utf-8?q?gr=C3=A1fico?=
+In-Reply-To: <b97fcff04a4bb804318d380e933f3d5c.squirrel@correo.cmw.sld.cu>
+References: <b97fcff04a4bb804318d380e933f3d5c.squirrel@correo.cmw.sld.cu>
+Message-ID: <420fa85f-a284-fbf3-8eff-f4f6f1bf140d@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170904/369d517e/attachment.html>
+
+From cof en qualityexcellence.es  Mon Sep  4 17:57:24 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 4 Sep 2017 17:57:24 +0200
+Subject: [R-es] MaxEnt
+In-Reply-To: <CADE5r-2ChgXSXvGUmYGq7RHnjXPVH+LS9UgLSe611dSvOced+A@mail.gmail.com>
+References: <CADE5r-2ChgXSXvGUmYGq7RHnjXPVH+LS9UgLSe611dSvOced+A@mail.gmail.com>
+Message-ID: <CAOKbq8geeKEFE8Exfi0=0q-dRVLRP5QtaOdBSn2fiTzxspjkUw@mail.gmail.com>
+
+Si buscas en "rseek.org" por "ecology entropy" aparece esto en las primeras
+posiciones:
+
+https://cran.r-project.org/web/packages/meteR/vignettes/meteR_vignette.html
+https://rdrr.io/cran/ade4/man/apqe.html
+https://cran.r-project.org/web/packages/MIAmaxent
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 4 de septiembre de 2017, 17:13, ANTONY BARJA INGARUCA <
+antony.barja8 en gmail.com> escribió:
+
+> Buenas días me gustaria saber cual es la libreria mas actual que contiene
+> al algoritmo de maxima entropia que permite modelar nichos ecologicos; a su
+> vez que libreria presenta mejor temática en la representacion de mapas.
+> Saludos¡
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From marcelino.delacruz en urjc.es  Mon Sep  4 18:12:20 2017
+From: marcelino.delacruz en urjc.es (Marcelino de la Cruz Rot)
+Date: Mon, 4 Sep 2017 18:12:20 +0200
+Subject: [R-es] MaxEnt
+In-Reply-To: <CAOKbq8geeKEFE8Exfi0=0q-dRVLRP5QtaOdBSn2fiTzxspjkUw@mail.gmail.com>
+References: <CADE5r-2ChgXSXvGUmYGq7RHnjXPVH+LS9UgLSe611dSvOced+A@mail.gmail.com>
+ <CAOKbq8geeKEFE8Exfi0=0q-dRVLRP5QtaOdBSn2fiTzxspjkUw@mail.gmail.com>
+Message-ID: <52d0c915-5d03-d01f-95a7-f52b3c37fb51@urjc.es>
+
+Hola, Antony.
+El paquete más apropiado para modelización de nichos ecológicos con 
+maxent (y otras herramientas como gbm) así como para su representación 
+cartográfica es *dismo*. Desde luego, es la manera más sencilla de 
+conseguir un resultado de calidad rápidamente. Tiene una viñeta muy 
+clara para ayudarte a empezar.
+Robert J. Hijmans, Steven Phillips, John Leathwick and Jane Elith 
+(2017). dismo: Species
+   Distribution Modeling. R package version 1.1-4. 
+https://CRAN.R-project.org/package=dismo
+
+
+El 04/09/2017 a las 17:57, Carlos Ortega escribió:
+> Si buscas en "rseek.org" por "ecology entropy" aparece esto en las primeras
+> posiciones:
+>
+> https://cran.r-project.org/web/packages/meteR/vignettes/meteR_vignette.html
+> https://rdrr.io/cran/ade4/man/apqe.html
+> https://cran.r-project.org/web/packages/MIAmaxent
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El 4 de septiembre de 2017, 17:13, ANTONY BARJA INGARUCA <
+> antony.barja8 en gmail.com> escribió:
+>
+>> Buenas días me gustaria saber cual es la libreria mas actual que contiene
+>> al algoritmo de maxima entropia que permite modelar nichos ecologicos; a su
+>> vez que libreria presenta mejor temática en la representacion de mapas.
+>> Saludos¡
+>>
+>>          [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From patricio.fuenmayor en gmail.com  Tue Sep  5 00:43:18 2017
+From: patricio.fuenmayor en gmail.com (patricio fuenmayor)
+Date: Mon, 4 Sep 2017 17:43:18 -0500
+Subject: [R-es] Condiciones en data.table
+Message-ID: <CACEaGhPFOt_swePsBD-S8eb9vCPAeFUUJOqJEfONFKuSHJKKrQ@mail.gmail.com>
+
+Hola a todos.
+Tengo una consulta con data.tables
+Si tengo asignado un valor a una variable que se llama exactamente como el
+de una columna de la data.table, y quiero usar el valor grabado en la
+variable como condicionante del where, cómo debo construir la condicionante
+?. Ejemplo
+x <- 3
+dt <- data.table("x"=c(1,3,4))
+dt[x==x]
+el resultado imprime toda la data.table ya que los dos objetos son iguales
+Gracias por la ayuda...
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Tue Sep  5 09:49:02 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 5 Sep 2017 09:49:02 +0200
+Subject: [R-es] Condiciones en data.table
+In-Reply-To: <CACEaGhPFOt_swePsBD-S8eb9vCPAeFUUJOqJEfONFKuSHJKKrQ@mail.gmail.com>
+References: <CACEaGhPFOt_swePsBD-S8eb9vCPAeFUUJOqJEfONFKuSHJKKrQ@mail.gmail.com>
+Message-ID: <CAOKbq8jVX5vp65SZUOvrUYXfDYrP7TQNsRmgv2pA0kdrpmZFoQ@mail.gmail.com>
+
+Hola,
+
+Es que la forma de preguntar por "x" en tu data.table se tiene que hacer
+como aparece destacado en lo siguiente...
+
+> dt <- data.table("x"=c(1,3,4), "y"=c(6:8))
+> dt[x==x]
+   x y
+1: 1 6
+2: 3 7
+3: 4 8
+> dt[x]
+   x y
+1: 4 8
+*> dt[,x]*
+*[1] 1 3 4*
+> dt[x=="x"]
+Empty data.table (0 rows) of 2 cols: x,y
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 5 de septiembre de 2017, 0:43, patricio fuenmayor <
+patricio.fuenmayor en gmail.com> escribió:
+
+> Hola a todos.
+> Tengo una consulta con data.tables
+> Si tengo asignado un valor a una variable que se llama exactamente como el
+> de una columna de la data.table, y quiero usar el valor grabado en la
+> variable como condicionante del where, cómo debo construir la condicionante
+> ?. Ejemplo
+> x <- 3
+> dt <- data.table("x"=c(1,3,4))
+> dt[x==x]
+> el resultado imprime toda la data.table ya que los dos objetos son iguales
+> Gracias por la ayuda...
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From javier.valdes en mop.gov.cl  Tue Sep  5 23:09:38 2017
+From: javier.valdes en mop.gov.cl (Javier Valdes Cantallopts (DGA))
+Date: Tue, 5 Sep 2017 21:09:38 +0000
+Subject: [R-es] funcion aggregate por mes
+Message-ID: <023AE46828930542B1F3839F47A15400220A563E@EXMBX02.moptt.gov.cl>
+
+Estimados:
+Quería saber si alguno de uds ha podido realizar operación simples(sumar, media por ejemplo) usando la función AGGREGATE.
+La idea es obtener los LA MEDIA de las T° por cada mes, desde una planilla de CON DATOS CADA 10 MINUTOS, La planilla base es algo así;
+
+
+Fecha(día mes año)     temperatura
+1-1-2013                  1
+2-1-2013                  3
+3-1-2013                 4,5
+4-1-2013                  2
+5-1-2013                  1
+6-1-2013                  3
+1-2-2013                  2
+2-2-2014                  1
+
+Esta operación la realizo con ZOO Y xts, pero me interesaría saber si se puede hacer con AGGREGATE también.
+Saludos.
+
+
+
+[Descripción: FIRMA3]
+
+
+________________________________
+
+CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los archivos adjuntos es de carácter confidencial o privilegiada y está destinada al uso exclusivo del emisor y/o de la persona o entidad a quien va dirigida. Si usted no es el destinatario, cualquier almacenamiento, divulgación, distribución o copia de esta información está estrictamente prohibido y sancionado por la ley. Si recibió este mensaje por error, por favor infórmenos inmediatamente respondiendo este mismo mensaje y borre todos los archivos adjuntos. Gracias.
+
+CONFIDENTIAL NOTE: The information transmitted in this message and/or attachments is confidential and/or privileged and is intented only for use of the person or entity to whom it is addressed. If you are not the intended recipient, any retention, dissemination, distribution or copy of this information is strictly prohibited and sanctioned by law. If you received this message in error, please reply us this same message and delete this message and all attachments. Thank you.
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170905/07dc256a/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: image001.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170905/07dc256a/attachment-0001.png>
+
+From javier.ruben.marcuzzi en gmail.com  Tue Sep  5 23:19:21 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Tue, 5 Sep 2017 18:19:21 -0300
+Subject: [R-es] funcion aggregate por mes
+In-Reply-To: <023AE46828930542B1F3839F47A15400220A563E@EXMBX02.moptt.gov.cl>
+References: <023AE46828930542B1F3839F47A15400220A563E@EXMBX02.moptt.gov.cl>
+Message-ID: <59af14dd.465b370a.b7a2b.79d7@mx.google.com>
+
+Estimado Javier Valdes Cantallopts
+
+Yo creo que anduve por esos lados, no lo recuerdo en forma correcta para enviarle mi solución pero se puede y busque una en internet, mire las dos últimas opciones. (lo que puede dar trabajo es codificar correctamente la fecha)
+
+https://stackoverflow.com/questions/7778234/aggregate-by-year-and-month-for-a-posix-variable
+
+Javier Rubén Marcuzzi
+
+De: Javier Valdes Cantallopts (DGA)
+Enviado: martes, 5 de septiembre de 2017 18:09
+Para: Carlos Ortega (cof en qualityexcellence.es)
+CC: r-help-es en r-project.org
+Asunto: [R-es] funcion aggregate por mes
+
+Estimados:
+Quería saber si alguno de uds ha podido realizar operación simples(sumar, media por ejemplo) usando la función AGGREGATE.
+La idea es obtener los LA MEDIA de las T° por cada mes, desde una planilla de CON DATOS CADA 10 MINUTOS, La planilla base es algo así;
+
+
+Fecha(día mes año)     temperatura
+1-1-2013                  1
+2-1-2013                  3
+3-1-2013                 4,5
+4-1-2013                  2
+5-1-2013                  1 
+6-1-2013                  3
+1-2-2013                  2 
+2-2-2014                  1        
+
+Esta operación la realizo con ZOO Y xts, pero me interesaría saber si se puede hacer con AGGREGATE también.
+Saludos.
+
+
+
+
+
+
+
+
+CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los archivos adjuntos es de carácter confidencial o privilegiada y está destinada al uso exclusivo del emisor y/o de la persona o entidad a quien va dirigida. Si usted no es el destinatario, cualquier almacenamiento, divulgación, distribución o copia de esta información está estrictamente prohibido y sancionado por la ley. Si recibió este mensaje por error, por favor infórmenos inmediatamente respondiendo este mismo mensaje y borre todos los archivos adjuntos. Gracias.
+
+CONFIDENTIAL NOTE: The information transmitted in this message and/or attachments is confidential and/or privileged and is intented only for use of the person or entity to whom it is addressed. If you are not the intended recipient, any retention, dissemination, distribution or copy of this information is strictly prohibited and sanctioned by law. If you received this message in error, please reply us this same message and delete this message and all attachments. Thank you.
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170905/f655e553/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: C5810B0A27E84F7CBA96B72FFDD7978A.png
+Type: image/png
+Size: 148 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170905/f655e553/attachment-0002.png>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170905/f655e553/attachment-0003.png>
+
+From jbetancourt en iscmc.cmw.sld.cu  Wed Sep  6 17:07:14 2017
+From: jbetancourt en iscmc.cmw.sld.cu (jbetancourt en iscmc.cmw.sld.cu)
+Date: Wed, 6 Sep 2017 11:07:14 -0400
+Subject: [R-es] =?iso-8859-1?q?gr=C3=A1fico?=
+In-Reply-To: <CAKL8G3HkXHkprkvzk2UndxhNhXfGPJOvOErPx=8DoAkxyjJFZQ@mail.gmail.com>
+References: <b97fcff04a4bb804318d380e933f3d5c.squirrel@correo.cmw.sld.cu>
+ <CAKL8G3HkXHkprkvzk2UndxhNhXfGPJOvOErPx=8DoAkxyjJFZQ@mail.gmail.com>
+Message-ID: <5027bfaa878680081682ca62e4cc2d2a.squirrel@correo.cmw.sld.cu>
+
+eSTIMADO
+FUNCIONÓ MUY BIEN
+plot(z, col = as.numeric(pred.class))
+SALUDOS
+Jose,
+>
+> Usa
+>
+> plot(z, col = as.numeric(pred.class))
+>
+> Saludos,
+> Jorge.-
+>
+>
+> 2017-09-03 8:29 GMT-05:00 <jbetancourt en iscmc.cmw.sld.cu>:
+>
+>> Estimados
+>> QuisiÃ©ramos que la salida final plot (z) fuera de tres colores, uno
+>> para
+>> cada especie, no encuentro el comando para ello. ApreciarÃ­a su ayuda
+>> Saludos
+>> Jose
+>>
+>>
+>> rm(list = ls())
+>> library(MASS)
+>> data(iris)
+>> datos <- data.frame(iris[,1:4],clase=as.vector(iris[,5]))
+>> head(datos)
+>> especies <- iris[,5] # La columna cinco se refiere a las especies(clase)
+>> z <- lda(clase~.,datos)
+>> predict(z,iris[1:4, ])$class #Para clasificar las observaciones
+>> Tabla <- table(iris[,5],predict(z,iris[,1:4])$class)
+>> Tabla
+>> (pred.class<-predict(z)$class) # Para clasificar las observaciones
+>> plot(z)
+>>
+>>
+>>
+>> --
+>> Este mensaje le ha llegado mediante el servicio de correo electronico
+>> que
+>> ofrece Infomed para respaldar el cumplimiento de las misiones del
+>> Sistema
+>> Nacional de Salud. La persona que envia este correo asume el compromiso
+>> de
+>> usar el servicio a tales fines y cumplir con las regulaciones
+>> establecidas
+>>
+>> Infomed: http://www.sld.cu/
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+
+
+
+--
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+From eduardo_vd en hotmail.com  Wed Sep  6 19:51:02 2017
+From: eduardo_vd en hotmail.com (=?iso-8859-1?Q?Eduardo_Villag=F3mez?=)
+Date: Wed, 6 Sep 2017 17:51:02 +0000
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_103=2C_Env=EDo_?=
+	=?iso-8859-1?q?9?=
+In-Reply-To: <mailman.6485.1504645748.1137.r-help-es@r-project.org>
+References: <mailman.6485.1504645748.1137.r-help-es@r-project.org>
+Message-ID: <CY1PR14MB00460289DAB84D5AF95A38B6EE970@CY1PR14MB0046.namprd14.prod.outlook.com>
+
+Estimado Javier:
+
+A ver si mi caso te sirve como ejemplo. He estado trabajando con precipitaciones y usando la función "aggregate" para calcular acumulados en diferentes escalas temporales, talvez es algo aplicable a lo que estas buscando. 
+Te mando adjunto el archivo que realiza estas operaciones y a continuación escribo el código correspondiente a la parte de la función aggregate:
+
+tab <- read.xlsx("precip_todas.xlsx", sheet = paste(sheetnames[i]), cols = c(1,2))		# Variable temporal donde se graba los datos de cada hoja ## de excel
+    assign(tmp, tab)      								                        	# Crea la variable de nombre y con los datos de cada hoja (nam1, nam2, nam3)
+    convertToDateTime(tab[,1], origin = "1900-01-01") -> tab[,1]					# Convierte las fechas, de formato excel a formato fecha y hora, y reemplaza en la misma variable
+    tab$Fecha <- trunc.POSIXt(tab$Fecha, units = "mins")          					# Redondea a minutos. La serie de datos, en mi caso, tiene resolución hasta décimas de segundo, que es innecesario.
+    tab [is.na(tab[,2]),2] <- 0                                 							# Identifica valores NA en la serie y les convierte en ceros
+
+    tab <- aggregate(x = tab[,2],							                  	# Utilizar la segunda columna (precip), ignora la columna de "fecha"
+                    		by = list( Fecha = substr( tab$Fecha, 1, 16)),				# Agregar por fecha = únicamente considera las coincidencias hasta minutos.
+                    		FUN = sum )							              # Los que coincidan deben sumarse para obtener el acumulado periódico (función sum)
+    names(tab) <- c("Fecha", paste("Precip", min, sep = "_"))	            				# Renombra los títulos de las columnas a fecha y precip
+
+Espero poder sido de ayuda y cualquier adicional, no dudes en contactarme.
+
+Saludos,
+Eduardo.
+
+-----Original Message-----
+From: R-help-es [mailto:r-help-es-bounces en r-project.org] On Behalf Of r-help-es-request en r-project.org
+Sent: Tuesday, 5 September, 2017 16:09
+To: r-help-es en r-project.org
+Subject: Resumen de R-help-es, Vol 103, Envío 9
+
+Envíe los mensajes para la lista R-help-es a
+	r-help-es en r-project.org
+
+Para subscribirse o anular su subscripción a través de la WEB
+	https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+O por correo electrónico, enviando un mensaje con el texto "help" en el asunto (subject) o en el cuerpo a:
+	r-help-es-request en r-project.org
+
+Puede contactar con el responsable de la lista escribiendo a:
+	r-help-es-owner en r-project.org
+
+Si responde a algún contenido de este mensaje, por favor, edite la linea del asunto (subject) para que el texto sea mas especifico que:
+"Re: Contents of R-help-es digest...". Además, por favor, incluya en la respuesta sólo aquellas partes del mensaje a las que está respondiendo.
+
+
+Asuntos del día:
+
+   1. funcion aggregate por mes (Javier Valdes Cantallopts (DGA))
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Tue, 5 Sep 2017 21:09:38 +0000
+From: "Javier Valdes Cantallopts (DGA)" <javier.valdes en mop.gov.cl>
+To: "Carlos Ortega (cof en qualityexcellence.es)"
+	<cof en qualityexcellence.es>
+Cc: "r-help-es en r-project.org" <r-help-es en r-project.org>
+Subject: [R-es] funcion aggregate por mes
+Message-ID:
+	<023AE46828930542B1F3839F47A15400220A563E en EXMBX02.moptt.gov.cl>
+Content-Type: text/plain; charset="iso-8859-1"
+
+Estimados:
+Quería saber si alguno de uds ha podido realizar operación simples(sumar, media por ejemplo) usando la función AGGREGATE.
+La idea es obtener los LA MEDIA de las T° por cada mes, desde una planilla de CON DATOS CADA 10 MINUTOS, La planilla base es algo así;
+
+
+Fecha(día mes año)     temperatura
+1-1-2013                  1
+2-1-2013                  3
+3-1-2013                 4,5
+4-1-2013                  2
+5-1-2013                  1
+6-1-2013                  3
+1-2-2013                  2
+2-2-2014                  1
+
+Esta operación la realizo con ZOO Y xts, pero me interesaría saber si se puede hacer con AGGREGATE también.
+Saludos.
+
+
+
+[Descripción: FIRMA3]
+
+
+________________________________
+
+CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los archivos adjuntos es de carácter confidencial o privilegiada y está destinada al uso exclusivo del emisor y/o de la persona o entidad a quien va dirigida. Si usted no es el destinatario, cualquier almacenamiento, divulgación, distribución o copia de esta información está estrictamente prohibido y sancionado por la ley. Si recibió este mensaje por error, por favor infórmenos inmediatamente respondiendo este mismo mensaje y borre todos los archivos adjuntos. Gracias.
+
+CONFIDENTIAL NOTE: The information transmitted in this message and/or attachments is confidential and/or privileged and is intented only for use of the person or entity to whom it is addressed. If you are not the intended recipient, any retention, dissemination, distribution or copy of this information is strictly prohibited and sanctioned by law. If you received this message in error, please reply us this same message and delete this message and all attachments. Thank you.
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170905/07dc256a/attachment.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: image001.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170905/07dc256a/attachment.png>
+
+------------------------------
+
+Subject: Pié de página del digest
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+------------------------------
+
+Fin de Resumen de R-help-es, Vol 103, Envío 9
+*********************************************
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Precip_Instant_XXmin.R
+Type: application/octet-stream
+Size: 5438 bytes
+Desc: Precip_Instant_XXmin.R
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170906/a2a06904/attachment.obj>
+
+From cof en qualityexcellence.es  Fri Sep  8 01:03:39 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 8 Sep 2017 01:03:39 +0200
+Subject: [R-es]
+	=?utf-8?q?Resumen_de_R-help-es=2C_Vol_103=2C_Env=C3=ADo_9?=
+In-Reply-To: <CY1PR14MB00460289DAB84D5AF95A38B6EE970@CY1PR14MB0046.namprd14.prod.outlook.com>
+References: <mailman.6485.1504645748.1137.r-help-es@r-project.org>
+ <CY1PR14MB00460289DAB84D5AF95A38B6EE970@CY1PR14MB0046.namprd14.prod.outlook.com>
+Message-ID: <CAOKbq8hCf8L=tHv4p2xaHKAoWvjUWnZPoHj8pdAf0syjdc-ssw@mail.gmail.com>
+
+Hola,
+
+Esto también puede ayudar:
+
+https://cloud.r-project.org/web/packages/tibbletime/index.html
+
+Es un paquete especialmente orientado para tratar este caso, agregar por
+fechas...
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 6 de septiembre de 2017, 19:51, Eduardo Villagómez <
+eduardo_vd en hotmail.com> escribió:
+
+> Estimado Javier:
+>
+> A ver si mi caso te sirve como ejemplo. He estado trabajando con
+> precipitaciones y usando la función "aggregate" para calcular acumulados en
+> diferentes escalas temporales, talvez es algo aplicable a lo que estas
+> buscando.
+> Te mando adjunto el archivo que realiza estas operaciones y a continuación
+> escribo el código correspondiente a la parte de la función aggregate:
+>
+> tab <- read.xlsx("precip_todas.xlsx", sheet = paste(sheetnames[i]), cols =
+> c(1,2))              # Variable temporal donde se graba los datos de cada
+> hoja ## de excel
+>     assign(tmp, tab)
+>                                               # Crea la variable de nombre
+> y con los datos de cada hoja (nam1, nam2, nam3)
+>     convertToDateTime(tab[,1], origin = "1900-01-01") -> tab[,1]
+>                               # Convierte las fechas, de formato excel a
+> formato fecha y hora, y reemplaza en la misma variable
+>     tab$Fecha <- trunc.POSIXt(tab$Fecha, units = "mins")
+>                               # Redondea a minutos. La serie de datos, en
+> mi caso, tiene resolución hasta décimas de segundo, que es innecesario.
+>     tab [is.na(tab[,2]),2] <- 0
+>                                                # Identifica valores NA en
+> la serie y les convierte en ceros
+>
+>     tab <- aggregate(x = tab[,2],
+>                                      # Utilizar la segunda columna
+> (precip), ignora la columna de "fecha"
+>                                 by = list( Fecha = substr( tab$Fecha, 1,
+> 16)),                          # Agregar por fecha = únicamente considera
+> las coincidencias hasta minutos.
+>                                 FUN = sum )
+>                                    # Los que coincidan deben sumarse para
+> obtener el acumulado periódico (función sum)
+>     names(tab) <- c("Fecha", paste("Precip", min, sep = "_"))
+>                              # Renombra los títulos de las columnas a fecha
+> y precip
+>
+> Espero poder sido de ayuda y cualquier adicional, no dudes en contactarme.
+>
+> Saludos,
+> Eduardo.
+>
+> -----Original Message-----
+> From: R-help-es [mailto:r-help-es-bounces en r-project.org] On Behalf Of
+> r-help-es-request en r-project.org
+> Sent: Tuesday, 5 September, 2017 16:09
+> To: r-help-es en r-project.org
+> Subject: Resumen de R-help-es, Vol 103, Envío 9
+>
+> Envíe los mensajes para la lista R-help-es a
+>         r-help-es en r-project.org
+>
+> Para subscribirse o anular su subscripción a través de la WEB
+>         https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> O por correo electrónico, enviando un mensaje con el texto "help" en el
+> asunto (subject) o en el cuerpo a:
+>         r-help-es-request en r-project.org
+>
+> Puede contactar con el responsable de la lista escribiendo a:
+>         r-help-es-owner en r-project.org
+>
+> Si responde a algún contenido de este mensaje, por favor, edite la linea
+> del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en la
+> respuesta sólo aquellas partes del mensaje a las que está respondiendo.
+>
+>
+> Asuntos del día:
+>
+>    1. funcion aggregate por mes (Javier Valdes Cantallopts (DGA))
+>
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Tue, 5 Sep 2017 21:09:38 +0000
+> From: "Javier Valdes Cantallopts (DGA)" <javier.valdes en mop.gov.cl>
+> To: "Carlos Ortega (cof en qualityexcellence.es)"
+>         <cof en qualityexcellence.es>
+> Cc: "r-help-es en r-project.org" <r-help-es en r-project.org>
+> Subject: [R-es] funcion aggregate por mes
+> Message-ID:
+>         <023AE46828930542B1F3839F47A15400220A563E en EXMBX02.moptt.gov.cl>
+> Content-Type: text/plain; charset="iso-8859-1"
+>
+> Estimados:
+> Quería saber si alguno de uds ha podido realizar operación simples(sumar,
+> media por ejemplo) usando la función AGGREGATE.
+> La idea es obtener los LA MEDIA de las T° por cada mes, desde una planilla
+> de CON DATOS CADA 10 MINUTOS, La planilla base es algo así;
+>
+>
+> Fecha(día mes año)     temperatura
+> 1-1-2013                  1
+> 2-1-2013                  3
+> 3-1-2013                 4,5
+> 4-1-2013                  2
+> 5-1-2013                  1
+> 6-1-2013                  3
+> 1-2-2013                  2
+> 2-2-2014                  1
+>
+> Esta operación la realizo con ZOO Y xts, pero me interesaría saber si se
+> puede hacer con AGGREGATE también.
+> Saludos.
+>
+>
+>
+> [Descripción: FIRMA3]
+>
+>
+> ________________________________
+>
+> CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los
+> archivos adjuntos es de carácter confidencial o privilegiada y está
+> destinada al uso exclusivo del emisor y/o de la persona o entidad a quien
+> va dirigida. Si usted no es el destinatario, cualquier almacenamiento,
+> divulgación, distribución o copia de esta información está estrictamente
+> prohibido y sancionado por la ley. Si recibió este mensaje por error, por
+> favor infórmenos inmediatamente respondiendo este mismo mensaje y borre
+> todos los archivos adjuntos. Gracias.
+>
+> CONFIDENTIAL NOTE: The information transmitted in this message and/or
+> attachments is confidential and/or privileged and is intented only for use
+> of the person or entity to whom it is addressed. If you are not the
+> intended recipient, any retention, dissemination, distribution or copy of
+> this information is strictly prohibited and sanctioned by law. If you
+> received this message in error, please reply us this same message and
+> delete this message and all attachments. Thank you.
+> ------------ próxima parte ------------
+> Se ha borrado un adjunto en formato HTML...
+> URL: <https://stat.ethz.ch/pipermail/r-help-es/
+> attachments/20170905/07dc256a/attachment.html>
+> ------------ próxima parte ------------
+> A non-text attachment was scrubbed...
+> Name: image001.png
+> Type: image/png
+> Size: 33786 bytes
+> Desc: image001.png
+> URL: <https://stat.ethz.ch/pipermail/r-help-es/
+> attachments/20170905/07dc256a/attachment.png>
+>
+> ------------------------------
+>
+> Subject: Pié de página del digest
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> ------------------------------
+>
+> Fin de Resumen de R-help-es, Vol 103, Envío 9
+> *********************************************
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Fri Sep  8 08:34:03 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Fri, 8 Sep 2017 01:34:03 -0500
+Subject: [R-es] Error lectura
+Message-ID: <CAG9EJTK4sNewX8SF7ErEjjrY4bXOCQf-uazYNTTDikOHEomjvQ@mail.gmail.com>
+
+Buenas noches Colegas
+Tengo un error, que considero es de lectura (introducción de datos), y no
+doy en que me estoy equivocando, así que solicito su ayuda.
+Tengo el siguiente código:
+mtzbin <- matrix(0,39,48,byrow = T)
+vec <- 0
+datIn <- read.table('dato.csv', sep = ',', as.is = T)
+sma <- rowSums(ms, 1)
+sr <- max(sma)
+for(i in 1:39) {
+    for(j in 1:48) {
+        vec <- datIn[i, j]
+    #    mtzbin[i, j] <- ((vec/sma[j])^vec)*((1-
+vec/sma[j])^(sma[j]-vec))*choose((sr-1),(vec-1))
+        mtzbin[i, j] <-
+((vec/sma)^vec)*((1-vec/sma)^(sma-vec))*choose((sr-1),(vec-1))
+    }
+}
+He puesto dos asignaciones para mtzbin[i, j] porque las dos me conducen a
+que Rstudio me marca error; en el primer caso me indica:
+Error in vec/sma[i] : argumento no-numérico para operador binario
+y en el segundo marca:
+Error in mtzbin[i, j] <- ((vec/sma)^vec) * ((1 - vec/sma)^(sma - vec)) *  :
+  número de items para para sustituir no es un múltiplo de la longitud del
+reemplazo
+Interpreto que se trata de un error de lectura puesto que indica que es sma
+el 'común denominador'.
+Alguien me podría decir donde está mi error; por supuesto adelanto mis más
+cumplidas gracias.
+Atentamente;
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Fri Sep  8 09:07:45 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 8 Sep 2017 09:07:45 +0200
+Subject: [R-es] Error lectura
+In-Reply-To: <CAG9EJTK4sNewX8SF7ErEjjrY4bXOCQf-uazYNTTDikOHEomjvQ@mail.gmail.com>
+References: <CAG9EJTK4sNewX8SF7ErEjjrY4bXOCQf-uazYNTTDikOHEomjvQ@mail.gmail.com>
+Message-ID: <CAOKbq8jCGFQWNY3vd5va-5OqUOay10mL598O3T7RpEtDMTAp3g@mail.gmail.com>
+
+Si no envías un conjunto de datos con el que se pueda reproducir....
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 8 de septiembre de 2017, 8:34, Manuel Máquez <manuelmx11 en gmail.com>
+escribió:
+
+> Buenas noches Colegas
+> Tengo un error, que considero es de lectura (introducción de datos), y no
+> doy en que me estoy equivocando, así que solicito su ayuda.
+> Tengo el siguiente código:
+> mtzbin <- matrix(0,39,48,byrow = T)
+> vec <- 0
+> datIn <- read.table('dato.csv', sep = ',', as.is = T)
+> sma <- rowSums(ms, 1)
+> sr <- max(sma)
+> for(i in 1:39) {
+>     for(j in 1:48) {
+>         vec <- datIn[i, j]
+>     #    mtzbin[i, j] <- ((vec/sma[j])^vec)*((1-
+> vec/sma[j])^(sma[j]-vec))*choose((sr-1),(vec-1))
+>         mtzbin[i, j] <-
+> ((vec/sma)^vec)*((1-vec/sma)^(sma-vec))*choose((sr-1),(vec-1))
+>     }
+> }
+> He puesto dos asignaciones para mtzbin[i, j] porque las dos me conducen a
+> que Rstudio me marca error; en el primer caso me indica:
+> Error in vec/sma[i] : argumento no-numérico para operador binario
+> y en el segundo marca:
+> Error in mtzbin[i, j] <- ((vec/sma)^vec) * ((1 - vec/sma)^(sma - vec)) *  :
+>   número de items para para sustituir no es un múltiplo de la longitud del
+> reemplazo
+> Interpreto que se trata de un error de lectura puesto que indica que es sma
+> el 'común denominador'.
+> Alguien me podría decir donde está mi error; por supuesto adelanto mis más
+> cumplidas gracias.
+> Atentamente;
+> *MANOLO MÁRQUEZ P.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Fri Sep  8 18:30:19 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Fri, 8 Sep 2017 11:30:19 -0500
+Subject: [R-es] Error lectura
+Message-ID: <CAG9EJTLasacJtcXjqBion2ZDU4BKWi59Rgfm9C4kSusQ5dbueg@mail.gmail.com>
+
+Carlos, muchas gracias por la rapidez de tu respuesta; claro que sí, te
+adjunto los datos.
+Nuevamente muchas gracias.
+Atentamente;
+*MANOLO MÁRQUEZ P.*
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170908/4b3d9bbb/attachment.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: dato.csv
+Type: text/csv
+Size: 4975 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170908/4b3d9bbb/attachment.csv>
+
+From cof en qualityexcellence.es  Fri Sep  8 18:48:04 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 8 Sep 2017 18:48:04 +0200
+Subject: [R-es] Error lectura
+In-Reply-To: <CAG9EJTLasacJtcXjqBion2ZDU4BKWi59Rgfm9C4kSusQ5dbueg@mail.gmail.com>
+References: <CAG9EJTLasacJtcXjqBion2ZDU4BKWi59Rgfm9C4kSusQ5dbueg@mail.gmail.com>
+Message-ID: <CAOKbq8g7go70xO3SgYx6aNe7_8eaQ-HuOXm6odOVqjfGCipczA@mail.gmail.com>
+
+En tu código, ¿qué es "ms"?...
+
+mtzbin <- matrix(0,39,48,byrow = T)
+vec <- 0
+datIn <- read.table('dato.csv', sep = ',', as.is = T)
+sma <- rowSums(ms, 1)
+sr <- max(sma)
+for(i in 1:39) {
+    for(j in 1:48) {
+        vec <- datIn[i, j]
+    #    mtzbin[i, j] <- ((vec/sma[j])^vec)*((1-
+vec/sma[j])^(sma[j]-vec))*choose((sr-1),(vec-1))
+        mtzbin[i, j] <-
+((vec/sma)^vec)*((1-vec/sma)^(sma-vec))*choose((sr-1),(vec-1))
+    }
+}
+
+En los datos no aparece...
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 8 de septiembre de 2017, 18:30, Manuel Máquez <manuelmx11 en gmail.com>
+escribió:
+
+> Carlos, muchas gracias por la rapidez de tu respuesta; claro que sí, te
+> adjunto los datos.
+> Nuevamente muchas gracias.
+> Atentamente;
+> *MANOLO MÁRQUEZ P.*
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Fri Sep  8 19:35:29 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Fri, 8 Sep 2017 12:35:29 -0500
+Subject: [R-es] Error lectura
+Message-ID: <CAG9EJTJYom2DkLaW=gZGc9jZ73wSgQ_TCVEXe+gfbjnLAU3RSQ@mail.gmail.com>
+
+Se trata de una matriz en donde se van sumando las apariciones del
+fenómeno; te mando dicha matriz y el código que la genera:
+    for(j in 1:39) {                      # Elemento
+        da <- dt[i ,j]                    # Dato
+        if(da == 0) {next
+            }else{
+            mc[j, da] <- mc[j, da] + 1
+            ms[j, da] <- ms[j, da] + da
+            it <- da/mc[j, da]
+            mp[j, da] <- it
+        }
+    }
+*?Gracias.?*
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Fri Sep  8 20:37:00 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Fri, 8 Sep 2017 13:37:00 -0500
+Subject: [R-es] Error lectura
+Message-ID: <CAG9EJT+Watd9cMMBrkYYhiHqtY7QDNSDTOrjnuQ4uyrOp2M8uw@mail.gmail.com>
+
+No exactamente, pues en esa tabla se consignan los datos originales y cada
+registro tiene sólo 7 diferentes de cero; por ello se hace la suma por
+separado.
+
+*M?AN?OLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Fri Sep  8 21:59:03 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 8 Sep 2017 21:59:03 +0200
+Subject: [R-es] Error lectura
+In-Reply-To: <CAG9EJT+Watd9cMMBrkYYhiHqtY7QDNSDTOrjnuQ4uyrOp2M8uw@mail.gmail.com>
+References: <CAG9EJT+Watd9cMMBrkYYhiHqtY7QDNSDTOrjnuQ4uyrOp2M8uw@mail.gmail.com>
+Message-ID: <CAOKbq8i1UFhkMTUuEQpitH=B1_81wyFPs8Pg_N5Nr05Z5VLrSw@mail.gmail.com>
+
+Disculpa, pero no me entero..
+Si puedes volver a explicar el problema que tienes y los datos que aplican
+para poder reproducirlo...
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 8 de septiembre de 2017, 20:37, Manuel Máquez <manuelmx11 en gmail.com>
+escribió:
+
+> No exactamente, pues en esa tabla se consignan los datos originales y cada
+> registro tiene sólo 7 diferentes de cero; por ello se hace la suma por
+> separado.
+>
+> *M?AN?OLO MÁRQUEZ P.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Sat Sep  9 00:33:29 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Fri, 8 Sep 2017 17:33:29 -0500
+Subject: [R-es] Error lectura
+Message-ID: <CAG9EJT+m5BPzz3KNb9DGELwqNda7PeUU0Um2YzHAmTUDFYKELw@mail.gmail.com>
+
+Los datos originales están Tdist.csv que adjunto, el código es:
+mc <- matrix(0,39,48,byrow = T)           # Matriz Cta
+mp <- matrix(0,39,48,byrow = T)           # Matriz Pr
+ms <- matrix(0,39,48,byrow = T)           # Matriz Sumas
+mtzbin <- matrix(0,39,48,byrow = T)       # Matriz Binom
+vec <- 0                                  # Valor temporal
+dt <- read.csv('Tdist.csv', header = F)   # Datos
+lg <- 0                                   # Inicial
+lg <- length(dt$V1)                       # Valor longitud
+for(i in 1:lg) {                          # Registro
+    for(j in 1:39) {                      # Elemento
+        da <- dt[i ,j]                    # Dato
+        if(da == 0) {next
+            }else{
+            mc[j, da] <- mc[j, da] + 1
+            ms[j, da] <- ms[j, da] + da
+            it <- da/mc[j, da]
+            mp[j, da] <- it
+        }
+    }
+}
+sma <- rowSums(ms, 1)
+sr <- max(sma)
+write.csv(ms, file = 'dato.csv')
+datIn <- read.table('dato.csv', sep = ',', as.is = T)
+for(i in 1:39) {
+    for(j in 1:48) {
+        vec <- datIn[i, j]
+    #    mtzbin[i, j] <- ((vec/sma[j])^vec)*((1-
+vec/sma[j])^(sma[j]-vec))*choose((sr-1),(vec-1))
+        mtzbin[i, j] <-
+((vec/sma)^vec)*((1-vec/sma)^(sma-vec))*choose((sr-1),(vec-1))
+    }
+}
+Se trata de leer los datos por medio de la primera parte del código, para
+después construir una tabla de probabilidad binomial negativa, vía la
+segunda parte del mismo.
+Esa primera parte da por resultado 'dato.csv' que también adjunto.
+Carlos, nuevamente muchas gracias.
+Atentamente;
+*MANOLO MÁRQUEZ P.*
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170908/98915176/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Tdist.csv
+Type: text/csv
+Size: 60123 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170908/98915176/attachment-0002.csv>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: dato.csv
+Type: text/csv
+Size: 4975 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170908/98915176/attachment-0003.csv>
+
+From cof en qualityexcellence.es  Sat Sep  9 02:23:09 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 9 Sep 2017 02:23:09 +0200
+Subject: [R-es] Error lectura
+In-Reply-To: <CAG9EJT+m5BPzz3KNb9DGELwqNda7PeUU0Um2YzHAmTUDFYKELw@mail.gmail.com>
+References: <CAG9EJT+m5BPzz3KNb9DGELwqNda7PeUU0Um2YzHAmTUDFYKELw@mail.gmail.com>
+Message-ID: <CAOKbq8hDt1GZcd9uVvWYpmRaP5A4o=6kWRa+7fVCFC8CG=-1TA@mail.gmail.com>
+
+Hola,
+
+Hay un primer error en la forma en la que grabas el csv.
+Tienes que indicar que no te ponga nombres a las filas...
+Y al leer el csv, tienes que indicar que hay cabecera.
+
+write.csv(ms, file = 'dato.csv', *row.names = FALSE*)
+datIn <- read.table('dato.csv', sep = ',', as.is = T, *header = TRUE*)
+
+Y luego hay otro error importante.
+
+Cuando dices:
+
+mtzbin[i, j]
+
+Uno esperaría un único valor para rellenar ese elemento de la matriz
+"mtzbin", pero lo que obtienes de esta cuenta:
+
+((vec/sma)^vec)*((1-vec/sma)^(sma-vec))*choose((sr-1),(vec-1))
+
+es esto...
+
+    ((vec/sma)^vec)*((1-vec/sma)^(sma-vec))*choose((sr-1),(vec-1))
+ [1] 0.002626719 0.003161702 0.002793684 0.003065193 0.002971755 0.002708859
+ [7] 0.003161702 0.002626719 0.002626719 0.002708859 0.002626719 0.002971755
+[13] 0.002881284 0.003364353 0.002793684 0.003065193 0.004901558 0.002793684
+[19] 0.002971755 0.004187086 0.004057734 0.002881284 0.003364353 0.003470717
+[25] 0.002708859 0.003261385 0.003364353 0.002971755 0.002971755 0.002626719
+[31] 0.002881284 0.002881284 0.002971755 0.002626719 0.002547173 0.002708859
+[37] 0.003470717 0.002793684 0.002708859
+
+un vector de 37 elementos...
+
+Hay algo que en concepto no es correcto en esa cuenta. Claramente le faltan
+subindices, "sma" es un vector,
+
+Cuando tienes este tipo de problemas, itera "a mano".
+Simplemente haz:
+i <- 1
+j <- 1
+
+Y ves el resultado de la operación...
+
+En cambio la línea que tienes comentada, parece que es la correcta, "sma"
+está indexado..:
+
+((vec/sma[j])^vec)*((1- vec/sma[j])^(sma[j]-vec))*choose((sr-1),(vec-1))
+[1] 0.002626719
+
+Y efectivamente, si esa línea, la quitas el comentario y comentas la otra,
+la que devuelve el vector de 37 elementos, el bucle funciona sin
+problemas...
+
+> head(mtzbin)
+            [,1]        [,2]        [,3]        [,4]        [,5]
+ [,6]        [,7]        [,8]        [,9]
+[1,] 0.002626719 0.004978632 0.005201255 0.006462926 0.006391686
+0.002353819 0.004419175 0.004785744 0.006434316
+[2,] 0.002689092 0.006981814 0.005856663 0.004714338 0.003580492
+0.006443308 0.004419175 0.002689092 0.004301845
+[3,] 0.002297961 0.003883366 0.003086845 0.006462926 0.005394031
+0.004988292 0.006060432 0.004399715 0.003851898
+[4,] 0.003159180 0.006187438 0.005635778 0.005556810 0.005394031
+0.005346379 0.007985787 0.004399715 0.003851898
+[5,] 0.002433220 0.005210141 0.003725039 0.005128456 0.006921837
+0.003548008 0.002245950 0.004003866 0.003379612
+[6,] 0.003379612 0.004978632 0.003934702 0.004312628 0.004921966
+0.004274360 0.006981814 0.005542097 0.003379612
+           [,10]       [,11]       [,12]       [,13]       [,14]
+[,15]       [,16]       [,17]       [,18]
+[1,] 0.003793022 0.004350860 0.001971524 0.004148574 0.002331970
+0.000000000 0.003921276 0.003526645 0.000000000
+[2,] 0.004393626 0.004350860 0.003058957 0.000000000 0.003964126
+0.002168110 0.007445536 0.000000000 0.000000000
+
+....
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+
+
+
+
+
+
+
+2017-09-09 0:33 GMT+02:00 Manuel Máquez <manuelmx11 en gmail.com>:
+
+> Los datos originales están Tdist.csv que adjunto, el código es:
+> mc <- matrix(0,39,48,byrow = T)           # Matriz Cta
+> mp <- matrix(0,39,48,byrow = T)           # Matriz Pr
+> ms <- matrix(0,39,48,byrow = T)           # Matriz Sumas
+> mtzbin <- matrix(0,39,48,byrow = T)       # Matriz Binom
+> vec <- 0                                  # Valor temporal
+> dt <- read.csv('Tdist.csv', header = F)   # Datos
+> lg <- 0                                   # Inicial
+> lg <- length(dt$V1)                       # Valor longitud
+> for(i in 1:lg) {                          # Registro
+>     for(j in 1:39) {                      # Elemento
+>         da <- dt[i ,j]                    # Dato
+>         if(da == 0) {next
+>             }else{
+>             mc[j, da] <- mc[j, da] + 1
+>             ms[j, da] <- ms[j, da] + da
+>             it <- da/mc[j, da]
+>             mp[j, da] <- it
+>         }
+>     }
+> }
+> sma <- rowSums(ms, 1)
+> sr <- max(sma)
+> write.csv(ms, file = 'dato.csv')
+> datIn <- read.table('dato.csv', sep = ',', as.is = T)
+> for(i in 1:39) {
+>     for(j in 1:48) {
+>         vec <- datIn[i, j]
+>     #    mtzbin[i, j] <- ((vec/sma[j])^vec)*((1- vec/sma[j])^(sma[j]-vec))*
+> choose((sr-1),(vec-1))
+>         mtzbin[i, j] <- ((vec/sma)^vec)*((1-vec/sma)^(
+> sma-vec))*choose((sr-1),(vec-1))
+>     }
+> }
+> Se trata de leer los datos por medio de la primera parte del código, para
+> después construir una tabla de probabilidad binomial negativa, vía la
+> segunda parte del mismo.
+> Esa primera parte da por resultado 'dato.csv' que también adjunto.
+> Carlos, nuevamente muchas gracias.
+> Atentamente;
+> *MANOLO MÁRQUEZ P.*
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Sat Sep  9 09:14:57 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Sat, 9 Sep 2017 02:14:57 -0500
+Subject: [R-es] Error lectura
+Message-ID: <CAG9EJTK+AETjDiPZBLVB+F_nhV3r7wOwjixcu9ygaJiV_JMT2A@mail.gmail.com>
+
+Carlos, ya funcionó, nuevamente muchas gracias y buenas noches, o mejor
+dicho días.
+Atentamente;
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From matutetote en hotmail.com  Mon Sep 11 05:00:19 2017
+From: matutetote en hotmail.com (Matias Ledesma)
+Date: Mon, 11 Sep 2017 03:00:19 +0000
+Subject: [R-es] lapply y boot
+Message-ID: <MWHPR04MB3773E61E6C9BBB58A74AA566D9680@MWHPR04MB3773.namprd04.prod.outlook.com>
+
+Hola a todos,
+
+Quisiera tener una opinión sobre el siguiente script, estoy tratando de resumir el set de datos de 5 variables que tengo mediante 2 dos de las dos variables (y=años, x=estaciones de muestreo). A su vez, dado que en ciertas estaciones tienen un n reducido hice un bootstrap con reposición por cada sub set de datos (años,estación).
+
+f2 <- lapply(split(dat_c, list(dat_c$x, dat_c$y)),
+   function(subdf) subdf[sample(1:nrow(subdf),10000,replace=T),])
+f3<-do.call("rbind",f2)
+str(f3)
+head(f3,10)
+library(doBy)
+summaryBy(z~y+x,data=f3,FUN=c(mean,median,var,length))
+
+No estoy completamente empapado con estas funciones y quisera simplemente estar seguro de que esta correcto.
+Gracias,
+
+Matias
+
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Mon Sep 11 10:19:05 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Mon, 11 Sep 2017 08:19:05 +0000
+Subject: [R-es] =?iso-8859-1?q?Quitar_m=E1rgenes?=
+Message-ID: <VI1PR0801MB2096541E641A99E270081342CC680@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Buenas,
+
+He creado en un a3 un gráfico para poder imprimir, pero el problema es que me salen unos márgenes demasiado grandes entre grafico y grafico, no viendose nada. Para crear el gráfico he usado la funcion
+
+par(mfrow=c(9,2))
+y he añadido uno a uno los graficos con el plot. ¿Como puedo hacer para que se vea algo?
+
+
+Adjunto la imagen que veo
+
+[cid:99dc039d-0f33-416a-b4d3-135bc5c820b2]
+
+
+Gracias!!!
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170911/63600177/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: imagen.png
+Type: image/png
+Size: 71826 bytes
+Desc: imagen.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170911/63600177/attachment-0001.png>
+
+From cof en qualityexcellence.es  Mon Sep 11 10:52:20 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 11 Sep 2017 10:52:20 +0200
+Subject: [R-es] =?utf-8?q?Quitar_m=C3=A1rgenes?=
+In-Reply-To: <VI1PR0801MB2096541E641A99E270081342CC680@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB2096541E641A99E270081342CC680@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <CAOKbq8i_xZ2m9a=D1Tck5sLVC4jvVFwsNicmDFhTWHQiaX4iQA@mail.gmail.com>
+
+Hola,
+
+Los márgenes entre los plots los controlas con el parámetro "oma" de
+"par()".
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 11 de septiembre de 2017, 10:19, Jesús Para Fernández <
+j.para.fernandez en hotmail.com> escribió:
+
+> Buenas,
+>
+> He creado en un a3 un gráfico para poder imprimir, pero el problema es que
+> me salen unos márgenes demasiado grandes entre grafico y grafico, no
+> viendose nada. Para crear el gráfico he usado la funcion
+>
+> par(mfrow=c(9,2))
+> y he añadido uno a uno los graficos con el plot. ¿Como puedo hacer para
+> que se vea algo?
+>
+>
+> Adjunto la imagen que veo
+>
+>
+>
+> Gracias!!!
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From andreshirigoyen en gmail.com  Tue Sep 12 20:27:31 2017
+From: andreshirigoyen en gmail.com (Andres Hirigoyen)
+Date: Tue, 12 Sep 2017 15:27:31 -0300
+Subject: [R-es] =?utf-8?q?Creaci=C3=B3n_de_data_frame?=
+Message-ID: <CAOaTypUtx6M9kuD9=eMnoJYOnrHuPtvjWTzG1=KmyyRg=QuVQA@mail.gmail.com>
+
+Buenos dias, tengo una consulta con la creación de un nuevo data frame. La
+primer columna, que no forma parte del data frame, toma los valores de la
+variable LETRA lo cual no me permite luego seguir haciendo procedimentos ya
+q no ordena. Va ejemplo
+
+Parto de un data frame (llamado resu),  con las variables Letra, Suelo y
+ha, quiero hacer uno nuevo que resuma las hectáreas (ha) por Letra.
+
+
+ resu<-with(resuu data.frame( ,
+                                Letra=unique(Letra),
+                               Suelo=unique(Suelo),
+                               ha= tapply(resulr,Suelo,sum)))
+Resultado:
+
+       Letra   Suelo   ha
+a      b          2        145
+b      c          2        456
+c      a          2         60
+
+
+Esa primer columna debería de estar numerada de forma lógica de 1 a 3 por
+ejemplo. Ya intente cambiando el orden de las variables, Suelo y Letra,
+pero el resultado es el mismo.
+
+Espero haber sido claro, gracias por la ayuda
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Thu Sep 14 14:12:22 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Thu, 14 Sep 2017 12:12:22 +0000
+Subject: [R-es] Guardar funcion
+Message-ID: <VI1PR0801MB2096F770A39DC3CD5F1EB99ACC6F0@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Buenas,
+
+Me gustaría sabe rcomo guardar una funcion en R para que se quede guardada dentor de R como si fuera una funcin del paquete base, y esté disponible para poder ejecutar, sin necesidad de tener que cargarla. ¿Como se puede hacer?
+
+Gracias
+Jesús
+
+	[[alternative HTML version deleted]]
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Thu Sep 14 14:21:44 2017
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Thu, 14 Sep 2017 12:21:44 +0000
+Subject: [R-es] Guardar funcion
+In-Reply-To: <VI1PR0801MB2096F770A39DC3CD5F1EB99ACC6F0@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB2096F770A39DC3CD5F1EB99ACC6F0@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <e13cc203-ecef-31c0-13fe-63cefd80def4@sergas.es>
+
+Hola Jesús.
+
+Puedes definirla en el fichero "RProfile.site" de la carpeta "etc"... lo que pongas ahí se carga cada vez que ejecutas R (yo lo uso para cargar librerías y para predefinir el mirror del CRAn que prefiero usar) o cada vez que sales de R (pero esa es otra historia).
+
+http://www.statmethods.net/interface/customizing.html
+
+Un saludo,
+Miguel.
+
+
+El 14/09/2017 a las 14:12, Jesús Para Fernández escribió:
+
+Buenas,
+
+Me gustar?a sabe rcomo guardar una funcion en R para que se quede guardada dentor de R como si fuera una funcin del paquete base, y est? disponible para poder ejecutar, sin necesidad de tener que cargarla. ?Como se puede hacer?
+
+Gracias
+Jes?s
+
+
+
+
+
+
+
+
+________________________________
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Sep 14 15:11:24 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 14 Sep 2017 10:11:24 -0300
+Subject: [R-es] =?utf-8?q?Creaci=C3=B3n_de_data_frame?=
+In-Reply-To: <CAOaTypUtx6M9kuD9=eMnoJYOnrHuPtvjWTzG1=KmyyRg=QuVQA@mail.gmail.com>
+References: <CAOaTypUtx6M9kuD9=eMnoJYOnrHuPtvjWTzG1=KmyyRg=QuVQA@mail.gmail.com>
+Message-ID: <59ba7ffc.4650370a.70505.233d@mx.google.com>
+
+Estimado Andrés Hirigoyen
+
+Mi respuesta tiene dos partes, la primera es que no se comprende o por lo menos en mi caso, desde donde viene el problema con el código que publica, la segunda parte es suponiendo que todo estaría correcto menos el data.frame, yo crearía un nuevo data.frame solo con las columnas que deseo, luego uso el código de resumen, y puedo borrar el Segundo data.frame.
+
+Otra forma es tomar cualquier ejemplo publicado o código propio que funcione y reemplazar los datos, el cometer un error de tipeo es muy fácil y difícil de encontrar.
+
+Disculpas por errors idiomáticos, esta cosa me está pasando del español al inglés en forma automática.
+
+Javier Rubén Marcuzzi
+
+De: Andres Hirigoyen
+Enviado: martes, 12 de septiembre de 2017 15:27
+Para: Lista R
+Asunto: [R-es] Creación de data frame
+
+Buenos dias, tengo una consulta con la creación de un nuevo data frame. La
+primer columna, que no forma parte del data frame, toma los valores de la
+variable LETRA lo cual no me permite luego seguir haciendo procedimentos ya
+q no ordena. Va ejemplo
+
+Parto de un data frame (llamado resu),  con las variables Letra, Suelo y
+ha, quiero hacer uno nuevo que resuma las hectáreas (ha) por Letra.
+
+
+ resu<-with(resuu data.frame( ,
+                                Letra=unique(Letra),
+                               Suelo=unique(Suelo),
+                               ha= tapply(resulr,Suelo,sum)))
+Resultado:
+
+       Letra   Suelo   ha
+a      b          2        145
+b      c          2        456
+c      a          2         60
+
+
+Esa primer columna debería de estar numerada de forma lógica de 1 a 3 por
+ejemplo. Ya intente cambiando el orden de las variables, Suelo y Letra,
+pero el resultado es el mismo.
+
+Espero haber sido claro, gracias por la ayuda
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From andreshirigoyen en gmail.com  Thu Sep 14 17:13:37 2017
+From: andreshirigoyen en gmail.com (Andres Hirigoyen)
+Date: Thu, 14 Sep 2017 12:13:37 -0300
+Subject: [R-es] =?utf-8?q?Creaci=C3=B3n_de_data_frame?=
+In-Reply-To: <59ba7ffc.4650370a.70505.233d@mx.google.com>
+References: <CAOaTypUtx6M9kuD9=eMnoJYOnrHuPtvjWTzG1=KmyyRg=QuVQA@mail.gmail.com>
+ <59ba7ffc.4650370a.70505.233d@mx.google.com>
+Message-ID: <CAOaTypXXixBMi3H5tAUvtoftM2NX9WNAvF8YM_H=NoRCVWhpOg@mail.gmail.com>
+
+Hola Javier, gracias por tu respuesta, explico de nuevo.
+
+Luego de varios calculos, llego a un dataframe con varias observaciones,
+llamado resuu:
+
+Letra Suelo result
+1 a 2 23
+2 b 2 15
+3 c 2 36
+4 a 3 20
+5 b 3 2
+6 c 3 36
+7 a 2 32
+8 b 2 25
+9 c 3 32
+...
+La primer columna que no tiene cabecera o etiqueta, aparece en la consola
+en color gris y es un identificador de las filas
+
+Cuando  quiero resumir, usando
+
+ resu<-with(resuu data.frame( ,
+                                Letra=unique(Letra),
+                               Suelo=unique(Suelo),
+                               ha= tapply(resulr,Suelo,sum)))
+
+El  nuevo dataframe tiene como identificador de filas los valores de la
+variable LETRAS:
+
+Letra Suelo ha
+a b 2 145
+b c 2 456
+c a 3 60
+Si quiero hacer algo con ese nuevo  dataframe, agrupar por la variable
+Letra, etc. se confunde porque toma como valor de "a", "b" o "c" el
+identificador y no la variable LETRAS.
+
+Mi pregunta es como cambiar el identificado de las filas a numérico o como
+evitar q pase lo que explique arriba..
+
+Gracias
+
+
+El 14 de septiembre de 2017, 10:11, Javier Marcuzzi<
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimado Andrés Hirigoyen
+>
+>
+>
+> Mi respuesta tiene dos partes, la primera es que no se comprende o por lo
+> menos en mi caso, desde donde viene el problema con el código que publica,
+> la segunda parte es suponiendo que todo estaría correcto menos el
+> data.frame, yo crearía un nuevo data.frame solo con las columnas que deseo,
+> luego uso el código de resumen, y puedo borrar el Segundo data.frame.
+>
+>
+>
+> Otra forma es tomar cualquier ejemplo publicado o código propio que
+> funcione y reemplazar los datos, el cometer un error de tipeo es muy fácil
+> y difícil de encontrar.
+>
+>
+>
+> Disculpas por errors idiomáticos, esta cosa me está pasando del español al
+> inglés en forma automática.
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Andres Hirigoyen <andreshirigoyen en gmail.com>
+> *Enviado: *martes, 12 de septiembre de 2017 15:27
+> *Para: *Lista R <r-help-es en r-project.org>
+> *Asunto: *[R-es] Creación de data frame
+>
+>
+>
+> Buenos dias, tengo una consulta con la creación de un nuevo data frame. La
+>
+> primer columna, que no forma parte del data frame, toma los valores de la
+>
+> variable LETRA lo cual no me permite luego seguir haciendo procedimentos ya
+>
+> q no ordena. Va ejemplo
+>
+>
+>
+> Parto de un data frame (llamado resu),  con las variables Letra, Suelo y
+>
+> ha, quiero hacer uno nuevo que resuma las hectáreas (ha) por Letra.
+>
+>
+>
+>
+>
+> resu<-with(resuu data.frame( ,
+>
+>                                 Letra=unique(Letra),
+>
+>                                Suelo=unique(Suelo),
+>
+>                                ha= tapply(resulr,Suelo,sum)))
+>
+> Resultado:
+>
+>
+>
+>        Letra   Suelo   ha
+>
+> a      b          2        145
+>
+> b      c          2        456
+>
+> c      a          2         60
+>
+>
+>
+>
+>
+> Esa primer columna debería de estar numerada de forma lógica de 1 a 3 por
+>
+> ejemplo. Ya intente cambiando el orden de las variables, Suelo y Letra,
+>
+> pero el resultado es el mismo.
+>
+>
+>
+> Espero haber sido claro, gracias por la ayuda
+>
+>
+>
+>                 [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+
+
+-- 
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSC) *
+
+	[[alternative HTML version deleted]]
+
+
+From mac_javi en hotmail.com  Thu Sep 14 17:44:04 2017
+From: mac_javi en hotmail.com (Javier Nieto)
+Date: Thu, 14 Sep 2017 15:44:04 +0000
+Subject: [R-es] =?iso-8859-1?q?Creaci=F3n_de_data_frame?=
+In-Reply-To: <CAOaTypXXixBMi3H5tAUvtoftM2NX9WNAvF8YM_H=NoRCVWhpOg@mail.gmail.com>
+References: <CAOaTypUtx6M9kuD9=eMnoJYOnrHuPtvjWTzG1=KmyyRg=QuVQA@mail.gmail.com>
+ <59ba7ffc.4650370a.70505.233d@mx.google.com>,
+ <CAOaTypXXixBMi3H5tAUvtoftM2NX9WNAvF8YM_H=NoRCVWhpOg@mail.gmail.com>
+Message-ID: <BN6PR1201MB24661B1EF9E1A647E402A801EB6F0@BN6PR1201MB2466.namprd12.prod.outlook.com>
+
+Hola
+
+
+prueba: rownames(resu) <- NULL
+
+
+Saludos
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Andres Hirigoyen <andreshirigoyen en gmail.com>
+Enviado: jueves, 14 de septiembre de 2017 10:13:37 a. m.
+Para: Javier Marcuzzi
+CC: Lista R
+Asunto: Re: [R-es] Creación de data frame
+
+Hola Javier, gracias por tu respuesta, explico de nuevo.
+
+Luego de varios calculos, llego a un dataframe con varias observaciones,
+llamado resuu:
+
+Letra Suelo result
+1 a 2 23
+2 b 2 15
+3 c 2 36
+4 a 3 20
+5 b 3 2
+6 c 3 36
+7 a 2 32
+8 b 2 25
+9 c 3 32
+...
+La primer columna que no tiene cabecera o etiqueta, aparece en la consola
+en color gris y es un identificador de las filas
+
+Cuando  quiero resumir, usando
+
+ resu<-with(resuu data.frame( ,
+                                Letra=unique(Letra),
+                               Suelo=unique(Suelo),
+                               ha= tapply(resulr,Suelo,sum)))
+
+El  nuevo dataframe tiene como identificador de filas los valores de la
+variable LETRAS:
+
+Letra Suelo ha
+a b 2 145
+b c 2 456
+c a 3 60
+Si quiero hacer algo con ese nuevo  dataframe, agrupar por la variable
+Letra, etc. se confunde porque toma como valor de "a", "b" o "c" el
+identificador y no la variable LETRAS.
+
+Mi pregunta es como cambiar el identificado de las filas a numérico o como
+evitar q pase lo que explique arriba..
+
+Gracias
+
+
+El 14 de septiembre de 2017, 10:11, Javier Marcuzzi<
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimado Andrés Hirigoyen
+>
+>
+>
+> Mi respuesta tiene dos partes, la primera es que no se comprende o por lo
+> menos en mi caso, desde donde viene el problema con el código que publica,
+> la segunda parte es suponiendo que todo estaría correcto menos el
+> data.frame, yo crearía un nuevo data.frame solo con las columnas que deseo,
+> luego uso el código de resumen, y puedo borrar el Segundo data.frame.
+>
+>
+>
+> Otra forma es tomar cualquier ejemplo publicado o código propio que
+> funcione y reemplazar los datos, el cometer un error de tipeo es muy fácil
+> y difícil de encontrar.
+>
+>
+>
+> Disculpas por errors idiomáticos, esta cosa me está pasando del español al
+> inglés en forma automática.
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Andres Hirigoyen <andreshirigoyen en gmail.com>
+> *Enviado: *martes, 12 de septiembre de 2017 15:27
+> *Para: *Lista R <r-help-es en r-project.org>
+> *Asunto: *[R-es] Creación de data frame
+>
+>
+>
+> Buenos dias, tengo una consulta con la creación de un nuevo data frame. La
+>
+> primer columna, que no forma parte del data frame, toma los valores de la
+>
+> variable LETRA lo cual no me permite luego seguir haciendo procedimentos ya
+>
+> q no ordena. Va ejemplo
+>
+>
+>
+> Parto de un data frame (llamado resu),  con las variables Letra, Suelo y
+>
+> ha, quiero hacer uno nuevo que resuma las hectáreas (ha) por Letra.
+>
+>
+>
+>
+>
+> resu<-with(resuu data.frame( ,
+>
+>                                 Letra=unique(Letra),
+>
+>                                Suelo=unique(Suelo),
+>
+>                                ha= tapply(resulr,Suelo,sum)))
+>
+> Resultado:
+>
+>
+>
+>        Letra   Suelo   ha
+>
+> a      b          2        145
+>
+> b      c          2        456
+>
+> c      a          2         60
+>
+>
+>
+>
+>
+> Esa primer columna debería de estar numerada de forma lógica de 1 a 3 por
+>
+> ejemplo. Ya intente cambiando el orden de las variables, Suelo y Letra,
+>
+> pero el resultado es el mismo.
+>
+>
+>
+> Espero haber sido claro, gracias por la ayuda
+>
+>
+>
+>                 [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+
+
+--
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSC) *
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From fernand_arce en yahoo.es  Fri Sep 15 06:18:55 2017
+From: fernand_arce en yahoo.es (Fernando Arce)
+Date: Fri, 15 Sep 2017 04:18:55 +0000 (UTC)
+Subject: [R-es] =?utf-8?q?Creaci=C3=B3n_de_data_frame?=
+In-Reply-To: <BN6PR1201MB24661B1EF9E1A647E402A801EB6F0@BN6PR1201MB2466.namprd12.prod.outlook.com>
+References: <CAOaTypUtx6M9kuD9=eMnoJYOnrHuPtvjWTzG1=KmyyRg=QuVQA@mail.gmail.com>
+ <59ba7ffc.4650370a.70505.233d@mx.google.com>
+ <CAOaTypXXixBMi3H5tAUvtoftM2NX9WNAvF8YM_H=NoRCVWhpOg@mail.gmail.com>
+ <BN6PR1201MB24661B1EF9E1A647E402A801EB6F0@BN6PR1201MB2466.namprd12.prod.outlook.com>
+Message-ID: <1466777074.4031108.1505449135066@mail.yahoo.com>
+
+No acabo de ver el motivo del problema, creo haber entendido que el nombre de las filas esta tomado de la columna letra? No es posible, puesto que tus letras tienen que estar 'repetidas' ya que estas agregando y sumando...
+He probado esto y ha funcionado
+## minireplica de tus datosd <- data.frame(Letra=c('a','b','c','a','b','c','a','b','c'),Suelo=c(2,2,2,3,3,3,2,2,3),result=c(23,15,36,20,2,36,32,25,32))
+
+
+## calculamos la tabla de contingencia (los margenes van definidos por el orden de la lista, si quieres cambiar como se agregan, cambia de orden los dos elementos de la lista)tabla <- tapply(d$result,list(d$Letra,d$Suelo),sum, simplify=TRUE)## la damos formato de tabla (trae predefinido formato matriz y necesitamos formato de tabla para expandirla con as.data.frame)class(tabla) <- 'table'## y expandimos (despuestendrias que renombrar las columnas)final <- as.data.frame(tabla)
+Los identificadores de las columnas no deberian darte guerra asi.
+Tambien puedes hacerlo con dos lazos, que tambien te evitaria eso que comentas:
+letra <- NULLSuelo <- NULLha <- NULLfor (i in unique(d$Letra)){    for(j in unique(d$Suelo)){        letra <- c(letra,i)        Suelo <- c(Suelo,j)        tmp.sum <- sum(d$result[d$Letra==i & d$Suelo==j])        ha <- c(ha,tmp.sum)    }}out <- data.frame(letra=letra, Suelo=Suelo, ha=ha)
+
+Saludos y espero que te sirva
+Fer 
+
+    El Viernes 15 de septiembre de 2017 1:44, Javier Nieto <mac_javi en hotmail.com> escribió:
+ 
+
+ Hola
+
+
+prueba: rownames(resu) <- NULL
+
+
+Saludos
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Andres Hirigoyen <andreshirigoyen en gmail.com>
+Enviado: jueves, 14 de septiembre de 2017 10:13:37 a. m.
+Para: Javier Marcuzzi
+CC: Lista R
+Asunto: Re: [R-es] Creaci?n de data frame
+
+Hola Javier, gracias por tu respuesta, explico de nuevo.
+
+Luego de varios calculos, llego a un dataframe con varias observaciones,
+llamado resuu:
+
+Letra Suelo result
+1 a 2 23
+2 b 2 15
+3 c 2 36
+4 a 3 20
+5 b 3 2
+6 c 3 36
+7 a 2 32
+8 b 2 25
+9 c 3 32
+...
+La primer columna que no tiene cabecera o etiqueta, aparece en la consola
+en color gris y es un identificador de las filas
+
+Cuando  quiero resumir, usando
+
+ resu<-with(resuu data.frame( ,
+                                Letra=unique(Letra),
+                              Suelo=unique(Suelo),
+                              ha= tapply(resulr,Suelo,sum)))
+
+El  nuevo dataframe tiene como identificador de filas los valores de la
+variable LETRAS:
+
+Letra Suelo ha
+a b 2 145
+b c 2 456
+c a 3 60
+Si quiero hacer algo con ese nuevo  dataframe, agrupar por la variable
+Letra, etc. se confunde porque toma como valor de "a", "b" o "c" el
+identificador y no la variable LETRAS.
+
+Mi pregunta es como cambiar el identificado de las filas a num?rico o como
+evitar q pase lo que explique arriba..
+
+Gracias
+
+
+El 14 de septiembre de 2017, 10:11, Javier Marcuzzi<
+javier.ruben.marcuzzi en gmail.com> escribi?:
+
+> Estimado Andr?s Hirigoyen
+>
+>
+>
+> Mi respuesta tiene dos partes, la primera es que no se comprende o por lo
+> menos en mi caso, desde donde viene el problema con el c?digo que publica,
+> la segunda parte es suponiendo que todo estar?a correcto menos el
+> data.frame, yo crear?a un nuevo data.frame solo con las columnas que deseo,
+> luego uso el c?digo de resumen, y puedo borrar el Segundo data.frame.
+>
+>
+>
+> Otra forma es tomar cualquier ejemplo publicado o c?digo propio que
+> funcione y reemplazar los datos, el cometer un error de tipeo es muy f?cil
+> y dif?cil de encontrar.
+>
+>
+>
+> Disculpas por errors idiom?ticos, esta cosa me est? pasando del espa?ol al
+> ingl?s en forma autom?tica.
+>
+>
+>
+> Javier Rub?n Marcuzzi
+>
+>
+>
+> *De: *Andres Hirigoyen <andreshirigoyen en gmail.com>
+> *Enviado: *martes, 12 de septiembre de 2017 15:27
+> *Para: *Lista R <r-help-es en r-project.org>
+> *Asunto: *[R-es] Creaci?n de data frame
+>
+>
+>
+> Buenos dias, tengo una consulta con la creaci?n de un nuevo data frame. La
+>
+> primer columna, que no forma parte del data frame, toma los valores de la
+>
+> variable LETRA lo cual no me permite luego seguir haciendo procedimentos ya
+>
+> q no ordena. Va ejemplo
+>
+>
+>
+> Parto de un data frame (llamado resu),  con las variables Letra, Suelo y
+>
+> ha, quiero hacer uno nuevo que resuma las hect?reas (ha) por Letra.
+>
+>
+>
+>
+>
+> resu<-with(resuu data.frame( ,
+>
+>                                Letra=unique(Letra),
+>
+>                                Suelo=unique(Suelo),
+>
+>                                ha= tapply(resulr,Suelo,sum)))
+>
+> Resultado:
+>
+>
+>
+>        Letra  Suelo  ha
+>
+> a      b          2        145
+>
+> b      c          2        456
+>
+> c      a          2        60
+>
+>
+>
+>
+>
+> Esa primer columna deber?a de estar numerada de forma l?gica de 1 a 3 por
+>
+> ejemplo. Ya intente cambiando el orden de las variables, Suelo y Letra,
+>
+> pero el resultado es el mismo.
+>
+>
+>
+> Espero haber sido claro, gracias por la ayuda
+>
+>
+>
+>                [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+
+
+--
+*Andr?s Hirigoyen*
+* Prof. Ciencias Biol?gicas*
+*Ing. Agr. Forestal (MSC) *
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+    [[alternative HTML version deleted]]
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+   
+	[[alternative HTML version deleted]]
+
+
+From miriam.alzate en unavarra.es  Mon Sep 18 23:53:16 2017
+From: miriam.alzate en unavarra.es (miriam.alzate en unavarra.es)
+Date: Mon, 18 Sep 2017 23:53:16 +0200
+Subject: [R-es] Pseudo R2 en modelos ZINB
+Message-ID: <d4863b4e0af26bb1c41e07f191610327.squirrel@webmail.unavarra.es>
+
+Tengo un modelo ZINB y quiero probar la robustez del modelo. He calculado
+el VUONG test para compararlo con un modelo binomial negativo estandar.
+Por otro lado, lo he comparado también con el modelo ZIP usando el
+log-likelihood y el AIC.
+
+Sin embargo, me gustaria saber si existen otras medidas que digan por si
+solas si el modelo es bueno o no, estilo un pseudo-R2.
+
+Muchas gracias,
+
+Miriam
+
+
+From freddy.vate01 en gmail.com  Tue Sep 19 00:12:15 2017
+From: freddy.vate01 en gmail.com (Freddy Omar =?ISO-8859-1?Q?L=F3pez?= Quintero)
+Date: Mon, 18 Sep 2017 19:12:15 -0300
+Subject: [R-es] Pseudo R2 en modelos ZINB
+In-Reply-To: <d4863b4e0af26bb1c41e07f191610327.squirrel@webmail.unavarra.es>
+References: <d4863b4e0af26bb1c41e07f191610327.squirrel@webmail.unavarra.es>
+Message-ID: <1505772735.18848.6.camel@gmail.com>
+
+Hola.
+
+El lun, 18-09-2017 a las 23:53 +0200, miriam.alzate en unavarra.es
+escribió:
+> Sin embargo, me gustaria saber si existen otras medidas que digan por si
+> solas si el modelo es bueno o no, estilo un pseudo-R2.
+
+El reciente trabajo
+
+    Jacob Martin & Daniel B. Hall (2016): R² measures for zero-
+    inflatedregression models for count data with excess zeros, Journal
+    of Statistical Computation and Simulation, DOI:
+    10.1080/00949655.2016.1186166
+
+ofrece una variante. Puedes mirar su ecuación (5) para la idea inicial
+y la ecuación (7) para el caso de la binomial negativa. Solo necesitas
+tener algunos valores de la función de verosimilitud y calcular su
+cociente.
+
+Ojalá sea de utilidad.
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Fri Sep 22 02:51:37 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Thu, 21 Sep 2017 19:51:37 -0500
+Subject: [R-es] Subtotales de matriz
+Message-ID: <CAG9EJTJkCmDufkVBS11_uVpKuvqhARGbTOh1r6Zt7p0cK8ShfQ@mail.gmail.com>
+
+Buenas noches Colegas:
+He estando buscando la manera de encontrar los subtotales, de una tabla que
+tiene algo más de 750 registros, para ello uso un bucle for, pero siempre
+me da el total, a pesar de que dentro del bucle está el obtener la suma
+parcial en un registro de otra matriz.
+He tratado con colSum, applay(ko, 2, sum) y da sólo el gran total; también
+con  mr <- rbind(ko, 2, sum) pero en este caso el sistema me indica "cannot
+coerce type 'builtin' to vector of type 'list'"
+Adjunto un archivo llamado, Ejem.csv en donde vacié el contenido de los 50
+primeros registros, el registro 52 tiene los totales que se deberían
+asentar en el primero de la matriz resultante; y en los registros 55 a 104
+están los 50 siguientes, para terminar con el 106 que contiene el total de
+esos 50 anteriores.
+Es de hacer notar que no me importaría si en lugar de salir lo que indica
+el registro 106, se tuviera la suma de 52 y 106.
+Si hubiera alguna duda, adjunto también Tdist.csv que es la totalidad de
+los datos.
+Ojalá que alguno de Uds. me pudiera orientar, ya, anticipo las gracias más
+cumplidas.
+
+*MANOLO MÁRQUEZ P.*
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170921/ea337a27/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: EJEM.csv
+Type: text/csv
+Size: 8360 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170921/ea337a27/attachment-0002.csv>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Tdist.csv
+Type: text/csv
+Size: 60123 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170921/ea337a27/attachment-0003.csv>
+
+From freddy.lopez.quintero en gmail.com  Fri Sep 22 05:56:18 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Fri, 22 Sep 2017 00:56:18 -0300
+Subject: [R-es] Subtotales de matriz
+In-Reply-To: <CAG9EJTJkCmDufkVBS11_uVpKuvqhARGbTOh1r6Zt7p0cK8ShfQ@mail.gmail.com>
+References: <CAG9EJTJkCmDufkVBS11_uVpKuvqhARGbTOh1r6Zt7p0cK8ShfQ@mail.gmail.com>
+Message-ID: <CALCOUquQNH2mQ8-vUCREn+BRUv0=a3TThNaA+bcQV_=bPHCb+A@mail.gmail.com>
+
+Hola.
+
+Yo creo que no se entiende bien lo que quieres hacer. ¿Los subtotales que
+mencionas son cada 50 filas o cada cuánto exactamente? O, específicamente
+¿de acuerdo a cuál variable se crean o se deben crear estos subtotales?
+
+Salud.
+
+2017-09-21 21:51 GMT-03:00 Manuel Máquez <manuelmx11 en gmail.com>:
+
+> Buenas noches Colegas:
+> He estando buscando la manera de encontrar los subtotales, de una tabla
+> que tiene algo más de 750 registros, para ello uso un bucle for, pero
+> siempre me da el total, a pesar de que dentro del bucle está el obtener la
+> suma parcial en un registro de otra matriz.
+> He tratado con colSum, applay(ko, 2, sum) y da sólo el gran total; también
+> con  mr <- rbind(ko, 2, sum) pero en este caso el sistema me indica "cannot
+> coerce type 'builtin' to vector of type 'list'"
+> Adjunto un archivo llamado, Ejem.csv en donde vacié el contenido de los 50
+> primeros registros, el registro 52 tiene los totales que se deberían
+> asentar en el primero de la matriz resultante; y en los registros 55 a 104
+> están los 50 siguientes, para terminar con el 106 que contiene el total de
+> esos 50 anteriores.
+> Es de hacer notar que no me importaría si en lugar de salir lo que indica
+> el registro 106, se tuviera la suma de 52 y 106.
+> Si hubiera alguna duda, adjunto también Tdist.csv que es la totalidad de
+> los datos.
+> Ojalá que alguno de Uds. me pudiera orientar, ya, anticipo las gracias más
+> cumplidas.
+>
+> *MANOLO MÁRQUEZ P.*
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Fri Sep 22 06:37:38 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Thu, 21 Sep 2017 23:37:38 -0500
+Subject: [R-es] Subtotales de matriz
+Message-ID: <CAG9EJTLxp51wY+NGusvX1-gtFPgx-NUuHpv9bS-QoU8SaC0t6g@mail.gmail.com>
+
+Estimado Freddy:
+Te agradezco la rapidez de tu respuesta.
+Trato de obtener los subtotales de cada 50 filas de Tdist.csv, es por ello
+que adjunte dicha tabla; y el objeto de haber enviado el otro archivo, era
+poner un ejemplo de los resultados que se obtendrían, al efectuar los
+subtotales de la misma Tdist.csv, pues es parte de ésta.
+Estoy a tus órdenes para cualquier otra aclaración.
+Atentamente;
+
+*M?**ANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From freddy.lopez.quintero en gmail.com  Fri Sep 22 07:37:25 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Fri, 22 Sep 2017 02:37:25 -0300
+Subject: [R-es] Subtotales de matriz
+In-Reply-To: <CAG9EJTLxp51wY+NGusvX1-gtFPgx-NUuHpv9bS-QoU8SaC0t6g@mail.gmail.com>
+References: <CAG9EJTLxp51wY+NGusvX1-gtFPgx-NUuHpv9bS-QoU8SaC0t6g@mail.gmail.com>
+Message-ID: <CALCOUqu2gfwUzkTA96cARO-E5Fjq+ZG-O+Hk0rbNqd8cuYYPUw@mail.gmail.com>
+
+Hola.
+
+Calcular los subtotales cada 50 filas se puede hacer de varias formas. Una
+es esta:
+
+ko<-read.csv('Tdist.csv',h=F)
+> ko<-data.frame(aux=rep(1:ceiling(nrow(ko)/50),each=50,length=nrow(ko)),ko)
+> aggregate(.~aux,data=ko,sum)
+>
+
+donde aux es una variable auxiliar que da cuenta de la cantidad de grupos
+de 50 filas que hay. El último grupo es menor y tiene solo 9 filas.
+
+Este código es un poco rudimentario. Casi seguro con data.table o dplyr (de
+los que soy ajeno) se puede hacer algo más grato.
+
+Ojalá sirva, sin embargo.
+
+¡Salud!
+
+2017-09-22 1:37 GMT-03:00 Manuel Máquez <manuelmx11 en gmail.com>:
+
+> Estimado Freddy:
+> Te agradezco la rapidez de tu respuesta.
+> Trato de obtener los subtotales de cada 50 filas de Tdist.csv, es por ello
+> que adjunte dicha tabla; y el objeto de haber enviado el otro archivo, era
+> poner un ejemplo de los resultados que se obtendrían, al efectuar los
+> subtotales de la misma Tdist.csv, pues es parte de ésta.
+> Estoy a tus órdenes para cualquier otra aclaración.
+> Atentamente;
+>
+> *M?**ANOLO MÁRQUEZ P.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Fri Sep 22 08:30:16 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Fri, 22 Sep 2017 01:30:16 -0500
+Subject: [R-es] Subtotales de matriz
+Message-ID: <CAG9EJTJbpM-N9rDneyYBMiaEGwXUxyiB+qd4AK8UQ4qXCkM5hQ@mail.gmail.com>
+
+¡¡Hombre!!, Freddy, nuevamente gracias por lo inmediato de tu respuesta, y
+mira no veo lo rudimentario de la solución, lo importante es que funcione.
+Otra vez muchísimas gracias.
+Atentamente;
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From jgil en edu.uned.es  Sun Sep 24 18:00:10 2017
+From: jgil en edu.uned.es (Juan Antonio Gil)
+Date: Sun, 24 Sep 2017 18:00:10 +0200
+Subject: [R-es] problemas con predict y tree
+Message-ID: <7b1a99d4-9461-f658-6387-357924323d67@edu.uned.es>
+
+Estimados compañeros hace unos días instale la versión última de R 
+(3.4.1) en windows 10 y hoy me tiene loco el siguiente error cuando 
+ejecuto predict para un árbol de clasificación-regresión. El problema da 
+incluso con el ejemplo del comando predict
+
+library(tree)
+data(shuttle, package="MASS")
+shuttle.tr <- tree(use ~ ., shuttle, subset=1:253,
+                    mindev=1e-6, minsize=2)
+shuttle.tr
+shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+predict(shuttle.tr, shuttle1)
+
+Da el error:
+
+Error in pred1.tree(object, tree.matrix(newdata)) : object 'VR_pred1' 
+not found Sabe alguien ¿cuál es el problema? ¿Os ocurre a vosotros lo 
+mismo? Un cordial saludo, Juan
+
+-- 
+Juan Antonio Gil Pascual
+Profesor de Metodología de la Investigación Cuantitativa
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+Dpto. MIDE
+Facultad de Educación
+c/Juan del Rosal, 14 desp. 2.72
+28040 Madrid
+Tel?f. 91 3987279
+Fax. 91 3987288
+
+
+	[[alternative HTML version deleted]]
+
+
+From jgil en edu.uned.es  Sun Sep 24 19:51:58 2017
+From: jgil en edu.uned.es (Juan Antonio Gil)
+Date: Sun, 24 Sep 2017 19:51:58 +0200
+Subject: [R-es] predict y tree
+Message-ID: <81db4ee8-8d6c-c810-bfeb-508336641d1d@edu.uned.es>
+
+Estimados compañeros hace unos días instale la versión última de R
+(3.4.1) en windows 10 y hoy me tiene loco el siguiente error cuando
+ejecuto predict para un árbol de clasificación-regresión. El problema da
+incluso con el ejemplo del comando predict
+
+library(tree)
+data(shuttle, package="MASS")
+shuttle.tr <- tree(use ~ ., shuttle, subset=1:253,
+                     mindev=1e-6, minsize=2)
+shuttle.tr
+shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+predict(shuttle.tr, shuttle1)
+
+Da el error:
+
+Error in pred1.tree(object, tree.matrix(newdata)) : object 'VR_pred1'
+not found Sabe alguien ¿cuál es el problema? ¿Os ocurre a vosotros lo
+mismo?
+
+Un cordial saludo, Juan
+
+-- 
+Juan Antonio Gil Pascual
+Profesor de Metodología de la Investigación Cuantitativa
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+Dpto. MIDE
+Facultad de Educación
+c/Juan del Rosal, 14 desp. 2.72
+28040 Madrid
+Tel?f. 91 3987279
+Fax. 91 3987288
+
+
+From cof en qualityexcellence.es  Sun Sep 24 20:32:17 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sun, 24 Sep 2017 20:32:17 +0200
+Subject: [R-es] predict y tree
+In-Reply-To: <81db4ee8-8d6c-c810-bfeb-508336641d1d@edu.uned.es>
+References: <81db4ee8-8d6c-c810-bfeb-508336641d1d@edu.uned.es>
+Message-ID: <CAOKbq8ix0tAHfYtRUPjtBPR26SYRB1xbjDS2hToa7b5cn9bQRQ@mail.gmail.com>
+
+Hola Juan Antonio,
+
+Acabo de instalar "tree" en Mac OSX y no aparece este error...
+
+> shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+> predict(shuttle.tr, shuttle1)
+    auto noauto
+254    0      1
+255    0      1
+256    0      1
+
+De todas formas por si puede ser un error propio de Windows, mira si este
+fix te valdría:
+
+https://github.com/cran/tree/blob/master/R/treefix.R
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 24 de septiembre de 2017, 19:51, Juan Antonio Gil <jgil en edu.uned.es>
+escribió:
+
+> Estimados compañeros hace unos días instale la versión última de R
+> (3.4.1) en windows 10 y hoy me tiene loco el siguiente error cuando
+> ejecuto predict para un árbol de clasificación-regresión. El problema da
+> incluso con el ejemplo del comando predict
+>
+> library(tree)
+> data(shuttle, package="MASS")
+> shuttle.tr <- tree(use ~ ., shuttle, subset=1:253,
+>                     mindev=1e-6, minsize=2)
+> shuttle.tr
+> shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+> predict(shuttle.tr, shuttle1)
+>
+> Da el error:
+>
+> Error in pred1.tree(object, tree.matrix(newdata)) : object 'VR_pred1'
+> not found Sabe alguien ¿cuál es el problema? ¿Os ocurre a vosotros lo
+> mismo?
+>
+> Un cordial saludo, Juan
+>
+> --
+> Juan Antonio Gil Pascual
+> Profesor de Metodología de la Investigación Cuantitativa
+> correo: jgil en edu.uned.es
+> web: www.uned.es/personal/jgil
+>
+> Dpto. MIDE
+> Facultad de Educación
+> c/Juan del Rosal, 14
+> <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g>
+> desp. 2.72
+> 28040 Madrid
+> Tel?f. 91 3987279
+> Fax. 91 3987288
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From jgil en edu.uned.es  Sun Sep 24 20:57:17 2017
+From: jgil en edu.uned.es (Juan Antonio Gil)
+Date: Sun, 24 Sep 2017 20:57:17 +0200
+Subject: [R-es] predict y tree
+In-Reply-To: <CAOKbq8ix0tAHfYtRUPjtBPR26SYRB1xbjDS2hToa7b5cn9bQRQ@mail.gmail.com>
+References: <81db4ee8-8d6c-c810-bfeb-508336641d1d@edu.uned.es>
+ <CAOKbq8ix0tAHfYtRUPjtBPR26SYRB1xbjDS2hToa7b5cn9bQRQ@mail.gmail.com>
+Message-ID: <408b5ef0-1571-0443-aca9-d87331b65d2d@edu.uned.es>
+
+Gracias Carlos miraré el fix y en su defecto intentaré mandar un mensaje 
+al autor. De todas las maneras espero que alguien lo pruebe en windows 10
+
+Saludos,
+
+Juan
+
+
+
+El 24/09/2017 a las 20:32, Carlos Ortega escribió:
+> Hola Juan Antonio,
+>
+> Acabo de instalar "tree" en Mac OSX y no aparece este error...
+>
+> > shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+> > predict(shuttle.tr <http://shuttle.tr>, shuttle1)
+> auto noauto
+> 254   0      1
+> 255   0      1
+> 256   0      1
+>
+> De todas formas por si puede ser un error propio de Windows, mira si 
+> este fix te valdría:
+>
+> https://github.com/cran/tree/blob/master/R/treefix.R
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es>
+>
+>
+> El 24 de septiembre de 2017, 19:51, Juan Antonio Gil <jgil en edu.uned.es 
+> <mailto:jgil en edu.uned.es>> escribió:
+>
+>     Estimados compañeros hace unos días instale la versión última de R
+>     (3.4.1) en windows 10 y hoy me tiene loco el siguiente error cuando
+>     ejecuto predict para un árbol de clasificación-regresión. El
+>     problema da
+>     incluso con el ejemplo del comando predict
+>
+>     library(tree)
+>     data(shuttle, package="MASS")
+>     shuttle.tr <http://shuttle.tr> <- tree(use ~ ., shuttle, subset=1:253,
+>                         mindev=1e-6, minsize=2)
+>     shuttle.tr <http://shuttle.tr>
+>     shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+>     predict(shuttle.tr <http://shuttle.tr>, shuttle1)
+>
+>     Da el error:
+>
+>     Error in pred1.tree(object, tree.matrix(newdata)) : object 'VR_pred1'
+>     not found Sabe alguien ¿cuál es el problema? ¿Os ocurre a vosotros lo
+>     mismo?
+>
+>     Un cordial saludo, Juan
+>
+>     -- 
+>     Juan Antonio Gil Pascual
+>     Profesor de Metodología de la Investigación Cuantitativa
+>     correo: jgil en edu.uned.es <mailto:jgil en edu.uned.es>
+>     web: www.uned.es/personal/jgil <http://www.uned.es/personal/jgil>
+>
+>     Dpto. MIDE
+>     Facultad de Educación
+>     c/Juan del Rosal, 14
+>     <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g>
+>     desp. 2.72
+>     28040 Madrid
+>     Tel?f. 91 3987279 <tel:91%203987279>
+>     Fax. 91 3987288 <tel:91%203987288>
+>
+>     _______________________________________________
+>     R-help-es mailing list
+>     R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>     https://stat.ethz.ch/mailman/listinfo/r-help-es
+>     <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>
+>
+>
+>
+> -- 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es>
+
+-- 
+Juan Antonio Gil Pascual
+Profesor de Metodología de la Investigación Cuantitativa
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+Dpto. MIDE
+Facultad de Educación
+c/Juan del Rosal, 14 desp. 2.72
+28040 Madrid
+Tel?f. 91 3987279
+Fax. 91 3987288
+
+
+	[[alternative HTML version deleted]]
+
+
+From pedro.concejerocerezo en telefonica.com  Mon Sep 25 10:57:57 2017
+From: pedro.concejerocerezo en telefonica.com (PEDRO CONCEJERO CEREZO)
+Date: Mon, 25 Sep 2017 10:57:57 +0200
+Subject: [R-es]
+	=?utf-8?q?Resumen_de_R-help-es=2C_Vol_103=2C_Env=C3=ADo_24?=
+In-Reply-To: <mailman.9265.1506279448.1137.r-help-es@r-project.org>
+References: <mailman.9265.1506279448.1137.r-help-es@r-project.org>
+Message-ID: <46d7bec6-636f-e49f-8a54-c5fa686a5269@telefonica.com>
+
+Hola, he probado con Windows 10, 64-bit (ojo!), y con esta sessionInfo y no he tenido ningun problema
+
+> predict(shuttle.tr, shuttle1)
+    auto noauto
+254    0      1
+255    0      1
+256    0      1
+
+> sessionInfo()
+R version 3.4.0 (2017-04-21)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows >= 8 x64 (build 9200)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=Spanish_Spain.1252  LC_CTYPE=Spanish_Spain.1252    LC_MONETARY=Spanish_Spain.1252 LC_NUMERIC=C
+[5] LC_TIME=Spanish_Spain.1252
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base
+
+other attached packages:
+[1] tree_1.0-37
+
+loaded via a namespace (and not attached):
+[1] compiler_3.4.0 rsconnect_0.8  tools_3.4.0
+
+
+El 24/09/2017 a las 20:57, r-help-es-request en r-project.org<mailto:r-help-es-request en r-project.org> escribió:
+
+library(tree)
+data(shuttle, package="MASS")
+shuttle.tr <- tree(use ~ ., shuttle, subset=1:253,
+                    mindev=1e-6, minsize=2)
+shuttle.tr
+shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+predict(shuttle.tr, shuttle1)
+
+
+--
+Pedro Concejero
+E-mail: pedro.concejerocerezo en telefonica.com<mailto:pedro.concejerocerezo en telefonica.com>
+skype: pedro.concejero
+twitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>
+linkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>
+eRReRo feliz, me puedes encontrar en gRupo R madRid <http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>
+
+________________________________
+
+Este mensaje y sus adjuntos se dirigen exclusivamente a su destinatario, puede contener información privilegiada o confidencial y es para uso exclusivo de la persona o entidad de destino. Si no es usted. el destinatario indicado, queda notificado de que la lectura, utilización, divulgación y/o copia sin autorización puede estar prohibida en virtud de la legislación vigente. Si ha recibido este mensaje por error, le rogamos que nos lo comunique inmediatamente por esta misma vía y proceda a su destrucción.
+
+The information contained in this transmission is privileged and confidential information intended only for the use of the individual or entity named above. If the reader of this message is not the intended recipient, you are hereby notified that any dissemination, distribution or copying of this communication is strictly prohibited. If you have received this transmission in error, do not read it. Please immediately reply to the sender that you have received this communication in error and then delete it.
+
+Esta mensagem e seus anexos se dirigem exclusivamente ao seu destinatário, pode conter informação privilegiada ou confidencial e é para uso exclusivo da pessoa ou entidade de destino. Se não é vossa senhoria o destinatário indicado, fica notificado de que a leitura, utilização, divulgação e/ou cópia sem autorização pode estar proibida em virtude da legislação vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos o comunique imediatamente por esta mesma via e proceda a sua destruição
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Mon Sep 25 11:09:50 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 25 Sep 2017 11:09:50 +0200
+Subject: [R-es] predict y tree
+In-Reply-To: <408b5ef0-1571-0443-aca9-d87331b65d2d@edu.uned.es>
+References: <81db4ee8-8d6c-c810-bfeb-508336641d1d@edu.uned.es>
+ <CAOKbq8ix0tAHfYtRUPjtBPR26SYRB1xbjDS2hToa7b5cn9bQRQ@mail.gmail.com>
+ <408b5ef0-1571-0443-aca9-d87331b65d2d@edu.uned.es>
+Message-ID: <CAOKbq8jsm8343S68_zyNhC8OMFizfwRMQa9YJ46mHNj2qGW00Q@mail.gmail.com>
+
+Hola Juan,
+
+Lo mismo que acaba de enviar Pedro, a mi tampoco me da error en una máquina
+Windows-10 (64bits).
+Me he bajado la versión del paquete tree para ejecutar lo que pasaste...
+
+> predict(shuttle.tr, shuttle1)
+    auto noauto
+254    0      1
+255    0      1
+256    0      1
+
+¿Tienes la última versión de "R"?....
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 24 de septiembre de 2017, 20:57, Juan Antonio Gil <jgil en edu.uned.es>
+escribió:
+
+> Gracias Carlos miraré el fix y en su defecto intentaré mandar un mensaje
+> al autor. De todas las maneras espero que alguien lo pruebe en windows 10
+>
+> Saludos,
+>
+> Juan
+>
+>
+>
+> El 24/09/2017 a las 20:32, Carlos Ortega escribió:
+>
+> Hola Juan Antonio,
+>
+> Acabo de instalar "tree" en Mac OSX y no aparece este error...
+>
+> > shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+> > predict(shuttle.tr, shuttle1)
+>     auto noauto
+> 254    0      1
+> 255    0      1
+> 256    0      1
+>
+> De todas formas por si puede ser un error propio de Windows, mira si este
+> fix te valdría:
+>
+> https://github.com/cran/tree/blob/master/R/treefix.R
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El 24 de septiembre de 2017, 19:51, Juan Antonio Gil <jgil en edu.uned.es>
+> escribió:
+>
+>> Estimados compañeros hace unos días instale la versión última de R
+>> (3.4.1) en windows 10 y hoy me tiene loco el siguiente error cuando
+>> ejecuto predict para un árbol de clasificación-regresión. El problema da
+>> incluso con el ejemplo del comando predict
+>>
+>> library(tree)
+>> data(shuttle, package="MASS")
+>> shuttle.tr <- tree(use ~ ., shuttle, subset=1:253,
+>>                     mindev=1e-6, minsize=2)
+>> shuttle.tr
+>> shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+>> predict(shuttle.tr, shuttle1)
+>>
+>> Da el error:
+>>
+>> Error in pred1.tree(object, tree.matrix(newdata)) : object 'VR_pred1'
+>> not found Sabe alguien ¿cuál es el problema? ¿Os ocurre a vosotros lo
+>> mismo?
+>>
+>> Un cordial saludo, Juan
+>>
+>> --
+>> Juan Antonio Gil Pascual
+>> Profesor de Metodología de la Investigación Cuantitativa
+>> correo: jgil en edu.uned.es
+>> web: www.uned.es/personal/jgil
+>>
+>> Dpto. MIDE
+>> Facultad de Educación
+>> c/Juan del Rosal, 14
+>> <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g>
+>> desp. 2.72
+>> 28040 Madrid
+>> Tel?f. 91 3987279
+>> Fax. 91 3987288
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> --
+> Juan Antonio Gil Pascual
+> Profesor de Metodología de la Investigación Cuantitativa
+> correo: jgil en edu.uned.es
+> web: www.uned.es/personal/jgil
+>
+> Dpto. MIDE
+> Facultad de Educaciónc/Juan del Rosal, 14 <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g> desp. 2.72
+> 28040 Madrid
+> Tel?f. 91 3987279 <913%2098%2072%2079>
+> Fax. 91 3987288 <913%2098%2072%2088>
+>
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From jgil en edu.uned.es  Mon Sep 25 11:46:10 2017
+From: jgil en edu.uned.es (Juan Antonio Gil Pascual)
+Date: Mon, 25 Sep 2017 11:46:10 +0200
+Subject: [R-es] predict y tree
+In-Reply-To: <CAOKbq8jsm8343S68_zyNhC8OMFizfwRMQa9YJ46mHNj2qGW00Q@mail.gmail.com>
+References: <81db4ee8-8d6c-c810-bfeb-508336641d1d@edu.uned.es>
+ <CAOKbq8ix0tAHfYtRUPjtBPR26SYRB1xbjDS2hToa7b5cn9bQRQ@mail.gmail.com>
+ <408b5ef0-1571-0443-aca9-d87331b65d2d@edu.uned.es>
+ <CAOKbq8jsm8343S68_zyNhC8OMFizfwRMQa9YJ46mHNj2qGW00Q@mail.gmail.com>
+Message-ID: <b47de0a3-5674-2865-f01b-b422fda0a02b@edu.uned.es>
+
+Muchas gracias Carlos. Sólo veo una diferencia yo tengo instalada la 
+versión 3.4.1 de R y Pedro ha hecho la prueba en la 3.4.0. Voy a 
+probarlo en el ordenador de la Universidad para ver si el problema es 
+del portátil.
+
+Saludos,
+
+Juan
+
+
+
+El 25/09/2017 a las 11:09, Carlos Ortega escribió:
+> Hola Juan,
+>
+> Lo mismo que acaba de enviar Pedro, a mi tampoco me da error en una 
+> máquina Windows-10 (64bits).
+> Me he bajado la versión del paquete tree para ejecutar lo que pasaste...
+>
+> > predict(shuttle.tr <http://shuttle.tr>, shuttle1)
+>     auto noauto
+> 254    0      1
+> 255    0      1
+> 256    0      1
+>
+> ¿Tienes la última versión de "R"?....
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es>
+>
+>
+> El 24 de septiembre de 2017, 20:57, Juan Antonio Gil <jgil en edu.uned.es 
+> <mailto:jgil en edu.uned.es>> escribió:
+>
+>     Gracias Carlos miraré el fix y en su defecto intentaré mandar un
+>     mensaje al autor. De todas las maneras espero que alguien lo
+>     pruebe en windows 10
+>
+>     Saludos,
+>
+>     Juan
+>
+>
+>
+>     El 24/09/2017 a las 20:32, Carlos Ortega escribió:
+>>     Hola Juan Antonio,
+>>
+>>     Acabo de instalar "tree" en Mac OSX y no aparece este error...
+>>
+>>     > shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+>>     > predict(shuttle.tr <http://shuttle.tr>, shuttle1)
+>>       auto noauto
+>>     254   0      1
+>>     255   0      1
+>>     256   0      1
+>>
+>>     De todas formas por si puede ser un error propio de Windows, mira
+>>     si este fix te valdría:
+>>
+>>     https://github.com/cran/tree/blob/master/R/treefix.R
+>>     <https://github.com/cran/tree/blob/master/R/treefix.R>
+>>
+>>     Saludos,
+>>     Carlos Ortega
+>>     www.qualityexcellence.es <http://www.qualityexcellence.es>
+>>
+>>
+>>     El 24 de septiembre de 2017, 19:51, Juan Antonio Gil
+>>     <jgil en edu.uned.es <mailto:jgil en edu.uned.es>> escribió:
+>>
+>>         Estimados compañeros hace unos días instale la versión última
+>>         de R
+>>         (3.4.1) en windows 10 y hoy me tiene loco el siguiente error
+>>         cuando
+>>         ejecuto predict para un árbol de clasificación-regresión. El
+>>         problema da
+>>         incluso con el ejemplo del comando predict
+>>
+>>         library(tree)
+>>         data(shuttle, package="MASS")
+>>         shuttle.tr <http://shuttle.tr> <- tree(use ~ ., shuttle,
+>>         subset=1:253,
+>>                             mindev=1e-6, minsize=2)
+>>         shuttle.tr <http://shuttle.tr>
+>>         shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+>>         predict(shuttle.tr <http://shuttle.tr>, shuttle1)
+>>
+>>         Da el error:
+>>
+>>         Error in pred1.tree(object, tree.matrix(newdata)) : object
+>>         'VR_pred1'
+>>         not found Sabe alguien ¿cuál es el problema? ¿Os ocurre a
+>>         vosotros lo
+>>         mismo?
+>>
+>>         Un cordial saludo, Juan
+>>
+>>         -- 
+>>         Juan Antonio Gil Pascual
+>>         Profesor de Metodología de la Investigación Cuantitativa
+>>         correo: jgil en edu.uned.es <mailto:jgil en edu.uned.es>
+>>         web: www.uned.es/personal/jgil <http://www.uned.es/personal/jgil>
+>>
+>>         Dpto. MIDE
+>>         Facultad de Educación
+>>         c/Juan del Rosal, 14
+>>         <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g>
+>>         desp. 2.72
+>>         28040 Madrid
+>>         Tel?f. 91 3987279 <tel:91%203987279>
+>>         Fax. 91 3987288 <tel:91%203987288>
+>>
+>>         _______________________________________________
+>>         R-help-es mailing list
+>>         R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>         https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>         <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>>
+>>
+>>
+>>
+>>     -- 
+>>     Saludos,
+>>     Carlos Ortega
+>>     www.qualityexcellence.es <http://www.qualityexcellence.es>
+>
+>     -- 
+>     Juan Antonio Gil Pascual
+>     Profesor de Metodología de la Investigación Cuantitativa
+>     correo:jgil en edu.uned.es <mailto:jgil en edu.uned.es>
+>     web:www.uned.es/personal/jgil <http://www.uned.es/personal/jgil>
+>
+>     Dpto. MIDE
+>     Facultad de Educación
+>     c/Juan del Rosal, 14
+>     <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g>  desp. 2.72
+>     28040 Madrid
+>     Tel?f.91 3987279 <tel:913%2098%2072%2079>
+>     Fax.91 3987288 <tel:913%2098%2072%2088>
+>
+>
+>
+>
+> -- 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es>
+
+-- 
+Juan Antonio Gil Pascual
+Profesor de Metodología de la Investigación Cuantitativa
+correo: jgil en edu.uned.es
+web: www.uned.es/personal/jgil
+
+Dpto. MIDE
+Facultad de Educación
+c/Juan del Rosal, 14 desp. 2.72
+28040 Madrid
+Tel?f. 91 3987279
+Fax. 91 3987288
+
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Mon Sep 25 11:49:04 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 25 Sep 2017 11:49:04 +0200
+Subject: [R-es] predict y tree
+In-Reply-To: <b47de0a3-5674-2865-f01b-b422fda0a02b@edu.uned.es>
+References: <81db4ee8-8d6c-c810-bfeb-508336641d1d@edu.uned.es>
+ <CAOKbq8ix0tAHfYtRUPjtBPR26SYRB1xbjDS2hToa7b5cn9bQRQ@mail.gmail.com>
+ <408b5ef0-1571-0443-aca9-d87331b65d2d@edu.uned.es>
+ <CAOKbq8jsm8343S68_zyNhC8OMFizfwRMQa9YJ46mHNj2qGW00Q@mail.gmail.com>
+ <b47de0a3-5674-2865-f01b-b422fda0a02b@edu.uned.es>
+Message-ID: <CAOKbq8gkQYc90ZSxY0RjX5kHrFQU1EuZkJo-p3XEnT-Bdq4Kww@mail.gmail.com>
+
+OK.
+Yo también lo he probado con la 3.4.1....
+
+Gracias,
+Carlos.
+
+El 25 de septiembre de 2017, 11:46, Juan Antonio Gil Pascual <
+jgil en edu.uned.es> escribió:
+
+> Muchas gracias Carlos. Sólo veo una diferencia yo tengo instalada la
+> versión 3.4.1 de R y Pedro ha hecho la prueba en la 3.4.0. Voy a probarlo
+> en el ordenador de la Universidad para ver si el problema es del portátil.
+>
+> Saludos,
+>
+> Juan
+>
+>
+>
+> El 25/09/2017 a las 11:09, Carlos Ortega escribió:
+>
+> Hola Juan,
+>
+> Lo mismo que acaba de enviar Pedro, a mi tampoco me da error en una
+> máquina Windows-10 (64bits).
+> Me he bajado la versión del paquete tree para ejecutar lo que pasaste...
+>
+> > predict(shuttle.tr, shuttle1)
+>     auto noauto
+> 254    0      1
+> 255    0      1
+> 256    0      1
+>
+> ¿Tienes la última versión de "R"?....
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El 24 de septiembre de 2017, 20:57, Juan Antonio Gil <jgil en edu.uned.es>
+> escribió:
+>
+>> Gracias Carlos miraré el fix y en su defecto intentaré mandar un mensaje
+>> al autor. De todas las maneras espero que alguien lo pruebe en windows 10
+>>
+>> Saludos,
+>>
+>> Juan
+>>
+>>
+>>
+>> El 24/09/2017 a las 20:32, Carlos Ortega escribió:
+>>
+>> Hola Juan Antonio,
+>>
+>> Acabo de instalar "tree" en Mac OSX y no aparece este error...
+>>
+>> > shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+>> > predict(shuttle.tr, shuttle1)
+>>     auto noauto
+>> 254    0      1
+>> 255    0      1
+>> 256    0      1
+>>
+>> De todas formas por si puede ser un error propio de Windows, mira si este
+>> fix te valdría:
+>>
+>> https://github.com/cran/tree/blob/master/R/treefix.R
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>
+>> El 24 de septiembre de 2017, 19:51, Juan Antonio Gil <jgil en edu.uned.es>
+>> escribió:
+>>
+>>> Estimados compañeros hace unos días instale la versión última de R
+>>> (3.4.1) en windows 10 y hoy me tiene loco el siguiente error cuando
+>>> ejecuto predict para un árbol de clasificación-regresión. El problema da
+>>> incluso con el ejemplo del comando predict
+>>>
+>>> library(tree)
+>>> data(shuttle, package="MASS")
+>>> shuttle.tr <- tree(use ~ ., shuttle, subset=1:253,
+>>>                     mindev=1e-6, minsize=2)
+>>> shuttle.tr
+>>> shuttle1 <- shuttle[254:256, ]  # 3 missing cases
+>>> predict(shuttle.tr, shuttle1)
+>>>
+>>> Da el error:
+>>>
+>>> Error in pred1.tree(object, tree.matrix(newdata)) : object 'VR_pred1'
+>>> not found Sabe alguien ¿cuál es el problema? ¿Os ocurre a vosotros lo
+>>> mismo?
+>>>
+>>> Un cordial saludo, Juan
+>>>
+>>> --
+>>> Juan Antonio Gil Pascual
+>>> Profesor de Metodología de la Investigación Cuantitativa
+>>> correo: jgil en edu.uned.es
+>>> web: www.uned.es/personal/jgil
+>>>
+>>> Dpto. MIDE
+>>> Facultad de Educación
+>>> c/Juan del Rosal, 14
+>>> <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g>
+>>> desp. 2.72
+>>> 28040 Madrid
+>>> Tel?f. 91 3987279
+>>> Fax. 91 3987288
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>
+>> --
+>> Juan Antonio Gil Pascual
+>> Profesor de Metodología de la Investigación Cuantitativa
+>> correo: jgil en edu.uned.es
+>> web: www.uned.es/personal/jgil
+>>
+>> Dpto. MIDE
+>> Facultad de Educaciónc/Juan del Rosal, 14 <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g> desp. 2.72
+>> 28040 Madrid
+>> Tel?f. 91 3987279 <913%2098%2072%2079>
+>> Fax. 91 3987288 <913%2098%2072%2088>
+>>
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> --
+> Juan Antonio Gil Pascual
+> Profesor de Metodología de la Investigación Cuantitativa
+> correo: jgil en edu.uned.es
+> web: www.uned.es/personal/jgil
+>
+> Dpto. MIDE
+> Facultad de Educaciónc/Juan del Rosal, 14 <https://maps.google.com/?q=c/Juan+del+Rosal,+14&entry=gmail&source=g> desp. 2.72
+> 28040 Madrid
+> Tel?f. 91 3987279 <913%2098%2072%2079>
+> Fax. 91 3987288 <913%2098%2072%2088>
+>
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From rodriguezmarcelogaston en gmail.com  Mon Sep 25 19:25:05 2017
+From: rodriguezmarcelogaston en gmail.com (marcelo rodriguez)
+Date: Mon, 25 Sep 2017 14:25:05 -0300
+Subject: [R-es] Medidas Repetidas
+Message-ID: <CACVOLwJ9yAwp5xAEos_edeN40aWSh2X2K3AYk71DxCC-FXVeoA@mail.gmail.com>
+
+Buenos días a todos!
+Quisiera saber si me pueden ayudar con un Script. Necesito hacer un ANOVA
+para medidas repetidas. Sé que el modelo es el *lme,* pero no se indicarle
+las medidas repetidas.
+El conjunto de datos tiene como variable respuesta volumen ingresado y como
+factores tiempo y tratamientos. El tiempo se midió a las 2,4,6 y 8 min para
+los distintos tratamientos, son medidas repetidas porque se observó en los
+distintos tiempos el mismo insecto.
+Espero que se haya entendido lo que quiero realizar y que me puedan ayudar
+con el Script para poder trabajarlo en R.
+Muchas gracias!!
+
+	[[alternative HTML version deleted]]
+
+
+From onunez en unex.es  Fri Sep 29 10:30:50 2017
+From: onunez en unex.es (Olivier =?utf-8?Q?Nu=C3=B1ez?=)
+Date: Fri, 29 Sep 2017 10:30:50 +0200 (CEST)
+Subject: [R-es] Medidas Repetidas
+In-Reply-To: <CACVOLwJ9yAwp5xAEos_edeN40aWSh2X2K3AYk71DxCC-FXVeoA@mail.gmail.com>
+References: <CACVOLwJ9yAwp5xAEos_edeN40aWSh2X2K3AYk71DxCC-FXVeoA@mail.gmail.com>
+Message-ID: <1560948073.11028447.1506673850263.JavaMail.zimbra@unex.es>
+
+Marcelo,
+
+si "y" es la respuesta, "t" el tratamiento y "id" el indice del insecto en tu base de datos "Insectos".
+Un modelo que toma en cuenta la estructura de tus datos es puede escribir:
+
+modelo=lme(y~t, data = Insectos, random = ~ id)
+
+Un saludo. Olivier
+
+
+
+----- Mensaje original -----
+De: "marcelo rodriguez" <rodriguezmarcelogaston en gmail.com>
+Para: r-help-es en r-project.org
+Enviados: Lunes, 25 de Septiembre 2017 19:25:05
+Asunto: [R-es] Medidas Repetidas
+
+Buenos días a todos!
+Quisiera saber si me pueden ayudar con un Script. Necesito hacer un ANOVA
+para medidas repetidas. Sé que el modelo es el *lme,* pero no se indicarle
+las medidas repetidas.
+El conjunto de datos tiene como variable respuesta volumen ingresado y como
+factores tiempo y tratamientos. El tiempo se midió a las 2,4,6 y 8 min para
+los distintos tratamientos, son medidas repetidas porque se observó en los
+distintos tiempos el mismo insecto.
+Espero que se haya entendido lo que quiero realizar y que me puedan ayudar
+con el Script para poder trabajarlo en R.
+Muchas gracias!!
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From mspinola10 en gmail.com  Fri Sep 29 15:18:49 2017
+From: mspinola10 en gmail.com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Fri, 29 Sep 2017 07:18:49 -0600
+Subject: [R-es] Paquetes de R para elaborar y analizar encuestas
+Message-ID: <CABkCotQDB+NQd916BsfL0MM+RZZpjRt67+L3x39zigKL=jFHiA@mail.gmail.com>
+
+Estimados miembros de la lista,
+
+Hace no mucho tiempo, creo que Carlos Ortega, envió una lista de paquetes
+para elaborar y analizar encuestas en R.  Alguien me puede reenviar ese
+correo o realizar sugerencias de paquetes con esta capacidad.
+
+Manuel
+
+-- 
+*Manuel Spínola, Ph.D.*
+Instituto Internacional en Conservación y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Teléfono: (506) 8706 - 4662
+Personal website: Lobito de río <https://sites.google.com/site/lobitoderio/>
+Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+
+	[[alternative HTML version deleted]]
+
+
+From mspinola10 en gmail.com  Fri Sep 29 16:47:22 2017
+From: mspinola10 en gmail.com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Fri, 29 Sep 2017 08:47:22 -0600
+Subject: [R-es] =?utf-8?q?Miner=C3=ADa_de_testo_en_R?=
+Message-ID: <CABkCotR7Ff2ZSN=aNXD+OWcT5u9y5wJg3L8pUbfOkvs8LznTjw@mail.gmail.com>
+
+Estimados miembros del grupo,
+
+Estoy buscando paquetes de R que permitan hacer minería de textos de
+archivos PDF o Word que tengan una estructura tabular (cuadros) de
+resultado de talleres de trabajo donde se tratan diferentes ejes temáticos.
+
+Especifico esto porque he visto que algunos paquetes analizan directamente
+texto de libros, tweets u otras fuentes donde no hay una estructura como
+cuadros en el texto que se quiere analizar.
+
+Desde ya muchas gracias por la ayuda.
+
+Saludos,
+
+Manuel
+
+-- 
+*Manuel Spínola, Ph.D.*
+Instituto Internacional en Conservación y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Teléfono: (506) 8706 - 4662
+Personal website: Lobito de río <https://sites.google.com/site/lobitoderio/>
+Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+
+	[[alternative HTML version deleted]]
+
+

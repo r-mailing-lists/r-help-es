@@ -1,0 +1,2396 @@
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Jul  1 00:15:21 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Wed, 30 Jun 2021 19:15:21 -0300
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+Message-ID: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+
+Hola, como andan!
+
+Tengo una base de datos de medicamentos (monodrogas), con tres variables,
+unidades, precio y precio unitario. Necesito llegar a un data frame donde
+tenga solo las monodrogas que cumplen alguna condición en la variable
+unidades, pero considerando varias monodrogas.
+
+Esto es un recorte de la base:
+
+Monodroga UNIDADES Precio PrecioUnit
+aciclovir 20 111272 55.636
+aciclovir 20 97464 48.732
+aciclovir 40 98322 432
+aciclovir 40 98322 324
+paracetamol 1 19291 192.91
+paracetamol 1 24702 247.02
+paracetamol 1 21120 211.2
+paracetamol 10 9993 9.993
+paracetamol 10 10443 10.443
+rosuvastatina 14 141134 100.81
+rosuvastatina 28 258262 92.2364286
+rosuvastatina 28 201590 71.9964286
+rosuvastatina 30 183717 61.239
+rosuvastatina 30 231935 77.3116667
+
+Por ejemplo, para la monodroga "aciclovir" necesito solo las filas donde
+Unidades==20,  en paracetamol==10 y en rosuvastatina==30.
+
+Estoy trabajando con tidyverse y he probado algunas cosas que no han
+funcionado.
+
+prom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final %>%
+  ##unite("concat1",CodDrog,CodForma,sep="",remove = FALSE) %>%
+  ##unite("concat2",CodDrog,CodForma,Potencia,sep="",remove = FALSE) %>%
+  filter(!is.na(CodDrog)) %>%
+  ##filter(monodroga=="aciclovir", Unidades %in% c(20)) %>%
+  group_by(concat1,concat2,monodroga) %>%
+  summarize(min_may_2021=min(precio_unitario),
+            max_may_2021=max(precio_unitario),
+            prom_may_2021=mean(precio_unitario)) %>%
+  ungroup()
+
+Ajdunto la base en csv.
+
+Muchas gracias!
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210630/6497cf18/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: base_monodrogas.csv
+Type: application/vnd.ms-excel
+Size: 455 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210630/6497cf18/attachment.xlb>
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Thu Jul  1 00:34:45 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Wed, 30 Jun 2021 18:34:45 -0400
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+Message-ID: <20210630183445.123808a6@TheMatrix>
+
+
+ Y si lo haces con la libreria data.table ? suponiendo que bd es tu
+ base de datos:
+
+ bd1 <- bd[monodroga=="aciclovir" & UNIDADES==20,]
+ bd2 <- bd[monodroga=="paracetamol" & UNIDADES==10,]
+ bd3 <- bd[monodroga=="rosuvastatina" & UNIDADES==30,]
+
+y luego las unes:
+
+ bd.nueva <- rbind(bd1,bd2,bd3)
+
+Algo así podría ser ... hay muchas otras formas de hacerlo, pero me
+gusta data.table cuando son bbdd grandes xq es muy rápida, sobretodo si
+la usas con set.key() ... mira la ayuda de R para que veas los detalles
+de data.table.
+
+Ojo con los detalles, como que la columna monodroga sea tipo caracter o
+factor, q UNIDADES sea numérico, y así ...
+
+Suerte !!
+
+Eric.
+
+
+
+
+n Wed, 30 Jun 2021 19:15:21 -0300
+juan manuel dias <juamadias en gmail.com> wrote:
+
+> Hola, como andan!
+> 
+> Tengo una base de datos de medicamentos (monodrogas), con tres
+> variables, unidades, precio y precio unitario. Necesito llegar a un
+> data frame donde tenga solo las monodrogas que cumplen alguna
+> condición en la variable unidades, pero considerando varias
+> monodrogas.
+> 
+> Esto es un recorte de la base:
+> 
+> Monodroga UNIDADES Precio PrecioUnit
+> aciclovir 20 111272 55.636
+> aciclovir 20 97464 48.732
+> aciclovir 40 98322 432
+> aciclovir 40 98322 324
+> paracetamol 1 19291 192.91
+> paracetamol 1 24702 247.02
+> paracetamol 1 21120 211.2
+> paracetamol 10 9993 9.993
+> paracetamol 10 10443 10.443
+> rosuvastatina 14 141134 100.81
+> rosuvastatina 28 258262 92.2364286
+> rosuvastatina 28 201590 71.9964286
+> rosuvastatina 30 183717 61.239
+> rosuvastatina 30 231935 77.3116667
+> 
+> Por ejemplo, para la monodroga "aciclovir" necesito solo las filas
+> donde Unidades==20,  en paracetamol==10 y en rosuvastatina==30.
+> 
+> Estoy trabajando con tidyverse y he probado algunas cosas que no han
+> funcionado.
+> 
+> prom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final
+> %>% ##unite("concat1",CodDrog,CodForma,sep="",remove = FALSE) %>%
+>   ##unite("concat2",CodDrog,CodForma,Potencia,sep="",remove = FALSE)
+> %>% filter(!is.na(CodDrog)) %>%
+>   ##filter(monodroga=="aciclovir", Unidades %in% c(20)) %>%
+>   group_by(concat1,concat2,monodroga) %>%
+>   summarize(min_may_2021=min(precio_unitario),
+>             max_may_2021=max(precio_unitario),
+>             prom_may_2021=mean(precio_unitario)) %>%
+>   ungroup()
+> 
+> Ajdunto la base en csv.
+> 
+> Muchas gracias!
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Jul  1 05:53:37 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Thu, 1 Jul 2021 00:53:37 -0300
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <20210630183445.123808a6@TheMatrix>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <20210630183445.123808a6@TheMatrix>
+Message-ID: <CAOF0weG78JdRvaPFaVZRFpYNpAD6fcYfC+jiXLczdc80G+Aqhg@mail.gmail.com>
+
+Muchas gracias! Lo veo una buena opción, mañana voy a probar con algunas
+monodrogas para ver que funcione y en tal caso lo escalo a toda la base.
+Muchas gracias! Juan.
+
+El mié., 30 de jun. de 2021 7:35 p.m., Eric Concha M. <
+ericconchamunoz en gmail.com> escribió:
+
+>
+>  Y si lo haces con la libreria data.table ? suponiendo que bd es tu
+>  base de datos:
+>
+>  bd1 <- bd[monodroga=="aciclovir" & UNIDADES==20,]
+>  bd2 <- bd[monodroga=="paracetamol" & UNIDADES==10,]
+>  bd3 <- bd[monodroga=="rosuvastatina" & UNIDADES==30,]
+>
+> y luego las unes:
+>
+>  bd.nueva <- rbind(bd1,bd2,bd3)
+>
+> Algo así podría ser ... hay muchas otras formas de hacerlo, pero me
+> gusta data.table cuando son bbdd grandes xq es muy rápida, sobretodo si
+> la usas con set.key() ... mira la ayuda de R para que veas los detalles
+> de data.table.
+>
+> Ojo con los detalles, como que la columna monodroga sea tipo caracter o
+> factor, q UNIDADES sea numérico, y así ...
+>
+> Suerte !!
+>
+> Eric.
+>
+>
+>
+>
+> n Wed, 30 Jun 2021 19:15:21 -0300
+> juan manuel dias <juamadias en gmail.com> wrote:
+>
+> > Hola, como andan!
+> >
+> > Tengo una base de datos de medicamentos (monodrogas), con tres
+> > variables, unidades, precio y precio unitario. Necesito llegar a un
+> > data frame donde tenga solo las monodrogas que cumplen alguna
+> > condición en la variable unidades, pero considerando varias
+> > monodrogas.
+> >
+> > Esto es un recorte de la base:
+> >
+> > Monodroga UNIDADES Precio PrecioUnit
+> > aciclovir 20 111272 55.636
+> > aciclovir 20 97464 48.732
+> > aciclovir 40 98322 432
+> > aciclovir 40 98322 324
+> > paracetamol 1 19291 192.91
+> > paracetamol 1 24702 247.02
+> > paracetamol 1 21120 211.2
+> > paracetamol 10 9993 9.993
+> > paracetamol 10 10443 10.443
+> > rosuvastatina 14 141134 100.81
+> > rosuvastatina 28 258262 92.2364286
+> > rosuvastatina 28 201590 71.9964286
+> > rosuvastatina 30 183717 61.239
+> > rosuvastatina 30 231935 77.3116667
+> >
+> > Por ejemplo, para la monodroga "aciclovir" necesito solo las filas
+> > donde Unidades==20,  en paracetamol==10 y en rosuvastatina==30.
+> >
+> > Estoy trabajando con tidyverse y he probado algunas cosas que no han
+> > funcionado.
+> >
+> > prom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final
+> > %>% ##unite("concat1",CodDrog,CodForma,sep="",remove = FALSE) %>%
+> >   ##unite("concat2",CodDrog,CodForma,Potencia,sep="",remove = FALSE)
+> > %>% filter(!is.na(CodDrog)) %>%
+> >   ##filter(monodroga=="aciclovir", Unidades %in% c(20)) %>%
+> >   group_by(concat1,concat2,monodroga) %>%
+> >   summarize(min_may_2021=min(precio_unitario),
+> >             max_may_2021=max(precio_unitario),
+> >             prom_may_2021=mean(precio_unitario)) %>%
+> >   ungroup()
+> >
+> > Ajdunto la base en csv.
+> >
+> > Muchas gracias!
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From v|ctorgr@nd@g@rc|@ @end|ng |rom gm@||@com  Thu Jul  1 07:53:49 2021
+From: v|ctorgr@nd@g@rc|@ @end|ng |rom gm@||@com (=?UTF-8?Q?V=C3=ADctor_Granda_Garc=C3=ADa?=)
+Date: Thu, 1 Jul 2021 07:53:49 +0200
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <CAOF0weG78JdRvaPFaVZRFpYNpAD6fcYfC+jiXLczdc80G+Aqhg@mail.gmail.com>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <20210630183445.123808a6@TheMatrix>
+ <CAOF0weG78JdRvaPFaVZRFpYNpAD6fcYfC+jiXLczdc80G+Aqhg@mail.gmail.com>
+Message-ID: <CAOpgSEbPV7AxLRqSX6DJ3zG5CN=PpapsDd=jNdd5xHBsdAmEyw@mail.gmail.com>
+
+Otra opción es combinar case_when y filter con dplyr. Con case_when creas
+una variable dummy y luego filtras por esta:
+
+data %>%
+  mutate(
+    dummy = case_when(
+      Monodroga == aciclovir & unidades >= 20 ~ TRUE,
+      Monodroga == paracetamol & unidades >= 10 ~ TRUE,
+      Monodroga == rosuvastina & unidades >= 30 ~ TRUE,
+      TRUE ~ FALSE
+      )
+    ) %>%
+  filter(isTRUE(dummy))
+
+
+*Víctor Granda García*
+Data Scientist
+Ecosystem Modelling Facility - CREAF
+
+
+Tel. +34 93 581 33 53
+CREAF. Campus UAB. Edifici C. 08193 Bellaterra (Barcelona)
+
+Antes de imprimir este mensaje electrónico piense en el medio ambiente.
+
+
+
+On Thu, 1 Jul 2021 at 06:53, juan manuel dias <juamadias en gmail.com> wrote:
+
+> Muchas gracias! Lo veo una buena opción, mañana voy a probar con algunas
+> monodrogas para ver que funcione y en tal caso lo escalo a toda la base.
+> Muchas gracias! Juan.
+>
+> El mié., 30 de jun. de 2021 7:35 p.m., Eric Concha M. <
+> ericconchamunoz en gmail.com> escribió:
+>
+> >
+> >  Y si lo haces con la libreria data.table ? suponiendo que bd es tu
+> >  base de datos:
+> >
+> >  bd1 <- bd[monodroga=="aciclovir" & UNIDADES==20,]
+> >  bd2 <- bd[monodroga=="paracetamol" & UNIDADES==10,]
+> >  bd3 <- bd[monodroga=="rosuvastatina" & UNIDADES==30,]
+> >
+> > y luego las unes:
+> >
+> >  bd.nueva <- rbind(bd1,bd2,bd3)
+> >
+> > Algo así podría ser ... hay muchas otras formas de hacerlo, pero me
+> > gusta data.table cuando son bbdd grandes xq es muy rápida, sobretodo si
+> > la usas con set.key() ... mira la ayuda de R para que veas los detalles
+> > de data.table.
+> >
+> > Ojo con los detalles, como que la columna monodroga sea tipo caracter o
+> > factor, q UNIDADES sea numérico, y así ...
+> >
+> > Suerte !!
+> >
+> > Eric.
+> >
+> >
+> >
+> >
+> > n Wed, 30 Jun 2021 19:15:21 -0300
+> > juan manuel dias <juamadias en gmail.com> wrote:
+> >
+> > > Hola, como andan!
+> > >
+> > > Tengo una base de datos de medicamentos (monodrogas), con tres
+> > > variables, unidades, precio y precio unitario. Necesito llegar a un
+> > > data frame donde tenga solo las monodrogas que cumplen alguna
+> > > condición en la variable unidades, pero considerando varias
+> > > monodrogas.
+> > >
+> > > Esto es un recorte de la base:
+> > >
+> > > Monodroga UNIDADES Precio PrecioUnit
+> > > aciclovir 20 111272 55.636
+> > > aciclovir 20 97464 48.732
+> > > aciclovir 40 98322 432
+> > > aciclovir 40 98322 324
+> > > paracetamol 1 19291 192.91
+> > > paracetamol 1 24702 247.02
+> > > paracetamol 1 21120 211.2
+> > > paracetamol 10 9993 9.993
+> > > paracetamol 10 10443 10.443
+> > > rosuvastatina 14 141134 100.81
+> > > rosuvastatina 28 258262 92.2364286
+> > > rosuvastatina 28 201590 71.9964286
+> > > rosuvastatina 30 183717 61.239
+> > > rosuvastatina 30 231935 77.3116667
+> > >
+> > > Por ejemplo, para la monodroga "aciclovir" necesito solo las filas
+> > > donde Unidades==20,  en paracetamol==10 y en rosuvastatina==30.
+> > >
+> > > Estoy trabajando con tidyverse y he probado algunas cosas que no han
+> > > funcionado.
+> > >
+> > > prom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final
+> > > %>% ##unite("concat1",CodDrog,CodForma,sep="",remove = FALSE) %>%
+> > >   ##unite("concat2",CodDrog,CodForma,Potencia,sep="",remove = FALSE)
+> > > %>% filter(!is.na(CodDrog)) %>%
+> > >   ##filter(monodroga=="aciclovir", Unidades %in% c(20)) %>%
+> > >   group_by(concat1,concat2,monodroga) %>%
+> > >   summarize(min_may_2021=min(precio_unitario),
+> > >             max_may_2021=max(precio_unitario),
+> > >             prom_may_2021=mean(precio_unitario)) %>%
+> > >   ungroup()
+> > >
+> > > Ajdunto la base en csv.
+> > >
+> > > Muchas gracias!
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Thu Jul  1 09:25:05 2021
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Thu, 1 Jul 2021 07:25:05 +0000
+Subject: [R-es] =?iso-8859-1?q?Consulta_filtro_m=FAltiple=2E?=
+In-Reply-To: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+Message-ID: <1625124305024.67772@sergas.es>
+
+Hola Juan Manuel.
+
+
+Otro enfoque (de la vieja escuela)....
+
+
+base <- read.csv2("base_monodrogas.csv")
+
+library(sqldf)
+
+?seleccion <- sqldf("select * from base where (monodroga='aciclovir' AND UNIDADES=20) OR (monodroga='paracetamol' AND UNIDADES=10) ")
+
+
+M?s info del paquete sqldf aqu? -> https://rquer.netlify.app/sql/
+
+
+
+Un saludo,
+
+Miguel.
+
+
+
+
+
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de juan manuel dias <juamadias en gmail.com>
+Enviado: jueves, 1 de julio de 2021 0:15
+Para: Lista R
+Asunto: [R-es] Consulta filtro m?ltiple.
+
+Hola, como andan!
+
+Tengo una base de datos de medicamentos (monodrogas), con tres variables, unidades, precio y precio unitario. Necesito llegar a un data frame donde tenga solo las monodrogas que cumplen alguna condici?n en la variable unidades, pero considerando varias monodrogas.
+
+Esto es un recorte de la base:
+
+Monodroga       UNIDADES        Precio  PrecioUnit
+aciclovir       20      111272  55.636
+aciclovir       20      97464   48.732
+aciclovir       40      98322   432
+aciclovir       40      98322   324
+paracetamol     1       19291   192.91
+paracetamol     1       24702   247.02
+paracetamol     1       21120   211.2
+paracetamol     10      9993    9.993
+paracetamol     10      10443   10.443
+rosuvastatina   14      141134  100.81
+rosuvastatina   28      258262  92.2364286
+rosuvastatina   28      201590  71.9964286
+rosuvastatina   30      183717  61.239
+rosuvastatina   30      231935  77.3116667
+
+Por ejemplo, para la monodroga "aciclovir" necesito solo las filas donde Unidades==20,  en paracetamol==10 y en rosuvastatina==30.
+
+Estoy trabajando con tidyverse y he probado algunas cosas que no han funcionado.
+
+prom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final %>%
+  ##unite("concat1",CodDrog,CodForma,sep="",remove = FALSE) %>%
+  ##unite("concat2",CodDrog,CodForma,Potencia,sep="",remove = FALSE) %>%
+  filter(!is.na<http://is.na/>(CodDrog)) %>%
+  ##filter(monodroga=="aciclovir", Unidades %in% c(20)) %>%
+  group_by(concat1,concat2,monodroga) %>%
+  summarize(min_may_2021=min(precio_unitario),
+            max_may_2021=max(precio_unitario),
+            prom_may_2021=mean(precio_unitario)) %>%
+  ungroup()
+
+Ajdunto la base en csv.
+
+Muchas gracias!
+
+________________________________
+
+Nota: A informaci?n contida nesta mensaxe e os seus posibles documentos adxuntos ? privada e confidencial e est? dirixida ?nicamente ? seu destinatario/a. Se vostede non ? o/a destinatario/a orixinal desta mensaxe, por favor elim?nea. A distribuci?n ou copia desta mensaxe non est? autorizada.
+
+Nota: La informaci?n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est? dirigida ?nicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?nelo. La distribuci?n o copia de este mensaje no est? autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Thu Jul  1 12:16:39 2021
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Thu, 1 Jul 2021 10:16:39 +0000
+Subject: [R-es] =?iso-8859-1?q?Consulta_filtro_m=FAltiple=2E?=
+In-Reply-To: <CAOKbq8gwGOgCxK8CPdobacpADSXAJ_BYrvpsezDibyLpL8cpBQ@mail.gmail.com>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <1625124305024.67772@sergas.es>
+ <CAOKbq8j3xrH_PbviAj_gELQyORrqDO9iO-hDLj6dpN07k7C_dg@mail.gmail.com>,
+ <CAOKbq8gwGOgCxK8CPdobacpADSXAJ_BYrvpsezDibyLpL8cpBQ@mail.gmail.com>
+Message-ID: <1625134598423.33567@sergas.es>
+
+Buen trabajo, Carlos.
+
+
+Efectivamente, sqldf es muy poco eficiente (porque "recorre" varias veces la base adem?s de que tiene que traducir las instrucciones).
+
+
+Yo s?lo lo recomiendo para la gente que viene del mundo SQL (y del grandioso SELECT) y/o a los vagos que prefieran escribir poco c?digo.
+
+(yo cumplo las dos condiciones)
+
+
+:-)
+
+
+?
+
+Un saludo,
+
+Miguel.
+
+
+
+
+
+________________________________
+De: Carlos Ortega <cof en qualityexcellence.es>
+Enviado: jueves, 1 de julio de 2021 11:57
+Para: Rodr?guez Mu??os, Miguel ?ngel
+Cc: juan manuel dias; Lista R
+Asunto: Re: [R-es] Consulta filtro m?ltiple.
+
+ [ ... ]
+
+Y el ganador en tiempos de ejecuci?n es...
+
+Unit: microseconds
+      expr       min         lq       mean    median         uq       max neval
+ datatable    99.376   198.8520   338.4575   232.609   300.4635  7845.888  1000
+     dplyr  1417.242  1939.4520  2598.0892  2285.436  2884.1000 21591.185  1000
+      base    62.119    99.7405   158.8749   119.255   156.1890 10826.685  1000
+     sqldf 13058.622 16870.2300 21358.6144 19247.554 24269.0985 64807.865  1000
+
+ [ ... ]
+
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+
+
+________________________________
+
+Nota: A informaci?n contida nesta mensaxe e os seus posibles documentos adxuntos ? privada e confidencial e est? dirixida ?nicamente ? seu destinatario/a. Se vostede non ? o/a destinatario/a orixinal desta mensaxe, por favor elim?nea. A distribuci?n ou copia desta mensaxe non est? autorizada.
+
+Nota: La informaci?n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est? dirigida ?nicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?nelo. La distribuci?n o copia de este mensaje no est? autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Thu Jul  1 14:37:06 2021
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Thu, 1 Jul 2021 14:37:06 +0200
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <1625134598423.33567@sergas.es>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <1625124305024.67772@sergas.es>
+ <CAOKbq8j3xrH_PbviAj_gELQyORrqDO9iO-hDLj6dpN07k7C_dg@mail.gmail.com>,
+ <CAOKbq8gwGOgCxK8CPdobacpADSXAJ_BYrvpsezDibyLpL8cpBQ@mail.gmail.com>
+ <1625134598423.33567@sergas.es>
+Message-ID: <002a01d76e75$cd60c860$68225920$@jccm.es>
+
+Carlos,
+¿Te importaría poner el código?
+Mil gracias...
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de miguel.angel.rodriguez.muinos en sergas.es
+Enviado el: jueves, 1 de julio de 2021 12:17
+Para: cof en qualityexcellence.es
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] Consulta filtro múltiple.
+
+Buen trabajo, Carlos.
+
+
+Efectivamente, sqldf es muy poco eficiente (porque "recorre" varias veces la base adem?de que tiene que traducir las instrucciones).
+
+
+Yo s?lo recomiendo para la gente que viene del mundo SQL (y del grandioso SELECT) y/o a los vagos que prefieran escribir poco c?o.
+
+(yo cumplo las dos condiciones)
+
+
+:-)
+
+
+?
+
+Un saludo,
+
+Miguel.
+
+
+
+
+
+________________________________
+De: Carlos Ortega <cof en qualityexcellence.es>
+Enviado: jueves, 1 de julio de 2021 11:57
+Para: Rodr?ez Mu?s, Miguel ?gel
+Cc: juan manuel dias; Lista R
+Asunto: Re: [R-es] Consulta filtro m?le.
+
+ [ ... ]
+
+Y el ganador en tiempos de ejecuci?s...
+
+Unit: microseconds
+      expr       min         lq       mean    median         uq       max neval
+ datatable    99.376   198.8520   338.4575   232.609   300.4635  7845.888  1000
+     dplyr  1417.242  1939.4520  2598.0892  2285.436  2884.1000 21591.185  1000
+      base    62.119    99.7405   158.8749   119.255   156.1890 10826.685  1000
+     sqldf 13058.622 16870.2300 21358.6144 19247.554 24269.0985 64807.865  1000
+
+ [ ... ]
+
+
+
+Saludos,
+Carlos Ortega
+http://secure-web.cisco.com/1sPMcNqTKgaZhCI3VHWDNPt8_Vz5bObsQ2pCpI6mALdCvwyT029ZW-ysfzukZ3rJw_JLfq3tp4HGeCTtarv64mANhWiqtSNw6eWZDkYL3pFw0Mf4Hx_YmTloiiwMhiH4at3c9HBAOyorwxRZbKClEi-JxpDosJjwQcIVT86Wygf27Pw4nI-yF7R0XhLNnfDbt8JrGM6GrqTB2Wtgqx4kVcJhNPmZ43oEzA-vHOyvU_IzV94U3bOinlD3q6bszB9KY-QH0OoIPQE69aJNCUipeKQ/http%3A%2F%2Fwww.qualityexcellence.es<http://secure-web.cisco.com/1sPMcNqTKgaZhCI3VHWDNPt8_Vz5bObsQ2pCpI6mALdCvwyT029ZW-ysfzukZ3rJw_JLfq3tp4HGeCTtarv64mANhWiqtSNw6eWZDkYL3pFw0Mf4Hx_YmTloiiwMhiH4at3c9HBAOyorwxRZbKClEi-JxpDosJjwQcIVT86Wygf27Pw4nI-yF7R0XhLNnfDbt8JrGM6GrqTB2Wtgqx4kVcJhNPmZ43oEzA-vHOyvU_IzV94U3bOinlD3q6bszB9KY-QH0OoIPQE69aJNCUipeKQ/http%3A%2F%2Fwww.qualityexcellence.es>
+
+
+
+________________________________
+
+Nota: A informaci?ontida nesta mensaxe e os seus posibles documentos adxuntos ?rivada e confidencial e est?irixida ?mente ?u destinatario/a. Se vostede non ?/a destinatario/a orixinal desta mensaxe, por favor elim?a. A distribuci?u copia desta mensaxe non est?utorizada.
+
+Nota: La informaci?ontenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est?irigida ?mente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?lo. La distribuci? copia de este mensaje no est?utorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Jul  1 17:36:49 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Thu, 1 Jul 2021 12:36:49 -0300
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <CAOpgSEbPV7AxLRqSX6DJ3zG5CN=PpapsDd=jNdd5xHBsdAmEyw@mail.gmail.com>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <20210630183445.123808a6@TheMatrix>
+ <CAOF0weG78JdRvaPFaVZRFpYNpAD6fcYfC+jiXLczdc80G+Aqhg@mail.gmail.com>
+ <CAOpgSEbPV7AxLRqSX6DJ3zG5CN=PpapsDd=jNdd5xHBsdAmEyw@mail.gmail.com>
+Message-ID: <CAOF0weGnuDDTZX90_Qa3A87v8+pG1W0y4hhXF4th_XHarrV_mw@mail.gmail.com>
+
+Muchas gracias! Esta interesante esta propuesta! Voy a probarla!
+
+El jue., 1 de jul. de 2021 2:53 a.m., Víctor Granda García <
+victorgrandagarcia en gmail.com> escribió:
+
+> Otra opción es combinar case_when y filter con dplyr. Con case_when creas
+> una variable dummy y luego filtras por esta:
+>
+> data %>%
+>   mutate(
+>     dummy = case_when(
+>       Monodroga == aciclovir & unidades >= 20 ~ TRUE,
+>       Monodroga == paracetamol & unidades >= 10 ~ TRUE,
+>       Monodroga == rosuvastina & unidades >= 30 ~ TRUE,
+>       TRUE ~ FALSE
+>       )
+>     ) %>%
+>   filter(isTRUE(dummy))
+>
+>
+> *Víctor Granda García*
+> Data Scientist
+> Ecosystem Modelling Facility - CREAF
+>
+>
+> Tel. +34 93 581 33 53
+> CREAF. Campus UAB. Edifici C. 08193 Bellaterra (Barcelona)
+>
+> Antes de imprimir este mensaje electrónico piense en el medio ambiente.
+>
+>
+>
+> On Thu, 1 Jul 2021 at 06:53, juan manuel dias <juamadias en gmail.com> wrote:
+>
+>> Muchas gracias! Lo veo una buena opción, mañana voy a probar con algunas
+>> monodrogas para ver que funcione y en tal caso lo escalo a toda la base.
+>> Muchas gracias! Juan.
+>>
+>> El mié., 30 de jun. de 2021 7:35 p.m., Eric Concha M. <
+>> ericconchamunoz en gmail.com> escribió:
+>>
+>> >
+>> >  Y si lo haces con la libreria data.table ? suponiendo que bd es tu
+>> >  base de datos:
+>> >
+>> >  bd1 <- bd[monodroga=="aciclovir" & UNIDADES==20,]
+>> >  bd2 <- bd[monodroga=="paracetamol" & UNIDADES==10,]
+>> >  bd3 <- bd[monodroga=="rosuvastatina" & UNIDADES==30,]
+>> >
+>> > y luego las unes:
+>> >
+>> >  bd.nueva <- rbind(bd1,bd2,bd3)
+>> >
+>> > Algo así podría ser ... hay muchas otras formas de hacerlo, pero me
+>> > gusta data.table cuando son bbdd grandes xq es muy rápida, sobretodo si
+>> > la usas con set.key() ... mira la ayuda de R para que veas los detalles
+>> > de data.table.
+>> >
+>> > Ojo con los detalles, como que la columna monodroga sea tipo caracter o
+>> > factor, q UNIDADES sea numérico, y así ...
+>> >
+>> > Suerte !!
+>> >
+>> > Eric.
+>> >
+>> >
+>> >
+>> >
+>> > n Wed, 30 Jun 2021 19:15:21 -0300
+>> > juan manuel dias <juamadias en gmail.com> wrote:
+>> >
+>> > > Hola, como andan!
+>> > >
+>> > > Tengo una base de datos de medicamentos (monodrogas), con tres
+>> > > variables, unidades, precio y precio unitario. Necesito llegar a un
+>> > > data frame donde tenga solo las monodrogas que cumplen alguna
+>> > > condición en la variable unidades, pero considerando varias
+>> > > monodrogas.
+>> > >
+>> > > Esto es un recorte de la base:
+>> > >
+>> > > Monodroga UNIDADES Precio PrecioUnit
+>> > > aciclovir 20 111272 55.636
+>> > > aciclovir 20 97464 48.732
+>> > > aciclovir 40 98322 432
+>> > > aciclovir 40 98322 324
+>> > > paracetamol 1 19291 192.91
+>> > > paracetamol 1 24702 247.02
+>> > > paracetamol 1 21120 211.2
+>> > > paracetamol 10 9993 9.993
+>> > > paracetamol 10 10443 10.443
+>> > > rosuvastatina 14 141134 100.81
+>> > > rosuvastatina 28 258262 92.2364286
+>> > > rosuvastatina 28 201590 71.9964286
+>> > > rosuvastatina 30 183717 61.239
+>> > > rosuvastatina 30 231935 77.3116667
+>> > >
+>> > > Por ejemplo, para la monodroga "aciclovir" necesito solo las filas
+>> > > donde Unidades==20,  en paracetamol==10 y en rosuvastatina==30.
+>> > >
+>> > > Estoy trabajando con tidyverse y he probado algunas cosas que no han
+>> > > funcionado.
+>> > >
+>> > > prom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final
+>> > > %>% ##unite("concat1",CodDrog,CodForma,sep="",remove = FALSE) %>%
+>> > >   ##unite("concat2",CodDrog,CodForma,Potencia,sep="",remove = FALSE)
+>> > > %>% filter(!is.na(CodDrog)) %>%
+>> > >   ##filter(monodroga=="aciclovir", Unidades %in% c(20)) %>%
+>> > >   group_by(concat1,concat2,monodroga) %>%
+>> > >   summarize(min_may_2021=min(precio_unitario),
+>> > >             max_may_2021=max(precio_unitario),
+>> > >             prom_may_2021=mean(precio_unitario)) %>%
+>> > >   ungroup()
+>> > >
+>> > > Ajdunto la base en csv.
+>> > >
+>> > > Muchas gracias!
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Jul  1 17:38:18 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Thu, 1 Jul 2021 12:38:18 -0300
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <1625124305024.67772@sergas.es>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <1625124305024.67772@sergas.es>
+Message-ID: <CAOF0weGTDF5dYYojHREF_-KuP6KBw3qevaoTMLOt-+TB-tuwcQ@mail.gmail.com>
+
+Hola! Si, pense en librería sqldf! Gracias!
+
+El jue., 1 de jul. de 2021 4:25 a.m., <
+miguel.angel.rodriguez.muinos en sergas.es> escribió:
+
+> Hola Juan Manuel.
+>
+>
+> Otro enfoque (de la vieja escuela)....
+>
+>
+> base <- read.csv2("base_monodrogas.csv")
+>
+> library(sqldf)
+>
+> ?seleccion <- sqldf("select * from base where (monodroga='aciclovir' AND
+> UNIDADES=20) OR (monodroga='paracetamol' AND UNIDADES=10) ")
+>
+>
+> Más info del paquete sqldf aquí -> https://rquer.netlify.app/sql/
+>
+>
+>
+> Un saludo,
+>
+> Miguel.
+>
+>
+>
+>
+>
+>
+> ------------------------------
+> *De:* R-help-es <r-help-es-bounces en r-project.org> en nombre de juan
+> manuel dias <juamadias en gmail.com>
+> *Enviado:* jueves, 1 de julio de 2021 0:15
+> *Para:* Lista R
+> *Asunto:* [R-es] Consulta filtro múltiple.
+>
+> Hola, como andan!
+>
+> Tengo una base de datos de medicamentos (monodrogas), con tres variables,
+> unidades, precio y precio unitario. Necesito llegar a un data frame donde
+> tenga solo las monodrogas que cumplen alguna condición en la variable
+> unidades, pero considerando varias monodrogas.
+>
+> Esto es un recorte de la base:
+>
+> Monodroga UNIDADES Precio PrecioUnit
+> aciclovir 20 111272 55.636
+> aciclovir 20 97464 48.732
+> aciclovir 40 98322 432
+> aciclovir 40 98322 324
+> paracetamol 1 19291 192.91
+> paracetamol 1 24702 247.02
+> paracetamol 1 21120 211.2
+> paracetamol 10 9993 9.993
+> paracetamol 10 10443 10.443
+> rosuvastatina 14 141134 100.81
+> rosuvastatina 28 258262 92.2364286
+> rosuvastatina 28 201590 71.9964286
+> rosuvastatina 30 183717 61.239
+> rosuvastatina 30 231935 77.3116667
+>
+> Por ejemplo, para la monodroga "aciclovir" necesito solo las filas donde
+> Unidades==20,  en paracetamol==10 y en rosuvastatina==30.
+>
+> Estoy trabajando con tidyverse y he probado algunas cosas que no han
+> funcionado.
+>
+> prom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final %>%
+>   ##unite("concat1",CodDrog,CodForma,sep="",remove = FALSE) %>%
+>   ##unite("concat2",CodDrog,CodForma,Potencia,sep="",remove = FALSE) %>%
+>   filter(!is.na(CodDrog)) %>%
+>   ##filter(monodroga=="aciclovir", Unidades %in% c(20)) %>%
+>   group_by(concat1,concat2,monodroga) %>%
+>   summarize(min_may_2021=min(precio_unitario),
+>             max_may_2021=max(precio_unitario),
+>             prom_may_2021=mean(precio_unitario)) %>%
+>   ungroup()
+>
+> Ajdunto la base en csv.
+>
+> Muchas gracias!
+>
+> ------------------------------
+>
+> Nota: A información contida nesta mensaxe e os seus posibles documentos
+> adxuntos é privada e confidencial e está dirixida únicamente ó seu
+> destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe,
+> por favor elimínea. A distribución ou copia desta mensaxe non está
+> autorizada.
+>
+> Nota: La información contenida en este mensaje y sus posibles documentos
+> adjuntos es privada y confidencial y está dirigida únicamente a su
+> destinatario/a. Si usted no es el/la destinatario/a original de este
+> mensaje, por favor elimínelo. La distribución o copia de este mensaje no
+> está autorizada.
+>
+> See more languages: http://www.sergas.es/aviso-confidencialidad
+>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Thu Jul  1 21:12:25 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Thu, 1 Jul 2021 16:12:25 -0300
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <002a01d76e75$cd60c860$68225920$@jccm.es>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <1625124305024.67772@sergas.es>
+ <CAOKbq8j3xrH_PbviAj_gELQyORrqDO9iO-hDLj6dpN07k7C_dg@mail.gmail.com>
+ <CAOKbq8gwGOgCxK8CPdobacpADSXAJ_BYrvpsezDibyLpL8cpBQ@mail.gmail.com>
+ <1625134598423.33567@sergas.es> <002a01d76e75$cd60c860$68225920$@jccm.es>
+Message-ID: <CAOF0weEHc8bv_Noi6PzeScM=vd_se10Xn5=4x0m4xF2-gZpJcQ@mail.gmail.com>
+
+Muchas gracias a todos! Que buen trabajo carlos comparando tiempos de
+ejecucion con las distintas opciones r base dplyr y sqldf. Saludos! Juan.
+
+El jue., 1 de jul. de 2021 9:37 a.m., Isidro Hidalgo Arellano <
+ihidalgo en jccm.es> escribió:
+
+> Carlos,
+> ¿Te importaría poner el código?
+> Mil gracias...
+>
+> Isidro Hidalgo Arellano
+> Observatorio del Mercado de Trabajo
+> Consejería de Economía, Empresas y Empleo
+> http://www.castillalamancha.es/
+>
+> -----Mensaje original-----
+> De: R-help-es <r-help-es-bounces en r-project.org> En nombre de
+> miguel.angel.rodriguez.muinos en sergas.es
+> Enviado el: jueves, 1 de julio de 2021 12:17
+> Para: cof en qualityexcellence.es
+> CC: r-help-es en r-project.org
+> Asunto: Re: [R-es] Consulta filtro múltiple.
+>
+> Buen trabajo, Carlos.
+>
+>
+> Efectivamente, sqldf es muy poco eficiente (porque "recorre" varias veces
+> la base adem?de que tiene que traducir las instrucciones).
+>
+>
+> Yo s?lo recomiendo para la gente que viene del mundo SQL (y del grandioso
+> SELECT) y/o a los vagos que prefieran escribir poco c?o.
+>
+> (yo cumplo las dos condiciones)
+>
+>
+> :-)
+>
+>
+> ?
+>
+> Un saludo,
+>
+> Miguel.
+>
+>
+>
+>
+>
+> ________________________________
+> De: Carlos Ortega <cof en qualityexcellence.es>
+> Enviado: jueves, 1 de julio de 2021 11:57
+> Para: Rodr?ez Mu?s, Miguel ?gel
+> Cc: juan manuel dias; Lista R
+> Asunto: Re: [R-es] Consulta filtro m?le.
+>
+>  [ ... ]
+>
+> Y el ganador en tiempos de ejecuci?s...
+>
+> Unit: microseconds
+>       expr       min         lq       mean    median         uq       max
+> neval
+>  datatable    99.376   198.8520   338.4575   232.609   300.4635  7845.888
+> 1000
+>      dplyr  1417.242  1939.4520  2598.0892  2285.436  2884.1000 21591.185
+> 1000
+>       base    62.119    99.7405   158.8749   119.255   156.1890 10826.685
+> 1000
+>      sqldf 13058.622 16870.2300 21358.6144 19247.554 24269.0985 64807.865
+> 1000
+>
+>  [ ... ]
+>
+>
+>
+> Saludos,
+> Carlos Ortega
+>
+> http://secure-web.cisco.com/1sPMcNqTKgaZhCI3VHWDNPt8_Vz5bObsQ2pCpI6mALdCvwyT029ZW-ysfzukZ3rJw_JLfq3tp4HGeCTtarv64mANhWiqtSNw6eWZDkYL3pFw0Mf4Hx_YmTloiiwMhiH4at3c9HBAOyorwxRZbKClEi-JxpDosJjwQcIVT86Wygf27Pw4nI-yF7R0XhLNnfDbt8JrGM6GrqTB2Wtgqx4kVcJhNPmZ43oEzA-vHOyvU_IzV94U3bOinlD3q6bszB9KY-QH0OoIPQE69aJNCUipeKQ/http%3A%2F%2Fwww.qualityexcellence.es
+> <
+> http://secure-web.cisco.com/1sPMcNqTKgaZhCI3VHWDNPt8_Vz5bObsQ2pCpI6mALdCvwyT029ZW-ysfzukZ3rJw_JLfq3tp4HGeCTtarv64mANhWiqtSNw6eWZDkYL3pFw0Mf4Hx_YmTloiiwMhiH4at3c9HBAOyorwxRZbKClEi-JxpDosJjwQcIVT86Wygf27Pw4nI-yF7R0XhLNnfDbt8JrGM6GrqTB2Wtgqx4kVcJhNPmZ43oEzA-vHOyvU_IzV94U3bOinlD3q6bszB9KY-QH0OoIPQE69aJNCUipeKQ/http%3A%2F%2Fwww.qualityexcellence.es
+> >
+>
+>
+>
+> ________________________________
+>
+> Nota: A informaci?ontida nesta mensaxe e os seus posibles documentos
+> adxuntos ?rivada e confidencial e est?irixida ?mente ?u destinatario/a. Se
+> vostede non ?/a destinatario/a orixinal desta mensaxe, por favor elim?a. A
+> distribuci?u copia desta mensaxe non est?utorizada.
+>
+> Nota: La informaci?ontenida en este mensaje y sus posibles documentos
+> adjuntos es privada y confidencial y est?irigida ?mente a su
+> destinatario/a. Si usted no es el/la destinatario/a original de este
+> mensaje, por favor elim?lo. La distribuci? copia de este mensaje no
+> est?utorizada.
+>
+> See more languages: http://www.sergas.es/aviso-confidencialidad
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Thu Jul  1 23:30:08 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Thu, 1 Jul 2021 17:30:08 -0400
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <1625134598423.33567@sergas.es>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <1625124305024.67772@sergas.es>
+ <CAOKbq8j3xrH_PbviAj_gELQyORrqDO9iO-hDLj6dpN07k7C_dg@mail.gmail.com>
+ <CAOKbq8gwGOgCxK8CPdobacpADSXAJ_BYrvpsezDibyLpL8cpBQ@mail.gmail.com>
+ <1625134598423.33567@sergas.es>
+Message-ID: <20210701173008.32b4428a@TheMatrix>
+
+
+ Jajajaaaa que gran idea Carlos, gracias por tu aporte :)
+
+ Sólo para salir de la duda, usaste set.key() con la opción de DT ?
+
+ Saludos !!
+
+ Eric.
+
+
+
+
+> ________________________________
+> De: Carlos Ortega <cof en qualityexcellence.es>
+> Enviado: jueves, 1 de julio de 2021 11:57
+> Para: Rodr_guez Mu__os, Miguel _ngel
+> Cc: juan manuel dias; Lista R
+> Asunto: Re: [R-es] Consulta filtro m_ltiple.
+> 
+>  [ ... ]
+> 
+> Y el ganador en tiempos de ejecuci_n es...
+> 
+> Unit: microseconds
+>       expr       min         lq       mean    median         uq
+> max neval datatable    99.376   198.8520   338.4575   232.609
+> 300.4635  7845.888  1000 dplyr  1417.242  1939.4520  2598.0892
+> 2285.436  2884.1000 21591.185  1000 base    62.119    99.7405
+> 158.8749   119.255   156.1890 10826.685  1000 sqldf 13058.622
+> 16870.2300 21358.6144 19247.554 24269.0985 64807.865  1000
+> 
+>  [ ... ]
+> 
+> 
+> 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es<http://www.qualityexcellence.es>
+> 
+> 
+> 
+> ________________________________
+> 
+> Nota: A informaci_n contida nesta mensaxe e os seus posibles
+> documentos adxuntos _ privada e confidencial e est_ dirixida
+> _nicamente _ seu destinatario/a. Se vostede non _ o/a destinatario/a
+> orixinal desta mensaxe, por favor elim_nea. A distribuci_n ou copia
+> desta mensaxe non est_ autorizada.
+> 
+> Nota: La informaci_n contenida en este mensaje y sus posibles
+> documentos adjuntos es privada y confidencial y est_ dirigida
+> _nicamente a su destinatario/a. Si usted no es el/la destinatario/a
+> original de este mensaje, por favor elim_nelo. La distribuci_n o
+> copia de este mensaje no est_ autorizada.
+> 
+> See more languages: http://www.sergas.es/aviso-confidencialidad
+> 
+> 	[[alternative HTML version deleted]]
+> 
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Fri Jul  2 09:49:21 2021
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Fri, 2 Jul 2021 09:49:21 +0200
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <CAOKbq8i5udCU4BGaY2UEae4hRqcNEsyOi3wy-5=O+K11v9n2HA@mail.gmail.com>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <1625124305024.67772@sergas.es>
+ <CAOKbq8j3xrH_PbviAj_gELQyORrqDO9iO-hDLj6dpN07k7C_dg@mail.gmail.com>
+ <CAOKbq8gwGOgCxK8CPdobacpADSXAJ_BYrvpsezDibyLpL8cpBQ@mail.gmail.com>
+ <1625134598423.33567@sergas.es> <002a01d76e75$cd60c860$68225920$@jccm.es>
+ <CAOKbq8i7NpHWmzSHEBfd-dom5p-5dg2k7D3p3YG8T=VgbnAFpw@mail.gmail.com>
+ <CAOKbq8i5udCU4BGaY2UEae4hRqcNEsyOi3wy-5=O+K11v9n2HA@mail.gmail.com>
+Message-ID: <000801d76f16$c514b030$4f3e1090$@jccm.es>
+
+¡Muchas gracias, Carlos!
+
+Entonces, los tiempos que pusiste al principio, en los que había grandes diferencias, ¿de dónde salieron?
+
+¡Muchas gracias, como siempre, por tus grandes aportaciones!
+
+ 
+
+Isidro Hidalgo Arellano
+
+Observatorio del Mercado de Trabajo
+
+Consejería de Economía, Empresas y Empleo
+
+http://www.castillalamancha.es/
+
+ 
+
+De: Carlos Ortega <cof en qualityexcellence.es> 
+Enviado el: jueves, 1 de julio de 2021 16:19
+Para: Isidro Hidalgo Arellano <ihidalgo en jccm.es>
+CC: Lista R <r-help-es en r-project.org>
+Asunto: Re: [R-es] Consulta filtro múltiple.
+
+ 
+
+Hola,
+
+ 
+
+Pues al final he terminado haciéndolo... :-)
+
+ 
+
+Usando el paquete "babynames" que tiene casi dos millones de nombres y su frecuencia de aparición por año, se puede establecer la equivalencia de que los nombres son los medicamentos y las frecuencias son los valores que quiero encontrar.
+
+ 
+
+Con este código, puedo seleccionar el número de nombres (medicamentos) a buscar y automáticamente también selecciona los valores.
+
+El código también permite crear el número de condiciones que puedo crear (las condiciones pueden ser iguales o menores al número de nombres).
+
+ 
+
+Y con todo eso, ya puedo comparar cómo de rápido son data.table, dplyr y base de forma comparada, considerando diferentes número de condiciones lógicas, sobre este conjunto de datos que ya es algo más que 10 líneas.
+
+ 
+
+#-------------
+
+
+library(babynames)
+library(dplyr)
+library(data.table)
+library(tictoc)
+library(microbenchmark)
+
+midt <- setDT(copy(babynames))
+midf <- as.data.table(midt)
+
+#--- Ejemplo de condiciones que se buscan
+# Elizabeth == 8915
+# Michael == 88514
+# David == 86251
+
+# Selecciono nombres y su frecuencia (primera aparición) aleatoriamente
+NUM_NOMBRES <- 1000
+all_nam <- unique(midt[ , .(name)])
+rnd_idx <- sample(1:nrow(all_nam), NUM_NOMBRES, replace = FALSE)
+mi_names <- all_nam[ rnd_idx, .(name)]
+mi_value <- midt[ name %chin% mi_names$name, .(n), by = name] %>% 
+                 .[ , .SD[1], by = name]
+
+#--- Crear condiciones automáticamente
+#-- cond_end == Condiciones para data.table y dplyr
+#-- cond_bas == Condiciones para base
+NUM_CONDICIONES <- 50
+cond_end <- vector() 
+cond_bas <- vector()
+for (i in 1:NUM_CONDICIONES) {
+  name_val <- mi_value$name[i]
+  n_val    <- mi_value$n[i]
+  if (i < num_cond) {
+      mi_cond  <- paste("( name == '" , name_val, "' & n == ", n_val, " ) | ", sep = "")
+      mi_cond2 <- paste("( midf$name == '" , name_val, "' & midf$n == ", n_val, " ) | ", sep = "")
+  } else {
+      mi_cond  <- paste(" ( name == '" , name_val, "' & n == ", n_val, " )", sep = "")
+      mi_cond2 <- paste(" ( midf$name == '" , name_val, "' & midf$n == ", n_val, " )", sep = "")
+  }
+  cond_end <- paste0(cond_end, mi_cond, collapse = "\n")
+  cond_bas <- paste0(cond_bas, mi_cond2, collapse = "\n")
+}
+
+#------- COMPARACIONES ---------------
+#-- data.table
+tic()
+midt[ eval(parse(text = cond_end )), ]
+toc()
+
+#-- dplyr
+midf <- as.data.frame(midt)
+tic()
+midf %>%
+  filter( eval(parse(text = cond_end )), )
+toc()
+
+#--- base
+tic()
+midf[ eval(parse(text = cond_bas )), ]
+toc()
+
+
+#------- BENCHMARKINGS --------------
+microbenchmark(
+  data.table = midt[ eval(parse(text = cond_end )), ] ,
+  base       = midf[ eval(parse(text = cond_bas )), ] ,
+  dplyr      = midf %>% filter( eval(parse(text = cond_end )), ) ,
+  times = 25 
+)
+
+ 
+
+#------------
+
+ 
+
+Los tiempos que he obtenido para 50 condiciones lógicas, evaluados 25 veces...
+
+ 
+
+Unit: seconds
+       expr      min       lq     mean   median       uq      max neval
+ data.table 1.481466 1.543330 1.622688 1.598947 1.679465 1.866847    25
+       base 1.518659 1.560412 1.621398 1.592776 1.641903 1.798532    25
+      dplyr 1.505253 1.530137 1.571444 1.554524 1.597147 1.714049    25
+
+ 
+
+ 
+
+ 
+
+Gracias,
+
+Carlos Ortega
+
+http://secure-web.cisco.com/190P89zEZCZg27zm--Pzdemoj-uaSTLJwnn27fi161HUE-cXUu0gxmnbJK84Jb_ku-3DYJtt0nYjUfXsdh88VdePSLOtQCDzI0IRf2P0Q1dw0G2luzk8x2FbOx4dJ5Dx5_HtngsrqD7P9qY9S9Iv1IrpkL7AYkr_UQbrVjLHQtQ7KC9Z8nxbygLfSTQtxw8S_9Z2jJ_7LFUdX8ew_68GEv5ImC6lxtJGguR_RYMvEED2CxRLWJ1lVSlq1DfuzHgsv62S0-wUkYSMH3UJXsJeC-80lLiShNMN-N4Rw1rEIEvc294fZ8sGQ1zFawzp_Sfn395zK2PnX3xOwQbJTiugIqw/http%3A%2F%2Fwww.qualityexcellence.es
+
+ 
+
+El jue, 1 jul 2021 a las 14:51, Carlos Ortega (<cof en qualityexcellence.es <mailto:cof en qualityexcellence.es> >) escribió:
+
+Hola,
+
+ 
+
+Bueno, he comentado que estaría bien hacer eso... pero no lo he hecho... :-)...
+
+ 
+
+Se puede extender el mínimo dataset que nos han compartido, pero lo suyo sería trabajar con todo el conjunto si fuese posible, por incluir más fármacos y muy importante tener más condiciones.
+
+Todo esto se puede crear de forma sintética para el caso sencillo (las mismas condiciones planteadas) pero para incluir más condiciones costaría un tanto preparar ese dataset.
+
+ 
+
+Si  alguien se ofrece para crear el conjunto base... corremos luego varias compartivas.
+
+ 
+
+Gracias,
+
+Carlos Ortega
+
+http://secure-web.cisco.com/190P89zEZCZg27zm--Pzdemoj-uaSTLJwnn27fi161HUE-cXUu0gxmnbJK84Jb_ku-3DYJtt0nYjUfXsdh88VdePSLOtQCDzI0IRf2P0Q1dw0G2luzk8x2FbOx4dJ5Dx5_HtngsrqD7P9qY9S9Iv1IrpkL7AYkr_UQbrVjLHQtQ7KC9Z8nxbygLfSTQtxw8S_9Z2jJ_7LFUdX8ew_68GEv5ImC6lxtJGguR_RYMvEED2CxRLWJ1lVSlq1DfuzHgsv62S0-wUkYSMH3UJXsJeC-80lLiShNMN-N4Rw1rEIEvc294fZ8sGQ1zFawzp_Sfn395zK2PnX3xOwQbJTiugIqw/http%3A%2F%2Fwww.qualityexcellence.es
+
+ 
+
+ 
+
+El jue, 1 jul 2021 a las 14:37, Isidro Hidalgo Arellano (<ihidalgo en jccm.es <mailto:ihidalgo en jccm.es> >) escribió:
+
+Carlos,
+¿Te importaría poner el código?
+Mil gracias...
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org <mailto:r-help-es-bounces en r-project.org> > En nombre de miguel.angel.rodriguez.muinos en sergas.es <mailto:miguel.angel.rodriguez.muinos en sergas.es> 
+Enviado el: jueves, 1 de julio de 2021 12:17
+Para: cof en qualityexcellence.es <mailto:cof en qualityexcellence.es> 
+CC: r-help-es en r-project.org <mailto:r-help-es en r-project.org> 
+Asunto: Re: [R-es] Consulta filtro múltiple.
+
+Buen trabajo, Carlos.
+
+
+Efectivamente, sqldf es muy poco eficiente (porque "recorre" varias veces la base adem?de que tiene que traducir las instrucciones).
+
+
+Yo s?lo recomiendo para la gente que viene del mundo SQL (y del grandioso SELECT) y/o a los vagos que prefieran escribir poco c?o.
+
+(yo cumplo las dos condiciones)
+
+
+:-)
+
+
+?
+
+Un saludo,
+
+Miguel.
+
+
+
+
+
+________________________________
+De: Carlos Ortega <cof en qualityexcellence.es <mailto:cof en qualityexcellence.es> >
+Enviado: jueves, 1 de julio de 2021 11:57
+Para: Rodr?ez Mu?s, Miguel ?gel
+Cc: juan manuel dias; Lista R
+Asunto: Re: [R-es] Consulta filtro m?le.
+
+ [ ... ]
+
+Y el ganador en tiempos de ejecuci?s...
+
+Unit: microseconds
+      expr       min         lq       mean    median         uq       max neval
+ datatable    99.376   198.8520   338.4575   232.609   300.4635  7845.888  1000
+     dplyr  1417.242  1939.4520  2598.0892  2285.436  2884.1000 21591.185  1000
+      base    62.119    99.7405   158.8749   119.255   156.1890 10826.685  1000
+     sqldf 13058.622 16870.2300 21358.6144 19247.554 24269.0985 64807.865  1000
+
+ [ ... ]
+
+
+
+Saludos,
+Carlos Ortega
+http://secure-web.cisco.com/1sPMcNqTKgaZhCI3VHWDNPt8_Vz5bObsQ2pCpI6mALdCvwyT029ZW-ysfzukZ3rJw_JLfq3tp4HGeCTtarv64mANhWiqtSNw6eWZDkYL3pFw0Mf4Hx_YmTloiiwMhiH4at3c9HBAOyorwxRZbKClEi-JxpDosJjwQcIVT86Wygf27Pw4nI-yF7R0XhLNnfDbt8JrGM6GrqTB2Wtgqx4kVcJhNPmZ43oEzA-vHOyvU_IzV94U3bOinlD3q6bszB9KY-QH0OoIPQE69aJNCUipeKQ/http%3A%2F%2Fwww.qualityexcellence.es<http://secure-web.cisco.com/1sPMcNqTKgaZhCI3VHWDNPt8_Vz5bObsQ2pCpI6mALdCvwyT029ZW-ysfzukZ3rJw_JLfq3tp4HGeCTtarv64mANhWiqtSNw6eWZDkYL3pFw0Mf4Hx_YmTloiiwMhiH4at3c9HBAOyorwxRZbKClEi-JxpDosJjwQcIVT86Wygf27Pw4nI-yF7R0XhLNnfDbt8JrGM6GrqTB2Wtgqx4kVcJhNPmZ43oEzA-vHOyvU_IzV94U3bOinlD3q6bszB9KY-QH0OoIPQE69aJNCUipeKQ/http%3A%2F%2Fwww.qualityexcellence.es>
+
+
+
+________________________________
+
+Nota: A informaci?ontida nesta mensaxe e os seus posibles documentos adxuntos ?rivada e confidencial e est?irixida ?mente ?u destinatario/a. Se vostede non ?/a destinatario/a orixinal desta mensaxe, por favor elim?a. A distribuci?u copia desta mensaxe non est?utorizada.
+
+Nota: La informaci?ontenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est?irigida ?mente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?lo. La distribuci? copia de este mensaje no est?utorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+        [[alternative HTML version deleted]]
+
+
+
+
+
+-- 
+
+Saludos,
+Carlos Ortega
+http://secure-web.cisco.com/190P89zEZCZg27zm--Pzdemoj-uaSTLJwnn27fi161HUE-cXUu0gxmnbJK84Jb_ku-3DYJtt0nYjUfXsdh88VdePSLOtQCDzI0IRf2P0Q1dw0G2luzk8x2FbOx4dJ5Dx5_HtngsrqD7P9qY9S9Iv1IrpkL7AYkr_UQbrVjLHQtQ7KC9Z8nxbygLfSTQtxw8S_9Z2jJ_7LFUdX8ew_68GEv5ImC6lxtJGguR_RYMvEED2CxRLWJ1lVSlq1DfuzHgsv62S0-wUkYSMH3UJXsJeC-80lLiShNMN-N4Rw1rEIEvc294fZ8sGQ1zFawzp_Sfn395zK2PnX3xOwQbJTiugIqw/http%3A%2F%2Fwww.qualityexcellence.es
+
+
+
+-- 
+
+Saludos,
+Carlos Ortega
+http://secure-web.cisco.com/190P89zEZCZg27zm--Pzdemoj-uaSTLJwnn27fi161HUE-cXUu0gxmnbJK84Jb_ku-3DYJtt0nYjUfXsdh88VdePSLOtQCDzI0IRf2P0Q1dw0G2luzk8x2FbOx4dJ5Dx5_HtngsrqD7P9qY9S9Iv1IrpkL7AYkr_UQbrVjLHQtQ7KC9Z8nxbygLfSTQtxw8S_9Z2jJ_7LFUdX8ew_68GEv5ImC6lxtJGguR_RYMvEED2CxRLWJ1lVSlq1DfuzHgsv62S0-wUkYSMH3UJXsJeC-80lLiShNMN-N4Rw1rEIEvc294fZ8sGQ1zFawzp_Sfn395zK2PnX3xOwQbJTiugIqw/http%3A%2F%2Fwww.qualityexcellence.es
+
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Mon Jul  5 19:52:16 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Mon, 5 Jul 2021 14:52:16 -0300
+Subject: [R-es] =?utf-8?q?Consulta_filtro_m=C3=BAltiple=2E?=
+In-Reply-To: <000801d76f16$c514b030$4f3e1090$@jccm.es>
+References: <CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>
+ <1625124305024.67772@sergas.es>
+ <CAOKbq8j3xrH_PbviAj_gELQyORrqDO9iO-hDLj6dpN07k7C_dg@mail.gmail.com>
+ <CAOKbq8gwGOgCxK8CPdobacpADSXAJ_BYrvpsezDibyLpL8cpBQ@mail.gmail.com>
+ <1625134598423.33567@sergas.es> <002a01d76e75$cd60c860$68225920$@jccm.es>
+ <CAOKbq8i7NpHWmzSHEBfd-dom5p-5dg2k7D3p3YG8T=VgbnAFpw@mail.gmail.com>
+ <CAOKbq8i5udCU4BGaY2UEae4hRqcNEsyOi3wy-5=O+K11v9n2HA@mail.gmail.com>
+ <000801d76f16$c514b030$4f3e1090$@jccm.es>
+Message-ID: <CAOF0weEjwy-Unp3LqEEg98J7CXdZL1eL+8-KYM8ZU52TXdxbdw@mail.gmail.com>
+
+Hola, como andan!
+
+Estaba trabajando nuevamente con esto....y pensaba que teniendo un data
+frame por separado con las monodrogas y unidades que tengo que filtrar, lo
+podría
+resolver con un simple inner join de dplyr.
+
+prueba_2<-base_precios_jun_2021_final %>%
+  inner_join(mono_unid)
+view(prueba_2)
+
+En base_precios_jun_2021_final está el data frame completo con todas las
+variables, que incluye monodroga y unidades, y en  "mono_unid" tengo un
+data frame en
+formato longer con las monodrogas y unidades que necesito filtrar.
+
+Saludos, Juan.
+
+
+
+El vie, 2 jul 2021 a las 4:49, Isidro Hidalgo Arellano (<ihidalgo en jccm.es>)
+escribió:
+
+> ¡Muchas gracias, Carlos!
+>
+> Entonces, los tiempos que pusiste al principio, en los que había grandes
+> diferencias, ¿de dónde salieron?
+>
+> ¡Muchas gracias, como siempre, por tus grandes aportaciones!
+>
+>
+>
+> Isidro Hidalgo Arellano
+>
+> Observatorio del Mercado de Trabajo
+>
+> Consejería de Economía, Empresas y Empleo
+>
+> http://www.castillalamancha.es/
+>
+>
+>
+> De: Carlos Ortega <cof en qualityexcellence.es>
+> Enviado el: jueves, 1 de julio de 2021 16:19
+> Para: Isidro Hidalgo Arellano <ihidalgo en jccm.es>
+> CC: Lista R <r-help-es en r-project.org>
+> Asunto: Re: [R-es] Consulta filtro múltiple.
+>
+>
+>
+> Hola,
+>
+>
+>
+> Pues al final he terminado haciéndolo... :-)
+>
+>
+>
+> Usando el paquete "babynames" que tiene casi dos millones de nombres y su
+> frecuencia de aparición por año, se puede establecer la equivalencia de que
+> los nombres son los medicamentos y las frecuencias son los valores que
+> quiero encontrar.
+>
+>
+>
+> Con este código, puedo seleccionar el número de nombres (medicamentos) a
+> buscar y automáticamente también selecciona los valores.
+>
+> El código también permite crear el número de condiciones que puedo crear
+> (las condiciones pueden ser iguales o menores al número de nombres).
+>
+>
+>
+> Y con todo eso, ya puedo comparar cómo de rápido son data.table, dplyr y
+> base de forma comparada, considerando diferentes número de condiciones
+> lógicas, sobre este conjunto de datos que ya es algo más que 10 líneas.
+>
+>
+>
+> #-------------
+>
+>
+> library(babynames)
+> library(dplyr)
+> library(data.table)
+> library(tictoc)
+> library(microbenchmark)
+>
+> midt <- setDT(copy(babynames))
+> midf <- as.data.table(midt)
+>
+> #--- Ejemplo de condiciones que se buscan
+> # Elizabeth == 8915
+> # Michael == 88514
+> # David == 86251
+>
+> # Selecciono nombres y su frecuencia (primera aparición) aleatoriamente
+> NUM_NOMBRES <- 1000
+> all_nam <- unique(midt[ , .(name)])
+> rnd_idx <- sample(1:nrow(all_nam), NUM_NOMBRES, replace = FALSE)
+> mi_names <- all_nam[ rnd_idx, .(name)]
+> mi_value <- midt[ name %chin% mi_names$name, .(n), by = name] %>%
+>                  .[ , .SD[1], by = name]
+>
+> #--- Crear condiciones automáticamente
+> #-- cond_end == Condiciones para data.table y dplyr
+> #-- cond_bas == Condiciones para base
+> NUM_CONDICIONES <- 50
+> cond_end <- vector()
+> cond_bas <- vector()
+> for (i in 1:NUM_CONDICIONES) {
+>   name_val <- mi_value$name[i]
+>   n_val    <- mi_value$n[i]
+>   if (i < num_cond) {
+>       mi_cond  <- paste("( name == '" , name_val, "' & n == ", n_val, " )
+> | ", sep = "")
+>       mi_cond2 <- paste("( midf$name == '" , name_val, "' & midf$n == ",
+> n_val, " ) | ", sep = "")
+>   } else {
+>       mi_cond  <- paste(" ( name == '" , name_val, "' & n == ", n_val, "
+> )", sep = "")
+>       mi_cond2 <- paste(" ( midf$name == '" , name_val, "' & midf$n == ",
+> n_val, " )", sep = "")
+>   }
+>   cond_end <- paste0(cond_end, mi_cond, collapse = "\n")
+>   cond_bas <- paste0(cond_bas, mi_cond2, collapse = "\n")
+> }
+>
+> #------- COMPARACIONES ---------------
+> #-- data.table
+> tic()
+> midt[ eval(parse(text = cond_end )), ]
+> toc()
+>
+> #-- dplyr
+> midf <- as.data.frame(midt)
+> tic()
+> midf %>%
+>   filter( eval(parse(text = cond_end )), )
+> toc()
+>
+> #--- base
+> tic()
+> midf[ eval(parse(text = cond_bas )), ]
+> toc()
+>
+>
+> #------- BENCHMARKINGS --------------
+> microbenchmark(
+>   data.table = midt[ eval(parse(text = cond_end )), ] ,
+>   base       = midf[ eval(parse(text = cond_bas )), ] ,
+>   dplyr      = midf %>% filter( eval(parse(text = cond_end )), ) ,
+>   times = 25
+> )
+>
+>
+>
+> #------------
+>
+>
+>
+> Los tiempos que he obtenido para 50 condiciones lógicas, evaluados 25
+> veces...
+>
+>
+>
+> Unit: seconds
+>        expr      min       lq     mean   median       uq      max neval
+>  data.table 1.481466 1.543330 1.622688 1.598947 1.679465 1.866847    25
+>        base 1.518659 1.560412 1.621398 1.592776 1.641903 1.798532    25
+>       dplyr 1.505253 1.530137 1.571444 1.554524 1.597147 1.714049    25
+>
+>
+>
+>
+>
+>
+>
+> Gracias,
+>
+> Carlos Ortega
+>
+>
+> http://secure-web.cisco.com/190P89zEZCZg27zm--Pzdemoj-uaSTLJwnn27fi161HUE-cXUu0gxmnbJK84Jb_ku-3DYJtt0nYjUfXsdh88VdePSLOtQCDzI0IRf2P0Q1dw0G2luzk8x2FbOx4dJ5Dx5_HtngsrqD7P9qY9S9Iv1IrpkL7AYkr_UQbrVjLHQtQ7KC9Z8nxbygLfSTQtxw8S_9Z2jJ_7LFUdX8ew_68GEv5ImC6lxtJGguR_RYMvEED2CxRLWJ1lVSlq1DfuzHgsv62S0-wUkYSMH3UJXsJeC-80lLiShNMN-N4Rw1rEIEvc294fZ8sGQ1zFawzp_Sfn395zK2PnX3xOwQbJTiugIqw/http%3A%2F%2Fwww.qualityexcellence.es
+>
+>
+>
+> El jue, 1 jul 2021 a las 14:51, Carlos Ortega (<cof en qualityexcellence.es
+> <mailto:cof en qualityexcellence.es> >) escribió:
+>
+> Hola,
+>
+>
+>
+> Bueno, he comentado que estaría bien hacer eso... pero no lo he hecho...
+> :-)...
+>
+>
+>
+> Se puede extender el mínimo dataset que nos han compartido, pero lo suyo
+> sería trabajar con todo el conjunto si fuese posible, por incluir más
+> fármacos y muy importante tener más condiciones.
+>
+> Todo esto se puede crear de forma sintética para el caso sencillo (las
+> mismas condiciones planteadas) pero para incluir más condiciones costaría
+> un tanto preparar ese dataset.
+>
+>
+>
+> Si  alguien se ofrece para crear el conjunto base... corremos luego varias
+> compartivas.
+>
+>
+>
+> Gracias,
+>
+> Carlos Ortega
+>
+>
+> http://secure-web.cisco.com/190P89zEZCZg27zm--Pzdemoj-uaSTLJwnn27fi161HUE-cXUu0gxmnbJK84Jb_ku-3DYJtt0nYjUfXsdh88VdePSLOtQCDzI0IRf2P0Q1dw0G2luzk8x2FbOx4dJ5Dx5_HtngsrqD7P9qY9S9Iv1IrpkL7AYkr_UQbrVjLHQtQ7KC9Z8nxbygLfSTQtxw8S_9Z2jJ_7LFUdX8ew_68GEv5ImC6lxtJGguR_RYMvEED2CxRLWJ1lVSlq1DfuzHgsv62S0-wUkYSMH3UJXsJeC-80lLiShNMN-N4Rw1rEIEvc294fZ8sGQ1zFawzp_Sfn395zK2PnX3xOwQbJTiugIqw/http%3A%2F%2Fwww.qualityexcellence.es
+>
+>
+>
+>
+>
+> El jue, 1 jul 2021 a las 14:37, Isidro Hidalgo Arellano (<ihidalgo en jccm.es
+> <mailto:ihidalgo en jccm.es> >) escribió:
+>
+> Carlos,
+> ¿Te importaría poner el código?
+> Mil gracias...
+>
+> Isidro Hidalgo Arellano
+> Observatorio del Mercado de Trabajo
+> Consejería de Economía, Empresas y Empleo
+> http://www.castillalamancha.es/
+>
+> -----Mensaje original-----
+> De: R-help-es <r-help-es-bounces en r-project.org <mailto:
+> r-help-es-bounces en r-project.org> > En nombre de
+> miguel.angel.rodriguez.muinos en sergas.es <mailto:
+> miguel.angel.rodriguez.muinos en sergas.es>
+> Enviado el: jueves, 1 de julio de 2021 12:17
+> Para: cof en qualityexcellence.es <mailto:cof en qualityexcellence.es>
+> CC: r-help-es en r-project.org <mailto:r-help-es en r-project.org>
+> Asunto: Re: [R-es] Consulta filtro múltiple.
+>
+> Buen trabajo, Carlos.
+>
+>
+> Efectivamente, sqldf es muy poco eficiente (porque "recorre" varias veces
+> la base adem?de que tiene que traducir las instrucciones).
+>
+>
+> Yo s?lo recomiendo para la gente que viene del mundo SQL (y del grandioso
+> SELECT) y/o a los vagos que prefieran escribir poco c?o.
+>
+> (yo cumplo las dos condiciones)
+>
+>
+> :-)
+>
+>
+> ?
+>
+> Un saludo,
+>
+> Miguel.
+>
+>
+>
+>
+>
+> ________________________________
+> De: Carlos Ortega <cof en qualityexcellence.es <mailto:
+> cof en qualityexcellence.es> >
+> Enviado: jueves, 1 de julio de 2021 11:57
+> Para: Rodr?ez Mu?s, Miguel ?gel
+> Cc: juan manuel dias; Lista R
+> Asunto: Re: [R-es] Consulta filtro m?le.
+>
+>  [ ... ]
+>
+> Y el ganador en tiempos de ejecuci?s...
+>
+> Unit: microseconds
+>       expr       min         lq       mean    median         uq       max
+> neval
+>  datatable    99.376   198.8520   338.4575   232.609   300.4635  7845.888
+> 1000
+>      dplyr  1417.242  1939.4520  2598.0892  2285.436  2884.1000 21591.185
+> 1000
+>       base    62.119    99.7405   158.8749   119.255   156.1890 10826.685
+> 1000
+>      sqldf 13058.622 16870.2300 21358.6144 19247.554 24269.0985 64807.865
+> 1000
+>
+>  [ ... ]
+>
+>
+>
+> Saludos,
+> Carlos Ortega
+>
+> http://secure-web.cisco.com/1sPMcNqTKgaZhCI3VHWDNPt8_Vz5bObsQ2pCpI6mALdCvwyT029ZW-ysfzukZ3rJw_JLfq3tp4HGeCTtarv64mANhWiqtSNw6eWZDkYL3pFw0Mf4Hx_YmTloiiwMhiH4at3c9HBAOyorwxRZbKClEi-JxpDosJjwQcIVT86Wygf27Pw4nI-yF7R0XhLNnfDbt8JrGM6GrqTB2Wtgqx4kVcJhNPmZ43oEzA-vHOyvU_IzV94U3bOinlD3q6bszB9KY-QH0OoIPQE69aJNCUipeKQ/http%3A%2F%2Fwww.qualityexcellence.es
+> <
+> http://secure-web.cisco.com/1sPMcNqTKgaZhCI3VHWDNPt8_Vz5bObsQ2pCpI6mALdCvwyT029ZW-ysfzukZ3rJw_JLfq3tp4HGeCTtarv64mANhWiqtSNw6eWZDkYL3pFw0Mf4Hx_YmTloiiwMhiH4at3c9HBAOyorwxRZbKClEi-JxpDosJjwQcIVT86Wygf27Pw4nI-yF7R0XhLNnfDbt8JrGM6GrqTB2Wtgqx4kVcJhNPmZ43oEzA-vHOyvU_IzV94U3bOinlD3q6bszB9KY-QH0OoIPQE69aJNCUipeKQ/http%3A%2F%2Fwww.qualityexcellence.es
+> >
+>
+>
+>
+> ________________________________
+>
+> Nota: A informaci?ontida nesta mensaxe e os seus posibles documentos
+> adxuntos ?rivada e confidencial e est?irixida ?mente ?u destinatario/a. Se
+> vostede non ?/a destinatario/a orixinal desta mensaxe, por favor elim?a. A
+> distribuci?u copia desta mensaxe non est?utorizada.
+>
+> Nota: La informaci?ontenida en este mensaje y sus posibles documentos
+> adjuntos es privada y confidencial y est?irigida ?mente a su
+> destinatario/a. Si usted no es el/la destinatario/a original de este
+> mensaje, por favor elim?lo. La distribuci? copia de este mensaje no
+> est?utorizada.
+>
+> See more languages: http://www.sergas.es/aviso-confidencialidad
+>
+>         [[alternative HTML version deleted]]
+>
+>
+>
+>
+>
+> --
+>
+> Saludos,
+> Carlos Ortega
+>
+> http://secure-web.cisco.com/190P89zEZCZg27zm--Pzdemoj-uaSTLJwnn27fi161HUE-cXUu0gxmnbJK84Jb_ku-3DYJtt0nYjUfXsdh88VdePSLOtQCDzI0IRf2P0Q1dw0G2luzk8x2FbOx4dJ5Dx5_HtngsrqD7P9qY9S9Iv1IrpkL7AYkr_UQbrVjLHQtQ7KC9Z8nxbygLfSTQtxw8S_9Z2jJ_7LFUdX8ew_68GEv5ImC6lxtJGguR_RYMvEED2CxRLWJ1lVSlq1DfuzHgsv62S0-wUkYSMH3UJXsJeC-80lLiShNMN-N4Rw1rEIEvc294fZ8sGQ1zFawzp_Sfn395zK2PnX3xOwQbJTiugIqw/http%3A%2F%2Fwww.qualityexcellence.es
+>
+>
+>
+> --
+>
+> Saludos,
+> Carlos Ortega
+>
+> http://secure-web.cisco.com/190P89zEZCZg27zm--Pzdemoj-uaSTLJwnn27fi161HUE-cXUu0gxmnbJK84Jb_ku-3DYJtt0nYjUfXsdh88VdePSLOtQCDzI0IRf2P0Q1dw0G2luzk8x2FbOx4dJ5Dx5_HtngsrqD7P9qY9S9Iv1IrpkL7AYkr_UQbrVjLHQtQ7KC9Z8nxbygLfSTQtxw8S_9Z2jJ_7LFUdX8ew_68GEv5ImC6lxtJGguR_RYMvEED2CxRLWJ1lVSlq1DfuzHgsv62S0-wUkYSMH3UJXsJeC-80lLiShNMN-N4Rw1rEIEvc294fZ8sGQ1zFawzp_Sfn395zK2PnX3xOwQbJTiugIqw/http%3A%2F%2Fwww.qualityexcellence.es
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210705/4dddc326/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: mono_unid_mayo_2021.csv
+Type: application/vnd.ms-excel
+Size: 2248 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210705/4dddc326/attachment-0001.xlb>
+
+From jmm@r|n @end|ng |rom e@t-econ@uc3m@e@  Tue Jul  6 13:10:14 2021
+From: jmm@r|n @end|ng |rom e@t-econ@uc3m@e@ (JUAN MIGUEL MARIN DIAZARAQUE)
+Date: Tue, 6 Jul 2021 13:10:14 +0200
+Subject: [R-es] Compartir codigos R
+Message-ID: <CA+=F6Pf8n_BfZ2emRKbp_VynVo1n+rUZRwKAvsYSPEsuG9A6_g@mail.gmail.com>
+
+Hola,
+
+disculpad una duda que ya se planteó antes.
+Creo que hay alguna web en la que se puede subir código R para acceso
+público, aparte de github.
+
+En realidad es para dar acceso a un tribunal el código de proyectos fin de
+grado que se van a leer próximamente.
+O sea que sería una cosa temporal.
+
+Y saludos
+
+-- 
+J. Miguel Marin
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Tue Jul  6 14:29:33 2021
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Tue, 6 Jul 2021 14:29:33 +0200
+Subject: [R-es] Compartir codigos R
+In-Reply-To: <CA+=F6Pf8n_BfZ2emRKbp_VynVo1n+rUZRwKAvsYSPEsuG9A6_g@mail.gmail.com>
+References: <CA+=F6Pf8n_BfZ2emRKbp_VynVo1n+rUZRwKAvsYSPEsuG9A6_g@mail.gmail.com>
+Message-ID: <dcc8a5e2-e428-4d9d-b7d1-0729d1581738@urjc.es>
+
+Hola:
+Dos ejemplos serían
+
+https://pastebin.com
+
+https://rpubs.com/
+
+Saludos,
+Marcelino
+
+
+
+El 06/07/2021 a las 13:10, JUAN MIGUEL MARIN DIAZARAQUE escribió:
+> Hola,
+>
+> disculpad una duda que ya se planteó antes.
+> Creo que hay alguna web en la que se puede subir código R para acceso
+> público, aparte de github.
+>
+> En realidad es para dar acceso a un tribunal el código de proyectos fin de
+> grado que se van a leer próximamente.
+> O sea que sería una cosa temporal.
+>
+> Y saludos
+>
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From jmm@r|n @end|ng |rom e@t-econ@uc3m@e@  Tue Jul  6 14:47:11 2021
+From: jmm@r|n @end|ng |rom e@t-econ@uc3m@e@ (JUAN MIGUEL MARIN DIAZARAQUE)
+Date: Tue, 6 Jul 2021 14:47:11 +0200
+Subject: [R-es] Compartir codigos R
+In-Reply-To: <dcc8a5e2-e428-4d9d-b7d1-0729d1581738@urjc.es>
+References: <CA+=F6Pf8n_BfZ2emRKbp_VynVo1n+rUZRwKAvsYSPEsuG9A6_g@mail.gmail.com>
+ <dcc8a5e2-e428-4d9d-b7d1-0729d1581738@urjc.es>
+Message-ID: <CA+=F6PcPcwUcq=ajbu5jEFr=OG-fuwhumoMKFYjnjhU_KZ8evw@mail.gmail.com>
+
+Muchas gracias ?
+
+
+El mar, 6 jul 2021 a las 14:29, Marcelino de la Cruz Rot (<
+marcelino.delacruz en urjc.es>) escribió:
+
+> Hola:
+> Dos ejemplos serían
+>
+> https://pastebin.com
+>
+> https://rpubs.com/
+>
+> Saludos,
+> Marcelino
+>
+>
+>
+> El 06/07/2021 a las 13:10, JUAN MIGUEL MARIN DIAZARAQUE escribió:
+> > Hola,
+> >
+> > disculpad una duda que ya se planteó antes.
+> > Creo que hay alguna web en la que se puede subir código R para acceso
+> > público, aparte de github.
+> >
+> > En realidad es para dar acceso a un tribunal el código de proyectos fin
+> de
+> > grado que se van a leer próximamente.
+> > O sea que sería una cosa temporal.
+> >
+> > Y saludos
+> >
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+>
+
+-- 
+J. Miguel Marin
+U. Carlos III de Madrid
+
+	[[alternative HTML version deleted]]
+
+
+From m@rco@gonz@|ezt @end|ng |rom u@n|@mx  Fri Jul  9 05:55:41 2021
+From: m@rco@gonz@|ezt @end|ng |rom u@n|@mx (Marco Aurelio Gonzalez Tagle (FCF))
+Date: Fri, 9 Jul 2021 03:55:41 +0000
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fica_con_dos_ejes?=
+References: <8ef50688-4605-4cc5-ab42-a5bc37404b87@Spark>
+Message-ID: <9e96f7b8-ea49-4114-8edc-e83c94123475@Spark>
+
+Muy buenos días a todos!
+
+Podrían ayudarme con mi siguiente problema?
+Estoy tratando de preparar en R una gráfica con dos ejes en Y.
+
+El primer eje contiene el número de incendios ocurridos en un periodo de tiempo 1998 a 2021 (Barplot),
+El segundo eje contiene la superficie afectada (line).
+Algo parecido a la siguiente gráfica
+
+[cid:6E223ADDD0F44EC489B007E3D3DB69F7]
+
+Alguien podría apoyarme para conseguir realizar una gráfica parecida a la de arriba,
+Saludos, Marco
+
+
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210709/152ec490/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Attachment.png
+Type: image/png
+Size: 48218 bytes
+Desc: Attachment.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210709/152ec490/attachment-0001.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Inc-Sup.csv
+Type: application/octet-stream
+Size: 240 bytes
+Desc: Inc-Sup.csv
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210709/152ec490/attachment-0001.obj>
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Fri Jul  9 07:32:02 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Fri, 9 Jul 2021 01:32:02 -0400
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fica_con_dos_ejes?=
+In-Reply-To: <9e96f7b8-ea49-4114-8edc-e83c94123475@Spark>
+References: <8ef50688-4605-4cc5-ab42-a5bc37404b87@Spark>
+ <9e96f7b8-ea49-4114-8edc-e83c94123475@Spark>
+Message-ID: <20210709013202.5c09a91e@TheMatrix>
+
+
+ Hola Marco, aquí hay dos aproximaciones al problema con dos de las
+ librerías más usadas para hacer gráficos (además de base):
+
+1. Con la librería latticeExtra
+
+https://www.r-graph-gallery.com/145-two-different-y-axis-on-the-same-plot.html
+
+
+
+2. Con la librería ggplot:
+
+https://www.r-graph-gallery.com/line-chart-dual-Y-axis-ggplot2.html
+
+
+
+Debo decir, eso sí, que este tipo de gráficos no se recomienda pues
+puede conducir a conclusiones erradas, en fin ...
+
+Suerte !!!
+
+Eric.
+
+pd. si compartes los datos, una parte al menos, se podría escribir
+algo que te sirva más directamente.
+
+
+
+
+
+
+
+
+On Fri, 9 Jul 2021 03:55:41 +0000
+"Marco Aurelio Gonzalez Tagle (FCF)" <marco.gonzalezt en uanl.mx> wrote:
+
+> Muy buenos días a todos!
+> 
+> Podrían ayudarme con mi siguiente problema?
+> Estoy tratando de preparar en R una gráfica con dos ejes en Y.
+> 
+> El primer eje contiene el número de incendios ocurridos en un periodo
+> de tiempo 1998 a 2021 (Barplot), El segundo eje contiene la
+> superficie afectada (line). Algo parecido a la siguiente gráfica
+> 
+> [cid:6E223ADDD0F44EC489B007E3D3DB69F7]
+> 
+> Alguien podría apoyarme para conseguir realizar una gráfica parecida
+> a la de arriba, Saludos, Marco
+> 
+> 
+> 
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Sat Jul 10 12:00:57 2021
+From: gr|er@ @end|ng |rom y@ndex@com (Griera)
+Date: Sat, 10 Jul 2021 12:00:57 +0200
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fica_con_dos_ejes?=
+In-Reply-To: <20210709013202.5c09a91e@TheMatrix>
+References: <8ef50688-4605-4cc5-ab42-a5bc37404b87@Spark>
+ <9e96f7b8-ea49-4114-8edc-e83c94123475@Spark>
+ <20210709013202.5c09a91e@TheMatrix>
+Message-ID: <20210710120057.43618152@debian-dde-tosh>
+
+Hola:
+
+Con ggplot2, al ser dos variables totalmente diferentes, es complicado.
+
+Con los graficos basicos aquí está un ejemplo:
+
+https://www.r-bloggers.com/2015/04/r-single-plot-with-two-different-y-axes/
+
+set.seed(2015-04-13)
+d = data.frame(x =seq(1,10),
+           n = c(0,0,1,2,3,4,4,5,6,6),
+           logp = signif(-log10(runif(10)), 2))
+par(mar = c(5,5,2,5))
+with(d, plot(x, logp, type="l", col="red3", 
+             ylab=expression(-log[10](italic(p))),
+             ylim=c(0,3)))
+par(new = T)
+with(d, plot(x, n, pch=16, axes=F, xlab=NA, ylab=NA, cex=1.2))
+axis(side = 4)
+mtext(side = 4, line = 3, 'Number genes selected')
+legend("topleft",
+       legend=c(expression(-log[10](italic(p))), "N genes"),
+       lty=c(1,0), pch=c(NA, 16), col=c("red3", "black"))
+
+Espero que te ayude. Saludos.
+
+On Fri, 9 Jul 2021 01:32:02 -0400
+"Eric Concha M." <ericconchamunoz en gmail.com> wrote:
+
+> 
+>  Hola Marco, aquí hay dos aproximaciones al problema con dos de las
+>  librerías más usadas para hacer gráficos (además de base):
+> 
+> 1. Con la librería latticeExtra
+> 
+> https://www.r-graph-gallery.com/145-two-different-y-axis-on-the-same-plot.html
+> 
+> 
+> 
+> 2. Con la librería ggplot:
+> 
+> https://www.r-graph-gallery.com/line-chart-dual-Y-axis-ggplot2.html
+> 
+> 
+> 
+> Debo decir, eso sí, que este tipo de gráficos no se recomienda pues
+> puede conducir a conclusiones erradas, en fin ...
+> 
+> Suerte !!!
+> 
+> Eric.
+> 
+> pd. si compartes los datos, una parte al menos, se podría escribir
+> algo que te sirva más directamente.
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> On Fri, 9 Jul 2021 03:55:41 +0000
+> "Marco Aurelio Gonzalez Tagle (FCF)" <marco.gonzalezt en uanl.mx> wrote:
+> 
+> > Muy buenos días a todos!
+> > 
+> > Podrían ayudarme con mi siguiente problema?
+> > Estoy tratando de preparar en R una gráfica con dos ejes en Y.
+> > 
+> > El primer eje contiene el número de incendios ocurridos en un periodo
+> > de tiempo 1998 a 2021 (Barplot), El segundo eje contiene la
+> > superficie afectada (line). Algo parecido a la siguiente gráfica
+> > 
+> > [cid:6E223ADDD0F44EC489B007E3D3DB69F7]
+> > 
+> > Alguien podría apoyarme para conseguir realizar una gráfica parecida
+> > a la de arriba, Saludos, Marco
+> > 
+> > 
+> > 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jmcontrer@@ @end|ng |rom ugr@e@  Mon Jul 19 19:15:34 2021
+From: jmcontrer@@ @end|ng |rom ugr@e@ (Jose Miguel Contreras)
+Date: Mon, 19 Jul 2021 19:15:34 +0200
+Subject: [R-es] Dividir una variable
+Message-ID: <6EFA199A-88EF-44E2-A594-BC3D046413DD@ugr.es>
+
+Hola a todos
+
+Estoy un poco atascado con cómo dividir una variable que tiene un carácter común en dos tomando la parte anterior del carácter y la posterior.
+
+La idea es, 
+
+Dado un vector 
+X <- c(?1-5?, ?2-7?, ?10-15?)
+La idea es sacar dos vectores
+
+Y1 <- c(1, 2, 10)
+Y2 <- c(5, 7, 15)
+
+Gracias
+
+From cgb @end|ng |rom d@t@n@|yt|c@@com  Mon Jul 19 19:42:19 2021
+From: cgb @end|ng |rom d@t@n@|yt|c@@com (Carlos J. Gil Bellosta)
+Date: Mon, 19 Jul 2021 19:42:19 +0200
+Subject: [R-es] Dividir una variable
+In-Reply-To: <6EFA199A-88EF-44E2-A594-BC3D046413DD@ugr.es>
+References: <6EFA199A-88EF-44E2-A594-BC3D046413DD@ugr.es>
+Message-ID: <CADg83edH7JCodH+Zf5C52Z6qJMzgLEBrVfJ443q-fKLDbdraBA@mail.gmail.com>
+
+¿Algo así?
+
+tmp <- do.call(rbind, strsplit(X, "-"))
+Y1  <- as.numeric(tmp[,1])
+Y2  <- as.numeric(tmp[,2])
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El lun, 19 jul 2021 a las 19:16, Jose Miguel Contreras (<jmcontreras en ugr.es>)
+escribió:
+
+> Hola a todos
+>
+> Estoy un poco atascado con cómo dividir una variable que tiene un carácter
+> común en dos tomando la parte anterior del carácter y la posterior.
+>
+> La idea es,
+>
+> Dado un vector
+> X <- c(?1-5?, ?2-7?, ?10-15?)
+> La idea es sacar dos vectores
+>
+> Y1 <- c(1, 2, 10)
+> Y2 <- c(5, 7, 15)
+>
+> Gracias
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From p@tr|c|o@|uenm@yor @end|ng |rom gm@||@com  Wed Jul 21 22:07:33 2021
+From: p@tr|c|o@|uenm@yor @end|ng |rom gm@||@com (patricio fuenmayor)
+Date: Wed, 21 Jul 2021 15:07:33 -0500
+Subject: [R-es] glm.fit: fitted probabilities numerically 0 or 1 occurred
+Message-ID: <CACEaGhNtXYpDq47Ku2sqNFKtd9ayVsgJ1N_vaQV9xQGJ+T5GzQ@mail.gmail.com>
+
+Hola a todos
+Estoy realizando un regresión logística y obtengo esta alerta:
+glm.fit: fitted probabilities numerically 0 or 1 occurred
+Pregunto cual es el proceso recomendado a seguir para evitar esto?
+Estoy usando glmnet y voy avanzando. Es la primera vez que tengo algo así.
+
+Saludos
+
+	[[alternative HTML version deleted]]
+
+
+From cgb @end|ng |rom d@t@n@|yt|c@@com  Thu Jul 22 01:23:23 2021
+From: cgb @end|ng |rom d@t@n@|yt|c@@com (Carlos J. Gil Bellosta)
+Date: Thu, 22 Jul 2021 01:23:23 +0200
+Subject: [R-es] 
+ glm.fit: fitted probabilities numerically 0 or 1 occurred
+In-Reply-To: <CACEaGhNtXYpDq47Ku2sqNFKtd9ayVsgJ1N_vaQV9xQGJ+T5GzQ@mail.gmail.com>
+References: <CACEaGhNtXYpDq47Ku2sqNFKtd9ayVsgJ1N_vaQV9xQGJ+T5GzQ@mail.gmail.com>
+Message-ID: <CADg83ee5_HzJ69E9J2FrQGoeg3RWMjgp154rNg48oLm7NTPXHQ@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Casi seguro, tienes un (bendito) problema de separación perfecta. Casi
+seguro, además, el error aparece cuando penalizas poco en glmnet.
+
+De hecho, penalizar lo suficiente es la solución de libro para este
+problema: evitas que el/los coeficiente/s culpable/s se vaya a infinito
+porque penalizas su tamaño.
+
+Si pintas la evolución de los coeficientes del modelo en función del grado
+de penalización, casi seguro verás que con penalizaciones bajas tienes
+coeficientes muy, muy altos, que son los que generan el "warning".
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El mié, 21 jul 2021 a las 22:08, patricio fuenmayor (<
+patricio.fuenmayor en gmail.com>) escribió:
+
+> Hola a todos
+> Estoy realizando un regresión logística y obtengo esta alerta:
+> glm.fit: fitted probabilities numerically 0 or 1 occurred
+> Pregunto cual es el proceso recomendado a seguir para evitar esto?
+> Estoy usando glmnet y voy avanzando. Es la primera vez que tengo algo así.
+>
+> Saludos
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@que||ne@||||o @end|ng |rom gm@||@com  Mon Jul 26 22:53:16 2021
+From: j@que||ne@||||o @end|ng |rom gm@||@com (JALS)
+Date: Mon, 26 Jul 2021 16:53:16 -0400
+Subject: [R-es] separar "frase" de texto
+Message-ID: <CAEgqsh-uJvvYeFUwsP9-FoXXs3GPue6ik=7o1T0wb3mfa3n1xw@mail.gmail.com>
+
+Buenas Tardes a todos!
+
+Junto con saludar y esperando se encuentren bien, favor necesito
+orientación como puedo rescatar de un texto los farmacos.
+
+ejemplo, en la tabla "MEDICAMENTOS" tengo estas filas, y necesito rescatar
+lo que se encuentra antes de la palabra "mg|Mg"
+
+1 "Ciclobenzaprina 10 Mg 1 En La Noche Via Oral Por 7 Dias"    --->
+Ciclobenzaprina 10 Mg
+ 2 "Ketoprofeno 50mg 1 Cada 8 Hrs Via Oral Por 4 Dias"   ------>
+Ketoprofeno 50mg
+ 3 "Paracetamol 500mg 2 Cada 8 Hrs Via Oral Por 7 Dias"
+
+gracias por su ayuda !
+
+	[[alternative HTML version deleted]]
+
+
+From jo@e|u|@pedromendez @end|ng |rom c|enc|@@@un@m@mx  Mon Jul 26 23:44:35 2021
+From: jo@e|u|@pedromendez @end|ng |rom c|enc|@@@un@m@mx (=?UTF-8?B?Sm9zw6kgTHVpcyBQZWRybyBNw6luZGV6?=)
+Date: Mon, 26 Jul 2021 16:44:35 -0500
+Subject: [R-es] separar "frase" de texto
+In-Reply-To: <CAEgqsh-uJvvYeFUwsP9-FoXXs3GPue6ik=7o1T0wb3mfa3n1xw@mail.gmail.com>
+References: <CAEgqsh-uJvvYeFUwsP9-FoXXs3GPue6ik=7o1T0wb3mfa3n1xw@mail.gmail.com>
+Message-ID: <CAJB8QNjsjN40qzJV=hUvEo9OQYsi8kuBO_uzKuxN8nwVgQ2HFw@mail.gmail.com>
+
+Buenas tardes, soy José Luis
+
+Puedes usar la función str_extract del paquete stringr (quizá debas
+instalar tidyverse antes para el correcto funcionamiento), con ayuda de una
+expresión regular particular en el parámetro pattern:
+
+library(stringr)
+str_extract("Ciclobenzaprina 10 Mg 1 En La Noche Via Oral Por 7
+Dias","(.)*(mg|Mg)")
+[1] "Ciclobenzaprina 10 Mg"
+str_extract("Ketoprofeno 50mg 1 Cada 8 Hrs Via Oral Por 4
+Dias","(.)*(mg|Mg)")
+[1] "Ketoprofeno 50mg"
+str_extract("Paracetamol 500mg 2 Cada 8 Hrs Via Oral Por 7
+Dias","(.)*(mg|Mg)")
+[1] "Paracetamol 500mg"
+
+Saludos
+
+El lun., 26 jul 2021 3:53 p. m., JALS <jaqueline.lillo en gmail.com> escribió:
+
+> Buenas Tardes a todos!
+>
+> Junto con saludar y esperando se encuentren bien, favor necesito
+> orientación como puedo rescatar de un texto los farmacos.
+>
+> ejemplo, en la tabla "MEDICAMENTOS" tengo estas filas, y necesito rescatar
+> lo que se encuentra antes de la palabra "mg|Mg"
+>
+> 1 "Ciclobenzaprina 10 Mg 1 En La Noche Via Oral Por 7 Dias"    --->
+> Ciclobenzaprina 10 Mg
+>  2 "Ketoprofeno 50mg 1 Cada 8 Hrs Via Oral Por 4 Dias"   ------>
+> Ketoprofeno 50mg
+>  3 "Paracetamol 500mg 2 Cada 8 Hrs Via Oral Por 7 Dias"
+>
+> gracias por su ayuda !
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@que||ne@||||o @end|ng |rom gm@||@com  Tue Jul 27 00:01:21 2021
+From: j@que||ne@||||o @end|ng |rom gm@||@com (JALS)
+Date: Mon, 26 Jul 2021 18:01:21 -0400
+Subject: [R-es] separar "frase" de texto
+In-Reply-To: <CAJB8QNjsjN40qzJV=hUvEo9OQYsi8kuBO_uzKuxN8nwVgQ2HFw@mail.gmail.com>
+References: <CAEgqsh-uJvvYeFUwsP9-FoXXs3GPue6ik=7o1T0wb3mfa3n1xw@mail.gmail.com>
+ <CAJB8QNjsjN40qzJV=hUvEo9OQYsi8kuBO_uzKuxN8nwVgQ2HFw@mail.gmail.com>
+Message-ID: <CAEgqsh97pXN7TXe6y6wDkXbEyzoCE18vGrBGG94OkRuu=sAY0A@mail.gmail.com>
+
+MUCHISIMAS GRACIAS!
+
+El lun., 26 de julio de 2021 17:44, José Luis Pedro Méndez <
+joseluispedromendez en ciencias.unam.mx> escribió:
+
+> Buenas tardes, soy José Luis
+>
+> Puedes usar la función str_extract del paquete stringr (quizá debas
+> instalar tidyverse antes para el correcto funcionamiento), con ayuda de una
+> expresión regular particular en el parámetro pattern:
+>
+> library(stringr)
+> str_extract("Ciclobenzaprina 10 Mg 1 En La Noche Via Oral Por 7
+> Dias","(.)*(mg|Mg)")
+> [1] "Ciclobenzaprina 10 Mg"
+> str_extract("Ketoprofeno 50mg 1 Cada 8 Hrs Via Oral Por 4
+> Dias","(.)*(mg|Mg)")
+> [1] "Ketoprofeno 50mg"
+> str_extract("Paracetamol 500mg 2 Cada 8 Hrs Via Oral Por 7
+> Dias","(.)*(mg|Mg)")
+> [1] "Paracetamol 500mg"
+>
+> Saludos
+>
+> El lun., 26 jul 2021 3:53 p. m., JALS <jaqueline.lillo en gmail.com>
+> escribió:
+>
+>> Buenas Tardes a todos!
+>>
+>> Junto con saludar y esperando se encuentren bien, favor necesito
+>> orientación como puedo rescatar de un texto los farmacos.
+>>
+>> ejemplo, en la tabla "MEDICAMENTOS" tengo estas filas, y necesito rescatar
+>> lo que se encuentra antes de la palabra "mg|Mg"
+>>
+>> 1 "Ciclobenzaprina 10 Mg 1 En La Noche Via Oral Por 7 Dias"    --->
+>> Ciclobenzaprina 10 Mg
+>>  2 "Ketoprofeno 50mg 1 Cada 8 Hrs Via Oral Por 4 Dias"   ------>
+>> Ketoprofeno 50mg
+>>  3 "Paracetamol 500mg 2 Cada 8 Hrs Via Oral Por 7 Dias"
+>>
+>> gracias por su ayuda !
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+	[[alternative HTML version deleted]]
+
+

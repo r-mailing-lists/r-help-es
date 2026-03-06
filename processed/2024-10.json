@@ -1,0 +1,351 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2024-10",
+  "messages": [
+    {
+      "id": "msg-1a2bb61621ad",
+      "message_id": "<20241007120115.26033e19@debian-dde-tosh>",
+      "from_name": "Griera",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2024-10-07T12:01:15+02:00",
+      "subject": "[R-es] Optimizar bucle for",
+      "subject_clean": "[R-es] Optimizar bucle for",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola a todos:\n\nTengo un bucle que tarda horas y me gustarÃ­a optimizarlo. Me explico. Simplificando, tengo una tabla con 332.505 registros de 63.738 individuos. Cada registro es una medida realiza de unos\ndÃ­as a unos meses o aÃ±os despuÃ©s de la anterior. Lo que quiero es borrar aquellos registros que entre Ã©l y el anterior hayan transcurrido menos\nde 6 meses, de manera que me quede una tabla con sÃ³lo aquellas medidas realizadas al menos 6 meses despuÃ©s de la anterior.\n\nLa tabla simplificada (no diferencio entre medida y ID y con una nueva columna ?BORRAR?) seria:\n\n## CÃ³digo \ndf <- data.frame(\n  ID = c(1, 1, 1, 2, 2, 2, 1, 3),\n  date = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\", \"2023-01-01\", \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\")),\n  BORRAR = 0)\n\n## El cÃ³digo con el bucle (doble bucle) es:\n\n# Definir umbral : 6 meses: si registro posterior menor 6 meses: borrar\numbral <- 30.5 * 6\n\n# Ordenar por ID i fecha\ndf <- df[order(df$ID, df$date), ]\n\n# Bucle per cada ID\nfor (id in unique(df$ID)) {\n  # Filtrar per ID actual\n  subset_df <- df[df$ID == id, ]\n\n  # Si hay mÃ¡s de un registro borrar aquellos de mÃ¡s de 6 meses\n  if (nrow(subset_df) > 1) {\n    # Inicializar la referencia del primer registro no borrado\n    reference_date <- subset_df$date[1]\n\n    for (i in 2:nrow(subset_df)) {\n      # Calcular la diferencia en dÃ­as respecto a la referencia\n      diff_days <- as.numeric(difftime(subset_df$date[i], reference_date, units = \"days\"))\n\n      # Si la diferencia es menor que el umbral, marcado para borrar\n      if (diff_days < umbral) {\n        df$BORRAR[df$ID == id & df$date == subset_df$date[i]] <- 1\n      } else {\n        # Actualizar la fecha referencia al nuevo registro no borrado\n        reference_date <- subset_df$date[i]\n      }   ## Fin de if (diff_days < umbral)\n\t\t}\t\t\t## Fin del for (I in 2:nrow(subset_df))\n  }\t\t\t\t## Fin de (nrow(subset_df) > 1)\n}\n\n# Resultado sin borrar registros\ndf\n\n## fin CÃ³digo \n\nEl problema es que tarda muchas horas en ejecutarse. He intentado\noptimizarlo (antes tardaba mÃ¡s), pero ya no se mÃ¡s R. Â¿Algunas\nsugerencias pera que vaya mÃ¡s rÃ¡pido?\n\nMuchas gracias de antemano por su ayuda.",
+      "body_snippet": "Hola a todos:\n\nTengo un bucle que tarda horas y me gustarÃ­a optimizarlo. Me explico. Simplificando, tengo una tabla con 332.505 registros de 63.738 individuos. Cada registro es una medida realiza de ",
+      "thread_id": "thread-1a2bb61621ad",
+      "thread_depth": 0,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-8c5c63719759",
+      "message_id": "<CADg83ee6PoUb9cbu2T9iUtGZHEVnvRkdU5CM9+Fjs_kf5RJfdQ@mail.gmail.com>",
+      "from_name": "Carlos J. Gil Bellosta",
+      "from_email_hash": "74715c2cf05b215c06d93a866849930fd023c0b2a90375a823cc229d23635dc5",
+      "date": "2024-10-07T13:24:56+02:00",
+      "subject": "[R-es] Optimizar bucle for",
+      "subject_clean": "[R-es] Optimizar bucle for",
+      "in_reply_to": "<20241007120115.26033e19@debian-dde-tosh>",
+      "references": [
+        "<20241007120115.26033e19@debian-dde-tosh>"
+      ],
+      "body_plain": "Hola, Â¿quÃ© tal?\n\nModifica esto:\n\n----\n\nlibrary(plyr)\n\nn_reg <- 332505\nn_ids <- 63738\n\ndif_days <- 90\n\ndf <- data.frame(\n  id = sample(n_ids, n_reg, replace = T),\n  dates = sample(1000, n_reg, replace = T)\n)\n\n# important!\ndf <- df[order(df$id, df$date),]\n\nn_borrar <- 1\n\nwhile (n_borrar > 0) {\n  df <- ddply(df, .(id), transform, delta = c(1000, diff(dates)))\n  # find the first register by id in less than dif_days\n  df <- ddply(df, .(id), transform, borrar = cumsum(delta < dif_days))\n  n_borrar <- sum(df$borrar == 1)\n  print(n_borrar)\n  df <- df[df$borrar != 1,]\n}\n\n----\n\nSe puede hacer un poco mejor (sacando los ids que ya estÃ¡n limpios de la\niteraciÃ³n), pero no vale la pena: tarda un par de minutos.\n\nUn saludo,\n\nCarlos J. Gil Bellosta\nhttp://www.datanalytics.com\n\n\nOn Mon, 7 Oct 2024 at 12:01, Griera <griera en yandex.com> wrote:\n\n> Hola a todos:\n>\n> Tengo un bucle que tarda horas y me gustarÃ­a optimizarlo. Me explico.\n> Simplificando, tengo una tabla con 332.505 registros de 63.738 individuos.\n> Cada registro es una medida realiza de unos\n> dÃ­as a unos meses o aÃ±os despuÃ©s de la anterior. Lo que quiero es borrar\n> aquellos registros que entre Ã©l y el anterior hayan transcurrido menos\n> de 6 meses, de manera que me quede una tabla con sÃ³lo aquellas medidas\n> realizadas al menos 6 meses despuÃ©s de la anterior.\n>\n> La tabla simplificada (no diferencio entre medida y ID y con una nueva\n> columna ?BORRAR?) seria:\n>\n> ## CÃ³digo\n> df <- data.frame(\n>   ID = c(1, 1, 1, 2, 2, 2, 1, 3),\n>   date = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\", \"2023-01-01\",\n> \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\")),\n>   BORRAR = 0)\n>\n> ## El cÃ³digo con el bucle (doble bucle) es:\n>\n> # Definir umbral : 6 meses: si registro posterior menor 6 meses: borrar\n> umbral <- 30.5 * 6\n>\n> # Ordenar por ID i fecha\n> df <- df[order(df$ID, df$date), ]\n>\n> # Bucle per cada ID\n> for (id in unique(df$ID)) {\n>   # Filtrar per ID actual\n>   subset_df <- df[df$ID == id, ]\n>\n>   # Si hay mÃ¡s de un registro borrar aquellos de mÃ¡s de 6 meses\n>   if (nrow(subset_df) > 1) {\n>     # Inicializar la referencia del primer registro no borrado\n>     reference_date <- subset_df$date[1]\n>\n>     for (i in 2:nrow(subset_df)) {\n>       # Calcular la diferencia en dÃ­as respecto a la referencia\n>       diff_days <- as.numeric(difftime(subset_df$date[i], reference_date,\n> units = \"days\"))\n>\n>       # Si la diferencia es menor que el umbral, marcado para borrar\n>       if (diff_days < umbral) {\n>         df$BORRAR[df$ID == id & df$date == subset_df$date[i]] <- 1\n>       } else {\n>         # Actualizar la fecha referencia al nuevo registro no borrado\n>         reference_date <- subset_df$date[i]\n>       }   ## Fin de if (diff_days < umbral)\n>                 }                       ## Fin del for (I in\n> 2:nrow(subset_df))\n>   }                             ## Fin de (nrow(subset_df) > 1)\n> }\n>\n> # Resultado sin borrar registros\n> df\n>\n> ## fin CÃ³digo\n>\n> El problema es que tarda muchas horas en ejecutarse. He intentado\n> optimizarlo (antes tardaba mÃ¡s), pero ya no se mÃ¡s R. Â¿Algunas\n> sugerencias pera que vaya mÃ¡s rÃ¡pido?\n>\n> Muchas gracias de antemano por su ayuda.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, Â¿quÃ© tal?\n\nModifica esto:\n\n----\n\nlibrary(plyr)\n\nn_reg <- 332505\nn_ids <- 63738\n\ndif_days <- 90\n\ndf <- data.frame(\n  id = sample(n_ids, n_reg, replace = T),\n  dates = sample(1000, n_reg, replac",
+      "thread_id": "thread-1a2bb61621ad",
+      "thread_depth": 1,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-c58cdb0dc400",
+      "message_id": "<20241007145020.49b3aabf@debian-dde-tosh>",
+      "from_name": "Griera",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2024-10-07T14:50:20+02:00",
+      "subject": "[R-es] Optimizar bucle for",
+      "subject_clean": "[R-es] Optimizar bucle for",
+      "in_reply_to": "<CADg83ee6PoUb9cbu2T9iUtGZHEVnvRkdU5CM9+Fjs_kf5RJfdQ@mail.gmail.com>",
+      "references": [
+        "<20241007120115.26033e19@debian-dde-tosh>",
+        "<CADg83ee6PoUb9cbu2T9iUtGZHEVnvRkdU5CM9+Fjs_kf5RJfdQ@mail.gmail.com>"
+      ],
+      "body_plain": "Muchas gracias, Carlos, por esta ayuda!\n\nDesconocia la existencia de ddply y me cuesta interpretar el cÃ³digo. Estoy en ello.\n\nRealmente es mucho, pero mucho, mÃ¡s rÃ¡pido. \n\nEl problema es que si lo aplico a la tabla dde pruebas:\n  id      dates\n1  1 2023-01-01\n2  1 2023-05-15\n3  1 2023-12-01\n4  2 2023-01-01\n5  2 2023-04-01\n6  2 2023-12-01\n7  1 2023-03-15\n8  3 2023-01-01\n\ndif_days <- 180\t\t# Cambiado 6 meses\ndf <- data.frame(\n  id = c(1, 1, 1, 2, 2, 2, 1, 3),\n  dates = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\", \"2023-01-01\", \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\"))\n)\n\nBorra incluso los registros de mÃ¡s de meses y solo queda:\n> df\n  id      dates delta borrar\n1  1 2023-01-01  1000      0\n2  2 2023-01-01  1000      0\n3  3 2023-01-01  1000      0\n\nÂ¿Sabes que puede estar pasando?\n\nMuchas gracias por la ayuda y saludos!\n\nOn Mon, 7 Oct 2024 13:24:56 +0200\n\"Carlos J. Gil Bellosta\" <gilbellosta en gmail.com> wrote:\n\n> Hola, Â¿quÃ© tal?\n> \n> Modifica esto:\n> \n> ----\n> \n> library(plyr)\n> \n> n_reg <- 332505\n> n_ids <- 63738\n> \n> dif_days <- 90\n> \n> df <- data.frame(\n>   id = sample(n_ids, n_reg, replace = T),\n>   dates = sample(1000, n_reg, replace = T)\n> )\n> \n> # important!\n> df <- df[order(df$id, df$date),]\n> \n> n_borrar <- 1\n> \n> while (n_borrar > 0) {\n>   df <- ddply(df, .(id), transform, delta = c(1000, diff(dates)))\n>   # find the first register by id in less than dif_days\n>   df <- ddply(df, .(id), transform, borrar = cumsum(delta < dif_days))\n>   n_borrar <- sum(df$borrar == 1)\n>   print(n_borrar)\n>   df <- df[df$borrar != 1,]\n> }\n> \n> ----\n> \n> Se puede hacer un poco mejor (sacando los ids que ya estÃ¡n limpios de la\n> iteraciÃ³n), pero no vale la pena: tarda un par de minutos.\n> \n> Un saludo,\n> \n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n> \n> \n> On Mon, 7 Oct 2024 at 12:01, Griera <griera en yandex.com> wrote:\n> \n> > Hola a todos:\n> >\n> > Tengo un bucle que tarda horas y me gustarÃ­a optimizarlo. Me explico.\n> > Simplificando, tengo una tabla con 332.505 registros de 63.738 individuos.\n> > Cada registro es una medida realiza de unos\n> > dÃ­as a unos meses o aÃ±os despuÃ©s de la anterior. Lo que quiero es borrar\n> > aquellos registros que entre Ã©l y el anterior hayan transcurrido menos\n> > de 6 meses, de manera que me quede una tabla con sÃ³lo aquellas medidas\n> > realizadas al menos 6 meses despuÃ©s de la anterior.\n> >\n> > La tabla simplificada (no diferencio entre medida y ID y con una nueva\n> > columna ?BORRAR?) seria:\n> >\n> > ## CÃ³digo\n> > df <- data.frame(\n> >   ID = c(1, 1, 1, 2, 2, 2, 1, 3),\n> >   date = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\", \"2023-01-01\",\n> > \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\")),\n> >   BORRAR = 0)\n> >\n> > ## El cÃ³digo con el bucle (doble bucle) es:\n> >\n> > # Definir umbral : 6 meses: si registro posterior menor 6 meses: borrar\n> > umbral <- 30.5 * 6\n> >\n> > # Ordenar por ID i fecha\n> > df <- df[order(df$ID, df$date), ]\n> >\n> > # Bucle per cada ID\n> > for (id in unique(df$ID)) {\n> >   # Filtrar per ID actual\n> >   subset_df <- df[df$ID == id, ]\n> >\n> >   # Si hay mÃ¡s de un registro borrar aquellos de mÃ¡s de 6 meses\n> >   if (nrow(subset_df) > 1) {\n> >     # Inicializar la referencia del primer registro no borrado\n> >     reference_date <- subset_df$date[1]\n> >\n> >     for (i in 2:nrow(subset_df)) {\n> >       # Calcular la diferencia en dÃ­as respecto a la referencia\n> >       diff_days <- as.numeric(difftime(subset_df$date[i], reference_date,\n> > units = \"days\"))\n> >\n> >       # Si la diferencia es menor que el umbral, marcado para borrar\n> >       if (diff_days < umbral) {\n> >         df$BORRAR[df$ID == id & df$date == subset_df$date[i]] <- 1\n> >       } else {\n> >         # Actualizar la fecha referencia al nuevo registro no borrado\n> >         reference_date <- subset_df$date[i]\n> >       }   ## Fin de if (diff_days < umbral)\n> >                 }                       ## Fin del for (I in\n> > 2:nrow(subset_df))\n> >   }                             ## Fin de (nrow(subset_df) > 1)\n> > }\n> >\n> > # Resultado sin borrar registros\n> > df\n> >\n> > ## fin CÃ³digo\n> >\n> > El problema es que tarda muchas horas en ejecutarse. He intentado\n> > optimizarlo (antes tardaba mÃ¡s), pero ya no se mÃ¡s R. Â¿Algunas\n> > sugerencias pera que vaya mÃ¡s rÃ¡pido?\n> >\n> > Muchas gracias de antemano por su ayuda.\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >",
+      "body_snippet": "Muchas gracias, Carlos, por esta ayuda!\n\nDesconocia la existencia de ddply y me cuesta interpretar el cÃ³digo. Estoy en ello.\n\nRealmente es mucho, pero mucho, mÃ¡s rÃ¡pido. \n\nEl problema es que si lo ",
+      "thread_id": "thread-1a2bb61621ad",
+      "thread_depth": 2,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-9cbab1681779",
+      "message_id": "<CADg83ecC34qATtpb0tA_J4gPHt1CxBFdbKTZux5NKy7qK5bjsw@mail.gmail.com>",
+      "from_name": "Carlos J. Gil Bellosta",
+      "from_email_hash": "74715c2cf05b215c06d93a866849930fd023c0b2a90375a823cc229d23635dc5",
+      "date": "2024-10-07T16:02:17+02:00",
+      "subject": "[R-es] Optimizar bucle for",
+      "subject_clean": "[R-es] Optimizar bucle for",
+      "in_reply_to": "<20241007145020.49b3aabf@debian-dde-tosh>",
+      "references": [
+        "<20241007120115.26033e19@debian-dde-tosh>",
+        "<CADg83ee6PoUb9cbu2T9iUtGZHEVnvRkdU5CM9+Fjs_kf5RJfdQ@mail.gmail.com>",
+        "<20241007145020.49b3aabf@debian-dde-tosh>"
+      ],
+      "body_plain": "Prueba asÃ­:\n\n---\n\ndif_days <- 180         # Cambiado 6 meses\ndf <- data.frame(\n  id = c(1, 1, 1, 2, 2, 2, 1, 3),\n  dates = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\", \"2023-01-01\",\n\"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\"))\n)\n\n\n# important!\ndf <- df[order(df$id, df$dates),]\n\nn_borrar <- 1\n\nwhile (n_borrar > 0) {\n  df <- ddply(df, .(id), transform, delta = c(1000, diff(dates)))\n  # find the first register by id in less than dif_days\n  df <- ddply(df, .(id), transform, borrar = cumsum(delta < dif_days))\n  df <- ddply(df, .(id), transform, borrar = cumsum(borrar))\n  n_borrar <- sum(df$borrar == 1)\n  print(n_borrar)\n  df <- df[df$borrar != 1,]\n}\n---\n\nEl programa no hacÃ­a lo que documentaba sino otra cosa distinta. Ahora solo\nborra una lÃ­nea por id en cada pasada, la de la primera fila que estÃ¡ a\nmenos de 6 meses de la anterior (por id). Antes podÃ­a haber borrado mÃ¡s de\nuna fila.\n\nUn saludo,\n\nCarlos J. Gil Bellosta\nhttp://www.datanalytics.com\n\n\nOn Mon, 7 Oct 2024 at 14:50, Griera <griera en yandex.com> wrote:\n\n> Muchas gracias, Carlos, por esta ayuda!\n>\n> Desconocia la existencia de ddply y me cuesta interpretar el cÃ³digo. Estoy\n> en ello.\n>\n> Realmente es mucho, pero mucho, mÃ¡s rÃ¡pido.\n>\n> El problema es que si lo aplico a la tabla dde pruebas:\n>   id      dates\n> 1  1 2023-01-01\n> 2  1 2023-05-15\n> 3  1 2023-12-01\n> 4  2 2023-01-01\n> 5  2 2023-04-01\n> 6  2 2023-12-01\n> 7  1 2023-03-15\n> 8  3 2023-01-01\n>\n> dif_days <- 180         # Cambiado 6 meses\n> df <- data.frame(\n>   id = c(1, 1, 1, 2, 2, 2, 1, 3),\n>   dates = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\",\n> \"2023-01-01\", \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\"))\n> )\n>\n> Borra incluso los registros de mÃ¡s de meses y solo queda:\n> > df\n>   id      dates delta borrar\n> 1  1 2023-01-01  1000      0\n> 2  2 2023-01-01  1000      0\n> 3  3 2023-01-01  1000      0\n>\n> Â¿Sabes que puede estar pasando?\n>\n> Muchas gracias por la ayuda y saludos!\n>\n> On Mon, 7 Oct 2024 13:24:56 +0200\n> \"Carlos J. Gil Bellosta\" <gilbellosta en gmail.com> wrote:\n>\n> > Hola, Â¿quÃ© tal?\n> >\n> > Modifica esto:\n> >\n> > ----\n> >\n> > library(plyr)\n> >\n> > n_reg <- 332505\n> > n_ids <- 63738\n> >\n> > dif_days <- 90\n> >\n> > df <- data.frame(\n> >   id = sample(n_ids, n_reg, replace = T),\n> >   dates = sample(1000, n_reg, replace = T)\n> > )\n> >\n> > # important!\n> > df <- df[order(df$id, df$date),]\n> >\n> > n_borrar <- 1\n> >\n> > while (n_borrar > 0) {\n> >   df <- ddply(df, .(id), transform, delta = c(1000, diff(dates)))\n> >   # find the first register by id in less than dif_days\n> >   df <- ddply(df, .(id), transform, borrar = cumsum(delta < dif_days))\n> >   n_borrar <- sum(df$borrar == 1)\n> >   print(n_borrar)\n> >   df <- df[df$borrar != 1,]\n> > }\n> >\n> > ----\n> >\n> > Se puede hacer un poco mejor (sacando los ids que ya estÃ¡n limpios de la\n> > iteraciÃ³n), pero no vale la pena: tarda un par de minutos.\n> >\n> > Un saludo,\n> >\n> > Carlos J. Gil Bellosta\n> > http://www.datanalytics.com\n> >\n> >\n> > On Mon, 7 Oct 2024 at 12:01, Griera <griera en yandex.com> wrote:\n> >\n> > > Hola a todos:\n> > >\n> > > Tengo un bucle que tarda horas y me gustarÃ­a optimizarlo. Me explico.\n> > > Simplificando, tengo una tabla con 332.505 registros de 63.738\n> individuos.\n> > > Cada registro es una medida realiza de unos\n> > > dÃ­as a unos meses o aÃ±os despuÃ©s de la anterior. Lo que quiero es\n> borrar\n> > > aquellos registros que entre Ã©l y el anterior hayan transcurrido menos\n> > > de 6 meses, de manera que me quede una tabla con sÃ³lo aquellas medidas\n> > > realizadas al menos 6 meses despuÃ©s de la anterior.\n> > >\n> > > La tabla simplificada (no diferencio entre medida y ID y con una nueva\n> > > columna ?BORRAR?) seria:\n> > >\n> > > ## CÃ³digo\n> > > df <- data.frame(\n> > >   ID = c(1, 1, 1, 2, 2, 2, 1, 3),\n> > >   date = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\",\n> \"2023-01-01\",\n> > > \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\")),\n> > >   BORRAR = 0)\n> > >\n> > > ## El cÃ³digo con el bucle (doble bucle) es:\n> > >\n> > > # Definir umbral : 6 meses: si registro posterior menor 6 meses: borrar\n> > > umbral <- 30.5 * 6\n> > >\n> > > # Ordenar por ID i fecha\n> > > df <- df[order(df$ID, df$date), ]\n> > >\n> > > # Bucle per cada ID\n> > > for (id in unique(df$ID)) {\n> > >   # Filtrar per ID actual\n> > >   subset_df <- df[df$ID == id, ]\n> > >\n> > >   # Si hay mÃ¡s de un registro borrar aquellos de mÃ¡s de 6 meses\n> > >   if (nrow(subset_df) > 1) {\n> > >     # Inicializar la referencia del primer registro no borrado\n> > >     reference_date <- subset_df$date[1]\n> > >\n> > >     for (i in 2:nrow(subset_df)) {\n> > >       # Calcular la diferencia en dÃ­as respecto a la referencia\n> > >       diff_days <- as.numeric(difftime(subset_df$date[i],\n> reference_date,\n> > > units = \"days\"))\n> > >\n> > >       # Si la diferencia es menor que el umbral, marcado para borrar\n> > >       if (diff_days < umbral) {\n> > >         df$BORRAR[df$ID == id & df$date == subset_df$date[i]] <- 1\n> > >       } else {\n> > >         # Actualizar la fecha referencia al nuevo registro no borrado\n> > >         reference_date <- subset_df$date[i]\n> > >       }   ## Fin de if (diff_days < umbral)\n> > >                 }                       ## Fin del for (I in\n> > > 2:nrow(subset_df))\n> > >   }                             ## Fin de (nrow(subset_df) > 1)\n> > > }\n> > >\n> > > # Resultado sin borrar registros\n> > > df\n> > >\n> > > ## fin CÃ³digo\n> > >\n> > > El problema es que tarda muchas horas en ejecutarse. He intentado\n> > > optimizarlo (antes tardaba mÃ¡s), pero ya no se mÃ¡s R. Â¿Algunas\n> > > sugerencias pera que vaya mÃ¡s rÃ¡pido?\n> > >\n> > > Muchas gracias de antemano por su ayuda.\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Prueba asÃ­:\n\n---\n\ndif_days <- 180         # Cambiado 6 meses\ndf <- data.frame(\n  id = c(1, 1, 1, 2, 2, 2, 1, 3),\n  dates = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\", \"2023-01-01\",\n\"2023-04-0",
+      "thread_id": "thread-1a2bb61621ad",
+      "thread_depth": 3,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-10bf180f6a9b",
+      "message_id": "<20241007162821.53c84d30@debian-dde-tosh>",
+      "from_name": "Griera",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2024-10-07T16:28:21+02:00",
+      "subject": "[R-es] Optimizar bucle for",
+      "subject_clean": "[R-es] Optimizar bucle for",
+      "in_reply_to": "<CADg83ecC34qATtpb0tA_J4gPHt1CxBFdbKTZux5NKy7qK5bjsw@mail.gmail.com>",
+      "references": [
+        "<20241007120115.26033e19@debian-dde-tosh>",
+        "<CADg83ee6PoUb9cbu2T9iUtGZHEVnvRkdU5CM9+Fjs_kf5RJfdQ@mail.gmail.com>",
+        "<20241007145020.49b3aabf@debian-dde-tosh>",
+        "<CADg83ecC34qATtpb0tA_J4gPHt1CxBFdbKTZux5NKy7qK5bjsw@mail.gmail.com>"
+      ],
+      "body_plain": "Muchas gracias, Carlos!!\n\nPura mÃ gia tu cÃ³digo que funciona a la perfecciÃ³n!\n\nNo se si conseguirÃ© entenderlo nunca, pero lo intento.\n\nPuedo preguntarte como funciona esto de : \n\ndelta = c(1000, diff(dates)))\n\nÂ¿Como es que en el primer registro coge 1000 i en los otros diff(dates)?\n\nMuchas gracias y saludos: me has ahorrado muchas horas!\n\n\n\nOn Mon, 7 Oct 2024 16:02:17 +0200\n\"Carlos J. Gil Bellosta\" <gilbellosta en gmail.com> wrote:\n\n> Prueba asÃ­:\n> \n> ---\n> \n> dif_days <- 180         # Cambiado 6 meses\n> df <- data.frame(\n>   id = c(1, 1, 1, 2, 2, 2, 1, 3),\n>   dates = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\", \"2023-01-01\",\n> \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\"))\n> )\n> \n> \n> # important!\n> df <- df[order(df$id, df$dates),]\n> \n> n_borrar <- 1\n> \n> while (n_borrar > 0) {\n>   df <- ddply(df, .(id), transform, delta = c(1000, diff(dates)))\n>   # find the first register by id in less than dif_days\n>   df <- ddply(df, .(id), transform, borrar = cumsum(delta < dif_days))\n>   df <- ddply(df, .(id), transform, borrar = cumsum(borrar))\n>   n_borrar <- sum(df$borrar == 1)\n>   print(n_borrar)\n>   df <- df[df$borrar != 1,]\n> }\n> ---\n> \n> El programa no hacÃ­a lo que documentaba sino otra cosa distinta. Ahora solo\n> borra una lÃ­nea por id en cada pasada, la de la primera fila que estÃ¡ a\n> menos de 6 meses de la anterior (por id). Antes podÃ­a haber borrado mÃ¡s de\n> una fila.\n> \n> Un saludo,\n> \n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n> \n> \n> On Mon, 7 Oct 2024 at 14:50, Griera <griera en yandex.com> wrote:\n> \n> > Muchas gracias, Carlos, por esta ayuda!\n> >\n> > Desconocia la existencia de ddply y me cuesta interpretar el cÃ³digo. Estoy\n> > en ello.\n> >\n> > Realmente es mucho, pero mucho, mÃ¡s rÃ¡pido.\n> >\n> > El problema es que si lo aplico a la tabla dde pruebas:\n> >   id      dates\n> > 1  1 2023-01-01\n> > 2  1 2023-05-15\n> > 3  1 2023-12-01\n> > 4  2 2023-01-01\n> > 5  2 2023-04-01\n> > 6  2 2023-12-01\n> > 7  1 2023-03-15\n> > 8  3 2023-01-01\n> >\n> > dif_days <- 180         # Cambiado 6 meses\n> > df <- data.frame(\n> >   id = c(1, 1, 1, 2, 2, 2, 1, 3),\n> >   dates = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\",\n> > \"2023-01-01\", \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\"))\n> > )\n> >\n> > Borra incluso los registros de mÃ¡s de meses y solo queda:\n> > > df\n> >   id      dates delta borrar\n> > 1  1 2023-01-01  1000      0\n> > 2  2 2023-01-01  1000      0\n> > 3  3 2023-01-01  1000      0\n> >\n> > Â¿Sabes que puede estar pasando?\n> >\n> > Muchas gracias por la ayuda y saludos!\n> >\n> > On Mon, 7 Oct 2024 13:24:56 +0200\n> > \"Carlos J. Gil Bellosta\" <gilbellosta en gmail.com> wrote:\n> >\n> > > Hola, Â¿quÃ© tal?\n> > >\n> > > Modifica esto:\n> > >\n> > > ----\n> > >\n> > > library(plyr)\n> > >\n> > > n_reg <- 332505\n> > > n_ids <- 63738\n> > >\n> > > dif_days <- 90\n> > >\n> > > df <- data.frame(\n> > >   id = sample(n_ids, n_reg, replace = T),\n> > >   dates = sample(1000, n_reg, replace = T)\n> > > )\n> > >\n> > > # important!\n> > > df <- df[order(df$id, df$date),]\n> > >\n> > > n_borrar <- 1\n> > >\n> > > while (n_borrar > 0) {\n> > >   df <- ddply(df, .(id), transform, delta = c(1000, diff(dates)))\n> > >   # find the first register by id in less than dif_days\n> > >   df <- ddply(df, .(id), transform, borrar = cumsum(delta < dif_days))\n> > >   n_borrar <- sum(df$borrar == 1)\n> > >   print(n_borrar)\n> > >   df <- df[df$borrar != 1,]\n> > > }\n> > >\n> > > ----\n> > >\n> > > Se puede hacer un poco mejor (sacando los ids que ya estÃ¡n limpios de la\n> > > iteraciÃ³n), pero no vale la pena: tarda un par de minutos.\n> > >\n> > > Un saludo,\n> > >\n> > > Carlos J. Gil Bellosta\n> > > http://www.datanalytics.com\n> > >\n> > >\n> > > On Mon, 7 Oct 2024 at 12:01, Griera <griera en yandex.com> wrote:\n> > >\n> > > > Hola a todos:\n> > > >\n> > > > Tengo un bucle que tarda horas y me gustarÃ­a optimizarlo. Me explico.\n> > > > Simplificando, tengo una tabla con 332.505 registros de 63.738\n> > individuos.\n> > > > Cada registro es una medida realiza de unos\n> > > > dÃ­as a unos meses o aÃ±os despuÃ©s de la anterior. Lo que quiero es\n> > borrar\n> > > > aquellos registros que entre Ã©l y el anterior hayan transcurrido menos\n> > > > de 6 meses, de manera que me quede una tabla con sÃ³lo aquellas medidas\n> > > > realizadas al menos 6 meses despuÃ©s de la anterior.\n> > > >\n> > > > La tabla simplificada (no diferencio entre medida y ID y con una nueva\n> > > > columna ?BORRAR?) seria:\n> > > >\n> > > > ## CÃ³digo\n> > > > df <- data.frame(\n> > > >   ID = c(1, 1, 1, 2, 2, 2, 1, 3),\n> > > >   date = as.Date(c(\"2023-01-01\", \"2023-05-15\", \"2023-12-01\",\n> > \"2023-01-01\",\n> > > > \"2023-04-01\", \"2023-12-01\", \"2023-03-15\", \"2023-01-01\")),\n> > > >   BORRAR = 0)\n> > > >\n> > > > ## El cÃ³digo con el bucle (doble bucle) es:\n> > > >\n> > > > # Definir umbral : 6 meses: si registro posterior menor 6 meses: borrar\n> > > > umbral <- 30.5 * 6\n> > > >\n> > > > # Ordenar por ID i fecha\n> > > > df <- df[order(df$ID, df$date), ]\n> > > >\n> > > > # Bucle per cada ID\n> > > > for (id in unique(df$ID)) {\n> > > >   # Filtrar per ID actual\n> > > >   subset_df <- df[df$ID == id, ]\n> > > >\n> > > >   # Si hay mÃ¡s de un registro borrar aquellos de mÃ¡s de 6 meses\n> > > >   if (nrow(subset_df) > 1) {\n> > > >     # Inicializar la referencia del primer registro no borrado\n> > > >     reference_date <- subset_df$date[1]\n> > > >\n> > > >     for (i in 2:nrow(subset_df)) {\n> > > >       # Calcular la diferencia en dÃ­as respecto a la referencia\n> > > >       diff_days <- as.numeric(difftime(subset_df$date[i],\n> > reference_date,\n> > > > units = \"days\"))\n> > > >\n> > > >       # Si la diferencia es menor que el umbral, marcado para borrar\n> > > >       if (diff_days < umbral) {\n> > > >         df$BORRAR[df$ID == id & df$date == subset_df$date[i]] <- 1\n> > > >       } else {\n> > > >         # Actualizar la fecha referencia al nuevo registro no borrado\n> > > >         reference_date <- subset_df$date[i]\n> > > >       }   ## Fin de if (diff_days < umbral)\n> > > >                 }                       ## Fin del for (I in\n> > > > 2:nrow(subset_df))\n> > > >   }                             ## Fin de (nrow(subset_df) > 1)\n> > > > }\n> > > >\n> > > > # Resultado sin borrar registros\n> > > > df\n> > > >\n> > > > ## fin CÃ³digo\n> > > >\n> > > > El problema es que tarda muchas horas en ejecutarse. He intentado\n> > > > optimizarlo (antes tardaba mÃ¡s), pero ya no se mÃ¡s R. Â¿Algunas\n> > > > sugerencias pera que vaya mÃ¡s rÃ¡pido?\n> > > >\n> > > > Muchas gracias de antemano por su ayuda.\n> > > >\n> > > > _______________________________________________\n> > > > R-help-es mailing list\n> > > > R-help-es en r-project.org\n> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > > >\n> >",
+      "body_snippet": "Muchas gracias, Carlos!!\n\nPura mÃ gia tu cÃ³digo que funciona a la perfecciÃ³n!\n\nNo se si conseguirÃ© entenderlo nunca, pero lo intento.\n\nPuedo preguntarte como funciona esto de : \n\ndelta = c(1000, di",
+      "thread_id": "thread-1a2bb61621ad",
+      "thread_depth": 4,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-6f5888d3cd52",
+      "message_id": "<CABkCotT=zqXG-6BkPcoQLs-jJ22D23xcB3Hp_qDj0MVqTO_L5A@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2024-10-10T08:02:39-06:00",
+      "subject": "[R-es] Anuncio del paquete de R, paisaje, para el análisis del paisaje y la biodiversidad",
+      "subject_clean": "[R-es] Anuncio del paquete de R, paisaje, para el análisis del paisaje y la biodiversidad",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimada comunidad de R,\n\nLes hago llegar el anuncio del paquete de R, paisaje, para el anÃ¡lisis del\npaisaje y la biodiversidad.\n\nhttps://github.com/ManuelSpinola/paisaje\n\nEl paquete estÃ¡ en desarrollo. Hasta ahora he incorporado estas funciones:\n\n*calculate_it_metrics*: Calculate 5 information theory landscape metrics\n*count_points_in_polygons*: Count Points within Polygons\n*create_cat_esa_10m*: Create Categorical Land Cover Raster from Copernicus\nLand Cover Data ESA WorldCover\n*extract_cat_raster*: Extract Categorical Raster Data and Summarize by Grid\n*extract_num_raster*: Extract Numerical Raster Data and Summarize by Grid\nwith Custom Function\n*get_esa_10m*: Download land cover data\n*get_h3_grid*: Generate an H3 Hexagonal Grid for an sf Object\n*get_nightlight_data*: Download and Retrieve Nightlight Data\n*get_records*: Retrieve species occurrence records within an Area of\nInterest\n*get_records_by_hexagon*: Get species records by hexagon\n*get_worldclim_future*: Download and process future environmental variables\nmade by worldclim version 2.1.\n*get_worldclim_historic*: Download and process environmental variables made\nby worldclim version 2.1.\n\n-- \n*Manuel SpÃ­nola, Ph.D.*\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola en una.cr <mspinola en una.ac.cr>\nmspinola10 en gmail.com\nTelÃ©fono: (506) 8706 - 4662\nSitio web institucional: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nSitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\nBlog sobre Ciencia de Datos: Blog de Ciencia de Datos\n<https://mspinola-ciencia-de-datos.netlify.app>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimada comunidad de R,\n\nLes hago llegar el anuncio del paquete de R, paisaje, para el anÃ¡lisis del\npaisaje y la biodiversidad.\n\nhttps://github.com/ManuelSpinola/paisaje\n\nEl paquete estÃ¡ en desarro",
+      "thread_id": "thread-6f5888d3cd52",
+      "thread_depth": 0,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-6fcdaa343e8e",
+      "message_id": "<45095A7A-109C-4327-AABD-86982809C3B2@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-10-10T17:39:22-03:00",
+      "subject": "[R-es]  Anuncio del paquete de R, paisaje, para el análisis del paisaje y la biodiversidad",
+      "subject_clean": "[R-es]  Anuncio del paquete de R, paisaje, para el análisis del paisaje y la biodiversidad",
+      "in_reply_to": "<CABkCotT=zqXG-6BkPcoQLs-jJ22D23xcB3Hp_qDj0MVqTO_L5A@mail.gmail.com>",
+      "references": [
+        "<CABkCotT=zqXG-6BkPcoQLs-jJ22D23xcB3Hp_qDj0MVqTO_L5A@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado\t\n\nQue bueno, pero no entiendo nada.\n\nMe parece muy bueno y me llama la curiosidad, observo nc = st_read <https://r-spatial.github.io/sf/reference/st_read.html>(system.file <https://rdrr.io/r/base/system.file.html>(\"shape/nc.shp\", package=\"sf?)) y no tengo ni idea que es el archivo .shp.\n\nÂ¿PodrÃ­a usted colocar algÃºn ejemplo, por ahÃ­ si no es complicado se reproducir en distintos lugares?\n\nPero sobre todo, muchas gracias por colocar de su conocimiento para quiÃ©n quiera usarlo, felicitaciones.\n\nJavier Marcuzzi\n\n> El 10 oct 2024, a las 11:02?a. m., Manuel SpÃ­nola <mspinola10 en gmail.com> escribiÃ³:\n> \n> Estimada comunidad de R,\n> \n> Les hago llegar el anuncio del paquete de R, paisaje, para el anÃ¡lisis del\n> paisaje y la biodiversidad.\n> \n> https://github.com/ManuelSpinola/paisaje\n> \n> El paquete estÃ¡ en desarrollo. Hasta ahora he incorporado estas funciones:\n> \n> *calculate_it_metrics*: Calculate 5 information theory landscape metrics\n> *count_points_in_polygons*: Count Points within Polygons\n> *create_cat_esa_10m*: Create Categorical Land Cover Raster from Copernicus\n> Land Cover Data ESA WorldCover\n> *extract_cat_raster*: Extract Categorical Raster Data and Summarize by Grid\n> *extract_num_raster*: Extract Numerical Raster Data and Summarize by Grid\n> with Custom Function\n> *get_esa_10m*: Download land cover data\n> *get_h3_grid*: Generate an H3 Hexagonal Grid for an sf Object\n> *get_nightlight_data*: Download and Retrieve Nightlight Data\n> *get_records*: Retrieve species occurrence records within an Area of\n> Interest\n> *get_records_by_hexagon*: Get species records by hexagon\n> *get_worldclim_future*: Download and process future environmental variables\n> made by worldclim version 2.1.\n> *get_worldclim_historic*: Download and process environmental variables made\n> by worldclim version 2.1.\n> \n> -- \n> *Manuel SpÃ­nola, Ph.D.*\n> Instituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\n> Universidad Nacional\n> Apartado 1350-3000\n> Heredia\n> COSTA RICA\n> mspinola en una.cr <mspinola en una.ac.cr>\n> mspinola10 en gmail.com\n> TelÃ©fono: (506) 8706 - 4662\n> Sitio web institucional: ICOMVIS\n> <http://www.icomvis.una.ac.cr/index.php/manuel>\n> Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\n> Blog sobre Ciencia de Datos: Blog de Ciencia de Datos\n> <https://mspinola-ciencia-de-datos.netlify.app>\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado\t\n\nQue bueno, pero no entiendo nada.\n\nMe parece muy bueno y me llama la curiosidad, observo nc = st_read <https://r-spatial.github.io/sf/reference/st_read.html>(system.file <https://rdrr.io/r/",
+      "thread_id": "thread-6f5888d3cd52",
+      "thread_depth": 1,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-083caa615336",
+      "message_id": "<CABkCotS402aJjmdhH=OJgXYwzC3+aJ2n7JdjXhVt-Nu2W2xzVA@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2024-10-11T07:07:58-06:00",
+      "subject": "[R-es]  Anuncio del paquete de R, paisaje, para el análisis del paisaje y la biodiversidad",
+      "subject_clean": "[R-es]  Anuncio del paquete de R, paisaje, para el análisis del paisaje y la biodiversidad",
+      "in_reply_to": "<45095A7A-109C-4327-AABD-86982809C3B2@gmail.com>",
+      "references": [
+        "<CABkCotT=zqXG-6BkPcoQLs-jJ22D23xcB3Hp_qDj0MVqTO_L5A@mail.gmail.com>",
+        "<45095A7A-109C-4327-AABD-86982809C3B2@gmail.com>"
+      ],
+      "body_plain": "Muchas gracias Javier.\n\nEl archivo shp es un archivo espacial que se usa en los SIG.  Todo el\npaquete es para anÃ¡lisis de datos espaciales.\n\nManuel\n\nEl jue, 10 oct 2024 a las 14:39, Javier Marcuzzi (<\njavier.ruben.marcuzzi en gmail.com>) escribiÃ³:\n\n> Estimado\n>\n> Que bueno, pero no entiendo nada.\n>\n> Me parece muy bueno y me llama la curiosidad, observo nc = st_read\n> <https://r-spatial.github.io/sf/reference/st_read.html>(system.file\n> <https://rdrr.io/r/base/system.file.html>(\"shape/nc.shp\", package=\"sf?))\n> y no tengo ni idea que es el archivo .shp.\n>\n> Â¿PodrÃ­a usted colocar algÃºn ejemplo, por ahÃ­ si no es complicado se\n> reproducir en distintos lugares?\n>\n> Pero sobre todo, muchas gracias por colocar de su conocimiento para quiÃ©n\n> quiera usarlo, felicitaciones.\n>\n> Javier Marcuzzi\n>\n> El 10 oct 2024, a las 11:02?a. m., Manuel SpÃ­nola <mspinola10 en gmail.com>\n> escribiÃ³:\n>\n> Estimada comunidad de R,\n>\n> Les hago llegar el anuncio del paquete de R, paisaje, para el anÃ¡lisis del\n> paisaje y la biodiversidad.\n>\n> https://github.com/ManuelSpinola/paisaje\n>\n> El paquete estÃ¡ en desarrollo. Hasta ahora he incorporado estas funciones:\n>\n> *calculate_it_metrics*: Calculate 5 information theory landscape metrics\n> *count_points_in_polygons*: Count Points within Polygons\n> *create_cat_esa_10m*: Create Categorical Land Cover Raster from Copernicus\n> Land Cover Data ESA WorldCover\n> *extract_cat_raster*: Extract Categorical Raster Data and Summarize by Grid\n> *extract_num_raster*: Extract Numerical Raster Data and Summarize by Grid\n> with Custom Function\n> *get_esa_10m*: Download land cover data\n> *get_h3_grid*: Generate an H3 Hexagonal Grid for an sf Object\n> *get_nightlight_data*: Download and Retrieve Nightlight Data\n> *get_records*: Retrieve species occurrence records within an Area of\n> Interest\n> *get_records_by_hexagon*: Get species records by hexagon\n> *get_worldclim_future*: Download and process future environmental variables\n> made by worldclim version 2.1.\n> *get_worldclim_historic*: Download and process environmental variables made\n> by worldclim version 2.1.\n>\n> --\n> *Manuel SpÃ­nola, Ph.D.*\n> Instituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\n> Universidad Nacional\n> Apartado 1350-3000\n> Heredia\n> COSTA RICA\n> mspinola en una.cr <mspinola en una.ac.cr>\n> mspinola10 en gmail.com\n> TelÃ©fono: (506) 8706 - 4662\n> Sitio web institucional: ICOMVIS\n> <http://www.icomvis.una.ac.cr/index.php/manuel>\n> Sitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\n> Blog sobre Ciencia de Datos: Blog de Ciencia de Datos\n> <https://mspinola-ciencia-de-datos.netlify.app>\n>\n> [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n>\n\n-- \n*Manuel SpÃ­nola, Ph.D.*\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola en una.cr <mspinola en una.ac.cr>\nmspinola10 en gmail.com\nTelÃ©fono: (506) 8706 - 4662\nSitio web institucional: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nSitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\nBlog sobre Ciencia de Datos: Blog de Ciencia de Datos\n<https://mspinola-ciencia-de-datos.netlify.app>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Javier.\n\nEl archivo shp es un archivo espacial que se usa en los SIG.  Todo el\npaquete es para anÃ¡lisis de datos espaciales.\n\nManuel\n\nEl jue, 10 oct 2024 a las 14:39, Javier Marcuzzi (",
+      "thread_id": "thread-6f5888d3cd52",
+      "thread_depth": 2,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-9138b470435f",
+      "message_id": "<GVXP189MB279509702BB2CF890BC984DEF1442@GVXP189MB2795.EURP189.PROD.OUTLOOK.COM>",
+      "from_name": "Andrés Ocaña Carretón",
+      "from_email_hash": "0f7ba0bb88656e0f521e7550165bd1a26d310847f1835c345b489099c56836cd",
+      "date": "2024-10-14T15:20:18Z",
+      "subject": "[R-es] Error in .local(x, ...) invalid layer names",
+      "subject_clean": "[R-es] Error in .local(x, ...) invalid layer names",
+      "in_reply_to": null,
+      "references": [
+        "<GVXP189MB279509702BB2CF890BC984DEF1442.ref@GVXP189MB2795.EURP189.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "Â¡Buenas tardes!\n\nAntes de nada, dar las gracias por permitirme participar en esta lista.\n\nSoy un usuario reciÃ©n llegado a R de la mano del anÃ¡lisis geoespacial. Soy un arqueÃ³logo que se ha topado con un package para R creado por un arqueÃ³logo para la ejecuciÃ³n de procesos para a creaciÃ³n de rutas de menor coste cuyo nombre es leastcostpath y que se encuentra en el repositorio de GitHub. Contiene diferentes scripts relacionados con esta cuestiÃ³n.\n\nEn concreto, estoy intentando realizar un cÃ¡lculo de tipo  FETE (from everywhere to everywhere approach). Para ello he utilizado una capa de tipo rÃ¡ster, en este caso de costes, y otra de tipo vectorial con puntos. Ambas las he creado en QGIS. La de costes es un mapa de pendientes en grados reclasificado. He usado una capa de costes por ser la que se utiliza en algunos ejemplos de uso que he visto, si bien en ellos se utiliza otra generada a partir de un mdt con la aplicaciÃ³n de algÃºn algoritmo, por el ejemplo el de Tobler. Esta se puede crear con otro script incluido en el paquete, pero que no he sido capaz de ejecutar porque me da error.\n\nTras cargar todos los packages necesarios en RStudio,  ejecuto el siguiente cÃ³digo:\n\nr <- raster(\"pendiente_grados_reclas.tif\")\nlocs <- st_read(\"puntos.geojson\")\n\nlcps <- create_FETE_lcps(x = r, locations = locs, cost_distance = FALSE, ncores = 1)\n\nY me da el siguiente mensaje de error:\n\"Error in .local(x, ...) invalid layer names\"\n\nEl cÃ³digo usado es igual al que viene en la ayuda del script y los nombres de las capas son iguales a las creadas, por lo que no comprendo el error. He estado buscando por internet pero no encuentro nada parecido.\n\nÂ¿Alquien me podrÃ­a ayudar a solucionarlo ? Â¿O indicarme dÃ³nde puede estar el problema?\n\nIncluyo el texto de la ayuda en cuanto al uso del script por si resulta de interÃ©s.\n\nUsage\ncreate_FETE_lcps(x, locations, cost_distance = FALSE, ncores = 1)\n\nArguments\nx?????conductanceMatrix\n\nlocations???sf 'POINT' or 'MULTIPOINT', SpatVector, data.frame or matrix containing the locations coordinates\n\ncost_distance?????logical if TRUE computes total accumulated cost from origin to destination. FALSE (default)\n\nncores??????numeric Number of cores used when calculating least-cost paths from-everywhere-to-everywhere. 1 (default)\n\nUn saludo\n\nAndrÃ©s OcaÃ±a CarretÃ³n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Â¡Buenas tardes!\n\nAntes de nada, dar las gracias por permitirme participar en esta lista.\n\nSoy un usuario reciÃ©n llegado a R de la mano del anÃ¡lisis geoespacial. Soy un arqueÃ³logo que se ha topado ",
+      "thread_id": "thread-9138b470435f",
+      "thread_depth": 0,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-53f609df79fa",
+      "message_id": "<c813e8b7-cebc-56f4-1250-9d746a2180f7@ehu.eus>",
+      "from_name": "Juan Abasolo",
+      "from_email_hash": "20be713e36dff382d1fe3151ad684c005f02d119de762911f953e87f656e2d3e",
+      "date": "2024-10-16T12:58:15+02:00",
+      "subject": "[R-es] Error in .local(x, ...) invalid layer names",
+      "subject_clean": "[R-es] Error in .local(x, ...) invalid layer names",
+      "in_reply_to": "<GVXP189MB279509702BB2CF890BC984DEF1442@GVXP189MB2795.EURP189.PROD.OUTLOOK.COM>",
+      "references": [
+        "<GVXP189MB279509702BB2CF890BC984DEF1442.ref@GVXP189MB2795.EURP189.PROD.OUTLOOK.COM>",
+        "<GVXP189MB279509702BB2CF890BC984DEF1442@GVXP189MB2795.EURP189.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "Hola, AndrÃ©s;\nMientras no aparezca algo mÃ¡s consistente de alguien que sepa de verdad, \nte hablo de tuerto a tuerto.\n\na) Por si no lo sabÃ©s, existe en Telegram un grupo de usuarios de R \nvinculado especÃ­ficamente con el anÃ¡lisis espacial: @rspatial_es\nPero no me suena que haya arqueÃ³logos. AsÃ­ que podrÃ­a pasar que el \npaquete no lo use nadie del grupo. Seguramente no de los usuarios mÃ¡s \nparticipativos.\n\nb) Me fijÃ© que el paquete no incluye ningÃºn vignette, que es lo que yo \nsuelo usar cuando no termino de entender cÃ³mo usarlo.\n\nc) Vi que en la pÃ¡gina del autor no linkea la pÃ¡gina de CRAN, si no la \nde GitHJub, que no aparece mencionada en la de CRAN.\nPor eso mismo te dirÃ­a que confirmaras que lo que tenÃ©s instalado con \nlos paquetes que tenÃ©s instalados puedan correr.\nEn el help de las funciones suele traer la opciÃ³n de hacer correr un \ncÃ³digo mÃ­nimo, que tambiÃ©n es prÃ¡ctico.\n\nd) Capaz que este es el que mÃ¡s sobre: parece que a partir de la versiÃ³n \n2 cambiaron los paquetes sobre los que corre, para que use terra y algÃºn \notro mÃ¡s.\n\nSuerte!\n\n\nJuan\n\n\n24/10/14 17:20(e)an, AndrÃ©s OcaÃ±a CarretÃ³n via R-help-es igorleak idatzi \nzuen:\n> Â¡Buenas tardes!\n>\n> Antes de nada, dar las gracias por permitirme participar en esta lista.\n>\n> Soy un usuario reciÃ©n llegado a R de la mano del anÃ¡lisis geoespacial. Soy un arqueÃ³logo que se ha topado con un package para R creado por un arqueÃ³logo para la ejecuciÃ³n de procesos para a creaciÃ³n de rutas de menor coste cuyo nombre es leastcostpath y que se encuentra en el repositorio de GitHub. Contiene diferentes scripts relacionados con esta cuestiÃ³n.\n>\n> En concreto, estoy intentando realizar un cÃ¡lculo de tipo  FETE (from everywhere to everywhere approach). Para ello he utilizado una capa de tipo rÃ¡ster, en este caso de costes, y otra de tipo vectorial con puntos. Ambas las he creado en QGIS. La de costes es un mapa de pendientes en grados reclasificado. He usado una capa de costes por ser la que se utiliza en algunos ejemplos de uso que he visto, si bien en ellos se utiliza otra generada a partir de un mdt con la aplicaciÃ³n de algÃºn algoritmo, por el ejemplo el de Tobler. Esta se puede crear con otro script incluido en el paquete, pero que no he sido capaz de ejecutar porque me da error.\n>\n> Tras cargar todos los packages necesarios en RStudio,  ejecuto el siguiente cÃ³digo:\n>\n> r <- raster(\"pendiente_grados_reclas.tif\")\n> locs <- st_read(\"puntos.geojson\")\n>\n> lcps <- create_FETE_lcps(x = r, locations = locs, cost_distance = FALSE, ncores = 1)\n>\n> Y me da el siguiente mensaje de error:\n> \"Error in .local(x, ...) invalid layer names\"\n>\n> El cÃ³digo usado es igual al que viene en la ayuda del script y los nombres de las capas son iguales a las creadas, por lo que no comprendo el error. He estado buscando por internet pero no encuentro nada parecido.\n>\n> Â¿Alquien me podrÃ­a ayudar a solucionarlo ? Â¿O indicarme dÃ³nde puede estar el problema?\n>\n> Incluyo el texto de la ayuda en cuanto al uso del script por si resulta de interÃ©s.\n>\n> Usage\n> create_FETE_lcps(x, locations, cost_distance = FALSE, ncores = 1)\n>\n> Arguments\n> x?????conductanceMatrix\n>\n> locations???sf 'POINT' or 'MULTIPOINT', SpatVector, data.frame or matrix containing the locations coordinates\n>\n> cost_distance?????logical if TRUE computes total accumulated cost from origin to destination. FALSE (default)\n>\n> ncores??????numeric Number of cores used when calculating least-cost paths from-everywhere-to-everywhere. 1 (default)\n>\n> Un saludo\n>\n> AndrÃ©s OcaÃ±a CarretÃ³n\n>\n>\n>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n-- \nimage/svg+xml eman ta zabal zazu Euskal Herriko Unibertsitatea \nUniversidad del PaÃ­s Vasco\n*Euskal Herriko Unibertsitatea*\n\n*Juan Abasolo*\nIrakasle eta ikertzailea\n/Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea/\n(+34) 94 601 7567 <tel:(+34) 94 601 7567>\njuan.abasolo en ehu.eus\nhttps://mastodon.eus/@juan\nhttps://juanabasolo.netlify.app\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, AndrÃ©s;\nMientras no aparezca algo mÃ¡s consistente de alguien que sepa de verdad, \nte hablo de tuerto a tuerto.\n\na) Por si no lo sabÃ©s, existe en Telegram un grupo de usuarios de R \nvinculado ",
+      "thread_id": "thread-9138b470435f",
+      "thread_depth": 1,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-1e7d334936b5",
+      "message_id": "<CABkCotT76ULhjnZKC0epAPHzBW_pM-AV2JVs93ULqwQRdP6BBw@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2024-10-16T06:48:09-06:00",
+      "subject": "[R-es] Error in .local(x, ...) invalid layer names",
+      "subject_clean": "[R-es] Error in .local(x, ...) invalid layer names",
+      "in_reply_to": "<GVXP189MB279509702BB2CF890BC984DEF1442@GVXP189MB2795.EURP189.PROD.OUTLOOK.COM>",
+      "references": [
+        "<GVXP189MB279509702BB2CF890BC984DEF1442.ref@GVXP189MB2795.EURP189.PROD.OUTLOOK.COM>",
+        "<GVXP189MB279509702BB2CF890BC984DEF1442@GVXP189MB2795.EURP189.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "Hola AndrÃ©s,\n\nEl argumento x dice que debe ser una\nconductanceMatrix no un raster.\n\nManuel\n\n\n*Manuel SpÃ­nola, Ph.D.*\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola en una.cr <mspinola en una.ac.cr>\nmspinola10 en gmail.com\nTelÃ©fono: (506) 8706 - 4662\nSitio web institucional: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nSitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\nBlog sobre Ciencia de Datos: Blog de Ciencia de Datos\n<https://mspinola-ciencia-de-datos.netlify.app>\n\n\nEl El lun, 14 oct 2024 a la(s) 09:20, AndrÃ©s OcaÃ±a CarretÃ³n via R-help-es <\nr-help-es en r-project.org> escribiÃ³:\n\n> Â¡Buenas tardes!\n>\n> Antes de nada, dar las gracias por permitirme participar en esta lista.\n>\n> Soy un usuario reciÃ©n llegado a R de la mano del anÃ¡lisis geoespacial. Soy\n> un arqueÃ³logo que se ha topado con un package para R creado por un\n> arqueÃ³logo para la ejecuciÃ³n de procesos para a creaciÃ³n de rutas de menor\n> coste cuyo nombre es leastcostpath y que se encuentra en el repositorio de\n> GitHub. Contiene diferentes scripts relacionados con esta cuestiÃ³n.\n>\n> En concreto, estoy intentando realizar un cÃ¡lculo de tipo  FETE (from\n> everywhere to everywhere approach). Para ello he utilizado una capa de tipo\n> rÃ¡ster, en este caso de costes, y otra de tipo vectorial con puntos. Ambas\n> las he creado en QGIS. La de costes es un mapa de pendientes en grados\n> reclasificado. He usado una capa de costes por ser la que se utiliza en\n> algunos ejemplos de uso que he visto, si bien en ellos se utiliza otra\n> generada a partir de un mdt con la aplicaciÃ³n de algÃºn algoritmo, por el\n> ejemplo el de Tobler. Esta se puede crear con otro script incluido en el\n> paquete, pero que no he sido capaz de ejecutar porque me da error.\n>\n> Tras cargar todos los packages necesarios en RStudio,  ejecuto el\n> siguiente cÃ³digo:\n>\n> r <- raster(\"pendiente_grados_reclas.tif\")\n> locs <- st_read(\"puntos.geojson\")\n>\n> lcps <- create_FETE_lcps(x = r, locations = locs, cost_distance = FALSE,\n> ncores = 1)\n>\n> Y me da el siguiente mensaje de error:\n> \"Error in .local(x, ...) invalid layer names\"\n>\n> El cÃ³digo usado es igual al que viene en la ayuda del script y los nombres\n> de las capas son iguales a las creadas, por lo que no comprendo el error.\n> He estado buscando por internet pero no encuentro nada parecido.\n>\n> Â¿Alquien me podrÃ­a ayudar a solucionarlo ? Â¿O indicarme dÃ³nde puede estar\n> el problema?\n>\n> Incluyo el texto de la ayuda en cuanto al uso del script por si resulta de\n> interÃ©s.\n>\n> Usage\n> create_FETE_lcps(x, locations, cost_distance = FALSE, ncores = 1)\n>\n> Arguments\n> x conductanceMatrix\n>\n> locations sf 'POINT' or 'MULTIPOINT', SpatVector, data.frame or matrix\n> containing the locations coordinates\n>\n> cost_distance logical if TRUE computes total accumulated cost from origin\n> to destination. FALSE (default)\n>\n> ncores numeric Number of cores used when calculating least-cost paths\n> from-everywhere-to-everywhere. 1 (default)\n>\n> Un saludo\n>\n> AndrÃ©s OcaÃ±a CarretÃ³n\n>\n>\n>\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola AndrÃ©s,\n\nEl argumento x dice que debe ser una\nconductanceMatrix no un raster.\n\nManuel\n\n\n*Manuel SpÃ­nola, Ph.D.*\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad N",
+      "thread_id": "thread-9138b470435f",
+      "thread_depth": 1,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-9ea54936f64b",
+      "message_id": "<CAOKbq8jCsivD-mB5YxQNAffOE1_Q5oW3P-WDX-0yLb3GmMv6Gw@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2024-10-24T00:25:58+02:00",
+      "subject": "[R-es] 92 - Reunión Grupo de R - Madrid: Miércoles 30 de octubre de 2024",
+      "subject_clean": "[R-es] 92 - Reunión Grupo de R - Madrid: Miércoles 30 de octubre de 2024",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Â¿QuÃ© tal?\n\nEl prÃ³ximo *miÃ©rcoles* (30 de octubre), volvemos con una nueva reuniÃ³n del\n\"Grupo de R de Madrid\".\n\nContaremos con Carmen Lancho y Emilio L. Cano (Presidente de la AsociaciÃ³n\nde R-Hispano y habitual en esta lista) que nos detallarÃ¡n como usan R en el\nGrupo \"DSLAB\" de la Universidad Rey Juan Carlos de Madrid.\n\nEl detalle de la agenda lo podÃ©is encontrar aquÃ­:\n\n   -\n   https://www.meetup.com/es-ES/grupo-de-usuarios-de-r-de-madrid/events/304169568/?eventorigin=group_upcoming_events\n\nEste evento serÃ¡ tanto presencial como online (Zoom).\n\nOs esperamos!.\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Â¿QuÃ© tal?\n\nEl prÃ³ximo *miÃ©rcoles* (30 de octubre), volvemos con una nueva reuniÃ³n del\n\"Grupo de R de Madrid\".\n\nContaremos con Carmen Lancho y Emilio L. Cano (Presidente de la AsociaciÃ³n\nde R-His",
+      "thread_id": "thread-9ea54936f64b",
+      "thread_depth": 0,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-5d94a16a6d54",
+      "message_id": "<CAEK8QGJ8rEvp7MxX66RYYeTWbwu0mtatiZvX7SPebN5M_GR05Q@mail.gmail.com>",
+      "from_name": "Jimmy Erney Reyes Velasco",
+      "from_email_hash": "ad70bac28029e778ec1fa03a5b3f2f3ec8ac1b471e0a8f20b34fcd0be82af104",
+      "date": "2024-10-23T18:21:15-05:00",
+      "subject": "[R-es] Error de Rstudio",
+      "subject_clean": "[R-es] Error de Rstudio",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola, estimados\nQuisiera pedirle un favor.\nHe tenido problemas Ãºltimamente con Rstudio, quizÃ¡ guardÃ© una sesiÃ³n con un\nerror y no he podido solucionarlo. He intentado actualizar R y Rstudio y no\nse ha solucionado. TambiÃ©n lo desinstale y volvÃ­ a instalar y sigue el\nmismo problema. Si alguno de ustedes sabe como solucionarlo, les\nagradecerÃ­a bastante que me pudieran orientar para arreglar este problema.\nAdjunto una imagen de cÃ³mo se ve el programa.\nMuchas gracias\nSaludos\nJimmy\n[image: image.png]\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20241023/4dc3289f/attachment.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 13268 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20241023/4dc3289f/attachment.png>",
+      "body_snippet": "Hola, estimados\nQuisiera pedirle un favor.\nHe tenido problemas Ãºltimamente con Rstudio, quizÃ¡ guardÃ© una sesiÃ³n con un\nerror y no he podido solucionarlo. He intentado actualizar R y Rstudio y no\ns",
+      "thread_id": "thread-5d94a16a6d54",
+      "thread_depth": 0,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-5bf9b5632dbb",
+      "message_id": "<96ebac45f3119f9a24d3fcdd5124cbce681b27a1.camel@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2024-10-24T07:11:24+02:00",
+      "subject": "[R-es] Error de Rstudio",
+      "subject_clean": "[R-es] Error de Rstudio",
+      "in_reply_to": "<CAEK8QGJ8rEvp7MxX66RYYeTWbwu0mtatiZvX7SPebN5M_GR05Q@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGJ8rEvp7MxX66RYYeTWbwu0mtatiZvX7SPebN5M_GR05Q@mail.gmail.com>"
+      ],
+      "body_plain": "Buenas, Jimmy:\n\nSi el problema es una sesiÃ³n guardada, con R y Rstudio cerrado, busca un fichero que se llame .RData en tu carpeta de usuario y bÃ³rralo. Si\nno lo encuentras allÃ­, bÃºscalo en la carpeta donde se ejecuta R.\n\nUn saludo.\n\nEl miÃ©, 23-10-2024 a las 18:21 -0500, Jimmy Erney Reyes Velasco escribiÃ³:\n> Hola, estimados\n> Quisiera pedirle un favor.\n> He tenido problemas Ãºltimamente con Rstudio, quizÃ¡ guardÃ© una sesiÃ³n con un error y no he podido solucionarlo. He intentado actualizar R y\n> Rstudio y no se ha solucionado. TambiÃ©n lo desinstale y volvÃ­ a instalar y sigue el mismoÂ problema. Si alguno de ustedes sabe\n> comoÂ solucionarlo, les agradecerÃ­a bastante que me pudieran orientar para arreglar este problema.\n> Adjunto una imagen de cÃ³mo se ve el programa.\n> MuchasÂ gracias\n> Saludos\n> Jimmy\n> image.png\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!Q1TyutI4unA1geexnHq13ocAlBK-KrUKg3c7mp5xJAUm3D1XDHuEJQ4B4nB4biMGoOc8Kt_n5-pc3woS3Yf7Y6I$\n> Â \n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20241024/31878c91/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 13268 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20241024/31878c91/attachment-0001.png>",
+      "body_snippet": "Buenas, Jimmy:\n\nSi el problema es una sesiÃ³n guardada, con R y Rstudio cerrado, busca un fichero que se llame .RData en tu carpeta de usuario y bÃ³rralo. Si\nno lo encuentras allÃ­, bÃºscalo en la car",
+      "thread_id": "thread-5d94a16a6d54",
+      "thread_depth": 1,
+      "month": "2024-10"
+    },
+    {
+      "id": "msg-aa5a14d0234f",
+      "message_id": "<CAEK8QGL1NzeJi+PWHYHY-Fos6SDtFJjtsMc8v3gmDr_UwbL5SQ@mail.gmail.com>",
+      "from_name": "Jimmy Erney Reyes Velasco",
+      "from_email_hash": "ad70bac28029e778ec1fa03a5b3f2f3ec8ac1b471e0a8f20b34fcd0be82af104",
+      "date": "2024-10-24T20:02:32-05:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 186, Envío 7",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 186, Envío 7",
+      "in_reply_to": "<mailman.15229.1489.1729746699.51419.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.15229.1489.1729746699.51419.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Muchas gracias, se solucionÃ³ mi problema con el programa.\nAgradezco mucho su colaboraciÃ³n.\n\nEl jue, 24 oct 2024 a la(s) 12:11?a.m., <r-help-es-request en r-project.org>\nescribiÃ³:\n\n> EnvÃ­e los mensajes para la lista R-help-es a\n>         r-help-es en r-project.org\n>\n> Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n>         https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n>         r-help-es-request en r-project.org\n>\n> Puede contactar con el responsable de la lista escribiendo a:\n>         r-help-es-owner en r-project.org\n>\n> Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> respondiendo.\n>\n>\n> Asuntos del dÃ­a:\n>\n>    1. 92 - ReuniÃ³n Grupo de R - Madrid: MiÃ©rcoles 30 de octubre de\n>       2024 (Carlos Ortega)\n>    2. Error de Rstudio (Jimmy Erney Reyes Velasco)\n>    3. Re: Error de Rstudio (Proyecto R-UCA)\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Thu, 24 Oct 2024 00:25:58 +0200\n> From: Carlos Ortega <cof en qualityexcellence.es>\n> To: Lista R <r-help-es en r-project.org>\n> Subject: [R-es] 92 - ReuniÃ³n Grupo de R - Madrid: MiÃ©rcoles 30 de\n>         octubre de 2024\n> Message-ID:\n>         <\n> CAOKbq8jCsivD-mB5YxQNAffOE1_Q5oW3P-WDX-0yLb3GmMv6Gw en mail.gmail.com>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Â¿QuÃ© tal?\n>\n> El prÃ³ximo *miÃ©rcoles* (30 de octubre), volvemos con una nueva reuniÃ³n del\n> \"Grupo de R de Madrid\".\n>\n> Contaremos con Carmen Lancho y Emilio L. Cano (Presidente de la AsociaciÃ³n\n> de R-Hispano y habitual en esta lista) que nos detallarÃ¡n como usan R en el\n> Grupo \"DSLAB\" de la Universidad Rey Juan Carlos de Madrid.\n>\n> El detalle de la agenda lo podÃ©is encontrar aquÃ­:\n>\n>    -\n>\n> https://www.meetup.com/es-ES/grupo-de-usuarios-de-r-de-madrid/events/304169568/?eventorigin=group_upcoming_events\n>\n> Este evento serÃ¡ tanto presencial como online (Zoom).\n>\n> Os esperamos!.\n>\n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>         [[alternative HTML version deleted]]\n>\n>\n>\n>\n> ------------------------------\n>\n> Message: 2\n> Date: Wed, 23 Oct 2024 18:21:15 -0500\n> From: Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com>\n> To: r-help-es-request en r-project.org, Lista R <r-help-es en r-project.org>\n> Subject: [R-es] Error de Rstudio\n> Message-ID:\n>         <\n> CAEK8QGJ8rEvp7MxX66RYYeTWbwu0mtatiZvX7SPebN5M_GR05Q en mail.gmail.com>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Hola, estimados\n> Quisiera pedirle un favor.\n> He tenido problemas Ãºltimamente con Rstudio, quizÃ¡ guardÃ© una sesiÃ³n con un\n> error y no he podido solucionarlo. He intentado actualizar R y Rstudio y no\n> se ha solucionado. TambiÃ©n lo desinstale y volvÃ­ a instalar y sigue el\n> mismo problema. Si alguno de ustedes sabe como solucionarlo, les\n> agradecerÃ­a bastante que me pudieran orientar para arreglar este problema.\n> Adjunto una imagen de cÃ³mo se ve el programa.\n> Muchas gracias\n> Saludos\n> Jimmy\n> [image: image.png]\n>\n> ------------ prÃ³xima parte ------------\n> Se ha borrado un adjunto en formato HTML...\n> URL: <\n> https://stat.ethz.ch/pipermail/r-help-es/attachments/20241023/4dc3289f/attachment-0001.html\n> >\n>\n> ------------ prÃ³xima parte ------------\n> A non-text attachment was scrubbed...\n> Name: image.png\n> Type: image/png\n> Size: 13268 bytes\n> Desc: no disponible\n> URL: <\n> https://stat.ethz.ch/pipermail/r-help-es/attachments/20241023/4dc3289f/attachment-0001.png\n> >\n>\n>\n> ------------------------------\n>\n> Message: 3\n> Date: Thu, 24 Oct 2024 07:11:24 +0200\n> From: Proyecto R-UCA <r-uca en uca.es>\n> To: r-help-es en r-project.org\n> Subject: Re: [R-es] Error de Rstudio\n> Message-ID: <96ebac45f3119f9a24d3fcdd5124cbce681b27a1.camel en uca.es>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Buenas, Jimmy:\n>\n> Si el problema es una sesiÃ³n guardada, con R y Rstudio cerrado, busca un\n> fichero que se llame .RData en tu carpeta de usuario y bÃ³rralo. Si\n> no lo encuentras allÃ­, bÃºscalo en la carpeta donde se ejecuta R.\n>\n> Un saludo.\n>\n> El miÃ©, 23-10-2024 a las 18:21 -0500, Jimmy Erney Reyes Velasco escribiÃ³:\n> > Hola, estimados\n> > Quisiera pedirle un favor.\n> > He tenido problemas Ãºltimamente con Rstudio, quizÃ¡ guardÃ© una sesiÃ³n con\n> un error y no he podido solucionarlo. He intentado actualizar R y\n> > Rstudio y no se ha solucionado. TambiÃ©n lo desinstale y volvÃ­ a instalar\n> y sigue el mismo problema. Si alguno de ustedes sabe\n> > como solucionarlo, les agradecerÃ­a bastante que me pudieran orientar\n> para arreglar este problema.\n> > Adjunto una imagen de cÃ³mo se ve el programa.\n> > Muchas gracias\n> > Saludos\n> > Jimmy\n> > image.png\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> >\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!Q1TyutI4unA1geexnHq13ocAlBK-KrUKg3c7mp5xJAUm3D1XDHuEJQ4B4nB4biMGoOc8Kt_n5-pc3woS3Yf7Y6I$\n> >\n>\n> ------------ prÃ³xima parte ------------\n> Se ha borrado un adjunto en formato HTML...\n> URL: <\n> https://stat.ethz.ch/pipermail/r-help-es/attachments/20241024/31878c91/attachment.html\n> >\n>\n> ------------ prÃ³xima parte ------------\n> A non-text attachment was scrubbed...\n> Name: image.png\n> Type: image/png\n> Size: 13268 bytes\n> Desc: no disponible\n> URL: <\n> https://stat.ethz.ch/pipermail/r-help-es/attachments/20241024/31878c91/attachment.png\n> >\n>\n>\n> ------------------------------\n>\n> Subject: PiÃ© de pÃ¡gina del digest\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> ------------------------------\n>\n> Fin de Resumen de R-help-es, Vol 186, EnvÃ­o 7\n> *********************************************\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias, se solucionÃ³ mi problema con el programa.\nAgradezco mucho su colaboraciÃ³n.\n\nEl jue, 24 oct 2024 a la(s) 12:11?a.m., <r-help-es-request en r-project.org>\nescribiÃ³:\n\n> EnvÃ­e los mens",
+      "thread_id": "thread-aa5a14d0234f",
+      "thread_depth": 0,
+      "month": "2024-10"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-1a2bb61621ad",
+      "subject": "[R-es] Optimizar bucle for",
+      "message_count": 5,
+      "participants": [
+        "Carlos J. Gil Bellosta",
+        "Griera"
+      ],
+      "started": "2024-10-07T12:01:15+02:00",
+      "last_reply": "2024-10-07T16:28:21+02:00",
+      "root_message_id": "msg-1a2bb61621ad"
+    },
+    {
+      "id": "thread-6f5888d3cd52",
+      "subject": "[R-es] Anuncio del paquete de R, paisaje, para el análisis del paisaje y la biodiversidad",
+      "message_count": 3,
+      "participants": [
+        "Javier Marcuzzi",
+        "Manuel Spínola"
+      ],
+      "started": "2024-10-10T08:02:39-06:00",
+      "last_reply": "2024-10-11T07:07:58-06:00",
+      "root_message_id": "msg-6f5888d3cd52"
+    },
+    {
+      "id": "thread-9138b470435f",
+      "subject": "[R-es] Error in .local(x, ...) invalid layer names",
+      "message_count": 3,
+      "participants": [
+        "Andrés Ocaña Carretón",
+        "Juan Abasolo",
+        "Manuel Spínola"
+      ],
+      "started": "2024-10-14T15:20:18+00:00",
+      "last_reply": "2024-10-16T06:48:09-06:00",
+      "root_message_id": "msg-9138b470435f"
+    },
+    {
+      "id": "thread-5d94a16a6d54",
+      "subject": "[R-es] Error de Rstudio",
+      "message_count": 2,
+      "participants": [
+        "Jimmy Erney Reyes Velasco",
+        "Proyecto R-UCA"
+      ],
+      "started": "2024-10-23T18:21:15-05:00",
+      "last_reply": "2024-10-24T07:11:24+02:00",
+      "root_message_id": "msg-5d94a16a6d54"
+    },
+    {
+      "id": "thread-9ea54936f64b",
+      "subject": "[R-es] 92 - Reunión Grupo de R - Madrid: Miércoles 30 de octubre de 2024",
+      "message_count": 1,
+      "participants": [
+        "Carlos Ortega"
+      ],
+      "started": "2024-10-24T00:25:58+02:00",
+      "last_reply": "2024-10-24T00:25:58+02:00",
+      "root_message_id": "msg-9ea54936f64b"
+    },
+    {
+      "id": "thread-aa5a14d0234f",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 186, Envío 7",
+      "message_count": 1,
+      "participants": [
+        "Jimmy Erney Reyes Velasco"
+      ],
+      "started": "2024-10-24T20:02:32-05:00",
+      "last_reply": "2024-10-24T20:02:32-05:00",
+      "root_message_id": "msg-aa5a14d0234f"
+    }
+  ]
+}

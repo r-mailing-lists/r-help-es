@@ -1,0 +1,482 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2020-10",
+  "messages": [
+    {
+      "id": "msg-a930af5e2159",
+      "message_id": "<52A38A6A-1600-48FD-8F9C-8C2F33A09FCD@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2020-10-01T11:10:26+02:00",
+      "subject": "[R-es] Graficar una curva de tendencia potencial.",
+      "subject_clean": "[R-es] Graficar una curva de tendencia potencial.",
+      "in_reply_to": "<CAEK8QG+wWih7QQ86LQ3kAnAo1-OBe-x51aOdYH3w8gfUFDMRpA@mail.gmail.com>",
+      "references": [
+        "<CAEK8QG+wWih7QQ86LQ3kAnAo1-OBe-x51aOdYH3w8gfUFDMRpA@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Jimmy,\n\nEnhorabuena por proporcionar un ejemplo reproducible. Es la mejor forma de poder ayudar, y no todo el mundo lo hace.\n\nEl ajuste no lineal muchas veces falla por los valores iniciales. Lo mejor es intentar buscar valores iniciales lo mÃ¡s aproximados posibles. De tu nube de puntos, se ve que es prÃ¡cticamente una recta y=x, pero si los pones en 1,1 o 0,1, da errores. Entonces siempre primero asegÃºrate de que el modelo lineal se puede ajustar. Si la funciÃ³n nls da errores, entonces primero arregla eso, y despuÃ©s podrÃ¡s graficarlo.\n\nEn el caso de la funciÃ³n potencial que planteas, es fÃ¡cil encontrar valores muy aproximados linealizando, y despuÃ©s puedes usar esos valores como iniciales para ajustar el modelo no lineal (y meterlos tambiÃ©n en el grÃ¡fico).\n\nPego debajo un ejemplo (reproducible) que funciona. Con nls parece que no funciona se=TRUE, si lo necesitas creo que tendrÃ­as que aÃ±adir una capa geom_ribbon calculÃ¡ndola con el resultado del modelo.\n\nUn saludo,\nEmilio L. Cano\n\n\nmodelos_Garcia <- read.table(header = TRUE,\n                text = \"AF_E PS_E\n90.838 2.206\n83.139 1.751\n134.272 3.710\n84.043 2.076\n105.184 2.788\n157.249 3.783\n50.280 1.027\n96.973 2.355\n123.582 3.398\n60.417 1.236\n123.501 3.315\n90.128 1.566\n193.783 5.167\n116.036 2.994\n100.289 2.216\n56.943 1.106\n102.272 2.692\n145.579 3.810\n53.105 1.202\n127.212 3.061\n102.838 2.383\n126.352 2.723\n13.661 0.190\n164.352 4.870\n159.945 4.160\n54.382 0.884\n128.253 3.598\n181.208 4.767\n145.118 3.779\n65.993 1.147\")\n\n## No funcionan los valores iniciales\nmodelo <- nls(PS_E ~ a*AF_E^b, modelos_Garcia, start = list(a = 1, b = 1))\n\n## Buscar mejores:\nmodelol <- lm(log(PS_E) ~ log(AF_E), modelos_Garcia)\ncoef(modelol)\n\n## Probar de nuevo\nmodelo <- nls(PS_E ~ a*AF_E^b, modelos_Garcia, \n              start = list(a = exp(coef(modelol)[1]), b = coef(modelol)[2]))\ncoef(modelo)\na0 <- exp(coef(modelol)[1])\nb0 <- coef(modelol)[2]\n\nlibrary(ggplot2)\nggplot(modelos_Garcia,aes(x = AF_E,y = PS_E)) +\n  geom_point() +\n  geom_smooth(method = 'nls', \n              formula = y~a*x^b, \n              method.args = list(start = list(a = a0, \n                                              b = b0)),\n              se = FALSE)\n\n\n\n> El 1 oct 2020, a las 0:48, Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribiÃ³:\n> \n> AF_E PS_E\n> 90.838 2.206\n> 83.139 1.751\n> 134.272 3.710\n> 84.043 2.076\n> 105.184 2.788\n> 157.249 3.783\n> 50.280 1.027\n> 96.973 2.355\n> 123.582 3.398\n> 60.417 1.236\n> 123.501 3.315\n> 90.128 1.566\n> 193.783 5.167\n> 116.036 2.994\n> 100.289 2.216\n> 56.943 1.106\n> 102.272 2.692\n> 145.579 3.810\n> 53.105 1.202\n> 127.212 3.061\n> 102.838 2.383\n> 126.352 2.723\n> 13.661 0.190\n> 164.352 4.870\n> 159.945 4.160\n> 54.382 0.884\n> 128.253 3.598\n> 181.208 4.767\n> 145.118 3.779\n> 65.993 1.147 Hola buenas tardes\n> quiero graficar una curva de tendendia de un modelo potencial con estos\n> datos.\n> mi codigo es el siguiente:\n> \n> ggplot(modelos_Garcia,aes(x = AF_E,y = PS_E)) +\n>  geom_point() +\n>  stat_smooth(method = 'nls', formula = 'y~a*x^b', start = list(a =\n> 1,b=1),se=TRUE)\n> \n> pero cuando ejecuto el cÃ³digo no me aparece la curva de tendencia\n> Â¿alguien sabe cÃ³mo podrÃ­a hacerlo?.\n> por otro lado me gustarÃ­a aÃ±adir la ecuaciÃ³n del modelo.\n> agradezco mucho la informaciÃ³n que puedan darme.\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Hola Jimmy,\n\nEnhorabuena por proporcionar un ejemplo reproducible. Es la mejor forma de poder ayudar, y no todo el mundo lo hace.\n\nEl ajuste no lineal muchas veces falla por los valores iniciales. Lo ",
+      "thread_id": "thread-a930af5e2159",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-4fdfaaac3352",
+      "message_id": "<CAEK8QGL19HO-tcYdGmHE7jhje2gVocM4-whuKn4EVDEz+hAMmA@mail.gmail.com>",
+      "from_name": "Jimmy Erney Reyes Velasco",
+      "from_email_hash": "ad70bac28029e778ec1fa03a5b3f2f3ec8ac1b471e0a8f20b34fcd0be82af104",
+      "date": "2020-10-01T06:30:08-05:00",
+      "subject": "[R-es] Graficar una curva de tendencia potencial.",
+      "subject_clean": "[R-es] Graficar una curva de tendencia potencial.",
+      "in_reply_to": "<52A38A6A-1600-48FD-8F9C-8C2F33A09FCD@gmail.com>",
+      "references": [
+        "<CAEK8QG+wWih7QQ86LQ3kAnAo1-OBe-x51aOdYH3w8gfUFDMRpA@mail.gmail.com>",
+        "<52A38A6A-1600-48FD-8F9C-8C2F33A09FCD@gmail.com>"
+      ],
+      "body_plain": "Muchas Gracias por la informaciÃ³n.\n\nAclaro que estoy trabajando con un modelo potencial porque el criterio de\ninformaciÃ³n de Akaike me da el valor mÃ¡s bajo en el modelo potencial\nteniendo para el modelo lineal un valor de AIC=5.81 y para el modelo\npotencial AIC=-46.55, por eso es que lo estoy utilizando.\nMuchas gracias me ha servido mucho la informaciÃ³n\n\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\nLibre\nde virus. www.avast.com\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\n<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n\nEl jue., 1 de oct. de 2020 a la(s) 04:10, Emilio L. Cano (\nemilopezcano en gmail.com) escribiÃ³:\n\n> Hola Jimmy,\n>\n> Enhorabuena por proporcionar un ejemplo reproducible. Es la mejor forma de\n> poder ayudar, y no todo el mundo lo hace.\n>\n> El ajuste no lineal muchas veces falla por los valores iniciales. Lo mejor\n> es intentar buscar valores iniciales lo mÃ¡s aproximados posibles. De tu\n> nube de puntos, se ve que es prÃ¡cticamente una recta y=x, pero si los pones\n> en 1,1 o 0,1, da errores. Entonces siempre primero asegÃºrate de que el\n> modelo lineal se puede ajustar. Si la funciÃ³n nls da errores, entonces\n> primero arregla eso, y despuÃ©s podrÃ¡s graficarlo.\n>\n> En el caso de la funciÃ³n potencial que planteas, es fÃ¡cil encontrar\n> valores muy aproximados linealizando, y despuÃ©s puedes usar esos valores\n> como iniciales para ajustar el modelo no lineal (y meterlos tambiÃ©n en el\n> grÃ¡fico).\n>\n> Pego debajo un ejemplo (reproducible) que funciona. Con nls parece que no\n> funciona se=TRUE, si lo necesitas creo que tendrÃ­as que aÃ±adir una capa\n> geom_ribbon calculÃ¡ndola con el resultado del modelo.\n>\n> Un saludo,\n> Emilio L. Cano\n>\n>\n> modelos_Garcia <- read.table(header = TRUE,\n>                 text = \"AF_E PS_E\n> 90.838 2.206\n> 83.139 1.751\n> 134.272 3.710\n> 84.043 2.076\n> 105.184 2.788\n> 157.249 3.783\n> 50.280 1.027\n> 96.973 2.355\n> 123.582 3.398\n> 60.417 1.236\n> 123.501 3.315\n> 90.128 1.566\n> 193.783 5.167\n> 116.036 2.994\n> 100.289 2.216\n> 56.943 1.106\n> 102.272 2.692\n> 145.579 3.810\n> 53.105 1.202\n> 127.212 3.061\n> 102.838 2.383\n> 126.352 2.723\n> 13.661 0.190\n> 164.352 4.870\n> 159.945 4.160\n> 54.382 0.884\n> 128.253 3.598\n> 181.208 4.767\n> 145.118 3.779\n> 65.993 1.147\")\n>\n> ## No funcionan los valores iniciales\n> modelo <- nls(PS_E ~ a*AF_E^b, modelos_Garcia, start = list(a = 1, b = 1))\n>\n> ## Buscar mejores:\n> modelol <- lm(log(PS_E) ~ log(AF_E), modelos_Garcia)\n> coef(modelol)\n>\n> ## Probar de nuevo\n> modelo <- nls(PS_E ~ a*AF_E^b, modelos_Garcia,\n>               start = list(a = exp(coef(modelol)[1]), b =\n> coef(modelol)[2]))\n> coef(modelo)\n> a0 <- exp(coef(modelol)[1])\n> b0 <- coef(modelol)[2]\n>\n> library(ggplot2)\n> ggplot(modelos_Garcia,aes(x = AF_E,y = PS_E)) +\n>   geom_point() +\n>   geom_smooth(method = 'nls',\n>               formula = y~a*x^b,\n>               method.args = list(start = list(a = a0,\n>                                               b = b0)),\n>               se = FALSE)\n>\n>\n>\n> > El 1 oct 2020, a las 0:48, Jimmy Erney Reyes Velasco <\n> jimmyreyesvelasco en gmail.com> escribiÃ³:\n> >\n> > AF_E PS_E\n> > 90.838 2.206\n> > 83.139 1.751\n> > 134.272 3.710\n> > 84.043 2.076\n> > 105.184 2.788\n> > 157.249 3.783\n> > 50.280 1.027\n> > 96.973 2.355\n> > 123.582 3.398\n> > 60.417 1.236\n> > 123.501 3.315\n> > 90.128 1.566\n> > 193.783 5.167\n> > 116.036 2.994\n> > 100.289 2.216\n> > 56.943 1.106\n> > 102.272 2.692\n> > 145.579 3.810\n> > 53.105 1.202\n> > 127.212 3.061\n> > 102.838 2.383\n> > 126.352 2.723\n> > 13.661 0.190\n> > 164.352 4.870\n> > 159.945 4.160\n> > 54.382 0.884\n> > 128.253 3.598\n> > 181.208 4.767\n> > 145.118 3.779\n> > 65.993 1.147 Hola buenas tardes\n> > quiero graficar una curva de tendendia de un modelo potencial con estos\n> > datos.\n> > mi codigo es el siguiente:\n> >\n> > ggplot(modelos_Garcia,aes(x = AF_E,y = PS_E)) +\n> >  geom_point() +\n> >  stat_smooth(method = 'nls', formula = 'y~a*x^b', start = list(a =\n> > 1,b=1),se=TRUE)\n> >\n> > pero cuando ejecuto el cÃ³digo no me aparece la curva de tendencia\n> > Â¿alguien sabe cÃ³mo podrÃ­a hacerlo?.\n> > por otro lado me gustarÃ­a aÃ±adir la ecuaciÃ³n del modelo.\n> > agradezco mucho la informaciÃ³n que puedan darme.\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\nLibre\nde virus. www.avast.com\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\n<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas Gracias por la informaciÃ³n.\n\nAclaro que estoy trabajando con un modelo potencial porque el criterio de\ninformaciÃ³n de Akaike me da el valor mÃ¡s bajo en el modelo potencial\nteniendo para el m",
+      "thread_id": "thread-a930af5e2159",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-35fea0920071",
+      "message_id": "<CABkCotR-=YUh+SsUUXg8bcDpA=N12z=oJV+XFzjQ19f3dz3i=w@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2020-10-01T06:16:54-06:00",
+      "subject": "[R-es] Graficar una curva de tendencia potencial.",
+      "subject_clean": "[R-es] Graficar una curva de tendencia potencial.",
+      "in_reply_to": "<CAEK8QG+wWih7QQ86LQ3kAnAo1-OBe-x51aOdYH3w8gfUFDMRpA@mail.gmail.com>",
+      "references": [
+        "<CAEK8QG+wWih7QQ86LQ3kAnAo1-OBe-x51aOdYH3w8gfUFDMRpA@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Jimmy,\n\nMe queda la duda si la fÃ³rmula debe ir entre ?single quote?.\n\nManuel\n\nOn Wed, 30 Sep 2020 at 16:48 Jimmy Erney Reyes Velasco <\njimmyreyesvelasco en gmail.com> wrote:\n\n> AF_E PS_E\n>\n> 90.838 2.206\n>\n> 83.139 1.751\n>\n> 134.272 3.710\n>\n> 84.043 2.076\n>\n> 105.184 2.788\n>\n> 157.249 3.783\n>\n> 50.280 1.027\n>\n> 96.973 2.355\n>\n> 123.582 3.398\n>\n> 60.417 1.236\n>\n> 123.501 3.315\n>\n> 90.128 1.566\n>\n> 193.783 5.167\n>\n> 116.036 2.994\n>\n> 100.289 2.216\n>\n> 56.943 1.106\n>\n> 102.272 2.692\n>\n> 145.579 3.810\n>\n> 53.105 1.202\n>\n> 127.212 3.061\n>\n> 102.838 2.383\n>\n> 126.352 2.723\n>\n> 13.661 0.190\n>\n> 164.352 4.870\n>\n> 159.945 4.160\n>\n> 54.382 0.884\n>\n> 128.253 3.598\n>\n> 181.208 4.767\n>\n> 145.118 3.779\n>\n> 65.993 1.147 Hola buenas tardes\n>\n> quiero graficar una curva de tendendia de un modelo potencial con estos\n>\n> datos.\n>\n> mi codigo es el siguiente:\n>\n>\n>\n> ggplot(modelos_Garcia,aes(x = AF_E,y = PS_E)) +\n>\n>   geom_point() +\n>\n>   stat_smooth(method = 'nls', formula = 'y~a*x^b', start = list(a =\n>\n> 1,b=1),se=TRUE)\n>\n>\n>\n> pero cuando ejecuto el cÃ³digo no me aparece la curva de tendencia\n>\n> Â¿alguien sabe cÃ³mo podrÃ­a hacerlo?.\n>\n> por otro lado me gustarÃ­a aÃ±adir la ecuaciÃ³n del modelo.\n>\n> agradezco mucho la informaciÃ³n que puedan darme.\n>\n>\n>\n>         [[alternative HTML version deleted]]\n>\n>\n>\n> _______________________________________________\n>\n> R-help-es mailing list\n>\n> R-help-es en r-project.org\n>\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> --\n*Manuel SpÃ­nola, Ph.D.*\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola en una.cr <mspinola en una.ac.cr>\nmspinola10 en gmail.com\nTelÃ©fono: (506) 8706 - 4662\nPersonal website: Lobito de rÃ­o <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Jimmy,\n\nMe queda la duda si la fÃ³rmula debe ir entre ?single quote?.\n\nManuel\n\nOn Wed, 30 Sep 2020 at 16:48 Jimmy Erney Reyes Velasco <\njimmyreyesvelasco en gmail.com> wrote:\n\n> AF_E PS_E\n>\n> 90.",
+      "thread_id": "thread-35fea0920071",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-a4f073799f90",
+      "message_id": "<2144871a-9bdc-cbc1-327f-ef75c142cede@gmail.com>",
+      "from_name": "Eric",
+      "from_email_hash": "9592c049134ace3b88d587013cf973f4a2bdf83e2d50d581ff507e78f61f6805",
+      "date": "2020-10-01T22:03:33-03:00",
+      "subject": "[R-es] Graficar una curva de tendencia potencial.",
+      "subject_clean": "[R-es] Graficar una curva de tendencia potencial.",
+      "in_reply_to": "<52A38A6A-1600-48FD-8F9C-8C2F33A09FCD@gmail.com>",
+      "references": [
+        "<CAEK8QG+wWih7QQ86LQ3kAnAo1-OBe-x51aOdYH3w8gfUFDMRpA@mail.gmail.com>",
+        "<52A38A6A-1600-48FD-8F9C-8C2F33A09FCD@gmail.com>"
+      ],
+      "body_plain": "Gracias Emilio, tu respuesta nos sirve a todos,\n\nEric.\n\n\n\nOn 01-10-20 06:10, Emilio L. Cano wrote:\n> Hola Jimmy,\n>\n> Enhorabuena por proporcionar un ejemplo reproducible. Es la mejor forma de poder ayudar, y no todo el mundo lo hace.\n>\n> El ajuste no lineal muchas veces falla por los valores iniciales. Lo mejor es intentar buscar valores iniciales lo mÃ¡s aproximados posibles. De tu nube de puntos, se ve que es prÃ¡cticamente una recta y=x, pero si los pones en 1,1 o 0,1, da errores. Entonces siempre primero asegÃºrate de que el modelo lineal se puede ajustar. Si la funciÃ³n nls da errores, entonces primero arregla eso, y despuÃ©s podrÃ¡s graficarlo.\n>\n> En el caso de la funciÃ³n potencial que planteas, es fÃ¡cil encontrar valores muy aproximados linealizando, y despuÃ©s puedes usar esos valores como iniciales para ajustar el modelo no lineal (y meterlos tambiÃ©n en el grÃ¡fico).\n>\n> Pego debajo un ejemplo (reproducible) que funciona. Con nls parece que no funciona se=TRUE, si lo necesitas creo que tendrÃ­as que aÃ±adir una capa geom_ribbon calculÃ¡ndola con el resultado del modelo.\n>\n> Un saludo,\n> Emilio L. Cano\n>\n>\n> modelos_Garcia <- read.table(header = TRUE,\n>                  text = \"AF_E PS_E\n> 90.838 2.206\n> 83.139 1.751\n> 134.272 3.710\n> 84.043 2.076\n> 105.184 2.788\n> 157.249 3.783\n> 50.280 1.027\n> 96.973 2.355\n> 123.582 3.398\n> 60.417 1.236\n> 123.501 3.315\n> 90.128 1.566\n> 193.783 5.167\n> 116.036 2.994\n> 100.289 2.216\n> 56.943 1.106\n> 102.272 2.692\n> 145.579 3.810\n> 53.105 1.202\n> 127.212 3.061\n> 102.838 2.383\n> 126.352 2.723\n> 13.661 0.190\n> 164.352 4.870\n> 159.945 4.160\n> 54.382 0.884\n> 128.253 3.598\n> 181.208 4.767\n> 145.118 3.779\n> 65.993 1.147\")\n>\n> ## No funcionan los valores iniciales\n> modelo <- nls(PS_E ~ a*AF_E^b, modelos_Garcia, start = list(a = 1, b = 1))\n>\n> ## Buscar mejores:\n> modelol <- lm(log(PS_E) ~ log(AF_E), modelos_Garcia)\n> coef(modelol)\n>\n> ## Probar de nuevo\n> modelo <- nls(PS_E ~ a*AF_E^b, modelos_Garcia,\n>                start = list(a = exp(coef(modelol)[1]), b = coef(modelol)[2]))\n> coef(modelo)\n> a0 <- exp(coef(modelol)[1])\n> b0 <- coef(modelol)[2]\n>\n> library(ggplot2)\n> ggplot(modelos_Garcia,aes(x = AF_E,y = PS_E)) +\n>    geom_point() +\n>    geom_smooth(method = 'nls',\n>                formula = y~a*x^b,\n>                method.args = list(start = list(a = a0,\n>                                                b = b0)),\n>                se = FALSE)\n>\n>\n>\n>> El 1 oct 2020, a las 0:48, Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribiÃ³:\n>>\n>> AF_E PS_E\n>> 90.838 2.206\n>> 83.139 1.751\n>> 134.272 3.710\n>> 84.043 2.076\n>> 105.184 2.788\n>> 157.249 3.783\n>> 50.280 1.027\n>> 96.973 2.355\n>> 123.582 3.398\n>> 60.417 1.236\n>> 123.501 3.315\n>> 90.128 1.566\n>> 193.783 5.167\n>> 116.036 2.994\n>> 100.289 2.216\n>> 56.943 1.106\n>> 102.272 2.692\n>> 145.579 3.810\n>> 53.105 1.202\n>> 127.212 3.061\n>> 102.838 2.383\n>> 126.352 2.723\n>> 13.661 0.190\n>> 164.352 4.870\n>> 159.945 4.160\n>> 54.382 0.884\n>> 128.253 3.598\n>> 181.208 4.767\n>> 145.118 3.779\n>> 65.993 1.147 Hola buenas tardes\n>> quiero graficar una curva de tendendia de un modelo potencial con estos\n>> datos.\n>> mi codigo es el siguiente:\n>>\n>> ggplot(modelos_Garcia,aes(x = AF_E,y = PS_E)) +\n>>   geom_point() +\n>>   stat_smooth(method = 'nls', formula = 'y~a*x^b', start = list(a =\n>> 1,b=1),se=TRUE)\n>>\n>> pero cuando ejecuto el cÃ³digo no me aparece la curva de tendencia\n>> Â¿alguien sabe cÃ³mo podrÃ­a hacerlo?.\n>> por otro lado me gustarÃ­a aÃ±adir la ecuaciÃ³n del modelo.\n>> agradezco mucho la informaciÃ³n que puedan darme.\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Gracias Emilio, tu respuesta nos sirve a todos,\n\nEric.\n\n\n\nOn 01-10-20 06:10, Emilio L. Cano wrote:\n> Hola Jimmy,\n>\n> Enhorabuena por proporcionar un ejemplo reproducible. Es la mejor forma de poder ay",
+      "thread_id": "thread-a930af5e2159",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-8925dc6e1cb5",
+      "message_id": "<CAEK8QGKgYokxZzaTi0n+W57qdrP3O+A_veXBYbQntFecdAz7dQ@mail.gmail.com>",
+      "from_name": "Jimmy Erney Reyes Velasco",
+      "from_email_hash": "ad70bac28029e778ec1fa03a5b3f2f3ec8ac1b471e0a8f20b34fcd0be82af104",
+      "date": "2020-10-04T09:07:21-05:00",
+      "subject": "[R-es] Leyenda gráfico combinado",
+      "subject_clean": "[R-es] Leyenda gráfico combinado",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola buenos dÃ­as\nhice un grÃ¡fico combinado de lÃ­neas, puntos y barras en ggplot2, pero no sÃ©\ncÃ³mo puedo poner la leyenda de eso grÃ¡fico para que me represente para las\nlÃ­neas con puntos los valores estimados por un modelo y observados.\neste es mi cÃ³digo:\nggplot(MLM,aes(x=Individuo)) + geom_bar(aes(y=Observada), stat =\n\"identity\", color= \"gray\") +\n  geom_line(aes(y=Estimada), stat = \"identity\", color=\"blue\", size=1.5) +\n  geom_point(aes(y=Estimada), shape=21, fill=\"blue\", color=\"white\")+\n  labs(y = expression(paste(\"Biomasa \", (g/cm^{2}))))+\n  ggtitle(\"Espeletia standleyana\")+ theme_minimal()+\n  annotate(geom = 'text',\n           x = 0,\n           y = 750,\n           hjust = 0,\n           label = \"Biomasa=220,774(IAF)+39,759(Aprom)-163,883\")+\n  annotate(geom = 'text',\n           x = 0,\n           y = 700,\n           hjust = 0,\n           label = \"RÂ² = 0,982      P=3,8187E-17\")\n\nÂ¿Alguien sabe cÃ³mo hacerlo? Agradezco mucho cualquier informaciÃ³n.\nque tengan buen dÃ­a\n\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\nLibre\nde virus. www.avast.com\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\n<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola buenos dÃ­as\nhice un grÃ¡fico combinado de lÃ­neas, puntos y barras en ggplot2, pero no sÃ©\ncÃ³mo puedo poner la leyenda de eso grÃ¡fico para que me represente para las\nlÃ­neas con puntos los val",
+      "thread_id": "thread-8925dc6e1cb5",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-f58cde61eec9",
+      "message_id": "<C9AB1CA5-9FBB-4EC2-A72E-B34D924DF8A8@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2020-10-04T20:20:59+02:00",
+      "subject": "[R-es] Leyenda gráfico combinado",
+      "subject_clean": "[R-es] Leyenda gráfico combinado",
+      "in_reply_to": "<CAEK8QGKgYokxZzaTi0n+W57qdrP3O+A_veXBYbQntFecdAz7dQ@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGKgYokxZzaTi0n+W57qdrP3O+A_veXBYbQntFecdAz7dQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nTal vez tu problema estÃ© en el rango del eje X. No puedo comprobarlo porque tu cÃ³digo no es reproducible, pero lo siguiente funciona:\n\nggplot(data.frame(x=101:200, y = rnorm(10, 100)), \n       aes(x, y)) + geom_bar(stat=\"identity\") +  \n  annotate(geom = 'text',x = 0,\n           y = 750,\n           hjust = 0,\n           label = \"Biomasa=220,774(IAF)+39,759(Aprom)-163,883\")+\n  annotate(geom = 'text',\n           x = 0,\n           y = 700,\n           hjust = 0,\n           label = \"RÂ² = 0,982      P=3,8187E-17\")\n\nSi x=individuo, entonces el annotate puede quedar fuera del rango (aunque deberÃ­a ajustarse automÃ¡ticamente como en el cÃ³digo que pego)\n\nCon un ejemplo reproducible serÃ¡ mÃ¡s fÃ¡cil ayudarte, bastarÃ¡ con una muestra de los datos (fÃ¡cil con dput, mira aquÃ­):\nhttps://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example <https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example>\n\nUn saludo,\nEmilio\n\n\n\n\n> El 4 oct 2020, a las 16:07, Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribiÃ³:\n> \n> Hola buenos dÃ­as\n> hice un grÃ¡fico combinado de lÃ­neas, puntos y barras en ggplot2, pero no sÃ©\n> cÃ³mo puedo poner la leyenda de eso grÃ¡fico para que me represente para las\n> lÃ­neas con puntos los valores estimados por un modelo y observados.\n> este es mi cÃ³digo:\n> ggplot(MLM,aes(x=Individuo)) + geom_bar(aes(y=Observada), stat =\n> \"identity\", color= \"gray\") +\n>  geom_line(aes(y=Estimada), stat = \"identity\", color=\"blue\", size=1.5) +\n>  geom_point(aes(y=Estimada), shape=21, fill=\"blue\", color=\"white\")+\n>  labs(y = expression(paste(\"Biomasa \", (g/cm^{2}))))+\n>  ggtitle(\"Espeletia standleyana\")+ theme_minimal()+\n>  annotate(geom = 'text',\n>           x = 0,\n>           y = 750,\n>           hjust = 0,\n>           label = \"Biomasa=220,774(IAF)+39,759(Aprom)-163,883\")+\n>  annotate(geom = 'text',\n>           x = 0,\n>           y = 700,\n>           hjust = 0,\n>           label = \"RÂ² = 0,982      P=3,8187E-17\")\n> \n> Â¿Alguien sabe cÃ³mo hacerlo? Agradezco mucho cualquier informaciÃ³n.\n> que tengan buen dÃ­a\n> \n> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\n> Libre\n> de virus. www.avast.com\n> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\n> <#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nTal vez tu problema estÃ© en el rango del eje X. No puedo comprobarlo porque tu cÃ³digo no es reproducible, pero lo siguiente funciona:\n\nggplot(data.frame(x=101:200, y = rnorm(10, 100)), \n     ",
+      "thread_id": "thread-8925dc6e1cb5",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-6c45c7a22035",
+      "message_id": "<CAOKbq8h7KnTFwTCN7hDffUTBE1J+8r43FiaNnYyRO62GafsgfQ@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-10-04T21:09:26+02:00",
+      "subject": "[R-es] Leyenda gráfico combinado",
+      "subject_clean": "[R-es] Leyenda gráfico combinado",
+      "in_reply_to": "<CAEK8QGKgYokxZzaTi0n+W57qdrP3O+A_veXBYbQntFecdAz7dQ@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGKgYokxZzaTi0n+W57qdrP3O+A_veXBYbQntFecdAz7dQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nAdemÃ¡s de la alternativa de Emilio, como estÃ¡s buscando incluir una fÃ³rmula\ny el valor de ajuste sobre el grÃ¡fico, quizÃ¡s te interese usar las\nfuncionalidades de este paquete:\n\n   - *ggpmisc*:\n   https://cran.r-project.org/web/packages/ggpmisc/vignettes/user-guide.html\n   - Y en particular la funciÃ³n *stat_poly_eq()*.\n   - Puedes ver ejemplos prÃ¡cticos de esta funciÃ³n sobre a mitad de la\n      viÃ±eta.\n      - Y que por cierto, permite ademÃ¡s ajuste y representaciÃ³n del tipo\n      *nls()* sobre tus datos .\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl dom., 4 oct. 2020 a las 16:07, Jimmy Erney Reyes Velasco (<\njimmyreyesvelasco en gmail.com>) escribiÃ³:\n\n> Hola buenos dÃ­as\n> hice un grÃ¡fico combinado de lÃ­neas, puntos y barras en ggplot2, pero no sÃ©\n> cÃ³mo puedo poner la leyenda de eso grÃ¡fico para que me represente para las\n> lÃ­neas con puntos los valores estimados por un modelo y observados.\n> este es mi cÃ³digo:\n> ggplot(MLM,aes(x=Individuo)) + geom_bar(aes(y=Observada), stat =\n> \"identity\", color= \"gray\") +\n>   geom_line(aes(y=Estimada), stat = \"identity\", color=\"blue\", size=1.5) +\n>   geom_point(aes(y=Estimada), shape=21, fill=\"blue\", color=\"white\")+\n>   labs(y = expression(paste(\"Biomasa \", (g/cm^{2}))))+\n>   ggtitle(\"Espeletia standleyana\")+ theme_minimal()+\n>   annotate(geom = 'text',\n>            x = 0,\n>            y = 750,\n>            hjust = 0,\n>            label = \"Biomasa=220,774(IAF)+39,759(Aprom)-163,883\")+\n>   annotate(geom = 'text',\n>            x = 0,\n>            y = 700,\n>            hjust = 0,\n>            label = \"RÂ² = 0,982      P=3,8187E-17\")\n>\n> Â¿Alguien sabe cÃ³mo hacerlo? Agradezco mucho cualquier informaciÃ³n.\n> que tengan buen dÃ­a\n>\n> <\n> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail\n> >\n> Libre\n> de virus. www.avast.com\n> <\n> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail\n> >\n> <#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nAdemÃ¡s de la alternativa de Emilio, como estÃ¡s buscando incluir una fÃ³rmula\ny el valor de ajuste sobre el grÃ¡fico, quizÃ¡s te interese usar las\nfuncionalidades de este paquete:\n\n   - *ggpmi",
+      "thread_id": "thread-8925dc6e1cb5",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-40ff54f8ab21",
+      "message_id": "<CAEK8QGLLJYD_nOfj8+1bHwxk2=Rijam9faaSqh7vEHswh02gXw@mail.gmail.com>",
+      "from_name": "Jimmy Erney Reyes Velasco",
+      "from_email_hash": "ad70bac28029e778ec1fa03a5b3f2f3ec8ac1b471e0a8f20b34fcd0be82af104",
+      "date": "2020-10-04T16:16:17-05:00",
+      "subject": "[R-es] Leyenda gráfico combinado",
+      "subject_clean": "[R-es] Leyenda gráfico combinado",
+      "in_reply_to": "<CAOKbq8h7KnTFwTCN7hDffUTBE1J+8r43FiaNnYyRO62GafsgfQ@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGKgYokxZzaTi0n+W57qdrP3O+A_veXBYbQntFecdAz7dQ@mail.gmail.com>",
+        "<CAOKbq8h7KnTFwTCN7hDffUTBE1J+8r43FiaNnYyRO62GafsgfQ@mail.gmail.com>"
+      ],
+      "body_plain": "Lo siento creo que olvide poner los datos.\nmis datos son:\n\nIndividuo Observada Estimada\n1 200.210 180.75719\n2 154.817 110.00147\n3 514.919 455.28532\n4 234.068 226.17628\n5 232.191 218.58544\n6 379.530 346.95982\n7 297.466 309.05514\n8 450.940 421.53012\n9 317.840 276.81604\n10 308.160 305.13638\n11 178.317 182.79552\n12 530.919 492.87962\n13 368.224 347.28844\n14 251.352 255.40259\n15 154.866 143.53278\n16 309.390 307.57602\n17 291.637 288.5641\n18 513.398 454.39712\n19 322.250 323.53048\n20 451.932 442.87195\n21 612.163 555.30366\n22 574.745 518.25317\n23 92.629 56.79211\n24 451.836 413.1442\n25 449.408 445.26074\n26 689.179 741.37221\n27 885.454 735.90541\n28 484.617 450.47909\n29 876.734 742.06702\n30 506.156 521.66028 por otro lado intentÃ© poner la ecuaciÃ³n para un modelo\npotencial pero no pude, no pude saber cÃ³mo escribir el argumento para la\nfÃ³rmula.\n\nEl dom., 4 de oct. de 2020 a la(s) 14:09, Carlos Ortega (\ncof en qualityexcellence.es) escribiÃ³:\n\n> Hola,\n>\n> AdemÃ¡s de la alternativa de Emilio, como estÃ¡s buscando incluir una\n> fÃ³rmula y el valor de ajuste sobre el grÃ¡fico, quizÃ¡s te interese usar las\n> funcionalidades de este paquete:\n>\n>    - *ggpmisc*:\n>    https://cran.r-project.org/web/packages/ggpmisc/vignettes/user-guide.html\n>    - Y en particular la funciÃ³n *stat_poly_eq()*.\n>    - Puedes ver ejemplos prÃ¡cticos de esta funciÃ³n sobre a mitad de la\n>       viÃ±eta.\n>       - Y que por cierto, permite ademÃ¡s ajuste y representaciÃ³n del tipo\n>       *nls()* sobre tus datos .\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El dom., 4 oct. 2020 a las 16:07, Jimmy Erney Reyes Velasco (<\n> jimmyreyesvelasco en gmail.com>) escribiÃ³:\n>\n>> Hola buenos dÃ­as\n>> hice un grÃ¡fico combinado de lÃ­neas, puntos y barras en ggplot2, pero no\n>> sÃ©\n>> cÃ³mo puedo poner la leyenda de eso grÃ¡fico para que me represente para las\n>> lÃ­neas con puntos los valores estimados por un modelo y observados.\n>> este es mi cÃ³digo:\n>> ggplot(MLM,aes(x=Individuo)) + geom_bar(aes(y=Observada), stat =\n>> \"identity\", color= \"gray\") +\n>>   geom_line(aes(y=Estimada), stat = \"identity\", color=\"blue\", size=1.5) +\n>>   geom_point(aes(y=Estimada), shape=21, fill=\"blue\", color=\"white\")+\n>>   labs(y = expression(paste(\"Biomasa \", (g/cm^{2}))))+\n>>   ggtitle(\"Espeletia standleyana\")+ theme_minimal()+\n>>   annotate(geom = 'text',\n>>            x = 0,\n>>            y = 750,\n>>            hjust = 0,\n>>            label = \"Biomasa=220,774(IAF)+39,759(Aprom)-163,883\")+\n>>   annotate(geom = 'text',\n>>            x = 0,\n>>            y = 700,\n>>            hjust = 0,\n>>            label = \"RÂ² = 0,982      P=3,8187E-17\")\n>>\n>> Â¿Alguien sabe cÃ³mo hacerlo? Agradezco mucho cualquier informaciÃ³n.\n>> que tengan buen dÃ­a\n>>\n>> <\n>> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail\n>> >\n>> Libre\n>> de virus. www.avast.com\n>> <\n>> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail\n>> >\n>> <#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Lo siento creo que olvide poner los datos.\nmis datos son:\n\nIndividuo Observada Estimada\n1 200.210 180.75719\n2 154.817 110.00147\n3 514.919 455.28532\n4 234.068 226.17628\n5 232.191 218.58544\n6 379.530 34",
+      "thread_id": "thread-8925dc6e1cb5",
+      "thread_depth": 2,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-06f52ab6c869",
+      "message_id": "<CAOKbq8hOd9ZhpnFXKNVFHKKe0Jw6E2wUr-MbjibtAZxHBFhoSA@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-10-05T00:28:06+02:00",
+      "subject": "[R-es] Leyenda gráfico combinado",
+      "subject_clean": "[R-es] Leyenda gráfico combinado",
+      "in_reply_to": "<CAEK8QGLLJYD_nOfj8+1bHwxk2=Rijam9faaSqh7vEHswh02gXw@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGKgYokxZzaTi0n+W57qdrP3O+A_veXBYbQntFecdAz7dQ@mail.gmail.com>",
+        "<CAOKbq8h7KnTFwTCN7hDffUTBE1J+8r43FiaNnYyRO62GafsgfQ@mail.gmail.com>",
+        "<CAEK8QGLLJYD_nOfj8+1bHwxk2=Rijam9faaSqh7vEHswh02gXw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nUsando el paquete que comentaba y cogiendo el data.frame con el paquete\n\"datapasta\"...\nHe aplicado un ajuste polinÃ³mico de grado 3.\n\n#--------------------------------------------\nlibrary(data.table)\nlibrary(ggplot2)\n\ndatIn <- data.table(\n  Individuo = c(1L,2L,3L,4L,5L,6L,7L,8L,9L,10L,\n                11L,12L,13L,14L,15L,16L,17L,18L,19L,20L,21L,22L,23L,\n                24L,25L,26L,27L,28L,29L,30L),\n  Observada = c(200.21,154.817,514.919,234.068,232.191,\n                379.53,297.466,450.94,317.84,308.16,178.317,530.919,\n                368.224,251.352,154.866,309.39,291.637,513.398,322.25,\n                451.932,612.163,574.745,92.629,451.836,449.408,689.179,\n                885.454,484.617,876.734,506.156),\n  Estimada = c(180.75719,110.00147,455.28532,226.17628,\n               218.58544,346.95982,309.05514,421.53012,276.81604,\n               305.13638,182.79552,492.87962,347.28844,255.40259,143.53278,\n               307.57602,288.5641,454.39712,323.53048,442.87195,555.30366,\n               518.25317,56.79211,413.1442,445.26074,741.37221,735.90541,\n               450.47909,742.06702,521.66028)\n)\n\ndatIn_lg <- melt(datIn, id=1)\nnames(datIn_lg) <- c('Individuo', 'Tipo', 'Valor')\n\nlibrary(ggpmisc)\nformula <- y ~ poly(x, 3, raw = TRUE)\nggplot(datIn_lg, aes( Individuo, Valor, group = Tipo, color = Tipo)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", formula = formula) +\n  stat_poly_eq(aes(label =  paste(stat(eq.label), stat(adj.rr.label),\n                                  sep = \"*\\\", \\\"*\")),\n               formula = formula, parse = TRUE) +\n  labs(x = expression(italic(x)), y = expression(italic(y))) +\n  facet_wrap(~Tipo) +\n  theme_bw()\n#----------------------------\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl dom., 4 oct. 2020 a las 23:16, Jimmy Erney Reyes Velasco (<\njimmyreyesvelasco en gmail.com>) escribiÃ³:\n\n> Lo siento creo que olvide poner los datos.\n> mis datos son:\n>\n> Individuo Observada Estimada\n> 1 200.210 180.75719\n> 2 154.817 110.00147\n> 3 514.919 455.28532\n> 4 234.068 226.17628\n> 5 232.191 218.58544\n> 6 379.530 346.95982\n> 7 297.466 309.05514\n> 8 450.940 421.53012\n> 9 317.840 276.81604\n> 10 308.160 305.13638\n> 11 178.317 182.79552\n> 12 530.919 492.87962\n> 13 368.224 347.28844\n> 14 251.352 255.40259\n> 15 154.866 143.53278\n> 16 309.390 307.57602\n> 17 291.637 288.5641\n> 18 513.398 454.39712\n> 19 322.250 323.53048\n> 20 451.932 442.87195\n> 21 612.163 555.30366\n> 22 574.745 518.25317\n> 23 92.629 56.79211\n> 24 451.836 413.1442\n> 25 449.408 445.26074\n> 26 689.179 741.37221\n> 27 885.454 735.90541\n> 28 484.617 450.47909\n> 29 876.734 742.06702\n> 30 506.156 521.66028 por otro lado intentÃ© poner la ecuaciÃ³n para un\n> modelo potencial pero no pude, no pude saber cÃ³mo escribir el argumento\n> para la fÃ³rmula.\n>\n> El dom., 4 de oct. de 2020 a la(s) 14:09, Carlos Ortega (\n> cof en qualityexcellence.es) escribiÃ³:\n>\n>> Hola,\n>>\n>> AdemÃ¡s de la alternativa de Emilio, como estÃ¡s buscando incluir una\n>> fÃ³rmula y el valor de ajuste sobre el grÃ¡fico, quizÃ¡s te interese usar las\n>> funcionalidades de este paquete:\n>>\n>>    - *ggpmisc*:\n>>    https://cran.r-project.org/web/packages/ggpmisc/vignettes/user-guide.html\n>>    - Y en particular la funciÃ³n *stat_poly_eq()*.\n>>    - Puedes ver ejemplos prÃ¡cticos de esta funciÃ³n sobre a mitad de la\n>>       viÃ±eta.\n>>       - Y que por cierto, permite ademÃ¡s ajuste y representaciÃ³n del\n>>       tipo *nls()* sobre tus datos .\n>>\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>> El dom., 4 oct. 2020 a las 16:07, Jimmy Erney Reyes Velasco (<\n>> jimmyreyesvelasco en gmail.com>) escribiÃ³:\n>>\n>>> Hola buenos dÃ­as\n>>> hice un grÃ¡fico combinado de lÃ­neas, puntos y barras en ggplot2, pero no\n>>> sÃ©\n>>> cÃ³mo puedo poner la leyenda de eso grÃ¡fico para que me represente para\n>>> las\n>>> lÃ­neas con puntos los valores estimados por un modelo y observados.\n>>> este es mi cÃ³digo:\n>>> ggplot(MLM,aes(x=Individuo)) + geom_bar(aes(y=Observada), stat =\n>>> \"identity\", color= \"gray\") +\n>>>   geom_line(aes(y=Estimada), stat = \"identity\", color=\"blue\", size=1.5) +\n>>>   geom_point(aes(y=Estimada), shape=21, fill=\"blue\", color=\"white\")+\n>>>   labs(y = expression(paste(\"Biomasa \", (g/cm^{2}))))+\n>>>   ggtitle(\"Espeletia standleyana\")+ theme_minimal()+\n>>>   annotate(geom = 'text',\n>>>            x = 0,\n>>>            y = 750,\n>>>            hjust = 0,\n>>>            label = \"Biomasa=220,774(IAF)+39,759(Aprom)-163,883\")+\n>>>   annotate(geom = 'text',\n>>>            x = 0,\n>>>            y = 700,\n>>>            hjust = 0,\n>>>            label = \"RÂ² = 0,982      P=3,8187E-17\")\n>>>\n>>> Â¿Alguien sabe cÃ³mo hacerlo? Agradezco mucho cualquier informaciÃ³n.\n>>> que tengan buen dÃ­a\n>>>\n>>> <\n>>> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail\n>>> >\n>>> Libre\n>>> de virus. www.avast.com\n>>> <\n>>> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail\n>>> >\n>>> <#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n>>>\n>>>         [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>\n>>\n>> --\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nUsando el paquete que comentaba y cogiendo el data.frame con el paquete\n\"datapasta\"...\nHe aplicado un ajuste polinÃ³mico de grado 3.\n\n#--------------------------------------------\nlibrary(data.",
+      "thread_id": "thread-8925dc6e1cb5",
+      "thread_depth": 3,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-4bd8376fe7b2",
+      "message_id": "<CAE=7UPV0kdRZOj3VmXzmvKuie72JX4dex2jZnveeouSCRLOhuA@mail.gmail.com>",
+      "from_name": "Leire Garmendia",
+      "from_email_hash": "29d53d37bfef4ea34894a976e485a8841b38f9404fa0f8c4a68e1f2a50f1850b",
+      "date": "2020-10-16T10:41:06+02:00",
+      "subject": "[R-es] Error: Unable to establish connection with R session",
+      "subject_clean": "[R-es] Error: Unable to establish connection with R session",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola,\n\nDesde hace unas semanas cada vez que intento usar RStudio me devuelve el\nsiguiente mensaje:\n Error: Unable to establish connection with R session.\nLa versiÃ³n que tengo instalada de R es la versiÃ³n 4.0.3 y la de RStudio es\nla 1.3.1093.\nHe intentado arreglarlo de varias formas pero sin Ã©xito. Estas son algunas\nopciones que he usado para intentar arreglarlo:\n\n   - Desinstalar e instalar nuevamente R y RStudio.\n   - Actualizar todos los paquetes instalados.\n   - Cambiar el software rendering.\n\nSi alguien ha tenido ese problema o sabe como solucionarlo agradecerÃ­a\nmucho su ayuda.\nMuchas gracias de antemano,\nLeire\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nDesde hace unas semanas cada vez que intento usar RStudio me devuelve el\nsiguiente mensaje:\n Error: Unable to establish connection with R session.\nLa versiÃ³n que tengo instalada de R es la ver",
+      "thread_id": "thread-4bd8376fe7b2",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-d94be787f23c",
+      "message_id": "<001001d6a39e$736557b0$5a300710$@jccm.es>",
+      "from_name": "Isidro Hidalgo Arellano",
+      "from_email_hash": "0724e196ab2f30e611934ecd7dc684176bcc11dd0a1132c7992011a16f84412a",
+      "date": "2020-10-16T11:26:38+02:00",
+      "subject": "[R-es] Error: Unable to establish connection with R session",
+      "subject_clean": "[R-es] Error: Unable to establish connection with R session",
+      "in_reply_to": "<CAE=7UPV0kdRZOj3VmXzmvKuie72JX4dex2jZnveeouSCRLOhuA@mail.gmail.com>",
+      "references": [
+        "<CAE=7UPV0kdRZOj3VmXzmvKuie72JX4dex2jZnveeouSCRLOhuA@mail.gmail.com>"
+      ],
+      "body_plain": "Buenos dÃ­as, Leire:\nA mÃ­ me pasa esporÃ¡dicamente, pero con el primer intento en el botÃ³n\n\"Reconnect\" funciona...\nDe todas formas, he encontrado esto. Por probar:\nhttps://support.rstudio.com/hc/en-us/articles/200534577-Resetting-RStudio-De\nsktop-s-State\nSuerte.\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nConsejerÃ­a de EconomÃ­a, Empresas y Empleo\nhttp://www.castillalamancha.es/\n\n\n-----Mensaje original-----\nDe: R-help-es <r-help-es-bounces en r-project.org> En nombre de Leire Garmendia\nEnviado el: viernes, 16 de octubre de 2020 10:41\nPara: r-help-es en r-project.org\nAsunto: [R-es] Error: Unable to establish connection with R session\n\nHola,\n\nDesde hace unas semanas cada vez que intento usar RStudio me devuelve el\nsiguiente mensaje:\n Error: Unable to establish connection with R session.\nLa versiÃ³n que tengo instalada de R es la versiÃ³n 4.0.3 y la de RStudio es\nla 1.3.1093.\nHe intentado arreglarlo de varias formas pero sin Ã©xito. Estas son algunas\nopciones que he usado para intentar arreglarlo:\n\n   - Desinstalar e instalar nuevamente R y RStudio.\n   - Actualizar todos los paquetes instalados.\n   - Cambiar el software rendering.\n\nSi alguien ha tenido ese problema o sabe como solucionarlo agradecerÃ­a mucho\nsu ayuda.\nMuchas gracias de antemano,\nLeire\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Buenos dÃ­as, Leire:\nA mÃ­ me pasa esporÃ¡dicamente, pero con el primer intento en el botÃ³n\n\"Reconnect\" funciona...\nDe todas formas, he encontrado esto. Por probar:\nhttps://support.rstudio.com/hc/en-",
+      "thread_id": "thread-4bd8376fe7b2",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-0b5948cce26f",
+      "message_id": "<CANuuowO+1KTCh253EXTCOcpJu5J_WsHQvJgSzLihiYPCV+KNvQ@mail.gmail.com>",
+      "from_name": "Jose Betancourt Bethencourt",
+      "from_email_hash": "b90847c8177ef52d350c4c371ce07cae9ff1f09ff64386c1848f72e6cd6a3d95",
+      "date": "2020-10-16T07:29:46-04:00",
+      "subject": "[R-es] Vectores de impedancia bioeléctrica",
+      "subject_clean": "[R-es] Vectores de impedancia bioeléctrica",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados\nEn este artÃ­culo que adjunto Vectores de impedancia bioelÃ©ctrica, en\nla fig 1 hay un grÃ¡fico que realizan en un programa, mi pregunta es si\nen R se puede calcular, si esto se relaciona a biplot, por favor\nnecesito de su ayuda\nSaludos\nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay",
+      "body_snippet": "Estimados\nEn este artÃ­culo que adjunto Vectores de impedancia bioelÃ©ctrica, en\nla fig 1 hay un grÃ¡fico que realizan en un programa, mi pregunta es si\nen R se puede calcular, si esto se relaciona a ",
+      "thread_id": "thread-0b5948cce26f",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-fc55fd6a59b3",
+      "message_id": "<CAOKbq8h7TFmqNQxx6=BFko6TpWFFAPuOEzGY7hEZ-N2JV3_GOw@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-10-16T22:09:37+02:00",
+      "subject": "[R-es] Vectores de impedancia bioeléctrica",
+      "subject_clean": "[R-es] Vectores de impedancia bioeléctrica",
+      "in_reply_to": "<CANuuowO+1KTCh253EXTCOcpJu5J_WsHQvJgSzLihiYPCV+KNvQ@mail.gmail.com>",
+      "references": [
+        "<CANuuowO+1KTCh253EXTCOcpJu5J_WsHQvJgSzLihiYPCV+KNvQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nLa propia lista filtra los adjuntos si superan cierto tamaÃ±o...\nNo veo la figura/artÃ­culo que adjuntas.\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\nEl vie., 16 oct. 2020 a las 13:30, Jose Betancourt Bethencourt (<\nbetanster en gmail.com>) escribiÃ³:\n\n> Estimados\n> En este artÃ­culo que adjunto Vectores de impedancia bioelÃ©ctrica, en\n> la fig 1 hay un grÃ¡fico que realizan en un programa, mi pregunta es si\n> en R se puede calcular, si esto se relaciona a biplot, por favor\n> necesito de su ayuda\n> Saludos\n> Dr. Jose A. Betancourt Bethencourt\n> Universidad de Ciencias Medicas Carlos j. Finlay\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nLa propia lista filtra los adjuntos si superan cierto tamaÃ±o...\nNo veo la figura/artÃ­culo que adjuntas.\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\nEl vie., 16 oct. 2020 a las 13:30, J",
+      "thread_id": "thread-0b5948cce26f",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-3fa2e780576d",
+      "message_id": "<CANuuowMtRkXnQqexFEYyCFZs5sBMkmt8u0U2hnpPdzG+RvEvOQ@mail.gmail.com>",
+      "from_name": "Jose Betancourt Bethencourt",
+      "from_email_hash": "b90847c8177ef52d350c4c371ce07cae9ff1f09ff64386c1848f72e6cd6a3d95",
+      "date": "2020-10-16T17:10:32-04:00",
+      "subject": "[R-es] Vectores de impedancia bioeléctrica",
+      "subject_clean": "[R-es] Vectores de impedancia bioeléctrica",
+      "in_reply_to": "<CANuuowOiJ29Mn=0QVZ8ML3vtNuzhXa9KX=LKwAkKTTeYQD8g-A@mail.gmail.com>",
+      "references": [
+        "<CANuuowOiJ29Mn=0QVZ8ML3vtNuzhXa9KX=LKwAkKTTeYQD8g-A@mail.gmail.com>"
+      ],
+      "body_plain": "> Estimados\n>\n> --En este artÃ­culo\nhttp://scielo.isciii.es/pdf/nh/v31n3/46originalvaloracionnutricional08.pdf\n\n\n Vectores de impedancia bioelÃ©ctrica, en  la fig 1 hay un grÃ¡fico que\nrealizan en un programa, mi pregunta es si > en R se puede calcular,\nsi esto se relaciona a biplot, por favor > necesito de su ayuda >\nsaludos\n> Dr. Jose A. Betancourt Bethencourt\n> Universidad de Ciencias Medicas Carlos j. Finlay\n>\n\n\n-- \nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay",
+      "body_snippet": "> Estimados\n>\n> --En este artÃ­culo\nhttp://scielo.isciii.es/pdf/nh/v31n3/46originalvaloracionnutricional08.pdf\n\n\n Vectores de impedancia bioelÃ©ctrica, en  la fig 1 hay un grÃ¡fico que\nrealizan en un ",
+      "thread_id": "thread-3fa2e780576d",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-89b3abc3ff94",
+      "message_id": "<7c2e4039-0745-8fe7-5744-6a08a5519cbd@gmail.com>",
+      "from_name": "Eric",
+      "from_email_hash": "9592c049134ace3b88d587013cf973f4a2bdf83e2d50d581ff507e78f61f6805",
+      "date": "2020-10-16T20:00:42-03:00",
+      "subject": "[R-es] Vectores de impedancia bioeléctrica",
+      "subject_clean": "[R-es] Vectores de impedancia bioeléctrica",
+      "in_reply_to": "<CANuuowMtRkXnQqexFEYyCFZs5sBMkmt8u0U2hnpPdzG+RvEvOQ@mail.gmail.com>",
+      "references": [
+        "<CANuuowOiJ29Mn=0QVZ8ML3vtNuzhXa9KX=LKwAkKTTeYQD8g-A@mail.gmail.com>",
+        "<CANuuowMtRkXnQqexFEYyCFZs5sBMkmt8u0U2hnpPdzG+RvEvOQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola JosÃ©, esos grÃ¡ficos sÃ­ se pueden hacer con R, con la librerÃ­a \nggplot2, aquÃ­ dice como:\n\nhttps://ggplot2.tidyverse.org/reference/stat_ellipse.html\n\nSaludos !!\n\nEric.\n\n\nOn 16-10-20 18:10, Jose Betancourt Bethencourt wrote:\n>> Estimados\n>>\n>> --En este artÃ­culo\n> http://scielo.isciii.es/pdf/nh/v31n3/46originalvaloracionnutricional08.pdf\n>\n>\n>   Vectores de impedancia bioelÃ©ctrica, en  la fig 1 hay un grÃ¡fico que\n> realizan en un programa, mi pregunta es si > en R se puede calcular,\n> si esto se relaciona a biplot, por favor > necesito de su ayuda >\n> saludos\n>> Dr. Jose A. Betancourt Bethencourt\n>> Universidad de Ciencias Medicas Carlos j. Finlay\n>>\n>",
+      "body_snippet": "Hola JosÃ©, esos grÃ¡ficos sÃ­ se pueden hacer con R, con la librerÃ­a \nggplot2, aquÃ­ dice como:\n\nhttps://ggplot2.tidyverse.org/reference/stat_ellipse.html\n\nSaludos !!\n\nEric.\n\n\nOn 16-10-20 18:10, Jos",
+      "thread_id": "thread-3fa2e780576d",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-5221dd5d2f2f",
+      "message_id": "<CAEK8QGJN6UOovQpjhysGVADXg6ANoSrRZ25T7y1st0uoCBHJ4g@mail.gmail.com>",
+      "from_name": "Jimmy Erney Reyes Velasco",
+      "from_email_hash": "ad70bac28029e778ec1fa03a5b3f2f3ec8ac1b471e0a8f20b34fcd0be82af104",
+      "date": "2020-10-18T00:11:28-05:00",
+      "subject": "[R-es] Resultado de la consola como un tibble",
+      "subject_clean": "[R-es] Resultado de la consola como un tibble",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buen dÃ­a\nestimados\nEstoy tratando de hacer un tibble con los resultados de un apply que se\nmuestran en la consola que me da R, no estoy seguro si eso se pueda hacer,\npero me gustarÃ­a organizar los resultados de esa manera.\nmi cÃ³digo es:\ndata(\"mtcars\")\nMtcars_matriz <- as.matrix(mtcars)\napply(Mtcars_matriz, MARGIN =2, FUN = shapiro.test)\nDF2 <- tibble(Variable = NA, W = NA, Pvalue = NA)\n\nla idea es que me guarde el nombre de la variable, el valor del estadÃ­stico\ny el pvalor.\n\nÂ¿alguien sabe si esto se puede hacer?\nagradezco mucho su informaciÃ³n\nsaludos\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buen dÃ­a\nestimados\nEstoy tratando de hacer un tibble con los resultados de un apply que se\nmuestran en la consola que me da R, no estoy seguro si eso se pueda hacer,\npero me gustarÃ­a organizar los r",
+      "thread_id": "thread-5221dd5d2f2f",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-df99160eee24",
+      "message_id": "<CAOKbq8iu88+knYe5k4SpTk9tOMjP-_O-19rqoMA3eq9SnMH2Uw@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-10-18T11:53:17+02:00",
+      "subject": "[R-es] Resultado de la consola como un tibble",
+      "subject_clean": "[R-es] Resultado de la consola como un tibble",
+      "in_reply_to": "<CAEK8QGJN6UOovQpjhysGVADXg6ANoSrRZ25T7y1st0uoCBHJ4g@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGJN6UOovQpjhysGVADXg6ANoSrRZ25T7y1st0uoCBHJ4g@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nNo hace falta (en este caso) capturarlo de la consola.\nEl resultado de la funciÃ³n apply se puede capturar y procesar.\n\n> data(\"mtcars\")\n> # Mtcars_matriz <- as.matrix(mtcars)\n> res_out <- apply(mtcars, MARGIN =2, FUN = shapiro.test)\n>\n>\n> res_df <- as.data.frame(unlist(res_out))\n> res_df$vars <- rownames(res_df)\n> rownames(res_df) <- NULL\n> names(res_df)[1] <- c('values')\n>\n> library(stringr)\n> res_fin <- data.frame(\n+   pvalues = res_df[ str_detect(res_df$vars, \"value\"), ],\n+   estadis = res_df[ str_detect(res_df$vars, \"statistic\"), ]\n+ )\n> res_fin\n         pvalues.values pvalues.vars    estadis.values     estadis.vars\n2     0.122881358539443  mpg.p.value 0.947564726479274  mpg.statistic.W\n6  6.05833813310341e-06  cyl.p.value 0.753310022842721  cyl.statistic.W\n10   0.0208065696108598 disp.p.value 0.920012680133146 disp.statistic.W\n14   0.0488082381051741   hp.p.value  0.93341934019855   hp.statistic.W\n18    0.110060757426683 drat.p.value 0.945883896521269 drat.statistic.W\n22   0.0926549888932132   wt.p.value 0.943257719087817   wt.statistic.W\n26    0.593517649295161 qsec.p.value 0.973250948857977 qsec.statistic.W\n30 9.73737573091618e-08   vs.p.value 0.632263534949347   vs.statistic.W\n34 7.83635448813453e-08   am.p.value 0.625074366031524   am.statistic.W\n38 1.30684376520844e-05 gear.p.value 0.772785633173186 gear.statistic.W\n42 0.000438240495931375 carb.p.value 0.851097225173946 carb.statistic.W\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\nEl dom., 18 oct. 2020 a las 7:12, Jimmy Erney Reyes Velasco (<\njimmyreyesvelasco en gmail.com>) escribiÃ³:\n\n> Buen dÃ­a\n> estimados\n> Estoy tratando de hacer un tibble con los resultados de un apply que se\n> muestran en la consola que me da R, no estoy seguro si eso se pueda hacer,\n> pero me gustarÃ­a organizar los resultados de esa manera.\n> mi cÃ³digo es:\n> data(\"mtcars\")\n> Mtcars_matriz <- as.matrix(mtcars)\n> apply(Mtcars_matriz, MARGIN =2, FUN = shapiro.test)\n> DF2 <- tibble(Variable = NA, W = NA, Pvalue = NA)\n>\n> la idea es que me guarde el nombre de la variable, el valor del estadÃ­stico\n> y el pvalor.\n>\n> Â¿alguien sabe si esto se puede hacer?\n> agradezco mucho su informaciÃ³n\n> saludos\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nNo hace falta (en este caso) capturarlo de la consola.\nEl resultado de la funciÃ³n apply se puede capturar y procesar.\n\n> data(\"mtcars\")\n> # Mtcars_matriz <- as.matrix(mtcars)\n> res_out <- appl",
+      "thread_id": "thread-5221dd5d2f2f",
+      "thread_depth": 1,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-60c25edd5501",
+      "message_id": "<CAOKbq8jwDuuqTjuqRig2CUvdLoWR23vY0Jkh8s8K9zA8zZ1gaw@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-10-18T12:32:32+02:00",
+      "subject": "[R-es] Resultado de la consola como un tibble",
+      "subject_clean": "[R-es] Resultado de la consola como un tibble",
+      "in_reply_to": "<CAOKbq8iu88+knYe5k4SpTk9tOMjP-_O-19rqoMA3eq9SnMH2Uw@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGJN6UOovQpjhysGVADXg6ANoSrRZ25T7y1st0uoCBHJ4g@mail.gmail.com>",
+        "<CAOKbq8iu88+knYe5k4SpTk9tOMjP-_O-19rqoMA3eq9SnMH2Uw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nBueno, puedes hacer el cÃ¡lculo de una forma mucho mÃ¡s compacta y rÃ¡pida.\nEsta forma es especialmente recomendable cuando tienes muchas columnas y\nmuchas filas.\n\n> library(data.table)\n> myDT       <- as.data.table(mtcars)\n> myDTlong <- melt(myDT, measure.vars=1:ncol(myDT))\n> myDTlong[ , list(p_value = shapiro.test(value)$p.value, v_stat =\nshapiro.test(value)$statistic) , by = .(variable)]\n    variable      p_value    v_stat\n 1:      mpg 1.228814e-01 0.9475647\n 2:      cyl 6.058338e-06 0.7533100\n 3:     disp 2.080657e-02 0.9200127\n 4:       hp 4.880824e-02 0.9334193\n 5:     drat 1.100608e-01 0.9458839\n 6:       wt 9.265499e-02 0.9432577\n 7:     qsec 5.935176e-01 0.9732509\n 8:       vs 9.737376e-08 0.6322635\n 9:       am 7.836354e-08 0.6250744\n10:     gear 1.306844e-05 0.7727856\n11:     carb 4.382405e-04 0.8510972\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\nEl dom., 18 oct. 2020 a las 11:53, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Hola,\n>\n> No hace falta (en este caso) capturarlo de la consola.\n> El resultado de la funciÃ³n apply se puede capturar y procesar.\n>\n> > data(\"mtcars\")\n> > # Mtcars_matriz <- as.matrix(mtcars)\n> > res_out <- apply(mtcars, MARGIN =2, FUN = shapiro.test)\n> >\n> >\n> > res_df <- as.data.frame(unlist(res_out))\n> > res_df$vars <- rownames(res_df)\n> > rownames(res_df) <- NULL\n> > names(res_df)[1] <- c('values')\n> >\n> > library(stringr)\n> > res_fin <- data.frame(\n> +   pvalues = res_df[ str_detect(res_df$vars, \"value\"), ],\n> +   estadis = res_df[ str_detect(res_df$vars, \"statistic\"), ]\n> + )\n> > res_fin\n>          pvalues.values pvalues.vars    estadis.values     estadis.vars\n> 2     0.122881358539443  mpg.p.value 0.947564726479274  mpg.statistic.W\n> 6  6.05833813310341e-06  cyl.p.value 0.753310022842721  cyl.statistic.W\n> 10   0.0208065696108598 disp.p.value 0.920012680133146 disp.statistic.W\n> 14   0.0488082381051741   hp.p.value  0.93341934019855   hp.statistic.W\n> 18    0.110060757426683 drat.p.value 0.945883896521269 drat.statistic.W\n> 22   0.0926549888932132   wt.p.value 0.943257719087817   wt.statistic.W\n> 26    0.593517649295161 qsec.p.value 0.973250948857977 qsec.statistic.W\n> 30 9.73737573091618e-08   vs.p.value 0.632263534949347   vs.statistic.W\n> 34 7.83635448813453e-08   am.p.value 0.625074366031524   am.statistic.W\n> 38 1.30684376520844e-05 gear.p.value 0.772785633173186 gear.statistic.W\n> 42 0.000438240495931375 carb.p.value 0.851097225173946 carb.statistic.W\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n> El dom., 18 oct. 2020 a las 7:12, Jimmy Erney Reyes Velasco (<\n> jimmyreyesvelasco en gmail.com>) escribiÃ³:\n>\n>> Buen dÃ­a\n>> estimados\n>> Estoy tratando de hacer un tibble con los resultados de un apply que se\n>> muestran en la consola que me da R, no estoy seguro si eso se pueda hacer,\n>> pero me gustarÃ­a organizar los resultados de esa manera.\n>> mi cÃ³digo es:\n>> data(\"mtcars\")\n>> Mtcars_matriz <- as.matrix(mtcars)\n>> apply(Mtcars_matriz, MARGIN =2, FUN = shapiro.test)\n>> DF2 <- tibble(Variable = NA, W = NA, Pvalue = NA)\n>>\n>> la idea es que me guarde el nombre de la variable, el valor del\n>> estadÃ­stico\n>> y el pvalor.\n>>\n>> Â¿alguien sabe si esto se puede hacer?\n>> agradezco mucho su informaciÃ³n\n>> saludos\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nBueno, puedes hacer el cÃ¡lculo de una forma mucho mÃ¡s compacta y rÃ¡pida.\nEsta forma es especialmente recomendable cuando tienes muchas columnas y\nmuchas filas.\n\n> library(data.table)\n> myDT ",
+      "thread_id": "thread-5221dd5d2f2f",
+      "thread_depth": 2,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-e8900b29bc0c",
+      "message_id": "<CAEK8QGLxAHY_cwi0SppepmYr-uNuq1Cjw8TFJ9bR-7mjRfyubw@mail.gmail.com>",
+      "from_name": "Jimmy Erney Reyes Velasco",
+      "from_email_hash": "ad70bac28029e778ec1fa03a5b3f2f3ec8ac1b471e0a8f20b34fcd0be82af104",
+      "date": "2020-10-18T09:06:12-05:00",
+      "subject": "[R-es] Resultado de la consola como un tibble",
+      "subject_clean": "[R-es] Resultado de la consola como un tibble",
+      "in_reply_to": "<CAOKbq8jwDuuqTjuqRig2CUvdLoWR23vY0Jkh8s8K9zA8zZ1gaw@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGJN6UOovQpjhysGVADXg6ANoSrRZ25T7y1st0uoCBHJ4g@mail.gmail.com>",
+        "<CAOKbq8iu88+knYe5k4SpTk9tOMjP-_O-19rqoMA3eq9SnMH2Uw@mail.gmail.com>",
+        "<CAOKbq8jwDuuqTjuqRig2CUvdLoWR23vY0Jkh8s8K9zA8zZ1gaw@mail.gmail.com>"
+      ],
+      "body_plain": "Â¡MUCHAS GRACIAS! Carlos me ha servido bastante.\nesto es excelente\nsaludos\nJimmy\n\nEl dom., 18 de oct. de 2020 a la(s) 05:32, Carlos Ortega (\ncof en qualityexcellence.es) escribiÃ³:\n\n> Hola,\n>\n> Bueno, puedes hacer el cÃ¡lculo de una forma mucho mÃ¡s compacta y rÃ¡pida.\n> Esta forma es especialmente recomendable cuando tienes muchas columnas y\n> muchas filas.\n>\n> > library(data.table)\n> > myDT       <- as.data.table(mtcars)\n> > myDTlong <- melt(myDT, measure.vars=1:ncol(myDT))\n> > myDTlong[ , list(p_value = shapiro.test(value)$p.value, v_stat =\n> shapiro.test(value)$statistic) , by = .(variable)]\n>     variable      p_value    v_stat\n>  1:      mpg 1.228814e-01 0.9475647\n>  2:      cyl 6.058338e-06 0.7533100\n>  3:     disp 2.080657e-02 0.9200127\n>  4:       hp 4.880824e-02 0.9334193\n>  5:     drat 1.100608e-01 0.9458839\n>  6:       wt 9.265499e-02 0.9432577\n>  7:     qsec 5.935176e-01 0.9732509\n>  8:       vs 9.737376e-08 0.6322635\n>  9:       am 7.836354e-08 0.6250744\n> 10:     gear 1.306844e-05 0.7727856\n> 11:     carb 4.382405e-04 0.8510972\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n>\n> El dom., 18 oct. 2020 a las 11:53, Carlos Ortega (<\n> cof en qualityexcellence.es>) escribiÃ³:\n>\n>> Hola,\n>>\n>> No hace falta (en este caso) capturarlo de la consola.\n>> El resultado de la funciÃ³n apply se puede capturar y procesar.\n>>\n>> > data(\"mtcars\")\n>> > # Mtcars_matriz <- as.matrix(mtcars)\n>> > res_out <- apply(mtcars, MARGIN =2, FUN = shapiro.test)\n>> >\n>> >\n>> > res_df <- as.data.frame(unlist(res_out))\n>> > res_df$vars <- rownames(res_df)\n>> > rownames(res_df) <- NULL\n>> > names(res_df)[1] <- c('values')\n>> >\n>> > library(stringr)\n>> > res_fin <- data.frame(\n>> +   pvalues = res_df[ str_detect(res_df$vars, \"value\"), ],\n>> +   estadis = res_df[ str_detect(res_df$vars, \"statistic\"), ]\n>> + )\n>> > res_fin\n>>          pvalues.values pvalues.vars    estadis.values     estadis.vars\n>> 2     0.122881358539443  mpg.p.value 0.947564726479274  mpg.statistic.W\n>> 6  6.05833813310341e-06  cyl.p.value 0.753310022842721  cyl.statistic.W\n>> 10   0.0208065696108598 disp.p.value 0.920012680133146 disp.statistic.W\n>> 14   0.0488082381051741   hp.p.value  0.93341934019855   hp.statistic.W\n>> 18    0.110060757426683 drat.p.value 0.945883896521269 drat.statistic.W\n>> 22   0.0926549888932132   wt.p.value 0.943257719087817   wt.statistic.W\n>> 26    0.593517649295161 qsec.p.value 0.973250948857977 qsec.statistic.W\n>> 30 9.73737573091618e-08   vs.p.value 0.632263534949347   vs.statistic.W\n>> 34 7.83635448813453e-08   am.p.value 0.625074366031524   am.statistic.W\n>> 38 1.30684376520844e-05 gear.p.value 0.772785633173186 gear.statistic.W\n>> 42 0.000438240495931375 carb.p.value 0.851097225173946 carb.statistic.W\n>>\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>>\n>> El dom., 18 oct. 2020 a las 7:12, Jimmy Erney Reyes Velasco (<\n>> jimmyreyesvelasco en gmail.com>) escribiÃ³:\n>>\n>>> Buen dÃ­a\n>>> estimados\n>>> Estoy tratando de hacer un tibble con los resultados de un apply que se\n>>> muestran en la consola que me da R, no estoy seguro si eso se pueda\n>>> hacer,\n>>> pero me gustarÃ­a organizar los resultados de esa manera.\n>>> mi cÃ³digo es:\n>>> data(\"mtcars\")\n>>> Mtcars_matriz <- as.matrix(mtcars)\n>>> apply(Mtcars_matriz, MARGIN =2, FUN = shapiro.test)\n>>> DF2 <- tibble(Variable = NA, W = NA, Pvalue = NA)\n>>>\n>>> la idea es que me guarde el nombre de la variable, el valor del\n>>> estadÃ­stico\n>>> y el pvalor.\n>>>\n>>> Â¿alguien sabe si esto se puede hacer?\n>>> agradezco mucho su informaciÃ³n\n>>> saludos\n>>>\n>>>         [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>\n>>\n>> --\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Â¡MUCHAS GRACIAS! Carlos me ha servido bastante.\nesto es excelente\nsaludos\nJimmy\n\nEl dom., 18 de oct. de 2020 a la(s) 05:32, Carlos Ortega (\ncof en qualityexcellence.es) escribiÃ³:\n\n> Hola,\n>\n> Bueno,",
+      "thread_id": "thread-5221dd5d2f2f",
+      "thread_depth": 3,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-ff7b468cc4f8",
+      "message_id": "<CAP3FtZjj42LZvY5r=LBWWKpF5mYFADU0noHwyF+JOpw11ZGY7g@mail.gmail.com>",
+      "from_name": "Jaume Tormo",
+      "from_email_hash": "c8c95643da6caabd3e68200436599103a5be80ae4f510e6c6113f140c41ce114",
+      "date": "2020-10-20T18:24:44+02:00",
+      "subject": "[R-es] Dibujar un gráfico con 4 terms - ggeffects + plot",
+      "subject_clean": "[R-es] Dibujar un gráfico con 4 terms - ggeffects + plot",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola eRRer en s,\n\nHe creado un modelo mixto (adjunto) con lme4\nHe dibujado la predicciÃ³n usando:\ndf <- ggpredict(m.glob.pre.anu\n                    , terms = c(\"pre\", \"area_m2\", \"sum.vs.win\")\n                    )\nplot(df)\nLuego he arreglado el grÃ¡fico usando:\ndf <- ggpredict(m.glob.pre.anu\n                    , terms = c(\"pre\", \"area_m2\", \"sum.vs.win\")\n                    )\nplot(df)+\nlabs(title =  \"Predicted number of annuals\" # falla al posar 4 terms en el\ndf\n         ,x = \"MAP\"\n         ,y = \"Proportion of annuals\"\n         ) +\nscale_x_continuous(breaks = c(-2,0,2)\n                               , labels= etiquetas\n                                )  +\nlabs(color=\"Area\")\nPero me interesa mÃ¡s el modelo con 4 terms que serÃ­a:\ndf <- ggpredict(m.glob.pre.anu\n                    , terms = c(\"pre\", \"area_m2\", \"sum.vs.win\", \"data_type\")\n                    )\nplot(df)\nHasta aquÃ­ funciona todo.\nPero si intento hacer los arreglos p.e.:\nplot(df)+\nlabs(title =  \"Predicted number of annuals\"\n         ,x = \"MAP\"\n         ,y = \"Proportion of annuals\"\n         )\nMe da el siguiente error:\nError in plot(df) + labs(title = \"Predicted number of annuals\", x = \"MAP\",\n :\n  non-numeric argument to binary operator\nCreo que el error se debe a que en el modelo ahora hay 4 terms en lugar de\n3 Â¿Puede ser?\nÂ¿Se os ocurre quÃ© puede estar pasando? Â¿SabÃ©is cÃ³mo puedo especificar los\ntÃ­tulos, leyendas, etc. de otra forma?\n\nMuchas gracias de antemano.\n\n-- \nDr. Jaume Tormo.\nArea of Ecology\nDepartment of Agrarian and Environmental Sciences\nTechnological College. Agri-food and Environment\nUniversity of Zaragoza, Spain\n0034 974292678\nhttps://es.linkedin.com/in/jaumetormo\nhttps://acercad.wordpress.com/\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20201020/d3862921/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: modelo.RData\nType: application/octet-stream\nSize: 130468 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20201020/d3862921/attachment-0001.obj>",
+      "body_snippet": "Hola eRRer en s,\n\nHe creado un modelo mixto (adjunto) con lme4\nHe dibujado la predicciÃ³n usando:\ndf <- ggpredict(m.glob.pre.anu\n                    , terms = c(\"pre\", \"area_m2\", \"sum.vs.win\")\n       ",
+      "thread_id": "thread-ff7b468cc4f8",
+      "thread_depth": 0,
+      "month": "2020-10"
+    },
+    {
+      "id": "msg-947dd5dc6c85",
+      "message_id": "<CAP3FtZj=HjVs2f4gezs5Ax__+AZELDvNkmhGLWrd1269AazTjQ@mail.gmail.com>",
+      "from_name": "Jaume Tormo",
+      "from_email_hash": "c8c95643da6caabd3e68200436599103a5be80ae4f510e6c6113f140c41ce114",
+      "date": "2020-10-21T13:34:56+02:00",
+      "subject": "[R-es]  Dibujar un gráfico con 4 terms - ggeffects + plot",
+      "subject_clean": "[R-es]  Dibujar un gráfico con 4 terms - ggeffects + plot",
+      "in_reply_to": "<CAP3FtZjj42LZvY5r=LBWWKpF5mYFADU0noHwyF+JOpw11ZGY7g@mail.gmail.com>",
+      "references": [
+        "<CAP3FtZjj42LZvY5r=LBWWKpF5mYFADU0noHwyF+JOpw11ZGY7g@mail.gmail.com>"
+      ],
+      "body_plain": "Hola de nuevo,\n\nMe he dado cuenta de que cuando haces el modelo con 3 terms crea un objeto\ndiferente que cuando lo haces con 4 terms p.e.\n# grÃ¡fica MAP vs prop.anu 3 terms\n  df <- ggpredict(m.glob.pre.anu\n                , terms = c(\"pre\",\"area_m2\",\"sum.vs.win\")\n                )\n  p.tot<-plot(df) # al hacer esto, guarda plot(df) en p.tot y no dibuja nada\n\n# grÃ¡fica MAP vs prop.anu 4 terms\n  df <- ggpredict(m.glob.pre.anu\n                  , terms = c(\"pre\", \"area_m2\", \"sum.vs.win\", \"data_type\")\n                  )\n  p<-plot(df) # al hacer esto, guarda plot(df) en p pero dibuja en grÃ¡fico\n\n  str(p); attributes(p)\n  str(p.tot); attributes(p.tot)\n\nCrea dos objetos diferentes... p.tot tiene que ver con gtable()\nEditar eso resulta bastante complicado:\nhttps://stackoverflow.com/questions/46516269/retrieve-facet-labels-from-a-ggplot-or-a-gtable-gtree-grob-gdesc-object\nCreo que voy a crear los dos grÃ¡ficos por separado y juntar las dos\nimÃ¡genes en una. O bien probar con layout() o grid()\nÂ¿Alguna sugerencia?\n\nJaume.\n\n\nEl mar., 20 oct. 2020 a las 18:24, Jaume Tormo (<jautorbla en gmail.com>)\nescribiÃ³:\n\n> Hola eRRer en s,\n>\n> He creado un modelo mixto (adjunto) con lme4\n> He dibujado la predicciÃ³n usando:\n> df <- ggpredict(m.glob.pre.anu\n>                     , terms = c(\"pre\", \"area_m2\", \"sum.vs.win\")\n>                     )\n> plot(df)\n> Luego he arreglado el grÃ¡fico usando:\n> df <- ggpredict(m.glob.pre.anu\n>                     , terms = c(\"pre\", \"area_m2\", \"sum.vs.win\")\n>                     )\n> plot(df)+\n> labs(title =  \"Predicted number of annuals\" # falla al posar 4 terms en el\n> df\n>          ,x = \"MAP\"\n>          ,y = \"Proportion of annuals\"\n>          ) +\n> scale_x_continuous(breaks = c(-2,0,2)\n>                                , labels= etiquetas\n>                                 )  +\n> labs(color=\"Area\")\n> Pero me interesa mÃ¡s el modelo con 4 terms que serÃ­a:\n> df <- ggpredict(m.glob.pre.anu\n>                     , terms = c(\"pre\", \"area_m2\", \"sum.vs.win\",\n> \"data_type\")\n>                     )\n> plot(df)\n> Hasta aquÃ­ funciona todo.\n> Pero si intento hacer los arreglos p.e.:\n> plot(df)+\n> labs(title =  \"Predicted number of annuals\"\n>          ,x = \"MAP\"\n>          ,y = \"Proportion of annuals\"\n>          )\n> Me da el siguiente error:\n> Error in plot(df) + labs(title = \"Predicted number of annuals\", x = \"MAP\",\n>  :\n>   non-numeric argument to binary operator\n> Creo que el error se debe a que en el modelo ahora hay 4 terms en lugar de\n> 3 Â¿Puede ser?\n> Â¿Se os ocurre quÃ© puede estar pasando? Â¿SabÃ©is cÃ³mo puedo especificar los\n> tÃ­tulos, leyendas, etc. de otra forma?\n>\n> Muchas gracias de antemano.\n>\n> --\n> Dr. Jaume Tormo.\n> Area of Ecology\n> Department of Agrarian and Environmental Sciences\n> Technological College. Agri-food and Environment\n> University of Zaragoza, Spain\n> 0034 974292678\n> https://es.linkedin.com/in/jaumetormo\n> https://acercad.wordpress.com/\n>\n>\n\n-- \nJaume Tormo.\nhttps://es.linkedin.com/in/jaumetormo\nhttps://acercad.wordpress.com/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola de nuevo,\n\nMe he dado cuenta de que cuando haces el modelo con 3 terms crea un objeto\ndiferente que cuando lo haces con 4 terms p.e.\n# grÃ¡fica MAP vs prop.anu 3 terms\n  df <- ggpredict(m.glob.pr",
+      "thread_id": "thread-ff7b468cc4f8",
+      "thread_depth": 1,
+      "month": "2020-10"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-35fea0920071",
+      "subject": "[R-es] Graficar una curva de tendencia potencial.",
+      "message_count": 1,
+      "participants": [
+        "Manuel Spínola"
+      ],
+      "started": "2020-10-01T06:16:54-06:00",
+      "last_reply": "2020-10-01T06:16:54-06:00",
+      "root_message_id": "msg-35fea0920071"
+    },
+    {
+      "id": "thread-a930af5e2159",
+      "subject": "[R-es] Graficar una curva de tendencia potencial.",
+      "message_count": 3,
+      "participants": [
+        "Emilio L. Cano",
+        "Eric",
+        "Jimmy Erney Reyes Velasco"
+      ],
+      "started": "2020-10-01T11:10:26+02:00",
+      "last_reply": "2020-10-01T22:03:33-03:00",
+      "root_message_id": "msg-a930af5e2159"
+    },
+    {
+      "id": "thread-8925dc6e1cb5",
+      "subject": "[R-es] Leyenda gráfico combinado",
+      "message_count": 5,
+      "participants": [
+        "Carlos Ortega",
+        "Emilio L. Cano",
+        "Jimmy Erney Reyes Velasco"
+      ],
+      "started": "2020-10-04T09:07:21-05:00",
+      "last_reply": "2020-10-05T00:28:06+02:00",
+      "root_message_id": "msg-8925dc6e1cb5"
+    },
+    {
+      "id": "thread-0b5948cce26f",
+      "subject": "[R-es] Vectores de impedancia bioeléctrica",
+      "message_count": 2,
+      "participants": [
+        "Carlos Ortega",
+        "Jose Betancourt Bethencourt"
+      ],
+      "started": "2020-10-16T07:29:46-04:00",
+      "last_reply": "2020-10-16T22:09:37+02:00",
+      "root_message_id": "msg-0b5948cce26f"
+    },
+    {
+      "id": "thread-4bd8376fe7b2",
+      "subject": "[R-es] Error: Unable to establish connection with R session",
+      "message_count": 2,
+      "participants": [
+        "Isidro Hidalgo Arellano",
+        "Leire Garmendia"
+      ],
+      "started": "2020-10-16T10:41:06+02:00",
+      "last_reply": "2020-10-16T11:26:38+02:00",
+      "root_message_id": "msg-4bd8376fe7b2"
+    },
+    {
+      "id": "thread-3fa2e780576d",
+      "subject": "[R-es] Vectores de impedancia bioeléctrica",
+      "message_count": 2,
+      "participants": [
+        "Eric",
+        "Jose Betancourt Bethencourt"
+      ],
+      "started": "2020-10-16T17:10:32-04:00",
+      "last_reply": "2020-10-16T20:00:42-03:00",
+      "root_message_id": "msg-3fa2e780576d"
+    },
+    {
+      "id": "thread-5221dd5d2f2f",
+      "subject": "[R-es] Resultado de la consola como un tibble",
+      "message_count": 4,
+      "participants": [
+        "Carlos Ortega",
+        "Jimmy Erney Reyes Velasco"
+      ],
+      "started": "2020-10-18T00:11:28-05:00",
+      "last_reply": "2020-10-18T09:06:12-05:00",
+      "root_message_id": "msg-5221dd5d2f2f"
+    },
+    {
+      "id": "thread-ff7b468cc4f8",
+      "subject": "[R-es] Dibujar un gráfico con 4 terms - ggeffects + plot",
+      "message_count": 2,
+      "participants": [
+        "Jaume Tormo"
+      ],
+      "started": "2020-10-20T18:24:44+02:00",
+      "last_reply": "2020-10-21T13:34:56+02:00",
+      "root_message_id": "msg-ff7b468cc4f8"
+    }
+  ]
+}

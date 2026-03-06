@@ -1,0 +1,517 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2022-03",
+  "messages": [
+    {
+      "id": "msg-c817e959e93f",
+      "message_id": "<CANuuowO9-W=1dHt=YaXRwiLQyOb38TtYH2d53oy0puSMzQu9Qg@mail.gmail.com>",
+      "from_name": "Jose Betancourt Bethencourt",
+      "from_email_hash": "b90847c8177ef52d350c4c371ce07cae9ff1f09ff64386c1848f72e6cd6a3d95",
+      "date": "2022-03-01T06:52:51-05:00",
+      "subject": "[R-es] Fwd: colores de los plots",
+      "subject_clean": "[R-es] Fwd: colores de los plots",
+      "in_reply_to": "<CANuuowMWr9=Gha8V9Gb_ok5CocNUqFEJ6X0VE24t=TJOqwmfUQ@mail.gmail.com>",
+      "references": [
+        "<CANuuowMWr9=Gha8V9Gb_ok5CocNUqFEJ6X0VE24t=TJOqwmfUQ@mail.gmail.com>"
+      ],
+      "body_plain": "---------- Forwarded message ----------\nFrom: Jose Betancourt Bethencourt <betanster en gmail.com>\nDate: Fri, 25 Feb 2022 13:38:44 -0500\nSubject: colores de los plots\nTo: r-help-es <r-help-es en r-project.org>\n\nEstimados\nEn este script quisieramos poder manejar los colores de los plots\nplot(model)  y plot(example1)\n\n y no\nvemos como se puede hacer\nPor lo que apreciariamos su ayuda\nNO RECIBIMOS RESPUESTA\n saludos cordiales.\nJosÃ©\n\n\n\n\n\nrm(list=ls(all=TRUE))\n\nlibrary(sets)\n\nsets_options(\"universe\", seq(1, 45, 1))\n\n#VARIABLES   no cierra\n\n\n\n  variables <- set(\n      temp= fuzzy_partition(varnames = c(normal= 36.5,\n  moderada= 37.5, alta= 38, muyalta=39), sd = 0.2),\n\n  disnea = fuzzy_partition(varnames = c(no = 0, poca = 20,mucha=40),sd=2.5),\n\n  gusto = fuzzy_partition(varnames = c(no = 0, poca = 30,mucha=40),sd=2.5),\n\n  garganta = fuzzy_partition(varnames = c(no = 0, poca = 25,mucha=40),sd=2.5),\n\n  severidad = fuzzy_partition(varnames = c(baja = 10, media = 20,alta=40),\n                              FUN = fuzzy_cone, radius = 10)\n  )\n\n\n\n  #RULES\n\n  rules <- set(\n\n    fuzzy_rule(temp %is% muyalta && disnea%is% mucha && gusto%is%mucha&&\n                 garganta%is%mucha, severidad %is% alta),\n    fuzzy_rule(temp %is% muyalta&& disnea%is% mucha, severidad %is% alta),\n    fuzzy_rule(temp %is% normal && disnea%is% no && gusto%is%no&&\n                 garganta%is%no, severidad %is% baja),\n    fuzzy_rule(temp %is% normal && disnea%is% no, severidad %is% baja),\n    fuzzy_rule(temp %is% moderada && disnea%is% poca && gusto%is%poca&&\n                 garganta%is%poca, severidad %is% media),\n    fuzzy_rule(temp %is% moderada && disnea%is% poca, severidad %is% media)\n\n  )\n\n\n\n\nmodel <- fuzzy_system(variables, rules)\nprint(model)\nplot(model)\n\n\nhacer=========================\n\nexample.1 <- fuzzy_inference(model, list(temp = 37,\ndisnea=40,garganta=40,gusto=40))\n\ngset_defuzzify(example.1, \"centroid\")  # NaN\n\nplot(example.1)\n\n\n\nexample.2 <- fuzzy_inference(model, list(Edad = 70, IMC=30,Tas=140,\n                                         tabaquismo= 40, glicemia=140))\ngset_defuzzify(example.2, \"centroid\")  # NaN\n\nplot(example.2)\n\n\nexample.3 <- fuzzy_inference(model, list(Edad = 75, IMC=30,Tas=140,\n                                         tabaquismo= 40, glicemia=150))\ngset_defuzzify(example.3, \"centroid\")  # NaN\n\nplot(example.3)\nsets_options(\"universe\", NULL)\n-- \nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay\n\n\n\n-- \nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay",
+      "body_snippet": "---------- Forwarded message ----------\nFrom: Jose Betancourt Bethencourt <betanster en gmail.com>\nDate: Fri, 25 Feb 2022 13:38:44 -0500\nSubject: colores de los plots\nTo: r-help-es <r-help-es en r-pro",
+      "thread_id": "thread-c817e959e93f",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-8968deab3e89",
+      "message_id": "<CA+8ueyZwNsQFJLsriFWGGBvnNxW7HSb1W=8PsUUnzuxYufSFSA@mail.gmail.com>",
+      "from_name": "Juan Abasolo",
+      "from_email_hash": "20be713e36dff382d1fe3151ad684c005f02d119de762911f953e87f656e2d3e",
+      "date": "2022-03-01T23:52:46+01:00",
+      "subject": "[R-es] Fwd: colores de los plots",
+      "subject_clean": "[R-es] Fwd: colores de los plots",
+      "in_reply_to": "<CANuuowO9-W=1dHt=YaXRwiLQyOb38TtYH2d53oy0puSMzQu9Qg@mail.gmail.com>",
+      "references": [
+        "<CANuuowMWr9=Gha8V9Gb_ok5CocNUqFEJ6X0VE24t=TJOqwmfUQ@mail.gmail.com>",
+        "<CANuuowO9-W=1dHt=YaXRwiLQyOb38TtYH2d53oy0puSMzQu9Qg@mail.gmail.com>"
+      ],
+      "body_plain": "Hola, Jose;\nA mÃ­ no me da para entender lo que estÃ¡s haciendo, o sea que entender lo\nque preguntÃ¡s, muy probablemente no lo haga. Como ejercicio de antes de\nirme a dormir agarrÃ© tu script, le  sume tidiverse, de haragÃ¡n no mÃ¡s y\nprobÃ© de a poquito\n\nmodel$variables$severidad %>% plot(col = 1:3)\n\nY sale el primero de los modelos con las rayas de tres colores. o sea que\nsi lo recreÃ¡s y lo Ãºnico que querÃ©s es cambiar algunos de los colores, ese\nes el camino.\nSi es medio raro, porque si le pedÃ­s que haga lo mismo con el tipo de\nlinea, no lo hace, solamente toma el primer valor.\n\nSuerte\n\n\n\nHau idatzi du Jose Betancourt Bethencourt (betanster en gmail.com)\nerabiltzaileak (2022 mar. 1, ar. (12:53)):\n\n> ---------- Forwarded message ----------\n> From: Jose Betancourt Bethencourt <betanster en gmail.com>\n> Date: Fri, 25 Feb 2022 13:38:44 -0500\n> Subject: colores de los plots\n> To: r-help-es <r-help-es en r-project.org>\n>\n> Estimados\n> En este script quisieramos poder manejar los colores de los plots\n> plot(model)  y plot(example1)\n>\n>  y no\n> vemos como se puede hacer\n> Por lo que apreciariamos su ayuda\n> NO RECIBIMOS RESPUESTA\n>  saludos cordiales.\n> JosÃ©\n>\n>\n>\n>\n>\n> rm(list=ls(all=TRUE))\n>\n> library(sets)\n>\n> sets_options(\"universe\", seq(1, 45, 1))\n>\n> #VARIABLES   no cierra\n>\n>\n>\n>   variables <- set(\n>       temp= fuzzy_partition(varnames = c(normal= 36.5,\n>   moderada= 37.5, alta= 38, muyalta=39), sd = 0.2),\n>\n>   disnea = fuzzy_partition(varnames = c(no = 0, poca =\n> 20,mucha=40),sd=2.5),\n>\n>   gusto = fuzzy_partition(varnames = c(no = 0, poca = 30,mucha=40),sd=2.5),\n>\n>   garganta = fuzzy_partition(varnames = c(no = 0, poca =\n> 25,mucha=40),sd=2.5),\n>\n>   severidad = fuzzy_partition(varnames = c(baja = 10, media = 20,alta=40),\n>                               FUN = fuzzy_cone, radius = 10)\n>   )\n>\n>\n>\n>   #RULES\n>\n>   rules <- set(\n>\n>     fuzzy_rule(temp %is% muyalta && disnea%is% mucha && gusto%is%mucha&&\n>                  garganta%is%mucha, severidad %is% alta),\n>     fuzzy_rule(temp %is% muyalta&& disnea%is% mucha, severidad %is% alta),\n>     fuzzy_rule(temp %is% normal && disnea%is% no && gusto%is%no&&\n>                  garganta%is%no, severidad %is% baja),\n>     fuzzy_rule(temp %is% normal && disnea%is% no, severidad %is% baja),\n>     fuzzy_rule(temp %is% moderada && disnea%is% poca && gusto%is%poca&&\n>                  garganta%is%poca, severidad %is% media),\n>     fuzzy_rule(temp %is% moderada && disnea%is% poca, severidad %is% media)\n>\n>   )\n>\n>\n>\n>\n> model <- fuzzy_system(variables, rules)\n> print(model)\n> plot(model)\n>\n>\n> hacer=========================\n>\n> example.1 <- fuzzy_inference(model, list(temp = 37,\n> disnea=40,garganta=40,gusto=40))\n>\n> gset_defuzzify(example.1, \"centroid\")  # NaN\n>\n> plot(example.1)\n>\n>\n>\n> example.2 <- fuzzy_inference(model, list(Edad = 70, IMC=30,Tas=140,\n>                                          tabaquismo= 40, glicemia=140))\n> gset_defuzzify(example.2, \"centroid\")  # NaN\n>\n> plot(example.2)\n>\n>\n> example.3 <- fuzzy_inference(model, list(Edad = 75, IMC=30,Tas=140,\n>                                          tabaquismo= 40, glicemia=150))\n> gset_defuzzify(example.3, \"centroid\")  # NaN\n>\n> plot(example.3)\n> sets_options(\"universe\", NULL)\n> --\n> Dr. Jose A. Betancourt Bethencourt\n> Universidad de Ciencias Medicas Carlos j. Finlay\n>\n>\n>\n> --\n> Dr. Jose A. Betancourt Bethencourt\n> Universidad de Ciencias Medicas Carlos j. Finlay\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nJuan Abasolo, PhD\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea UPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT       : (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype   : abasolo72\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, Jose;\nA mÃ­ no me da para entender lo que estÃ¡s haciendo, o sea que entender lo\nque preguntÃ¡s, muy probablemente no lo haga. Como ejercicio de antes de\nirme a dormir agarrÃ© tu script, le  sum",
+      "thread_id": "thread-c817e959e93f",
+      "thread_depth": 1,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-0673338717f0",
+      "message_id": "<CANuuowPzH-=8v5+MpehTWHENmwAmGvK=tr0MMfSEDJQbfVRK0g@mail.gmail.com>",
+      "from_name": "Jose Betancourt Bethencourt",
+      "from_email_hash": "b90847c8177ef52d350c4c371ce07cae9ff1f09ff64386c1848f72e6cd6a3d95",
+      "date": "2022-03-02T07:22:09-05:00",
+      "subject": "[R-es] Fwd: colores de los plots",
+      "subject_clean": "[R-es] Fwd: colores de los plots",
+      "in_reply_to": "<CANuuowOBAAchbbKxKJGxqKktZz_L-oEkSMvSa0iVCtZvKKYKYw@mail.gmail.com>",
+      "references": [
+        "<CANuuowMWr9=Gha8V9Gb_ok5CocNUqFEJ6X0VE24t=TJOqwmfUQ@mail.gmail.com>",
+        "<CANuuowO9-W=1dHt=YaXRwiLQyOb38TtYH2d53oy0puSMzQu9Qg@mail.gmail.com>",
+        "<CA+8ueyZwNsQFJLsriFWGGBvnNxW7HSb1W=8PsUUnzuxYufSFSA@mail.gmail.com>",
+        "<CANuuowOBAAchbbKxKJGxqKktZz_L-oEkSMvSa0iVCtZvKKYKYw@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado\n  no funcionÃ³\n\n es simple lo que quiero , es que las lineas de todos los plots tengan\n un color que no sea el negro\n\n saludos\n\n JosÃ©\n>\n> El 1/3/22, Juan Abasolo <juan.abasolo en ehu.eus> escribiÃ³:\n>> Hola, Jose;\n>> A mÃ­ no me da para entender lo que estÃ¡s haciendo, o sea que entender lo\n>> que preguntÃ¡s, muy probablemente no lo haga. Como ejercicio de antes de\n>> irme a dormir agarrÃ© tu script, le  sume tidiverse, de haragÃ¡n no mÃ¡s y\n>> probÃ© de a poquito\n>>\n>> model$variables$severidad %>% plot(col = 1:3)\n>>\n>> Y sale el primero de los modelos con las rayas de tres colores. o sea que\n>> si lo recreÃ¡s y lo Ãºnico que querÃ©s es cambiar algunos de los colores,\n>> ese\n>> es el camino.\n>> Si es medio raro, porque si le pedÃ­s que haga lo mismo con el tipo de\n>> linea, no lo hace, solamente toma el primer valor.\n>>\n>> Suerte\n>>\n>>\n>>\n>> Hau idatzi du Jose Betancourt Bethencourt (betanster en gmail.com)\n>> erabiltzaileak (2022 mar. 1, ar. (12:53)):\n>>\n>>> ---------- Forwarded message ----------\n>>> From: Jose Betancourt Bethencourt <betanster en gmail.com>\n>>> Date: Fri, 25 Feb 2022 13:38:44 -0500\n>>> Subject: colores de los plots\n>>> To: r-help-es <r-help-es en r-project.org>\n>>>\n>>> Estimados\n>>> En este script quisieramos poder manejar los colores de los plots\n>>> plot(model)  y plot(example1)\n>>>\n>>>  y no\n>>> vemos como se puede hacer\n>>> Por lo que apreciariamos su ayuda\n>>> NO RECIBIMOS RESPUESTA\n>>>  saludos cordiales.\n>>> JosÃ©\n>>>\n>>>\n>>>\n>>>\n>>>\n>>> rm(list=ls(all=TRUE))\n>>>\n>>> library(sets)\n>>>\n>>> sets_options(\"universe\", seq(1, 45, 1))\n>>>\n>>> #VARIABLES   no cierra\n>>>\n>>>\n>>>\n>>>   variables <- set(\n>>>       temp= fuzzy_partition(varnames = c(normal= 36.5,\n>>>   moderada= 37.5, alta= 38, muyalta=39), sd = 0.2),\n>>>\n>>>   disnea = fuzzy_partition(varnames = c(no = 0, poca =\n>>> 20,mucha=40),sd=2.5),\n>>>\n>>>   gusto = fuzzy_partition(varnames = c(no = 0, poca =\n>>> 30,mucha=40),sd=2.5),\n>>>\n>>>   garganta = fuzzy_partition(varnames = c(no = 0, poca =\n>>> 25,mucha=40),sd=2.5),\n>>>\n>>>   severidad = fuzzy_partition(varnames = c(baja = 10, media =\n>>> 20,alta=40),\n>>>                               FUN = fuzzy_cone, radius = 10)\n>>>   )\n>>>\n>>>\n>>>\n>>>   #RULES\n>>>\n>>>   rules <- set(\n>>>\n>>>     fuzzy_rule(temp %is% muyalta && disnea%is% mucha && gusto%is%mucha&&\n>>>                  garganta%is%mucha, severidad %is% alta),\n>>>     fuzzy_rule(temp %is% muyalta&& disnea%is% mucha, severidad %is%\n>>> alta),\n>>>     fuzzy_rule(temp %is% normal && disnea%is% no && gusto%is%no&&\n>>>                  garganta%is%no, severidad %is% baja),\n>>>     fuzzy_rule(temp %is% normal && disnea%is% no, severidad %is% baja),\n>>>     fuzzy_rule(temp %is% moderada && disnea%is% poca && gusto%is%poca&&\n>>>                  garganta%is%poca, severidad %is% media),\n>>>     fuzzy_rule(temp %is% moderada && disnea%is% poca, severidad %is%\n>>> media)\n>>>\n>>>   )\n>>>\n>>>\n>>>\n>>>\n>>> model <- fuzzy_system(variables, rules)\n>>> print(model)\n>>> plot(model)\n>>>\n>>>\n>>> hacer=========================\n>>>\n>>> example.1 <- fuzzy_inference(model, list(temp = 37,\n>>> disnea=40,garganta=40,gusto=40))\n>>>\n>>> gset_defuzzify(example.1, \"centroid\")  # NaN\n>>>\n>>> plot(example.1)\n>>>\n>>>\n>>>\n>>> example.2 <- fuzzy_inference(model, list(Edad = 70, IMC=30,Tas=140,\n>>>                                          tabaquismo= 40, glicemia=140))\n>>> gset_defuzzify(example.2, \"centroid\")  # NaN\n>>>\n>>> plot(example.2)\n>>>\n>>>\n>>> example.3 <- fuzzy_inference(model, list(Edad = 75, IMC=30,Tas=140,\n>>>                                          tabaquismo= 40, glicemia=150))\n>>> gset_defuzzify(example.3, \"centroid\")  # NaN\n>>>\n>>> plot(example.3)\n>>> sets_options(\"universe\", NULL)\n>>> --\n>>> Dr. Jose A. Betancourt Bethencourt\n>>> Universidad de Ciencias Medicas Carlos j. Finlay\n>>>\n>>>\n>>>\n>>> --\n>>> Dr. Jose A. Betancourt Bethencourt\n>>> Universidad de Ciencias Medicas Carlos j. Finlay\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>\n>>\n>> --\n>> Juan Abasolo, PhD\n>>\n>> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\n>> Bilboko Hezkuntza Fakultatea\n>> Euskal Herriko Unibertsitatea UPV/EHU\n>>\n>> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)\n>>\n>> T       : (+34) 94 601 7567\n>> Telegram: @JuanAbasolo\n>> Skype   : abasolo72\n>>\n>\n>\n> --\n> Dr. Jose A. Betancourt Bethencourt\n> Universidad de Ciencias Medicas Carlos j. Finlay\n>\n\n\n-- \nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay",
+      "body_snippet": "Estimado\n  no funcionÃ³\n\n es simple lo que quiero , es que las lineas de todos los plots tengan\n un color que no sea el negro\n\n saludos\n\n JosÃ©\n>\n> El 1/3/22, Juan Abasolo <juan.abasolo en ehu.eus> es",
+      "thread_id": "thread-0673338717f0",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-1a5ebf98fc4c",
+      "message_id": "<CANuuowPKjaWSA94RSaVcSrzHKk8Uo4MCKqJUeSAXWQm0tvyKfA@mail.gmail.com>",
+      "from_name": "Jose Betancourt Bethencourt",
+      "from_email_hash": "b90847c8177ef52d350c4c371ce07cae9ff1f09ff64386c1848f72e6cd6a3d95",
+      "date": "2022-03-02T07:22:25-05:00",
+      "subject": "[R-es] Fwd: colores de los plots",
+      "subject_clean": "[R-es] Fwd: colores de los plots",
+      "in_reply_to": "<CANuuowPzH-=8v5+MpehTWHENmwAmGvK=tr0MMfSEDJQbfVRK0g@mail.gmail.com>",
+      "references": [
+        "<CANuuowMWr9=Gha8V9Gb_ok5CocNUqFEJ6X0VE24t=TJOqwmfUQ@mail.gmail.com>",
+        "<CANuuowO9-W=1dHt=YaXRwiLQyOb38TtYH2d53oy0puSMzQu9Qg@mail.gmail.com>",
+        "<CA+8ueyZwNsQFJLsriFWGGBvnNxW7HSb1W=8PsUUnzuxYufSFSA@mail.gmail.com>",
+        "<CANuuowOBAAchbbKxKJGxqKktZz_L-oEkSMvSa0iVCtZvKKYKYw@mail.gmail.com>",
+        "<CANuuowPzH-=8v5+MpehTWHENmwAmGvK=tr0MMfSEDJQbfVRK0g@mail.gmail.com>"
+      ],
+      "body_plain": "no funcionÃ³\n\nes simple lo que quiero , es que las lineas de todos los plots tengan\nun color que no sea el negro\n\nsaludos\n\nJosÃ©\n\n\nEl 2/3/22, Jose Betancourt Bethencourt <betanster en gmail.com> escribiÃ³:\n> Estimado\n>   no funcionÃ³\n>\n>  es simple lo que quiero , es que las lineas de todos los plots tengan\n>  un color que no sea el negro\n>\n>  saludos\n>\n>  JosÃ©\n>>\n>> El 1/3/22, Juan Abasolo <juan.abasolo en ehu.eus> escribiÃ³:\n>>> Hola, Jose;\n>>> A mÃ­ no me da para entender lo que estÃ¡s haciendo, o sea que entender lo\n>>> que preguntÃ¡s, muy probablemente no lo haga. Como ejercicio de antes de\n>>> irme a dormir agarrÃ© tu script, le  sume tidiverse, de haragÃ¡n no mÃ¡s y\n>>> probÃ© de a poquito\n>>>\n>>> model$variables$severidad %>% plot(col = 1:3)\n>>>\n>>> Y sale el primero de los modelos con las rayas de tres colores. o sea\n>>> que\n>>> si lo recreÃ¡s y lo Ãºnico que querÃ©s es cambiar algunos de los colores,\n>>> ese\n>>> es el camino.\n>>> Si es medio raro, porque si le pedÃ­s que haga lo mismo con el tipo de\n>>> linea, no lo hace, solamente toma el primer valor.\n>>>\n>>> Suerte\n>>>\n>>>\n>>>\n>>> Hau idatzi du Jose Betancourt Bethencourt (betanster en gmail.com)\n>>> erabiltzaileak (2022 mar. 1, ar. (12:53)):\n>>>\n>>>> ---------- Forwarded message ----------\n>>>> From: Jose Betancourt Bethencourt <betanster en gmail.com>\n>>>> Date: Fri, 25 Feb 2022 13:38:44 -0500\n>>>> Subject: colores de los plots\n>>>> To: r-help-es <r-help-es en r-project.org>\n>>>>\n>>>> Estimados\n>>>> En este script quisieramos poder manejar los colores de los plots\n>>>> plot(model)  y plot(example1)\n>>>>\n>>>>  y no\n>>>> vemos como se puede hacer\n>>>> Por lo que apreciariamos su ayuda\n>>>> NO RECIBIMOS RESPUESTA\n>>>>  saludos cordiales.\n>>>> JosÃ©\n>>>>\n>>>>\n>>>>\n>>>>\n>>>>\n>>>> rm(list=ls(all=TRUE))\n>>>>\n>>>> library(sets)\n>>>>\n>>>> sets_options(\"universe\", seq(1, 45, 1))\n>>>>\n>>>> #VARIABLES   no cierra\n>>>>\n>>>>\n>>>>\n>>>>   variables <- set(\n>>>>       temp= fuzzy_partition(varnames = c(normal= 36.5,\n>>>>   moderada= 37.5, alta= 38, muyalta=39), sd = 0.2),\n>>>>\n>>>>   disnea = fuzzy_partition(varnames = c(no = 0, poca =\n>>>> 20,mucha=40),sd=2.5),\n>>>>\n>>>>   gusto = fuzzy_partition(varnames = c(no = 0, poca =\n>>>> 30,mucha=40),sd=2.5),\n>>>>\n>>>>   garganta = fuzzy_partition(varnames = c(no = 0, poca =\n>>>> 25,mucha=40),sd=2.5),\n>>>>\n>>>>   severidad = fuzzy_partition(varnames = c(baja = 10, media =\n>>>> 20,alta=40),\n>>>>                               FUN = fuzzy_cone, radius = 10)\n>>>>   )\n>>>>\n>>>>\n>>>>\n>>>>   #RULES\n>>>>\n>>>>   rules <- set(\n>>>>\n>>>>     fuzzy_rule(temp %is% muyalta && disnea%is% mucha &&\n>>>> gusto%is%mucha&&\n>>>>                  garganta%is%mucha, severidad %is% alta),\n>>>>     fuzzy_rule(temp %is% muyalta&& disnea%is% mucha, severidad %is%\n>>>> alta),\n>>>>     fuzzy_rule(temp %is% normal && disnea%is% no && gusto%is%no&&\n>>>>                  garganta%is%no, severidad %is% baja),\n>>>>     fuzzy_rule(temp %is% normal && disnea%is% no, severidad %is% baja),\n>>>>     fuzzy_rule(temp %is% moderada && disnea%is% poca && gusto%is%poca&&\n>>>>                  garganta%is%poca, severidad %is% media),\n>>>>     fuzzy_rule(temp %is% moderada && disnea%is% poca, severidad %is%\n>>>> media)\n>>>>\n>>>>   )\n>>>>\n>>>>\n>>>>\n>>>>\n>>>> model <- fuzzy_system(variables, rules)\n>>>> print(model)\n>>>> plot(model)\n>>>>\n>>>>\n>>>> hacer=========================\n>>>>\n>>>> example.1 <- fuzzy_inference(model, list(temp = 37,\n>>>> disnea=40,garganta=40,gusto=40))\n>>>>\n>>>> gset_defuzzify(example.1, \"centroid\")  # NaN\n>>>>\n>>>> plot(example.1)\n>>>>\n>>>>\n>>>>\n>>>> example.2 <- fuzzy_inference(model, list(Edad = 70, IMC=30,Tas=140,\n>>>>                                          tabaquismo= 40, glicemia=140))\n>>>> gset_defuzzify(example.2, \"centroid\")  # NaN\n>>>>\n>>>> plot(example.2)\n>>>>\n>>>>\n>>>> example.3 <- fuzzy_inference(model, list(Edad = 75, IMC=30,Tas=140,\n>>>>                                          tabaquismo= 40, glicemia=150))\n>>>> gset_defuzzify(example.3, \"centroid\")  # NaN\n>>>>\n>>>> plot(example.3)\n>>>> sets_options(\"universe\", NULL)\n>>>> --\n>>>> Dr. Jose A. Betancourt Bethencourt\n>>>> Universidad de Ciencias Medicas Carlos j. Finlay\n>>>>\n>>>>\n>>>>\n>>>> --\n>>>> Dr. Jose A. Betancourt Bethencourt\n>>>> Universidad de Ciencias Medicas Carlos j. Finlay\n>>>>\n>>>> _______________________________________________\n>>>> R-help-es mailing list\n>>>> R-help-es en r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>>\n>>>\n>>>\n>>> --\n>>> Juan Abasolo, PhD\n>>>\n>>> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\n>>> Bilboko Hezkuntza Fakultatea\n>>> Euskal Herriko Unibertsitatea UPV/EHU\n>>>\n>>> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)\n>>>\n>>> T       : (+34) 94 601 7567\n>>> Telegram: @JuanAbasolo\n>>> Skype   : abasolo72\n>>>\n>>\n>>\n>> --\n>> Dr. Jose A. Betancourt Bethencourt\n>> Universidad de Ciencias Medicas Carlos j. Finlay\n>>\n>\n>\n> --\n> Dr. Jose A. Betancourt Bethencourt\n> Universidad de Ciencias Medicas Carlos j. Finlay\n>\n\n\n-- \nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay",
+      "body_snippet": "no funcionÃ³\n\nes simple lo que quiero , es que las lineas de todos los plots tengan\nun color que no sea el negro\n\nsaludos\n\nJosÃ©\n\n\nEl 2/3/22, Jose Betancourt Bethencourt <betanster en gmail.com> escri",
+      "thread_id": "thread-0673338717f0",
+      "thread_depth": 1,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-fea3c7d0a444",
+      "message_id": "<B801CDFD-1158-4DC3-86A3-0129C792EEAB@ugr.es>",
+      "from_name": "Jose Miguel Contreras",
+      "from_email_hash": "dfdba24861c7ed63d863e4597b2918cadd9f70db547f0e0bd8ec14dd4831070a",
+      "date": "2022-03-02T19:56:50+01:00",
+      "subject": "[R-es] Leer ficheros txt con número diferente de columnas por fila",
+      "subject_clean": "[R-es] Leer ficheros txt con número diferente de columnas por fila",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola \n\nUna pregunta\n\nTengo un archivo txt que tiene 9 o 11 columnas, dependiendo de la fila\n\nConsigo leerlo con read.table(\"A.txt\", header=FALSE, fill=TRUE), pero al ponerle la opciÃ³n fill=TRUE, solo me lee las 9 columnas primeras, sin ese argumento no lo lee.\n\nHay alguna opciÃ³n para que complete el archivo con NA, es decir, que tenga 11 columnas rellenado los valores faltantes con NAs.\n\n\nSaludos\n\nJose Miguel Contreras\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola \n\nUna pregunta\n\nTengo un archivo txt que tiene 9 o 11 columnas, dependiendo de la fila\n\nConsigo leerlo con read.table(\"A.txt\", header=FALSE, fill=TRUE), pero al ponerle la opciÃ³n fill=TRUE, solo",
+      "thread_id": "thread-fea3c7d0a444",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-6a9ed9c8600a",
+      "message_id": "<9c8a2678-6947-06f9-c664-90d1d82cfa78@upc.edu>",
+      "from_name": "Klaus Langohr",
+      "from_email_hash": "5d39e30b58453c94b812214b5047092c89966822b06822735224d5594732c499",
+      "date": "2022-03-02T20:07:17+01:00",
+      "subject": "[R-es]  Leer ficheros txt con número diferente de columnas por fila",
+      "subject_clean": "[R-es]  Leer ficheros txt con número diferente de columnas por fila",
+      "in_reply_to": "<B801CDFD-1158-4DC3-86A3-0129C792EEAB@ugr.es>",
+      "references": [
+        "<B801CDFD-1158-4DC3-86A3-0129C792EEAB@ugr.es>"
+      ],
+      "body_plain": "Hola Jose Miguel,\n\nSi las columnas estÃ¡n separadas por tabulador, prueba con\n\nread.table(\"A.txt\", header = FALSE, sep = \"\\t\")\n\no\n\nread.delim(\"A.txt\", header = FALSE)\n\nHope it helps.\n\nUn saludo,\n\nKlaus.\n\nOn 02-Mar-22 19:56, Jose Miguel Contreras wrote:\n\n> Hola\n>\n> Una pregunta\n>\n> Tengo un archivo txt que tiene 9 o 11 columnas, dependiendo de la fila\n>\n> Consigo leerlo con read.table(\"A.txt\", header=FALSE, fill=TRUE), pero al ponerle la opciÃ³n fill=TRUE, solo me lee las 9 columnas primeras, sin ese argumento no lo lee.\n>\n> Hay alguna opciÃ³n para que complete el archivo con NA, es decir, que tenga 11 columnas rellenado los valores faltantes con NAs.\n>\n>\n> Saludos\n>\n> Jose Miguel Contreras\n>\n>\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n-- \n----------------------------------------------------\n  Klaus Langohr\n  Departament d'EstadÃ­stica i InvestigaciÃ³ Operativa\n  Universitat PolitÃ¨cnica de Catalunya/BARCELONATECH\n  Edifici C5 (Campus Nord)\n  C/ Jordi Girona, 1-3\n  E-08034 Barcelona\n  Tel: (+34) 934 017 034\n  Email: klaus.langohr en upc.edu",
+      "body_snippet": "Hola Jose Miguel,\n\nSi las columnas estÃ¡n separadas por tabulador, prueba con\n\nread.table(\"A.txt\", header = FALSE, sep = \"\\t\")\n\no\n\nread.delim(\"A.txt\", header = FALSE)\n\nHope it helps.\n\nUn saludo,\n\nKlau",
+      "thread_id": "thread-fea3c7d0a444",
+      "thread_depth": 1,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-aa985a3991be",
+      "message_id": "<CACEaGhMhDAtR9XmDrGyCRM=_nRyC+evVQqi_8sMBXPZ2gcs+Kg@mail.gmail.com>",
+      "from_name": "patricio fuenmayor",
+      "from_email_hash": "59b445396ac723c905e0d4234add3713852acb63455a0cf9f26748b90720a213",
+      "date": "2022-03-02T14:44:44-05:00",
+      "subject": "[R-es]  Leer ficheros txt con número diferente de columnas por fila",
+      "subject_clean": "[R-es]  Leer ficheros txt con número diferente de columnas por fila",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "JosÃ© Miguel\nTienes que hacer un trabajo un poco mÃ¡s complejo con esto.\nPrimera pregunta, puedes hacer requerimiento sobre la generaciÃ³n del\narchivo, para que te envÃ­en con las condiciones correctas ?\nSi no es asÃ­, esta es una soluciÃ³n (de las tantas)\n- carga el archivo en donde la fila sea una sola columna texto; esto es\nponiendo el delimitador de columnas como \"\", o usando readlines\ncrea una columna contando el nÃºmero de delimitadores encontrados en la fila\n(tendrÃ¡s 8 o 10)\nsepara en un dataframe las filas que tienen 8 delimitadores y renombra las\ncolumnas\nsepara en un dataframe las filas con 10 delimitadores y renombra las\ncolumnas\nunifica los dos dataframes usando el parÃ¡metro fill=TRUE para que se\nalineen.\ncon eso ya tienes cargado el archivo y procede a dar formato a las columnas\nSaludos\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "JosÃ© Miguel\nTienes que hacer un trabajo un poco mÃ¡s complejo con esto.\nPrimera pregunta, puedes hacer requerimiento sobre la generaciÃ³n del\narchivo, para que te envÃ­en con las condiciones correcta",
+      "thread_id": "thread-aa985a3991be",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-bb59d4ffe07b",
+      "message_id": "<CANuuowMGL+Pf1kKGQxee8WcQZF9hN-o9qBtwqfdAf+S8Q3ZF=w@mail.gmail.com>",
+      "from_name": "Jose Betancourt Bethencourt",
+      "from_email_hash": "b90847c8177ef52d350c4c371ce07cae9ff1f09ff64386c1848f72e6cd6a3d95",
+      "date": "2022-03-02T16:39:35-05:00",
+      "subject": "[R-es] Fwd: colores de los plots",
+      "subject_clean": "[R-es] Fwd: colores de los plots",
+      "in_reply_to": "<CAOKbq8h41ZbTSfcWT5y33uw6YFobAvCFfXH5txX=A65a8VO9fg@mail.gmail.com>",
+      "references": [
+        "<CANuuowMWr9=Gha8V9Gb_ok5CocNUqFEJ6X0VE24t=TJOqwmfUQ@mail.gmail.com>",
+        "<CANuuowO9-W=1dHt=YaXRwiLQyOb38TtYH2d53oy0puSMzQu9Qg@mail.gmail.com>",
+        "<CA+8ueyZwNsQFJLsriFWGGBvnNxW7HSb1W=8PsUUnzuxYufSFSA@mail.gmail.com>",
+        "<CANuuowOBAAchbbKxKJGxqKktZz_L-oEkSMvSa0iVCtZvKKYKYw@mail.gmail.com>",
+        "<CANuuowPzH-=8v5+MpehTWHENmwAmGvK=tr0MMfSEDJQbfVRK0g@mail.gmail.com>",
+        "<CANuuowPKjaWSA94RSaVcSrzHKk8Uo4MCKqJUeSAXWQm0tvyKfA@mail.gmail.com>",
+        "<CAOKbq8h41ZbTSfcWT5y33uw6YFobAvCFfXH5txX=A65a8VO9fg@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias por su ayuda\n\nEl 2/3/22, Carlos Ortega <cof en qualityexcellence.es> escribiÃ³:\n> Hola,\n>\n> Mira el ejemplo adaptado de la funciÃ³n \"fuzzy_syxtem()\".\n>\n>    - Para el segundo plot (en rojo): los colores se pueden cambiar sin\n>    problemas, siguiendo el esquema de \"plot()\" del paquete base. He\n> modificado\n>    el color y el ancho de la lÃ­nea.\n>    - En cambio para el caso en azul, no he encontrado la forma de cambiar\n>    los colores. En este caso, tienes que seguir mirando...\n>\n>\n> #-----------------------\n> library(sets)\n>\n> ## set universe\n> sets_options(\"universe\", seq(from = 0, to = 25, by = 0.1))\n>\n> ## set up fuzzy variables\n> variables <-\n>   set(service =\n>         fuzzy_partition(varnames =\n>                           c(poor = 0, good = 5, excellent = 10),\n>                         sd = 1.5),\n>       food =\n>         fuzzy_variable(rancid =\n>                          fuzzy_trapezoid(corners = c(-2, 0, 2, 4)),\n>                        delicious =\n>                          fuzzy_trapezoid(corners = c(7, 9, 11, 13))),\n>       tip =\n>         fuzzy_partition(varnames =\n>                           c(cheap = 5, average = 12.5, generous = 20),\n>                         FUN = fuzzy_cone, radius = 5)\n>   )\n>\n> ## set up rules\n> rules <-\n>   set(\n>     fuzzy_rule(service %is% poor || food %is% rancid,\n>                tip %is% cheap),\n>     fuzzy_rule(service %is% good,\n>                tip %is% average),\n>     fuzzy_rule(service %is% excellent || food %is% delicious,\n>                tip %is% generous)\n>   )\n>\n> ## combine to a system\n> system <- fuzzy_system(variables, rules)\n> print(system)\n> *# plot(system, col = gray.colors(10))*\n> plot(system)\n>\n> ## do inference\n> fi <- fuzzy_inference(system, list(service = 3, food = 8))\n>\n>\n>\n>\n>\n> *## plot resulting fuzzy setpar(mfrow = c(2,1))plot(fi)plot(fi, col =\n> \"blue\", lwd = 4)*\n> ## defuzzify\n> gset_defuzzify(fi, \"centroid\")\n>\n> ## reset universe\n> sets_options(\"universe\", NULL)\n> #------------------------------------------------\n>\n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n> El miÃ©, 2 mar 2022 a las 13:23, Jose Betancourt Bethencourt (<\n> betanster en gmail.com>) escribiÃ³:\n>\n>> no funcionÃ³\n>>\n>> es simple lo que quiero , es que las lineas de todos los plots tengan\n>> un color que no sea el negro\n>>\n>> saludos\n>>\n>> JosÃ©\n>>\n>>\n>> El 2/3/22, Jose Betancourt Bethencourt <betanster en gmail.com> escribiÃ³:\n>> > Estimado\n>> >   no funcionÃ³\n>> >\n>> >  es simple lo que quiero , es que las lineas de todos los plots tengan\n>> >  un color que no sea el negro\n>> >\n>> >  saludos\n>> >\n>> >  JosÃ©\n>> >>\n>> >> El 1/3/22, Juan Abasolo <juan.abasolo en ehu.eus> escribiÃ³:\n>> >>> Hola, Jose;\n>> >>> A mÃ­ no me da para entender lo que estÃ¡s haciendo, o sea que entender\n>> lo\n>> >>> que preguntÃ¡s, muy probablemente no lo haga. Como ejercicio de antes\n>> >>> de\n>> >>> irme a dormir agarrÃ© tu script, le  sume tidiverse, de haragÃ¡n no mÃ¡s\n>> >>> y\n>> >>> probÃ© de a poquito\n>> >>>\n>> >>> model$variables$severidad %>% plot(col = 1:3)\n>> >>>\n>> >>> Y sale el primero de los modelos con las rayas de tres colores. o sea\n>> >>> que\n>> >>> si lo recreÃ¡s y lo Ãºnico que querÃ©s es cambiar algunos de los\n>> >>> colores,\n>> >>> ese\n>> >>> es el camino.\n>> >>> Si es medio raro, porque si le pedÃ­s que haga lo mismo con el tipo de\n>> >>> linea, no lo hace, solamente toma el primer valor.\n>> >>>\n>> >>> Suerte\n>> >>>\n>> >>>\n>> >>>\n>> >>> Hau idatzi du Jose Betancourt Bethencourt (betanster en gmail.com)\n>> >>> erabiltzaileak (2022 mar. 1, ar. (12:53)):\n>> >>>\n>> >>>> ---------- Forwarded message ----------\n>> >>>> From: Jose Betancourt Bethencourt <betanster en gmail.com>\n>> >>>> Date: Fri, 25 Feb 2022 13:38:44 -0500\n>> >>>> Subject: colores de los plots\n>> >>>> To: r-help-es <r-help-es en r-project.org>\n>> >>>>\n>> >>>> Estimados\n>> >>>> En este script quisieramos poder manejar los colores de los plots\n>> >>>> plot(model)  y plot(example1)\n>> >>>>\n>> >>>>  y no\n>> >>>> vemos como se puede hacer\n>> >>>> Por lo que apreciariamos su ayuda\n>> >>>> NO RECIBIMOS RESPUESTA\n>> >>>>  saludos cordiales.\n>> >>>> JosÃ©\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>> rm(list=ls(all=TRUE))\n>> >>>>\n>> >>>> library(sets)\n>> >>>>\n>> >>>> sets_options(\"universe\", seq(1, 45, 1))\n>> >>>>\n>> >>>> #VARIABLES   no cierra\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>>   variables <- set(\n>> >>>>       temp= fuzzy_partition(varnames = c(normal= 36.5,\n>> >>>>   moderada= 37.5, alta= 38, muyalta=39), sd = 0.2),\n>> >>>>\n>> >>>>   disnea = fuzzy_partition(varnames = c(no = 0, poca =\n>> >>>> 20,mucha=40),sd=2.5),\n>> >>>>\n>> >>>>   gusto = fuzzy_partition(varnames = c(no = 0, poca =\n>> >>>> 30,mucha=40),sd=2.5),\n>> >>>>\n>> >>>>   garganta = fuzzy_partition(varnames = c(no = 0, poca =\n>> >>>> 25,mucha=40),sd=2.5),\n>> >>>>\n>> >>>>   severidad = fuzzy_partition(varnames = c(baja = 10, media =\n>> >>>> 20,alta=40),\n>> >>>>                               FUN = fuzzy_cone, radius = 10)\n>> >>>>   )\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>>   #RULES\n>> >>>>\n>> >>>>   rules <- set(\n>> >>>>\n>> >>>>     fuzzy_rule(temp %is% muyalta && disnea%is% mucha &&\n>> >>>> gusto%is%mucha&&\n>> >>>>                  garganta%is%mucha, severidad %is% alta),\n>> >>>>     fuzzy_rule(temp %is% muyalta&& disnea%is% mucha, severidad %is%\n>> >>>> alta),\n>> >>>>     fuzzy_rule(temp %is% normal && disnea%is% no && gusto%is%no&&\n>> >>>>                  garganta%is%no, severidad %is% baja),\n>> >>>>     fuzzy_rule(temp %is% normal && disnea%is% no, severidad %is%\n>> baja),\n>> >>>>     fuzzy_rule(temp %is% moderada && disnea%is% poca &&\n>> gusto%is%poca&&\n>> >>>>                  garganta%is%poca, severidad %is% media),\n>> >>>>     fuzzy_rule(temp %is% moderada && disnea%is% poca, severidad %is%\n>> >>>> media)\n>> >>>>\n>> >>>>   )\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>> model <- fuzzy_system(variables, rules)\n>> >>>> print(model)\n>> >>>> plot(model)\n>> >>>>\n>> >>>>\n>> >>>> hacer=========================\n>> >>>>\n>> >>>> example.1 <- fuzzy_inference(model, list(temp = 37,\n>> >>>> disnea=40,garganta=40,gusto=40))\n>> >>>>\n>> >>>> gset_defuzzify(example.1, \"centroid\")  # NaN\n>> >>>>\n>> >>>> plot(example.1)\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>> example.2 <- fuzzy_inference(model, list(Edad = 70, IMC=30,Tas=140,\n>> >>>>                                          tabaquismo= 40,\n>> glicemia=140))\n>> >>>> gset_defuzzify(example.2, \"centroid\")  # NaN\n>> >>>>\n>> >>>> plot(example.2)\n>> >>>>\n>> >>>>\n>> >>>> example.3 <- fuzzy_inference(model, list(Edad = 75, IMC=30,Tas=140,\n>> >>>>                                          tabaquismo= 40,\n>> glicemia=150))\n>> >>>> gset_defuzzify(example.3, \"centroid\")  # NaN\n>> >>>>\n>> >>>> plot(example.3)\n>> >>>> sets_options(\"universe\", NULL)\n>> >>>> --\n>> >>>> Dr. Jose A. Betancourt Bethencourt\n>> >>>> Universidad de Ciencias Medicas Carlos j. Finlay\n>> >>>>\n>> >>>>\n>> >>>>\n>> >>>> --\n>> >>>> Dr. Jose A. Betancourt Bethencourt\n>> >>>> Universidad de Ciencias Medicas Carlos j. Finlay\n>> >>>>\n>> >>>> _______________________________________________\n>> >>>> R-help-es mailing list\n>> >>>> R-help-es en r-project.org\n>> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >>>>\n>> >>>\n>> >>>\n>> >>> --\n>> >>> Juan Abasolo, PhD\n>> >>>\n>> >>> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa\n>> >>> taldea\n>> >>> Bilboko Hezkuntza Fakultatea\n>> >>> Euskal Herriko Unibertsitatea UPV/EHU\n>> >>>\n>> >>> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)\n>> >>>\n>> >>> T       : (+34) 94 601 7567\n>> >>> Telegram: @JuanAbasolo\n>> >>> Skype   : abasolo72\n>> >>>\n>> >>\n>> >>\n>> >> --\n>> >> Dr. Jose A. Betancourt Bethencourt\n>> >> Universidad de Ciencias Medicas Carlos j. Finlay\n>> >>\n>> >\n>> >\n>> > --\n>> > Dr. Jose A. Betancourt Bethencourt\n>> > Universidad de Ciencias Medicas Carlos j. Finlay\n>> >\n>>\n>>\n>> --\n>> Dr. Jose A. Betancourt Bethencourt\n>> Universidad de Ciencias Medicas Carlos j. Finlay\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\n-- \nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay",
+      "body_snippet": "Gracias por su ayuda\n\nEl 2/3/22, Carlos Ortega <cof en qualityexcellence.es> escribiÃ³:\n> Hola,\n>\n> Mira el ejemplo adaptado de la funciÃ³n \"fuzzy_syxtem()\".\n>\n>    - Para el segundo plot (en rojo): l",
+      "thread_id": "thread-bb59d4ffe07b",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-c3d2c2b1e85d",
+      "message_id": "<1ad9dbd3418cece9b1f6942af1d58c9da39bedb4.camel@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2022-03-04T12:21:59+01:00",
+      "subject": "[R-es] Porcentajes de clasificaciones correctas",
+      "subject_clean": "[R-es] Porcentajes de clasificaciones correctas",
+      "in_reply_to": "<CAF3uytX_xbO_2Go1WVd9kq9SMM6yV1wjcf9w-RMNQ9Y=eTucYw@mail.gmail.com>",
+      "references": [
+        "<CAF3uytX_xbO_2Go1WVd9kq9SMM6yV1wjcf9w-RMNQ9Y=eTucYw@mail.gmail.com>"
+      ],
+      "body_plain": "Buenas,\n\nCreo que la cuestiÃ³n puede estar aquÃ­\ndata$preds <- as.factor(preds)\n\nSupongamos que las clasificaciones correctas estÃ¡n en data$clas, prueba\na hacer\ndata$preds <- as.factor(preds, levels = levels(data$clas))\n\nEsto te garantiza que ambos factores tengan los mismos niveles y en el\nmismo orden y creo que eso es lo que necesitas.\n\nUn saludo.\n\nEl sÃ¡b, 26-02-2022 a las 20:39 +0100, Manuel Mendoza escribiÃ³:\n> Hola de nuevo. Me ha costado pero ahora entiendo la confusiÃ³n. Cuando\n> hago\n> una tabla enfrentando lo observado con lo predicho por un anÃ¡lisis\n> (rpart\n> en este caso) la clasificaciÃ³n mantiene las categorÃ­as originales,\n> por lo\n> que la tabla es cuadrada y la diagonal de prop.table(variable\n> objetivo,\n> predicciÃ³n) recoge los porcentajes de clasificaciones correctas.\n> \n> El problema surge cuando las predicciones vienen de un loop (un leave\n> one\n> out en este caso) en el que se almacenan las predicciones. Las\n> categorÃ­as\n> sin predicciones no son contempladas, y al hacer la tabla, ya no es\n> cuadrada.\n> \n> Os lo copio por si alguien sabe cÃ³mo hacer que incluya las categorÃ­as\n> sin\n> casos predichos.\n> \n> preds <- c(0)Â  # creamos un vector vacÃ­o\n> for (i in 1:nrow(data)) {\n> Â  training <- data[-i, ]\n> Â  fitrp <- rpart(FAMILY ~ .,data=training, cp=cpopt)\n> Â  Pred <- predict(fitrp,data[i,], type=\"class\")\n> Â  preds[i] <- as.character(Pred)\n> Â }\n> data$preds<- as.factor(preds)\n> tabrp<-table(data$FAMILY,data$preds); tabrp # Tabla de contingencia\n> en\n> valores absolutos\n> tabprc<-round(100*(prop.table(tabrp,1)),0); tabprc # Tabla de\n> contingencia\n> en porcentajes\n> \n> Gracias,\n> Manuel\n> \n> \n> > El sÃ¡b, 26 feb 2022 a las 1:19, Manuel Mendoza (<\n> > mmendoza en fulbrightmail.org>) escribiÃ³:\n> > \n> > > Buenos dÃ­as, obtengo una Tabla de contingencia con:\n> > > tabrp<-table(variable objetivo, predicciÃ³n)\n> > > \n> > > y en porcentajes con:\n> > > tabprc<-100*(prop.table(tabrp,1))\n> > > \n> > > Para sacar los porcentajes de clasificaciones correctas usaba\n> > > simplemente:\n> > > diag(tabrp)\n> > > \n> > > pero si no todas las categorÃ­as de la variable objetivo estÃ¡n en\n> > > la\n> > > predicciÃ³n, la diagonal ya no son las clasificaciones correctas.\n> > > \n> > > Â¿SabÃ©is de alguna forma sencilla de obtener esas clasificaciones\n> > > correctas\n> > > o de algÃºn paquete que te lo dÃ© directamente?\n> > > Gracias,\n> > > Manuel\n> > > \n> > \n> \n> Â Â Â Â Â Â Â Â [[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Buenas,\n\nCreo que la cuestiÃ³n puede estar aquÃ­\ndata$preds <- as.factor(preds)\n\nSupongamos que las clasificaciones correctas estÃ¡n en data$clas, prueba\na hacer\ndata$preds <- as.factor(preds, levels ",
+      "thread_id": "thread-c3d2c2b1e85d",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-07a7548defea",
+      "message_id": "<cfe0d71a225d448ea98282b6a7c4270c@EJWP1147.elkarlan.euskadi.eus>",
+      "from_name": "Relloso Barrio, Juan Bautista",
+      "from_email_hash": "96c3c9dd898209a4840b3f9134da276052453c6543b6595586da85885c58e3dd",
+      "date": "2022-03-08T10:27:20Z",
+      "subject": "[R-es] Script sencillo para calculo de residuos",
+      "subject_clean": "[R-es] Script sencillo para calculo de residuos",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as.\nNecesito calcular en R los residuos estandarizados de unos datos que tienen una variable respuesta continua y tres factores (pero si se complica mucho lo podrÃ­a hacer factor a factor).\nOs querÃ­a pedir ayuda por si alguien tendrÃ­a un script con los comandos bÃ¡sicos que hay que utilizar.\nGraciaspor adelantado\nUn saludo.\nJuan Bautista Relloso Barrio\nCoordinador de Equipos e Infraestructuras | TÃ©cnico de Cultivos del Departamento de ProducciÃ³n Vegetal\nTalde eta Azpiegitura Koordinatzailea | Laborantza teknikaria Landare Ekoizpen Departamentua\njbautista en neiker.eus <mailto:jbautista en neiker.eus> | M. 688 62 98 14\nwww.neiker.eus<http://www.neiker.eus/>              [cid:image001.png en 01D832DF.75EFDF60] <https://www.linkedin.com/company/neiker/>  [cid:image002.png en 01D832DF.75EFDF60] <https://twitter.com/neiker_BRTA> [cid:image003.png en 01D832DF.75EFDF60] <https://www.facebook.com/neikerBRTA>  [cid:image004.png en 01D832DF.75EFDF60] <https://www.youtube.com/user/neikertec>\n[cid:image005.png en 01D832DF.75EFDF60]        [ej_ekonomia_garapen_lateral]           [https://www.emakunde.euskadi.eus/contenidos/informacion/violencia_puntolila/eu_def/adjuntos/punto.lila.jpg]\n\nPRIBATUTASUN POLITIKA<https://neiker.eus/eu/pribatutasun-politika/> | POLÃTICA DE PRIVACIDAD<https://neiker.eus/es/politica-privacidad/> | LEGAL NOTICE<https://neiker.eus/en/privacy-policy/>\n\nDe: Relloso Barrio, Juan Bautista <jbautista en neiker.eus>\nEnviado el: jueves, 10 de febrero de 2022 17:25\nPara: Manuel SpÃ­nola <mspinola10 en gmail.com>\nCC: r-help-es en r-project.org\nAsunto: Re: [R-es] Realizar interacciones entre varios factores con el test no paramÃ©trico de Kruskal walis\n\nGracias Manuel.\n\nJuan Bautista Relloso Barrio\nEnviado desde mi mÃ³vil\n________________________________\nFrom: Manuel SpÃ­nola <mspinola10 en gmail.com<mailto:mspinola10 en gmail.com>>\nSent: Thursday, February 10, 2022 5:15:50 PM\nTo: Relloso Barrio, Juan Bautista <jbautista en neiker.eus<mailto:jbautista en neiker.eus>>\nCc: r-help-es en r-project.org<mailto:r-help-es en r-project.org> <r-help-es en r-project.org<mailto:r-help-es en r-project.org>>\nSubject: Re: [R-es] Realizar interacciones entre varios factores con el test no paramÃ©trico de Kruskal walis\n\nHola Juan,\n\nYo te recomiendo un modelo lineal general con la funciÃ³n lm.  La normalidad requerida en este caso es de los residuales del modelo, no de lo datos.\n\nManuel\n\nEl jue, 10 feb 2022 a las 8:29, Relloso Barrio, Juan Bautista (<jbautista en neiker.eus<mailto:jbautista en neiker.eus>>) escribiÃ³:\n[cid:image008.gif en 01D832DF.75EFDF60]\n\nEstoy realizando anÃ¡lisis de varianza con unos datos que no tienen la normalidad necesaria.\n\nEs por esto que estoy utilizando el test no paramÃ©trico de kruskal walis.\n\nPero no sÃ© como decirle en \"R\" para que me calcule las interacciones entre los factores analizados.\n\nUn saludo.\n\nJuan Bautista Relloso Barrio\n\nCoordinador de Equipos e Infraestructuras | TÃ©cnico de Cultivos del Departamento de ProducciÃ³n Vegetal\n\nTalde eta Azpiegitura Koordinatzailea | Laborantza teknikaria Landare Ekoizpen Departamentua\n\njbautista en neiker.eus <mailto:jbautista en neiker.eus> | M. 688 62 98 14\n\nwww.neiker.eus<http://www.neiker.eus/>              [cid:image001.png en 01D832DF.75EFDF60] <https://www.linkedin.com/company/neiker/>  [cid:image002.png en 01D832DF.75EFDF60] <https://twitter.com/neiker_BRTA> [cid:image003.png en 01D832DF.75EFDF60] <https://www.facebook.com/neikerBRTA>  [cid:image004.png en 01D832DF.75EFDF60] <https://www.youtube.com/user/neikertec>\n\n[cid:image005.png en 01D832DF.75EFDF60]        [ej_ekonomia_garapen_lateral]           [https://www.emakunde.euskadi.eus/contenidos/informacion/violencia_puntolila/eu_def/adjuntos/punto.lila.jpg]\n\n\n\nPRIBATUTASUN POLITIKA<https://neiker.eus/eu/pribatutasun-politika/> | POLÃTICA DE PRIVACIDAD<https://neiker.eus/es/politica-privacidad/> | LEGAL NOTICE<https://neiker.eus/en/privacy-policy/>\n\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org<mailto:R-help-es en r-project.org>\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n--\nManuel SpÃ­nola, Ph.D.\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola en una.cr<mailto:mspinola en una.ac.cr>\nmspinola10 en gmail.com<mailto:mspinola10 en gmail.com>\nTelÃ©fono: (506) 8706 - 4662\nPersonal website: Lobito de rÃ­o<https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS<http://www.icomvis.una.ac.cr/>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image001.png\nType: image/png\nSize: 1298 bytes\nDesc: image001.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0005.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image002.png\nType: image/png\nSize: 1318 bytes\nDesc: image002.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0006.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image003.png\nType: image/png\nSize: 1193 bytes\nDesc: image003.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0007.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image004.png\nType: image/png\nSize: 1305 bytes\nDesc: image004.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0008.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image005.png\nType: image/png\nSize: 21076 bytes\nDesc: image005.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0009.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image006.jpg\nType: image/jpeg\nSize: 14174 bytes\nDesc: image006.jpg\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0002.jpg>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image007.jpg\nType: image/jpeg\nSize: 5590 bytes\nDesc: image007.jpg\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0003.jpg>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image008.gif\nType: image/gif\nSize: 2051 bytes\nDesc: image008.gif\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/985cf04f/attachment-0001.gif>",
+      "body_snippet": "Buenos dÃ­as.\nNecesito calcular en R los residuos estandarizados de unos datos que tienen una variable respuesta continua y tres factores (pero si se complica mucho lo podrÃ­a hacer factor a factor).\n",
+      "thread_id": "thread-07a7548defea",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-806f53b0ba23",
+      "message_id": "<feb7ef29bd7247afa16d84c7458e4128@EJWP1147.elkarlan.euskadi.eus>",
+      "from_name": "Relloso Barrio, Juan Bautista",
+      "from_email_hash": "96c3c9dd898209a4840b3f9134da276052453c6543b6595586da85885c58e3dd",
+      "date": "2022-03-08T10:50:51Z",
+      "subject": "[R-es] Cálculo de residuos",
+      "subject_clean": "[R-es] Cálculo de residuos",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as.\nNecesito calcular en R los residuos estandarizados de unos datos que tienen una variable respuesta continua y tres factores (pero si se complica mucho lo podrÃ­a hacer factor a factor).\nOs querÃ­a pedir ayuda por si alguien tendrÃ­a un script con los comandos bÃ¡sicos que hay que utilizar.\nGracias\nUn saludo.\nJuan Bautista Relloso Barrio\nCoordinador de Equipos e Infraestructuras | TÃ©cnico de Cultivos del Departamento de ProducciÃ³n Vegetal\nTalde eta Azpiegitura Koordinatzailea | Laborantza teknikaria Landare Ekoizpen Departamentua\njbautista en neiker.eus <mailto:jbautista en neiker.eus> | M. 688 62 98 14\nwww.neiker.eus<http://www.neiker.eus/>              [cid:image002.png en 01D832E2.C20058F0] <https://www.linkedin.com/company/neiker/>  [cid:image003.png en 01D832E2.C20058F0] <https://twitter.com/neiker_BRTA> [cid:image004.png en 01D832E2.C20058F0] <https://www.facebook.com/neikerBRTA>  [cid:image005.png en 01D832E2.C20058F0] <https://www.youtube.com/user/neikertec>\n[cid:image006.png en 01D832E2.C20058F0]        [ej_ekonomia_garapen_lateral]           [https://www.emakunde.euskadi.eus/contenidos/informacion/violencia_puntolila/eu_def/adjuntos/punto.lila.jpg]\n\nPRIBATUTASUN POLITIKA<https://neiker.eus/eu/pribatutasun-politika/> | POLÃTICA DE PRIVACIDAD<https://neiker.eus/es/politica-privacidad/> | LEGAL NOTICE<https://neiker.eus/en/privacy-policy/>\n\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image001.gif\nType: image/gif\nSize: 2051 bytes\nDesc: image001.gif\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0001.gif>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image002.png\nType: image/png\nSize: 1298 bytes\nDesc: image002.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0005.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image003.png\nType: image/png\nSize: 1318 bytes\nDesc: image003.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0006.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image004.png\nType: image/png\nSize: 1193 bytes\nDesc: image004.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0007.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image005.png\nType: image/png\nSize: 1305 bytes\nDesc: image005.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0008.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image006.png\nType: image/png\nSize: 21076 bytes\nDesc: image006.png\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0009.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image007.jpg\nType: image/jpeg\nSize: 14174 bytes\nDesc: image007.jpg\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0002.jpg>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image008.jpg\nType: image/jpeg\nSize: 5590 bytes\nDesc: image008.jpg\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/5d984fa5/attachment-0003.jpg>",
+      "body_snippet": "Buenos dÃ­as.\nNecesito calcular en R los residuos estandarizados de unos datos que tienen una variable respuesta continua y tres factores (pero si se complica mucho lo podrÃ­a hacer factor a factor).\n",
+      "thread_id": "thread-806f53b0ba23",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-00318285f86d",
+      "message_id": "<-e2h5zuqrywubq9s1x4-qz5esnz7n4lc-lm0oho-2o59eb-5tns0gjts4hy3d0cgqhky1qvmegvb9-lzfmaa4r7rbj-ag5pig-slpjs3qpudrb-g1i1o6-ga3krbbg120x-e05ixci1a2e3-ez2fr56ydhim.1646754889143@email.android.com>",
+      "from_name": "‪Sebastian Kruk‬",
+      "from_email_hash": "a65e9b3040f8f1811b3bf74d2c4f13fa3313fea406ff0de967af7111620a34d2",
+      "date": "2022-03-08T12:59:19-03:00",
+      "subject": "[R-es] Regresión dinámica datos panel N=21 T=50",
+      "subject_clean": "[R-es] Regresión dinámica datos panel N=21 T=50",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/7ad87ed3/attachment.html>",
+      "body_snippet": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/7ad87ed3/attachment.html>",
+      "thread_id": "thread-00318285f86d",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-79a65966048c",
+      "message_id": "<CAFvJtoGdGh-F7p=VBBTz4N2h5jmVes3F-h31m37jYKviSwO7TQ@mail.gmail.com>",
+      "from_name": "Rolando Valdez",
+      "from_email_hash": "7a287217fc9700f06a62a18adbe5a2f1b2e04f2022e1d4904912879252859b2f",
+      "date": "2022-03-08T10:09:40-06:00",
+      "subject": "[R-es] Cálculo de residuos",
+      "subject_clean": "[R-es] Cálculo de residuos",
+      "in_reply_to": "<feb7ef29bd7247afa16d84c7458e4128@EJWP1147.elkarlan.euskadi.eus>",
+      "references": [
+        "<feb7ef29bd7247afa16d84c7458e4128@EJWP1147.elkarlan.euskadi.eus>"
+      ],
+      "body_plain": "Hola, creo que despuÃ©s de ajustar el modelo, digamos:\n\nm <- lm(y~x, data)\nresiduals(m)\n\nEl mar, 8 mar 2022 a la(s) 04:51, Relloso Barrio, Juan Bautista\n(jbautista en neiker.eus) escribiÃ³:\n\n> Buenos dÃ­as.\n>\n> Necesito calcular en R los residuos estandarizados de unos datos que\n> tienen una variable respuesta continua y tres factores (pero si se complica\n> mucho lo podrÃ­a hacer factor a factor).\n>\n> Os querÃ­a pedir ayuda por si alguien tendrÃ­a un script con los comandos\n> bÃ¡sicos que hay que utilizar.\n>\n> Gracias\n>\n> Un saludo.\n>\n> *Juan Bautista Relloso Barrio*\n>\n> Coordinador de Equipos e Infraestructuras | TÃ©cnico de Cultivos del\n> Departamento de ProducciÃ³n Vegetal\n>\n> Talde eta Azpiegitura Koordinatzailea | Laborantza teknikaria Landare\n> Ekoizpen Departamentua\n>\n> jbautista en neiker.eus | M. 688 62 98 14\n>\n> *www.neiker.eus* <http://www.neiker.eus/>\n> <https://www.linkedin.com/company/neiker/>\n> <https://twitter.com/neiker_BRTA> <https://www.facebook.com/neikerBRTA>\n> <https://www.youtube.com/user/neikertec>\n>\n> *        [image: ej_ekonomia_garapen_lateral]         * [image:\n> https://www.emakunde.euskadi.eus/contenidos/informacion/violencia_puntolila/eu_def/adjuntos/punto.lila.jpg]\n>\n>\n>\n> PRIBATUTASUN POLITIKA <https://neiker.eus/eu/pribatutasun-politika/> | POLÃTICA\n> DE PRIVACIDAD <https://neiker.eus/es/politica-privacidad/> | LEGAL NOTICE\n> <https://neiker.eus/en/privacy-policy/>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nRol~\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image001.gif\nType: image/gif\nSize: 2051 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0001.gif>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image002.png\nType: image/png\nSize: 1298 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0005.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image003.png\nType: image/png\nSize: 1318 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0006.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image004.png\nType: image/png\nSize: 1193 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0007.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image005.png\nType: image/png\nSize: 1305 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0008.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image006.png\nType: image/png\nSize: 21076 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0009.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image007.jpg\nType: image/jpeg\nSize: 14174 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0002.jpg>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image008.jpg\nType: image/jpeg\nSize: 5590 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220308/48a424fc/attachment-0003.jpg>",
+      "body_snippet": "Hola, creo que despuÃ©s de ajustar el modelo, digamos:\n\nm <- lm(y~x, data)\nresiduals(m)\n\nEl mar, 8 mar 2022 a la(s) 04:51, Relloso Barrio, Juan Bautista\n(jbautista en neiker.eus) escribiÃ³:\n\n> Buenos ",
+      "thread_id": "thread-806f53b0ba23",
+      "thread_depth": 1,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-c912240286a1",
+      "message_id": "<CAMn86Nd6Y5PrHRTw8jPAtizzz5=7g22OkhHrzsewFNWn+4-u8w@mail.gmail.com>",
+      "from_name": "Sebastian Kruk",
+      "from_email_hash": "a65e9b3040f8f1811b3bf74d2c4f13fa3313fea406ff0de967af7111620a34d2",
+      "date": "2022-03-08T22:31:27-03:00",
+      "subject": "[R-es] modelo dinamico datos panel N<<T",
+      "subject_clean": "[R-es] modelo dinamico datos panel N<<T",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buen dÃ­a.\n\nEstoy analizando un modelo empÃ­rico donde explico las emisiones de CO2\npor el retardo de las emisiones CO2, el producto, la intensidad\nenergÃ©tica y la participaciÃ³n de las energÃ­as renovables en la oferta\nprimaria de energÃ­a.\n\nTengo un panel desbalanceado de 27 paÃ­ses con datos anuales de 1970 y\n2019. Si lo hago balanceado me quedan 21 paÃ­ses y pierdo unos aÃ±os del\nprincipio y el final.\n\nÂ¿QuÃ© librerÃ­a me aconsejan usar? Â¿Efectos fijos, panel ARDL, system\nGMM o difference GMM? Â¿FMOLS/DMOLS?\n\nA su vez lo anterior lo complemento con una regresiÃ³n cuantifica de\ndatos de panel con efectos fijos.Â¿CÃºal librerÃ­a me servirÃ¡ mÃ¡s?\n\nDesde ya muchas gracias.\n\nSaludos,\n\nSebastiÃ¡n.",
+      "body_snippet": "Buen dÃ­a.\n\nEstoy analizando un modelo empÃ­rico donde explico las emisiones de CO2\npor el retardo de las emisiones CO2, el producto, la intensidad\nenergÃ©tica y la participaciÃ³n de las energÃ­as ren",
+      "thread_id": "thread-c912240286a1",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-e6079e346da7",
+      "message_id": "<CAE09ejdo4t1S9=iZq3y=B8kg82FaijP3oji7NJ-pQEbE8k9Ftg@mail.gmail.com>",
+      "from_name": "Fernando Archuby",
+      "from_email_hash": "5b11d451fda060640eb0c11819cc53c8561eb6b0ad0b1c301241433cffea09d8",
+      "date": "2022-03-14T13:15:00-03:00",
+      "subject": "[R-es] Orden de las cajas en un boxplots",
+      "subject_clean": "[R-es] Orden de las cajas en un boxplots",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola a todos/as.\nLa funciÃ³n boxplot() dispone las cajas de cada nivel de factor\nalfabÃ©ticamente. Â¿CÃ³mo puedo hacer que no haga eso? Del mismo modo, Â¿cÃ³mo\npuedo conseguir que se ordenen como yo necesito?\nMuchas gracias!\nSaludos,\nFernando.\n\n-- \n\n*Dr. Fernando M. Archuby*\nCONICET-UNLP\nTelÃ©fono Personal: +54-221-15-6129667.\nfarchuby en gmail.com\npaleobiologia en gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos/as.\nLa funciÃ³n boxplot() dispone las cajas de cada nivel de factor\nalfabÃ©ticamente. Â¿CÃ³mo puedo hacer que no haga eso? Del mismo modo, Â¿cÃ³mo\npuedo conseguir que se ordenen como yo n",
+      "thread_id": "thread-e6079e346da7",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-9d68bd23647f",
+      "message_id": "<CA+8ueya5dEkrb2Wm45vWWu6ZAJceykNJzJgYHEJ-rOz4FDU3nw@mail.gmail.com>",
+      "from_name": "Juan Abasolo",
+      "from_email_hash": "20be713e36dff382d1fe3151ad684c005f02d119de762911f953e87f656e2d3e",
+      "date": "2022-03-14T17:21:00+01:00",
+      "subject": "[R-es] Orden de las cajas en un boxplots",
+      "subject_clean": "[R-es] Orden de las cajas en un boxplots",
+      "in_reply_to": "<CAE09ejdo4t1S9=iZq3y=B8kg82FaijP3oji7NJ-pQEbE8k9Ftg@mail.gmail.com>",
+      "references": [
+        "<CAE09ejdo4t1S9=iZq3y=B8kg82FaijP3oji7NJ-pQEbE8k9Ftg@mail.gmail.com>"
+      ],
+      "body_plain": "Hola, Fernando;\nEsa yo la sÃ©: reordenÃ¡ el factor:\n\ndf$tufactor <- factor(df$tufactor, levels = c ('a', 'e', 'd', 'c', 'b'))\n\nMas o menos asÃ­, ajustÃ¡ndolo al orden que te guste a vos\n\nSuerte.\n\nJuan\n\nHau idatzi du Fernando Archuby (farchuby en gmail.com) erabiltzaileak (2022\nmar. 14, al. (17:16)):\n\n> Hola a todos/as.\n> La funciÃ³n boxplot() dispone las cajas de cada nivel de factor\n> alfabÃ©ticamente. Â¿CÃ³mo puedo hacer que no haga eso? Del mismo modo, Â¿cÃ³mo\n> puedo conseguir que se ordenen como yo necesito?\n> Muchas gracias!\n> Saludos,\n> Fernando.\n>\n> --\n>\n> *Dr. Fernando M. Archuby*\n> CONICET-UNLP\n> TelÃ©fono Personal: +54-221-15-6129667.\n> farchuby en gmail.com\n> paleobiologia en gmail.com\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nJuan Abasolo, PhD\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea UPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT       : (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype   : abasolo72\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, Fernando;\nEsa yo la sÃ©: reordenÃ¡ el factor:\n\ndf$tufactor <- factor(df$tufactor, levels = c ('a', 'e', 'd', 'c', 'b'))\n\nMas o menos asÃ­, ajustÃ¡ndolo al orden que te guste a vos\n\nSuerte.\n\nJuan",
+      "thread_id": "thread-e6079e346da7",
+      "thread_depth": 1,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-a51cd9f9869e",
+      "message_id": "<CAEgqsh_LaLB8kR0gomq_p5Gv4ELuc7tRoGHsp7-M-=4bZdc79Q@mail.gmail.com>",
+      "from_name": "JALS",
+      "from_email_hash": "a69be1588cd43599d710f2ae4384ae7e44b59c2595aa34907f3397574e56f4bd",
+      "date": "2022-03-23T12:44:37-03:00",
+      "subject": "[R-es] consulta",
+      "subject_clean": "[R-es] consulta",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "hola esperando que se encuentren bien, me podrian ayudar...necesito agregar\nuna columna en un dataframe (df1) con un dato que se encuentra en otro\ndataframe (df2) y que cumpla  una condicion df1.col1= df2.col2\n\n\nmuchas gracias\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "hola esperando que se encuentren bien, me podrian ayudar...necesito agregar\nuna columna en un dataframe (df1) con un dato que se encuentra en otro\ndataframe (df2) y que cumpla  una condicion df1.col1=",
+      "thread_id": "thread-a51cd9f9869e",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-de1136700b05",
+      "message_id": "<79486b19-4d1d-6d54-1703-2212f0b4e9df@unex.es>",
+      "from_name": "José Trujillo Carmona",
+      "from_email_hash": "af2647cb50819e6240d8732985bccca31163c9659cce67854ca2df3cfc52531c",
+      "date": "2022-03-23T16:55:14+01:00",
+      "subject": "[R-es] consulta",
+      "subject_clean": "[R-es] consulta",
+      "in_reply_to": "<CAEgqsh_LaLB8kR0gomq_p5Gv4ELuc7tRoGHsp7-M-=4bZdc79Q@mail.gmail.com>",
+      "references": [
+        "<CAEgqsh_LaLB8kR0gomq_p5Gv4ELuc7tRoGHsp7-M-=4bZdc79Q@mail.gmail.com>"
+      ],
+      "body_plain": "La explicaciÃ³n es mejorable. Dices que se trata de un dato que se \nencuentra en otro dataframe. Pero no indicas en quÃ© lugar del dataframe.\n\nVoy a suponer que no es uno sino tantos datos como cumplan la condiciÃ³n \nque planteas y todos ellos en una columna a la que voy a llamar \ndf2$colx. AdemÃ¡s voy a suponer que ambos df tienen igual nÃºmero de filas.\n\nEntonces, llamando df1$coly a la nueva columna la soluciÃ³n es sencilla:\n\ndf1$col.y <- df2$col.x[df1$col1==df2$col2]\n\nSaludos.\n\nEl 23/3/22 a las 16:44, JALS escribiÃ³:\n> hola esperando que se encuentren bien, me podrian ayudar...necesito agregar\n> una columna en un dataframe (df1) con un dato que se encuentra en otro\n> dataframe (df2) y que cumpla  una condicion df1.col1= df2.col2\n>\n>\n> muchas gracias\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "La explicaciÃ³n es mejorable. Dices que se trata de un dato que se \nencuentra en otro dataframe. Pero no indicas en quÃ© lugar del dataframe.\n\nVoy a suponer que no es uno sino tantos datos como cumpla",
+      "thread_id": "thread-a51cd9f9869e",
+      "thread_depth": 1,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-6d836c5e28e9",
+      "message_id": "<8BE7CE55-E356-4C1C-906A-570CDA0073DA@ugr.es>",
+      "from_name": "Jose Miguel Contreras",
+      "from_email_hash": "dfdba24861c7ed63d863e4597b2918cadd9f70db547f0e0bd8ec14dd4831070a",
+      "date": "2022-03-23T17:01:19+01:00",
+      "subject": "[R-es] Recodificar puntos xy",
+      "subject_clean": "[R-es] Recodificar puntos xy",
+      "in_reply_to": "<mailman.14693.15.1647342012.18874.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.14693.15.1647342012.18874.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Hola a todos\n\nUna cuestiÃ³n, por si conocÃ©is una forma mÃ¡s simple de hacerlo\n\nEstoy recodificando unos puntos (x,y) en funciÃ³n del polÃ­gono donde estÃ© incluido, para calcular la proporciÃ³n de cada uno de ellos por secciÃ³n. Para ello me parto de una particiÃ³n realizada con panel.grid.major\n\nDando una particiÃ³n como aparece en el ejemplo:\n\n\n\nDado que dispongo de una variable con los datos de las accisas y otra con las ordenadas, la idea es crear una variable con el identificador de zona de los puntos.\n\nSe me ocurre algo como esto:\ndf %>% \n  filter(df$x > 0 & df$x < 25 & df$y > 0 & df$y < 10) %>% \n  mutate(recode = \"A\")\n\nPara cada uno de los bloques, con un for para x y otro para y. \n\nHay alguna forma mÃ¡s fÃ¡cil, del estilo de los anÃ¡lisis de mapping???\n\n\nGracias a todos\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220323/b15d392a/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: GrÃ¡fico_pegado-1.png\nType: image/png\nSize: 40221 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220323/b15d392a/attachment-0001.png>",
+      "body_snippet": "Hola a todos\n\nUna cuestiÃ³n, por si conocÃ©is una forma mÃ¡s simple de hacerlo\n\nEstoy recodificando unos puntos (x,y) en funciÃ³n del polÃ­gono donde estÃ© incluido, para calcular la proporciÃ³n de ca",
+      "thread_id": "thread-6d836c5e28e9",
+      "thread_depth": 0,
+      "month": "2022-03"
+    },
+    {
+      "id": "msg-0bfd0c71eaa5",
+      "message_id": "<4f2db4e7-0c65-b1ec-963f-2b1b4b6c2739@gmail.com>",
+      "from_name": "Francisco Rodriguez Sanchez",
+      "from_email_hash": "4a5eb885002ba2873468400dbe25575bdd347c849eedeeb20eb06ac47ed79b49",
+      "date": "2022-03-25T23:57:40+01:00",
+      "subject": "[R-es] Recodificar puntos xy",
+      "subject_clean": "[R-es] Recodificar puntos xy",
+      "in_reply_to": "<8BE7CE55-E356-4C1C-906A-570CDA0073DA@ugr.es>",
+      "references": [
+        "<mailman.14693.15.1647342012.18874.r-help-es@r-project.org>",
+        "<8BE7CE55-E356-4C1C-906A-570CDA0073DA@ugr.es>"
+      ],
+      "body_plain": "Hola JosÃ© Miguel,\n\nUna opciÃ³n es usar case_when, de dplyr: \nhttps://dplyr.tidyverse.org/reference/case_when.html\n\ndf %>%\n Â Â Â  mutate(recode = case_when(\n Â Â Â  Â Â Â  x < 25 & y < 10 ~ \"A\",\n Â Â Â  Â Â Â  x < 25 & y >= 10 ~ \"B\",\n Â Â Â  etc\n\n\nOtra opciÃ³n serÃ­a hacer un spatial join (sf::st_join), pero si solo \ntienes 4 polÃ­gonos regulares como esos me parece que no merece la pena\n\nSuerte\n\nPaco\n\n\n\nOn 23/3/22 17:01, Jose Miguel Contreras wrote:\n> Hola a todos\n>\n> Una cuestiÃ³n, por si conocÃ©is una forma mÃ¡s simple de hacerlo\n>\n> Estoy recodificando unos puntos (x,y) en funciÃ³n del polÃ­gono donde \n> estÃ© incluido, para calcular la proporciÃ³n de cada uno de ellos por \n> secciÃ³n. Para ello me parto de una particiÃ³n realizada con \n> panel.grid.major\n>\n> Dando una particiÃ³n como aparece en el ejemplo:\n>\n>\n> Dado que dispongo de una variable con los datos de las accisas y otra \n> con las ordenadas, la idea es crear una variable con el identificador \n> de zona de los puntos.\n>\n> Se me ocurre algo como esto:\n> df %>%\n> Â  filter(df$x > 0 & df$x < 25 & df$y > 0 & df$y < 10) %>%\n> Â  mutate(recode = \"A\")\n>\n> Para cada uno de los bloques, con un for para x y otro para y.\n>\n> Hay alguna forma mÃ¡s fÃ¡cil, del estilo de los anÃ¡lisis deÂ mapping???\n>\n>\n> Gracias a todos\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n-- \nDr Francisco RodrÃ­guez-SÃ¡nchez\nhttps://frodriguezsanchez.net\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220325/65836a5e/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: Gr%C3%A1fico_pegado-1.png\nType: image/png\nSize: 40221 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220325/65836a5e/attachment-0001.png>",
+      "body_snippet": "Hola JosÃ© Miguel,\n\nUna opciÃ³n es usar case_when, de dplyr: \nhttps://dplyr.tidyverse.org/reference/case_when.html\n\ndf %>%\n Â Â Â  mutate(recode = case_when(\n Â Â Â  Â Â Â  x < 25 & y < 10 ~ \"A\",\n Â Â",
+      "thread_id": "thread-6d836c5e28e9",
+      "thread_depth": 1,
+      "month": "2022-03"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-c817e959e93f",
+      "subject": "[R-es] Fwd: colores de los plots",
+      "message_count": 2,
+      "participants": [
+        "Jose Betancourt Bethencourt",
+        "Juan Abasolo"
+      ],
+      "started": "2022-03-01T06:52:51-05:00",
+      "last_reply": "2022-03-01T23:52:46+01:00",
+      "root_message_id": "msg-c817e959e93f"
+    },
+    {
+      "id": "thread-0673338717f0",
+      "subject": "[R-es] Fwd: colores de los plots",
+      "message_count": 2,
+      "participants": [
+        "Jose Betancourt Bethencourt"
+      ],
+      "started": "2022-03-02T07:22:09-05:00",
+      "last_reply": "2022-03-02T07:22:25-05:00",
+      "root_message_id": "msg-0673338717f0"
+    },
+    {
+      "id": "thread-aa985a3991be",
+      "subject": "[R-es]  Leer ficheros txt con número diferente de columnas por fila",
+      "message_count": 1,
+      "participants": [
+        "patricio fuenmayor"
+      ],
+      "started": "2022-03-02T14:44:44-05:00",
+      "last_reply": "2022-03-02T14:44:44-05:00",
+      "root_message_id": "msg-aa985a3991be"
+    },
+    {
+      "id": "thread-bb59d4ffe07b",
+      "subject": "[R-es] Fwd: colores de los plots",
+      "message_count": 1,
+      "participants": [
+        "Jose Betancourt Bethencourt"
+      ],
+      "started": "2022-03-02T16:39:35-05:00",
+      "last_reply": "2022-03-02T16:39:35-05:00",
+      "root_message_id": "msg-bb59d4ffe07b"
+    },
+    {
+      "id": "thread-fea3c7d0a444",
+      "subject": "[R-es] Leer ficheros txt con número diferente de columnas por fila",
+      "message_count": 2,
+      "participants": [
+        "Jose Miguel Contreras",
+        "Klaus Langohr"
+      ],
+      "started": "2022-03-02T19:56:50+01:00",
+      "last_reply": "2022-03-02T20:07:17+01:00",
+      "root_message_id": "msg-fea3c7d0a444"
+    },
+    {
+      "id": "thread-c3d2c2b1e85d",
+      "subject": "[R-es] Porcentajes de clasificaciones correctas",
+      "message_count": 1,
+      "participants": [
+        "Proyecto R-UCA"
+      ],
+      "started": "2022-03-04T12:21:59+01:00",
+      "last_reply": "2022-03-04T12:21:59+01:00",
+      "root_message_id": "msg-c3d2c2b1e85d"
+    },
+    {
+      "id": "thread-07a7548defea",
+      "subject": "[R-es] Script sencillo para calculo de residuos",
+      "message_count": 1,
+      "participants": [
+        "Relloso Barrio, Juan Bautista"
+      ],
+      "started": "2022-03-08T10:27:20+00:00",
+      "last_reply": "2022-03-08T10:27:20+00:00",
+      "root_message_id": "msg-07a7548defea"
+    },
+    {
+      "id": "thread-806f53b0ba23",
+      "subject": "[R-es] Cálculo de residuos",
+      "message_count": 2,
+      "participants": [
+        "Relloso Barrio, Juan Bautista",
+        "Rolando Valdez"
+      ],
+      "started": "2022-03-08T10:50:51+00:00",
+      "last_reply": "2022-03-08T10:09:40-06:00",
+      "root_message_id": "msg-806f53b0ba23"
+    },
+    {
+      "id": "thread-00318285f86d",
+      "subject": "[R-es] Regresión dinámica datos panel N=21 T=50",
+      "message_count": 1,
+      "participants": [
+        "‪Sebastian Kruk‬"
+      ],
+      "started": "2022-03-08T12:59:19-03:00",
+      "last_reply": "2022-03-08T12:59:19-03:00",
+      "root_message_id": "msg-00318285f86d"
+    },
+    {
+      "id": "thread-c912240286a1",
+      "subject": "[R-es] modelo dinamico datos panel N<<T",
+      "message_count": 1,
+      "participants": [
+        "Sebastian Kruk"
+      ],
+      "started": "2022-03-08T22:31:27-03:00",
+      "last_reply": "2022-03-08T22:31:27-03:00",
+      "root_message_id": "msg-c912240286a1"
+    },
+    {
+      "id": "thread-e6079e346da7",
+      "subject": "[R-es] Orden de las cajas en un boxplots",
+      "message_count": 2,
+      "participants": [
+        "Fernando Archuby",
+        "Juan Abasolo"
+      ],
+      "started": "2022-03-14T13:15:00-03:00",
+      "last_reply": "2022-03-14T17:21:00+01:00",
+      "root_message_id": "msg-e6079e346da7"
+    },
+    {
+      "id": "thread-a51cd9f9869e",
+      "subject": "[R-es] consulta",
+      "message_count": 2,
+      "participants": [
+        "JALS",
+        "José Trujillo Carmona"
+      ],
+      "started": "2022-03-23T12:44:37-03:00",
+      "last_reply": "2022-03-23T16:55:14+01:00",
+      "root_message_id": "msg-a51cd9f9869e"
+    },
+    {
+      "id": "thread-6d836c5e28e9",
+      "subject": "[R-es] Recodificar puntos xy",
+      "message_count": 2,
+      "participants": [
+        "Francisco Rodriguez Sanchez",
+        "Jose Miguel Contreras"
+      ],
+      "started": "2022-03-23T17:01:19+01:00",
+      "last_reply": "2022-03-25T23:57:40+01:00",
+      "root_message_id": "msg-6d836c5e28e9"
+    }
+  ]
+}

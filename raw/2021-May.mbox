@@ -1,0 +1,2591 @@
+From j|mmyreye@ve|@@co @end|ng |rom gm@||@com  Mon May  3 03:48:28 2021
+From: j|mmyreye@ve|@@co @end|ng |rom gm@||@com (Jimmy Erney Reyes Velasco)
+Date: Sun, 2 May 2021 20:48:28 -0500
+Subject: [R-es] =?utf-8?q?Comparaci=C3=B3n_de_dos_muestras_que_provienen_?=
+	=?utf-8?q?de_poblaciones_diferentes?=
+Message-ID: <CAEK8QGJuftgsvDS=qaBVDEf=KrYCCS5hjq7sSwugkbB+DRuOuw@mail.gmail.com>
+
+Buenas noches estimados compañeros, quisiera hacerles una pregunta.
+Soy estudiante de biología y en este momento me encuentro haciendo mi
+trabajo de grado, en este estoy comparando diferentes rasgos morfológicos
+de 2 especies vegetales, tengo un dilema, y es que necesito hacer un
+análisis multivariado para comparar. Hace algún tiempo hice un Manova, pero
+según lo que he leído tiene algunos inconvenientes. el primer problema es
+que algunas de las variables son normales, luego algunas de las variables
+no tienen homogeneidad de varianzas, por esta razón procedí a hacer una
+prueba T multivariada, realizando una corrección de Bonferroní, aunque no
+sé si esté en lo correcto, pero también leí un poco sobre esto y lo que
+encuentro es que esta prueba se realiza para probar si las muestras son
+provenientes de la misma población y seguro que estoy trabajando con dos
+poblaciones diferentes según mi diseño experimental.
+Podrían orientarme qué prueba estadística sería la más conveniente y cómo
+podría hacerlo en R, Se los agradecería bastante.
+Saludos
+Jimmy
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Mon May  3 20:57:56 2021
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Mon, 3 May 2021 15:57:56 -0300
+Subject: [R-es] 
+	=?utf-8?q?Comparaci=C3=B3n_de_dos_muestras_que_provienen_?=
+	=?utf-8?q?de_poblaciones_diferentes?=
+In-Reply-To: <CAEK8QGJuftgsvDS=qaBVDEf=KrYCCS5hjq7sSwugkbB+DRuOuw@mail.gmail.com>
+References: <CAEK8QGJuftgsvDS=qaBVDEf=KrYCCS5hjq7sSwugkbB+DRuOuw@mail.gmail.com>
+Message-ID: <CAHo_aEQ29MccfpJkfOTHRLSeOC9P3Uhye387ApYbObsTtjBhYQ@mail.gmail.com>
+
+Estimado Jimmy
+
+Yo pensaba parecido, tenía unos datos, luego otros, los juntaba, pregunté a
+mis profesores. La respuesta es NO, luego en genética de las poblaciones y
+estudiando más me di cuenta que no se puede, posiblemente en otra área de
+la ciencia la parte de matemática lo permita, pero si es biología los
+efectos genéticos, ambientales como no ambientales, que entran al
+particionar las variancias, estarán presentes aunque no lo tengas en cuenta
+en los cálculos estadísticos, aunque, si asumes que el cálculo tiene
+errores puedes aproximar algo a modo de ejercicio matemático.
+
+Javier Rubén Marcuzzi
+
+El dom, 2 may 2021 a las 22:48, Jimmy Erney Reyes Velasco (<
+jimmyreyesvelasco en gmail.com>) escribió:
+
+> Buenas noches estimados compañeros, quisiera hacerles una pregunta.
+> Soy estudiante de biología y en este momento me encuentro haciendo mi
+> trabajo de grado, en este estoy comparando diferentes rasgos morfológicos
+> de 2 especies vegetales, tengo un dilema, y es que necesito hacer un
+> análisis multivariado para comparar. Hace algún tiempo hice un Manova, pero
+> según lo que he leído tiene algunos inconvenientes. el primer problema es
+> que algunas de las variables son normales, luego algunas de las variables
+> no tienen homogeneidad de varianzas, por esta razón procedí a hacer una
+> prueba T multivariada, realizando una corrección de Bonferroní, aunque no
+> sé si esté en lo correcto, pero también leí un poco sobre esto y lo que
+> encuentro es que esta prueba se realiza para probar si las muestras son
+> provenientes de la misma población y seguro que estoy trabajando con dos
+> poblaciones diferentes según mi diseño experimental.
+> Podrían orientarme qué prueba estadística sería la más conveniente y cómo
+> podría hacerlo en R, Se los agradecería bastante.
+> Saludos
+> Jimmy
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue May  4 03:54:30 2021
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Mon, 3 May 2021 22:54:30 -0300
+Subject: [R-es] 
+	=?utf-8?q?Comparaci=C3=B3n_de_dos_muestras_que_provienen_?=
+	=?utf-8?q?de_poblaciones_diferentes?=
+In-Reply-To: <CAHo_aEQ29MccfpJkfOTHRLSeOC9P3Uhye387ApYbObsTtjBhYQ@mail.gmail.com>
+References: <CAEK8QGJuftgsvDS=qaBVDEf=KrYCCS5hjq7sSwugkbB+DRuOuw@mail.gmail.com>
+ <CAHo_aEQ29MccfpJkfOTHRLSeOC9P3Uhye387ApYbObsTtjBhYQ@mail.gmail.com>
+Message-ID: <CAHo_aEQ5gaL+xgkmKqqnpz3NuqyUfSSVhYXD8dg0BAwsaGWgOA@mail.gmail.com>
+
+Estimado Jimmy
+
+Lo escribo en forma diferente, con un ejemplo biológico. Lo paso de dos
+especies vegetales, a una sola especie animal, pero dos razas, lógicamente
+cada raza viene de poblaciones distintas, entonces lo llevo a genética de
+las poblaciones y aparecen términos tan conocidos, o nombrados pero sin
+conocer por el COVID, como lo es la mutación y la migración, entonces puedo
+pensar en dos cosas, la primera es si se mezclan dos poblaciones hay
+migración, y la segunda, si hay diferencias de morfología esto entra en
+genética cuantitativa que mide esas diferencias. Pero si miro las
+heredabilidades de ambas razas (poblaciones), encuentro diferencias, y
+estas son básicamente por variancia (genética, ambiental, permanentes, no
+permanentes), en definitiva, las dos poblaciones tienen una parte que se
+debe ponderar, lógicamente, si tengo todos los datos en bruto puedo hacer
+una análisis mezclando ambas poblaciones, colocando una variable población
+A, y población B, y analizar todo desde cero, pero si no tengo los valores
+en bruto para crear el modelo, puedo entrar en error, aunque posiblemente
+este error en otro área de la ciencia no exista, se me ocurre un ingeniero
+civil con los puentes, ahí puede ser que la matemática al no ser biológica
+permita cuestiones que en biología no se podrían.
+
+Espero haberme explicado un poco mejor.
+
+Javier Rubén Marcuzzi
+
+
+
+El lun, 3 may 2021 a las 15:57, Javier Marcuzzi (<
+javier.ruben.marcuzzi en gmail.com>) escribió:
+
+> Estimado Jimmy
+>
+> Yo pensaba parecido, tenía unos datos, luego otros, los juntaba, pregunté
+> a mis profesores. La respuesta es NO, luego en genética de las poblaciones
+> y estudiando más me di cuenta que no se puede, posiblemente en otra área de
+> la ciencia la parte de matemática lo permita, pero si es biología los
+> efectos genéticos, ambientales como no ambientales, que entran al
+> particionar las variancias, estarán presentes aunque no lo tengas en cuenta
+> en los cálculos estadísticos, aunque, si asumes que el cálculo tiene
+> errores puedes aproximar algo a modo de ejercicio matemático.
+>
+> Javier Rubén Marcuzzi
+>
+> El dom, 2 may 2021 a las 22:48, Jimmy Erney Reyes Velasco (<
+> jimmyreyesvelasco en gmail.com>) escribió:
+>
+>> Buenas noches estimados compañeros, quisiera hacerles una pregunta.
+>> Soy estudiante de biología y en este momento me encuentro haciendo mi
+>> trabajo de grado, en este estoy comparando diferentes rasgos morfológicos
+>> de 2 especies vegetales, tengo un dilema, y es que necesito hacer un
+>> análisis multivariado para comparar. Hace algún tiempo hice un Manova,
+>> pero
+>> según lo que he leído tiene algunos inconvenientes. el primer problema es
+>> que algunas de las variables son normales, luego algunas de las variables
+>> no tienen homogeneidad de varianzas, por esta razón procedí a hacer una
+>> prueba T multivariada, realizando una corrección de Bonferroní, aunque no
+>> sé si esté en lo correcto, pero también leí un poco sobre esto y lo que
+>> encuentro es que esta prueba se realiza para probar si las muestras son
+>> provenientes de la misma población y seguro que estoy trabajando con dos
+>> poblaciones diferentes según mi diseño experimental.
+>> Podrían orientarme qué prueba estadística sería la más conveniente y cómo
+>> podría hacerlo en R, Se los agradecería bastante.
+>> Saludos
+>> Jimmy
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Fri May  7 00:41:25 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Thu, 6 May 2021 18:41:25 -0400
+Subject: [R-es] Reemplazar con NAs en la columna "esc" condicionado a lo que
+ sucede en otra columna
+Message-ID: <20210506184125.08ac6f01@TheMatrix>
+
+
+Hola comunidad, una consulta por favor, de un problema que no puedo
+resolver ... tengo que asignar NA (missing data) a la columna "esc"
+cuando el valor de "b2c" sea 99 ... cómo lo puedo hacer en un único
+paso ? he probado con las funciones:
+
+is.na()
+na_if(x, y)
+replace_with_na()
+
+pero esas funciones siempre reemplazan en la misma columna que establece
+la condición, me explico ? Aquí un set de datos de ejemplo. 
+
+
+      folio b2c b2n a16 a19        a22               a23 esc
+  1: 112721  99  99   1  27 Sin pareja Pueblo originario  
+  2: 112741   1  99   1  24 Sin pareja Pueblo originario   
+  3: 115861  99  99   1  40 Con pareja            NPANPI  
+  4: 116081  99  99   1  23 Con pareja            NPANPI  
+  5: 123761   7  99   1  25 Con pareja            NPANPI   
+
+
+Muchas gracias por la orientación !!
+
+Saludos,
+
+Eric.
+
+
+From jcm|d @end|ng |rom c@rmon@roch@@com  Fri May  7 06:28:12 2021
+From: jcm|d @end|ng |rom c@rmon@roch@@com (JCMld)
+Date: Fri, 7 May 2021 06:28:12 +0200
+Subject: [R-es] 
+ Reemplazar con NAs en la columna "esc" condicionado a lo que
+ sucede en otra columna
+In-Reply-To: <20210506184125.08ac6f01@TheMatrix>
+References: <20210506184125.08ac6f01@TheMatrix>
+Message-ID: <000601d742f9$64680eb0$2d382c10$@carmonarocha.com>
+
+Hola Eric,
+
+Una solución sería
+
+df[df$b2c==99,"esc"]<-NA
+
+(suponiendo que el nombre del data frame sea df)
+
+Saludos,
+Juan
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Eric Concha M.
+Enviado el: viernes, 7 de mayo de 2021 0:41
+Para: r-help-es <R-help-es en r-project.org>
+Asunto: [R-es] Reemplazar con NAs en la columna "esc" condicionado a lo que
+sucede en otra columna
+
+
+Hola comunidad, una consulta por favor, de un problema que no puedo resolver
+... tengo que asignar NA (missing data) a la columna "esc"
+cuando el valor de "b2c" sea 99 ... cómo lo puedo hacer en un único paso ?
+he probado con las funciones:
+
+is.na()
+na_if(x, y)
+replace_with_na()
+
+pero esas funciones siempre reemplazan en la misma columna que establece la
+condición, me explico ? Aquí un set de datos de ejemplo. 
+
+
+      folio b2c b2n a16 a19        a22               a23 esc
+  1: 112721  99  99   1  27 Sin pareja Pueblo originario  
+  2: 112741   1  99   1  24 Sin pareja Pueblo originario   
+  3: 115861  99  99   1  40 Con pareja            NPANPI  
+  4: 116081  99  99   1  23 Con pareja            NPANPI  
+  5: 123761   7  99   1  25 Con pareja            NPANPI   
+
+
+Muchas gracias por la orientación !!
+
+Saludos,
+
+Eric.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From |eb@|c@z@r @end|ng |rom gm@||@com  Fri May  7 06:34:26 2021
+From: |eb@|c@z@r @end|ng |rom gm@||@com (=?UTF-8?Q?Luis_Balc=C3=A1zar?=)
+Date: Thu, 6 May 2021 23:34:26 -0500
+Subject: [R-es] 
+ Reemplazar con NAs en la columna "esc" condicionado a lo que
+ sucede en otra columna
+In-Reply-To: <000601d742f9$64680eb0$2d382c10$@carmonarocha.com>
+References: <20210506184125.08ac6f01@TheMatrix>
+ <000601d742f9$64680eb0$2d382c10$@carmonarocha.com>
+Message-ID: <CABphHR-_p3Z8Cb8wpmhao=HNSF4UDmd+sov85tdUa1oSUdOPpw@mail.gmail.com>
+
+Hola,
+Prueba esto:
+
+library(tidyverse)
+data_f <- data %>% mutate(esc = ifelse(b2c == 99, NA, b2c))
+
+Saludos
+______________________________________________
+Luis Balcázar
+Universidad Autónoma del Estado de México
+Instituto Interamericano de Tecnología y Ciencias del Agua
+https://www.researchgate.net/profile/Luis_Balcazar2
+lbalcazaro630 en alumno.uaemex.mx
+Toluca, Edo. de México
+
+
+
+El jue, 6 may 2021 a las 23:28, JCMld (<jcmld en carmonarocha.com>) escribió:
+
+> Hola Eric,
+>
+> Una solución sería
+>
+> df[df$b2c==99,"esc"]<-NA
+>
+> (suponiendo que el nombre del data frame sea df)
+>
+> Saludos,
+> Juan
+>
+> -----Mensaje original-----
+> De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Eric Concha
+> M.
+> Enviado el: viernes, 7 de mayo de 2021 0:41
+> Para: r-help-es <R-help-es en r-project.org>
+> Asunto: [R-es] Reemplazar con NAs en la columna "esc" condicionado a lo que
+> sucede en otra columna
+>
+>
+> Hola comunidad, una consulta por favor, de un problema que no puedo
+> resolver
+> ... tengo que asignar NA (missing data) a la columna "esc"
+> cuando el valor de "b2c" sea 99 ... cómo lo puedo hacer en un único paso ?
+> he probado con las funciones:
+>
+> is.na()
+> na_if(x, y)
+> replace_with_na()
+>
+> pero esas funciones siempre reemplazan en la misma columna que establece la
+> condición, me explico ? Aquí un set de datos de ejemplo.
+>
+>
+>       folio b2c b2n a16 a19        a22               a23 esc
+>   1: 112721  99  99   1  27 Sin pareja Pueblo originario
+>   2: 112741   1  99   1  24 Sin pareja Pueblo originario
+>   3: 115861  99  99   1  40 Con pareja            NPANPI
+>   4: 116081  99  99   1  23 Con pareja            NPANPI
+>   5: 123761   7  99   1  25 Con pareja            NPANPI
+>
+>
+> Muchas gracias por la orientación !!
+>
+> Saludos,
+>
+> Eric.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri May  7 08:42:01 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 7 May 2021 08:42:01 +0200
+Subject: [R-es] 
+ Reemplazar con NAs en la columna "esc" condicionado a lo que
+ sucede en otra columna
+In-Reply-To: <20210506184125.08ac6f01@TheMatrix>
+References: <20210506184125.08ac6f01@TheMatrix>
+Message-ID: <AF9796EE-481A-4AF5-BB65-1FE73735E3B1@gmail.com>
+
+Hola,
+
+Seguramente puedas imputar esos valores NA en la propia importación de los datos. Si usas read.table (o alguno de sus wrappers como read.csv), el argumento na.strings hará el trabajo. Las funciones que importan desde otros archivos como excel tienen opciones similares.
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com 
+
+
+
+
+> El 7 may 2021, a las 0:41, Eric Concha M. <ericconchamunoz en gmail.com> escribió:
+> 
+> 
+> Hola comunidad, una consulta por favor, de un problema que no puedo
+> resolver ... tengo que asignar NA (missing data) a la columna "esc"
+> cuando el valor de "b2c" sea 99 ... cómo lo puedo hacer en un único
+> paso ? he probado con las funciones:
+> 
+> is.na()
+> na_if(x, y)
+> replace_with_na()
+> 
+> pero esas funciones siempre reemplazan en la misma columna que establece
+> la condición, me explico ? Aquí un set de datos de ejemplo. 
+> 
+> 
+>      folio b2c b2n a16 a19        a22               a23 esc
+>  1: 112721  99  99   1  27 Sin pareja Pueblo originario  
+>  2: 112741   1  99   1  24 Sin pareja Pueblo originario   
+>  3: 115861  99  99   1  40 Con pareja            NPANPI  
+>  4: 116081  99  99   1  23 Con pareja            NPANPI  
+>  5: 123761   7  99   1  25 Con pareja            NPANPI   
+> 
+> 
+> Muchas gracias por la orientación !!
+> 
+> Saludos,
+> 
+> Eric.
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Fri May  7 22:58:31 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Fri, 7 May 2021 16:58:31 -0400
+Subject: [R-es] 
+ Reemplazar con NAs en la columna "esc" condicionado a lo que
+ sucede en otra columna
+In-Reply-To: <AF9796EE-481A-4AF5-BB65-1FE73735E3B1@gmail.com>
+References: <20210506184125.08ac6f01@TheMatrix>
+ <AF9796EE-481A-4AF5-BB65-1FE73735E3B1@gmail.com>
+Message-ID: <20210507165831.559f5f0e@TheMatrix>
+
+
+Muchas gracias Emilio, Luis y Juan ... después de ver las soluciones
+propouestas le di una mirada a los fundamentos de R y cai en cuenta de
+que, errónamente, yo creía que para que NA fuera distinto del string
+"NA" había forzomente que asignarlo con alguna de las funciones de R y
+al parecer no es así jajaaaa ... eso es lo que pasa por ser autodidacta
+XD
+
+Bueno, problema resuelto, muchas gracias !!
+
+Eric.
+
+
+
+
+
+On Fri, 7 May 2021 08:42:01 +0200
+"Emilio L. Cano" <emilopezcano en gmail.com> wrote:
+
+> Hola,
+> 
+> Seguramente puedas imputar esos valores NA en la propia importación
+> de los datos. Si usas read.table (o alguno de sus wrappers como
+> read.csv), el argumento na.strings hará el trabajo. Las funciones que
+> importan desde otros archivos como excel tienen opciones similares.
+> 
+> Un saludo,
+> 
+> Emilio L. Cano
+> http://emilio.lcano.com 
+> 
+> 
+> 
+> 
+> > El 7 may 2021, a las 0:41, Eric Concha M.
+> > <ericconchamunoz en gmail.com> escribió:
+> > 
+> > 
+> > Hola comunidad, una consulta por favor, de un problema que no puedo
+> > resolver ... tengo que asignar NA (missing data) a la columna "esc"
+> > cuando el valor de "b2c" sea 99 ... cómo lo puedo hacer en un único
+> > paso ? he probado con las funciones:
+> > 
+> > is.na()
+> > na_if(x, y)
+> > replace_with_na()
+> > 
+> > pero esas funciones siempre reemplazan en la misma columna que
+> > establece la condición, me explico ? Aquí un set de datos de
+> > ejemplo. 
+> > 
+> > 
+> >      folio b2c b2n a16 a19        a22               a23 esc
+> >  1: 112721  99  99   1  27 Sin pareja Pueblo originario  
+> >  2: 112741   1  99   1  24 Sin pareja Pueblo originario   
+> >  3: 115861  99  99   1  40 Con pareja            NPANPI  
+> >  4: 116081  99  99   1  23 Con pareja            NPANPI  
+> >  5: 123761   7  99   1  25 Con pareja            NPANPI   
+> > 
+> > 
+> > Muchas gracias por la orientación !!
+> > 
+> > Saludos,
+> > 
+> > Eric.
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sat May  8 16:19:59 2021
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sat, 8 May 2021 11:19:59 -0300
+Subject: [R-es] 
+ Reemplazar con NAs en la columna "esc" condicionado a lo que
+ sucede en otra columna
+In-Reply-To: <20210507165831.559f5f0e@TheMatrix>
+References: <20210506184125.08ac6f01@TheMatrix>
+ <AF9796EE-481A-4AF5-BB65-1FE73735E3B1@gmail.com>
+ <20210507165831.559f5f0e@TheMatrix>
+Message-ID: <CAHo_aESZxbsfc7s5LtW2d-rLnzdBx+2c9TxvPGoF5Jkd+4SJCw@mail.gmail.com>
+
+Estimado Eric Concha
+
+Cuidado con su razonamiento, ser autodidacta no es malo, ya hace mucho
+tiempo yo comencé con R, versión 1 y algo, sin persona que me pueda
+explicar algo, por otro lado, NA no es una cadena, la cadena tiene valor,
+el NA es nulo, no hay nada y se especifica que con NA, una forma de estar
+seguro es realizar str(datos), y mirar los resultados de esta función, ahí
+uno se puede dar cuenta si hay algunos errores en los datos..
+
+Javier Rubén Marcuzzi
+
+El vie, 7 may 2021 a las 17:58, Eric Concha M. (<ericconchamunoz en gmail.com>)
+escribió:
+
+>
+> Muchas gracias Emilio, Luis y Juan ... después de ver las soluciones
+> propouestas le di una mirada a los fundamentos de R y cai en cuenta de
+> que, errónamente, yo creía que para que NA fuera distinto del string
+> "NA" había forzomente que asignarlo con alguna de las funciones de R y
+> al parecer no es así jajaaaa ... eso es lo que pasa por ser autodidacta
+> XD
+>
+> Bueno, problema resuelto, muchas gracias !!
+>
+> Eric.
+>
+>
+>
+>
+>
+> On Fri, 7 May 2021 08:42:01 +0200
+> "Emilio L. Cano" <emilopezcano en gmail.com> wrote:
+>
+> > Hola,
+> >
+> > Seguramente puedas imputar esos valores NA en la propia importación
+> > de los datos. Si usas read.table (o alguno de sus wrappers como
+> > read.csv), el argumento na.strings hará el trabajo. Las funciones que
+> > importan desde otros archivos como excel tienen opciones similares.
+> >
+> > Un saludo,
+> >
+> > Emilio L. Cano
+> > http://emilio.lcano.com
+> >
+> >
+> >
+> >
+> > > El 7 may 2021, a las 0:41, Eric Concha M.
+> > > <ericconchamunoz en gmail.com> escribió:
+> > >
+> > >
+> > > Hola comunidad, una consulta por favor, de un problema que no puedo
+> > > resolver ... tengo que asignar NA (missing data) a la columna "esc"
+> > > cuando el valor de "b2c" sea 99 ... cómo lo puedo hacer en un único
+> > > paso ? he probado con las funciones:
+> > >
+> > > is.na()
+> > > na_if(x, y)
+> > > replace_with_na()
+> > >
+> > > pero esas funciones siempre reemplazan en la misma columna que
+> > > establece la condición, me explico ? Aquí un set de datos de
+> > > ejemplo.
+> > >
+> > >
+> > >      folio b2c b2n a16 a19        a22               a23 esc
+> > >  1: 112721  99  99   1  27 Sin pareja Pueblo originario
+> > >  2: 112741   1  99   1  24 Sin pareja Pueblo originario
+> > >  3: 115861  99  99   1  40 Con pareja            NPANPI
+> > >  4: 116081  99  99   1  23 Con pareja            NPANPI
+> > >  5: 123761   7  99   1  25 Con pareja            NPANPI
+> > >
+> > >
+> > > Muchas gracias por la orientación !!
+> > >
+> > > Saludos,
+> > >
+> > > Eric.
+> > >
+> > > _______________________________________________
+> > > R-help-es mailing list
+> > > R-help-es en r-project.org
+> > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Sat May  8 17:59:39 2021
+From: gr|er@ @end|ng |rom y@ndex@com (Griera)
+Date: Sat, 8 May 2021 17:59:39 +0200
+Subject: [R-es] =?utf-8?q?SAS_proc_genmod_con_opci=C3=B3n_repeated?=
+Message-ID: <20210508175939.61e972cb@debian-dde-tosh>
+
+Buenas tardes, Lista:
+
+¿Alguien me podría decir que función de R podría substituir al proc
+genmod con la opción "repeated subject"?
+
+Muchas gracias y saludos.
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Sat May  8 22:01:39 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Sat, 8 May 2021 16:01:39 -0400
+Subject: [R-es] 
+ Reemplazar con NAs en la columna "esc" condicionado a lo que
+ sucede en otra columna
+In-Reply-To: <CAHo_aESZxbsfc7s5LtW2d-rLnzdBx+2c9TxvPGoF5Jkd+4SJCw@mail.gmail.com>
+References: <20210506184125.08ac6f01@TheMatrix>
+ <AF9796EE-481A-4AF5-BB65-1FE73735E3B1@gmail.com>
+ <20210507165831.559f5f0e@TheMatrix>
+ <CAHo_aESZxbsfc7s5LtW2d-rLnzdBx+2c9TxvPGoF5Jkd+4SJCw@mail.gmail.com>
+Message-ID: <20210508160139.01dc007d@TheMatrix>
+
+Gracias Javier.
+
+Sólo para aclarar el punto, lo que quiero decir con "autodidacta" es
+que yo, por falta de tiempo, aprendo lo que necesito aprender y no he
+hecho un barrido sistemático acerca de los fundamentos de R, pues
+apenas me alcanza el tiempo para resolver los problemas operativos que
+se presentan en mi trabajo. En cambio, creo si hubiera tomado algunos
+cursos probablemente no me habría equivocado con lo de NA :) ... En mis
+vacaciones me daré el tiempo para tomar varios cursos ya que ocurrirán
+encerrado en cuarentena jajaaaa.
+
+Voy a mirar mis objetos con str().
+
+Saludos y gracias !!
+
+Eric.
+
+
+
+
+
+On Sat, 8 May 2021 11:19:59 -0300
+Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> wrote:
+
+> Estimado Eric Concha
+> 
+> Cuidado con su razonamiento, ser autodidacta no es malo, ya hace mucho
+> tiempo yo comencé con R, versión 1 y algo, sin persona que me pueda
+> explicar algo, por otro lado, NA no es una cadena, la cadena tiene
+> valor, el NA es nulo, no hay nada y se especifica que con NA, una
+> forma de estar seguro es realizar str(datos), y mirar los resultados
+> de esta función, ahí uno se puede dar cuenta si hay algunos errores
+> en los datos..
+> 
+> Javier Rubén Marcuzzi
+> 
+> El vie, 7 may 2021 a las 17:58, Eric Concha M.
+> (<ericconchamunoz en gmail.com>) escribió:
+> 
+> >
+> > Muchas gracias Emilio, Luis y Juan ... después de ver las soluciones
+> > propouestas le di una mirada a los fundamentos de R y cai en cuenta
+> > de que, errónamente, yo creía que para que NA fuera distinto del
+> > string "NA" había forzomente que asignarlo con alguna de las
+> > funciones de R y al parecer no es así jajaaaa ... eso es lo que
+> > pasa por ser autodidacta XD
+> >
+> > Bueno, problema resuelto, muchas gracias !!
+> >
+> > Eric.
+> >
+> >
+> >
+> >
+> >
+> > On Fri, 7 May 2021 08:42:01 +0200
+> > "Emilio L. Cano" <emilopezcano en gmail.com> wrote:
+> >
+> > > Hola,
+> > >
+> > > Seguramente puedas imputar esos valores NA en la propia
+> > > importación de los datos. Si usas read.table (o alguno de sus
+> > > wrappers como read.csv), el argumento na.strings hará el trabajo.
+> > > Las funciones que importan desde otros archivos como excel tienen
+> > > opciones similares.
+> > >
+> > > Un saludo,
+> > >
+> > > Emilio L. Cano
+> > > http://emilio.lcano.com
+> > >
+> > >
+> > >
+> > >
+> > > > El 7 may 2021, a las 0:41, Eric Concha M.
+> > > > <ericconchamunoz en gmail.com> escribió:
+> > > >
+> > > >
+> > > > Hola comunidad, una consulta por favor, de un problema que no
+> > > > puedo resolver ... tengo que asignar NA (missing data) a la
+> > > > columna "esc" cuando el valor de "b2c" sea 99 ... cómo lo puedo
+> > > > hacer en un único paso ? he probado con las funciones:
+> > > >
+> > > > is.na()
+> > > > na_if(x, y)
+> > > > replace_with_na()
+> > > >
+> > > > pero esas funciones siempre reemplazan en la misma columna que
+> > > > establece la condición, me explico ? Aquí un set de datos de
+> > > > ejemplo.
+> > > >
+> > > >
+> > > >      folio b2c b2n a16 a19        a22               a23 esc
+> > > >  1: 112721  99  99   1  27 Sin pareja Pueblo originario
+> > > >  2: 112741   1  99   1  24 Sin pareja Pueblo originario
+> > > >  3: 115861  99  99   1  40 Con pareja            NPANPI
+> > > >  4: 116081  99  99   1  23 Con pareja            NPANPI
+> > > >  5: 123761   7  99   1  25 Con pareja            NPANPI
+> > > >
+> > > >
+> > > > Muchas gracias por la orientación !!
+> > > >
+> > > > Saludos,
+> > > >
+> > > > Eric.
+> > > >
+> > > > _______________________________________________
+> > > > R-help-es mailing list
+> > > > R-help-es en r-project.org
+> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> > >
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+
+
+From b|erzom@p@@ @end|ng |rom gm@||@com  Mon May 10 10:41:48 2021
+From: b|erzom@p@@ @end|ng |rom gm@||@com (Javi Lopez)
+Date: Mon, 10 May 2021 10:41:48 +0200
+Subject: [R-es] =?iso-8859-1?q?=28sin_asunto=29?=
+Message-ID: <CAFjggdB7PJ8AyjkjYNUXXJAEBZDyU9yu4L80Qcab5yCwH3c-zg@mail.gmail.com>
+
+Hola. Acabo de suscribirme a la lista y espero poder colaborar aunque soy
+nuevo en R y estoy aprendiendo.
+
+Estoy intentando hacer un raspado de páginas web (web scraping),pero con mi
+código solo consigo que me devuelva la primera tabla, y necesitaría al
+menos una decena.
+
+url <- http://www.infocif.es/ranking/ventas-empresas/espana
+pagina <- read_html(url, as.data.frame=T, stringsAsFactors = TRUE)
+pagina %>%
+html_nodes("table") %>%
+.[[1]] %>%
+html_table(fill=T) -> x
+
+Así, como digo, consigo los datos de la primera tabla, pero no de las
+siguientes.
+
+Gracias por cualquier ayuda y por aceptarme en esta comunidad. Saludos
+
+Javier
+
+	[[alternative HTML version deleted]]
+
+
+From cgb @end|ng |rom d@t@n@|yt|c@@com  Mon May 10 10:51:52 2021
+From: cgb @end|ng |rom d@t@n@|yt|c@@com (Carlos J. Gil Bellosta)
+Date: Mon, 10 May 2021 10:51:52 +0200
+Subject: [R-es] (sin asunto)
+In-Reply-To: <CAFjggdB7PJ8AyjkjYNUXXJAEBZDyU9yu4L80Qcab5yCwH3c-zg@mail.gmail.com>
+References: <CAFjggdB7PJ8AyjkjYNUXXJAEBZDyU9yu4L80Qcab5yCwH3c-zg@mail.gmail.com>
+Message-ID: <CADg83edKH-X1e6=Bna1_sek-W9BfFOzG+n2pCoVUNEfBa3TPkw@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Tienes que bajar la tabla de
+
+http://www.infocif.es/ranking/ventas-empresas/espana?pagina=1,
+http://www.infocif.es/ranking/ventas-empresas/espana?pagina=
+<http://www.infocif.es/ranking/ventas-empresas/espana?pagina=1>2,
+etc.
+
+Lo puedes hacer en un bucle.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El lun, 10 may 2021 a las 10:42, Javi Lopez (<bierzomapas en gmail.com>)
+escribió:
+
+> Hola. Acabo de suscribirme a la lista y espero poder colaborar aunque soy
+> nuevo en R y estoy aprendiendo.
+>
+> Estoy intentando hacer un raspado de páginas web (web scraping),pero con mi
+> código solo consigo que me devuelva la primera tabla, y necesitaría al
+> menos una decena.
+>
+> url <- http://www.infocif.es/ranking/ventas-empresas/espana
+> pagina <- read_html(url, as.data.frame=T, stringsAsFactors = TRUE)
+> pagina %>%
+> html_nodes("table") %>%
+> .[[1]] %>%
+> html_table(fill=T) -> x
+>
+> Así, como digo, consigo los datos de la primera tabla, pero no de las
+> siguientes.
+>
+> Gracias por cualquier ayuda y por aceptarme en esta comunidad. Saludos
+>
+> Javier
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Mon May 10 14:19:07 2021
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Mon, 10 May 2021 09:19:07 -0300
+Subject: [R-es] (sin asunto)
+In-Reply-To: <CAFjggdB7PJ8AyjkjYNUXXJAEBZDyU9yu4L80Qcab5yCwH3c-zg@mail.gmail.com>
+References: <CAFjggdB7PJ8AyjkjYNUXXJAEBZDyU9yu4L80Qcab5yCwH3c-zg@mail.gmail.com>
+Message-ID: <CAHo_aERyhrZ3Orx_JpGqJ8+WGx5kUVzR-gQcNHD1gvgALGN5Eg@mail.gmail.com>
+
+Estimado López
+
+Es que debe hacer click en 1, en 2, en 3, de esta forma recorre todos los
+datos. Para hacer click debe analizar el código html, y luego en R crear un
+código para que lo automatice. Casi todas las variantes tienen como ejemplo
+buscar una palabra en el buscador, bueno, es click en el botón y en
+parámetro en lugar de la palabra va el índice de tabla. Pero, hay que
+hacerlo, web scraping tiene sus cosas, yo lo supe realizar con R, ahora uso
+c#, pero solo por la asistencia del editor para escribir el código y el
+mezclar lenguajes, pero, si son pocos datos lo realizo a mano,
+automatizarlo es mucho trabajo y esto lleva tiempo.
+
+Javier Rubén Marcuzzi
+
+El lun, 10 may 2021 a las 5:42, Javi Lopez (<bierzomapas en gmail.com>)
+escribió:
+
+> Hola. Acabo de suscribirme a la lista y espero poder colaborar aunque soy
+> nuevo en R y estoy aprendiendo.
+>
+> Estoy intentando hacer un raspado de páginas web (web scraping),pero con mi
+> código solo consigo que me devuelva la primera tabla, y necesitaría al
+> menos una decena.
+>
+> url <- http://www.infocif.es/ranking/ventas-empresas/espana
+> pagina <- read_html(url, as.data.frame=T, stringsAsFactors = TRUE)
+> pagina %>%
+> html_nodes("table") %>%
+> .[[1]] %>%
+> html_table(fill=T) -> x
+>
+> Así, como digo, consigo los datos de la primera tabla, pero no de las
+> siguientes.
+>
+> Gracias por cualquier ayuda y por aceptarme en esta comunidad. Saludos
+>
+> Javier
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From jo@er@m|rezco@t@ @end|ng |rom gm@||@com  Wed May 12 02:29:29 2021
+From: jo@er@m|rezco@t@ @end|ng |rom gm@||@com (Jose Ramirez Costa)
+Date: Tue, 11 May 2021 21:29:29 -0300
+Subject: [R-es] Instalar R en micro de arquitectura arm
+Message-ID: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+
+Buenas comunidad, quiero instalar R en una tablet Samsung a la q le instale
+Ubuntu, existe una versión de R para micros de arquitectura AMR?
+
+Si me podrían pasar la versión o el link, les agradecería mucho.
+
+Saludos!
+
+-- 
+
+*?Nos quieren tristes para que nos sintamos vencidos y los pueblos
+deprimidos no vencen? Por eso, venimos a combatir alegremente. Seguros de
+nuestro destino y sabiéndonos vencedores, a corto o a largo plazo?.*
+
+*A.J.*
+
+	[[alternative HTML version deleted]]
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Wed May 12 03:04:28 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Tue, 11 May 2021 21:04:28 -0400
+Subject: [R-es] Instalar R en micro de arquitectura arm
+In-Reply-To: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+References: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+Message-ID: <20210511210428.2c61599a@TheMatrix>
+
+
+Disculpa la ignorancia, pero del micro no se ocupa el SO ?? es decir,
+si el SO puede lidiar con el, entonces a R no le importa lo que hay
+debajo, se entiende sólo con la capa del SO ... o no ?
+
+
+
+
+
+
+On Tue, 11 May 2021 21:29:29 -0300
+Jose Ramirez Costa <joseramirezcosta en gmail.com> wrote:
+
+> Buenas comunidad, quiero instalar R en una tablet Samsung a la q le
+> instale Ubuntu, existe una versión de R para micros de arquitectura
+> AMR?
+> 
+> Si me podrían pasar la versión o el link, les agradecería mucho.
+> 
+> Saludos!
+> 
+
+
+From jo@er@m|rezco@t@ @end|ng |rom gm@||@com  Wed May 12 04:51:55 2021
+From: jo@er@m|rezco@t@ @end|ng |rom gm@||@com (Jose Ramirez Costa)
+Date: Tue, 11 May 2021 23:51:55 -0300
+Subject: [R-es] Instalar R en micro de arquitectura arm
+In-Reply-To: <20210511210428.2c61599a@TheMatrix>
+References: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+ <20210511210428.2c61599a@TheMatrix>
+Message-ID: <CAFOGFn+GYDnSNexGwYphdWL=abiqT5+-YanpvmuxsLfaak65ZQ@mail.gmail.com>
+
+Hola Eric, yo tampoco soy muy experto en el tema. Según he leído de un
+usuario de Python se necesita q el software este compilado para esa
+arquitectura del micro.
+
+El martes, 11 de mayo de 2021, Eric Concha M. <ericconchamunoz en gmail.com>
+escribió:
+>
+> Disculpa la ignorancia, pero del micro no se ocupa el SO ?? es decir,
+> si el SO puede lidiar con el, entonces a R no le importa lo que hay
+> debajo, se entiende sólo con la capa del SO ... o no ?
+>
+>
+>
+>
+>
+>
+> On Tue, 11 May 2021 21:29:29 -0300
+> Jose Ramirez Costa <joseramirezcosta en gmail.com> wrote:
+>
+>> Buenas comunidad, quiero instalar R en una tablet Samsung a la q le
+>> instale Ubuntu, existe una versión de R para micros de arquitectura
+>> AMR?
+>>
+>> Si me podrían pasar la versión o el link, les agradecería mucho.
+>>
+>> Saludos!
+>>
+>
+>
+
+-- 
+
+*?Nos quieren tristes para que nos sintamos vencidos y los pueblos
+deprimidos no vencen? Por eso, venimos a combatir alegremente. Seguros de
+nuestro destino y sabiéndonos vencedores, a corto o a largo plazo?.*
+
+*A.J.*
+
+	[[alternative HTML version deleted]]
+
+
+From dc@||@t@@ @end|ng |rom gm@||@com  Wed May 12 08:30:57 2021
+From: dc@||@t@@ @end|ng |rom gm@||@com (El Aprendiz)
+Date: Wed, 12 May 2021 08:30:57 +0200
+Subject: [R-es] Instalar R en micro de arquitectura arm
+In-Reply-To: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+References: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+Message-ID: <CAGrqtWozctpX-rY4qy_5gFMUyhYrp9By6kDUGPeLcDoXWZgJ4Q@mail.gmail.com>
+
+Si has instalado ubuntu, los paquetes de tu instalación son para arm por lo
+que busca r-cran* en el repositorio de paquetes o bien desde la terminal
+
+> sudo apt install r-base
+
+
+
+El mié, 12 may 2021 a las 2:29, Jose Ramirez Costa (<
+joseramirezcosta en gmail.com>) escribió:
+
+> Buenas comunidad, quiero instalar R en una tablet Samsung a la q le instale
+> Ubuntu, existe una versión de R para micros de arquitectura AMR?
+>
+> Si me podrían pasar la versión o el link, les agradecería mucho.
+>
+> Saludos!
+>
+> --
+>
+> *?Nos quieren tristes para que nos sintamos vencidos y los pueblos
+> deprimidos no vencen? Por eso, venimos a combatir alegremente. Seguros de
+> nuestro destino y sabiéndonos vencedores, a corto o a largo plazo?.*
+>
+> *A.J.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Daniel Costas
+
+	[[alternative HTML version deleted]]
+
+
+From truj|||o @end|ng |rom unex@e@  Wed May 12 09:28:47 2021
+From: truj|||o @end|ng |rom unex@e@ (=?UTF-8?Q?Jos=c3=a9_Trujillo_Carmona?=)
+Date: Wed, 12 May 2021 09:28:47 +0200
+Subject: [R-es] Instalar R en micro de arquitectura arm
+In-Reply-To: <CAFOGFn+GYDnSNexGwYphdWL=abiqT5+-YanpvmuxsLfaak65ZQ@mail.gmail.com>
+References: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+ <20210511210428.2c61599a@TheMatrix>
+ <CAFOGFn+GYDnSNexGwYphdWL=abiqT5+-YanpvmuxsLfaak65ZQ@mail.gmail.com>
+Message-ID: <579a83cf-a1b8-32fe-545d-717965652841@unex.es>
+
+El 12/5/21 a las 4:51, Jose Ramirez Costa escribió:
+> Hola Eric, yo tampoco soy muy experto en el tema. Según he leído de un
+> usuario de Python se necesita q el software este compilado para esa
+> arquitectura del micro.
+
+No conozco Ubuntu a fondo pero sí Debian y debería ser igual. Debería.
+
+Efectivamente los paquetes tienen una parte que se compila en el momento 
+de la instalación (con install.packages muchos) y otra parte que está 
+precompilada y esta precompilación sí es específica de la arquitectura 
+que hay debajo.
+
+En el caso de Debian, todos los paquetes con el formato "r-cran-xxxx" 
+(cada vez hay  más) que se intalan con "apt install" están precompilados 
+para casi todas las arquitecturas (no me he puesto en detalle a ver que 
+hay en ARM). En el caso de Ubuntu debería ser igual.
+
+Pero es que además los paquetes r-cran-xxxx tanto en Ubuntu como en 
+Debian van, obligatoriamente, con su paquete fuente y se suelen poder 
+compilar desde la fuente para cualquier arquitectura. No tengo a mano 
+las instrucciones, pero si se necesita las puedo buscar. Si el SO y 
+hardware es capaz de hacer la compilación, cosa que en una tablet no sé 
+si es posible.
+
+Finalmente si la tablet no es capaz de compilar, también se puede hacer 
+compilación cruzada de una arquitectura a otra.
+
+Así que sí. En el tablet se debe poder poner R completo. No sé cual 
+puede llegar a ser el nivel de complejidad al que se puede llegar, 
+depende de lo completa que sea la distribución precompilada de R en 
+Ubuntu-ARM y la capacidad del tablet para compilar lo que falte.
+
+Suerte.
+
+
+>
+> El martes, 11 de mayo de 2021, Eric Concha M. <ericconchamunoz en gmail.com>
+> escribió:
+>> Disculpa la ignorancia, pero del micro no se ocupa el SO ?? es decir,
+>> si el SO puede lidiar con el, entonces a R no le importa lo que hay
+>> debajo, se entiende sólo con la capa del SO ... o no ?
+>>
+>>
+>>
+>>
+>>
+>>
+>> On Tue, 11 May 2021 21:29:29 -0300
+>> Jose Ramirez Costa <joseramirezcosta en gmail.com> wrote:
+>>
+>>> Buenas comunidad, quiero instalar R en una tablet Samsung a la q le
+>>> instale Ubuntu, existe una versión de R para micros de arquitectura
+>>> AMR?
+>>>
+>>> Si me podrían pasar la versión o el link, les agradecería mucho.
+>>>
+>>> Saludos!
+>>>
+>>
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Wed May 12 12:52:22 2021
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Wed, 12 May 2021 12:52:22 +0200
+Subject: [R-es] Instalar R en micro de arquitectura arm
+In-Reply-To: <579a83cf-a1b8-32fe-545d-717965652841@unex.es>
+References: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+ <20210511210428.2c61599a@TheMatrix>
+ <CAFOGFn+GYDnSNexGwYphdWL=abiqT5+-YanpvmuxsLfaak65ZQ@mail.gmail.com>
+ <579a83cf-a1b8-32fe-545d-717965652841@unex.es>
+Message-ID: <CA+8ueybiYAD4_dGEeXCvrKwGQL+2mz7yUcmXJAcBGqbm7sp7GQ@mail.gmail.com>
+
+hola, José y el resto,
+Ahora ando volando así que te dejo la tarea de buscar.
+Hay en GitHub la manera de instalar RStudio en RaspberryPy.
+
+Seguro que después te pueden faltar paquetes si trabajás con java, datos
+espaciales... etc.
+
+Pero eso está resuelto y encontrable
+
+Suerte
+
+Hau idatzi du José Trujillo Carmona (trujillo en unex.es) erabiltzaileak (2021
+mai. 12, az. (09:29)):
+
+> El 12/5/21 a las 4:51, Jose Ramirez Costa escribió:
+> > Hola Eric, yo tampoco soy muy experto en el tema. Según he leído de un
+> > usuario de Python se necesita q el software este compilado para esa
+> > arquitectura del micro.
+>
+> No conozco Ubuntu a fondo pero sí Debian y debería ser igual. Debería.
+>
+> Efectivamente los paquetes tienen una parte que se compila en el momento
+> de la instalación (con install.packages muchos) y otra parte que está
+> precompilada y esta precompilación sí es específica de la arquitectura
+> que hay debajo.
+>
+> En el caso de Debian, todos los paquetes con el formato "r-cran-xxxx"
+> (cada vez hay  más) que se intalan con "apt install" están precompilados
+> para casi todas las arquitecturas (no me he puesto en detalle a ver que
+> hay en ARM). En el caso de Ubuntu debería ser igual.
+>
+> Pero es que además los paquetes r-cran-xxxx tanto en Ubuntu como en
+> Debian van, obligatoriamente, con su paquete fuente y se suelen poder
+> compilar desde la fuente para cualquier arquitectura. No tengo a mano
+> las instrucciones, pero si se necesita las puedo buscar. Si el SO y
+> hardware es capaz de hacer la compilación, cosa que en una tablet no sé
+> si es posible.
+>
+> Finalmente si la tablet no es capaz de compilar, también se puede hacer
+> compilación cruzada de una arquitectura a otra.
+>
+> Así que sí. En el tablet se debe poder poner R completo. No sé cual
+> puede llegar a ser el nivel de complejidad al que se puede llegar,
+> depende de lo completa que sea la distribución precompilada de R en
+> Ubuntu-ARM y la capacidad del tablet para compilar lo que falte.
+>
+> Suerte.
+>
+>
+> >
+> > El martes, 11 de mayo de 2021, Eric Concha M. <ericconchamunoz en gmail.com
+> >
+> > escribió:
+> >> Disculpa la ignorancia, pero del micro no se ocupa el SO ?? es decir,
+> >> si el SO puede lidiar con el, entonces a R no le importa lo que hay
+> >> debajo, se entiende sólo con la capa del SO ... o no ?
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >> On Tue, 11 May 2021 21:29:29 -0300
+> >> Jose Ramirez Costa <joseramirezcosta en gmail.com> wrote:
+> >>
+> >>> Buenas comunidad, quiero instalar R en una tablet Samsung a la q le
+> >>> instale Ubuntu, existe una versión de R para micros de arquitectura
+> >>> AMR?
+> >>>
+> >>> Si me podrían pasar la versión o el link, les agradecería mucho.
+> >>>
+> >>> Saludos!
+> >>>
+> >>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Juan Abasolo, PhD
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T       : (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype   : abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+[blo <https://juanabasolo.netlify.app/>][gak
+<http://bosgarrena.blogspot.com/>]
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu May 13 19:13:54 2021
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 13 May 2021 14:13:54 -0300
+Subject: [R-es] Instalar R en micro de arquitectura arm
+In-Reply-To: <CA+8ueybiYAD4_dGEeXCvrKwGQL+2mz7yUcmXJAcBGqbm7sp7GQ@mail.gmail.com>
+References: <CAFOGFnJ+gX0PyjZfJ8C09oNjDNgqDUnEv7qF9kpEnZWUgSPeng@mail.gmail.com>
+ <20210511210428.2c61599a@TheMatrix>
+ <CAFOGFn+GYDnSNexGwYphdWL=abiqT5+-YanpvmuxsLfaak65ZQ@mail.gmail.com>
+ <579a83cf-a1b8-32fe-545d-717965652841@unex.es>
+ <CA+8ueybiYAD4_dGEeXCvrKwGQL+2mz7yUcmXJAcBGqbm7sp7GQ@mail.gmail.com>
+Message-ID: <CAHo_aEQwz12rHowM-ODpQTTJFzAMH8uMunUR0UpJWUQyJbtatg@mail.gmail.com>
+
+Estimados
+
+Hay un problema,
+
+Por un lado la arquitectura, porque puedo decir ARM, Intel X86, X64, Mac
+M1, pero también alguno puede decir sobre la utilización de CPU, GPU,
+
+La respuesta es fácil en principio, si los repositorios de R tienen
+documentada la compilación para el sistema operativo y la arquitectura, no
+habría problema, por ejemplo, para mac M1 falta el compilador fortran, pero
+ya estaría como para intentarlo, si alguien tiene una M1 puede probarlo.
+
+Pero la respuesta difícil, ARM en una tablet o celular, solo serviría para
+cosas simples, no análisis donde sean necesarias librerías, pero ARM en M1,
+ya es otra cosa, miré algo y hay puntos optimizados por el sistema y la
+arquitectura propia de la empresa, de pronto esa combinación da resultados
+superiores al resto de las alternativas, o simplemente funciona en forma
+semejante.
+
+Javier Rubén Marcuzzi
+
+
+El mié, 12 may 2021 a las 7:52, Juan Abasolo (<juan.abasolo en ehu.eus>)
+escribió:
+
+> hola, José y el resto,
+> Ahora ando volando así que te dejo la tarea de buscar.
+> Hay en GitHub la manera de instalar RStudio en RaspberryPy.
+>
+> Seguro que después te pueden faltar paquetes si trabajás con java, datos
+> espaciales... etc.
+>
+> Pero eso está resuelto y encontrable
+>
+> Suerte
+>
+> Hau idatzi du José Trujillo Carmona (trujillo en unex.es) erabiltzaileak
+> (2021
+> mai. 12, az. (09:29)):
+>
+> > El 12/5/21 a las 4:51, Jose Ramirez Costa escribió:
+> > > Hola Eric, yo tampoco soy muy experto en el tema. Según he leído de un
+> > > usuario de Python se necesita q el software este compilado para esa
+> > > arquitectura del micro.
+> >
+> > No conozco Ubuntu a fondo pero sí Debian y debería ser igual. Debería.
+> >
+> > Efectivamente los paquetes tienen una parte que se compila en el momento
+> > de la instalación (con install.packages muchos) y otra parte que está
+> > precompilada y esta precompilación sí es específica de la arquitectura
+> > que hay debajo.
+> >
+> > En el caso de Debian, todos los paquetes con el formato "r-cran-xxxx"
+> > (cada vez hay  más) que se intalan con "apt install" están precompilados
+> > para casi todas las arquitecturas (no me he puesto en detalle a ver que
+> > hay en ARM). En el caso de Ubuntu debería ser igual.
+> >
+> > Pero es que además los paquetes r-cran-xxxx tanto en Ubuntu como en
+> > Debian van, obligatoriamente, con su paquete fuente y se suelen poder
+> > compilar desde la fuente para cualquier arquitectura. No tengo a mano
+> > las instrucciones, pero si se necesita las puedo buscar. Si el SO y
+> > hardware es capaz de hacer la compilación, cosa que en una tablet no sé
+> > si es posible.
+> >
+> > Finalmente si la tablet no es capaz de compilar, también se puede hacer
+> > compilación cruzada de una arquitectura a otra.
+> >
+> > Así que sí. En el tablet se debe poder poner R completo. No sé cual
+> > puede llegar a ser el nivel de complejidad al que se puede llegar,
+> > depende de lo completa que sea la distribución precompilada de R en
+> > Ubuntu-ARM y la capacidad del tablet para compilar lo que falte.
+> >
+> > Suerte.
+> >
+> >
+> > >
+> > > El martes, 11 de mayo de 2021, Eric Concha M. <
+> ericconchamunoz en gmail.com
+> > >
+> > > escribió:
+> > >> Disculpa la ignorancia, pero del micro no se ocupa el SO ?? es decir,
+> > >> si el SO puede lidiar con el, entonces a R no le importa lo que hay
+> > >> debajo, se entiende sólo con la capa del SO ... o no ?
+> > >>
+> > >>
+> > >>
+> > >>
+> > >>
+> > >>
+> > >> On Tue, 11 May 2021 21:29:29 -0300
+> > >> Jose Ramirez Costa <joseramirezcosta en gmail.com> wrote:
+> > >>
+> > >>> Buenas comunidad, quiero instalar R en una tablet Samsung a la q le
+> > >>> instale Ubuntu, existe una versión de R para micros de arquitectura
+> > >>> AMR?
+> > >>>
+> > >>> Si me podrían pasar la versión o el link, les agradecería mucho.
+> > >>>
+> > >>> Saludos!
+> > >>>
+> > >>
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>
+> --
+> Juan Abasolo, PhD
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T       : (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype   : abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+> [blo <https://juanabasolo.netlify.app/>][gak
+> <http://bosgarrena.blogspot.com/>]
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Sat May 15 15:18:13 2021
+From: gr|er@ @end|ng |rom y@ndex@com (Griera)
+Date: Sat, 15 May 2021 15:18:13 +0200
+Subject: [R-es] =?utf-8?q?SAS_proc_genmod_con_opci=C3=B3n_repeated?=
+In-Reply-To: <CALCOUqt_SU-Anv9wwJMip+ErKiG1y99ejV1JQ_-xR-G1f02-iA@mail.gmail.com>
+References: <20210508175939.61e972cb@debian-dde-tosh>
+ <CALCOUqt_SU-Anv9wwJMip+ErKiG1y99ejV1JQ_-xR-G1f02-iA@mail.gmail.com>
+Message-ID: <20210515151813.1c5af032@debian-dde-tosh>
+
+Hola Freddy:
+
+Gracias por responder y disculpa que no haya respondido hasta ahora: no había vista tu respuesta.
+
+Tengo dos problemas de datos correlacionados:
+
+- Un estudio con un muestreo de pacientes visitados en atención
+  primaria con un diagnóstico concreto durante los últimos cinco años.
+  Para para cada enfermo, se han seleccionado tres controles sin el diagnóstico y apareados
+  por edad y sexo y visitados en el mismo momento. La idea es comparar
+  los casos y los controles y el problema es que son datos
+  correlacionados que en SAS hubiese analizado con el
+  GENMOD y la opción "repeated subject".   
+
+- Un estudio de casos y controles con cuatro controles por caso, pero con casos a los que no se consiguió encontrar un control adecuado. También lo hubiese analizado con el GENMOD y la opción "repeated subject". La pregunta es la clásica de un estudio de casos y controles : los casos han estados más expuetos que los controles?
+
+Espero haberme explicado mejor esta vez.
+
+Muchas gracias y saludos.
+
+On Mon, 10 May 2021 19:10:15 -0400
+Freddy Omar López Quintero <freddy.vate01 en gmail.com> wrote:
+
+> Hola.
+> 
+> Sin una descripción más amplia de lo que buscas es difícil ayudar. Por lo
+> pronto, MASS::glmmPQL creo que hace lo que buscas, pero no lo sé con
+> certeza. Los PROC de SAS suelen abarcar muchísimo más que las funciones de
+> R.
+> 
+> Saludos.
+> 
+> On Sat, May 8, 2021 at 11:59 AM Griera <griera en yandex.com> wrote:
+> 
+> > Buenas tardes, Lista:
+> >
+> > ¿Alguien me podría decir que función de R podría substituir al proc
+> > genmod con la opción "repeated subject"?
+> >
+> > Muchas gracias y saludos.
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> 
+> 
+> -- 
+> «...my role is to be on the bottom of things.»
+> 
+> Donald Knuth
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Wed May 19 04:39:28 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Tue, 18 May 2021 22:39:28 -0400
+Subject: [R-es] random forest y datos faltantes
+Message-ID: <20210518223928.2c0f09c9@TheMatrix>
+
+
+Hola chicos, una pregunta por favor, quizá alguien sabe ... tengo un
+set de datos con missings y no lo puedo imputar con MICE, pero sí con
+missForest. Mi problema es que MICE hace todo el trabajo de calcular
+los parámetros del modelo de interés bajo el set de datos imputados, las
+nuevas varianza, grados de libertad y así, con la función pool() se
+obtienen esa información.
+
+Mi pregunta es: hay algo parecido a pool() de MICE para alguno de los
+algoritmos que usan random forest como missforest o missCompare, por
+ejemplo ? missforest hace un gran trabajo obteniendo los datos
+faltantes, pero de lo que leí desde su viñeta, no va más allá ... llevo
+buscando desde ayer, pero me ha ido mal.
+
+No quiero hacer el trabajo a mano pues me va a llevar mucho tiempo,
+nosoy muy experto y tengo una alta probabilidad de equivocarme.
+
+Espero haber explicado bien mi necesidad.
+
+Saludos y gracias !!
+
+Eric.
+
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Wed May 19 14:12:54 2021
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Wed, 19 May 2021 12:12:54 +0000
+Subject: [R-es] BioStatFLOSS y EpiLinux
+Message-ID: <1621426374892.59162@sergas.es>
+
+Hola.
+
+
+Retomando este antiguo hilo, os anuncio la reciente publicaci?n de:
+
+
+- BioStatfloss V5.0: https://www.sergas.es/Saude-publica/BioStatFLOSS?idioma=es?
+
+
+- EpiLinux v6.0: https://www.sergas.es/Saude-publica/Epilinux?idioma=es
+
+
+
+Notas (un poco al azar):
+
+
+- Obviamente, R es una de las aplicaciones principales (junto con RCommander y RStudio como interfaces gr?ficas) en ambos proyectos.
+
+
+- A los usuarios de Windows (BioStatFLOSS), os recomiendo que le ech?is un ojo a Radiant (otro GUI de R basado web -con Shiny-) y como proyectos derivados de R: JASP y Jamovi.
+
+
+- Todas las aplicaciones de BioStatFLOSS son portables (no necesitan instalaci?n) e independientes unas de otras, por lo que se puede copiar la carpeta correspondiente y ejecutar por separado desde un pendrive, HD externo o en el propio equipo.
+
+
+- La ISO de EpiLinux se puede probar desde una m?quina virtual o grab?ndola en un pendrive (con Rufus o Etcher, por ejemplo); en este caso, una vez grabado el pendrive o HD externo, hay que indicarle al equipo que arranque desde ?l.
+
+
+- Tanto en BioStatFLOSS como en EpiLinux se incluye Epidat (otro de nuestros proyectos de software). M?s info: https://www.sergas.es/Saude-publica/EPIDAT?idioma=es
+
+
+
+Espero que a alguien el resulte de utilidad.
+
+Un saludo,
+
+-------------
+
+Miguel ?ngel Rodr?guez Mu??os
+
+Direcci?n Xeral de Sa?de P?blica
+
+Conseller?a de Sanidade
+
+Xunta de Galicia
+
+https://dxsp.sergas.gal/<https://www.sergas.gal/Saude-publica>
+
+
+
+
+[R-es] EpiLinux 5
+miguel.angel.rodriguez.muinos en sergas.es miguel.angel.rodriguez.muinos en sergas.es<mailto:r-help-es%40r-project.org?Subject=Re%3A%20%5BR-es%5D%20EpiLinux%205&In-Reply-To=%3C1516609305844.55711%40sergas.es%3E>
+Lun Ene 22 09:21:46 CET 2018
+
+
+Hola.
+
+
+Os anuncio la publicaci?n de la versi?n 5 de EpiLinux.
+
+
+Es una distribuci?n cient?fica de Linux, basada en Ubuntu de 64 bits con entorno de escritorio LXDE, que incluye una recopilaci?n de software espec?ficamente orientado al an?lisis de datos, la bioestad?stica y/o la epidemiolog?a.
+
+
+Obviamente, el "n?cleo central" de la distro es R (que viene con tres entornos gr?ficos preinstalados: RCommander, RKward y RStudio) aunque la selecci?n de software es amplia.
+
+
+Ten?is m?s informaci?n aqu? -> https://www.sergas.es/Saude-publica/Epilinux?idioma=es
+
+
+Se puede descargar en forma de ISO (4Gb aprox.). Esta ISO se puede montar virtualizada o pasarla a un pendrive para convertirla en una distribuci?n live -funciona aut?nomamente desde el propio pendrive-. Tambi?n se puede instalar en el disco duro del ordenador.
+
+
+Espero que os pueda ser ?til. Aunque es dif?cil que alguien de esta lista no tenga ya un entorno de trabajo estable y personalizado, este tipo de distribuciones "live" son bastante adecuadas para la formaci?n por no ser agresivas con el sistema operativo host del ordenador y/o para iniciarse en este campo (nota: para este prop?sito os recomiendo que prob?is JASP, a los que no lo conoc?is)
+
+
+Si ten?is alg?n ordenador por ah? que ya no puede con las nuevas versiones de Windows, pod?is probarla tambi?n (mejor instalada en el HD porque ese tipo de equipos suele tener puertos USB "lentos"), igual os sorprende su ligereza.
+
+
+Se agradecen comentarios, sugerencias, ideas, cr?ticas, ....
+
+
+Un saludo,
+Miguel.
+
+
+
+
+
+
+
+
+
+________________________________
+
+Nota: A informaci?n contida nesta mensaxe e os seus posibles documentos adxuntos ? privada e confidencial e est? dirixida ?nicamente ? seu destinatario/a. Se vostede non ? o/a destinatario/a orixinal desta mensaxe, por favor elim?nea. A distribuci?n ou copia desta mensaxe non est? autorizada.
+
+Nota: La informaci?n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est? dirigida ?nicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?nelo. La distribuci?n o copia de este mensaje no est? autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Wed May 19 18:42:49 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha M.)
+Date: Wed, 19 May 2021 12:42:49 -0400
+Subject: [R-es] random forest y datos faltantes
+In-Reply-To: <CAOKbq8iKuwhx4AR2Eass_2WffYuQQa7mew8dvJ5ZjeY9t1aHxA@mail.gmail.com>
+References: <20210518223928.2c0f09c9@TheMatrix>
+ <CAOKbq8iKuwhx4AR2Eass_2WffYuQQa7mew8dvJ5ZjeY9t1aHxA@mail.gmail.com>
+Message-ID: <20210519124249.1a8a4684@TheMatrix>
+
+
+Hoal Carlos, muchas gracias por compartir tu experiencia.
+
+Slds,
+
+Eric.
+
+
+
+On Wed, 19 May 2021 12:01:29 +0200
+Carlos Ortega <cof en qualityexcellence.es> wrote:
+
+> Hola Eric,
+> 
+> La función "pool()" es una modificación de las funciones "tidy()" y
+> "glance()" del paquete "broom" y permite extraer y presentar de forma
+> muy amigable resultados de un modelo.
+> El paquete "broom" incluye la posibilidad de extraer parámetros,
+> coeficientes, valores de bondad de ajuste, etc de múltiples modelos
+> de R. El paquete "mice" lo que hace es utilizar esta función para
+> presentarte resultados del modelo ajustado de forma muy equivalente a
+> lo que hacen las funciones de "broom".
+> 
+> En tu caso, simplemente imputa tus NAs con los paquetes "missForest"
+> (te recomiendo muy especialmente otra alternativa con "missRanger") o
+> cualquier otro, y sobre el conjunto imputado tendrás que definir un
+> modelo ("lm", "glm"... lo que consideres) y sobre el modelo ajustado
+> usa la función "tidy()" o "glance(), tendrás que haber incluido la
+> librería "broom" previamente. Y tendrás tus resultados como en "mice".
+> 
+> Mira el ejemplo de la salida que producen las funciones "tidy()" y
+> "glance()" del paquete "broom" para que veas que el resultado es
+> equivalente al que produce "pool()"
+> 
+> > library(ggplot2)
+> > library(dplyr)
+> >
+> > mod <- lm(mpg ~ wt + qsec, data = mtcars)
+> >
+> > tidy(mod)
+> # A tibble: 3 x 5
+>   term        estimate std.error statistic  p.value
+>   <chr>          <dbl>     <dbl>     <dbl>    <dbl>
+> 1 (Intercept)   19.7       5.25       3.76 7.65e- 4
+> 2 wt            -5.05      0.484    -10.4  2.52e-11
+> 3 qsec           0.929     0.265      3.51 1.50e- 3
+> > glance(mod)
+> # A tibble: 1 x 12
+>   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC
+>   BIC deviance df.residual  nobs
+>       <dbl>         <dbl> <dbl>     <dbl>    <dbl> <dbl>  <dbl> <dbl>
+> <dbl> <dbl>       <int> <int>
+> 1     0.826         0.814  2.60      69.0 9.39e-12     2  -74.4  157.
+>  163. 195.          29    32
+> >
+> 
+> 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+> 
+> 
+> 
+> El mié, 19 may 2021 a las 4:40, Eric Concha M.
+> (<ericconchamunoz en gmail.com>) escribió:
+> 
+> >
+> > Hola chicos, una pregunta por favor, quizá alguien sabe ... tengo un
+> > set de datos con missings y no lo puedo imputar con MICE, pero sí
+> > con missForest. Mi problema es que MICE hace todo el trabajo de
+> > calcular los parámetros del modelo de interés bajo el set de datos
+> > imputados, las nuevas varianza, grados de libertad y así, con la
+> > función pool() se obtienen esa información.
+> >
+> > Mi pregunta es: hay algo parecido a pool() de MICE para alguno de
+> > los algoritmos que usan random forest como missforest o
+> > missCompare, por ejemplo ? missforest hace un gran trabajo
+> > obteniendo los datos faltantes, pero de lo que leí desde su viñeta,
+> > no va más allá ... llevo buscando desde ayer, pero me ha ido mal.
+> >
+> > No quiero hacer el trabajo a mano pues me va a llevar mucho tiempo,
+> > nosoy muy experto y tengo una alta probabilidad de equivocarme.
+> >
+> > Espero haber explicado bien mi necesidad.
+> >
+> > Saludos y gracias !!
+> >
+> > Eric.
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> 
+> 
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Thu May 20 10:17:06 2021
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Thu, 20 May 2021 10:17:06 +0200
+Subject: [R-es] BioStatFLOSS y EpiLinux
+In-Reply-To: <1621426374892.59162@sergas.es>
+References: <1621426374892.59162@sergas.es>
+Message-ID: <CA+8ueyZ09Nc3Nmj0ByKnm--C75fNs0V15qL-t9vnebPHKqnsCg@mail.gmail.com>
+
+Muchas gracias, Miguel Angel;
+Por curiosidad lo voy a intentar probar.
+Seguramente me venga muy bien para salir del paso cuando no estoy en mi
+máquina.
+Espero encontrar la manera de incluirlo en mi flujo de trabajo.
+
+Juan
+
+Mezu hau jaso duzu <miguel.angel.rodriguez.muinos en sergas.es> helbidetik
+(2021 mai. 19, az. (14:13)):
+
+> Hola.
+>
+>
+> Retomando este antiguo hilo, os anuncio la reciente publicación de:
+>
+>
+> - BioStatfloss V5.0:
+> https://www.sergas.es/Saude-publica/BioStatFLOSS?idioma=es?
+>
+>
+> - EpiLinux v6.0: https://www.sergas.es/Saude-publica/Epilinux?idioma=es
+>
+>
+>
+> Notas (un poco al azar):
+>
+>
+> - Obviamente, R es una de las aplicaciones principales (junto con
+> RCommander y RStudio como interfaces gráficas) en ambos proyectos.
+>
+>
+> - A los usuarios de Windows (BioStatFLOSS), os recomiendo que le echéis un
+> ojo a Radiant (otro GUI de R basado web -con Shiny-) y como proyectos
+> derivados de R: JASP y Jamovi.
+>
+>
+> - Todas las aplicaciones de BioStatFLOSS son portables (no necesitan
+> instalación) e independientes unas de otras, por lo que se puede copiar la
+> carpeta correspondiente y ejecutar por separado desde un pendrive, HD
+> externo o en el propio equipo.
+>
+>
+> - La ISO de EpiLinux se puede probar desde una máquina virtual o
+> grabándola en un pendrive (con Rufus o Etcher, por ejemplo); en este caso,
+> una vez grabado el pendrive o HD externo, hay que indicarle al equipo que
+> arranque desde él.
+>
+>
+> - Tanto en BioStatFLOSS como en EpiLinux se incluye Epidat (otro de
+> nuestros proyectos de software). Más info:
+> https://www.sergas.es/Saude-publica/EPIDAT?idioma=es
+>
+>
+>
+> Espero que a alguien el resulte de utilidad.
+>
+> Un saludo,
+>
+> -------------
+>
+> Miguel Ángel Rodríguez Muíños
+>
+> Dirección Xeral de Saúde Pública
+>
+> Consellería de Sanidade
+>
+> Xunta de Galicia
+>
+> https://dxsp.sergas.gal/<https://www.sergas.gal/Saude-publica>
+>
+>
+>
+>
+> [R-es] EpiLinux 5
+> miguel.angel.rodriguez.muinos en sergas.es miguel.angel.rodriguez.muinos
+> en sergas.es<mailto:r-help-es%40r-project.org
+> ?Subject=Re%3A%20%5BR-es%5D%20EpiLinux%205&In-Reply-To=%3C1516609305844.55711%
+> 40sergas.es%3E>
+> Lun Ene 22 09:21:46 CET 2018
+>
+>
+> Hola.
+>
+>
+> Os anuncio la publicación de la versión 5 de EpiLinux.
+>
+>
+> Es una distribución científica de Linux, basada en Ubuntu de 64 bits con
+> entorno de escritorio LXDE, que incluye una recopilación de software
+> específicamente orientado al análisis de datos, la bioestadística y/o la
+> epidemiología.
+>
+>
+> Obviamente, el "núcleo central" de la distro es R (que viene con tres
+> entornos gráficos preinstalados: RCommander, RKward y RStudio) aunque la
+> selección de software es amplia.
+>
+>
+> Tenéis más información aquí ->
+> https://www.sergas.es/Saude-publica/Epilinux?idioma=es
+>
+>
+> Se puede descargar en forma de ISO (4Gb aprox.). Esta ISO se puede montar
+> virtualizada o pasarla a un pendrive para convertirla en una distribución
+> live -funciona autónomamente desde el propio pendrive-. También se puede
+> instalar en el disco duro del ordenador.
+>
+>
+> Espero que os pueda ser útil. Aunque es difícil que alguien de esta lista
+> no tenga ya un entorno de trabajo estable y personalizado, este tipo de
+> distribuciones "live" son bastante adecuadas para la formación por no ser
+> agresivas con el sistema operativo host del ordenador y/o para iniciarse en
+> este campo (nota: para este propósito os recomiendo que probéis JASP, a los
+> que no lo conocéis)
+>
+>
+> Si tenéis algún ordenador por ahí que ya no puede con las nuevas versiones
+> de Windows, podéis probarla también (mejor instalada en el HD porque ese
+> tipo de equipos suele tener puertos USB "lentos"), igual os sorprende su
+> ligereza.
+>
+>
+> Se agradecen comentarios, sugerencias, ideas, críticas, ....
+>
+>
+> Un saludo,
+> Miguel.
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> ________________________________
+>
+> Nota: A información contida nesta mensaxe e os seus posibles documentos
+> adxuntos é privada e confidencial e está dirixida únicamente ó seu
+> destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe,
+> por favor elimínea. A distribución ou copia desta mensaxe non está
+> autorizada.
+>
+> Nota: La información contenida en este mensaje y sus posibles documentos
+> adjuntos es privada y confidencial y está dirigida únicamente a su
+> destinatario/a. Si usted no es el/la destinatario/a original de este
+> mensaje, por favor elimínelo. La distribución o copia de este mensaje no
+> está autorizada.
+>
+> See more languages: http://www.sergas.es/aviso-confidencialidad
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Juan Abasolo, PhD
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T       : (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype   : abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+[blo <https://juanabasolo.netlify.app/>][gak
+<http://bosgarrena.blogspot.com/>]
+
+	[[alternative HTML version deleted]]
+
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Tue May 25 13:42:11 2021
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Tue, 25 May 2021 11:42:11 +0000
+Subject: [R-es] BioStatFLOSS y EpiLinux
+Message-ID: <1621942931494.96582@sergas.es>
+
+Hola.
+
+
+A los que quer?is probar la nueva versi?n de EpiLinux (6.0) sin descargaros ni instalar nada, ya la ten?is disponible en la web de DistroTest.net
+
+(se ejecuta en el navegador; obviamente, el rendimiento no es el mismo)
+
+
+https://distrotest.net/EpiLinux/6.0
+
+
+
+Un saludo,
+
+Miguel.
+
+
+
+?
+
+
+
+
+________________________________
+De: Rodr?guez Mu??os, Miguel ?ngel
+Enviado: mi?rcoles, 19 de mayo de 2021 14:12
+Para: r-help-es en r-project.org
+Asunto: BioStatFLOSS y EpiLinux
+
+
+Hola.
+
+
+Retomando este antiguo hilo, os anuncio la reciente publicaci?n de:
+
+
+- BioStatfloss V5.0: https://www.sergas.es/Saude-publica/BioStatFLOSS?idioma=es?
+
+
+- EpiLinux v6.0: https://www.sergas.es/Saude-publica/Epilinux?idioma=es
+
+
+
+Notas (un poco al azar):
+
+
+- Obviamente, R es una de las aplicaciones principales (junto con RCommander y RStudio como interfaces gr?ficas) en ambos proyectos.
+
+
+- A los usuarios de Windows (BioStatFLOSS), os recomiendo que le ech?is un ojo a Radiant (otro GUI de R basado web -con Shiny-) y como proyectos derivados de R: JASP y Jamovi.
+
+
+- Todas las aplicaciones de BioStatFLOSS son portables (no necesitan instalaci?n) e independientes unas de otras, por lo que se puede copiar la carpeta correspondiente y ejecutar por separado desde un pendrive, HD externo o en el propio equipo.
+
+
+- La ISO de EpiLinux se puede probar desde una m?quina virtual o grab?ndola en un pendrive (con Rufus o Etcher, por ejemplo); en este caso, una vez grabado el pendrive o HD externo, hay que indicarle al equipo que arranque desde ?l.
+
+
+- Tanto en BioStatFLOSS como en EpiLinux se incluye Epidat (otro de nuestros proyectos de software). M?s info: https://www.sergas.es/Saude-publica/EPIDAT?idioma=es
+
+
+
+Espero que a alguien el resulte de utilidad.
+
+Un saludo,
+
+-------------
+
+Miguel ?ngel Rodr?guez Mu??os
+
+Direcci?n Xeral de Sa?de P?blica
+
+Conseller?a de Sanidade
+
+Xunta de Galicia
+
+https://dxsp.sergas.gal/<https://www.sergas.gal/Saude-publica>
+
+
+
+[R-es] EpiLinux 5
+miguel.angel.rodriguez.muinos en sergas.es miguel.angel.rodriguez.muinos en sergas.es<mailto:r-help-es%40r-project.org?Subject=Re%3A%20%5BR-es%5D%20EpiLinux%205&In-Reply-To=%3C1516609305844.55711%40sergas.es%3E>
+Lun Ene 22 09:21:46 CET 2018
+
+
+Hola.
+
+
+Os anuncio la publicaci?n de la versi?n 5 de EpiLinux.
+
+
+Es una distribuci?n cient?fica de Linux, basada en Ubuntu de 64 bits con entorno de escritorio LXDE, que incluye una recopilaci?n de software espec?ficamente orientado al an?lisis de datos, la bioestad?stica y/o la epidemiolog?a.
+
+
+Obviamente, el "n?cleo central" de la distro es R (que viene con tres entornos gr?ficos preinstalados: RCommander, RKward y RStudio) aunque la selecci?n de software es amplia.
+
+
+Ten?is m?s informaci?n aqu? -> https://www.sergas.es/Saude-publica/Epilinux?idioma=es
+
+
+Se puede descargar en forma de ISO (4Gb aprox.). Esta ISO se puede montar virtualizada o pasarla a un pendrive para convertirla en una distribuci?n live -funciona aut?nomamente desde el propio pendrive-. Tambi?n se puede instalar en el disco duro del ordenador.
+
+
+Espero que os pueda ser ?til. Aunque es dif?cil que alguien de esta lista no tenga ya un entorno de trabajo estable y personalizado, este tipo de distribuciones "live" son bastante adecuadas para la formaci?n por no ser agresivas con el sistema operativo host del ordenador y/o para iniciarse en este campo (nota: para este prop?sito os recomiendo que prob?is JASP, a los que no lo conoc?is)
+
+
+Si ten?is alg?n ordenador por ah? que ya no puede con las nuevas versiones de Windows, pod?is probarla tambi?n (mejor instalada en el HD porque ese tipo de equipos suele tener puertos USB "lentos"), igual os sorprende su ligereza.
+
+
+Se agradecen comentarios, sugerencias, ideas, cr?ticas, ....
+
+
+Un saludo,
+Miguel.
+
+
+
+?
+
+
+________________________________
+
+Nota: A informaci?n contida nesta mensaxe e os seus posibles documentos adxuntos ? privada e confidencial e est? dirixida ?nicamente ? seu destinatario/a. Se vostede non ? o/a destinatario/a orixinal desta mensaxe, por favor elim?nea. A distribuci?n ou copia desta mensaxe non est? autorizada.
+
+Nota: La informaci?n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est? dirigida ?nicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?nelo. La distribuci?n o copia de este mensaje no est? autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From c@n@d@@reche @end|ng |rom gm@||@com  Tue May 25 13:48:57 2021
+From: c@n@d@@reche @end|ng |rom gm@||@com (=?UTF-8?Q?Jos=C3=A9_Luis_Ca=C3=B1adas?=)
+Date: Tue, 25 May 2021 13:48:57 +0200
+Subject: [R-es] BioStatFLOSS y EpiLinux
+In-Reply-To: <1621942931494.96582@sergas.es>
+References: <1621942931494.96582@sergas.es>
+Message-ID: <CADdZEnPFOzojT_qjWsxPyW42ukd2K7aADBK+gsF+YMdBHVpezg@mail.gmail.com>
+
+Gracias Miguel Ángel. Seguro que la distro es de la máxima calidad
+
+El mar., 25 may. 2021 13:42, <miguel.angel.rodriguez.muinos en sergas.es>
+escribió:
+
+> Hola.
+>
+>
+> A los que queráis probar la nueva versión de EpiLinux (6.0) sin
+> descargaros ni instalar nada, ya la tenéis disponible en la web de
+> DistroTest.net
+>
+> (se ejecuta en el navegador; obviamente, el rendimiento no es el mismo)
+>
+>
+> https://distrotest.net/EpiLinux/6.0
+>
+>
+>
+> Un saludo,
+>
+> Miguel.
+>
+>
+>
+> ?
+>
+>
+>
+>
+> ________________________________
+> De: Rodríguez Muíños, Miguel Ángel
+> Enviado: miércoles, 19 de mayo de 2021 14:12
+> Para: r-help-es en r-project.org
+> Asunto: BioStatFLOSS y EpiLinux
+>
+>
+> Hola.
+>
+>
+> Retomando este antiguo hilo, os anuncio la reciente publicación de:
+>
+>
+> - BioStatfloss V5.0:
+> https://www.sergas.es/Saude-publica/BioStatFLOSS?idioma=es?
+>
+>
+> - EpiLinux v6.0: https://www.sergas.es/Saude-publica/Epilinux?idioma=es
+>
+>
+>
+> Notas (un poco al azar):
+>
+>
+> - Obviamente, R es una de las aplicaciones principales (junto con
+> RCommander y RStudio como interfaces gráficas) en ambos proyectos.
+>
+>
+> - A los usuarios de Windows (BioStatFLOSS), os recomiendo que le echéis un
+> ojo a Radiant (otro GUI de R basado web -con Shiny-) y como proyectos
+> derivados de R: JASP y Jamovi.
+>
+>
+> - Todas las aplicaciones de BioStatFLOSS son portables (no necesitan
+> instalación) e independientes unas de otras, por lo que se puede copiar la
+> carpeta correspondiente y ejecutar por separado desde un pendrive, HD
+> externo o en el propio equipo.
+>
+>
+> - La ISO de EpiLinux se puede probar desde una máquina virtual o
+> grabándola en un pendrive (con Rufus o Etcher, por ejemplo); en este caso,
+> una vez grabado el pendrive o HD externo, hay que indicarle al equipo que
+> arranque desde él.
+>
+>
+> - Tanto en BioStatFLOSS como en EpiLinux se incluye Epidat (otro de
+> nuestros proyectos de software). Más info:
+> https://www.sergas.es/Saude-publica/EPIDAT?idioma=es
+>
+>
+>
+> Espero que a alguien el resulte de utilidad.
+>
+> Un saludo,
+>
+> -------------
+>
+> Miguel Ángel Rodríguez Muíños
+>
+> Dirección Xeral de Saúde Pública
+>
+> Consellería de Sanidade
+>
+> Xunta de Galicia
+>
+> https://dxsp.sergas.gal/<https://www.sergas.gal/Saude-publica>
+>
+>
+>
+> [R-es] EpiLinux 5
+> miguel.angel.rodriguez.muinos en sergas.es miguel.angel.rodriguez.muinos
+> en sergas.es<mailto:r-help-es%40r-project.org
+> ?Subject=Re%3A%20%5BR-es%5D%20EpiLinux%205&In-Reply-To=%3C1516609305844.55711%
+> 40sergas.es%3E>
+> Lun Ene 22 09:21:46 CET 2018
+>
+>
+> Hola.
+>
+>
+> Os anuncio la publicación de la versión 5 de EpiLinux.
+>
+>
+> Es una distribución científica de Linux, basada en Ubuntu de 64 bits con
+> entorno de escritorio LXDE, que incluye una recopilación de software
+> específicamente orientado al análisis de datos, la bioestadística y/o la
+> epidemiología.
+>
+>
+> Obviamente, el "núcleo central" de la distro es R (que viene con tres
+> entornos gráficos preinstalados: RCommander, RKward y RStudio) aunque la
+> selección de software es amplia.
+>
+>
+> Tenéis más información aquí ->
+> https://www.sergas.es/Saude-publica/Epilinux?idioma=es
+>
+>
+> Se puede descargar en forma de ISO (4Gb aprox.). Esta ISO se puede montar
+> virtualizada o pasarla a un pendrive para convertirla en una distribución
+> live -funciona autónomamente desde el propio pendrive-. También se puede
+> instalar en el disco duro del ordenador.
+>
+>
+> Espero que os pueda ser útil. Aunque es difícil que alguien de esta lista
+> no tenga ya un entorno de trabajo estable y personalizado, este tipo de
+> distribuciones "live" son bastante adecuadas para la formación por no ser
+> agresivas con el sistema operativo host del ordenador y/o para iniciarse en
+> este campo (nota: para este propósito os recomiendo que probéis JASP, a los
+> que no lo conocéis)
+>
+>
+> Si tenéis algún ordenador por ahí que ya no puede con las nuevas versiones
+> de Windows, podéis probarla también (mejor instalada en el HD porque ese
+> tipo de equipos suele tener puertos USB "lentos"), igual os sorprende su
+> ligereza.
+>
+>
+> Se agradecen comentarios, sugerencias, ideas, críticas, ....
+>
+>
+> Un saludo,
+> Miguel.
+>
+>
+>
+> ?
+>
+>
+> ________________________________
+>
+> Nota: A información contida nesta mensaxe e os seus posibles documentos
+> adxuntos é privada e confidencial e está dirixida únicamente ó seu
+> destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe,
+> por favor elimínea. A distribución ou copia desta mensaxe non está
+> autorizada.
+>
+> Nota: La información contenida en este mensaje y sus posibles documentos
+> adjuntos es privada y confidencial y está dirigida únicamente a su
+> destinatario/a. Si usted no es el/la destinatario/a original de este
+> mensaje, por favor elimínelo. La distribución o copia de este mensaje no
+> está autorizada.
+>
+> See more languages: http://www.sergas.es/aviso-confidencialidad
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From moreno@m@b|e6 @end|ng |rom gm@||@com  Fri May 28 16:32:56 2021
+From: moreno@m@b|e6 @end|ng |rom gm@||@com (Amable Moreno)
+Date: Fri, 28 May 2021 11:32:56 -0300
+Subject: [R-es] paquete npsm
+Message-ID: <CADOthBgW=KMwXfTz+tR_wSurR=4k2U4XVu8wzmHHB=1qZ=Q16Q@mail.gmail.com>
+
+Buen dia a todos
+Quisiera saber con qué paquete hacer el test de Fligner Killen
+porque lo solia resolver con el paquete npsm pero ahora ese paquete
+no se puede bajar
+
+	[[alternative HTML version deleted]]
+
+
+From truj|||o @end|ng |rom unex@e@  Fri May 28 17:03:33 2021
+From: truj|||o @end|ng |rom unex@e@ (=?UTF-8?Q?Jos=c3=a9_Trujillo_Carmona?=)
+Date: Fri, 28 May 2021 17:03:33 +0200
+Subject: [R-es] paquete npsm
+In-Reply-To: <CADOthBgW=KMwXfTz+tR_wSurR=4k2U4XVu8wzmHHB=1qZ=Q16Q@mail.gmail.com>
+References: <CADOthBgW=KMwXfTz+tR_wSurR=4k2U4XVu8wzmHHB=1qZ=Q16Q@mail.gmail.com>
+Message-ID: <fcb6e621-c11c-c154-c72e-fe24d342b385@unex.es>
+
+En realidad sí puedes instalar npsm, solo que está en github, no en cran:
+
+ > install.packages("remotes")
+
+ > install.packages("xfun")
+
+ > library(xfun)
+
+ > install_github('kloke/npsm')
+
+Y listo.
+
+
+El 28/5/21 a las 16:32, Amable Moreno escribió:
+> Buen dia a todos
+> Quisiera saber con qué paquete hacer el test de Fligner Killen
+> porque lo solia resolver con el paquete npsm pero ahora ese paquete
+> no se puede bajar
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From truj|||o @end|ng |rom unex@e@  Fri May 28 17:37:50 2021
+From: truj|||o @end|ng |rom unex@e@ (=?UTF-8?Q?Jos=c3=a9_Trujillo_Carmona?=)
+Date: Fri, 28 May 2021 17:37:50 +0200
+Subject: [R-es] paquete npsm
+In-Reply-To: <fcb6e621-c11c-c154-c72e-fe24d342b385@unex.es>
+References: <CADOthBgW=KMwXfTz+tR_wSurR=4k2U4XVu8wzmHHB=1qZ=Q16Q@mail.gmail.com>
+ <fcb6e621-c11c-c154-c72e-fe24d342b385@unex.es>
+Message-ID: <8f18e217-1959-0224-c495-9059e66b4f5e@unex.es>
+
+Aunque no incluye estimas de la razón de escalas ni su intervalo de 
+confianza, el contraste de diferencias de escalas de Fligner lo tienes 
+también en el paquete stasts (función Fligner.test), aunque supongo que 
+eso ya lo sabes.
+
+Saludos.
+
+
+El 28/5/21 a las 17:03, José Trujillo Carmona escribió:
+> En realidad sí puedes instalar npsm, solo que está en github, no en cran:
+>
+>> install.packages("remotes")
+>
+>> install.packages("xfun")
+>
+>> library(xfun)
+>
+>> install_github('kloke/npsm')
+>
+> Y listo.
+>
+>
+> El 28/5/21 a las 16:32, Amable Moreno escribió:
+>> Buen dia a todos
+>> Quisiera saber con qué paquete hacer el test de Fligner Killen
+>> porque lo solia resolver con el paquete npsm pero ahora ese paquete
+>> no se puede bajar
+>>
+>>     [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Fri May 28 22:54:58 2021
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Fri, 28 May 2021 22:54:58 +0200
+Subject: [R-es] =?utf-8?q?Crear_un_data_frame_con_las_respuestas_de_texto?=
+	=?utf-8?q?_a_los_ex=C3=A1menes=2E=2E=2E_o_similares?=
+Message-ID: <CA+8ueybJTfbRSoKs7AnO8USKqdZe3rZL4j25DGf5LQ_CNZXF+w@mail.gmail.com>
+
+Buenas, compañeRos;
+Tengo una idea que no consigo terminar de resolver eficientemente.
+
+Mis alumnos tienen que escribir un exámen en formato texto, del que yo les
+doy las preguntas, pueden contestar cualquier cosa o no contestar.
+
+Yo quiero hacer un data frame en el que cada caso sea un exámen y que cada
+variable sea una pregunta y los valores las respuestas.
+
+Con el paquete readtext leo todo y consigo que una variable sea el exámen
+completo. Lo otro lo intenté hacer a mano y me queda (con errores) un loop
+pregunta a pregunta.
+
+Me pregunto si conocerán alguna función/paquete especialmente para hacer
+este tipo de tratamientos del texto.
+
+Atte,
+
+Juan
+
+
+-- 
+Juan Abasolo, PhD
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T       : (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype   : abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+[blo <https://juanabasolo.netlify.app/>][gak
+<http://bosgarrena.blogspot.com/>]
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Sun May 30 11:59:14 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Sun, 30 May 2021 11:59:14 +0200
+Subject: [R-es] 
+ =?utf-8?q?Crear_un_data_frame_con_las_respuestas_de_texto?=
+ =?utf-8?q?_a_los_ex=C3=A1menes=2E=2E=2E_o_similares?=
+In-Reply-To: <CA+8ueybJTfbRSoKs7AnO8USKqdZe3rZL4j25DGf5LQ_CNZXF+w@mail.gmail.com>
+References: <CA+8ueybJTfbRSoKs7AnO8USKqdZe3rZL4j25DGf5LQ_CNZXF+w@mail.gmail.com>
+Message-ID: <3386555D-A4FF-46FC-AF1C-CB4DF99C7F0C@gmail.com>
+
+Hola Juan,
+
+Con el paquete exams puedes generar exámenes en pdf. Se puede usar para crear exámenes muy sencillos o muy complejos. Tendrás que pasar lo que tengas en texto a Rmd, pero después es muy automático.
+http://www.r-exams.org <http://www.r-exams.org/>
+
+
+Emilio L. Cano
+http://emilio.lcano.com 
+
+
+
+
+> El 28 may 2021, a las 22:54, Juan Abasolo <juan.abasolo en ehu.eus> escribió:
+> 
+> Buenas, compañeRos;
+> Tengo una idea que no consigo terminar de resolver eficientemente.
+> 
+> Mis alumnos tienen que escribir un exámen en formato texto, del que yo les
+> doy las preguntas, pueden contestar cualquier cosa o no contestar.
+> 
+> Yo quiero hacer un data frame en el que cada caso sea un exámen y que cada
+> variable sea una pregunta y los valores las respuestas.
+> 
+> Con el paquete readtext leo todo y consigo que una variable sea el exámen
+> completo. Lo otro lo intenté hacer a mano y me queda (con errores) un loop
+> pregunta a pregunta.
+> 
+> Me pregunto si conocerán alguna función/paquete especialmente para hacer
+> este tipo de tratamientos del texto.
+> 
+> Atte,
+> 
+> Juan
+> 
+> 
+> -- 
+> Juan Abasolo, PhD
+> 
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+> 
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+> 
+> T       : (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype   : abasolo72
+> 
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+> [blo <https://juanabasolo.netlify.app/>][gak
+> <http://bosgarrena.blogspot.com/>]
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|@m@rt|nez@|opez @end|ng |rom gm@||@com  Mon May 31 10:51:29 2021
+From: j@v|@m@rt|nez@|opez @end|ng |rom gm@||@com (=?UTF-8?B?SmF2aWVyIE1hcnTDrW5lei1Mw7NwZXo=?=)
+Date: Mon, 31 May 2021 10:51:29 +0200
+Subject: [R-es] Duda MCDA y alternativas
+Message-ID: <CAKgwV9kHUSEW-P3siOU1ptY=W56GfGZuzqHA5VjAO=deVtv_3g@mail.gmail.com>
+
+Hola,
+
+Estoy usando MCDA (la librería se llama igual - Multicriteria Decision
+Aiding) para buscar alternativas óptimas en base a los resultados de un
+modelo usando 5 criterios/variables. Lo que pasa es que no me aparecen los
+mismos rankings de alternativas si comparo sólo un pequeño conjunto de las
+posibles alternativas (n=14) o si las comparo todas (n=16000). El rango de
+algunas de las 5 variables va de cero a uno pero en otras no tiene límite
+superior. He estandarizado las variables a optimizar usando varios métodos
+y siempre pasa.
+
+Antes de usar MCDA simplemente estandarizaba y luego hacía la media (todas
+se intentan maximizar y no hay pesos) y me pasaba igual. En cambio, si miro
+los rankings de cada variable por separado, sin hacer la media, siempre
+sale consistente.
+
+Sólo se me ocurre que al estandarizar y luego hacer la media, algunas de
+las variables pueden bajar o subir su valor relativo respecto a otras (al
+dividir por el máximo, por ejemplo) y quizá por eso se dan los cambios en
+los ranking de alternativas, pero en ese caso me entra la duda de hasta qué
+punto estos métodos son subjetivos y dependen de las comparaciones que se
+hagan...
+
+¿Alguien tiene alguna experiencia similar o sugerencia?
+
+Gracias y saludos,
+
+Javier
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Mon May 31 15:43:17 2021
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Mon, 31 May 2021 15:43:17 +0200
+Subject: [R-es] 
+	=?utf-8?q?Crear_un_data_frame_con_las_respuestas_de_texto?=
+	=?utf-8?q?_a_los_ex=C3=A1menes=2E=2E=2E_o_similares?=
+In-Reply-To: <3386555D-A4FF-46FC-AF1C-CB4DF99C7F0C@gmail.com>
+References: <CA+8ueybJTfbRSoKs7AnO8USKqdZe3rZL4j25DGf5LQ_CNZXF+w@mail.gmail.com>
+ <3386555D-A4FF-46FC-AF1C-CB4DF99C7F0C@gmail.com>
+Message-ID: <CA+8ueyYYCXUJObFEMOD+BhSpVPBy0T3P3FmsTU9rVbcjLBRFpg@mail.gmail.com>
+
+Muchas gracias, Emilio;
+Ya los tengo en .md, así que la mitad del trabajo está hecha!
+
+Igualmente, tengo que buscar tutorial o algo así para entender bien cómo
+proponen qué uso.
+
+Hau idatzi du Emilio L. Cano (emilopezcano en gmail.com) erabiltzaileak (2021
+mai. 30, ig. (11:59)):
+
+> Hola Juan,
+>
+> Con el paquete exams puedes generar exámenes en pdf. Se puede usar para
+> crear exámenes muy sencillos o muy complejos. Tendrás que pasar lo que
+> tengas en texto a Rmd, pero después es muy automático.
+> http://www.r-exams.org
+>
+>
+> Emilio L. Cano
+> http://emilio.lcano.com
+>
+>
+>
+>
+> El 28 may 2021, a las 22:54, Juan Abasolo <juan.abasolo en ehu.eus> escribió:
+>
+> Buenas, compañeRos;
+> Tengo una idea que no consigo terminar de resolver eficientemente.
+>
+> Mis alumnos tienen que escribir un exámen en formato texto, del que yo les
+> doy las preguntas, pueden contestar cualquier cosa o no contestar.
+>
+> Yo quiero hacer un data frame en el que cada caso sea un exámen y que cada
+> variable sea una pregunta y los valores las respuestas.
+>
+> Con el paquete readtext leo todo y consigo que una variable sea el exámen
+> completo. Lo otro lo intenté hacer a mano y me queda (con errores) un loop
+> pregunta a pregunta.
+>
+> Me pregunto si conocerán alguna función/paquete especialmente para hacer
+> este tipo de tratamientos del texto.
+>
+> Atte,
+>
+> Juan
+>
+>
+> --
+> Juan Abasolo, PhD
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T       : (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype   : abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+> [blo <https://juanabasolo.netlify.app/>][gak
+> <http://bosgarrena.blogspot.com/>]
+>
+> [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+-- 
+Juan Abasolo, PhD
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T       : (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype   : abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+[blo <https://juanabasolo.netlify.app/>][gak
+<http://bosgarrena.blogspot.com/>]
+
+	[[alternative HTML version deleted]]
+
+

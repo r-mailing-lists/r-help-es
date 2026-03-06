@@ -1,0 +1,2900 @@
+From er@m@||e @end|ng |rom |@r|oj@@org  Fri Feb  3 13:36:33 2023
+From: er@m@||e @end|ng |rom |@r|oj@@org (Enrique Ramalle Gomara)
+Date: Fri, 3 Feb 2023 12:36:33 +0000
+Subject: [R-es] Comando similar a ELSE de spss
+Message-ID: <23c5fbc1bfde434b9e4e5a4da375d25b@larioja.org>
+
+Hola
+Quiero recodificar los valores de una variable en otra, pero hay un subconjunto de esos valores que me interesa agruparlos en una categor?a que sea NA. Por ejemplo
+De la variable color:
+1 ="verde"
+2 ="azul"
+3 ="rojo"
+Todos las dem?s  = NA (o que deje el campo vac?o)
+
+?C?mo hacer para que todos los dem?s, los que no est?n en las categor?as de recodificaci?n se les asigne un campo vacio o un campo NA?
+
+
+
+Un saludo, muchas gracias
+
+Enrique Ramalle
+
+
+________________________________
+
+GOBIERNO DE LA RIOJA
+AVISO LEGAL: La informaci?n contenida en este mensaje ...{{dropped:10}}
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Fri Feb  3 14:04:55 2023
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Fri, 3 Feb 2023 14:04:55 +0100
+Subject: [R-es] Comando similar a ELSE de spss
+In-Reply-To: <23c5fbc1bfde434b9e4e5a4da375d25b@larioja.org>
+References: <23c5fbc1bfde434b9e4e5a4da375d25b@larioja.org>
+Message-ID: <ff9ee09a-cbe4-64fa-18c5-cd180b2019e3@urjc.es>
+
+Hola, Enrique:
+Puedes hacerlo así de fácil:
+
+variable <- factor(variable)
+
+levels(variable)[!(levels(datos)%in% c("verde", "azul", "rojo"))] <- NA
+
+Un saludo,
+Marcelino
+
+
+El 03/02/2023 a las 13:36, Enrique Ramalle Gomara via R-help-es escribió:
+> Hola
+> Quiero recodificar los valores de una variable en otra, pero hay un subconjunto de esos valores que me interesa agruparlos en una categor?a que sea NA. Por ejemplo
+> De la variable color:
+> 1 ="verde"
+> 2 ="azul"
+> 3 ="rojo"
+> Todos las dem?s  = NA (o que deje el campo vac?o)
+>
+> ?C?mo hacer para que todos los dem?s, los que no est?n en las categor?as de recodificaci?n se les asigne un campo vacio o un campo NA?
+>
+>
+>
+> Un saludo, muchas gracias
+>
+> Enrique Ramalle
+>
+>
+> ________________________________
+>
+> GOBIERNO DE LA RIOJA
+> AVISO LEGAL: La informaci?n contenida en este mensaje ...{{dropped:10}}
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+-- 
+Marcelino de la Cruz Rot
+
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From truj|||o @end|ng |rom unex@e@  Sat Feb  4 09:30:08 2023
+From: truj|||o @end|ng |rom unex@e@ (=?UTF-8?Q?Jos=c3=a9_Trujillo?=)
+Date: Sat, 4 Feb 2023 09:30:08 +0100
+Subject: [R-es] Comando similar a ELSE de spss
+In-Reply-To: <23c5fbc1bfde434b9e4e5a4da375d25b@larioja.org>
+References: <23c5fbc1bfde434b9e4e5a4da375d25b@larioja.org>
+Message-ID: <0a69ea9c-eedc-8fc7-fa3a-f1854d1b3ba1@unex.es>
+
+La respuesta está en la función recode del paquete car:
+
+?recode
+
+example(recode)
+
+Ahí tiene el uso de else justo como lo quieres.
+
+Salud
+
+El 3/2/23 a las 13:36, Enrique Ramalle Gomara via R-help-es escribió:
+> Hola
+> Quiero recodificar los valores de una variable en otra, pero hay un subconjunto de esos valores que me interesa agruparlos en una categor?a que sea NA. Por ejemplo
+> De la variable color:
+> 1 ="verde"
+> 2 ="azul"
+> 3 ="rojo"
+> Todos las dem?s  = NA (o que deje el campo vac?o)
+>
+> ?C?mo hacer para que todos los dem?s, los que no est?n en las categor?as de recodificaci?n se les asigne un campo vacio o un campo NA?
+>
+>
+>
+> Un saludo, muchas gracias
+>
+> Enrique Ramalle
+>
+>
+> ________________________________
+>
+> GOBIERNO DE LA RIOJA
+> AVISO LEGAL: La informaci?n contenida en este mensaje ...{{dropped:10}}
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From er@m@||e @end|ng |rom |c|oud@com  Sat Feb  4 12:02:53 2023
+From: er@m@||e @end|ng |rom |c|oud@com (Enrique Ramalle Gomara)
+Date: Sat, 4 Feb 2023 12:02:53 +0100
+Subject: [R-es] 
+ =?utf-8?q?Resumen_de_R-help-es=2C_Vol_168=2C_Env=C3=ADo_1?=
+In-Reply-To: <mailman.14917.7.1675508402.57989.r-help-es@r-project.org>
+References: <mailman.14917.7.1675508402.57989.r-help-es@r-project.org>
+Message-ID: <CFF4A07D-AFF5-4C97-87EF-57823370BFEA@icloud.com>
+
+Muchas gracias, Marcelino
+
+Saludos
+Enrique
+
+> El 4 feb 2023, a las 12:01, r-help-es-request en r-project.org escribió:
+> 
+> ?Envíe los mensajes para la lista R-help-es a
+>    r-help-es en r-project.org
+> 
+> Para subscribirse o anular su subscripción a través de la WEB
+>    https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+>    r-help-es-request en r-project.org
+> 
+> Puede contactar con el responsable de la lista escribiendo a:
+>    r-help-es-owner en r-project.org
+> 
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+> 
+> 
+> Asuntos del día:
+> 
+>   1. Comando similar a ELSE de spss (Enrique Ramalle Gomara)
+>   2. Re: Comando similar a ELSE de spss (Marcelino de la Cruz Rot)
+>   3. Re: Comando similar a ELSE de spss (José Trujillo)
+> 
+> ----------------------------------------------------------------------
+> 
+> Message: 1
+> Date: Fri, 3 Feb 2023 12:36:33 +0000
+> From: Enrique Ramalle Gomara <eramalle en larioja.org>
+> To: "r-help-es en r-project.org" <r-help-es en r-project.org>
+> Subject: [R-es] Comando similar a ELSE de spss
+> Message-ID: <23c5fbc1bfde434b9e4e5a4da375d25b en larioja.org>
+> Content-Type: text/plain; charset="utf-8"
+> 
+> Hola
+> Quiero recodificar los valores de una variable en otra, pero hay un subconjunto de esos valores que me interesa agruparlos en una categor?a que sea NA. Por ejemplo
+> De la variable color:
+> 1 ="verde"
+> 2 ="azul"
+> 3 ="rojo"
+> Todos las dem?s  = NA (o que deje el campo vac?o)
+> 
+> ?C?mo hacer para que todos los dem?s, los que no est?n en las categor?as de recodificaci?n se les asigne un campo vacio o un campo NA?
+> 
+> 
+> 
+> Un saludo, muchas gracias
+> 
+> Enrique Ramalle
+> 
+> 
+> ________________________________
+> 
+> GOBIERNO DE LA RIOJA
+> AVISO LEGAL: La informaci?n contenida en este mensaje ...{{dropped:10}}
+> 
+> 
+> 
+> 
+> ------------------------------
+> 
+> Message: 2
+> Date: Fri, 3 Feb 2023 14:04:55 +0100
+> From: Marcelino de la Cruz Rot <marcelino.delacruz en urjc.es>
+> To: r-help-es en r-project.org
+> Subject: Re: [R-es] Comando similar a ELSE de spss
+> Message-ID: <ff9ee09a-cbe4-64fa-18c5-cd180b2019e3 en urjc.es>
+> Content-Type: text/plain; charset="utf-8"; Format="flowed"
+> 
+> Hola, Enrique:
+> Puedes hacerlo así de fácil:
+> 
+> variable <- factor(variable)
+> 
+> levels(variable)[!(levels(datos)%in% c("verde", "azul", "rojo"))] <- NA
+> 
+> Un saludo,
+> Marcelino
+> 
+> 
+>> El 03/02/2023 a las 13:36, Enrique Ramalle Gomara via R-help-es escribió:
+>> Hola
+>> Quiero recodificar los valores de una variable en otra, pero hay un subconjunto de esos valores que me interesa agruparlos en una categor?a que sea NA. Por ejemplo
+>> De la variable color:
+>> 1 ="verde"
+>> 2 ="azul"
+>> 3 ="rojo"
+>> Todos las dem?s  = NA (o que deje el campo vac?o)
+>> 
+>> ?C?mo hacer para que todos los dem?s, los que no est?n en las categor?as de recodificaci?n se les asigne un campo vacio o un campo NA?
+>> 
+>> 
+>> 
+>> Un saludo, muchas gracias
+>> 
+>> Enrique Ramalle
+>> 
+>> 
+>> ________________________________
+>> 
+>> GOBIERNO DE LA RIOJA
+>> AVISO LEGAL: La informaci?n contenida en este mensaje ...{{dropped:10}}
+>> 
+>> 
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+> -- 
+> Marcelino de la Cruz Rot
+> 
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+> 
+> 
+> 
+> 
+> ------------------------------
+> 
+> Message: 3
+> Date: Sat, 4 Feb 2023 09:30:08 +0100
+> From: José Trujillo <trujillo en unex.es>
+> To: r-help-es en r-project.org
+> Subject: Re: [R-es] Comando similar a ELSE de spss
+> Message-ID: <0a69ea9c-eedc-8fc7-fa3a-f1854d1b3ba1 en unex.es>
+> Content-Type: text/plain; charset="utf-8"; Format="flowed"
+> 
+> La respuesta está en la función recode del paquete car:
+> 
+> ?recode
+> 
+> example(recode)
+> 
+> Ahí tiene el uso de else justo como lo quieres.
+> 
+> Salud
+> 
+>> El 3/2/23 a las 13:36, Enrique Ramalle Gomara via R-help-es escribió:
+>> Hola
+>> Quiero recodificar los valores de una variable en otra, pero hay un subconjunto de esos valores que me interesa agruparlos en una categor?a que sea NA. Por ejemplo
+>> De la variable color:
+>> 1 ="verde"
+>> 2 ="azul"
+>> 3 ="rojo"
+>> Todos las dem?s  = NA (o que deje el campo vac?o)
+>> 
+>> ?C?mo hacer para que todos los dem?s, los que no est?n en las categor?as de recodificaci?n se les asigne un campo vacio o un campo NA?
+>> 
+>> 
+>> 
+>> Un saludo, muchas gracias
+>> 
+>> Enrique Ramalle
+>> 
+>> 
+>> ________________________________
+>> 
+>> GOBIERNO DE LA RIOJA
+>> AVISO LEGAL: La informaci?n contenida en este mensaje ...{{dropped:10}}
+>> 
+>> 
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+> 
+> 
+> ------------------------------
+> 
+> Subject: Pié de página del digest
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+> ------------------------------
+> 
+> Fin de Resumen de R-help-es, Vol 168, Envío 1
+> *********************************************
+
+
+From Guiiiermo@Vi@ue m@iii@g oii uv@es  Wed Feb  8 17:56:21 2023
+From: Guiiiermo@Vi@ue m@iii@g oii uv@es (=?iso-8859-1?q?Guiiiermo=40Vi=40ue_m=40iii=40g_oii_uv=40es?=)
+Date: Wed, 8 Feb 2023 17:56:21 +0100 (CET)
+Subject: [R-es] Actualizar tabla en shiny
+Message-ID: <1154922717vivigui@uv.es>
+
+Hola,
+
+Quería preguntar si alguien sabe cómo se puede utilizar el resultado de modificar una tabla con el argumento editable = TRUE de datatable, para actualizar una segunda tabla. Adjunto un código de ejemplo y lo copio también aquí abajo. 
+
+Lo que yo querría por ejemplo es poner en la columna 'replacements' de la tab1 los valores 1 y 2 (clicando en las celdas de esa columna y escribiendo a mano ese valor, gracias a editable = TRUE) y que en la tab2 aparecieran esos valores cambiados.
+
+He encontrado este enlace con la misma idea
+
+https://stackoverflow.com/questions/31744300/using-the-values-of-rendered-datatable-in-later-analysis
+
+pero no sé llevar a cabo los procedimientos que se comentan en la respuesta.
+
+Gracias de antemano.
+
+Saludos,
+
+Guillermo
+
+----
+
+library(shiny)
+library(DT)
+library(dplyr)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      h4("App para sustituir valores. A partir de sustituir valores en la tabla de arriba, el 
+         objetivo es actualizar la tabla de abajo."),
+    ),
+    mainPanel(
+      dataTableOutput("tab1"),
+      br(),
+      dataTableOutput("tab2")
+    )
+  )
+)
+
+server <- function(input, output) {
+  
+  output$tab1 <- renderDataTable({
+    df1 <- data.frame(values_to_replace = c("A+", "B-")) %>%
+      mutate(replacements = NA)
+    
+    datatable(df1, rownames = FALSE, editable = TRUE)
+  })
+  
+  output$tab2 <- renderDataTable({
+    df1 <- data.frame(observations = c("A+", "B-", 1, 5, "B-", 7, "A+", "B-"))
+    
+    vals_orig <- c("A+", "B-")
+    #vals_repl <- df1$replacements # ESTO ES LO QUE DEBE VENIR DE tab.
+    vals_repl <- c(10, 20)
+    
+    df2 <- df1 %>%
+      mutate(observations_repl = plyr::mapvalues(observations, from = vals_orig, to = vals_repl))
+    
+    datatable(df2, rownames = FALSE)
+  })
+}
+
+shinyApp(ui, server)
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: app_example_data_replacement.R
+Type: application/octet-stream
+Size: 1027 bytes
+Desc: 
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230208/ab62cf0b/attachment.obj>
+
+From mepo|o @end|ng |rom unex@e@  Thu Feb  9 09:53:02 2023
+From: mepo|o @end|ng |rom unex@e@ (=?iso-8859-1?Q?MAR=CDA_EUGENIA__POLO_GARC=CDA?=)
+Date: Thu, 9 Feb 2023 08:53:02 +0000
+Subject: [R-es] ejecutar RStudio desde posit y problemas con R
+Message-ID: <VI1PR05MB4157C0E8F67C05E1430CBEC0D0D99@VI1PR05MB4157.eurprd05.prod.outlook.com>
+
+Estimados usuarios de R,
+
+Disculpad si ha salido el tema. He actualizado la ?ltima versi?n de R, que abro sin problemas, pero cuando intento hacer lo mismo con RStudio (desde posit) y me da la opci?n de: Choose a specific version of R, indica que:
+
+An error occurred while attempting to load the selected version of R. Please select a different R installation.
+
+He probado las diferentes opciones y nada. Hasta la fecha he usado R y RStudio (aunque no descargada desde posit) sin problemas.
+
+Si alguien hubiera tenido el mismo problema os agradecer?a la ayuda.
+
+Saludos cordiales
+
+Mar?a E. Polo
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Thu Feb  9 10:30:18 2023
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Thu, 9 Feb 2023 09:30:18 +0000
+Subject: [R-es] ejecutar RStudio desde posit y problemas con R
+In-Reply-To: <VI1PR05MB4157C0E8F67C05E1430CBEC0D0D99@VI1PR05MB4157.eurprd05.prod.outlook.com>
+References: <VI1PR05MB4157C0E8F67C05E1430CBEC0D0D99@VI1PR05MB4157.eurprd05.prod.outlook.com>
+Message-ID: <3530c846be884575bf78dcdd808a1168@sergas.es>
+
+Hola Mª Eugenia.
+
+
+Parece que RStudio está intentando leer la ruta de la versión antigua de R (que parece que ya no encuentra). Te está preguntando por la ubicación de los ejecutables de la nueva versión. Asumiendo que tu sistema Operativo sea Windows, seguramente tendrás R instalado en
+
+
+C:\Archivos de Programa\R\R4.2.2
+
+
+o en
+
+
+C:\Archivos de Programa (x86)\R\R4.2.2
+
+
+Suponiendo que esté instalado en esa ruta (si no es así, sustitúyela por la ruta correcta), la carpeta que pide es "bin"; es decir, debes indicarle el trayecto:
+
+
+C:\Archivos de Programa\R\R4.2.2\bin
+
+
+
+Un saludo,
+
+Miguel.
+
+
+
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de MARÍA EUGENIA POLO GARCÍA <mepolo en unex.es>
+Enviado: jueves, 9 de febrero de 2023 9:53
+Para: r-help-es en r-project.org
+Asunto: [R-es] ejecutar RStudio desde posit y problemas con R
+
+Estimados usuarios de R,
+
+Disculpad si ha salido el tema. He actualizado la ?ltima versi?n de R, que abro sin problemas, pero cuando intento hacer lo mismo con RStudio (desde posit) y me da la opci?n de: Choose a specific version of R, indica que:
+
+An error occurred while attempting to load the selected version of R. Please select a different R installation.
+
+He probado las diferentes opciones y nada. Hasta la fecha he usado R y RStudio (aunque no descargada desde posit) sin problemas.
+
+Si alguien hubiera tenido el mismo problema os agradecer?a la ayuda.
+
+Saludos cordiales
+
+Mar?a E. Polo
+
+
+
+        [[alternative HTML version deleted]]
+
+
+________________________________
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From mepo|o @end|ng |rom unex@e@  Thu Feb  9 11:20:05 2023
+From: mepo|o @end|ng |rom unex@e@ (=?iso-8859-1?Q?MAR=CDA_EUGENIA__POLO_GARC=CDA?=)
+Date: Thu, 9 Feb 2023 10:20:05 +0000
+Subject: [R-es] ejecutar RStudio desde posit y problemas con R
+In-Reply-To: <CAOKbq8gFBG2HaNCw=-huUQGjPDZ=yT4Rs1VAV4dmUGZBAo4EYg@mail.gmail.com>
+References: <VI1PR05MB4157C0E8F67C05E1430CBEC0D0D99@VI1PR05MB4157.eurprd05.prod.outlook.com>
+ <CAOKbq8gFBG2HaNCw=-huUQGjPDZ=yT4Rs1VAV4dmUGZBAo4EYg@mail.gmail.com>
+Message-ID: <VI1PR05MB4157F2BB2189942FDF7C32B0D0D99@VI1PR05MB4157.eurprd05.prod.outlook.com>
+
+Buenas,
+
+Lo he hecho varias veces, pero probar? una vez m?s.
+
+Muchas gracias
+
+Un saludo
+
+
+__________________________________________________
+
+Mar?a Eugenia Polo Garc?a
+
+Departamento de Expresi?n Gr?fica
+
+Centro Universitario de M?rida. Universidad de Extremadura.
+
+Santa Teresa de Jornet, 38 (06800) M?rida, Espa?a
+
+Telf: 924 673084 / 924 387068 Ext. 82584
+
+http://kraken.unex.es/
+________________________________
+De: Carlos Ortega <cof en qualityexcellence.es>
+Enviado: jueves, 9 de febrero de 2023 10:10
+Para: MAR?A EUGENIA POLO GARC?A <mepolo en unex.es>
+Cc: r-help-es en r-project.org <r-help-es en r-project.org>
+Asunto: Re: [R-es] ejecutar RStudio desde posit y problemas con R
+
+Hola,
+
+Entiendo que est?s en Windows, ?S??.
+
+Te dir?a que desinstalaras completamente R y RStudio y lo volvieras a instalar desde cero. Incluso busca donde se instalaron las versiones anteriores y elim?nalas.
+
+Haz la instalaci?n por defecto, no cambies ning?n directorio.
+
+RStudio busca la versi?n de R en un directorio especial, donde se instala por defecto y te deber?a funcionar todo.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+
+El jue, 9 feb 2023 a las 9:53, MAR?A EUGENIA POLO GARC?A (<mepolo en unex.es<mailto:mepolo en unex.es>>) escribi?:
+Estimados usuarios de R,
+
+Disculpad si ha salido el tema. He actualizado la ?ltima versi?n de R, que abro sin problemas, pero cuando intento hacer lo mismo con RStudio (desde posit) y me da la opci?n de: Choose a specific version of R, indica que:
+
+An error occurred while attempting to load the selected version of R. Please select a different R installation.
+
+He probado las diferentes opciones y nada. Hasta la fecha he usado R y RStudio (aunque no descargada desde posit) sin problemas.
+
+Si alguien hubiera tenido el mismo problema os agradecer?a la ayuda.
+
+Saludos cordiales
+
+Mar?a E. Polo
+
+
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+--
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+	[[alternative HTML version deleted]]
+
+
+From dcgomezme @end|ng |rom un@|@edu@co  Thu Feb  9 16:27:07 2023
+From: dcgomezme @end|ng |rom un@|@edu@co (David Camilo Gomez Medina)
+Date: Thu, 9 Feb 2023 10:27:07 -0500
+Subject: [R-es] Cambiar nombre columnas de un dataframe
+Message-ID: <CABaOv1F6Wz3JiVQ=PfumimPzJ5fovGJn9Onb_16PraykcQZeSw@mail.gmail.com>
+
+Buen día,
+
+Es que al realizar diferentes operaciones con un dataframe, el nombre de
+las columnas aparece con una *X*. ¿Alguien sabe cómo podría solucionarlo?
+
+Quedo atento a sus comentarios. Gracias.
+
+[image: image.png]
+
+-- 
+*Aviso legal:* El contenido de este mensaje y los archivos adjuntos son 
+confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. 
+Se encuentran dirigidos sólo para el uso del destinatario al cual van 
+enviados. La reproducción, lectura y/o copia se encuentran prohibidas a 
+cualquier persona diferente a este y puede ser ilegal. Si usted lo ha 
+recibido por error, infórmenos y elimínelo de su correo. Los Datos 
+Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra 
+Política de Datos Personales que podrá consultar en la página web 
+www.unal.edu.co <http://www.unal.edu.co/>.* *Las opiniones, informaciones, 
+conclusiones y cualquier otro tipo de dato contenido en este correo 
+electrónico, no relacionados con la actividad de la Universidad Nacional de 
+Colombia, se entenderá como personales y de ninguna manera son avaladas por 
+la Universidad.
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230209/cc59baf4/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 28750 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230209/cc59baf4/attachment-0001.png>
+
+From em||opezc@no @end|ng |rom gm@||@com  Thu Feb  9 16:47:54 2023
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Thu, 9 Feb 2023 16:47:54 +0100
+Subject: [R-es] Cambiar nombre columnas de un dataframe
+In-Reply-To: <CABaOv1F6Wz3JiVQ=PfumimPzJ5fovGJn9Onb_16PraykcQZeSw@mail.gmail.com>
+References: <CABaOv1F6Wz3JiVQ=PfumimPzJ5fovGJn9Onb_16PraykcQZeSw@mail.gmail.com>
+Message-ID: <50D155B7-807A-4D0C-80B4-22D24015D545@gmail.com>
+
+Hola,
+
+Para que sean nombres válidos de columna no pueden empezar con un número, por eso se le pone el prefijo de la X cuando es necesario.
+
+En algunas funciones (como data.frame) se puede evitar ese comportamiento con el argumento check.names, y entonces a las variables hay que hacer referencia poniendo el nombre entre acentos graves, por ejemplo `123`. Comprueba si este argumento o parecido está en las funciones que usas para las operaciones que comentas.
+
+Saludos,
+Emilio
+
+
+
+
+
+> El 9 feb 2023, a las 16:27, David Camilo Gomez Medina <dcgomezme en unal.edu.co> escribió:
+> 
+> Buen día,
+> 
+> Es que al realizar diferentes operaciones con un dataframe, el nombre de las columnas aparece con una X. ¿Alguien sabe cómo podría solucionarlo?
+> 
+> Quedo atento a sus comentarios. Gracias.
+> 
+> <image.png>
+> 
+> Aviso legal: El contenido de este mensaje y los archivos adjuntos son confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. Se encuentran dirigidos sólo para el uso del destinatario al cual van enviados. La reproducción, lectura y/o copia se encuentran prohibidas a cualquier persona diferente a este y puede ser ilegal. Si usted lo ha recibido por error, infórmenos y elimínelo de su correo. Los Datos Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra Política de Datos Personales que podrá consultar en la página web www.unal.edu.co <http://www.unal.edu.co/>. Las opiniones, informaciones, conclusiones y cualquier otro tipo de dato contenido en este correo electrónico, no relacionados con la actividad de la Universidad Nacional de Colombia, se entenderá como personales y de ninguna manera son avaladas por la Universidad.
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From dcgomezme @end|ng |rom un@|@edu@co  Thu Feb  9 17:27:26 2023
+From: dcgomezme @end|ng |rom un@|@edu@co (David Camilo Gomez Medina)
+Date: Thu, 9 Feb 2023 11:27:26 -0500
+Subject: [R-es] Cambiar nombre columnas de un dataframe
+In-Reply-To: <50D155B7-807A-4D0C-80B4-22D24015D545@gmail.com>
+References: <CABaOv1F6Wz3JiVQ=PfumimPzJ5fovGJn9Onb_16PraykcQZeSw@mail.gmail.com>
+ <50D155B7-807A-4D0C-80B4-22D24015D545@gmail.com>
+Message-ID: <CABaOv1EtSfTPJeCnC+A-_cUbQ7k2+dk_J+B5VqpE5y7vVi-yvw@mail.gmail.com>
+
+Muchas gracias Emilio, usando chek.names pude solucionarlo.
+
+Cordialmente,
+
+David.
+
+On Thu, 9 Feb 2023 at 10:48, Emilio L. Cano <emilopezcano en gmail.com> wrote:
+
+> Hola,
+>
+> Para que sean nombres válidos de columna no pueden empezar con un número,
+> por eso se le pone el prefijo de la X cuando es necesario.
+>
+> En algunas funciones (como data.frame) se puede evitar ese comportamiento
+> con el argumento check.names, y entonces a las variables hay que hacer
+> referencia poniendo el nombre entre acentos graves, por ejemplo `123`.
+> Comprueba si este argumento o parecido está en las funciones que usas para
+> las operaciones que comentas.
+>
+> Saludos,
+> Emilio
+>
+>
+>
+>
+>
+> El 9 feb 2023, a las 16:27, David Camilo Gomez Medina <
+> dcgomezme en unal.edu.co> escribió:
+>
+> Buen día,
+>
+> Es que al realizar diferentes operaciones con un dataframe, el nombre de
+> las columnas aparece con una *X*. ¿Alguien sabe cómo podría solucionarlo?
+>
+> Quedo atento a sus comentarios. Gracias.
+>
+> <image.png>
+>
+> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son
+> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.
+> Se encuentran dirigidos sólo para el uso del destinatario al cual van
+> enviados. La reproducción, lectura y/o copia se encuentran prohibidas a
+> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha
+> recibido por error, infórmenos y elimínelo de su correo. Los Datos
+> Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra
+> Política de Datos Personales que podrá consultar en la página web
+> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier
+> otro tipo de dato contenido en este correo electrónico, no relacionados con
+> la actividad de la Universidad Nacional de Colombia, se entenderá como
+> personales y de ninguna manera son avaladas por la Universidad.
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+-- 
+*Aviso legal:* El contenido de este mensaje y los archivos adjuntos son 
+confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. 
+Se encuentran dirigidos sólo para el uso del destinatario al cual van 
+enviados. La reproducción, lectura y/o copia se encuentran prohibidas a 
+cualquier persona diferente a este y puede ser ilegal. Si usted lo ha 
+recibido por error, infórmenos y elimínelo de su correo. Los Datos 
+Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra 
+Política de Datos Personales que podrá consultar en la página web 
+www.unal.edu.co <http://www.unal.edu.co/>.* *Las opiniones, informaciones, 
+conclusiones y cualquier otro tipo de dato contenido en este correo 
+electrónico, no relacionados con la actividad de la Universidad Nacional de 
+Colombia, se entenderá como personales y de ninguna manera son avaladas por 
+la Universidad.
+
+	[[alternative HTML version deleted]]
+
+
+From er@m@||e @end|ng |rom |c|oud@com  Fri Feb 10 13:32:04 2023
+From: er@m@||e @end|ng |rom |c|oud@com (Enrique Ramalle Gomara)
+Date: Fri, 10 Feb 2023 13:32:04 +0100
+Subject: [R-es] 
+ =?utf-8?q?Resumen_de_R-help-es=2C_Vol_168=2C_Env=C3=ADo_4?=
+In-Reply-To: <mailman.14922.2888.1675956447.1609.r-help-es@r-project.org>
+References: <mailman.14922.2888.1675956447.1609.r-help-es@r-project.org>
+Message-ID: <FE788FEF-4425-4CBD-88F8-2168271769FD@icloud.com>
+
+Hola
+Prueba esto:
+
+names(dataframe)[c(xx)] <- c("Nueva")
+
+Donde data frame es el nombre de tu data frame xx es el número de columna que ocupa la variable que quieres cambiar y ?Nueva? es como quieres que se llame tu nueva variable
+
+Saludos
+Enrique Ramalle -Gómara
+
+Enviado desde mi iPad
+
+> El 9 feb 2023, a las 16:27, r-help-es-request en r-project.org escribió:
+> 
+> ?Envíe los mensajes para la lista R-help-es a
+>    r-help-es en r-project.org
+> 
+> Para subscribirse o anular su subscripción a través de la WEB
+>    https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+>    r-help-es-request en r-project.org
+> 
+> Puede contactar con el responsable de la lista escribiendo a:
+>    r-help-es-owner en r-project.org
+> 
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+> 
+> 
+> Asuntos del día:
+> 
+>   1. Cambiar nombre columnas de un dataframe
+>      (David Camilo Gomez Medina)
+> 
+> ----------------------------------------------------------------------
+> 
+> Message: 1
+> Date: Thu, 9 Feb 2023 10:27:07 -0500
+> From: David Camilo Gomez Medina <dcgomezme en unal.edu.co>
+> To: Lista R <r-help-es en r-project.org>
+> Subject: [R-es] Cambiar nombre columnas de un dataframe
+> Message-ID:
+>    <CABaOv1F6Wz3JiVQ=PfumimPzJ5fovGJn9Onb_16PraykcQZeSw en mail.gmail.com>
+> Content-Type: text/plain; charset="utf-8"
+> 
+> Buen día,
+> 
+> Es que al realizar diferentes operaciones con un dataframe, el nombre de
+> las columnas aparece con una *X*. ¿Alguien sabe cómo podría solucionarlo?
+> 
+> Quedo atento a sus comentarios. Gracias.
+> 
+> [image: image.png]
+> 
+> -- 
+> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son 
+> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. 
+> Se encuentran dirigidos sólo para el uso del destinatario al cual van 
+> enviados. La reproducción, lectura y/o copia se encuentran prohibidas a 
+> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha 
+> recibido por error, infórmenos y elimínelo de su correo. Los Datos 
+> Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra 
+> Política de Datos Personales que podrá consultar en la página web 
+> www.unal.edu.co <http://www.unal.edu.co/>.* *Las opiniones, informaciones, 
+> conclusiones y cualquier otro tipo de dato contenido en este correo 
+> electrónico, no relacionados con la actividad de la Universidad Nacional de 
+> Colombia, se entenderá como personales y de ninguna manera son avaladas por 
+> la Universidad.
+> 
+> ------------ próxima parte ------------
+> Se ha borrado un adjunto en formato HTML...
+> URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230209/cc59baf4/attachment.html>
+> 
+> ------------ próxima parte ------------
+> A non-text attachment was scrubbed...
+> Name: image.png
+> Type: image/png
+> Size: 28750 bytes
+> Desc: no disponible
+> URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230209/cc59baf4/attachment.png>
+> 
+> 
+> ------------------------------
+> 
+> Subject: Pié de página del digest
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+> ------------------------------
+> 
+> Fin de Resumen de R-help-es, Vol 168, Envío 4
+> *********************************************
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Tue Feb 14 06:07:51 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Tue, 14 Feb 2023 06:07:51 +0100
+Subject: [R-es] =?iso-8859-1?q?=28sin_asunto=29?=
+Message-ID: <CAF3uytXvWEkALYvC=poQ=LH1SJniPXo0L2Ey_r1httL7P9yteQ@mail.gmail.com>
+
+Buenos días, tengo un conjunto de 10 bases de datos en excel cuyos nombres
+van de BIO1 a BIO10. Quiero hacer un loop en el que me coja una cada vez.
+He probado lo que os pongo abajo (y otras cosas parecidas) y obviamente no
+funciona. ¿Conocéis alguna forma?
+Gracias como siempre,
+Manuel
+
+BIOs<-
+("BIO1?,?BIO2?,?BIO3","BIO4?,?BIO5?,?BIO6?,?BIO7?,?BIO8","BIO9?,?BIO10?)
+for (j in 1:length(BIOs)) {
+      data <- read_excel("BIOs[j].xlsx")
+...
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Tue Feb 14 07:37:46 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Tue, 14 Feb 2023 07:37:46 +0100
+Subject: [R-es] Tomar dfs con for
+Message-ID: <CAF3uytV05-V_r9i8pKnDmGKiKHTbKvV8p+vsCuMuUYx6S59A9g@mail.gmail.com>
+
+Perdonad que se me olvidó el asunto. Repito:
+
+Buenos días, tengo un conjunto de 10 bases de datos en excel cuyos nombres
+van de BIO1 a BIO10. Quiero hacer un loop en el que me coja una cada vez.
+He probado lo que os pongo abajo (y otras cosas parecidas) y obviamente no
+funciona. ¿Conocéis alguna forma?
+Gracias como siempre,
+Manuel
+
+BIOs<-("BIO1?,?BIO2?,?BIO3","BIO4?,?BIO5?,?BIO6?,?BIO7?,?BIO8","BIO9?,?BIO10?)
+for (j in 1:length(BIOs)) {
+      data <- read_excel("BIOs[j].xlsx")
+...
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Tue Feb 14 07:52:52 2023
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Tue, 14 Feb 2023 07:52:52 +0100
+Subject: [R-es] Tomar dfs con for
+In-Reply-To: <CAF3uytV05-V_r9i8pKnDmGKiKHTbKvV8p+vsCuMuUYx6S59A9g@mail.gmail.com>
+References: <CAF3uytV05-V_r9i8pKnDmGKiKHTbKvV8p+vsCuMuUYx6S59A9g@mail.gmail.com>
+Message-ID: <CA+8ueyY3yLP=w8YQai8i4oG_=41wkXi3=_XA-wy76pUmZTY=pA@mail.gmail.com>
+
+Hola, Manuel
+El problema lo tnes en el nombre que le decis que lea. Tenes que poner un
+paste0 y construirlo pasito a pasito.
+
+Recomendacion: metele en el loop un print(i)  o tantos como hagan falta,
+para qie veas que estas haciendo.
+Segunda recomendacion: hace una variable que sea el_df_a_leer y que lea
+eso, con un print antes.
+
+Disculpa la explicacion torpe, desde el telefono en el bus
+Suerte
+
+Juan
+
+Telefomotik, barkatu abilezi falta.
+
+Manuel Mendoza <mmendoza en fulbrightmail.org> igorleak hau idatzi zuen (2023
+ots. 14, ar. 07:38):
+
+> Perdonad que se me olvidó el asunto. Repito:
+>
+> Buenos días, tengo un conjunto de 10 bases de datos en excel cuyos nombres
+> van de BIO1 a BIO10. Quiero hacer un loop en el que me coja una cada vez.
+> He probado lo que os pongo abajo (y otras cosas parecidas) y obviamente no
+> funciona. ¿Conocéis alguna forma?
+> Gracias como siempre,
+> Manuel
+>
+>
+> BIOs<-("BIO1?,?BIO2?,?BIO3","BIO4?,?BIO5?,?BIO6?,?BIO7?,?BIO8","BIO9?,?BIO10?)
+> for (j in 1:length(BIOs)) {
+>       data <- read_excel("BIOs[j].xlsx")
+> ...
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Tue Feb 14 08:38:18 2023
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Tue, 14 Feb 2023 08:38:18 +0100
+Subject: [R-es] (sin asunto)
+In-Reply-To: <CAF3uytXvWEkALYvC=poQ=LH1SJniPXo0L2Ey_r1httL7P9yteQ@mail.gmail.com>
+References: <CAF3uytXvWEkALYvC=poQ=LH1SJniPXo0L2Ey_r1httL7P9yteQ@mail.gmail.com>
+Message-ID: <a966c839-28db-60b4-512d-d17604b508ca@urjc.es>
+
+Buenos días:
+
+BIOs<-
+("BIO1?,?BIO2?,?BIO3","BIO4?,?BIO5?,?BIO6?,?BIO7?,?BIO8","BIO9?,?BIO10?)
+for (j in BIOs) {
+       excel <- paste(j,".xlsx", sep="")
+       data <- read_excel(excel)
+...
+
+
+Un saludo,
+Marcelino
+
+El 14/02/2023 a las 6:07, Manuel Mendoza escribió:
+> Buenos días, tengo un conjunto de 10 bases de datos en excel cuyos nombres
+> van de BIO1 a BIO10. Quiero hacer un loop en el que me coja una cada vez.
+> He probado lo que os pongo abajo (y otras cosas parecidas) y obviamente no
+> funciona. ¿Conocéis alguna forma?
+> Gracias como siempre,
+> Manuel
+>
+> BIOs<-
+> ("BIO1?,?BIO2?,?BIO3","BIO4?,?BIO5?,?BIO6?,?BIO7?,?BIO8","BIO9?,?BIO10?)
+> for (j in 1:length(BIOs)) {
+>        data <- read_excel("BIOs[j].xlsx")
+> ...
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Tue Feb 14 17:38:10 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Tue, 14 Feb 2023 17:38:10 +0100
+Subject: [R-es] (sin asunto)
+In-Reply-To: <a966c839-28db-60b4-512d-d17604b508ca@urjc.es>
+References: <CAF3uytXvWEkALYvC=poQ=LH1SJniPXo0L2Ey_r1httL7P9yteQ@mail.gmail.com>
+ <a966c839-28db-60b4-512d-d17604b508ca@urjc.es>
+Message-ID: <CAF3uytU5RLT8=nO-HRkfOkUQOLzzC0ibFWHV_mrZJ8RzfNHKzw@mail.gmail.com>
+
+Gracias Marrcelino y Juan, con paste (y BIOs<-c("BIO2" ...) funcionó.
+Un saludo,
+Manuel
+
+El mar, 14 feb 2023 a las 8:38, Marcelino de la Cruz Rot (<
+marcelino.delacruz en urjc.es>) escribió:
+
+> Buenos días:
+>
+> BIOs<-
+> ("BIO1?,?BIO2?,?BIO3","BIO4?,?BIO5?,?BIO6?,?BIO7?,?BIO8","BIO9?,?BIO10?)
+> for (j in BIOs) {
+>        excel <- paste(j,".xlsx", sep="")
+>        data <- read_excel(excel)
+> ...
+>
+>
+> Un saludo,
+> Marcelino
+>
+> El 14/02/2023 a las 6:07, Manuel Mendoza escribió:
+> > Buenos días, tengo un conjunto de 10 bases de datos en excel cuyos
+> nombres
+> > van de BIO1 a BIO10. Quiero hacer un loop en el que me coja una cada vez.
+> > He probado lo que os pongo abajo (y otras cosas parecidas) y obviamente
+> no
+> > funciona. ¿Conocéis alguna forma?
+> > Gracias como siempre,
+> > Manuel
+> >
+> > BIOs<-
+> > ("BIO1?,?BIO2?,?BIO3","BIO4?,?BIO5?,?BIO6?,?BIO7?,?BIO8","BIO9?,?BIO10?)
+> > for (j in 1:length(BIOs)) {
+> >        data <- read_excel("BIOs[j].xlsx")
+> > ...
+> >
+> >       [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Tue Feb 14 18:24:15 2023
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Tue, 14 Feb 2023 12:24:15 -0500
+Subject: [R-es] (sin asunto)
+In-Reply-To: <CAF3uytXvWEkALYvC=poQ=LH1SJniPXo0L2Ey_r1httL7P9yteQ@mail.gmail.com>
+References: <CAF3uytXvWEkALYvC=poQ=LH1SJniPXo0L2Ey_r1httL7P9yteQ@mail.gmail.com>
+Message-ID: <CAKL8G3H3VWOwxtOv27-1XG7YFayB=FpvevsEKZJ4JBYSCy9PjA@mail.gmail.com>
+
+Manuel,
+
+Si los archivos están en workig directory, basta con que hagas
+
+files <-  list.files(pattern = ".xlsx")
+list_df <- lapply(files, function(f){
+  data <- read_excel(f)
+  data
+}
+
+Para acceder al primer archivo basta con hacer
+
+list_df[[1]]
+
+Si los archivos tiene el _mismo_ nombre en las columnas, puedes unirlos
+haciendo
+
+datos_completos <- do.call(rbind, list_df)
+
+Espero sea de utilidad.
+
+Saludos,
+Jorge.-
+
+
+
+On Tue, Feb 14, 2023 at 12:08 AM Manuel Mendoza <mmendoza en fulbrightmail.org>
+wrote:
+
+> Buenos días, tengo un conjunto de 10 bases de datos en excel cuyos nombres
+> van de BIO1 a BIO10. Quiero hacer un loop en el que me coja una cada vez.
+> He probado lo que os pongo abajo (y otras cosas parecidas) y obviamente no
+> funciona. ¿Conocéis alguna forma?
+> Gracias como siempre,
+> Manuel
+>
+> BIOs<-
+> ("BIO1?,?BIO2?,?BIO3","BIO4?,?BIO5?,?BIO6?,?BIO7?,?BIO8","BIO9?,?BIO10?)
+> for (j in 1:length(BIOs)) {
+>       data <- read_excel("BIOs[j].xlsx")
+> ...
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Thu Feb 16 12:41:53 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Thu, 16 Feb 2023 06:41:53 -0500
+Subject: [R-es] Rda
+Message-ID: <CANuuowP--UayA0DOgBqR0G7JZhTvQa+-vPpvtGQE_+9Gf4KWaw@mail.gmail.com>
+
+Estimados
+
+como puedo importar en Rstudio datos que esten en RData?
+
+Saludos José
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Thu Feb 16 12:44:00 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Thu, 16 Feb 2023 06:44:00 -0500
+Subject: [R-es] SVM plot duda
+Message-ID: <CANuuowNTxqtxfd7LB7=x4PdZZVQGUet_8o5m=t4=bMXU-tu26w@mail.gmail.com>
+
+Estimados
+En este modelo no puedo hacer el plot(svmfit,df11 ) #AQUI NO TRABAJA
+Le adjunto Excel
+
+
+library(readxl)
+
+df11
+attach(df11)
+
+df11$fallecido=factor(df11$fallecido)
+
+# Selección de una submuestra del 70% de los datos
+set.seed(101)
+tamano.total <- nrow(df11)
+tamano.entreno <- round(tamano.total*0.7)
+datos.indices <- sample(1:tamano.total , size=tamano.entreno)
+datos.entreno <- df11[datos.indices,]
+datos.test <- df11[-datos.indices,]
+
+# Ejecución del modelo SVM
+modelo <- svm(fallecido~., data=datos.entreno)
+
+# Predicción de los restantes
+prediccion <- predict(modelo,new=datos.test)
+
+# Tabla de confusión.
+
+(mc <- with(datos.test,(table(prediccion,fallecido))))
+
+
+# % correctamente clasificados
+(correctos <- sum(diag(mc)) / nrow(datos.test) *100)
+
+
+plot(svmfit,df11 ) #AQUI NO TRABAJA
+
+Saludos José
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: df11.xlsx
+Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Size: 13680 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230216/f0b9d42b/attachment.xlsx>
+
+From em||opezc@no @end|ng |rom gm@||@com  Thu Feb 16 16:55:36 2023
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Thu, 16 Feb 2023 16:55:36 +0100
+Subject: [R-es] Rda
+In-Reply-To: <CANuuowP--UayA0DOgBqR0G7JZhTvQa+-vPpvtGQE_+9Gf4KWaw@mail.gmail.com>
+References: <CANuuowP--UayA0DOgBqR0G7JZhTvQa+-vPpvtGQE_+9Gf4KWaw@mail.gmail.com>
+Message-ID: <71982A8F-8318-4579-A23F-C01B6B1AD862@gmail.com>
+
+Hola,
+
+Con la función load() o desde ?Environment? el icono ?Load workspace?
+
+Emilio L. Cano
+
+
+
+> El 16 feb 2023, a las 12:41, Jose Betancourt Bethencourt <betanster en gmail.com> escribió:
+> 
+> Estimados
+> 
+> como puedo importar en Rstudio datos que esten en RData?
+> 
+> Saludos José
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Thu Feb 16 17:02:52 2023
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Thu, 16 Feb 2023 17:02:52 +0100
+Subject: [R-es] SVM plot duda
+In-Reply-To: <CANuuowNTxqtxfd7LB7=x4PdZZVQGUet_8o5m=t4=bMXU-tu26w@mail.gmail.com>
+References: <CANuuowNTxqtxfd7LB7=x4PdZZVQGUet_8o5m=t4=bMXU-tu26w@mail.gmail.com>
+Message-ID: <1B36B995-8ABE-41AC-A530-B08AA24FE4CB@gmail.com>
+
+Hola,
+
+El mensaje es claro: el modelo svmfit no existe, tú has llamado al ajuste ?modelo?. De todas formas, aparte de eso tendrías que especificar qué dimensiones (variables predictivas) quieres representar. Si miras en la ayuda de ?plot.svm lo tienes explicado.
+
+Esto sí funcionaría:
+
+plot(modelo,df11, LDH ~ INL )
+
+Gracias por proporcionar el código y los datos para poder reproducir el error.
+
+Un saludo,
+
+Emilio L. Cano
+
+
+
+> El 16 feb 2023, a las 12:44, Jose Betancourt Bethencourt <betanster en gmail.com> escribió:
+> 
+> Estimados
+> En este modelo no puedo hacer el plot(svmfit,df11 ) #AQUI NO TRABAJA
+> Le adjunto Excel
+> 
+> 
+> library(readxl)
+> 
+> df11
+> attach(df11)
+> 
+> df11$fallecido=factor(df11$fallecido)
+> 
+> # Selección de una submuestra del 70% de los datos
+> set.seed(101)
+> tamano.total <- nrow(df11)
+> tamano.entreno <- round(tamano.total*0.7)
+> datos.indices <- sample(1:tamano.total , size=tamano.entreno)
+> datos.entreno <- df11[datos.indices,]
+> datos.test <- df11[-datos.indices,]
+> 
+> # Ejecución del modelo SVM
+> modelo <- svm(fallecido~., data=datos.entreno)
+> 
+> # Predicción de los restantes
+> prediccion <- predict(modelo,new=datos.test)
+> 
+> # Tabla de confusión.
+> 
+> (mc <- with(datos.test,(table(prediccion,fallecido))))
+> 
+> 
+> # % correctamente clasificados
+> (correctos <- sum(diag(mc)) / nrow(datos.test) *100)
+> 
+> 
+> plot(svmfit,df11 ) #AQUI NO TRABAJA
+> 
+> Saludos José
+> <df11.xlsx>_______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Thu Feb 16 23:54:25 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Thu, 16 Feb 2023 17:54:25 -0500
+Subject: [R-es] Rda
+In-Reply-To: <71982A8F-8318-4579-A23F-C01B6B1AD862@gmail.com>
+References: <CANuuowP--UayA0DOgBqR0G7JZhTvQa+-vPpvtGQE_+9Gf4KWaw@mail.gmail.com>
+ <71982A8F-8318-4579-A23F-C01B6B1AD862@gmail.com>
+Message-ID: <CANuuowOcRXYHD3i4S4JT7_0yCFqMoTWdhZiyVoz_oxnmoEbQHQ@mail.gmail.com>
+
+Gracias
+
+El jue., 16 de feb. de 2023 10:55 a. m., Emilio L. Cano <
+emilopezcano en gmail.com> escribió:
+
+> Hola,
+>
+> Con la función load() o desde ?Environment? el icono ?Load workspace?
+>
+> Emilio L. Cano
+>
+>
+>
+> El 16 feb 2023, a las 12:41, Jose Betancourt Bethencourt <
+> betanster en gmail.com> escribió:
+>
+> Estimados
+>
+> como puedo importar en Rstudio datos que esten en RData?
+>
+> Saludos José
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Fri Feb 17 13:17:28 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Fri, 17 Feb 2023 07:17:28 -0500
+Subject: [R-es] SVM plot duda
+In-Reply-To: <1B36B995-8ABE-41AC-A530-B08AA24FE4CB@gmail.com>
+References: <CANuuowNTxqtxfd7LB7=x4PdZZVQGUet_8o5m=t4=bMXU-tu26w@mail.gmail.com>
+ <1B36B995-8ABE-41AC-A530-B08AA24FE4CB@gmail.com>
+Message-ID: <CANuuowPaZBDiWBNipdRz2MW7OXFDNQJAPA8HcaXW_g_JkR0HWg@mail.gmail.com>
+
+Gracias!
+
+El 16/2/23, Emilio L. Cano <emilopezcano en gmail.com> escribió:
+> Hola,
+>
+> El mensaje es claro: el modelo svmfit no existe, tú has llamado al ajuste
+> ?modelo?. De todas formas, aparte de eso tendrías que especificar qué
+> dimensiones (variables predictivas) quieres representar. Si miras en la
+> ayuda de ?plot.svm lo tienes explicado.
+>
+> Esto sí funcionaría:
+>
+> plot(modelo,df11, LDH ~ INL )
+>
+> Gracias por proporcionar el código y los datos para poder reproducir el
+> error.
+>
+> Un saludo,
+>
+> Emilio L. Cano
+>
+>
+>
+>> El 16 feb 2023, a las 12:44, Jose Betancourt Bethencourt
+>> <betanster en gmail.com> escribió:
+>>
+>> Estimados
+>> En este modelo no puedo hacer el plot(svmfit,df11 ) #AQUI NO TRABAJA
+>> Le adjunto Excel
+>>
+>>
+>> library(readxl)
+>>
+>> df11
+>> attach(df11)
+>>
+>> df11$fallecido=factor(df11$fallecido)
+>>
+>> # Selección de una submuestra del 70% de los datos
+>> set.seed(101)
+>> tamano.total <- nrow(df11)
+>> tamano.entreno <- round(tamano.total*0.7)
+>> datos.indices <- sample(1:tamano.total , size=tamano.entreno)
+>> datos.entreno <- df11[datos.indices,]
+>> datos.test <- df11[-datos.indices,]
+>>
+>> # Ejecución del modelo SVM
+>> modelo <- svm(fallecido~., data=datos.entreno)
+>>
+>> # Predicción de los restantes
+>> prediccion <- predict(modelo,new=datos.test)
+>>
+>> # Tabla de confusión.
+>>
+>> (mc <- with(datos.test,(table(prediccion,fallecido))))
+>>
+>>
+>> # % correctamente clasificados
+>> (correctos <- sum(diag(mc)) / nrow(datos.test) *100)
+>>
+>>
+>> plot(svmfit,df11 ) #AQUI NO TRABAJA
+>>
+>> Saludos José
+>> <df11.xlsx>_______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+-- 
+Dr. Jose A. Betancourt Bethencourt
+Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri Feb 17 14:25:31 2023
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 17 Feb 2023 14:25:31 +0100
+Subject: [R-es] SVM plot duda
+In-Reply-To: <CANuuowNNW=O6KZx-J=N1bK+mSOvyyHMgAd74a0FwCnG+esQG=Q@mail.gmail.com>
+References: <CANuuowNTxqtxfd7LB7=x4PdZZVQGUet_8o5m=t4=bMXU-tu26w@mail.gmail.com>
+ <1B36B995-8ABE-41AC-A530-B08AA24FE4CB@gmail.com>
+ <CANuuowMuJK9ardmoh=X60ak35hZZB_WC-0U6czbhuLGYkH0-Ug@mail.gmail.com>
+ <CANuuowNNW=O6KZx-J=N1bK+mSOvyyHMgAd74a0FwCnG+esQG=Q@mail.gmail.com>
+Message-ID: <F8BED2D7-647C-400D-89E7-BAE20284104D@gmail.com>
+
+Pues depende del modelo, y de los datos. Por ejemplo, si se ajusta con el kernel sigmoidal, sí que se visualiza la separación con los vectores:
+
+modelo <- svm(fallecido~., data=datos.entreno, kernel = "sigmoid?)
+plot(modelo,df11, LDH ~ INL ) 
+
+?
+
+Emilio L. Cano
+Tel: 665 676 225
+http://emilio.lcano.com 
+
+
+
+
+> El 17 feb 2023, a las 13:36, Jose Betancourt Bethencourt <betanster en gmail.com> escribió:
+> 
+> Perdon, si sale el grafico, pero no le veo sentido como  en el caso de iris
+> jose
+> 
+> El 17/2/23, Jose Betancourt Bethencourt <betanster en gmail.com <mailto:betanster en gmail.com>> escribió:
+>> EStimado Emilio
+>> plot(modelo,df11, LDH ~ INL )
+>> no funcionó, pienso que a la formula hay que agregarle algo
+>> 
+>> como en esta
+>> data(iris)
+>> m2 <- svm(Species~., data = iris)
+>> plot(m2, iris, Petal.Width ~ Petal.Length,
+>>     slice = list(Sepal.Width = 3, Sepal.Length = 4))
+>> 
+>> Apreciaria su ayuda
+>> 
+>> 
+>> Adjunto base de datos y codigos
+>> 
+>> saludos
+>> José
+>> 
+>> 
+>> 
+>> 
+>> El 16/2/23, Emilio L. Cano <emilopezcano en gmail.com> escribió:
+>>> Hola,
+>>> 
+>>> El mensaje es claro: el modelo svmfit no existe, tú has llamado al ajuste
+>>> ?modelo?. De todas formas, aparte de eso tendrías que especificar qué
+>>> dimensiones (variables predictivas) quieres representar. Si miras en la
+>>> ayuda de ?plot.svm lo tienes explicado.
+>>> 
+>>> Esto sí funcionaría:
+>>> 
+>>> plot(modelo,df11, LDH ~ INL )
+>>> 
+>>> Gracias por proporcionar el código y los datos para poder reproducir el
+>>> error.
+>>> 
+>>> Un saludo,
+>>> 
+>>> Emilio L. Cano
+>>> 
+>>> 
+>>> 
+>>>> El 16 feb 2023, a las 12:44, Jose Betancourt Bethencourt
+>>>> <betanster en gmail.com> escribió:
+>>>> 
+>>>> Estimados
+>>>> En este modelo no puedo hacer el plot(svmfit,df11 ) #AQUI NO TRABAJA
+>>>> Le adjunto Excel
+>>>> 
+>>>> 
+>>>> library(readxl)
+>>>> 
+>>>> df11
+>>>> attach(df11)
+>>>> 
+>>>> df11$fallecido=factor(df11$fallecido)
+>>>> 
+>>>> # Selección de una submuestra del 70% de los datos
+>>>> set.seed(101)
+>>>> tamano.total <- nrow(df11)
+>>>> tamano.entreno <- round(tamano.total*0.7)
+>>>> datos.indices <- sample(1:tamano.total , size=tamano.entreno)
+>>>> datos.entreno <- df11[datos.indices,]
+>>>> datos.test <- df11[-datos.indices,]
+>>>> 
+>>>> # Ejecución del modelo SVM
+>>>> modelo <- svm(fallecido~., data=datos.entreno)
+>>>> 
+>>>> # Predicción de los restantes
+>>>> prediccion <- predict(modelo,new=datos.test)
+>>>> 
+>>>> # Tabla de confusión.
+>>>> 
+>>>> (mc <- with(datos.test,(table(prediccion,fallecido))))
+>>>> 
+>>>> 
+>>>> # % correctamente clasificados
+>>>> (correctos <- sum(diag(mc)) / nrow(datos.test) *100)
+>>>> 
+>>>> 
+>>>> plot(svmfit,df11 ) #AQUI NO TRABAJA
+>>>> 
+>>>> Saludos José
+>>>> <df11.xlsx>_______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> 
+>>> 
+>> 
+>> 
+>> --
+>> Dr. Jose A. Betancourt Bethencourt
+>> Universidad de Ciencias Medicas Carlos j. Finlay
+>> 
+> 
+> 
+> -- 
+> Dr. Jose A. Betancourt Bethencourt
+> Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230217/c7688fda/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Gráfico_pegado-1.tiff
+Type: image/tiff
+Size: 128138 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230217/c7688fda/attachment-0001.tiff>
+
+From bet@n@ter @end|ng |rom gm@||@com  Fri Feb 17 19:02:24 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Fri, 17 Feb 2023 13:02:24 -0500
+Subject: [R-es] SVM plot duda
+In-Reply-To: <F8BED2D7-647C-400D-89E7-BAE20284104D@gmail.com>
+References: <CANuuowNTxqtxfd7LB7=x4PdZZVQGUet_8o5m=t4=bMXU-tu26w@mail.gmail.com>
+ <1B36B995-8ABE-41AC-A530-B08AA24FE4CB@gmail.com>
+ <CANuuowMuJK9ardmoh=X60ak35hZZB_WC-0U6czbhuLGYkH0-Ug@mail.gmail.com>
+ <CANuuowNNW=O6KZx-J=N1bK+mSOvyyHMgAd74a0FwCnG+esQG=Q@mail.gmail.com>
+ <F8BED2D7-647C-400D-89E7-BAE20284104D@gmail.com>
+Message-ID: <CANuuowPBQDFObR2j=1=gwL7WArRV_TW8uKOYDOPHZ4naGsTFpg@mail.gmail.com>
+
+Muchas gracias !!
+
+El 17/2/23, Emilio L. Cano <emilopezcano en gmail.com> escribió:
+> Pues depende del modelo, y de los datos. Por ejemplo, si se ajusta con el
+> kernel sigmoidal, sí que se visualiza la separación con los vectores:
+>
+> modelo <- svm(fallecido~., data=datos.entreno, kernel = "sigmoid?)
+> plot(modelo,df11, LDH ~ INL )
+>
+> ?
+>
+> Emilio L. Cano
+> Tel: 665 676 225
+> http://emilio.lcano.com
+>
+>
+>
+>
+>> El 17 feb 2023, a las 13:36, Jose Betancourt Bethencourt
+>> <betanster en gmail.com> escribió:
+>>
+>> Perdon, si sale el grafico, pero no le veo sentido como  en el caso de
+>> iris
+>> jose
+>>
+>> El 17/2/23, Jose Betancourt Bethencourt <betanster en gmail.com
+>> <mailto:betanster en gmail.com>> escribió:
+>>> EStimado Emilio
+>>> plot(modelo,df11, LDH ~ INL )
+>>> no funcionó, pienso que a la formula hay que agregarle algo
+>>>
+>>> como en esta
+>>> data(iris)
+>>> m2 <- svm(Species~., data = iris)
+>>> plot(m2, iris, Petal.Width ~ Petal.Length,
+>>>     slice = list(Sepal.Width = 3, Sepal.Length = 4))
+>>>
+>>> Apreciaria su ayuda
+>>>
+>>>
+>>> Adjunto base de datos y codigos
+>>>
+>>> saludos
+>>> José
+>>>
+>>>
+>>>
+>>>
+>>> El 16/2/23, Emilio L. Cano <emilopezcano en gmail.com> escribió:
+>>>> Hola,
+>>>>
+>>>> El mensaje es claro: el modelo svmfit no existe, tú has llamado al
+>>>> ajuste
+>>>> ?modelo?. De todas formas, aparte de eso tendrías que especificar qué
+>>>> dimensiones (variables predictivas) quieres representar. Si miras en la
+>>>> ayuda de ?plot.svm lo tienes explicado.
+>>>>
+>>>> Esto sí funcionaría:
+>>>>
+>>>> plot(modelo,df11, LDH ~ INL )
+>>>>
+>>>> Gracias por proporcionar el código y los datos para poder reproducir el
+>>>> error.
+>>>>
+>>>> Un saludo,
+>>>>
+>>>> Emilio L. Cano
+>>>>
+>>>>
+>>>>
+>>>>> El 16 feb 2023, a las 12:44, Jose Betancourt Bethencourt
+>>>>> <betanster en gmail.com> escribió:
+>>>>>
+>>>>> Estimados
+>>>>> En este modelo no puedo hacer el plot(svmfit,df11 ) #AQUI NO TRABAJA
+>>>>> Le adjunto Excel
+>>>>>
+>>>>>
+>>>>> library(readxl)
+>>>>>
+>>>>> df11
+>>>>> attach(df11)
+>>>>>
+>>>>> df11$fallecido=factor(df11$fallecido)
+>>>>>
+>>>>> # Selección de una submuestra del 70% de los datos
+>>>>> set.seed(101)
+>>>>> tamano.total <- nrow(df11)
+>>>>> tamano.entreno <- round(tamano.total*0.7)
+>>>>> datos.indices <- sample(1:tamano.total , size=tamano.entreno)
+>>>>> datos.entreno <- df11[datos.indices,]
+>>>>> datos.test <- df11[-datos.indices,]
+>>>>>
+>>>>> # Ejecución del modelo SVM
+>>>>> modelo <- svm(fallecido~., data=datos.entreno)
+>>>>>
+>>>>> # Predicción de los restantes
+>>>>> prediccion <- predict(modelo,new=datos.test)
+>>>>>
+>>>>> # Tabla de confusión.
+>>>>>
+>>>>> (mc <- with(datos.test,(table(prediccion,fallecido))))
+>>>>>
+>>>>>
+>>>>> # % correctamente clasificados
+>>>>> (correctos <- sum(diag(mc)) / nrow(datos.test) *100)
+>>>>>
+>>>>>
+>>>>> plot(svmfit,df11 ) #AQUI NO TRABAJA
+>>>>>
+>>>>> Saludos José
+>>>>> <df11.xlsx>_______________________________________________
+>>>>> R-help-es mailing list
+>>>>> R-help-es en r-project.org
+>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>>
+>>>
+>>>
+>>> --
+>>> Dr. Jose A. Betancourt Bethencourt
+>>> Universidad de Ciencias Medicas Carlos j. Finlay
+>>>
+>>
+>>
+>> --
+>> Dr. Jose A. Betancourt Bethencourt
+>> Universidad de Ciencias Medicas Carlos j. Finlay
+>
+>
+
+
+-- 
+Dr. Jose A. Betancourt Bethencourt
+Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From dcgomezme @end|ng |rom un@|@edu@co  Fri Feb 17 19:56:18 2023
+From: dcgomezme @end|ng |rom un@|@edu@co (David Camilo Gomez Medina)
+Date: Fri, 17 Feb 2023 13:56:18 -0500
+Subject: [R-es] =?utf-8?q?Interpolaci=C3=B3n_IDW?=
+Message-ID: <CABaOv1Goc=yycqO4f_3D4j3+KGY=m3=sk5y2zU4yW8X82uxA9w@mail.gmail.com>
+
+Hola, buen día a todos.
+
+He estado mirando cómo interpolar unos datos anuales con el método IDW,
+pero no consigo aún realizarlo.
+
+idw_models <- list()
+
+for (i in 1:ncol(data_y_mt)) {
+  #Extract the current variable
+  current_var <- names(data_y_mt)[i]
+
+  #Create an IDW model for the current variable
+  idw_model <- idw(current_var, sta_mt, grid, p = 1)
+
+  idw_models[[i]] <- idw_model
+}
+
+Ese es el código que llevo, pero me siento muy perdido. La variable*
+data_y_mt* es el dataframe donde tengo los valores, *sta_mt* son las
+coordenadas de los puntos, *grid* es la malla coordenada.
+
+Me gustaría también eliminar los datos con valores NA. Adjunto imagen del
+dataframe.
+
+Quedo muy atento, gracias.
+
+[image: image.png]
+
+-- 
+*Aviso legal:* El contenido de este mensaje y los archivos adjuntos son 
+confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. 
+Se encuentran dirigidos sólo para el uso del destinatario al cual van 
+enviados. La reproducción, lectura y/o copia se encuentran prohibidas a 
+cualquier persona diferente a este y puede ser ilegal. Si usted lo ha 
+recibido por error, infórmenos y elimínelo de su correo. Los Datos 
+Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra 
+Política de Datos Personales que podrá consultar en la página web 
+www.unal.edu.co <http://www.unal.edu.co/>.* *Las opiniones, informaciones, 
+conclusiones y cualquier otro tipo de dato contenido en este correo 
+electrónico, no relacionados con la actividad de la Universidad Nacional de 
+Colombia, se entenderá como personales y de ninguna manera son avaladas por 
+la Universidad.
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230217/7ea7a082/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 50767 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230217/7ea7a082/attachment-0001.png>
+
+From em||opezc@no @end|ng |rom gm@||@com  Mon Feb 20 08:11:31 2023
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Mon, 20 Feb 2023 08:11:31 +0100
+Subject: [R-es] =?utf-8?q?Interpolaci=C3=B3n_IDW?=
+In-Reply-To: <CABaOv1Goc=yycqO4f_3D4j3+KGY=m3=sk5y2zU4yW8X82uxA9w@mail.gmail.com>
+References: <CABaOv1Goc=yycqO4f_3D4j3+KGY=m3=sk5y2zU4yW8X82uxA9w@mail.gmail.com>
+Message-ID: <D280F548-0591-4D63-B51D-DA0E6788FD21@gmail.com>
+
+Hola,
+Es difícil responder con un ejemplo no reproducible y sin el mensaje de error, pero te diría que intentes primero comprobar que puedes ajustar un único modelo fuera del bucle.
+
+Dicho esto, parece que estás pasando como primer argumento de la función un ?string?, el nombre de la variable, y debe ser una fórmula. Tal vez as.formula(current_var, ?~1?) te funcione.
+
+En cuanto a los NA, puedes usar en cada iteración current_df <- tidyr::drop_na(current_var) y usar current_df en vez de sta_mt
+
+Saludos,
+Emilio
+
+
+
+> El 17 feb 2023, a las 19:56, David Camilo Gomez Medina <dcgomezme en unal.edu.co> escribió:
+> 
+> Hola, buen día a todos.
+> 
+> He estado mirando cómo interpolar unos datos anuales con el método IDW, pero no consigo aún realizarlo. 
+> 
+> idw_models <- list()
+> 
+> for (i in 1:ncol(data_y_mt)) {
+>   #Extract the current variable
+>   current_var <- names(data_y_mt)[i]
+>   
+>   #Create an IDW model for the current variable
+>   idw_model <- idw(current_var, sta_mt, grid, p = 1)
+>   
+>   idw_models[[i]] <- idw_model 
+> }
+> 
+> Ese es el código que llevo, pero me siento muy perdido. La variable data_y_mt es el dataframe donde tengo los valores, sta_mt son las coordenadas de los puntos, grid es la malla coordenada.
+> 
+> Me gustaría también eliminar los datos con valores NA. Adjunto imagen del dataframe. 
+> 
+> Quedo muy atento, gracias.
+> 
+> <image.png>
+> 
+> Aviso legal: El contenido de este mensaje y los archivos adjuntos son confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. Se encuentran dirigidos sólo para el uso del destinatario al cual van enviados. La reproducción, lectura y/o copia se encuentran prohibidas a cualquier persona diferente a este y puede ser ilegal. Si usted lo ha recibido por error, infórmenos y elimínelo de su correo. Los Datos Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra Política de Datos Personales que podrá consultar en la página web www.unal.edu.co <http://www.unal.edu.co/>. Las opiniones, informaciones, conclusiones y cualquier otro tipo de dato contenido en este correo electrónico, no relacionados con la actividad de la Universidad Nacional de Colombia, se entenderá como personales y de ninguna manera son avaladas por la Universidad.
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From dcgomezme @end|ng |rom un@|@edu@co  Tue Feb 21 19:16:12 2023
+From: dcgomezme @end|ng |rom un@|@edu@co (David Camilo Gomez Medina)
+Date: Tue, 21 Feb 2023 13:16:12 -0500
+Subject: [R-es] =?utf-8?q?Interpolaci=C3=B3n_IDW?=
+In-Reply-To: <D280F548-0591-4D63-B51D-DA0E6788FD21@gmail.com>
+References: <CABaOv1Goc=yycqO4f_3D4j3+KGY=m3=sk5y2zU4yW8X82uxA9w@mail.gmail.com>
+ <D280F548-0591-4D63-B51D-DA0E6788FD21@gmail.com>
+Message-ID: <CABaOv1G-ieSPRCpEUATq8U_arsFnuYV2UkNdTUzP2YRDgJMowQ@mail.gmail.com>
+
+Emilio, muchas gracias. Tuve que rehacer el código para entender mejor
+todo, pero me sale el siguiente error:
+
+
+*Error in as.data.frame.default(x[[i]], optional = TRUE) :   cannot coerce
+class ?structure("RasterLayer", package = "raster")? to a data.frame*
+
+El código es el siguiente:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*for (i in 1:nrows_mt) {    data_it_mt <-
+as.numeric(as.vector(data_y_mt[i,]))    it_data_mt <- idw(data_it_mt,
+sta_mt, grid, p = 1)    grid <- data.frame(grid, valores = it_data_mt[ ,
+1])    coordinates(grid) <- ~x+y    gridded(grid) <- T    grid <-
+raster(grid, "valores")    projection(grid) <- crs("+init=epsg:9377")
+path <- 'C:/Users/David Gomez/Desktop/TESIS/DATOS/RESULTS/'    numeration
+<- as.character(i)    name <- "MEAN_TEMP"    exten <- ".tif"
+writeRaster(grid, paste(path, name, numeration, exten), overwrite = T)}*
+
+No entiendo muy bien a qué parte hace énfasis el error.
+
+Quedo atento, gracias.
+
+Saludos.
+
+On Mon, 20 Feb 2023 at 02:11, Emilio L. Cano <emilopezcano en gmail.com> wrote:
+
+> Hola,
+> Es difícil responder con un ejemplo no reproducible y sin el mensaje de
+> error, pero te diría que intentes primero comprobar que puedes ajustar un
+> único modelo fuera del bucle.
+>
+> Dicho esto, parece que estás pasando como primer argumento de la función
+> un ?string?, el nombre de la variable, y debe ser una fórmula. Tal vez
+> as.formula(current_var, ?~1?) te funcione.
+>
+> En cuanto a los NA, puedes usar en cada iteración current_df <-
+> tidyr::drop_na(current_var) y usar current_df en vez de sta_mt
+>
+> Saludos,
+> Emilio
+>
+>
+>
+> El 17 feb 2023, a las 19:56, David Camilo Gomez Medina <
+> dcgomezme en unal.edu.co> escribió:
+>
+> Hola, buen día a todos.
+>
+> He estado mirando cómo interpolar unos datos anuales con el método IDW,
+> pero no consigo aún realizarlo.
+>
+> idw_models <- list()
+>
+> for (i in 1:ncol(data_y_mt)) {
+>   #Extract the current variable
+>   current_var <- names(data_y_mt)[i]
+>
+>   #Create an IDW model for the current variable
+>   idw_model <- idw(current_var, sta_mt, grid, p = 1)
+>
+>   idw_models[[i]] <- idw_model
+> }
+>
+> Ese es el código que llevo, pero me siento muy perdido. La variable*
+> data_y_mt* es el dataframe donde tengo los valores, *sta_mt* son las
+> coordenadas de los puntos, *grid* es la malla coordenada.
+>
+> Me gustaría también eliminar los datos con valores NA. Adjunto imagen del
+> dataframe.
+>
+> Quedo muy atento, gracias.
+>
+> <image.png>
+>
+> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son
+> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.
+> Se encuentran dirigidos sólo para el uso del destinatario al cual van
+> enviados. La reproducción, lectura y/o copia se encuentran prohibidas a
+> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha
+> recibido por error, infórmenos y elimínelo de su correo. Los Datos
+> Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra
+> Política de Datos Personales que podrá consultar en la página web
+> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier
+> otro tipo de dato contenido en este correo electrónico, no relacionados con
+> la actividad de la Universidad Nacional de Colombia, se entenderá como
+> personales y de ninguna manera son avaladas por la Universidad.
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+-- 
+*Aviso legal:* El contenido de este mensaje y los archivos adjuntos son 
+confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. 
+Se encuentran dirigidos sólo para el uso del destinatario al cual van 
+enviados. La reproducción, lectura y/o copia se encuentran prohibidas a 
+cualquier persona diferente a este y puede ser ilegal. Si usted lo ha 
+recibido por error, infórmenos y elimínelo de su correo. Los Datos 
+Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra 
+Política de Datos Personales que podrá consultar en la página web 
+www.unal.edu.co <http://www.unal.edu.co/>.* *Las opiniones, informaciones, 
+conclusiones y cualquier otro tipo de dato contenido en este correo 
+electrónico, no relacionados con la actividad de la Universidad Nacional de 
+Colombia, se entenderá como personales y de ninguna manera son avaladas por 
+la Universidad.
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Wed Feb 22 12:06:27 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Wed, 22 Feb 2023 06:06:27 -0500
+Subject: [R-es] manejo bases de datos
+Message-ID: <CANuuowNeQD7GAzweosaiucof9Yqah3jjbNS9822DbNvn56nx-Q@mail.gmail.com>
+
+Estimados
+He trabajado en R, pero los cambios a las bases de datos los he hecho
+en Excel. Quisiera saber como se puede desde el propio R:
+
+1.	Anadir Mas casos (filas)
+2.	Calcular una nueva variable, ejemplo el IMC a partir del peso y la estatura
+3.	Agrupar edades en grupos (0-10, 11-20 etc.)
+4.	Ordenar casos (descendente o ascendente)
+Saludos
+José
+
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Wed Feb 22 13:16:04 2023
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Wed, 22 Feb 2023 12:16:04 +0000
+Subject: [R-es] manejo bases de datos
+In-Reply-To: <CANuuowNeQD7GAzweosaiucof9Yqah3jjbNS9822DbNvn56nx-Q@mail.gmail.com>
+References: <CANuuowNeQD7GAzweosaiucof9Yqah3jjbNS9822DbNvn56nx-Q@mail.gmail.com>
+Message-ID: <cf84a666c7e1411e9cffc968131cdfd8@sergas.es>
+
+Hola Jos?.
+
+Tienes dos opciones para abordar esta cuesti?n: desde el propio c?digo de R [empezando con instrucciones como fix() o edit() para editar de manera muy b?sica el conjunto de datos] o desde un entorno gr?fico de R (me centrar? en esta ?ltima opci?n porque es lo m?s parecido a Excel que vas a tener e imagino que es lo que te interesa).
+
+Creo que los GUI de R m?s avanzados para manipular gr?ficamente los conjuntos de datos son JASP (https://jasp-stats.org/) y  JAMOVI (https://www.jamovi.org/).
+
+Yo prefiero entornos menos "alejados" de R como RStudio (https://posit.co/products/open-source/rstudio/) o RCommander (Rcmdr en CRAN) pero quiz? no te sirvan tan bien como los dos anteriores para trabajar los datos como si fuera desde una hoja de c?lculo.
+
+Mi recomendaci?n es que le eches un ojo a JASP (un proyecto bastante interesante de la Universidad de Amsterdam) a ver si cumple con tus requerimientos. En esta URL tienes materiales para empezar: https://jasp-stats.org/teaching-with-jasp/
+
+
+Un saludo,
+Miguel.
+
+
+
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Jose Betancourt Bethencourt <betanster en gmail.com>
+Enviado: mi?rcoles, 22 de febrero de 2023 12:06
+Para: r-help-es
+Asunto: [R-es] manejo bases de datos
+
+Estimados
+He trabajado en R, pero los cambios a las bases de datos los he hecho
+en Excel. Quisiera saber como se puede desde el propio R:
+
+1.      Anadir Mas casos (filas)
+2.      Calcular una nueva variable, ejemplo el IMC a partir del peso y la estatura
+3.      Agrupar edades en grupos (0-10, 11-20 etc.)
+4.      Ordenar casos (descendente o ascendente)
+Saludos
+Jos?
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+________________________________
+
+Nota: A informaci?n contida nesta mensaxe e os seus posibles documentos adxuntos ? privada e confidencial e est? dirixida ?nicamente ? seu destinatario/a. Se vostede non ? o/a destinatario/a orixinal desta mensaxe, por favor elim?nea. A distribuci?n ou copia desta mensaxe non est? autorizada.
+
+Nota: La informaci?n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est? dirigida ?nicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?nelo. La distribuci?n o copia de este mensaje no est? autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Wed Feb 22 20:11:16 2023
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric Concha)
+Date: Wed, 22 Feb 2023 16:11:16 -0300
+Subject: [R-es] manejo bases de datos
+In-Reply-To: <CANuuowNeQD7GAzweosaiucof9Yqah3jjbNS9822DbNvn56nx-Q@mail.gmail.com>
+References: <CANuuowNeQD7GAzweosaiucof9Yqah3jjbNS9822DbNvn56nx-Q@mail.gmail.com>
+Message-ID: <42b7bdcc-af6b-42d7-343c-98493bd03852@gmail.com>
+
+Hola José, si pudieras compartir un subconjunto de datos y un poco más 
+de detalle de lo que deseas hacer, se podría responder con más 
+precisión. Por ahora un adelanto:
+
+1. para añadir filas puedes usar rbin() del sistema base
+
+2. para crear una columna llamada IMC al DF dataframe usando el sistema 
+base: dataframe$IMC = elcalculo  ... con data.table sería: dataframe[, 
+IMC=elcalculo]
+
+3. para realizar operaciones de agrupación hay varias opciones, una de 
+las más usadas es la libreria dplyr del paquete tidyverse 
+(https://dplyr.tidyverse.org/articles/grouping.html), pero a mi me gusta 
+usar la libreria data.table 
+(https://github.com/Rdatatable/data.table/wiki/Getting-started)
+
+4. para ordenar también lo puedes hacer con dplyr, sistema base o 
+data.table (la función setkey())
+
+
+Espero que esos datos te puedan orientar.
+
+Saludos !!
+
+
+
+
+
+On 22-02-23 08:06, Jose Betancourt Bethencourt wrote:
+> Estimados
+> He trabajado en R, pero los cambios a las bases de datos los he hecho
+> en Excel. Quisiera saber como se puede desde el propio R:
+>
+> 1.	Anadir Mas casos (filas)
+> 2.	Calcular una nueva variable, ejemplo el IMC a partir del peso y la estatura
+> 3.	Agrupar edades en grupos (0-10, 11-20 etc.)
+> 4.	Ordenar casos (descendente o ascendente)
+> Saludos
+> José
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+	[[alternative HTML version deleted]]
+
+
+From @|ro77777 @end|ng |rom gm@||@com  Thu Feb 23 01:06:12 2023
+From: @|ro77777 @end|ng |rom gm@||@com (Alfredo Diaz)
+Date: Wed, 22 Feb 2023 19:06:12 -0500
+Subject: [R-es] Problemas con algunos atajos en Rstudio
+Message-ID: <CAFu+hONqdq8b1jSHsj7=D5BRa0QsUJ+3HW2xDvLqcm+Y82PQpQ@mail.gmail.com>
+
+Cordial saludo,
+
+Necesito de su ayuda dado que, cuando estoy trabajando en Rstudio no me
+están funcionando los atajos *CTRL + 1, CTRL + 2*, además cuando utilizo el
+atajo* CTRL + SHIFT + M* el operador que obtengo es: |>. Atajos como *CTRL +
+ENTER, ALT + -, ALT + SHIFT + K* funcionan perfectamente, por ende, no
+entiendo qué está pasando ¿Alguien sabe que puede estar ocurriendo? ¿Por
+qué puede ocurrir? ¿Qué debo hacer para solucionar este problema?
+
+De antemano muchas gracias por las respuestas.
+
+
+Fraternalmente,
+-- 
+José Diaz E.
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Thu Feb 23 02:15:28 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Wed, 22 Feb 2023 20:15:28 -0500
+Subject: [R-es] manejo bases de datos
+In-Reply-To: <CAOKbq8jfoNzkS+SgrrUTA68+0ZO_X7edgaEMOBfCaRW4LNDdXw@mail.gmail.com>
+References: <CANuuowNeQD7GAzweosaiucof9Yqah3jjbNS9822DbNvn56nx-Q@mail.gmail.com>
+ <CAOKbq8jfoNzkS+SgrrUTA68+0ZO_X7edgaEMOBfCaRW4LNDdXw@mail.gmail.com>
+Message-ID: <CANuuowPBiCmoYt1cM2jf+Dq6tm8=aw+qZ_0z-vJXejL_FnzECA@mail.gmail.com>
+
+Estimado
+Le agradezco especialmente
+saludos
+Jose
+
+El 22/2/23, Carlos Ortega <cof en qualityexcellence.es> escribió:
+> Hola José,
+>
+> Mira este ejemplo que cubre todo lo que comentas...
+>
+> #--------------
+> # Ejemplo manipulación de datos - altura - peso - cálculo BMI...
+> library(readr)
+> library(dplyr)
+> library(magrittr)
+>
+> #-- Dirección de los datos iniciales
+> url <- "
+> https://raw.githubusercontent.com/abhaymise/Face-to-height-weight-BMI-estimation-/master/BMI%20data%20-%20Sheet1.csv
+> "
+>
+> datos <-
+>   # Leo fichero con datos de altura y peso
+>   read_csv(url) %>%
+>   #- quito columna BMI, luego la voy a calcular nuevamente
+>   select(-BMI) %>%
+>   #- añado una columna
+>   mutate( miBMI = weight/(height^2)) %>%
+>   #- quito columna id y UID que no hacen falta
+>   select(-id, -UID)
+> datos
+>
+> #-- Creo un conjunto de datos ficticio
+> library(randomNames)
+> datosnew <- data.frame(
+>   name = randomNames(20, ethnicity = 2),
+>   height = runif(20, min = 1, max = 2),
+>   weight = runif(20, min = 50, max = 100)
+> ) %>%
+>   mutate(miBMI = weight/(height^2))
+>
+> #-- Añado datosnew a los datos originales
+> datosfin <- datos %>%
+>   bind_rows(datosnew)
+>
+> #-- Asignar un decil a cada persona en función de su BMI
+> datosfin %<>%
+>   # Asigno decil
+>   mutate(decil_bmi = ntile(miBMI, 10)) %>%
+>   # Ordeno el conjunto de mayor a menor decil
+>   arrange(-decil_bmi)
+>
+> #-- Ver resultados
+> head(datosfin)
+> tail(datosfin)
+> #----------------------------------------------------
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mié, 22 feb 2023 a las 12:06, Jose Betancourt Bethencourt (<
+> betanster en gmail.com>) escribió:
+>
+>> Estimados
+>> He trabajado en R, pero los cambios a las bases de datos los he hecho
+>> en Excel. Quisiera saber como se puede desde el propio R:
+>>
+>> 1.      Anadir Mas casos (filas)
+>> 2.      Calcular una nueva variable, ejemplo el IMC a partir del peso y
+>> la
+>> estatura
+>> 3.      Agrupar edades en grupos (0-10, 11-20 etc.)
+>> 4.      Ordenar casos (descendente o ascendente)
+>> Saludos
+>> José
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+Dr. Jose A. Betancourt Bethencourt
+Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Thu Feb 23 08:10:01 2023
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Thu, 23 Feb 2023 08:10:01 +0100
+Subject: [R-es] Problemas con algunos atajos en Rstudio
+In-Reply-To: <CAFu+hONqdq8b1jSHsj7=D5BRa0QsUJ+3HW2xDvLqcm+Y82PQpQ@mail.gmail.com>
+References: <CAFu+hONqdq8b1jSHsj7=D5BRa0QsUJ+3HW2xDvLqcm+Y82PQpQ@mail.gmail.com>
+Message-ID: <8B24A0CC-B101-4A59-A660-E0D5870D1F78@gmail.com>
+
+Hola,
+
+El comportamiento de CTRL + SHIFT + M lo puedes cambiar en Tools/Global Options, tendrás marcado ?Use native pipe operator? en el grupo de opciones ?Code?. CTRL+1 etc. ni idea, pero comprueba también las opciones ?keybingings? y ?modify keyboard shorcuts?? por si acaso se han cambiado.
+
+Un saludo,
+Emilio
+
+
+
+
+
+> El 23 feb 2023, a las 1:06, Alfredo Diaz <afro77777 en gmail.com> escribió:
+> 
+> Cordial saludo,
+> 
+> Necesito de su ayuda dado que, cuando estoy trabajando en Rstudio no me
+> están funcionando los atajos *CTRL + 1, CTRL + 2*, además cuando utilizo el
+> atajo* CTRL + SHIFT + M* el operador que obtengo es: |>. Atajos como *CTRL +
+> ENTER, ALT + -, ALT + SHIFT + K* funcionan perfectamente, por ende, no
+> entiendo qué está pasando ¿Alguien sabe que puede estar ocurriendo? ¿Por
+> qué puede ocurrir? ¿Qué debo hacer para solucionar este problema?
+> 
+> De antemano muchas gracias por las respuestas.
+> 
+> 
+> Fraternalmente,
+> -- 
+> José Diaz E.
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From @|ro77777 @end|ng |rom gm@||@com  Fri Feb 24 16:21:13 2023
+From: @|ro77777 @end|ng |rom gm@||@com (Alfredo Diaz)
+Date: Fri, 24 Feb 2023 10:21:13 -0500
+Subject: [R-es] Problemas con algunos atajos en Rstudio
+In-Reply-To: <mailman.14949.11.1677150002.23560.r-help-es@r-project.org>
+References: <mailman.14949.11.1677150002.23560.r-help-es@r-project.org>
+Message-ID: <CAFu+hOM3=-YYQRj-DfDQberETUez6PyUfJQLof1Lec2DPUSx_A@mail.gmail.com>
+
+Cordial saludo,
+
+Gracias a ti Emilio pude resolver el primer problema, con los otros atajos
+otro sigo con el mismo problema. Si alguien me puede ayudar se lo agradezco.
+
+!Muchas gracias¡
+
+Fraternalmente,
+
+José Diaz
+ ------------------------------
+---------------------------------------------------
+------------------------------------------------
+--------------------------------
+El jue, 23 feb 2023 a la(s) 06:01, <r-help-es-request en r-project.org>
+escribió:
+
+> Envíe los mensajes para la lista R-help-es a
+>         r-help-es en r-project.org
+>
+> Para subscribirse o anular su subscripción a través de la WEB
+>         https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+>         r-help-es-request en r-project.org
+>
+> Puede contactar con el responsable de la lista escribiendo a:
+>         r-help-es-owner en r-project.org
+>
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+>
+>
+> Asuntos del día:
+>
+>    1. Re: Problemas con algunos atajos en Rstudio (Emilio L. Cano)
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Thu, 23 Feb 2023 08:10:01 +0100
+> From: "Emilio L. Cano" <emilopezcano en gmail.com>
+> To: Alfredo Diaz <afro77777 en gmail.com>
+> Cc: r-help-es en r-project.org
+> Subject: Re: [R-es] Problemas con algunos atajos en Rstudio
+> Message-ID: <8B24A0CC-B101-4A59-A660-E0D5870D1F78 en gmail.com>
+> Content-Type: text/plain; charset="utf-8"
+>
+> Hola,
+>
+> El comportamiento de CTRL + SHIFT + M lo puedes cambiar en Tools/Global
+> Options, tendrás marcado ?Use native pipe operator? en el grupo de opciones
+> ?Code?. CTRL+1 etc. ni idea, pero comprueba también las opciones
+> ?keybingings? y ?modify keyboard shorcuts?? por si acaso se han cambiado.
+>
+> Un saludo,
+> Emilio
+>
+>
+>
+>
+>
+> > El 23 feb 2023, a las 1:06, Alfredo Diaz <afro77777 en gmail.com> escribió:
+> >
+> > Cordial saludo,
+> >
+> > Necesito de su ayuda dado que, cuando estoy trabajando en Rstudio no me
+> > están funcionando los atajos *CTRL + 1, CTRL + 2*, además cuando utilizo
+> el
+> > atajo* CTRL + SHIFT + M* el operador que obtengo es: |>. Atajos como
+> *CTRL +
+> > ENTER, ALT + -, ALT + SHIFT + K* funcionan perfectamente, por ende, no
+> > entiendo qué está pasando ¿Alguien sabe que puede estar ocurriendo? ¿Por
+> > qué puede ocurrir? ¿Qué debo hacer para solucionar este problema?
+> >
+> > De antemano muchas gracias por las respuestas.
+> >
+> >
+> > Fraternalmente,
+> > --
+> > José Diaz E.
+> >
+> >       [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>         [[alternative HTML version deleted]]
+>
+>
+>
+>
+> ------------------------------
+>
+> Subject: Pié de página del digest
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> ------------------------------
+>
+> Fin de Resumen de R-help-es, Vol 168, Envío 16
+> **********************************************
+
+
+
+-- 
+José Alfredo Diaz E.
+
+	[[alternative HTML version deleted]]
+
+
+From @|ro77777 @end|ng |rom gm@||@com  Fri Feb 24 23:49:22 2023
+From: @|ro77777 @end|ng |rom gm@||@com (Alfredo Diaz)
+Date: Fri, 24 Feb 2023 17:49:22 -0500
+Subject: [R-es] Problemas con algunos atajos en Rstudio
+In-Reply-To: <CAOKbq8jU88gSmobH0QTUahrf6j28UbO=JQuzeqJG+hRHtRb9Gg@mail.gmail.com>
+References: <mailman.14949.11.1677150002.23560.r-help-es@r-project.org>
+ <CAFu+hOM3=-YYQRj-DfDQberETUez6PyUfJQLof1Lec2DPUSx_A@mail.gmail.com>
+ <CAOKbq8jU88gSmobH0QTUahrf6j28UbO=JQuzeqJG+hRHtRb9Gg@mail.gmail.com>
+Message-ID: <CAFu+hOMx1B8B90OeeYezwd+WW=AUkNgZ8h9gGm=-aV5kPRP4tg@mail.gmail.com>
+
+Cordial saludo,
+
+ Muchas gracias por tu recomendación, finalmente cambié los atajos con
+otras letras, dado a que no me funcionó con las que trae por defecto, a
+pesar que realicé el cambio muchas veces.
+
+Muchas gracias.
+
+El vie, 24 feb 2023 a la(s) 12:27, Carlos Ortega (cof en qualityexcellence.es)
+escribió:
+
+> Hola,
+>
+> Prueba estas cosas:
+> 1. En Tools > Global Options > Code > (pestaña Editing), asegúrate que
+> tienes desativada la 4ª opción "Use native pipe, operator....".
+> 2. En Tools > Modify Keyboard Shortcuts..
+>
+>    - Pulsa sobre el título "Shortcut" para ordenarte por orden alfabético
+>    todos los shortcuts que tienes.
+>    - Localiza tu Ctrl+1 y Ctrl+2 para ver a qué está asignado. Puede que
+>    por haber añadido recientemente un Addin estos shortcuts hayan quedado
+>    desactivados.
+>    - Entiendo que querrás aplicar "Ctrl+1" y "Ctrl+2" a tener "Move Focus
+>    to Source" y "Move Focus To Console". Es ahí donde puedes asignar un nuevo
+>    atajo, si es que hay conflicto. Y si no lo hay, prueba a añadir otro atajo
+>    para ver si ahora ya te funciona.
+>    - Tras aplicar ese nuevo atajo, tendrás que pulsar sobre "Apply" para
+>    que los cambios tengan efecto.
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El vie, 24 feb 2023 a las 16:22, Alfredo Diaz (<afro77777 en gmail.com>)
+> escribió:
+>
+>> Cordial saludo,
+>>
+>> Gracias a ti Emilio pude resolver el primer problema, con los otros atajos
+>> otro sigo con el mismo problema. Si alguien me puede ayudar se lo
+>> agradezco.
+>>
+>> !Muchas gracias¡
+>>
+>> Fraternalmente,
+>>
+>> José Diaz
+>>  ------------------------------
+>> ---------------------------------------------------
+>> ------------------------------------------------
+>> --------------------------------
+>> El jue, 23 feb 2023 a la(s) 06:01, <r-help-es-request en r-project.org>
+>> escribió:
+>>
+>> > Envíe los mensajes para la lista R-help-es a
+>> >         r-help-es en r-project.org
+>> >
+>> > Para subscribirse o anular su subscripción a través de la WEB
+>> >         https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>> > O por correo electrónico, enviando un mensaje con el texto "help" en
+>> > el asunto (subject) o en el cuerpo a:
+>> >         r-help-es-request en r-project.org
+>> >
+>> > Puede contactar con el responsable de la lista escribiendo a:
+>> >         r-help-es-owner en r-project.org
+>> >
+>> > Si responde a algún contenido de este mensaje, por favor, edite la
+>> > linea del asunto (subject) para que el texto sea mas especifico que:
+>> > "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+>> > la respuesta sólo aquellas partes del mensaje a las que está
+>> > respondiendo.
+>> >
+>> >
+>> > Asuntos del día:
+>> >
+>> >    1. Re: Problemas con algunos atajos en Rstudio (Emilio L. Cano)
+>> >
+>> > ----------------------------------------------------------------------
+>> >
+>> > Message: 1
+>> > Date: Thu, 23 Feb 2023 08:10:01 +0100
+>> > From: "Emilio L. Cano" <emilopezcano en gmail.com>
+>> > To: Alfredo Diaz <afro77777 en gmail.com>
+>> > Cc: r-help-es en r-project.org
+>> > Subject: Re: [R-es] Problemas con algunos atajos en Rstudio
+>> > Message-ID: <8B24A0CC-B101-4A59-A660-E0D5870D1F78 en gmail.com>
+>> > Content-Type: text/plain; charset="utf-8"
+>> >
+>> > Hola,
+>> >
+>> > El comportamiento de CTRL + SHIFT + M lo puedes cambiar en Tools/Global
+>> > Options, tendrás marcado ?Use native pipe operator? en el grupo de
+>> opciones
+>> > ?Code?. CTRL+1 etc. ni idea, pero comprueba también las opciones
+>> > ?keybingings? y ?modify keyboard shorcuts?? por si acaso se han
+>> cambiado.
+>> >
+>> > Un saludo,
+>> > Emilio
+>> >
+>> >
+>> >
+>> >
+>> >
+>> > > El 23 feb 2023, a las 1:06, Alfredo Diaz <afro77777 en gmail.com>
+>> escribió:
+>> > >
+>> > > Cordial saludo,
+>> > >
+>> > > Necesito de su ayuda dado que, cuando estoy trabajando en Rstudio no
+>> me
+>> > > están funcionando los atajos *CTRL + 1, CTRL + 2*, además cuando
+>> utilizo
+>> > el
+>> > > atajo* CTRL + SHIFT + M* el operador que obtengo es: |>. Atajos como
+>> > *CTRL +
+>> > > ENTER, ALT + -, ALT + SHIFT + K* funcionan perfectamente, por ende, no
+>> > > entiendo qué está pasando ¿Alguien sabe que puede estar ocurriendo?
+>> ¿Por
+>> > > qué puede ocurrir? ¿Qué debo hacer para solucionar este problema?
+>> > >
+>> > > De antemano muchas gracias por las respuestas.
+>> > >
+>> > >
+>> > > Fraternalmente,
+>> > > --
+>> > > José Diaz E.
+>> > >
+>> > >       [[alternative HTML version deleted]]
+>> > >
+>> > > _______________________________________________
+>> > > R-help-es mailing list
+>> > > R-help-es en r-project.org
+>> > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>> >
+>> >         [[alternative HTML version deleted]]
+>> >
+>> >
+>> >
+>> >
+>> > ------------------------------
+>> >
+>> > Subject: Pié de página del digest
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>> >
+>> > ------------------------------
+>> >
+>> > Fin de Resumen de R-help-es, Vol 168, Envío 16
+>> > **********************************************
+>>
+>>
+>>
+>> --
+>> José Alfredo Diaz E.
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+José Alfredo Diaz E.
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Tue Feb 28 12:18:38 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Tue, 28 Feb 2023 12:18:38 +0100
+Subject: [R-es] vector a partir de los valores de una tabla
+Message-ID: <CAF3uytW5H=M-Y6inJ0OFmpr0MQtimcni5ntDK+8aT4hjWo_BwA@mail.gmail.com>
+
+Muy buenas, necesito crear un vector a partir de los valores de una tabla
+como la de abajo. Debe ser algo muy fácil pero no lo encuentro en la web.
+Gracias,
+Manuel
+
+246, 345, 401, 131,125, 69 a partir de:
+
+TS1  TS2  TS3  TS4   TS5  TS6
+246  345   401   131   125    69
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Tue Feb 28 12:24:40 2023
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Tue, 28 Feb 2023 12:24:40 +0100
+Subject: [R-es] vector a partir de los valores de una tabla
+In-Reply-To: <CAF3uytW5H=M-Y6inJ0OFmpr0MQtimcni5ntDK+8aT4hjWo_BwA@mail.gmail.com>
+References: <CAF3uytW5H=M-Y6inJ0OFmpr0MQtimcni5ntDK+8aT4hjWo_BwA@mail.gmail.com>
+Message-ID: <2f06bd5b-bdce-5082-562b-46820c1afcc1@urjc.es>
+
+Buenas:
+
+as.vector(tabla)
+
+Saludos,
+
+Marcelino
+
+
+El 28/02/2023 a las 12:18, Manuel Mendoza escribió:
+> Muy buenas, necesito crear un vector a partir de los valores de una tabla
+> como la de abajo. Debe ser algo muy fácil pero no lo encuentro en la web.
+> Gracias,
+> Manuel
+>
+> 246, 345, 401, 131,125, 69 a partir de:
+>
+> TS1  TS2  TS3  TS4   TS5  TS6
+> 246  345   401   131   125    69
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Tue Feb 28 12:26:04 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Tue, 28 Feb 2023 12:26:04 +0100
+Subject: [R-es] vector a partir de los datos de una tabla
+Message-ID: <CAF3uytWSU2ZWc-bLRPrsqtRrv7tnOi6TP+_SRspg4cR-Gt5ncg@mail.gmail.com>
+
+Muy fácil: as.numeric(table(data$Clst)
+
+No salía porque la tabla era de otros datos.
+
+Un saludo,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Feb 28 13:19:10 2023
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 28 Feb 2023 09:19:10 -0300
+Subject: [R-es] =?utf-8?q?Interpolaci=C3=B3n_IDW?=
+In-Reply-To: <CABaOv1G-ieSPRCpEUATq8U_arsFnuYV2UkNdTUzP2YRDgJMowQ@mail.gmail.com>
+References: <CABaOv1Goc=yycqO4f_3D4j3+KGY=m3=sk5y2zU4yW8X82uxA9w@mail.gmail.com>
+ <D280F548-0591-4D63-B51D-DA0E6788FD21@gmail.com>
+ <CABaOv1G-ieSPRCpEUATq8U_arsFnuYV2UkNdTUzP2YRDgJMowQ@mail.gmail.com>
+Message-ID: <34B231BF-A13F-4C9B-9625-C6F568AED15E@gmail.com>
+
+Estimado David
+
+Miro su correo, sin poder reproducir como dice nuestro compañero de lista, es complicado responder, pero por lo que es su correo, hay dos puntos, el primero tiene que ver con la posibilidad que usted esté intentando trabajar con.dos cosas que piensa que son iguales pero son distintas, por eso el mensaje de error, cuándo define algo lo hace de tal forma que se crean dos cosas distintas, algo que a mí me ayuda es usar str( lo que quiero ver), el segundo punto es que es una tesis, su director de tesis debería resolver el problema.
+
+Javier Marcuzzi
+
+> El 21 feb. 2023, a las 15:16, David Camilo Gomez Medina <dcgomezme en unal.edu.co> escribió:
+> 
+> Emilio, muchas gracias. Tuve que rehacer el código para entender mejor
+> todo, pero me sale el siguiente error:
+> 
+> 
+> *Error in as.data.frame.default(x[[i]], optional = TRUE) :   cannot coerce
+> class ?structure("RasterLayer", package = "raster")? to a data.frame*
+> 
+> El código es el siguiente:
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> *for (i in 1:nrows_mt) {    data_it_mt <-
+> as.numeric(as.vector(data_y_mt[i,]))    it_data_mt <- idw(data_it_mt,
+> sta_mt, grid, p = 1)    grid <- data.frame(grid, valores = it_data_mt[ ,
+> 1])    coordinates(grid) <- ~x+y    gridded(grid) <- T    grid <-
+> raster(grid, "valores")    projection(grid) <- crs("+init=epsg:9377")
+> path <- 'C:/Users/David Gomez/Desktop/TESIS/DATOS/RESULTS/'    numeration
+> <- as.character(i)    name <- "MEAN_TEMP"    exten <- ".tif"
+> writeRaster(grid, paste(path, name, numeration, exten), overwrite = T)}*
+> 
+> No entiendo muy bien a qué parte hace énfasis el error.
+> 
+> Quedo atento, gracias.
+> 
+> Saludos.
+> 
+> On Mon, 20 Feb 2023 at 02:11, Emilio L. Cano <emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>> wrote:
+> 
+>> Hola,
+>> Es difícil responder con un ejemplo no reproducible y sin el mensaje de
+>> error, pero te diría que intentes primero comprobar que puedes ajustar un
+>> único modelo fuera del bucle.
+>> 
+>> Dicho esto, parece que estás pasando como primer argumento de la función
+>> un ?string?, el nombre de la variable, y debe ser una fórmula. Tal vez
+>> as.formula(current_var, ?~1?) te funcione.
+>> 
+>> En cuanto a los NA, puedes usar en cada iteración current_df <-
+>> tidyr::drop_na(current_var) y usar current_df en vez de sta_mt
+>> 
+>> Saludos,
+>> Emilio
+>> 
+>> 
+>> 
+>> El 17 feb 2023, a las 19:56, David Camilo Gomez Medina <
+>> dcgomezme en unal.edu.co> escribió:
+>> 
+>> Hola, buen día a todos.
+>> 
+>> He estado mirando cómo interpolar unos datos anuales con el método IDW,
+>> pero no consigo aún realizarlo.
+>> 
+>> idw_models <- list()
+>> 
+>> for (i in 1:ncol(data_y_mt)) {
+>>  #Extract the current variable
+>>  current_var <- names(data_y_mt)[i]
+>> 
+>>  #Create an IDW model for the current variable
+>>  idw_model <- idw(current_var, sta_mt, grid, p = 1)
+>> 
+>>  idw_models[[i]] <- idw_model
+>> }
+>> 
+>> Ese es el código que llevo, pero me siento muy perdido. La variable*
+>> data_y_mt* es el dataframe donde tengo los valores, *sta_mt* son las
+>> coordenadas de los puntos, *grid* es la malla coordenada.
+>> 
+>> Me gustaría también eliminar los datos con valores NA. Adjunto imagen del
+>> dataframe.
+>> 
+>> Quedo muy atento, gracias.
+>> 
+>> <image.png>
+>> 
+>> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son
+>> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.
+>> Se encuentran dirigidos sólo para el uso del destinatario al cual van
+>> enviados. La reproducción, lectura y/o copia se encuentran prohibidas a
+>> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha
+>> recibido por error, infórmenos y elimínelo de su correo. Los Datos
+>> Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra
+>> Política de Datos Personales que podrá consultar en la página web
+>> www.unal.edu.co <http://www.unal.edu.co/>. Las opiniones, informaciones, conclusiones y cualquier
+>> otro tipo de dato contenido en este correo electrónico, no relacionados con
+>> la actividad de la Universidad Nacional de Colombia, se entenderá como
+>> personales y de ninguna manera son avaladas por la Universidad.
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> 
+>> 
+>> 
+> 
+> -- 
+> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son 
+> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. 
+> Se encuentran dirigidos sólo para el uso del destinatario al cual van 
+> enviados. La reproducción, lectura y/o copia se encuentran prohibidas a 
+> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha 
+> recibido por error, infórmenos y elimínelo de su correo. Los Datos 
+> Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra 
+> Política de Datos Personales que podrá consultar en la página web 
+> www.unal.edu.co <http://www.unal.edu.co/> <http://www.unal.edu.co/>.* *Las opiniones, informaciones, 
+> conclusiones y cualquier otro tipo de dato contenido en este correo 
+> electrónico, no relacionados con la actividad de la Universidad Nacional de 
+> Colombia, se entenderá como personales y de ninguna manera son avaladas por 
+> la Universidad.
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+

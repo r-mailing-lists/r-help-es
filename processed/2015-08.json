@@ -1,0 +1,1244 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2015-08",
+  "messages": [
+    {
+      "id": "msg-402bb97094bc",
+      "message_id": "<DAD39DF8-DC9F-4F6D-8980-CB576158A575@unizar.es>",
+      "from_name": "JM ARBONES",
+      "from_email_hash": "ddb1cb0a10d133ea7d1a0f1d019bb48a80117883efb247fe8b7bdb8cb1a528ce",
+      "date": "2015-08-02T19:19:45+02:00",
+      "subject": "[R-es] ayuda con análisis de supervivencia",
+      "subject_clean": "[R-es] ayuda con análisis de supervivencia",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola a todos,\n-Estoy estudiando el efecto de dos genotipos (~tratamientos) en la apariciÃ³n de sÃ­ndrome metabÃ³lico (MetS) con datos longitudinales recogidos a tiempo 0,7,10,15,20 y 25 aÃ±os.\n\n-He hecho un dataframe con las siguientes variables\nMetS: SÃ­ndrome MetabÃ³lico (Si=1,No=0)\nbmi: Indice de masa corporal (IMC) cuando se produce la conversiÃ³n a MetS+ . Para los que permancen MetS-, esta variable indica el bmi cuando hay censura (por abandono del estudio o al finalizar el estudio en el aÃ±o 25).\nbmi0: IMC al inicio del estudio (categÃ³rica, levels=normal/overweight/obese)\napoE4: Genotipo de interÃ©s (E4, no-E4)\n\n-Mi hipÃ³tesis es que la interacciÃ³n genotipo~MetS depende del IMC al principio del estudio. Concretamente, individuos 'overweight' al inicio del estudio y con el genotipo E4 hacen la conversiÃ³n a MetS+ a valores de IMC mas bajos que los que tienen el genotipo no-E4. Este fenÃ³meno no ocurrirÃ­a en los 'normal' y 'obese'.\n\n-He creado unos objetos Surv, pero en lugar de utilizar el tiempo hasta evento (MetS+) estoy utilizando el bmi hasta el evento. Las grÃ¡ficas que resultan al hacer el anÃ¡lisis de supervivencia parecerÃ­an confirmar mi hipÃ³tesis, pero no se si lo que estoy haciendo es una aberraciÃ³n estadÃ­stica. Tampoco se si los coeficientes de la regresiÃ³n de Cox tienen sentido al no utilizar la variable tiempo.\n\n?Alguien me podrÃ­a 1)decir si lo que estoy haciendo tiene sentido y 2) como interpretar los resultados (regresiÃ³n de Cox y grÃ¡ficas)?\nSi a alguien se anima a contestar, adjunto un link con los datos (.Rdata) y el script que he utilizado en el anÃ¡lisis.\n\n\nhttps://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0 <https://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0>\n\nsapply(levels(df0$bmi0),function (x){ #####SURVIVAL CURVE\n  dfx=filter(df0,bmi0==x)\n  \n  surv2=Surv(dfx$bmi,dfx$MetS)\n  km2=survfit(surv2~dfx$apoe4)##start.time=20,type='kaplan')\n  plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at onset',main=x,mark.time = F)\n  legend('bottomleft',c('E4','no-E4'),lty=2:1)\n  cox=list(coxph(surv2~relevel(dfx$apoe4,ref='no-E4')))\n})\n\nsapply(levels(df0$bmi0),function (x){ #####CUMULATIVE HAZARDs\n  dfx=filter(df0,bmi0==x)\n  \n  surv2=Surv(dfx$bmi,dfx$MetS)\n  km2=survfit(surv2~dfx$apoe4)\n  plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at onset',main=x,mark.time = F,fun='cumhaz')\n  legend('topleft',c('E4','no-E4'),lty=2:1)\n  \n})\n\nMuchas gracias y un saludo\n\nJose Miguel\n\n-------------------------------------------------------------------\n\nJose Miguel Arbones-Mainar, PhD\nUnidad de InvestigaciÃ³n Traslacional \nInstituto Aragones de Ciencias de la Salud \nHospital Universitario Miguel Servet \nPÂº Isabel la CatÃ³lica, 1-3 \n50009 Zaragoza (Spain) \nTel: +34 976 769 565\nFax: +34 976 769 566 \nwww.adipofat.com <http://www.adipofat.com/>\n\n\n\n\n-----------------------------------------------------------------------------------\nJose Miguel Arbones-Mainar\nwww.adipofat.com <http://www.adipofat.com/>\n\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n-Estoy estudiando el efecto de dos genotipos (~tratamientos) en la apariciÃ³n de sÃ­ndrome metabÃ³lico (MetS) con datos longitudinales recogidos a tiempo 0,7,10,15,20 y 25 aÃ±os.\n\n-He he",
+      "thread_id": "thread-402bb97094bc",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-1d3d793d0620",
+      "message_id": "<55bef423.261e8c0a.e5ec3.38ba@mx.google.com>",
+      "from_name": "Javier Rubén Marcuzzi",
+      "from_email_hash": "c43db5d4d68fae2afa940530fe5fb46b7745dd68133fc096162a24f656d55363",
+      "date": "2015-08-03T01:55:01-03:00",
+      "subject": "[R-es] ayuda con análisis de supervivencia",
+      "subject_clean": "[R-es] ayuda con análisis de supervivencia",
+      "in_reply_to": "<DAD39DF8-DC9F-4F6D-8980-CB576158A575@unizar.es>",
+      "references": [
+        "<DAD39DF8-DC9F-4F6D-8980-CB576158A575@unizar.es>"
+      ],
+      "body_plain": "Estimado JosÃ© Miguel Arbones\n\nLeÃ­ su solicitud respecto a un anÃ¡lisis de (Survival) donde quiere medir el efecto de dos genotipos en la apariciÃ³n de un sÃ­ndrome metabÃ³lico. Usted tambiÃ©n pregunta sobre si estadÃ­sticamente serÃ­a apropiado ese enfoque.\n\nLeÃ­ algo de sobrevida en genÃ©tica, pero su problema desde mi punto de vista es de genÃ©tica cuantitativa, Â¿en que cuantificaciÃ³n tiene que ver el genotipo respecto a la mediciÃ³n del sÃ­ndrome metabÃ³lico? Usted habla de genotipo, este puede ser homocigota, heterocigota, pero en la gametogÃ©nesis solo se \"heredan genes, no genotipos\", por lo cuÃ¡l Â¿hay un efecto entre los genes iguales?. En otras palabras, efecto aditivo del gen, epistasis, dominancia, etc.\n\nNo es justo lenguaje R pero hay un libro en espaÃ±ol de Falconer, introducciÃ³n a la genÃ©tica cuantitativa, luego hay algunos (muchos) paquetes par estos temas en R, pero sobrevida sin mezclar algo de terminologÃ­a de genÃ©tica cuantitativa, a mi me resulta extraÃ±o. Por otro lado como usted tiene mediciÃ³nes a lo largo del tiempo, no hay nada que diga que los efectos del gen son los mismos todo el tiempo, si emplea modelos de regresiones aleatorios puede observar que el efecto cuantitativo del gen varÃ­a, sospecho que el sÃ­ndrome metabÃ³lico puede ser observado por ejemplo en el peso, pero este no depende de un gen, hay un efecto de muchos genes menores, aunque el que usted quiere analizar puede ser un gen mayor (no lo se).\n\nPor lo que usted comenta yo irÃ­a sobre el paquete MCMCglmm, posiblemente en los ejemplos hay algo que intermedia entre lo que usted plantea, R, y lo que yo pienso.\n\nJavier RubÃ©n Marcuzzi\nTÃ©cnico en Industria LÃ¡cteas\nVeterinario\n\n\n\nDe: JM ARBONES\nEnviado: domingo, 2 de agosto de 2015 2:19 p. m.\nPara: r-help-es en r-project.org\nAsunto: [R-es] ayuda con anÃ¡lisis de supervivencia\n\n\nHola a todos,\n-Estoy estudiando el efecto de dos genotipos (~tratamientos) en la apariciÃ³n de sÃ­ndrome metabÃ³lico (MetS) con datos longitudinales recogidos a tiempo 0,7,10,15,20 y 25 aÃ±os.\n\n-He hecho un dataframe con las siguientes variables\nMetS: SÃ­ndrome MetabÃ³lico (Si=1,No=0)\nbmi: Indice de masa corporal (IMC) cuando se produce la conversiÃ³n a MetS+ . Para los que permancen MetS-, esta variable indica el bmi cuando hay censura (por abandono del estudio o al finalizar el estudio en el aÃ±o 25).\nbmi0: IMC al inicio del estudio (categÃ³rica, levels=normal/overweight/obese)\napoE4: Genotipo de interÃ©s (E4, no-E4)\n\n-Mi hipÃ³tesis es que la interacciÃ³n genotipo~MetS depende del IMC al principio del estudio. Concretamente, individuos 'overweight' al inicio del estudio y con el genotipo E4 hacen la conversiÃ³n a MetS+ a valores de IMC mas bajos que los que tienen el genotipo no-E4. Este fenÃ³meno no ocurrirÃ­a en los 'normal' y 'obese'.\n\n-He creado unos objetos Surv, pero en lugar de utilizar el tiempo hasta evento (MetS+) estoy utilizando el bmi hasta el evento. Las grÃ¡ficas que resultan al hacer el anÃ¡lisis de supervivencia parecerÃ­an confirmar mi hipÃ³tesis, pero no se si lo que estoy haciendo es una aberraciÃ³n estadÃ­stica. Tampoco se si los coeficientes de la regresiÃ³n de Cox tienen sentido al no utilizar la variable tiempo.\n\n?Alguien me podrÃ­a 1)decir si lo que estoy haciendo tiene sentido y 2) como interpretar los resultados (regresiÃ³n de Cox y grÃ¡ficas)?\nSi a alguien se anima a contestar, adjunto un link con los datos (.Rdata) y el script que he utilizado en el anÃ¡lisis.\n\n\nhttps://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0 <https://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0>\n\nsapply(levels(df0$bmi0),function (x){ #####SURVIVAL CURVE\n  dfx=filter(df0,bmi0==x)\n  \n  surv2=Surv(dfx$bmi,dfx$MetS)\n  km2=survfit(surv2~dfx$apoe4)##start.time=20,type='kaplan')\n  plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at onset',main=x,mark.time = F)\n  legend('bottomleft',c('E4','no-E4'),lty=2:1)\n  cox=list(coxph(surv2~relevel(dfx$apoe4,ref='no-E4')))\n})\n\nsapply(levels(df0$bmi0),function (x){ #####CUMULATIVE HAZARDs\n  dfx=filter(df0,bmi0==x)\n  \n  surv2=Surv(dfx$bmi,dfx$MetS)\n  km2=survfit(surv2~dfx$apoe4)\n  plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at onset',main=x,mark.time = F,fun='cumhaz')\n  legend('topleft',c('E4','no-E4'),lty=2:1)\n  \n})\n\nMuchas gracias y un saludo\n\nJose Miguel\n\n-------------------------------------------------------------------\n\nJose Miguel Arbones-Mainar, PhD\nUnidad de InvestigaciÃ³n Traslacional \nInstituto Aragones de Ciencias de la Salud \nHospital Universitario Miguel Servet \nPÂº Isabel la CatÃ³lica, 1-3 \n50009 Zaragoza (Spain) \nTel: +34 976 769 565\nFax: +34 976 769 566 \nwww.adipofat.com <http://www.adipofat.com/>\n\n\n\n\n-----------------------------------------------------------------------------------\nJose Miguel Arbones-Mainar\nwww.adipofat.com <http://www.adipofat.com/>\n\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado JosÃ© Miguel Arbones\n\nLeÃ­ su solicitud respecto a un anÃ¡lisis de (Survival) donde quiere medir el efecto de dos genotipos en la apariciÃ³n de un sÃ­ndrome metabÃ³lico. Usted tambiÃ©n pregun",
+      "thread_id": "thread-402bb97094bc",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-dd16f9a75dfe",
+      "message_id": "<20150803113319.0e9055dc@epigpbn01.ad-hugtip>",
+      "from_name": "Griera",
+      "from_email_hash": "8778a248bbdc5e4f88dbbdd13921faefd1fd03b2a95f28819ca4f50c195fd259",
+      "date": "2015-08-03T11:33:19+02:00",
+      "subject": "[R-es] ayuda con análisis de supervivencia",
+      "subject_clean": "[R-es] ayuda con análisis de supervivencia",
+      "in_reply_to": "<DAD39DF8-DC9F-4F6D-8980-CB576158A575@unizar.es>",
+      "references": [
+        "<DAD39DF8-DC9F-4F6D-8980-CB576158A575@unizar.es>"
+      ],
+      "body_plain": "Hola:\n\nA que te refieres como \"el bmi hasta el evento\"?\n\nRespecto que no sea un tiempo de supervivencia, no eres el Ãºnico. En este artÃ­culo tampoco utilizan un \"tiempo\":\n\nhttp://www.ncbi.nlm.nih.gov/pubmed/8970394\n\nSaludos.\n\n\nOn Sun, 2 Aug 2015 19:19:45 +0200\nJM ARBONES <marbones en unizar.es> wrote:\n\n> Hola a todos,\n> -Estoy estudiando el efecto de dos genotipos (~tratamientos) en la apariciÃ³n de sÃ­ndrome metabÃ³lico (MetS) con datos longitudinales recogidos a tiempo 0,7,10,15,20 y 25 aÃ±os.\n> \n> -He hecho un dataframe con las siguientes variables\n> MetS: SÃ­ndrome MetabÃ³lico (Si=1,No=0)\n> bmi: Indice de masa corporal (IMC) cuando se produce la conversiÃ³n a MetS+ . Para los que permancen MetS-, esta variable indica el bmi cuando hay censura (por abandono del estudio o al finalizar el estudio en el aÃ±o 25).\n> bmi0: IMC al inicio del estudio (categÃ³rica, levels=normal/overweight/obese)\n> apoE4: Genotipo de interÃ©s (E4, no-E4)\n> \n> -Mi hipÃ³tesis es que la interacciÃ³n genotipo~MetS depende del IMC al principio del estudio. Concretamente, individuos 'overweight' al inicio del estudio y con el genotipo E4 hacen la conversiÃ³n a MetS+ a valores de IMC mas bajos que los que tienen el genotipo no-E4. Este fenÃ³meno no ocurrirÃ­a en los 'normal' y 'obese'.\n> \n> -He creado unos objetos Surv, pero en lugar de utilizar el tiempo hasta evento (MetS+) estoy utilizando el bmi hasta el evento. Las grÃ¡ficas que resultan al hacer el anÃ¡lisis de supervivencia parecerÃ­an confirmar mi hipÃ³tesis, pero no se si lo que estoy haciendo es una aberraciÃ³n estadÃ­stica. Tampoco se si los coeficientes de la regresiÃ³n de Cox tienen sentido al no utilizar la variable tiempo.\n> \n> ?Alguien me podrÃ­a 1)decir si lo que estoy haciendo tiene sentido y 2) como interpretar los resultados (regresiÃ³n de Cox y grÃ¡ficas)?\n> Si a alguien se anima a contestar, adjunto un link con los datos (.Rdata) y el script que he utilizado en el anÃ¡lisis.\n> \n> \n> https://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0 <https://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0>\n> \n> sapply(levels(df0$bmi0),function (x){ #####SURVIVAL CURVE\n>   dfx=filter(df0,bmi0==x)\n>   \n>   surv2=Surv(dfx$bmi,dfx$MetS)\n>   km2=survfit(surv2~dfx$apoe4)##start.time=20,type='kaplan')\n>   plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at onset',main=x,mark.time = F)\n>   legend('bottomleft',c('E4','no-E4'),lty=2:1)\n>   cox=list(coxph(surv2~relevel(dfx$apoe4,ref='no-E4')))\n> })\n> \n> sapply(levels(df0$bmi0),function (x){ #####CUMULATIVE HAZARDs\n>   dfx=filter(df0,bmi0==x)\n>   \n>   surv2=Surv(dfx$bmi,dfx$MetS)\n>   km2=survfit(surv2~dfx$apoe4)\n>   plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at onset',main=x,mark.time = F,fun='cumhaz')\n>   legend('topleft',c('E4','no-E4'),lty=2:1)\n>   \n> })\n> \n> Muchas gracias y un saludo\n> \n> Jose Miguel\n> \n> -------------------------------------------------------------------\n> \n> Jose Miguel Arbones-Mainar, PhD\n> Unidad de InvestigaciÃ³n Traslacional \n> Instituto Aragones de Ciencias de la Salud \n> Hospital Universitario Miguel Servet \n> PÂº Isabel la CatÃ³lica, 1-3 \n> 50009 Zaragoza (Spain) \n> Tel: +34 976 769 565\n> Fax: +34 976 769 566 \n> www.adipofat.com <http://www.adipofat.com/>\n> \n> \n> \n> \n> -----------------------------------------------------------------------------------\n> Jose Miguel Arbones-Mainar\n> www.adipofat.com <http://www.adipofat.com/>\n> \n> \n> \n> \n> \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Hola:\n\nA que te refieres como \"el bmi hasta el evento\"?\n\nRespecto que no sea un tiempo de supervivencia, no eres el Ãºnico. En este artÃ­culo tampoco utilizan un \"tiempo\":\n\nhttp://www.ncbi.nlm.nih.gov",
+      "thread_id": "thread-402bb97094bc",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-eff14dd6a04e",
+      "message_id": "<CAG9EJTKfbLChjgpMh__6WeTLq9L_Ov_sG96eOmN9-jVnaPs=NA@mail.gmail.com>",
+      "from_name": "Manuel Máquez",
+      "from_email_hash": "98848b8ad9b121ffa76274361058b67eea0d33fabac014fa3259ba865768f3ba",
+      "date": "2015-08-03T18:03:50-05:00",
+      "subject": "[R-es] Menor que 1000",
+      "subject_clean": "[R-es] Menor que 1000",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados Colegas:\nEstoy tratando de hacer unas grÃ¡ficas y al pedir ejecutar la Ãºltima lÃ­nea,\nel equipo me dice:\ngeom_smooth: method=\"auto\" and size of largest group is <1000, so using\nloess. Use 'method = x' to change the smoothing method.\n\nLa lÃ­nea en cuestiÃ³n es:\nggplot(data = dat, aes(x=srt, y=d_t, col=Detec)) +\ngeom_point(aes(shape=Detec)) +\ngeom_smooth(span=0.65, aes(group=1))+\nscale_colour_manual(values=c(\"black\",\"red\")) +\nggtitle(\"Curva Suavizada con Intervalo de Confianza +\nDetectados y No Detectados\")\nLos datos son 348 observaciones de 6 variables.\n\n*Â¿Me puede alguien ayudar para decirme que debo cambiar y asÃ­ deje de salir\ndicho aviso? ConsultÃ© la ayuda de ggplot en soporte de R Studio pero no que\nbusco.*\n*Anticipo las mÃ¡s cumplidas gracias.*\n\n*MANOLO MÃRQUEZ P.*\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados Colegas:\nEstoy tratando de hacer unas grÃ¡ficas y al pedir ejecutar la Ãºltima lÃ­nea,\nel equipo me dice:\ngeom_smooth: method=\"auto\" and size of largest group is <1000, so using\nloess. Use '",
+      "thread_id": "thread-eff14dd6a04e",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-f65935902d15",
+      "message_id": "<000601d0ce7f$cc921ac0$65b65040$@es>",
+      "from_name": "Isidro Hidalgo",
+      "from_email_hash": "ce34db3ce025e8c1faf935df17d0bf203858da19531d97c000ebfb2574da25d7",
+      "date": "2015-08-04T08:35:47+02:00",
+      "subject": "[R-es] Menor que 1000",
+      "subject_clean": "[R-es] Menor que 1000",
+      "in_reply_to": "<CAG9EJTKfbLChjgpMh__6WeTLq9L_Ov_sG96eOmN9-jVnaPs=NA@mail.gmail.com>",
+      "references": [
+        "<CAG9EJTKfbLChjgpMh__6WeTLq9L_Ov_sG96eOmN9-jVnaPs=NA@mail.gmail.com>"
+      ],
+      "body_plain": "Buenos dÃ­as:\nLa funciÃ³n geom_smooth utiliza otra (stat_smooth) para hacer un suavizado.\nPor defecto, si tienes menos de 1000 valores usa regresiÃ³n local (loess), si\ntienes mÃ¡s utiliza un modelo aditivo (gam).\nSi tienes la certeza de que no vas a pasar nunca de 1000 valores usa el\nsiguiente argumento en geom_smooth:\ngeom_smooth(span=0.65, aes(group=1), method = \"loess\") + ...\nEn general puedes fijar el mÃ©todo que te convenga para el suavizado, porque\nsoporta varios (mira la ayuda de stat_smooth)\n\nOtra opciÃ³n mÃ¡s drÃ¡stica es silenciar los warnings, usando al principio de\ntu cÃ³digo:\noptions(warnings = -1)\n\nUn saludo\n\nIsidro Hidalgo Arellano\nObservatorio de las Ocupaciones\nConsejerÃ­a de EconomÃ­a, Empresas y Empleo\nhttp://www.jccm.es\n\n> -----Mensaje original-----\n> De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de\n> Manuel MÃ¡quez\n> Enviado el: martes, 04 de agosto de 2015 1:04\n> Para: r-help-es en r-project.org\n> Asunto: [R-es] Menor que 1000\n>\n> Estimados Colegas:\n> Estoy tratando de hacer unas grÃ¡ficas y al pedir ejecutar la Ãºltima\n> lÃ­nea, el equipo me dice:\n> geom_smooth: method=\"auto\" and size of largest group is <1000, so using\n> loess. Use 'method = x' to change the smoothing method.\n>\n> La lÃ­nea en cuestiÃ³n es:\n> ggplot(data = dat, aes(x=srt, y=d_t, col=Detec)) +\n> geom_point(aes(shape=Detec)) +\n> geom_smooth(span=0.65, aes(group=1))+\n> scale_colour_manual(values=c(\"black\",\"red\")) + ggtitle(\"Curva Suavizada\n> con Intervalo de Confianza + Detectados y No Detectados\") Los datos son\n> 348 observaciones de 6 variables.\n>\n> *Â¿Me puede alguien ayudar para decirme que debo cambiar y asÃ­ deje de\n> salir dicho aviso? ConsultÃ© la ayuda de ggplot en soporte de R Studio\n> pero no que\n> busco.*\n> *Anticipo las mÃ¡s cumplidas gracias.*\n>\n> *MANOLO MÃRQUEZ P.*\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Buenos dÃ­as:\nLa funciÃ³n geom_smooth utiliza otra (stat_smooth) para hacer un suavizado.\nPor defecto, si tienes menos de 1000 valores usa regresiÃ³n local (loess), si\ntienes mÃ¡s utiliza un modelo ad",
+      "thread_id": "thread-eff14dd6a04e",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-c9c74e774d40",
+      "message_id": "<DUB122-W300C247CE183B93D4F364AB760@phx.gbl>",
+      "from_name": "Marcos Bermejo",
+      "from_email_hash": "4558ebce20654b7f2bf56a31492b6dc0a73ec48ff68d1c91d6a4bfd974ce9089",
+      "date": "2015-08-04T11:24:22+02:00",
+      "subject": "[R-es] Duda interpolación (package ' gstat ')",
+      "subject_clean": "[R-es] Duda interpolación (package ' gstat ')",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola,\n\n  # Hacemos el KED. Ver funciÃ³n \"krige()\":\n        KED.rad <- krige(\n          formula=pluvPcp~layer,                  # covariable -> radar\n          locations=lluvia.rad.pluv.spdf,\n          newdata=radarGrid,                      # podrÃ­a ser cualquier objeto Spatial\n          model=v.fit,                            # modelo de semivariograma. \n          maxdist=Inf\n        )\n\nEsta es la funciÃ³n que me interpola los datos de lluvia. El error que me da es:\n\n\"solve.c\", line 88: singular matrix in function Usolve()\n\n\"lufactor.c\", line 208: singular matrix in function m_inverse()\nError in predict.gstat(g, newdata = newdata, block = block, nsim = nsim,  : \n  m_inverse\nIn addition: Warning message:\nIn fit.variogram(vg.aux, model = vgm(psill = 0.1, model = \"Gau\",  :\n  Warning: singular model in variogram fit\n\n\nMi funciÃ³n del variograma es :\nv.fit <- fit.variogram(vg.aux, model=vgm(psill=0.15, model='Gau', range=5000,\n                                               nugget=0.05))\n\nÂ¿Alguien me podrÃ­a ayudar?\n\nGracias de antemano.\n\nUn saludo,\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\n  # Hacemos el KED. Ver funciÃ³n \"krige()\":\n        KED.rad <- krige(\n          formula=pluvPcp~layer,                  # covariable -> radar\n          locations=lluvia.rad.pluv.spdf,\n         ",
+      "thread_id": "thread-c9c74e774d40",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-3fe72610eccc",
+      "message_id": "<55C0DE87.9020900@unizar.es>",
+      "from_name": "JM Arbones",
+      "from_email_hash": "ddb1cb0a10d133ea7d1a0f1d019bb48a80117883efb247fe8b7bdb8cb1a528ce",
+      "date": "2015-08-04T17:47:19+02:00",
+      "subject": "[R-es] ayuda con análisis de supervivencia",
+      "subject_clean": "[R-es] ayuda con análisis de supervivencia",
+      "in_reply_to": "<20150803113319.0e9055dc@epigpbn01.ad-hugtip>",
+      "references": [
+        "<DAD39DF8-DC9F-4F6D-8980-CB576158A575@unizar.es>",
+        "<20150803113319.0e9055dc@epigpbn01.ad-hugtip>"
+      ],
+      "body_plain": "Hola,\nmuchas gracias por contestar (tambien a Javier RubÃ©n).\nEl bmi hasta el evento seria el el bmi que tienen los individuos cuando \nse les detecta el sÃ­ndrome metabÃ³lico o el ultimo bmi que consta para \naquellos que no desarrollaron el sÃ­ndrome metabÃ³lico.\n\nun saludo\n\nJose Miguel\n\n\nOn 03/08/15 11:33, Griera wrote:\n> Hola:\n>\n> A que te refieres como \"el bmi hasta el evento\"?\n>\n> Respecto que no sea un tiempo de supervivencia, no eres el Ãºnico. En este artÃ­culo tampoco utilizan un \"tiempo\":\n>\n> http://www.ncbi.nlm.nih.gov/pubmed/8970394\n>\n> Saludos.\n>\n>\n> On Sun, 2 Aug 2015 19:19:45 +0200\n> JM ARBONES <marbones en unizar.es> wrote:\n>\n>> Hola a todos,\n>> -Estoy estudiando el efecto de dos genotipos (~tratamientos) en la apariciÃ³n de sÃ­ndrome metabÃ³lico (MetS) con datos longitudinales recogidos a tiempo 0,7,10,15,20 y 25 aÃ±os.\n>>\n>> -He hecho un dataframe con las siguientes variables\n>> MetS: SÃ­ndrome MetabÃ³lico (Si=1,No=0)\n>> bmi: Indice de masa corporal (IMC) cuando se produce la conversiÃ³n a MetS+ . Para los que permancen MetS-, esta variable indica el bmi cuando hay censura (por abandono del estudio o al finalizar el estudio en el aÃ±o 25).\n>> bmi0: IMC al inicio del estudio (categÃ³rica, levels=normal/overweight/obese)\n>> apoE4: Genotipo de interÃ©s (E4, no-E4)\n>>\n>> -Mi hipÃ³tesis es que la interacciÃ³n genotipo~MetS depende del IMC al principio del estudio. Concretamente, individuos 'overweight' al inicio del estudio y con el genotipo E4 hacen la conversiÃ³n a MetS+ a valores de IMC mas bajos que los que tienen el genotipo no-E4. Este fenÃ³meno no ocurrirÃ­a en los 'normal' y 'obese'.\n>>\n>> -He creado unos objetos Surv, pero en lugar de utilizar el tiempo hasta evento (MetS+) estoy utilizando el bmi hasta el evento. Las grÃ¡ficas que resultan al hacer el anÃ¡lisis de supervivencia parecerÃ­an confirmar mi hipÃ³tesis, pero no se si lo que estoy haciendo es una aberraciÃ³n estadÃ­stica. Tampoco se si los coeficientes de la regresiÃ³n de Cox tienen sentido al no utilizar la variable tiempo.\n>>\n>> ?Alguien me podrÃ­a 1)decir si lo que estoy haciendo tiene sentido y 2) como interpretar los resultados (regresiÃ³n de Cox y grÃ¡ficas)?\n>> Si a alguien se anima a contestar, adjunto un link con los datos (.Rdata) y el script que he utilizado en el anÃ¡lisis.\n>>\n>>\n>> https://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0 <https://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0>\n>>\n>> sapply(levels(df0$bmi0),function (x){ #####SURVIVAL CURVE\n>>    dfx=filter(df0,bmi0==x)\n>>    \n>>    surv2=Surv(dfx$bmi,dfx$MetS)\n>>    km2=survfit(surv2~dfx$apoe4)##start.time=20,type='kaplan')\n>>    plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at onset',main=x,mark.time = F)\n>>    legend('bottomleft',c('E4','no-E4'),lty=2:1)\n>>    cox=list(coxph(surv2~relevel(dfx$apoe4,ref='no-E4')))\n>> })\n>>\n>> sapply(levels(df0$bmi0),function (x){ #####CUMULATIVE HAZARDs\n>>    dfx=filter(df0,bmi0==x)\n>>    \n>>    surv2=Surv(dfx$bmi,dfx$MetS)\n>>    km2=survfit(surv2~dfx$apoe4)\n>>    plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at onset',main=x,mark.time = F,fun='cumhaz')\n>>    legend('topleft',c('E4','no-E4'),lty=2:1)\n>>    \n>> })\n>>\n>> Muchas gracias y un saludo\n>>\n>> Jose Miguel\n>>\n>> -------------------------------------------------------------------\n>>\n>> Jose Miguel Arbones-Mainar, PhD\n>> Unidad de InvestigaciÃ³n Traslacional\n>> Instituto Aragones de Ciencias de la Salud\n>> Hospital Universitario Miguel Servet\n>> PÂº Isabel la CatÃ³lica, 1-3\n>> 50009 Zaragoza (Spain)\n>> Tel: +34 976 769 565\n>> Fax: +34 976 769 566\n>> www.adipofat.com <http://www.adipofat.com/>\n>>\n>>\n>>\n>>\n>> -----------------------------------------------------------------------------------\n>> Jose Miguel Arbones-Mainar\n>> www.adipofat.com <http://www.adipofat.com/>\n>>\n>>\n>>\n>>\n>>\n>>\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Hola,\nmuchas gracias por contestar (tambien a Javier RubÃ©n).\nEl bmi hasta el evento seria el el bmi que tienen los individuos cuando \nse les detecta el sÃ­ndrome metabÃ³lico o el ultimo bmi que const",
+      "thread_id": "thread-402bb97094bc",
+      "thread_depth": 2,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-29a00203d41d",
+      "message_id": "<20150804201954.Horde.WqYPYXWnoB3P8Jcbs58jgA4@webmail.um.es>",
+      "from_name": "Jose Manuel Veiga del Baño",
+      "from_email_hash": "45a5d49f14ec160222836e8724c6e63bec648477f4b44f3d293ab165c789dc93",
+      "date": "2015-08-04T20:19:54+02:00",
+      "subject": "[R-es] php-R",
+      "subject_clean": "[R-es] php-R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados colegas:\n\nEstoy tratando de ejecutar varios scripts de R a travÃ©s de php. Para ello\nestoy utilizando el siguiente cÃ³digo pero me sale:\n\n  El URL solicitado no ha sido localizado en este servidor. El URL de\nlaÂ pÃ¡gina que lo refiriÃ³[1]Â parece ser equivocado u obsoleto. Por favor\ncomunique al autor deÂ esa pÃ¡gina[1]Â acerca del error.\n  Este cÃ³digo que estÃ¡ sacado de internet indica la dificultad para\nejecutarlo a travÃ©s de php por velocidad y varios usuarios al mismo\nmomento. No se si alguien tiene experiencia en este tipo de usos php-R y me\npuede ayudar.\n\n---------------------------------------------------------------------------------------------------------------------------------------------------\n\nCodigo PHP:Â \n\n   <?php\n   // poorman.php\n   Â \n   echo \"<form action='poorman.php' method='get'>\";\n   echo \"Number values to generate: <input type='text' name='N' />\";\n   echo \"<input type='submit' />\";\n   echo \"</form>\";\n   Â \n   if(isset($_GET['N']))\n   {\n   Â  $N = $_GET['N'];\n   Â \n   Â  // execute R script from shell\n   Â  // this will save a plot at temp.png to the filesystem\n   Â  exec(\"C:\\Program Files\\R\\R-3.2.0\\bin\\x64\\my_rscript.R $N\");\n   Â \n   Â  // return image tag\n   Â  $nocache = rand();\n   Â  echo(\"<img src='temp.png?$nocache' />\");\n   }\n   ?>\n\nCodigo R:Â \n\n    args <- commandArgs(TRUE)\n    Â \n    N <- args[1]\n    x <- rnorm(N,0,1)\n    Â \n    png(filename=\"temp.png\", width=500, height=500)\n    hist(x, col=\"lightblue\")\n    dev.off()\n\nMuchas gracias.\n\nVÃ­nculos:\n---------\n[1] http://localhost/www/CHEMGEST/borrar.php\n\nDr. JosÃ© M. Veiga\nDpt. QuÃ­mica AgrÃ­cola, GeologÃ­a y EdafologÃ­a.\nUniversidad de Murcia.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados colegas:\n\nEstoy tratando de ejecutar varios scripts de R a travÃ©s de php. Para ello\nestoy utilizando el siguiente cÃ³digo pero me sale:\n\n  El URL solicitado no ha sido localizado en este se",
+      "thread_id": "thread-29a00203d41d",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-d66c16cff517",
+      "message_id": "<55C1D38B.2040006@yahoo.com>",
+      "from_name": "Mario Rodriguez",
+      "from_email_hash": "985276b79c762b87168d33fd64acc31dbac2948ef3c5879ba6a5fc3117cf08c8",
+      "date": "2015-08-05T11:12:43+02:00",
+      "subject": "[R-es] php-R",
+      "subject_clean": "[R-es] php-R",
+      "in_reply_to": "<20150804201954.Horde.WqYPYXWnoB3P8Jcbs58jgA4@webmail.um.es>",
+      "references": [
+        "<20150804201954.Horde.WqYPYXWnoB3P8Jcbs58jgA4@webmail.um.es>"
+      ],
+      "body_plain": "El 04/08/15 a las 20:19, Jose Manuel Veiga del BaÃ±o escribiÃ³:\n> Estimados colegas:\n>\n> Estoy tratando de ejecutar varios scripts de R a travÃ©s de php. Para ello\n> estoy utilizando el siguiente cÃ³digo pero me sale:\n>\n>    El URL solicitado no ha sido localizado en este servidor. El URL de\n> la pÃ¡gina que lo refiriÃ³[1] parece ser equivocado u obsoleto. Por favor\n> comunique al autor de esa pÃ¡gina[1] acerca del error.\n>    Este cÃ³digo que estÃ¡ sacado de internet indica la dificultad para\n> ejecutarlo a travÃ©s de php por velocidad y varios usuarios al mismo\n> momento. No se si alguien tiene experiencia en este tipo de usos php-R y me\n> puede ayudar.\n>\n> ---------------------------------------------------------------------------------------------------------------------------------------------------\n>\n> Codigo PHP:\n>\n>     <?php\n>     // poorman.php\n>      \n>     echo \"<form action='poorman.php' method='get'>\";\n>     echo \"Number values to generate: <input type='text' name='N' />\";\n>     echo \"<input type='submit' />\";\n>     echo \"</form>\";\n>      \n>     if(isset($_GET['N']))\n>     {\n>       $N = $_GET['N'];\n>      \n>       // execute R script from shell\n>       // this will save a plot at temp.png to the filesystem\n>       exec(\"C:\\Program Files\\R\\R-3.2.0\\bin\\x64\\my_rscript.R $N\");\n\nHola,\n\nPor motivos de seguridad, un servidor web solo tiene acceso a los \nficheros de un subÃ¡rbol de la estructura de directorios del sistema \noperativo.\n\nAsÃ­, un script php ejecutado en este entorno difÃ­cilmente podrÃ­a acceder \na la carpeta 'Program Files'. Mi sugerencia irÃ­a por guardar los scripts \ndentro del subÃ¡rbol al que tenga acceso el servidor (Apache?) o \ninstalarlos como un paquete de R.\n\nSi trabajas con Apache, quizÃ¡s haya alguna manera de indicarle a quÃ© \ncarpetas adicionales le das permiso de acceso. Yo no lo sÃ©, pero podrÃ­as \ninvestigarlo.\n\nOtra cosa. Cuando ejecutas la instrucciÃ³n exec, no indicas quÃ© programa \ntiene que ejecutar el fichero my_rscript.R y quizÃ¡s el SO no tenga forma \nde saberlo. Yo le  echarÃ­a un vistazo a cÃ³mo ejecutar R desde el \nterminal del SO y quÃ© parÃ¡metros tengo a mi disposiciÃ³n.\n\n--\nMario",
+      "body_snippet": "El 04/08/15 a las 20:19, Jose Manuel Veiga del BaÃ±o escribiÃ³:\n> Estimados colegas:\n>\n> Estoy tratando de ejecutar varios scripts de R a travÃ©s de php. Para ello\n> estoy utilizando el siguiente cÃ³d",
+      "thread_id": "thread-29a00203d41d",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-324cb28026d8",
+      "message_id": "<BLU182-W10853CCE50BC8554F4D09999750@phx.gbl>",
+      "from_name": "Patricio Fuenmayor Viteri",
+      "from_email_hash": "e8d95db9944a44c5b04b3ad267470eaa75600fd5c4057bd2350f925f957402a8",
+      "date": "2015-08-05T10:14:01-05:00",
+      "subject": "[R-es] php-R",
+      "subject_clean": "[R-es] php-R",
+      "in_reply_to": "<mailman.18.1438768803.21113.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.18.1438768803.21113.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Hola...Otra forma y mas robusta.. pienso yo, es usar PL/R http://www.joeconway.com/plr/de esta forma llamas a procedimientos almacenados en postgres y entiendo yo que es mas fÃ¡cil la interacciÃ³n entre php y postgres.Es una idea, y de paso ganas mucho en la administraciÃ³n de datos Patricio. \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola...Otra forma y mas robusta.. pienso yo, es usar PL/R http://www.joeconway.com/plr/de esta forma llamas a procedimientos almacenados en postgres y entiendo yo que es mas fÃ¡cil la interacciÃ³n ent",
+      "thread_id": "thread-324cb28026d8",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-d943db207871",
+      "message_id": "<CAFOGFn+2b2kaeHepAJAEcYyc7tx9yHcGv1jMKDz4i8JPa3YQjA@mail.gmail.com>",
+      "from_name": "Jose Ramirez Costa",
+      "from_email_hash": "bea4b68eacbc3ea103f474178c9979ba1caceed2147a7e35de9db9f98a8901be",
+      "date": "2015-08-05T15:06:56-03:00",
+      "subject": "[R-es] paquetes twitteR",
+      "subject_clean": "[R-es] paquetes twitteR",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buen dia, quisiera usar el paquete twitteR para hacer analisis de texto con\nel paquete tm, pero no puedo hacer la autentificacion con el OAuth.\n\nAlguien me podria dar los pasos a seguir?\n\nGracias\n\nJosÃ©\n\n-- \n\"Abraza la incertidumbre, es un intento de tener una filosofÃ­a de vida para\nagarrarme de algo e ir naufragando en la vida de alguna manera. Encarar a\nciegas, y generar incertidumbres en el proyectar.\"\nJ.I.S.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buen dia, quisiera usar el paquete twitteR para hacer analisis de texto con\nel paquete tm, pero no puedo hacer la autentificacion con el OAuth.\n\nAlguien me podria dar los pasos a seguir?\n\nGracias\n\nJos",
+      "thread_id": "thread-d943db207871",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-5cdacc8022be",
+      "message_id": "<CAOKbq8jRStL0pXWtwQJm3tq63dsWRw=khC=z0Fd1qtgxCxzLAQ@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "b964461817cc8c122ad873c2863e7820aa5a0ffe6e7754b2ed7e86c0aabb1574",
+      "date": "2015-08-05T20:16:01+02:00",
+      "subject": "[R-es] paquetes twitteR",
+      "subject_clean": "[R-es] paquetes twitteR",
+      "in_reply_to": "<CAFOGFn+2b2kaeHepAJAEcYyc7tx9yHcGv1jMKDz4i8JPa3YQjA@mail.gmail.com>",
+      "references": [
+        "<CAFOGFn+2b2kaeHepAJAEcYyc7tx9yHcGv1jMKDz4i8JPa3YQjA@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nA finales del aÃ±o pasado, se preguntÃ³ por esto mismo.\nAquÃ­ puedes ver la cadena de dudas/consejos/soluciones...\n\nhttp://grokbase.com/t/r/r-help-es/14b1pj7y1n/r-es-pregunta-creo-que-simple-para-usar-twitter\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 5 de agosto de 2015, 20:06, Jose Ramirez Costa <\njoseramirezcosta en gmail.com> escribiÃ³:\n\n> Buen dia, quisiera usar el paquete twitteR para hacer analisis de texto con\n> el paquete tm, pero no puedo hacer la autentificacion con el OAuth.\n>\n> Alguien me podria dar los pasos a seguir?\n>\n> Gracias\n>\n> JosÃ©\n>\n> --\n> \"Abraza la incertidumbre, es un intento de tener una filosofÃ­a de vida para\n> agarrarme de algo e ir naufragando en la vida de alguna manera. Encarar a\n> ciegas, y generar incertidumbres en el proyectar.\"\n> J.I.S.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nA finales del aÃ±o pasado, se preguntÃ³ por esto mismo.\nAquÃ­ puedes ver la cadena de dudas/consejos/soluciones...\n\nhttp://grokbase.com/t/r/r-help-es/14b1pj7y1n/r-es-pregunta-creo-que-simple-pa",
+      "thread_id": "thread-d943db207871",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-297512a1f430",
+      "message_id": "<CAOKbq8i7sZzHfM3AadBiQX_OdVcPeaOXNvKaz9d+10M3u6puzw@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "b964461817cc8c122ad873c2863e7820aa5a0ffe6e7754b2ed7e86c0aabb1574",
+      "date": "2015-08-05T20:19:43+02:00",
+      "subject": "[R-es] php-R",
+      "subject_clean": "[R-es] php-R",
+      "in_reply_to": "<20150804201954.Horde.WqYPYXWnoB3P8Jcbs58jgA4@webmail.um.es>",
+      "references": [
+        "<20150804201954.Horde.WqYPYXWnoB3P8Jcbs58jgA4@webmail.um.es>"
+      ],
+      "body_plain": "Hola,\n\nNo sÃ© si todavÃ­a es Ãºtil...:\n\nhttp://stats.stackexchange.com/questions/4279/how-can-i-integrate-r-with-php\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 4 de agosto de 2015, 20:19, Jose Manuel Veiga del BaÃ±o <chemavb en um.es>\nescribiÃ³:\n\n> Estimados colegas:\n>\n> Estoy tratando de ejecutar varios scripts de R a travÃ©s de php. Para ello\n> estoy utilizando el siguiente cÃ³digo pero me sale:\n>\n>   El URL solicitado no ha sido localizado en este servidor. El URL de\n> la pÃ¡gina que lo refiriÃ³[1] parece ser equivocado u obsoleto. Por favor\n> comunique al autor de esa pÃ¡gina[1] acerca del error.\n>   Este cÃ³digo que estÃ¡ sacado de internet indica la dificultad para\n> ejecutarlo a travÃ©s de php por velocidad y varios usuarios al mismo\n> momento. No se si alguien tiene experiencia en este tipo de usos php-R y me\n> puede ayudar.\n>\n>\n> ---------------------------------------------------------------------------------------------------------------------------------------------------\n>\n> Codigo PHP:\n>\n>    <?php\n>    // poorman.php\n>\n>    echo \"<form action='poorman.php' method='get'>\";\n>    echo \"Number values to generate: <input type='text' name='N' />\";\n>    echo \"<input type='submit' />\";\n>    echo \"</form>\";\n>\n>    if(isset($_GET['N']))\n>    {\n>      $N = $_GET['N'];\n>\n>      // execute R script from shell\n>      // this will save a plot at temp.png to the filesystem\n>      exec(\"C:\\Program Files\\R\\R-3.2.0\\bin\\x64\\my_rscript.R $N\");\n>\n>      // return image tag\n>      $nocache = rand();\n>      echo(\"<img src='temp.png?$nocache' />\");\n>    }\n>    ?>\n>\n> Codigo R:\n>\n>     args <- commandArgs(TRUE)\n>\n>     N <- args[1]\n>     x <- rnorm(N,0,1)\n>\n>     png(filename=\"temp.png\", width=500, height=500)\n>     hist(x, col=\"lightblue\")\n>     dev.off()\n>\n> Muchas gracias.\n>\n> VÃ­nculos:\n> ---------\n> [1] http://localhost/www/CHEMGEST/borrar.php\n>\n> Dr. JosÃ© M. Veiga\n> Dpt. QuÃ­mica AgrÃ­cola, GeologÃ­a y EdafologÃ­a.\n> Universidad de Murcia.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nNo sÃ© si todavÃ­a es Ãºtil...:\n\nhttp://stats.stackexchange.com/questions/4279/how-can-i-integrate-r-with-php\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 4 de agosto de 2015, 20:19, Jo",
+      "thread_id": "thread-29a00203d41d",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-2b69397940b6",
+      "message_id": "<CAFOGFn+sL4Tbn7isz-DKh+=0+zEUGdatq8PtzCGvPTWh-o1s0w@mail.gmail.com>",
+      "from_name": "Jose Ramirez Costa",
+      "from_email_hash": "bea4b68eacbc3ea103f474178c9979ba1caceed2147a7e35de9db9f98a8901be",
+      "date": "2015-08-05T15:31:14-03:00",
+      "subject": "[R-es] paquetes twitteR",
+      "subject_clean": "[R-es] paquetes twitteR",
+      "in_reply_to": "<CAOKbq8jRStL0pXWtwQJm3tq63dsWRw=khC=z0Fd1qtgxCxzLAQ@mail.gmail.com>",
+      "references": [
+        "<CAFOGFn+2b2kaeHepAJAEcYyc7tx9yHcGv1jMKDz4i8JPa3YQjA@mail.gmail.com>",
+        "<CAOKbq8jRStL0pXWtwQJm3tq63dsWRw=khC=z0Fd1qtgxCxzLAQ@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Carlos voy a probar siguiendo esos mensajes.\n\nEl 5 de agosto de 2015, 15:16, Carlos Ortega <cof en qualityexcellence.es>\nescribiÃ³:\n\n> Hola,\n>\n> A finales del aÃ±o pasado, se preguntÃ³ por esto mismo.\n> AquÃ­ puedes ver la cadena de dudas/consejos/soluciones...\n>\n>\n> http://grokbase.com/t/r/r-help-es/14b1pj7y1n/r-es-pregunta-creo-que-simple-para-usar-twitter\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El 5 de agosto de 2015, 20:06, Jose Ramirez Costa <\n> joseramirezcosta en gmail.com> escribiÃ³:\n>\n>> Buen dia, quisiera usar el paquete twitteR para hacer analisis de texto\n>> con\n>> el paquete tm, pero no puedo hacer la autentificacion con el OAuth.\n>>\n>> Alguien me podria dar los pasos a seguir?\n>>\n>> Gracias\n>>\n>> JosÃ©\n>>\n>> --\n>> \"Abraza la incertidumbre, es un intento de tener una filosofÃ­a de vida\n>> para\n>> agarrarme de algo e ir naufragando en la vida de alguna manera. Encarar a\n>> ciegas, y generar incertidumbres en el proyectar.\"\n>> J.I.S.\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\n\n-- \n\"Abraza la incertidumbre, es un intento de tener una filosofÃ­a de vida para\nagarrarme de algo e ir naufragando en la vida de alguna manera. Encarar a\nciegas, y generar incertidumbres en el proyectar.\"\nJ.I.S.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Carlos voy a probar siguiendo esos mensajes.\n\nEl 5 de agosto de 2015, 15:16, Carlos Ortega <cof en qualityexcellence.es>\nescribiÃ³:\n\n> Hola,\n>\n> A finales del aÃ±o pasado, se preguntÃ³ por est",
+      "thread_id": "thread-d943db207871",
+      "thread_depth": 2,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-d4bd07fdc265",
+      "message_id": "<55c27b17.051d8c0a.e3933.ffffcf60@mx.google.com>",
+      "from_name": "Javier Rubén Marcuzzi",
+      "from_email_hash": "c43db5d4d68fae2afa940530fe5fb46b7745dd68133fc096162a24f656d55363",
+      "date": "2015-08-05T18:07:40-03:00",
+      "subject": "[R-es] php-R",
+      "subject_clean": "[R-es] php-R",
+      "in_reply_to": "<CAOKbq8i7sZzHfM3AadBiQX_OdVcPeaOXNvKaz9d+10M3u6puzw@mail.gmail.com>",
+      "references": [
+        "<20150804201954.Horde.WqYPYXWnoB3P8Jcbs58jgA4@webmail.um.es>",
+        "<CAOKbq8i7sZzHfM3AadBiQX_OdVcPeaOXNvKaz9d+10M3u6puzw@mail.gmail.com>"
+      ],
+      "body_plain": "Estimados\n\nYo supe colocar algunas cosas entre php y R, pero creo que hoy hay una pregunta anterior, Â¿tienes acceso al servidor?, Â¿QuÃ© sistema operativo? Â¿QuÃ© base de datos? Â¿QuÃ© se usa para interactuar (html5, rest)?\n\nPorque posiblemente hoy es necesario pasar por php, r tiene herramientas para trabajar dentro de un servidor.\n\nSobre el cÃ³digo que usted envÃ­a, sospecho que debe haber un problema con los permisos de ejecuciÃ³n, R estÃ¡ en Windows y posiblemente xamp, wamp, o IIS, por ese lado deberÃ­a investigar antes de pensar en un problema de R (aunque es posible que el inconveniente estÃ© en R).\n\nOtra pregunta, el cÃ³digo que usted tiene en su computadora se ejecuta en el servidor, porque puede ser que una diferencia entre ambas computadoras complique su trabajo.\n\nJavier RubÃ©n Marcuzzi\nTÃ©cnico en Industria LÃ¡cteas\nVeterinario\n\n\n\nDe: Carlos Ortega\nEnviado: miÃ©rcoles, 5 de agosto de 2015 3:19 p. m.\nPara: Jose Manuel Veiga del BaÃ±o\nCC: Lista R\nAsunto: Re: [R-es] php-R\n\n\nHola,\n\nNo sÃ© si todavÃ­a es Ãºtil...:\n\nhttp://stats.stackexchange.com/questions/4279/how-can-i-integrate-r-with-php\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 4 de agosto de 2015, 20:19, Jose Manuel Veiga del BaÃ±o <chemavb en um.es>\nescribiÃ³:\n\n> Estimados colegas:\n>\n> Estoy tratando de ejecutar varios scripts de R a travÃ©s de php. Para ello\n> estoy utilizando el siguiente cÃ³digo pero me sale:\n>\n>   El URL solicitado no ha sido localizado en este servidor. El URL de\n> la pÃ¡gina que lo refiriÃ³[1] parece ser equivocado u obsoleto. Por favor\n> comunique al autor de esa pÃ¡gina[1] acerca del error.\n>   Este cÃ³digo que estÃ¡ sacado de internet indica la dificultad para\n> ejecutarlo a travÃ©s de php por velocidad y varios usuarios al mismo\n> momento. No se si alguien tiene experiencia en este tipo de usos php-R y me\n> puede ayudar.\n>\n>\n> ---------------------------------------------------------------------------------------------------------------------------------------------------\n>\n> Codigo PHP:\n>\n>    <?php\n>    // poorman.php\n>\n>    echo \"<form action='poorman.php' method='get'>\";\n>    echo \"Number values to generate: <input type='text' name='N' />\";\n>    echo \"<input type='submit' />\";\n>    echo \"</form>\";\n>\n>    if(isset($_GET['N']))\n>    {\n>      $N = $_GET['N'];\n>\n>      // execute R script from shell\n>      // this will save a plot at temp.png to the filesystem\n>      exec(\"C:\\Program Files\\R\\R-3.2.0\\bin\\x64\\my_rscript.R $N\");\n>\n>      // return image tag\n>      $nocache = rand();\n>      echo(\"<img src='temp.png?$nocache' />\");\n>    }\n>    ?>\n>\n> Codigo R:\n>\n>     args <- commandArgs(TRUE)\n>\n>     N <- args[1]\n>     x <- rnorm(N,0,1)\n>\n>     png(filename=\"temp.png\", width=500, height=500)\n>     hist(x, col=\"lightblue\")\n>     dev.off()\n>\n> Muchas gracias.\n>\n> VÃ­nculos:\n> ---------\n> [1] http://localhost/www/CHEMGEST/borrar.php\n>\n> Dr. JosÃ© M. Veiga\n> Dpt. QuÃ­mica AgrÃ­cola, GeologÃ­a y EdafologÃ­a.\n> Universidad de Murcia.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nYo supe colocar algunas cosas entre php y R, pero creo que hoy hay una pregunta anterior, Â¿tienes acceso al servidor?, Â¿QuÃ© sistema operativo? Â¿QuÃ© base de datos? Â¿QuÃ© se usa para in",
+      "thread_id": "thread-29a00203d41d",
+      "thread_depth": 2,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-62f73f00b8d0",
+      "message_id": "<CANxP2S5-rDm7oFjGb_-_BgHQYn_Q3q1jOfJaN8Dh5JngCQDboQ@mail.gmail.com>",
+      "from_name": "Luis Fernando García",
+      "from_email_hash": "08b77a3157b5c91447b7f56d36de562cb6b4a099ad4a646b73674a47ec3f0482",
+      "date": "2015-08-06T04:09:06-03:00",
+      "subject": "[R-es] consulta graficas para GLM",
+      "subject_clean": "[R-es] consulta graficas para GLM",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados amigos y expertos del R,\n\nLes escribo para hacerles una pregunta que parece un poco sencilla pero me\nha costado mucho. Estoy tratando de graficar los datos correspondientes a\ntasas de consumo de algunos organismos cuando estÃ¡n expuestos o no\nexpuestos a un quÃ­mico sobre tres tipos de presa. Por definiciÃ³n, debÃ­a\najustar los datos a un glm con distribuciÃ³n gama.\n\nLas grÃ¡ficas pueden ser 1) dos grÃ¡ficos correspondientes a expuesto o no\nexpuesto ( representado con 0 y 1)  y cada uno con tres lÃ­neas\n(correspondientes a tres presas) o 2) realizar tres grÃ¡ficos\n(correspondientes a cada tipo de presa), con dos lÃ­neas (expuesto vs no\nexpuesto).  Las lÃ­neas deberÃ­an ser generadas empleando la funciÃ³n predict.\n\n\nPara graficar estaba pensando dividir los datos con subset y ajustar un\nmodelo para poder graficar cada lÃ­nea pero no se si sea vÃ¡lido.  La otra\nopciÃ³n es graficar los datos como les mencionÃ© anteriormente a partir del\nprimer modelo, pero no he encontrado nada de informaciÃ³n al respecto. Si\nalguno pudiera proveerme alguna colaboraciÃ³n o sabe donde puedo encontrar\ninformaciÃ³n sobre como hacer este tipo de grÃ¡fico estarÃ­a muy agradecido.\n\nSaludos!\n\n\nPS: Adjunto el set de datos porque es muy largo\n\n\n\n#####Este es el script\n\ntodoslosdatos = read.table(\"TODOS POLIOSTOMA.txt\", header=T)\n\nExposiciÃ³n1=factor(todoslosdatos$ExposiciÃ³n)\n\nstr(todoslosdatos)\n\nattach(todoslosdatos)\n\nnames(todoslosdatos)\n\nglm6=glm(Consumo1 ~ I(1/Densidad) +ExposiciÃ³n1 + Presa, family = Gamma)\n\nsummary(glm6)\n\npar(mfrow=c(2,2))\n\nplot(glm6)\n\nanova(glm6,test=\"Chisq\")\n\nsummary(glm6)\n\nlibrary(multcomp)\n\ncompexp <- glht(glm6, mcp(ExposiciÃ³n1 = \"Tukey\", covariate_average = TRUE))\n\nsummary(compexp)\n\nplot(Densidad,Consumo1,type=\"n\")\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150806/f7517d04/attachment-0001.html>\n------------ prÃ³xima parte ------------\nEspecie\tPresa\tExposiciÃ³n\tDensidad\tConsumo1\npoliostoma\thormiga\t0\t1\t2\npoliostoma\thormiga\t0\t1\t2\npoliostoma\thormiga\t0\t1\t2\npoliostoma\thormiga\t0\t1\t2\npoliostoma\thormiga\t0\t1\t4\npoliostoma\thormiga\t0\t3\t3\npoliostoma\thormiga\t0\t3\t6\npoliostoma\thormiga\t0\t3\t3\npoliostoma\thormiga\t0\t3\t8\npoliostoma\thormiga\t0\t3\t3\npoliostoma\thormiga\t0\t5\t4\npoliostoma\thormiga\t0\t5\t2\npoliostoma\thormiga\t0\t5\t2\npoliostoma\thormiga\t0\t5\t2\npoliostoma\thormiga\t0\t5\t5\npoliostoma\thormiga\t0\t10\t6\npoliostoma\thormiga\t0\t10\t4\npoliostoma\thormiga\t0\t10\t6\npoliostoma\thormiga\t0\t10\t4\npoliostoma\thormiga\t0\t10\t3\npoliostoma\thormiga\t0\t15\t5\npoliostoma\thormiga\t0\t15\t3\npoliostoma\thormiga\t0\t15\t3\npoliostoma\thormiga\t0\t15\t4\npoliostoma\thormiga\t0\t15\t4\npoliostoma\tgrillo\t0\t1\t2\npoliostoma\tgrillo\t0\t1\t3\npoliostoma\tgrillo\t0\t1\t4\npoliostoma\tgrillo\t0\t1\t3\npoliostoma\tgrillo\t0\t1\t2\npoliostoma\tgrillo\t0\t3\t3\npoliostoma\tgrillo\t0\t3\t3\npoliostoma\tgrillo\t0\t3\t2\npoliostoma\tgrillo\t0\t3\t2\npoliostoma\tgrillo\t0\t3\t2\npoliostoma\tgrillo\t0\t5\t3\npoliostoma\tgrillo\t0\t5\t4\npoliostoma\tgrillo\t0\t5\t2\npoliostoma\tgrillo\t0\t5\t2\npoliostoma\tgrillo\t0\t5\t3\npoliostoma\tgrillo\t0\t10\t3\npoliostoma\tgrillo\t0\t10\t3\npoliostoma\tgrillo\t0\t10\t2\npoliostoma\tgrillo\t0\t10\t4\npoliostoma\tgrillo\t0\t10\t2\npoliostoma\tgrillo\t0\t15\t2\npoliostoma\tgrillo\t0\t15\t2\npoliostoma\tgrillo\t0\t15\t2\npoliostoma\tgrillo\t0\t15\t3\npoliostoma\tgrillo\t0\t15\t4\npoliostoma\tlepidoptero\t0\t1\t3\npoliostoma\tlepidoptero\t0\t1\t2\npoliostoma\tlepidoptero\t0\t1\t3\npoliostoma\tlepidoptero\t0\t1\t3\npoliostoma\tlepidoptero\t0\t1\t4\npoliostoma\tlepidoptero\t0\t3\t4\npoliostoma\tlepidoptero\t0\t3\t5\npoliostoma\tlepidoptero\t0\t3\t2\npoliostoma\tlepidoptero\t0\t3\t9\npoliostoma\tlepidoptero\t0\t3\t5\npoliostoma\tlepidoptero\t0\t5\t4\npoliostoma\tlepidoptero\t0\t5\t4\npoliostoma\tlepidoptero\t0\t5\t2\npoliostoma\tlepidoptero\t0\t5\t5\npoliostoma\tlepidoptero\t0\t5\t5\npoliostoma\tlepidoptero\t0\t10\t7\npoliostoma\tlepidoptero\t0\t10\t6\npoliostoma\tlepidoptero\t0\t10\t6\npoliostoma\tlepidoptero\t0\t10\t4\npoliostoma\tlepidoptero\t0\t10\t7\npoliostoma\tlepidoptero\t0\t15\t6\npoliostoma\tlepidoptero\t0\t15\t9\npoliostoma\tlepidoptero\t0\t15\t7\npoliostoma\tlepidoptero\t0\t15\t5\npoliostoma\tlepidoptero\t0\t15\t4\npoliostoma\thormiga\t1\t1\t2\npoliostoma\thormiga\t1\t1\t3\npoliostoma\thormiga\t1\t1\t2\npoliostoma\thormiga\t1\t1\t2\npoliostoma\thormiga\t1\t1\t2\npoliostoma\thormiga\t1\t3\t2\npoliostoma\thormiga\t1\t3\t2\npoliostoma\thormiga\t1\t3\t3\npoliostoma\thormiga\t1\t3\t4\npoliostoma\thormiga\t1\t3\t3\npoliostoma\thormiga\t1\t5\t3\npoliostoma\thormiga\t1\t5\t4\npoliostoma\thormiga\t1\t5\t2\npoliostoma\thormiga\t1\t5\t2\npoliostoma\thormiga\t1\t10\t4\npoliostoma\thormiga\t1\t10\t6\npoliostoma\thormiga\t1\t10\t3\npoliostoma\thormiga\t1\t10\t3\npoliostoma\thormiga\t1\t10\t5\npoliostoma\thormiga\t1\t15\t3\npoliostoma\thormiga\t1\t15\t5\npoliostoma\thormiga\t1\t15\t3\npoliostoma\thormiga\t1\t15\t3\npoliostoma\thormiga\t1\t15\t3\npoliostoma\tgrillo\t1\t1\t2\npoliostoma\tgrillo\t1\t1\t2\npoliostoma\tgrillo\t1\t1\t2\npoliostoma\tgrillo\t1\t1\t2\npoliostoma\tgrillo\t1\t1\t2\npoliostoma\tgrillo\t1\t3\t2\npoliostoma\tgrillo\t1\t3\t2\npoliostoma\tgrillo\t1\t3\t2\npoliostoma\tgrillo\t1\t3\t3\npoliostoma\tgrillo\t1\t3\t2\npoliostoma\tgrillo\t1\t5\t2\npoliostoma\tgrillo\t1\t5\t3\npoliostoma\tgrillo\t1\t5\t3\npoliostoma\tgrillo\t1\t5\t2\npoliostoma\tgrillo\t1\t5\t2\npoliostoma\tgrillo\t1\t10\t2\npoliostoma\tgrillo\t1\t10\t3\npoliostoma\tgrillo\t1\t10\t2\npoliostoma\tgrillo\t1\t10\t3\npoliostoma\tgrillo\t1\t10\t2\npoliostoma\tgrillo\t1\t15\t3\npoliostoma\tgrillo\t1\t15\t2\npoliostoma\tgrillo\t1\t15\t4\npoliostoma\tgrillo\t1\t15\t3\npoliostoma\tgrillo\t1\t15\t2\npoliostoma\tlepidoptero\t1\t1\t2\npoliostoma\tlepidoptero\t1\t1\t3\npoliostoma\tlepidoptero\t1\t1\t2\npoliostoma\tlepidoptero\t1\t1\t2\npoliostoma\tlepidoptero\t1\t3\t2\npoliostoma\tlepidoptero\t1\t3\t4\npoliostoma\tlepidoptero\t1\t3\t3\npoliostoma\tlepidoptero\t1\t3\t3\npoliostoma\tlepidoptero\t1\t3\t4\npoliostoma\tlepidoptero\t1\t5\t2\npoliostoma\tlepidoptero\t1\t5\t3\npoliostoma\tlepidoptero\t1\t5\t3\npoliostoma\tlepidoptero\t1\t5\t4\npoliostoma\tlepidoptero\t1\t5\t4\npoliostoma\tlepidoptero\t1\t10\t5\npoliostoma\tlepidoptero\t1\t10\t4\npoliostoma\tlepidoptero\t1\t10\t6\npoliostoma\tlepidoptero\t1\t10\t5\npoliostoma\tlepidoptero\t1\t10\t4\npoliostoma\tlepidoptero\t1\t15\t6\npoliostoma\tlepidoptero\t1\t15\t5\npoliostoma\tlepidoptero\t1\t15\t3\npoliostoma\tlepidoptero\t1\t15\t4\npoliostoma\tlepidoptero\t1\t15\t5",
+      "body_snippet": "Estimados amigos y expertos del R,\n\nLes escribo para hacerles una pregunta que parece un poco sencilla pero me\nha costado mucho. Estoy tratando de graficar los datos correspondientes a\ntasas de consum",
+      "thread_id": "thread-62f73f00b8d0",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-0f9f448415a5",
+      "message_id": "<55C32B9E.2090705@gmail.com>",
+      "from_name": "Jose Luis Cañadas Reche",
+      "from_email_hash": "7ddd1c4732731cee6c557c9c7638b2d5a340931a641b5647d826bc1326b9a4b0",
+      "date": "2015-08-06T11:40:46+02:00",
+      "subject": "[R-es] consulta graficas para GLM",
+      "subject_clean": "[R-es] consulta graficas para GLM",
+      "in_reply_to": "<CANxP2S5-rDm7oFjGb_-_BgHQYn_Q3q1jOfJaN8Dh5JngCQDboQ@mail.gmail.com>",
+      "references": [
+        "<CANxP2S5-rDm7oFjGb_-_BgHQYn_Q3q1jOfJaN8Dh5JngCQDboQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola.\n\nPrueba con el \"enÃ©simo\" paquete de R , effects, algo asi.\n\nlibrary(effects)\n\nefectos <- allEffects(glm6)\n\nplot(efectos)\n\nSaludos\n\nEl 06/08/15 a las 09:09, Luis Fernando GarcÃ­a escribiÃ³:\n> Estimados amigos y expertos del R,\n>\n> Les escribo para hacerles una pregunta que parece un poco sencilla \n> pero me ha costado mucho. Estoy tratando de graficar los datos \n> correspondientes a tasas de consumo de algunos organismos cuando estÃ¡n \n> expuestos o no expuestos a un quÃ­mico sobre tres tipos de presa. Por \n> definiciÃ³n, debÃ­a ajustar los datos a un glm con distribuciÃ³n gama.\n>\n> Las grÃ¡ficas pueden ser 1) dos grÃ¡ficos correspondientes a expuesto o \n> no expuesto ( representado con 0 y 1)  y cada uno con tres lÃ­neas \n> (correspondientes a tres presas) o 2) realizar tres grÃ¡ficos \n> (correspondientes a cada tipo de presa), con dos lÃ­neas (expuesto vs \n> no expuesto).  Las lÃ­neas deberÃ­an ser generadas empleando la funciÃ³n \n> predict.\n>\n> Para graficar estaba pensando dividir los datos con subset y ajustar \n> un modelo para poder graficar cada lÃ­nea pero no se si sea vÃ¡lido.  La \n> otra opciÃ³n es graficar los datos como les mencionÃ© anteriormente a \n> partir del primer modelo, pero no he encontrado nada de informaciÃ³n al \n> respecto. Si alguno pudiera proveerme alguna colaboraciÃ³n o sabe donde \n> puedo encontrar informaciÃ³n sobre como hacer este tipo de grÃ¡fico \n> estarÃ­a muy agradecido.\n>\n> Saludos!\n>\n>\n> PS: Adjunto el set de datos porque es muy largo\n>\n>\n>\n> #####Este es el script\n>\n> todoslosdatos = read.table(\"TODOS POLIOSTOMA.txt\", header=T)\n>\n> ExposiciÃ³n1=factor(todoslosdatos$ExposiciÃ³n)\n>\n> str(todoslosdatos)\n>\n> attach(todoslosdatos)\n>\n> names(todoslosdatos)\n>\n> glm6=glm(Consumo1 ~ I(1/Densidad) +ExposiciÃ³n1 + Presa, family = Gamma)\n>\n> summary(glm6)\n>\n> par(mfrow=c(2,2))\n>\n> plot(glm6)\n>\n> anova(glm6,test=\"Chisq\")\n>\n> summary(glm6)\n>\n> library(multcomp)\n>\n> compexp <- glht(glm6, mcp(ExposiciÃ³n1 = \"Tukey\", covariate_average = \n> TRUE))\n>\n> summary(compexp)\n>\n> plot(Densidad,Consumo1,type=\"n\")\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola.\n\nPrueba con el \"enÃ©simo\" paquete de R , effects, algo asi.\n\nlibrary(effects)\n\nefectos <- allEffects(glm6)\n\nplot(efectos)\n\nSaludos\n\nEl 06/08/15 a las 09:09, Luis Fernando GarcÃ­a escribiÃ³:\n> Es",
+      "thread_id": "thread-62f73f00b8d0",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-732e7fb2f094",
+      "message_id": "<55C32F20.7090206@gmail.com>",
+      "from_name": "Jose Luis Cañadas Reche",
+      "from_email_hash": "7ddd1c4732731cee6c557c9c7638b2d5a340931a641b5647d826bc1326b9a4b0",
+      "date": "2015-08-06T11:55:44+02:00",
+      "subject": "[R-es] consulta graficas para GLM",
+      "subject_clean": "[R-es] consulta graficas para GLM",
+      "in_reply_to": "<CANxP2S5-rDm7oFjGb_-_BgHQYn_Q3q1jOfJaN8Dh5JngCQDboQ@mail.gmail.com>",
+      "references": [
+        "<CANxP2S5-rDm7oFjGb_-_BgHQYn_Q3q1jOfJaN8Dh5JngCQDboQ@mail.gmail.com>"
+      ],
+      "body_plain": "Supongo que si quieres hacer el grÃ¡fico 1, puedes hacer esto.\n\nefectos <- Effect(c(\"Presa\", \"ExposiciÃ³n1\"), glm6 )\n\nplot(efectos)\n\n\nEl 06/08/15 a las 09:09, Luis Fernando GarcÃ­a escribiÃ³:\n> Estimados amigos y expertos del R,\n>\n> Les escribo para hacerles una pregunta que parece un poco sencilla \n> pero me ha costado mucho. Estoy tratando de graficar los datos \n> correspondientes a tasas de consumo de algunos organismos cuando estÃ¡n \n> expuestos o no expuestos a un quÃ­mico sobre tres tipos de presa. Por \n> definiciÃ³n, debÃ­a ajustar los datos a un glm con distribuciÃ³n gama.\n>\n> Las grÃ¡ficas pueden ser 1) dos grÃ¡ficos correspondientes a expuesto o \n> no expuesto ( representado con 0 y 1)  y cada uno con tres lÃ­neas \n> (correspondientes a tres presas) o 2) realizar tres grÃ¡ficos \n> (correspondientes a cada tipo de presa), con dos lÃ­neas (expuesto vs \n> no expuesto).  Las lÃ­neas deberÃ­an ser generadas empleando la funciÃ³n \n> predict.\n>\n> Para graficar estaba pensando dividir los datos con subset y ajustar \n> un modelo para poder graficar cada lÃ­nea pero no se si sea vÃ¡lido.  La \n> otra opciÃ³n es graficar los datos como les mencionÃ© anteriormente a \n> partir del primer modelo, pero no he encontrado nada de informaciÃ³n al \n> respecto. Si alguno pudiera proveerme alguna colaboraciÃ³n o sabe donde \n> puedo encontrar informaciÃ³n sobre como hacer este tipo de grÃ¡fico \n> estarÃ­a muy agradecido.\n>\n> Saludos!\n>\n>\n> PS: Adjunto el set de datos porque es muy largo\n>\n>\n>\n> #####Este es el script\n>\n> todoslosdatos = read.table(\"TODOS POLIOSTOMA.txt\", header=T)\n>\n> ExposiciÃ³n1=factor(todoslosdatos$ExposiciÃ³n)\n>\n> str(todoslosdatos)\n>\n> attach(todoslosdatos)\n>\n> names(todoslosdatos)\n>\n> glm6=glm(Consumo1 ~ I(1/Densidad) +ExposiciÃ³n1 + Presa, family = Gamma)\n>\n> summary(glm6)\n>\n> par(mfrow=c(2,2))\n>\n> plot(glm6)\n>\n> anova(glm6,test=\"Chisq\")\n>\n> summary(glm6)\n>\n> library(multcomp)\n>\n> compexp <- glht(glm6, mcp(ExposiciÃ³n1 = \"Tukey\", covariate_average = \n> TRUE))\n>\n> summary(compexp)\n>\n> plot(Densidad,Consumo1,type=\"n\")\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Supongo que si quieres hacer el grÃ¡fico 1, puedes hacer esto.\n\nefectos <- Effect(c(\"Presa\", \"ExposiciÃ³n1\"), glm6 )\n\nplot(efectos)\n\n\nEl 06/08/15 a las 09:09, Luis Fernando GarcÃ­a escribiÃ³:\n> Estima",
+      "thread_id": "thread-62f73f00b8d0",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-1f31b8bf6254",
+      "message_id": "<55C3515B.30000@gmail.com>",
+      "from_name": "rubenfcasal",
+      "from_email_hash": "a15ed1d99d79938a8dbc887e0ec5b346525c3b42ad75f5db525789cc3eec7731",
+      "date": "2015-08-06T14:21:47+02:00",
+      "subject": "[R-es] Duda interpolación (package ' gstat ')",
+      "subject_clean": "[R-es] Duda interpolación (package ' gstat ')",
+      "in_reply_to": "<DUB122-W300C247CE183B93D4F364AB760@phx.gbl>",
+      "references": [
+        "<DUB122-W300C247CE183B93D4F364AB760@phx.gbl>"
+      ],
+      "body_plain": "Hola Marcos,\n\n     Parece que el problema es con el ajuste del variograma (sale \nplano?), sin mÃ¡s informaciÃ³n no se exactamente que puede estar pasando...\n\n     Si me envÃ­as el cÃ³digo completo y los datos lo miro con mÃ¡s detalle \n(e incluso te doy una alternativa no paramÃ©trica con el paquete npsp).\n\n     Un saludo, RubÃ©n.\n\n\n\nEl 04/08/2015 a las 11:24, Marcos Bermejo escribiÃ³:\n> Hola,\n>\n>    # Hacemos el KED. Ver funci?n \"krige()\":\n>          KED.rad <- krige(\n>            formula=pluvPcp~layer,                  # covariable -> radar\n>            locations=lluvia.rad.pluv.spdf,\n>            newdata=radarGrid,                      # podr?a ser cualquier objeto Spatial\n>            model=v.fit,                            # modelo de semivariograma.\n>            maxdist=Inf\n>          )\n>\n> Esta es la funci?n que me interpola los datos de lluvia. El error que me da es:\n>\n> \"solve.c\", line 88: singular matrix in function Usolve()\n>\n> \"lufactor.c\", line 208: singular matrix in function m_inverse()\n> Error in predict.gstat(g, newdata = newdata, block = block, nsim = nsim,  :\n>    m_inverse\n> In addition: Warning message:\n> In fit.variogram(vg.aux, model = vgm(psill = 0.1, model = \"Gau\",  :\n>    Warning: singular model in variogram fit\n>\n>\n> Mi funci?n del variograma es :\n> v.fit <- fit.variogram(vg.aux, model=vgm(psill=0.15, model='Gau', range=5000,\n>                                                 nugget=0.05))\n>\n> ?Alguien me podr?a ayudar?\n>\n> Gracias de antemano.\n>\n> Un saludo,\n>   \t\t \t   \t\t\n> \t[[alternative HTML version deleted]]\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Marcos,\n\n     Parece que el problema es con el ajuste del variograma (sale \nplano?), sin mÃ¡s informaciÃ³n no se exactamente que puede estar pasando...\n\n     Si me envÃ­as el cÃ³digo completo y l",
+      "thread_id": "thread-c9c74e774d40",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-f720f2b424ed",
+      "message_id": "<CABkCotQ5L8mzR0oAs-xm-RtaUcAr05XN37F0K2y-nFGUPi03bg@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "506c48b2346c596af216cbc37aac2b77831c10bcb326670e0e56a6c9b7bee28c",
+      "date": "2015-08-06T07:00:17-06:00",
+      "subject": "[R-es] consulta graficas para GLM",
+      "subject_clean": "[R-es] consulta graficas para GLM",
+      "in_reply_to": "<55C32F20.7090206@gmail.com>",
+      "references": [
+        "<CANxP2S5-rDm7oFjGb_-_BgHQYn_Q3q1jOfJaN8Dh5JngCQDboQ@mail.gmail.com>",
+        "<55C32F20.7090206@gmail.com>"
+      ],
+      "body_plain": "O puedes usar el paquete visreg.\n\nManuel\n\nEl 6 de agosto de 2015, 3:55, Jose Luis CaÃ±adas Reche <\ncanadasreche en gmail.com> escribiÃ³:\n\n> Supongo que si quieres hacer el grÃ¡fico 1, puedes hacer esto.\n>\n> efectos <- Effect(c(\"Presa\", \"ExposiciÃ³n1\"), glm6 )\n>\n> plot(efectos)\n>\n>\n> El 06/08/15 a las 09:09, Luis Fernando GarcÃ­a escribiÃ³:\n> > Estimados amigos y expertos del R,\n> >\n> > Les escribo para hacerles una pregunta que parece un poco sencilla\n> > pero me ha costado mucho. Estoy tratando de graficar los datos\n> > correspondientes a tasas de consumo de algunos organismos cuando estÃ¡n\n> > expuestos o no expuestos a un quÃ­mico sobre tres tipos de presa. Por\n> > definiciÃ³n, debÃ­a ajustar los datos a un glm con distribuciÃ³n gama.\n> >\n> > Las grÃ¡ficas pueden ser 1) dos grÃ¡ficos correspondientes a expuesto o\n> > no expuesto ( representado con 0 y 1)  y cada uno con tres lÃ­neas\n> > (correspondientes a tres presas) o 2) realizar tres grÃ¡ficos\n> > (correspondientes a cada tipo de presa), con dos lÃ­neas (expuesto vs\n> > no expuesto).  Las lÃ­neas deberÃ­an ser generadas empleando la funciÃ³n\n> > predict.\n> >\n> > Para graficar estaba pensando dividir los datos con subset y ajustar\n> > un modelo para poder graficar cada lÃ­nea pero no se si sea vÃ¡lido.  La\n> > otra opciÃ³n es graficar los datos como les mencionÃ© anteriormente a\n> > partir del primer modelo, pero no he encontrado nada de informaciÃ³n al\n> > respecto. Si alguno pudiera proveerme alguna colaboraciÃ³n o sabe donde\n> > puedo encontrar informaciÃ³n sobre como hacer este tipo de grÃ¡fico\n> > estarÃ­a muy agradecido.\n> >\n> > Saludos!\n> >\n> >\n> > PS: Adjunto el set de datos porque es muy largo\n> >\n> >\n> >\n> > #####Este es el script\n> >\n> > todoslosdatos = read.table(\"TODOS POLIOSTOMA.txt\", header=T)\n> >\n> > ExposiciÃ³n1=factor(todoslosdatos$ExposiciÃ³n)\n> >\n> > str(todoslosdatos)\n> >\n> > attach(todoslosdatos)\n> >\n> > names(todoslosdatos)\n> >\n> > glm6=glm(Consumo1 ~ I(1/Densidad) +ExposiciÃ³n1 + Presa, family = Gamma)\n> >\n> > summary(glm6)\n> >\n> > par(mfrow=c(2,2))\n> >\n> > plot(glm6)\n> >\n> > anova(glm6,test=\"Chisq\")\n> >\n> > summary(glm6)\n> >\n> > library(multcomp)\n> >\n> > compexp <- glht(glm6, mcp(ExposiciÃ³n1 = \"Tukey\", covariate_average =\n> > TRUE))\n> >\n> > summary(compexp)\n> >\n> > plot(Densidad,Consumo1,type=\"n\")\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \n*Manuel SpÃ­nola, Ph.D.*\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola en una.ac.cr\nmspinola10 en gmail.com\nTelÃ©fono: (506) 2277-3598\nFax: (506) 2237-7036\nPersonal website: Lobito de rÃ­o <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "O puedes usar el paquete visreg.\n\nManuel\n\nEl 6 de agosto de 2015, 3:55, Jose Luis CaÃ±adas Reche <\ncanadasreche en gmail.com> escribiÃ³:\n\n> Supongo que si quieres hacer el grÃ¡fico 1, puedes hacer est",
+      "thread_id": "thread-62f73f00b8d0",
+      "thread_depth": 2,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-db6051c2b633",
+      "message_id": "<DUB122-W11636D8FD7024DDD96840AB740@phx.gbl>",
+      "from_name": "Marcos Bermejo",
+      "from_email_hash": "4558ebce20654b7f2bf56a31492b6dc0a73ec48ff68d1c91d6a4bfd974ce9089",
+      "date": "2015-08-06T17:34:03+02:00",
+      "subject": "[R-es] Duda interpolación (package ' gstat ')",
+      "subject_clean": "[R-es] Duda interpolación (package ' gstat ')",
+      "in_reply_to": "<55C3515B.30000@gmail.com>",
+      "references": [
+        "<DUB122-W300C247CE183B93D4F364AB760@phx.gbl>",
+        "<55C3515B.30000@gmail.com>"
+      ],
+      "body_plain": "Sale plano sÃ­. \n\nYa se que sin tener los datos y el cÃ³digo es un poco difÃ­cil, pero es que mis datos ocupan mucho, es imposible.\nSeguirÃ© mirando por internet. \n\nMuchas gracias RubÃ©n.\n\nUn saludo,\n\n\n> To: r-help-es en r-project.org\n> From: rubenfcasal en gmail.com\n> Date: Thu, 6 Aug 2015 14:21:47 +0200\n> Subject: Re: [R-es] Duda interpolaciÃ³n (package ' gstat ')\n> \n> Hola Marcos,\n> \n>      Parece que el problema es con el ajuste del variograma (sale \n> plano?), sin mÃ¡s informaciÃ³n no se exactamente que puede estar pasando...\n> \n>      Si me envÃ­as el cÃ³digo completo y los datos lo miro con mÃ¡s detalle \n> (e incluso te doy una alternativa no paramÃ©trica con el paquete npsp).\n> \n>      Un saludo, RubÃ©n.\n> \n> \n> \n> El 04/08/2015 a las 11:24, Marcos Bermejo escribiÃ³:\n> > Hola,\n> >\n> >    # Hacemos el KED. Ver funci?n \"krige()\":\n> >          KED.rad <- krige(\n> >            formula=pluvPcp~layer,                  # covariable -> radar\n> >            locations=lluvia.rad.pluv.spdf,\n> >            newdata=radarGrid,                      # podr?a ser cualquier objeto Spatial\n> >            model=v.fit,                            # modelo de semivariograma.\n> >            maxdist=Inf\n> >          )\n> >\n> > Esta es la funci?n que me interpola los datos de lluvia. El error que me da es:\n> >\n> > \"solve.c\", line 88: singular matrix in function Usolve()\n> >\n> > \"lufactor.c\", line 208: singular matrix in function m_inverse()\n> > Error in predict.gstat(g, newdata = newdata, block = block, nsim = nsim,  :\n> >    m_inverse\n> > In addition: Warning message:\n> > In fit.variogram(vg.aux, model = vgm(psill = 0.1, model = \"Gau\",  :\n> >    Warning: singular model in variogram fit\n> >\n> >\n> > Mi funci?n del variograma es :\n> > v.fit <- fit.variogram(vg.aux, model=vgm(psill=0.15, model='Gau', range=5000,\n> >                                                 nugget=0.05))\n> >\n> > ?Alguien me podr?a ayudar?\n> >\n> > Gracias de antemano.\n> >\n> > Un saludo,\n> >   \t\t \t   \t\t\n> > \t[[alternative HTML version deleted]]\n> >\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sale plano sÃ­. \n\nYa se que sin tener los datos y el cÃ³digo es un poco difÃ­cil, pero es que mis datos ocupan mucho, es imposible.\nSeguirÃ© mirando por internet. \n\nMuchas gracias RubÃ©n.\n\nUn saludo,\n",
+      "thread_id": "thread-c9c74e774d40",
+      "thread_depth": 2,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-83a4b4fa0dec",
+      "message_id": "<CALCOUqu26oh3HTrHb-jzKcKUniHskC66famOP6FvU98=cgFnew@mail.gmail.com>",
+      "from_name": "Freddy Omar López Quintero",
+      "from_email_hash": "dcded5f2b5658d75901c0db24585c863a4c82934b13fee7244bf0069c2e599b5",
+      "date": "2015-08-06T12:40:17-03:00",
+      "subject": "[R-es] Duda interpolación (package ' gstat ')",
+      "subject_clean": "[R-es] Duda interpolación (package ' gstat ')",
+      "in_reply_to": "<DUB122-W11636D8FD7024DDD96840AB740@phx.gbl>",
+      "references": [
+        "<DUB122-W300C247CE183B93D4F364AB760@phx.gbl>",
+        "<55C3515B.30000@gmail.com>",
+        "<DUB122-W11636D8FD7024DDD96840AB740@phx.gbl>"
+      ],
+      "body_plain": "Hola Marcos,\n\nÂ¿El problema persiste si pruebas con un subconjunto de los datos?\n\nSaludos.\n\n2015-08-06 12:34 GMT-03:00 Marcos Bermejo <markbermejo90 en hotmail.com>:\n\n> Sale plano sÃ­.\n>\n> Ya se que sin tener los datos y el cÃ³digo es un poco difÃ­cil, pero es que\n> mis datos ocupan mucho, es imposible.\n> SeguirÃ© mirando por internet.\n>\n> Muchas gracias RubÃ©n.\n>\n> Un saludo,\n>\n>\n> > To: r-help-es en r-project.org\n> > From: rubenfcasal en gmail.com\n> > Date: Thu, 6 Aug 2015 14:21:47 +0200\n> > Subject: Re: [R-es] Duda interpolaciÃ³n (package ' gstat ')\n> >\n> > Hola Marcos,\n> >\n> >      Parece que el problema es con el ajuste del variograma (sale\n> > plano?), sin mÃ¡s informaciÃ³n no se exactamente que puede estar pasando...\n> >\n> >      Si me envÃ­as el cÃ³digo completo y los datos lo miro con mÃ¡s detalle\n> > (e incluso te doy una alternativa no paramÃ©trica con el paquete npsp).\n> >\n> >      Un saludo, RubÃ©n.\n> >\n> >\n> >\n> > El 04/08/2015 a las 11:24, Marcos Bermejo escribiÃ³:\n> > > Hola,\n> > >\n> > >    # Hacemos el KED. Ver funci?n \"krige()\":\n> > >          KED.rad <- krige(\n> > >            formula=pluvPcp~layer,                  # covariable ->\n> radar\n> > >            locations=lluvia.rad.pluv.spdf,\n> > >            newdata=radarGrid,                      # podr?a ser\n> cualquier objeto Spatial\n> > >            model=v.fit,                            # modelo de\n> semivariograma.\n> > >            maxdist=Inf\n> > >          )\n> > >\n> > > Esta es la funci?n que me interpola los datos de lluvia. El error que\n> me da es:\n> > >\n> > > \"solve.c\", line 88: singular matrix in function Usolve()\n> > >\n> > > \"lufactor.c\", line 208: singular matrix in function m_inverse()\n> > > Error in predict.gstat(g, newdata = newdata, block = block, nsim =\n> nsim,  :\n> > >    m_inverse\n> > > In addition: Warning message:\n> > > In fit.variogram(vg.aux, model = vgm(psill = 0.1, model = \"Gau\",  :\n> > >    Warning: singular model in variogram fit\n> > >\n> > >\n> > > Mi funci?n del variograma es :\n> > > v.fit <- fit.variogram(vg.aux, model=vgm(psill=0.15, model='Gau',\n> range=5000,\n> > >                                                 nugget=0.05))\n> > >\n> > > ?Alguien me podr?a ayudar?\n> > >\n> > > Gracias de antemano.\n> > >\n> > > Un saludo,\n> > >\n> > >     [[alternative HTML version deleted]]\n> > >\n> > >\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nÂ«No soy aquellas sombras tutelares\nque honrÃ© con versos que no olvida el tiempo.Â»\n\nJL Borges\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Marcos,\n\nÂ¿El problema persiste si pruebas con un subconjunto de los datos?\n\nSaludos.\n\n2015-08-06 12:34 GMT-03:00 Marcos Bermejo <markbermejo90 en hotmail.com>:\n\n> Sale plano sÃ­.\n>\n> Ya se que s",
+      "thread_id": "thread-c9c74e774d40",
+      "thread_depth": 3,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-ccf89cef5f3b",
+      "message_id": "<55C3E89D.6010900@gmail.com>",
+      "from_name": "rubenfcasal",
+      "from_email_hash": "a15ed1d99d79938a8dbc887e0ec5b346525c3b42ad75f5db525789cc3eec7731",
+      "date": "2015-08-07T01:07:09+02:00",
+      "subject": "[R-es] Duda interpolación (package ' gstat ')",
+      "subject_clean": "[R-es] Duda interpolación (package ' gstat ')",
+      "in_reply_to": "<CALCOUqu26oh3HTrHb-jzKcKUniHskC66famOP6FvU98=cgFnew@mail.gmail.com>",
+      "references": [
+        "<DUB122-W300C247CE183B93D4F364AB760@phx.gbl>",
+        "<55C3515B.30000@gmail.com>",
+        "<DUB122-W11636D8FD7024DDD96840AB740@phx.gbl>",
+        "<CALCOUqu26oh3HTrHb-jzKcKUniHskC66famOP6FvU98=cgFnew@mail.gmail.com>"
+      ],
+      "body_plain": "Hola de nuevo,\n\n     Un par de detalles tÃ©cnicos...\n\n     Antes de nada comentar que el paquete gstat no es \ncomputacionalmente muy eficiente calculando las predicciones kriging \n(calcula el estimador mcg de la tendencia utilizando la expresiÃ³n \nexplÃ­cita, etc...), entre otras cosas requiere la factorizaciÃ³n de la \nmatriz de varianzas covarianzas y pueden aparecer problemas numÃ©ricos.\n\n     Es bien conocido que con el modelo gaussiano de variograma pueden \naparecer estas inestabilidades (puede ser muy plano en saltos pequeÃ±os y \ncomo consecuencia  la matriz de covarianzas es semidefinida positiva \npero no 'estrictamente' definida positiva - en esto influye el redondeo...).\n\n     Mi recomendaciÃ³n serÃ­a que probases con otro modelo de variograma y \nque compartas el grÃ¡fico del ajuste...\n\n     Un saludo, RubÃ©n.\n\nP.D. Cuidado tambiÃ©n con el sesgo en la estimaciÃ³n del variograma a \npartir de los residuos (e.g. Fernandez-Casal R. and Francisco-Fernandez \nM. (2014) Nonparametric bias-corrected variogram estimation under \nnon-constant trend, Stoch. Environ. Res. Ris. Assess, 28, 1247-1259), \naunque si tu objetivo final es la predicciÃ³n no te preocupes demasiado \n(no deberÃ­as fiarte de las varianzas kriging)...\n\n\nEl 06/08/2015 a las 17:40, Freddy Omar LÃ³pez Quintero escribiÃ³:\n> Hola Marcos,\n>\n> Â¿El problema persiste si pruebas con un subconjunto de los datos?\n>\n> Saludos.\n>\n> 2015-08-06 12:34 GMT-03:00 Marcos Bermejo <markbermejo90 en hotmail.com>:\n>\n>> Sale plano sÃ­.\n>>\n>> Ya se que sin tener los datos y el cÃ³digo es un poco difÃ­cil, pero es que\n>> mis datos ocupan mucho, es imposible.\n>> SeguirÃ© mirando por internet.\n>>\n>> Muchas gracias RubÃ©n.\n>>\n>> Un saludo,\n>>\n>>\n>>> To: r-help-es en r-project.org\n>>> From: rubenfcasal en gmail.com\n>>> Date: Thu, 6 Aug 2015 14:21:47 +0200\n>>> Subject: Re: [R-es] Duda interpolaciÃ³n (package ' gstat ')\n>>>\n>>> Hola Marcos,\n>>>\n>>>       Parece que el problema es con el ajuste del variograma (sale\n>>> plano?), sin mÃ¡s informaciÃ³n no se exactamente que puede estar pasando...\n>>>\n>>>       Si me envÃ­as el cÃ³digo completo y los datos lo miro con mÃ¡s detalle\n>>> (e incluso te doy una alternativa no paramÃ©trica con el paquete npsp).\n>>>\n>>>       Un saludo, RubÃ©n.\n>>>\n>>>\n>>>\n>>> El 04/08/2015 a las 11:24, Marcos Bermejo escribiÃ³:\n>>>> Hola,\n>>>>\n>>>>     # Hacemos el KED. Ver funci?n \"krige()\":\n>>>>           KED.rad <- krige(\n>>>>             formula=pluvPcp~layer,                  # covariable ->\n>> radar\n>>>>             locations=lluvia.rad.pluv.spdf,\n>>>>             newdata=radarGrid,                      # podr?a ser\n>> cualquier objeto Spatial\n>>>>             model=v.fit,                            # modelo de\n>> semivariograma.\n>>>>             maxdist=Inf\n>>>>           )\n>>>>\n>>>> Esta es la funci?n que me interpola los datos de lluvia. El error que\n>> me da es:\n>>>> \"solve.c\", line 88: singular matrix in function Usolve()\n>>>>\n>>>> \"lufactor.c\", line 208: singular matrix in function m_inverse()\n>>>> Error in predict.gstat(g, newdata = newdata, block = block, nsim =\n>> nsim,  :\n>>>>     m_inverse\n>>>> In addition: Warning message:\n>>>> In fit.variogram(vg.aux, model = vgm(psill = 0.1, model = \"Gau\",  :\n>>>>     Warning: singular model in variogram fit\n>>>>\n>>>>\n>>>> Mi funci?n del variograma es :\n>>>> v.fit <- fit.variogram(vg.aux, model=vgm(psill=0.15, model='Gau',\n>> range=5000,\n>>>>                                                  nugget=0.05))\n>>>>\n>>>> ?Alguien me podr?a ayudar?\n>>>>\n>>>> Gracias de antemano.\n>>>>\n>>>> Un saludo,\n>>>>\n>>>>      [[alternative HTML version deleted]]\n>>>>\n>>>>\n>>>>\n>>>> _______________________________________________\n>>>> R-help-es mailing list\n>>>> R-help-es en r-project.org\n>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>>        [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>          [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>",
+      "body_snippet": "Hola de nuevo,\n\n     Un par de detalles tÃ©cnicos...\n\n     Antes de nada comentar que el paquete gstat no es \ncomputacionalmente muy eficiente calculando las predicciones kriging \n(calcula el estimado",
+      "thread_id": "thread-c9c74e774d40",
+      "thread_depth": 4,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-72f8ef11a2d0",
+      "message_id": "<20150807190927.Horde.zLo_7twX3nIQyWRBhIHl0w9@webmail.um.es>",
+      "from_name": "Jose Manuel Veiga del Baño",
+      "from_email_hash": "45a5d49f14ec160222836e8724c6e63bec648477f4b44f3d293ab165c789dc93",
+      "date": "2015-08-07T19:09:27+02:00",
+      "subject": "[R-es] php-R",
+      "subject_clean": "[R-es] php-R",
+      "in_reply_to": "<mailman.19.1438768803.21113.r-help-es@r-project.org>",
+      "references": [],
+      "body_plain": "Estimados compaÃ±eros,\n\nOs agradezo la ayuda recibida, al final creo (porque tras mucho investigar\ny probar) es la opciÃ³n que me ha dado menos problemas y mÃ¡s rapidez es\nusar la clase Rclass ->Â https://github.com/jabrena/RLab\n\nUn saludo.\n\nDr. JosÃ© M. Veiga\nDpt. QuÃ­mica AgrÃ­cola, GeologÃ­a y EdafologÃ­a.\nUniversidad de Murcia.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados compaÃ±eros,\n\nOs agradezo la ayuda recibida, al final creo (porque tras mucho investigar\ny probar) es la opciÃ³n que me ha dado menos problemas y mÃ¡s rapidez es\nusar la clase Rclass ->Â htt",
+      "thread_id": "thread-72f8ef11a2d0",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-414c05e44433",
+      "message_id": "<DUB122-W6EFC507CE3E34843D28C9AB720@phx.gbl>",
+      "from_name": "Marcos Bermejo",
+      "from_email_hash": "4558ebce20654b7f2bf56a31492b6dc0a73ec48ff68d1c91d6a4bfd974ce9089",
+      "date": "2015-08-08T23:52:30+02:00",
+      "subject": "[R-es] Duda interpolación (package ' gstat ')",
+      "subject_clean": "[R-es] Duda interpolación (package ' gstat ')",
+      "in_reply_to": "<55C3E89D.6010900@gmail.com>",
+      "references": [
+        "<DUB122-W300C247CE183B93D4F364AB760@phx.gbl>",
+        "<55C3515B.30000@gmail.com>",
+        "<DUB122-W11636D8FD7024DDD96840AB740@phx.gbl>",
+        "<CALCOUqu26oh3HTrHb-jzKcKUniHskC66famOP6FvU98=cgFnew@mail.gmail.com>",
+        "<55C3E89D.6010900@gmail.com>"
+      ],
+      "body_plain": "Muchas gracias por todo.\n\nEsta es la parte del cÃ³digo del variograma: \nvg.aux <- variogram(radPcp~1, radar.spdf, cutoff=10000)\nvg <- as.data.frame(matrix(c(vg.aux$dist, vg.aux$gamma), nrow=15, ncol=2))\n# El primer argumento de \"fit.variogram()\" es lo que hemos obtenido de \"variogram()\".\nv.fit <- fit.variogram(vg.aux, model=vgm(psill=0.10, model='Gau', range=5000,\n                                               nugget=0.05))\n\nHe probado con otros modelos: 'Exp', 'Mat' y 'Sph', y me sigue dando el mismo error que os mandÃ©.\n\nOs pongo la funciÃ³n \"krige()\" otra vez:\nKED.rad <- krige(\n          formula=pluvPcp~layer,                  # covariable -> radar\n          locations=lluvia.rad.pluv.spdf,\n          newdata=radarGrid,                      # podrÃ­a ser cualquier objeto Spatial\n          model=v.fit,                            # modelo de semivariograma. \n          maxdist=Inf\n        )\n        \n\nLa cosa es que tengo datos de lluvia de 5 pluviÃ³metros (variable 'pluvPcp') situados en 5 puntos diferentes de una cuenca, y quiero interpolarpolarlos para que me estime la lluvia en toda la cuenca usando como covariable los datos de un radar meteorolÃ³gico en esos mismos 5 puntos de los pluviÃ³metros (variable 'layer'). \nEl variograma lo obtengo a partir de los datos del radar en toda la cuenca (variable 'radPcp' -> unos 13.000 puntos), ya que no puedo obtenerlo a partir de los datos de lluvia de los pluviÃ³metros, porque con 5 puntos no puedo obtener un variograma fiable.\nÂ¿El error que me daba R, puede ser por esto? Â¿CÃ³mo lo veis?\n\nLo de la soluciÃ³n no paramÃ©trica no lo entiendo muy bien y no sÃ© si podrÃ© implementarlo en mi caso.\n\nUn saludo, \n      \n\n> To: r-help-es en r-project.org\n> From: rubenfcasal en gmail.com\n> Date: Fri, 7 Aug 2015 01:07:09 +0200\n> Subject: Re: [R-es] Duda interpolaciÃ³n (package ' gstat ')\n> \n> Hola de nuevo,\n> \n>      Un par de detalles tÃ©cnicos...\n> \n>      Antes de nada comentar que el paquete gstat no es \n> computacionalmente muy eficiente calculando las predicciones kriging \n> (calcula el estimador mcg de la tendencia utilizando la expresiÃ³n \n> explÃ­cita, etc...), entre otras cosas requiere la factorizaciÃ³n de la \n> matriz de varianzas covarianzas y pueden aparecer problemas numÃ©ricos.\n> \n>      Es bien conocido que con el modelo gaussiano de variograma pueden \n> aparecer estas inestabilidades (puede ser muy plano en saltos pequeÃ±os y \n> como consecuencia  la matriz de covarianzas es semidefinida positiva \n> pero no 'estrictamente' definida positiva - en esto influye el redondeo...).\n> \n>      Mi recomendaciÃ³n serÃ­a que probases con otro modelo de variograma y \n> que compartas el grÃ¡fico del ajuste...\n> \n>      Un saludo, RubÃ©n.\n> \n> P.D. Cuidado tambiÃ©n con el sesgo en la estimaciÃ³n del variograma a \n> partir de los residuos (e.g. Fernandez-Casal R. and Francisco-Fernandez \n> M. (2014) Nonparametric bias-corrected variogram estimation under \n> non-constant trend, Stoch. Environ. Res. Ris. Assess, 28, 1247-1259), \n> aunque si tu objetivo final es la predicciÃ³n no te preocupes demasiado \n> (no deberÃ­as fiarte de las varianzas kriging)...\n> \n> \n> El 06/08/2015 a las 17:40, Freddy Omar LÃ³pez Quintero escribiÃ³:\n> > Hola Marcos,\n> >\n> > Â¿El problema persiste si pruebas con un subconjunto de los datos?\n> >\n> > Saludos.\n> >\n> > 2015-08-06 12:34 GMT-03:00 Marcos Bermejo <markbermejo90 en hotmail.com>:\n> >\n> >> Sale plano sÃ­.\n> >>\n> >> Ya se que sin tener los datos y el cÃ³digo es un poco difÃ­cil, pero es que\n> >> mis datos ocupan mucho, es imposible.\n> >> SeguirÃ© mirando por internet.\n> >>\n> >> Muchas gracias RubÃ©n.\n> >>\n> >> Un saludo,\n> >>\n> >>\n> >>> To: r-help-es en r-project.org\n> >>> From: rubenfcasal en gmail.com\n> >>> Date: Thu, 6 Aug 2015 14:21:47 +0200\n> >>> Subject: Re: [R-es] Duda interpolaciÃ³n (package ' gstat ')\n> >>>\n> >>> Hola Marcos,\n> >>>\n> >>>       Parece que el problema es con el ajuste del variograma (sale\n> >>> plano?), sin mÃ¡s informaciÃ³n no se exactamente que puede estar pasando...\n> >>>\n> >>>       Si me envÃ­as el cÃ³digo completo y los datos lo miro con mÃ¡s detalle\n> >>> (e incluso te doy una alternativa no paramÃ©trica con el paquete npsp).\n> >>>\n> >>>       Un saludo, RubÃ©n.\n> >>>\n> >>>\n> >>>\n> >>> El 04/08/2015 a las 11:24, Marcos Bermejo escribiÃ³:\n> >>>> Hola,\n> >>>>\n> >>>>     # Hacemos el KED. Ver funci?n \"krige()\":\n> >>>>           KED.rad <- krige(\n> >>>>             formula=pluvPcp~layer,                  # covariable ->\n> >> radar\n> >>>>             locations=lluvia.rad.pluv.spdf,\n> >>>>             newdata=radarGrid,                      # podr?a ser\n> >> cualquier objeto Spatial\n> >>>>             model=v.fit,                            # modelo de\n> >> semivariograma.\n> >>>>             maxdist=Inf\n> >>>>           )\n> >>>>\n> >>>> Esta es la funci?n que me interpola los datos de lluvia. El error que\n> >> me da es:\n> >>>> \"solve.c\", line 88: singular matrix in function Usolve()\n> >>>>\n> >>>> \"lufactor.c\", line 208: singular matrix in function m_inverse()\n> >>>> Error in predict.gstat(g, newdata = newdata, block = block, nsim =\n> >> nsim,  :\n> >>>>     m_inverse\n> >>>> In addition: Warning message:\n> >>>> In fit.variogram(vg.aux, model = vgm(psill = 0.1, model = \"Gau\",  :\n> >>>>     Warning: singular model in variogram fit\n> >>>>\n> >>>>\n> >>>> Mi funci?n del variograma es :\n> >>>> v.fit <- fit.variogram(vg.aux, model=vgm(psill=0.15, model='Gau',\n> >> range=5000,\n> >>>>                                                  nugget=0.05))\n> >>>>\n> >>>> ?Alguien me podr?a ayudar?\n> >>>>\n> >>>> Gracias de antemano.\n> >>>>\n> >>>> Un saludo,\n> >>>>\n> >>>>      [[alternative HTML version deleted]]\n> >>>>\n> >>>>\n> >>>>\n> >>>> _______________________________________________\n> >>>> R-help-es mailing list\n> >>>> R-help-es en r-project.org\n> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>>\n> >>>        [[alternative HTML version deleted]]\n> >>>\n> >>> _______________________________________________\n> >>> R-help-es mailing list\n> >>> R-help-es en r-project.org\n> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>          [[alternative HTML version deleted]]\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es en r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >\n> >\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias por todo.\n\nEsta es la parte del cÃ³digo del variograma: \nvg.aux <- variogram(radPcp~1, radar.spdf, cutoff=10000)\nvg <- as.data.frame(matrix(c(vg.aux$dist, vg.aux$gamma), nrow=15, ncol=2",
+      "thread_id": "thread-c9c74e774d40",
+      "thread_depth": 5,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-297b28b6895d",
+      "message_id": "<DUB122-W4980C90F3FF773A0CE32F5AB710@phx.gbl>",
+      "from_name": "Marcos Bermejo",
+      "from_email_hash": "4558ebce20654b7f2bf56a31492b6dc0a73ec48ff68d1c91d6a4bfd974ce9089",
+      "date": "2015-08-09T20:38:15+02:00",
+      "subject": "[R-es] Duda ' proj4string'",
+      "subject_clean": "[R-es] Duda ' proj4string'",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola, mi trozo de cÃ³digo es:\n\n# Primero creamos el mapa de toda la instrumentaciÃ³n\n\nrm(list=ls()) # remove all the variables from the workspace\nsetwd(\"C:/Users/Marcos/Documents/TFM/Situacion_pluviometros/\")\nlibrary(ggmap)\nlibrary(rgdal)\nlibrary(ggplot2)\nlibrary(scales)\nlibrary(maptools)\n\n# Convertimos coordenadas de UTM a geogrÃ¡ficas:\n\n# Leemos el archivo de texto donde estÃ¡n las coordenadas UTM de los PluviÃ³metros\ncoord <- read.delim(\"C:/Users/Marcos/Documents/TFM/Situacion_pluviometros/pluviometrosVenero.txt\", header=TRUE)[,4:5]\n\n# AÃ±adimos coordenadas del TDR, los dos limnÃ­metros y el radar meteorolÃ³gico (figura 3.1 TFM_Carlos)\ncoord.todo <- rbind(coord,c(356489,4474915), c(360744,4470212), c(360040,4471782), \n                    c(359088,4474084))\nrownames(coord.todo)=make.names(c(rep(\"PluviÃ³metros\",7), \"Radar\", \"TDR\", rep(\"LimnÃ­metros\",2)), unique=TRUE)\ncoord.todo.spdf <- coord.todo  # \".spdf\": Class for spatial attributes that have spatial point locations\ncolnames(coord.todo.spdf) <- c(\"x\",\"y\")\ncoordinates(coord.todo.spdf) <- ~x+y\n\n# To retrieve the CRS for a spatial object: proj4string(x)\nproj4string(coord.todo.spdf) <- CRS(\"+proj=utm +zone=30 ellps=WGS84\")\n\n# Ahora pasamos de un CRS a otro (pasamos de coordenadas UTM a geogrÃ¡ficas)\ncoord.geog <- as.data.frame(spTransform(coord.todo.spdf, CRS(\"+proj=longlat +datum=WGS84\")))\ncolnames(coord.geog) <- c(\"lon\", \"lat\")\n\n# Creamos un data.frame llamado \"datos\" para poder pintar bien la leyenda del mapa\ndatos <- coord.todo\ndatos$lon <- coord.geog$lon\ndatos$lat <- coord.geog$lat\ndatos$INSTRUMENTACIÃ“N <- c(\"PluviÃ³metro\",\"PluviÃ³metro\",\"PluviÃ³metro\",\"PluviÃ³metro\",\"PluviÃ³metro\",\"PluviÃ³metro\",\"PluviÃ³metro\",\n                           \"Radar meteorolÃ³gico\",\"TDR\",\"LimnÃ­metro\",\"LimnÃ­metro\")\n\n# Ahora con la funciÃ³n \"get_map\" consultamos en Google Maps el mapa \n# que queremos crear de nuestra zona de estudio \nmapa <- get_map(location=c(lon=-4.66, lat=40.39), zoom=13, maptype=\"terrain\", \n                source=\"google\")\nnombres.pluvio <- c(\"Arromoro\", \"Atalaya\", \"Dehesa\", \"Gasolinera\", \"Collado Morales\",\n                    \"PeÃ±a Parda\", \"Trampalones\")\n\n# Cercamos el Ã¡rea de la cuenca\narea <- readShapePoly(\"venero_Project.shp\")     # Lee el shape con el area de la cuenca\nproj4string(area)                               # Describes data's current coordinate reference system\n# To change to correct projection:\narea <- spTransform(area, CRS(\"+proj=longlat +datum=WGS84\"))\nproj4string(area) <- \"+proj=utm +zone=30 +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs\"\n\n\npng(\"mapa_zona_estudio.png\", units=\"in\", width=9, height=8.5, res=300)\n\n# Vamos a pintar los distintos instrumentos de medida sobre el mapa (junto con Ã©ste) y aÃ±adimos leyenda\nggmap(mapa, extend='device', legend=\"left\", base_layer=ggplot(datos, aes(x=lon, y=lat))) +\n  geom_point(data=datos, aes(shape = INSTRUMENTACIÃ“N, color=INSTRUMENTACIÃ“N, fill=INSTRUMENTACIÃ“N), size=7.5) +\n  geom_text(data=coord.geog[1:7,], aes(x=coord.geog$lon[1:7], y=coord.geog$lat[1:7], label=nombres.pluvio, hjust=0.2, vjust=1), size=5.2) +\n  scale_shape_manual(values=c(21,24,22,23))\n  geom_polygon(aes(x=long, y=lat, group=id), data=area, color=\"white\", alpha=.4, size=.2)\n\ndev.off()\n\n\nEl error que me da la consola de R es:\n\nError in spTransform(xSP, CRSobj, ...) : \n  No transformation possible from NA reference system\nÂ¿Alguien me puede decir lo que hay que hacer para que ya no me de este error?\n\nMuchas gracias de antemano.\n\nUn saludo,\n\nMarcos\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, mi trozo de cÃ³digo es:\n\n# Primero creamos el mapa de toda la instrumentaciÃ³n\n\nrm(list=ls()) # remove all the variables from the workspace\nsetwd(\"C:/Users/Marcos/Documents/TFM/Situacion_pluviom",
+      "thread_id": "thread-297b28b6895d",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-799a40933a1e",
+      "message_id": "<DUB122-W2908C09A6E66126EB1B81DAB700@phx.gbl>",
+      "from_name": "Marcos Bermejo",
+      "from_email_hash": "4558ebce20654b7f2bf56a31492b6dc0a73ec48ff68d1c91d6a4bfd974ce9089",
+      "date": "2015-08-10T12:55:37+02:00",
+      "subject": "[R-es] Duda ' proj4string'",
+      "subject_clean": "[R-es] Duda ' proj4string'",
+      "in_reply_to": "<87wpx3wxbp.fsf@upm.es>",
+      "references": [
+        "<DUB122-W4980C90F3FF773A0CE32F5AB710@phx.gbl>",
+        "<87wpx3wxbp.fsf@upm.es>"
+      ],
+      "body_plain": "Muchas gracias, ya no me da el error, lo que pasa que no me cerca el Ã¡rea de la cuenca, no me hace nada la funciÃ³n \"geom_polygon()\". Os paso los dos ficheros que se necesitan mÃ¡s el script, para ver si podÃ©is probar y ver quÃ© pasa.\n\nUn saludo,\n\n> From: oscar.perpinan en upm.es\n> To: public-markbermejo90-PkbjNfxxIARBDgjK7y7TUQ en plane.gmane.org\n> CC: public-r-help-es-0bNBQ1PAWB4BXFe83j6qeQ en plane.gmane.org\n> Subject: Re: Duda ' proj4string'\n> Date: Mon, 10 Aug 2015 07:02:02 +0200\n> \n> \n> \n> \n> Hola,\n> \n> Intuyo que el error se produce porque \"area\" no tiene definido el\n> proj4string. Creo que lo resolverÃ¡s cambiando el orden de estas lÃ­neas\n> asÃ­:\n> \n> proj4string(area) <- \"+proj=utm +zone=30 +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs\"\n> area <- spTransform(area, CRS(\"+proj=longlat +datum=WGS84\"))\n> \n> TambiÃ©n puedes probar a leer el fichero shp con readOGR (paquete rgdal)\n> en lugar de con readShapePoly.\n> \n> Saludos.\n> \n> Oscar.\n> -- \n> Oscar PerpiÃ±Ã¡n Lamigueiro\n> Dpto. Ing. ElÃ©ctrica, ElectrÃ³nica, AutomÃ¡tica y FÃ­sica Aplicada\n> Escuela TÃ©cnica Superior de IngenierÃ­a y DiseÃ±o Industrial\n> URL: http://oscarperpinan.github.io\n> \n> \n \t\t \t   \t\t  \n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150810/f42cd2e5/attachment.html>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: area_cuenca.R\nType: application/octet-stream\nSize: 3139 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150810/f42cd2e5/attachment.obj>\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: pluviometrosVenero.txt\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150810/f42cd2e5/attachment.txt>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: venero_Project.shp\nType: application/octet-stream\nSize: 3820 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150810/f42cd2e5/attachment-0001.obj>",
+      "body_snippet": "Muchas gracias, ya no me da el error, lo que pasa que no me cerca el Ã¡rea de la cuenca, no me hace nada la funciÃ³n \"geom_polygon()\". Os paso los dos ficheros que se necesitan mÃ¡s el script, para ve",
+      "thread_id": "thread-799a40933a1e",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-75472ef2c017",
+      "message_id": "<CALo3VdfWPHmNFT8iMf0s18tarj8bG9T00N5r3MzXh5zJav=bfg@mail.gmail.com>",
+      "from_name": "Rodrigo López Correa",
+      "from_email_hash": "f8a28408f0c5cdbbe4335d66d23e00e1e3571b6f476d7c3127b589cfd266f0f5",
+      "date": "2015-08-10T16:19:43-03:00",
+      "subject": "[R-es] Knitr problema con xtable",
+      "subject_clean": "[R-es] Knitr problema con xtable",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola soy medio nuevo en esto del uso del paquete knitr en R asociado a Lyx\ny tengo el siguiente problema:\n\n1) ConstruÃ­ un script en R que incluye entre otras operaciones simples una\ntabla utilizando el paquete xtable para poder imprimirla luego con Lyx.\n\n\n## @knitr q1\n\nlibrary(knitr)\n\nlibrary(RMySQL)\n\nlibrary(xtable)\n\n\n#abro la base datos mysql\n\ncon <- dbConnect(MySQL(),\n\n                 user=\"XXX\", password=\"xxx\",\n\n                 dbname=\"hol\", host=\"xxx\")\n\n\nuno<-dbGetQuery(con, \"SELECT nhijl FROM resumen where leche;\")\n\nquantile(uno$nhijl,probs=(c(0.25,0.5)))\n\nquantile(uno$nhijl,probs=0.5)\n\nquantile(uno$nhijl,probs=0.75)\n\nmin(uno$nhijl)\n\nmax(uno$nhijl)\n\n\n#tabla\n\ntabla_uno<-data.frame(Total_hijas=round((c(min(uno$nhijl),quantile(uno$nhijl,probs=(0.25)),quantile(uno$nhijl,probs=0.5),\nmean(uno$nhijl),quantile(uno$nhijl,probs=0.75),max(uno$nhijl)))))\n\nrownames(tabla_uno)<-(c(\"MÃ­nimo\",\"1er.cuartil\", \"Mediana\", \"Media\",\n\"3er.cuartil\", \"MÃ¡ximo\"))\n\nprint(xtable(tabla_uno),floating=FALSE)\n\n\n2) Desde Lyx quise leer el script en R:\n\n<<>>=\n\nread_chunk(\"descriptiva_resumen.R\")\n\n@\n\n<<q1,echo=TRUE,cache=FALSE,results=\"asis\">>=\n\n@\n\n*Sin embargo, la exportaciÃ³n a un archivo pdf falla y probÃ© las siguientes\n2 opciones con resultados diferentes:*\n\n3) Cuando elimino del chunk results=\"asis\", puedo exportar a un pdf los\nresultados esperados con el script de R, excepto la tabla que no la puedo\nvisualizar.\n\nEntonces las 2 opciones que seguÃ­ fueron:\n\nOPCION 3.1:\n\n- CerrÃ© el archivo pdf\n\n- Luego volvÃ­ a incluir results=\"asis\" en el chunk original\n\n- Finalmente tratÃ© de exportarlo a un *nuevo archivo pdf*.\n\nResultado: *FallÃ³ la exportaciÃ³n*\n\nOPTION 3.2\n\n*- MinimicÃ© el archivo pdf* obtenido en el paso 3),\n\n- Luego volvÃ­ a incluir results=\"asis\" en el chunk original\n\n- Finalmente tratÃ© de *actualizar la salida del archivo pdf que habÃ­a\nminimizado.*\n\n\nResultado: *Obtuve el resultado correcto y completo de todo el script*\n\n\n*No entiendo que estoy haciendo mal, porque deberÃ­a poder obtener el\nresultado de manera mÃ¡s directa incluyendo en el chunk original\nresults\"\"asis\"  y sin tener que hacer tantos pasos. *\n\nMuchas gracias desde ya por cualquier ayuda!\n\nSaludos,\n\nRodrigo.\n\n-- \n*Dr. Rodrigo LÃ³pez Correa.*\n\nMiguel Barreiro 3186.\nMontevideo.\nUruguay.\nCel: 099 660 549.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola soy medio nuevo en esto del uso del paquete knitr en R asociado a Lyx\ny tengo el siguiente problema:\n\n1) ConstruÃ­ un script en R que incluye entre otras operaciones simples una\ntabla utilizando ",
+      "thread_id": "thread-75472ef2c017",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-a6acaa748734",
+      "message_id": "<CAOZ+RxF_ooVezwPXnDWuqZ0A6bmdaeXmc4oMFOnivknEs--17A@mail.gmail.com>",
+      "from_name": "Javier Villacampa González",
+      "from_email_hash": "4ef9dd5dc24819f44414f517b1137dd62ae28efb09c81d3c01e40cb2281bea5b",
+      "date": "2015-08-13T17:27:27+02:00",
+      "subject": "[R-es] [Help] Oferta de trabajo en Valencia",
+      "subject_clean": "[R-es] [Help] Oferta de trabajo en Valencia",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Un excompaÃ±ero de trabajo ofrece trabajo a \"expertos\" en machine learning y\ngeolocalizaciÃ³n. Bueno, lo de expertos es un decir, basicamente lo que\nquieres es un joven con ganas de aprender aunque no sepa mucho.\n\nOs pongo el enlace por si a alguien le interesa.\n\nUn abrazo\n\nhttp://www.geoblink.com/jobsoffers/datascientist\n\n--\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Un excompaÃ±ero de trabajo ofrece trabajo a \"expertos\" en machine learning y\ngeolocalizaciÃ³n. Bueno, lo de expertos es un decir, basicamente lo que\nquieres es un joven con ganas de aprender aunque no",
+      "thread_id": "thread-a6acaa748734",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-39ad7daa0a4a",
+      "message_id": "<55cd30a1.83938c0a.78c3b.ffffc2db@mx.google.com>",
+      "from_name": "Javier Rubén Marcuzzi",
+      "from_email_hash": "c43db5d4d68fae2afa940530fe5fb46b7745dd68133fc096162a24f656d55363",
+      "date": "2015-08-13T21:04:50-03:00",
+      "subject": "[R-es] Curso R por Microsoft",
+      "subject_clean": "[R-es] Curso R por Microsoft",
+      "in_reply_to": "<DUB122-W2908C09A6E66126EB1B81DAB700@phx.gbl>",
+      "references": [
+        "<DUB122-W4980C90F3FF773A0CE32F5AB710@phx.gbl>",
+        "<87wpx3wxbp.fsf@upm.es>",
+        "<DUB122-W2908C09A6E66126EB1B81DAB700@phx.gbl>"
+      ],
+      "body_plain": "Estimados\n\nVi publicado un curso sobre R donde Microsoft estÃ¡ interesado, desconozco si nos es de utilidad, pero creo que es bueno que una empresa con mucho capital econÃ³mico como tecnolÃ³gico invierta en R. HabrÃ¡ que esperar a futuro para ver los resultados y si son de nuestro agrado, pero por ahora podemos compartir el curso.\n\nhttp://blog.datacamp.com/microsoft-launches-first-free-online-r-course-edx/\n\nJavier RubÃ©n Marcuzzi\nTÃ©cnico en Industrias LÃ¡cteas\nVeterinario\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nVi publicado un curso sobre R donde Microsoft estÃ¡ interesado, desconozco si nos es de utilidad, pero creo que es bueno que una empresa con mucho capital econÃ³mico como tecnolÃ³gico invie",
+      "thread_id": "thread-799a40933a1e",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-a9e79910851b",
+      "message_id": "<536360860.4827367.1439560454454.JavaMail.yahoo@mail.yahoo.com>",
+      "from_name": "Fernando Sanchez",
+      "from_email_hash": "fb8cc7cc3b3923c656da109f564fea9f157543ebeb5172c931642fc6131b9f82",
+      "date": "2015-08-14T13:54:14Z",
+      "subject": "[R-es] if: (5)",
+      "subject_clean": "[R-es] if: (5)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "http://www.ondevora.pt/6f7d8t9b0hq1z2a3s4e5c.php\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n...........................What is the use o'f a ho'use if yo'u haven't go't a to'lerable planet to' put it o'n?Sina Modisett\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "http://www.ondevora.pt/6f7d8t9b0hq1z2a3s4e5c.php\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n...........................What is the use o'f a ho'use if yo'u haven't go't a to'lerable planet to' put it o'n?Sina Modis",
+      "thread_id": "thread-a9e79910851b",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-89f087a82278",
+      "message_id": "<CALCOUquoFPX7m1d6VpgosuL2uM7KAJNvyC6dSc49+39Oc8wfLw@mail.gmail.com>",
+      "from_name": "Freddy Omar López Quintero",
+      "from_email_hash": "40f7d3b0713ce4eb9276ad7f7502ba20fc02fbf315e5019828d49017caf8a8bd",
+      "date": "2015-08-14T11:10:33-03:00",
+      "subject": "[R-es] Curso R por Microsoft",
+      "subject_clean": "[R-es] Curso R por Microsoft",
+      "in_reply_to": "<55cd30a1.83938c0a.78c3b.ffffc2db@mx.google.com>",
+      "references": [
+        "<DUB122-W4980C90F3FF773A0CE32F5AB710@phx.gbl>",
+        "<87wpx3wxbp.fsf@upm.es>",
+        "<DUB122-W2908C09A6E66126EB1B81DAB700@phx.gbl>",
+        "<55cd30a1.83938c0a.78c3b.ffffc2db@mx.google.com>"
+      ],
+      "body_plain": "Tantas manos ya pondrÃ¡n este caldo morado... Me espanta tanto microsoft\ntras R.\n\nSaludos a todos.\n\n2015-08-13 21:04 GMT-03:00 Javier RubÃ©n Marcuzzi <\njavier.ruben.marcuzzi en gmail.com>:\n\n> Estimados\n>\n> Vi publicado un curso sobre R donde Microsoft estÃ¡ interesado, desconozco\n> si nos es de utilidad, pero creo que es bueno que una empresa con mucho\n> capital econÃ³mico como tecnolÃ³gico invierta en R. HabrÃ¡ que esperar a\n> futuro para ver los resultados y si son de nuestro agrado, pero por ahora\n> podemos compartir el curso.\n>\n> http://blog.datacamp.com/microsoft-launches-first-free-online-r-course-edx/\n>\n> Javier RubÃ©n Marcuzzi\n> TÃ©cnico en Industrias LÃ¡cteas\n> Veterinario\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nÂ«No soy aquellas sombras tutelares\nque honrÃ© con versos que no olvida el tiempo.Â»\n\nJL Borges\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Tantas manos ya pondrÃ¡n este caldo morado... Me espanta tanto microsoft\ntras R.\n\nSaludos a todos.\n\n2015-08-13 21:04 GMT-03:00 Javier RubÃ©n Marcuzzi <\njavier.ruben.marcuzzi en gmail.com>:\n\n> Estimado",
+      "thread_id": "thread-799a40933a1e",
+      "thread_depth": 2,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-3ef41acef112",
+      "message_id": "<000001d0da7a$7e0582a0$7a1087e0$@infomed.sld.cu>",
+      "from_name": "Dr. José A. Betancourt Bethencourt",
+      "from_email_hash": "cd850dcc6e1f6e7135385cd6f9698ea6716647398fa86e56f893f759aee0d0d9",
+      "date": "2015-08-19T08:27:58-04:00",
+      "subject": "[R-es] pregunta  XLConnect",
+      "subject_clean": "[R-es] pregunta  XLConnect",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados\n\nEl correo mÃ­o   jbetancourt en iscmc.cmw.sld.cu\n<mailto:jbetancourt en iscmc.cmw.sld.cu>   que estÃ¡ en la lista de r estÃ¡\ninhabilitado hasta el dÃ­a primero, apreciarÃ­a que me respondieran por este\nsi es posible \n\n \n\n \n\nEstimados\n\nAl tratar de instalar el paquete XLConnect me informa lo que esta abajo\n\nÂ¿CÃ³mo se puede superar esta deficiencia?\n\n \n\nlibrary(XLConnect)\n\nLoading required package: XLConnectJars\n\nError : .onLoad failed in loadNamespace() for 'rJava', details:\n\n  call: fun(libname, pkgname)\n\n  error: JAVA_HOME cannot be determined from the Registry\n\nError: package â€˜XLConnectJarsâ€™ could not be loaded\n\n \n\n \n\n \n\nsessionInfo()\nR version 3.2.1 (2015-06-18)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 8 x64 (build 9200)\n \nlocale:\n[1] LC_COLLATE=Spanish_Spain.1252  LC_CTYPE=Spanish_Spain.1252   \n[3] LC_MONETARY=Spanish_Spain.1252 LC_NUMERIC=C                  \n[5] LC_TIME=Spanish_Spain.1252    \n \nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n \nloaded via a namespace (and not attached):\n[1] tools_3.2.1\n\n \n\n \n\nSaludos cordials\n\nJosÃ©\n\n\n\n--\nEste mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas\n\nInfomed: http://www.sld.cu/\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nEl correo mÃ­o   jbetancourt en iscmc.cmw.sld.cu\n<mailto:jbetancourt en iscmc.cmw.sld.cu>   que estÃ¡ en la lista de r estÃ¡\ninhabilitado hasta el dÃ­a primero, apreciarÃ­a que me respondie",
+      "thread_id": "thread-3ef41acef112",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-07314fe30969",
+      "message_id": "<000f01d0da8b$4ea12f80$ebe38e80$@com>",
+      "from_name": "JCMld",
+      "from_email_hash": "460c655a418d89fd36db7d8948af3cb8cc6cbbb134ff32c2025fe4c39764ee2d",
+      "date": "2015-08-19T16:28:17+02:00",
+      "subject": "[R-es] pregunta  XLConnect",
+      "subject_clean": "[R-es] pregunta  XLConnect",
+      "in_reply_to": "<000001d0da7a$7e0582a0$7a1087e0$@infomed.sld.cu>",
+      "references": [
+        "<000001d0da7a$7e0582a0$7a1087e0$@infomed.sld.cu>"
+      ],
+      "body_plain": "Hola JosÃ©.\n\nRecuerdo que yo tambiÃ©n tuve problemas para instalar este paquete. XLConnect utiliza java, asÃ­ que debes tener bien instalado el paquete rJava.\nSin embargo este paquete da algunos problemas, en especial si utilizas Windows 7 de 64 bits. Te paso unas notas que yo encontrÃ© y que me ayudaron a solucionarlo, espero te sean de ayuda. AquÃ­ va (estÃ¡ en inglÃ©s):\n\n\"Here is some quick advice on how to get up and running with R + rJava on Windows 7 64bit. There are several possibilities, but most have fatal flaws. Here is what worked for me:\n\nAdd jvm.dll to your PATH\n\nrJava, the R<->Java bridge, will need jvm.dll, but R will have trouble finding that DLL. It resides in a folder like\n\nC:\\Program Files\\Java\\jdk1.6.0_25\\jre\\bin\\server\nor\n\nC:\\Program Files\\Java\\jre6\\jre\\bin\\client\nWherever yours is, add that directory to your windows PATH variable. (Windows -> \"Path\" -> \"Edit environment variables to for your account\" -> PATH -> edit the value.)\n\nYou may already have Java on your PATH. If so you should find the client/server directory in the same Java \"home\" dir as the one already on your PATH.\n\nTo be safe, make sure your architectures match.If you have Java in Program Files, it is 64-bit, so you ought to run R64. If you have Java in Program Files (x86), that's 32-bit, so you use plain 32-bit R.\n\nRe-launch R from the Windows Menu\n\nIf R is running, quit.\"\n\n\nSaludos,\nJuan Carmona\n\n\n-----Mensaje original-----\nDe: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de Dr. JosÃ© A. Betancourt Bethencourt\nEnviado el: miÃ©rcoles, 19 de agosto de 2015 14:28\nPara: r-help-es en r-project.org\nAsunto: [R-es] pregunta XLConnect\n\nEstimados\n\nEl correo m o   jbetancourt en iscmc.cmw.sld.cu\n<mailto:jbetancourt en iscmc.cmw.sld.cu>   que est  en la lista de r est \ninhabilitado hasta el d a primero, apreciar a que me respondieran por este si es posible \n\n \n\n \n\nEstimados\n\nAl tratar de instalar el paquete XLConnect me informa lo que esta abajo\n\n C mo se puede superar esta deficiencia?\n\n \n\nlibrary(XLConnect)\n\nLoading required package: XLConnectJars\n\nError : .onLoad failed in loadNamespace() for 'rJava', details:\n\n  call: fun(libname, pkgname)\n\n  error: JAVA_HOME cannot be determined from the Registry\n\nError: package  XLConnectJars  could not be loaded\n\n \n\n \n\n \n\nsessionInfo()\nR version 3.2.1 (2015-06-18)\nPlatform: x86_64-w64-mingw32/x64 (64-bit) Running under: Windows 8 x64 (build 9200)\n \nlocale:\n[1] LC_COLLATE=Spanish_Spain.1252  LC_CTYPE=Spanish_Spain.1252   \n[3] LC_MONETARY=Spanish_Spain.1252 LC_NUMERIC=C                  \n[5] LC_TIME=Spanish_Spain.1252    \n \nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n \nloaded via a namespace (and not attached):\n[1] tools_3.2.1\n\n \n\n \n\nSaludos cordials\n\nJos \n\n\n\n--\nEste mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas\n\nInfomed: http://www.sld.cu/\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola JosÃ©.\n\nRecuerdo que yo tambiÃ©n tuve problemas para instalar este paquete. XLConnect utiliza java, asÃ­ que debes tener bien instalado el paquete rJava.\nSin embargo este paquete da algunos probl",
+      "thread_id": "thread-3ef41acef112",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-30bb10547fb5",
+      "message_id": "<8F7E2560309DD84BBAE98987371F912654890ABF@asscc764s.sergas.local>",
+      "from_name": "miguel.angel.rodriguez.muinos en sergas.es",
+      "from_email_hash": "791b1ad0da3ed4cfc7678657949975aa8fe26720a50391850bd5e1b8a2a3a506",
+      "date": "2015-08-19T20:24:01Z",
+      "subject": "[R-es] pregunta  XLConnect",
+      "subject_clean": "[R-es] pregunta  XLConnect",
+      "in_reply_to": "<000001d0da7a$7e0582a0$7a1087e0$@infomed.sld.cu>",
+      "references": [
+        "<000001d0da7a$7e0582a0$7a1087e0$@infomed.sld.cu>"
+      ],
+      "body_plain": "Hola JosÃ©.\n\nLo importante, para empezar es que la versiÃ³n de R y la de Java sean iguales (de 32 o de 64 bits).\nParece que tengas el Sistema Operativo y R en 64 bits y Java en 32bits.\n\nEs la primera comprobaciÃ³n que harÃ­a.\n\nUn Saludo,\nMiguel.\n\n\n\n________________________________________\nDe: R-help-es [r-help-es-bounces en r-project.org] en nombre de Dr. JosÃ© A. Betancourt Bethencourt [josebetancourt.cmw en infomed.sld.cu]\nEnviado: miÃ©rcoles, 19 de agosto de 2015 14:27\nPara: r-help-es en r-project.org\nAsunto: [R-es] pregunta  XLConnect\n\nEstimados\n\nEl correo m?o   jbetancourt en iscmc.cmw.sld.cu\n<mailto:jbetancourt en iscmc.cmw.sld.cu>   que est? en la lista de r est?\ninhabilitado hasta el d?a primero, apreciar?a que me respondieran por este\nsi es posible\n\n\n\n\n\nEstimados\n\nAl tratar de instalar el paquete XLConnect me informa lo que esta abajo\n\n?C?mo se puede superar esta deficiencia?\n\n\n\nlibrary(XLConnect)\n\nLoading required package: XLConnectJars\n\nError : .onLoad failed in loadNamespace() for 'rJava', details:\n\n  call: fun(libname, pkgname)\n\n  error: JAVA_HOME cannot be determined from the Registry\n\nError: package ?XLConnectJars? could not be loaded\n\n\n\n\n\n\n\nsessionInfo()\nR version 3.2.1 (2015-06-18)\nPlatform: x86_64-w64-mingw32/x64 (64-bit)\nRunning under: Windows 8 x64 (build 9200)\n\nlocale:\n[1] LC_COLLATE=Spanish_Spain.1252  LC_CTYPE=Spanish_Spain.1252\n[3] LC_MONETARY=Spanish_Spain.1252 LC_NUMERIC=C\n[5] LC_TIME=Spanish_Spain.1252\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nloaded via a namespace (and not attached):\n[1] tools_3.2.1\n\n\n\n\n\nSaludos cordials\n\nJos?\n\n\n\n--\nEste mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas\n\nInfomed: http://www.sld.cu/\n\n\n\n\n        [[alternative HTML version deleted]]\n\n\n________________________________\n\nNota: A informaciÃ³n contida nesta mensaxe e os seus posibles documentos adxuntos Ã© privada e confidencial e estÃ¡ dirixida Ãºnicamente Ã³ seu destinatario/a. Se vostede non Ã© o/a destinatario/a orixinal desta mensaxe, por favor elimÃ­nea. A distribuciÃ³n ou copia desta mensaxe non estÃ¡ autorizada.\n\nNota: La informaciÃ³n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y estÃ¡ dirigida Ãºnicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimÃ­nelo. La distribuciÃ³n o copia de este mensaje no estÃ¡ autorizada.\n\nSee more languages: http://www.sergas.es/aviso-confidencialidad",
+      "body_snippet": "Hola JosÃ©.\n\nLo importante, para empezar es que la versiÃ³n de R y la de Java sean iguales (de 32 o de 64 bits).\nParece que tengas el Sistema Operativo y R en 64 bits y Java en 32bits.\n\nEs la primera ",
+      "thread_id": "thread-3ef41acef112",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-454c9d40ea83",
+      "message_id": "<55D59447.1020906@juntadeandalucia.es>",
+      "from_name": "Francisco Viciana",
+      "from_email_hash": "ed26d1ed23ee04f84fdb0b706e55991713221d54459999e7c9dbb211ce66c8fa",
+      "date": "2015-08-20T10:48:07+02:00",
+      "subject": "[R-es] ayuda con análisis de supervivencia",
+      "subject_clean": "[R-es] ayuda con análisis de supervivencia",
+      "in_reply_to": "<55D303E1.2010308@unizar.es>",
+      "references": [
+        "<DAD39DF8-DC9F-4F6D-8980-CB576158A575@unizar.es>",
+        "<55D1C3D5.6000104@juntadeandalucia.es>",
+        "<55D303E1.2010308@unizar.es>"
+      ],
+      "body_plain": "Tal y como lo entiendo, despuÃ©s de algunos mensajes, se podrÃ­a \nconsiderar tu problema como un anÃ¡lisis de Supervivencia, y por lo tanto \nemplear las funciones \"Surv\" y \"coxph\", si consideramos que \"bmi\"  \nmedido en cada entrevista es un buen \"proxi\" de la edad cronolÃ³gica del \nindividuo, tal como parecen indicar las correcciones que pones en el \nmensaje.\n\nAun asi me chirrÃ­a un poco, Â¿porque no usar la edad al evento o censura \ncomo seria lo habitual, si se dispusiera de ella?.  Si no se dispone de \nella habria que valorar si es mejor usar el \"bmi\" o quizÃ¡s la \"altura\" \ncomo mejor variable proxi de la edad. Si se dispone de la edad, se \npodria buscar una manera de introducir el \"bmi\" medido en cada \nobservaciÃ³n como variable tiempo dependiente (por ejemplo los \nincrementos anuales medios del \"bmi\" entre observaciones). El \"bmi0\" en \nprincipio parece una co-variable tiempo independiente, si todo los \nsujetos son valorados a una edad equivalente a comienzo del estudio.\n\nCon respeto, a mi comentarios sobre la imprecisa dataciÃ³n del tiempo (o \nla variable proxi que se use) en los abandonos,  me confundÃ­  un poco al \nmezclar \"bmi0\", con \"bmi. Aun asi, sigo viendo problemas si la relaciÃ³n \nde edad y bmi no lineal, si no logÃ­stica como supongo.\n\nHe reformado tu cÃ³digo un poco y planteado otra alternativa de anÃ¡lisis \nde un modelo Ãºnico con interaciÃ³n:\n\n## ++++++++++++++++++++++\nload('~/Escritorio/dataframe.Rdata')\nrequire(survival)\nrequire(dplyr)\ndf0$apoe4 <-  relevel(df0$apoe4,ref='no-E4')\n\nfff <-  function (x){\n   dfx<- filter(df0,df0$bmi0==x)\n   surv2=Surv(dfx$bmi,dfx$MetS)\n   km2=survfit(surv2~dfx$apoe4)##start.time=20,type='kaplan')\n   cox=list(coxph(surv2~dfx$apoe4))\n}\nmodelos <-  sapply(levels(df0$bmi0),fff )\npp <- t(sapply(modelos, function(e) coef(summary(e)) ))\ncolnames(pp) <- c( 'coef:E4/no.E4','exp(coef)','se(coef)',  'z', 'Pr(>|z|)')\npp\n\n\n## Alternativa:\n## Graficar funciones de supervivencia de KM\nS    <- Surv(df0$bmi,df0$MetS)\nkm0  <- survfit(S~df0$apoe4+df0$bmi0)\n\nplot(km0,lty=2:1,col=2:4,xlim=c(20,41),xlab='BMI at event \ndate',main=x,mark.time = F)\netq<- as.vector(t(outer( c('E4.','no-E4'),levels(df0$bmi0), FUN='paste')))\nlegend('bottomleft',etq,lty=rep(2:1,each=3), col=2:4)\n\n## realiza un COX con interacion,\n## no equivalente a la realiazion de tres modelos distintito para cada bmi0\n(coxph(S~df0$apoe4 * df0$bmi0))\n\n## ++++++++++++++++++++++\n\n\nRespondo tambiÃ©n a la lista, que en el anterior mensaje no hice por error.\n\nOn 18/08/15 12:07, JM Arbones wrote:\n> Hola Francisco,\n> Muchas gracias por tu ayuda. Te intento contestar a tus sugerencias.\n>\n>> Con los datos contenidos en le data.frame de la direcciÃ³n del enlace \n>> yo no clasificarÃ­a este problema de \"anÃ¡lisis de supervivencia\", ya \n>> que no se dispone, o no se ha incluido,  la variable tiempo de \n>> observaciÃ³n: (0,7,10,15,20 y 25 aÃ±os)\n>>\n> UtilicÃ© el termino anÃ¡lisis de supervivencia porque intentaba utilizar \n> las herramientas propias de este tipo de anÃ¡lisis (regresiÃ³n de Cox, \n> riesgo cumulativos, etc).\n>\n>\n>> No creo muy adecuado remplazar la variable tiempo (hasta apariciÃ³n \n>> del evento u censura por la variable \"bmi\" (Body Mass Index), esto \n>> solo se podrÃ­a hacer si confirmÃ¡ramos la existencia de una fuerte \n>> correlaciÃ³n entre el BMI y el tiempo de seguimiento, lo cual no creo \n>> que sea del todo correcto, al menos en las especie humana (si es esta \n>> especie de la que estamos hablando).\n>>\n> El ~90% de los miembros de la cohorte de 4800 individuos tuvieron un \n> incremento de BMI positivo a lo largo de los 25 aÃ±os de seguimiento.\n> Al correlacionar la media de todos los BMI's en cada punto de \n> observacion con los aÃ±os de seguimiento, me sale una r= 0.98, p=0.0004.\n>\n>\n>\n>> Por otro lado,  si existiera una fuerte asociaciÃ³n entre el \"bmi0\" y \n>> el tiempo de seguimiento (lo que permitirÃ­a usar \"bmi0\" en lugar del \n>> tiempo, aun quedarÃ­a el problema de que en los datos proporcionados \n>> la censura por abandono (del tipo censura por intervalo, que puede \n>> ocurrir en edades tempranas)  no es distinguible de de la censura por \n>> cierre del estudio (censura por la derecha, y que esta asociado \n>> siempre al tiempo 25). Este echo hace muy difÃ­cil, si no imposible, \n>> llegar a conclusiones fiables con la informaciÃ³n suministrada.\n> Esto no lo entiendo muy bien, el bmi que estoy utilizando para hacer \n> el anÃ¡lisis es el que tiene cada individuo cuando ocurre el evento, o \n> en caso de que no tengan el evento, el bmi que tienen al final del \n> estudio o cuando lo abandonan.\n> Otra duda que me surge es si deberÃ­a utilizar una censura por la \n> izquierda, por que cada individuo empieza con un bmi distinto. ?quizÃ¡s \n> deberÃ­a utilizar solo el intervalo de bmi que recorre cada individuo?\n>\n>\n>>\n>> Con respecto al cÃ³digo suministrado, la funciÃ³n \"filter\" produce un \n>> error en mi sistema, supongo que se encuentra redefinida en parte del \n>> cÃ³digo no enviado.\n> filter es del paquete dplyr, creo que en este caso se podrÃ­a utilizar \n> subset del paquete base.\n>\n>\n> Un saludo y, otra vez, gracias por la ayuda y sugerencias.\n>\n> Jose Miguel\n>\n>\n>\n>>\n>> On 02/08/15 19:19, JM ARBONES wrote:\n>>> Hola a todos,\n>>> -Estoy estudiando el efecto de dos genotipos (~tratamientos) en la \n>>> apariciÃ³n de sÃ­ndrome metabÃ³lico (MetS) con datos longitudinales \n>>> recogidos a tiempo 0,7,10,15,20 y 25 aÃ±os.\n>>>\n>>> -He hecho un dataframe con las siguientes variables\n>>> MetS: SÃ­ndrome MetabÃ³lico (Si=1,No=0)\n>>> bmi: Indice de masa corporal (IMC) cuando se produce la conversiÃ³n a \n>>> MetS+ . Para los que permancen MetS-, esta variable indica el bmi \n>>> cuando hay censura (por abandono del estudio o al finalizar el \n>>> estudio en el aÃ±o 25).\n>>> bmi0: IMC al inicio del estudio (categÃ³rica, \n>>> levels=normal/overweight/obese)\n>>> apoE4: Genotipo de interÃ©s (E4, no-E4)\n>>>\n>>> -Mi hipÃ³tesis es que la interacciÃ³n genotipo~MetS depende del IMC al \n>>> principio del estudio. Concretamente, individuos 'overweight' al \n>>> inicio del estudio y con el genotipo E4 hacen la conversiÃ³n a MetS+ \n>>> a valores de IMC mas bajos que los que tienen el genotipo no-E4. \n>>> Este fenÃ³meno no ocurrirÃ­a en los 'normal' y 'obese'.\n>>>\n>>> -He creado unos objetos Surv, pero en lugar de utilizar el tiempo \n>>> hasta evento (MetS+) estoy utilizando el bmi hasta el evento. Las \n>>> grÃ¡ficas que resultan al hacer el anÃ¡lisis de supervivencia \n>>> parecerÃ­an confirmar mi hipÃ³tesis, pero no se si lo que estoy \n>>> haciendo es una aberraciÃ³n estadÃ­stica. Tampoco se si los \n>>> coeficientes de la regresiÃ³n de Cox tienen sentido al no utilizar la \n>>> variable tiempo.\n>>>\n>>> ?Alguien me podrÃ­a 1)decir si lo que estoy haciendo tiene sentido y \n>>> 2) como interpretar los resultados (regresiÃ³n de Cox y grÃ¡ficas)?\n>>> Si a alguien se anima a contestar, adjunto un link con los datos \n>>> (.Rdata) y el script que he utilizado en el anÃ¡lisis.\n>>>\n>>>\n>>> https://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0 \n>>> <https://www.dropbox.com/s/d96itird8ms42yx/dataframe.Rdata?dl=0>\n>>>\n>>> sapply(levels(df0$bmi0),function (x){ #####SURVIVAL CURVE\n>>>    dfx=filter(df0,bmi0==x)\n>>>       surv2=Surv(dfx$bmi,dfx$MetS)\n>>>    km2=survfit(surv2~dfx$apoe4)##start.time=20,type='kaplan')\n>>>    plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at \n>>> onset',main=x,mark.time = F)\n>>>    legend('bottomleft',c('E4','no-E4'),lty=2:1)\n>>>    cox=list(coxph(surv2~relevel(dfx$apoe4,ref='no-E4')))\n>>> })\n>>>\n>>> sapply(levels(df0$bmi0),function (x){ #####CUMULATIVE HAZARDs\n>>>    dfx=filter(df0,bmi0==x)\n>>>       surv2=Surv(dfx$bmi,dfx$MetS)\n>>>    km2=survfit(surv2~dfx$apoe4)\n>>>    plot(km2,lty=2:1,xlim=c(20,41),xlab='BMI at \n>>> onset',main=x,mark.time = F,fun='cumhaz')\n>>>    legend('topleft',c('E4','no-E4'),lty=2:1)\n>>>    })\n>>>\n>>> Muchas gracias y un saludo\n>>>\n>>> Jose Miguel\n>>>\n>>> -------------------------------------------------------------------\n>>>\n>>> Jose Miguel Arbones-Mainar, PhD\n>>> Unidad de InvestigaciÃ³n Traslacional\n>>> Instituto Aragones de Ciencias de la Salud\n>>> Hospital Universitario Miguel Servet\n>>> PÂº Isabel la CatÃ³lica, 1-3\n>>> 50009 Zaragoza (Spain)\n>>> Tel: +34 976 769 565\n>>> Fax: +34 976 769 566\n>>> www.adipofat.com <http://www.adipofat.com/>\n>>>\n>>>\n>>>\n>>>\n>>> ----------------------------------------------------------------------------------- \n>>>\n>>> Jose Miguel Arbones-Mainar\n>>> www.adipofat.com <http://www.adipofat.com/>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>     [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>\n>\n>\n\n-- \n+--------------------------------------------------------------\n| Francisco J. Viciana FernÃ¡ndez\n| Coordinador del Registro de PoblaciÃ³n\n| Servicio de EstadÃ­sticas DemogrÃ¡ficas y Sociales\n| Instituto de EstadÃ­stica y CartografÃ­a de AndalucÃ­a\n| Leonardo Da Vinci, nÂº 21. Isla de La Cartuja.\n| 41071 SEVILLA.\n| franciscoj.viciana en juntadeandalucia.es\n+--------------------------------------------------------------",
+      "body_snippet": "Tal y como lo entiendo, despuÃ©s de algunos mensajes, se podrÃ­a \nconsiderar tu problema como un anÃ¡lisis de Supervivencia, y por lo tanto \nemplear las funciones \"Surv\" y \"coxph\", si consideramos que",
+      "thread_id": "thread-454c9d40ea83",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-fec48895c0f3",
+      "message_id": "<DUB126-W8425E06BDF3F1BFA108954BC660@phx.gbl>",
+      "from_name": "nuria bs",
+      "from_email_hash": "6f0630d3fbeed1e8d0903ef5cd1db7f76f282d2c8f9e86d5761b2b87131cad97",
+      "date": "2015-08-20T11:58:52+02:00",
+      "subject": "[R-es] error en \"dudi.pco\"",
+      "subject_clean": "[R-es] error en \"dudi.pco\"",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas! Estoy intentando hacer un script que me permita integrar la informaciÃ³n filogenetica, funcional, ambiental y espacial para saber si hay filtrado ambiental en mis comunidades. Aunque el script creo que esta bien hecho, me sale un error que no puedo solucionar y no se porque me aparece. Alguien podrÃ­a darme alguna idea? Gracias!!!!\n\n\nlibrary(\"picante\")\nlibrary(\"stringr\")\nlibrary(\"ecodist\")\nlibrary(\"ade4\")\nlibrary(\"ape\")\n\nmy.xys <- read.table(\"C:/Filogenia/IN_my.xys.txt\",sep=\"\\t\",header=T,row.names=1)\nmy.env <- read.table(\"C:/Filogenia/IN_my.env.txt\",sep=\"\\t\",header=T,row.names=1)\nmy.sample <- read.delim(file=\"C:/Filogenia/IN_my.sample.txt\", sep=\"\\t\", header=T,row.names=1)\nmy.traits <- read.delim(\"C:/Filogenia/IN_traits_norm.txt\",sep=\"\\t\",header=T,row.names=1)\n\nstand.value <-apply(my.env, MARGIN=2, max)-apply(my.env, MARGIN=2, min)\nstand.envs <-sweep(my.env,2,stand.value,\"/\")\n\nmy.phylo <- read.tree(\"BCTree_Ports.nwk\")\n\n######################################### RLQ #######################################################\n# Convertimos el arbol en un arbol de la clase \"phylog\" gracias a la funcion \"newick2phylog()\" \n# la cual ya incluye la matriz de distancias filogeneticas. \nmy.phylog <-newick2phylog(write.tree(my.phylo))\n\n# L matrix: COA para my.sample:\nCOA.sample <- dudi.coa(my.sample,scan=FALSE,nf=dim(my.sample)[2]-1)\n\n# Hacemos un PCA con la matriz de datos geograficos. Esto constituira la mitad de la matriz R.\nPCA.xy <- dudi.pca(my.xys,COA.sample$lw,scan=FALSE, nf=dim(my.xys)[1]-1)\n\n# Hacemos un PCA que sera la otra mitad de la matriz R.\nPCA.env<- dudi.pca(stand.envs,COA.sample$lw,scale=FALSE, scan=FALSE, nf=dim(stand.envs)[2])\n\n# Hacemos un PCO para los traits:\ndist.traits <- dist(my.traits,method=\"euclidean\")\ndist.traits<-as.matrix(dist.traits)\n\n# Primera mitad de la matriz Q:\nPCO.traits <-dudi.pco(d=dist.traits, row.w=COA.sample$cw,full=TRUE)\nError in dudi.pco(d = dist.traits, row.w = COA.sample$cw, full = TRUE) : \n  Distance matrix expected\n# Segunda mitad de la matriz Q:\nPCO.phylo <-dudi.pco(as.dist(as.matrix(my.phylog$Wdist)[names(my.sample),names(my.sample)]),COA.sample$cw,full=TRUE)\n\n# Modificamos las matrices:\nsource(\"RLQ.R\")\nrlq.output <- rlqESLTP(PCA.env,PCA.xy,COA.sample,PCO.traits,PCO.phylo,scan=FALSE,nf=2)\n\n\n \t\t \t   \t\t  \n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150820/1eaef41e/attachment-0001.html>\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: IN_my.env.txt\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150820/1eaef41e/attachment-0004.txt>\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: IN_my.sample.txt\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150820/1eaef41e/attachment-0005.txt>\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: IN_my.xys.txt\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150820/1eaef41e/attachment-0006.txt>\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: IN_traits_norm.txt\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150820/1eaef41e/attachment-0007.txt>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: BCTree_Ports.nwk\nType: application/octet-stream\nSize: 1171 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150820/1eaef41e/attachment-0001.obj>",
+      "body_snippet": "Buenas! Estoy intentando hacer un script que me permita integrar la informaciÃ³n filogenetica, funcional, ambiental y espacial para saber si hay filtrado ambiental en mis comunidades. Aunque el script",
+      "thread_id": "thread-fec48895c0f3",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-7bc7ac2f042d",
+      "message_id": "<CAG9EJTL7uXhBXXwvN6eLQdM3W-BhWeBFdN3uHWoFuh7mHrHujQ@mail.gmail.com>",
+      "from_name": "Manuel Máquez",
+      "from_email_hash": "98848b8ad9b121ffa76274361058b67eea0d33fabac014fa3259ba865768f3ba",
+      "date": "2015-08-21T02:21:19-05:00",
+      "subject": "[R-es] Intento de script",
+      "subject_clean": "[R-es] Intento de script",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola Colegas:\nEstoy tratando de hacer mi primer script y lo tengo asÃ­:\n\ndat <- read.csv(\"M5.csv\",header = TRUE, sep = \",\")\nlibrary(\"ggplot2\")\nsource('~/Documentos/WORK/Scripts/gra.r',echo =TRUE)\n\nPor otra parte gra.r estÃ¡:\ngrafi <- function(dat){\n     dato <- dat\n     attach(dato)\n     y.loess <- loess(y ~ x, span=0.65, data.frame(x=or, y=dt))\n     y.predict <- predict(y.loess, data.frame(x=or))\n      plx<-predict(loess(dt ~ or, data=dato), se=T)\n     detach(dato)\n     dato$Detec<-ifelse(dat$t==7,\"Aumentado\",\"Natural\")\n     ggplot(data = dato, aes(x=or, y=dt, col=Detec)) +\n\netcÃ©tera\n\nel problema surge al tratarse la instrucciÃ³n ' y. predict <-' porque\nRStudio  indica y.predicted  ... [TRUNCATED].\n\nAlguien me podrÃ­a decir la razÃ³n y la manera de resolver el atorÃ³n; por\nanticipado doy las mÃ¡s cumplidas gracias.\n\n\n\n*MANOLO MÃRQUEZ P.*\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Colegas:\nEstoy tratando de hacer mi primer script y lo tengo asÃ­:\n\ndat <- read.csv(\"M5.csv\",header = TRUE, sep = \",\")\nlibrary(\"ggplot2\")\nsource('~/Documentos/WORK/Scripts/gra.r',echo =TRUE)\n\nPor",
+      "thread_id": "thread-7bc7ac2f042d",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-6c6f63f814cf",
+      "message_id": "<55D71B62.8090906@gmail.com>",
+      "from_name": "Fernando Macedo",
+      "from_email_hash": "59032262446d731f3957b885063ab9f0674ec4155c6aa14a26e18b8efde814d4",
+      "date": "2015-08-21T09:36:50-03:00",
+      "subject": "[R-es] intercalar elementos de vectores",
+      "subject_clean": "[R-es] intercalar elementos de vectores",
+      "in_reply_to": "<CAOKbq8j1e_hBfX796iyWd8hgcrod0Jjev+FehqX6m9KqLG06zQ@mail.gmail.com>",
+      "references": [
+        "<CAKCbn=vT8AwGbNNL3KF5tpFZnNz67wCVrQUGrZ57_hfSn1arMw@mail.gmail.com>",
+        "<CAKL8G3EqSTSJj+Uy2-F9a8r_BRYZ4=1ooYbFHRR5_yG8EpQ9_w@mail.gmail.com>",
+        "<CAKCbn=sjY1c_b_B4fsqWobcH0VNBF=t8HgpLVUo7OJVT3r87fQ@mail.gmail.com>",
+        "<CAOKbq8jM9io+9j-ZRKgUMy1njjF9LPK=3pdJwJL3zx-VZhDiHA@mail.gmail.com>",
+        "<CAKL8G3EC37cg3XNrGFgicSM+DveY_uQL2kyqz0U2hUmtyZsCdQ@mail.gmail.com>",
+        "<CAKCbn=uTnxO2MA+fRW-yQcGe9fCrocxxv4SM1arAoUEY6W0XEA@mail.gmail.com>",
+        "<CAOKbq8j1e_hBfX796iyWd8hgcrod0Jjev+FehqX6m9KqLG06zQ@mail.gmail.com>"
+      ],
+      "body_plain": "De vuelta a agradecer a ambos, porque justo ahora estaba de nuevo con un \nproblema parecido y he vuelto a consultar el correo.\n\nMuchas gracias por su ayuda!\n\nSaludos\n\nDMTV Fernando Macedo\nAsistente del Ã¡rea Mejoramiento GenÃ©tico\nFacultad de Veterinaria - UdelarR - Uruguay\nTel: 26284291\nCel.: 098596947\nfermace en gmail.com\n\nEl 24/02/15 a las 19:28, Carlos Ortega escibiÃ³:\n> Hola,\n>\n> He querido comprobar los tiempos proceso que se obtendrÃ­an utilizando \n> una u otra opciÃ³n (mapply vs. sapply) para un conjunto equivalente en \n> tamaÃ±o al que Fernando planteaba (data.frame de 316 columnas y 562000 \n> filas).\n>\n> Y estos son los resultados:\n>\n>   * En mi mÃ¡quina MacAir (4GB RAM - 1.3GHz Intel Core i5) :\n>       o con mapply obtengo tiempos de 1.4 minutos.\n>       o con sapply se me bloqueaba RStudio.\n>\n> En ambos casos, iniciaba sesiÃ³n \"limpia\" de RStudio.\n>\n> Para no tener problemas de mÃ¡quina he probado ambos casos en la \n> plataforma \"Microsoft Azure Machine Learning\" y los resultados son los \n> siguientes:\n>\n>   * mapply: 34.862 segundos\n>   * sapply: 35.057 segundos\n>\n> Sobre la plataforma de Microsoft, he vuelto a ver un comportamiento \n> raro con la opciÃ³n de sapply, hasta que he cambiado en la funciÃ³n \n> \"as.character()\" por \"as.vector()\" y es cuando ha funcionado sin \n> problemas con los tiempos indicados.\n>\n> Adjunto capturas de pantalla del cÃ³digo ejecutado en cada caso y los \n> tiempos de ejecuciÃ³n que proporciona la plataforma.\n> En ambos casos, los tiempos incluyen la generaciÃ³n del data.frame \n> equivalente (562000 x 316).\n>\n>\n>\n> *OPCIÃ“N A (MAPPLY)*\n>\n> ImÃ¡genes integradas 2\n> ImÃ¡genes integradas 6\n>\n>\n>\n>\n> *OPCIÃ“N B (SAPPLY)*\n>\n>\n> ImÃ¡genes integradas 1\n>\n> ImÃ¡genes integradas 5\n>\n> El 24 de febrero de 2015, 17:12, Fernando Macedo <fermace en gmail.com \n> <mailto:fermace en gmail.com>> escribiÃ³:\n>\n>     Muchas gracias a los dos, los ejemplos de uso de las funciones\n>     *apply siempre son bienvenidos.\n>\n>     Saludos\n>\n>     Fernando Macedo\n>\n>     El 24/02/15 a las 12:12, Jorge I Velez escribiÃ³:\n>>     Gracias, Carlos.\n>>\n>>     Habia pensado en algo similar usando sapply():\n>>\n>>     sapply(seq(1, ncol(vtmp), by = 2), function(i)\n>>     c(rbind(as.character(vtmp[, i]), as.character(vtmp[, i+1]))))\n>>\n>>     Dependiendo de la dimension de los datos, quizas mapply() sea\n>>     mas eficiente que sapply().\n>>\n>>     Saludos cordiales,\n>>     Jorge.-\n>>\n>>\n>>     2015-02-25 1:01 GMT+11:00 Carlos Ortega <cof en qualityexcellence.es\n>>     <mailto:cof en qualityexcellence.es>>:\n>>\n>>         Hola,\n>>\n>>         Este otro ejemplo a partir de la idea de Jorge, de cÃ³mo\n>>         procesar toda la tabla que tienes:\n>>\n>>         > #Creo un data.frame de ejemplo todo con letras\n>>         > vtmp <- as.data.frame(lapply(letters,function(x) {\n>>         rep(x,each=50) }))\n>>         > names(vtmp) <- paste(\"col\",LETTERS,sep=\"\")\n>>         > head(vtmp)\n>>           colA colB colC colD colE colF colG colH colI colJ colK colL\n>>         colM colN colO colP colQ colR colS colT colU colV colW colX\n>>         colY colZ\n>>         1    a    b    c    d    e    f g    h    i    j    k    l   \n>>         m n    o    p    q    r    s    t u    v    w    x    y    z\n>>         2    a    b    c    d    e    f g    h    i    j    k    l   \n>>         m n    o    p    q    r    s    t u    v    w    x    y    z\n>>         3    a    b    c    d    e    f g    h    i    j    k    l   \n>>         m n    o    p    q    r    s    t u    v    w    x    y    z\n>>         4    a    b    c    d    e    f g    h    i    j    k    l   \n>>         m n    o    p    q    r    s    t u    v    w    x    y    z\n>>         5    a    b    c    d    e    f g    h    i    j    k    l   \n>>         m n    o    p    q    r    s    t u    v    w    x    y    z\n>>         6    a    b    c    d    e    f g    h    i    j    k    l   \n>>         m n    o    p    q    r    s    t u    v    w    x    y    z\n>>         >\n>>         > #Los nÃºmeros de columnas impares de mi data.frame\n>>         > matIndex <- seq(1, dim(vtmp)[2], by=2)\n>>         >\n>>         > #FunciÃ³n para juntar dos columnas (idea de Jorge)\n>>         > mifun <- function(x,y)\n>>         c(rbind(as.vector(vtmp[,x]),as.vector(vtmp[,y])))\n>>         >\n>>         > #Resulado aplicando mapply. Coge dos columnas consecutivas\n>>         y las alterna\n>>         > #y asÃ­ de forma iterativa para cada una de las columnas que\n>>         indica \"matIndex\" y la siguiente columna \"matIndex+1\"\n>>         > resultado <- mapply(mifun,matIndex, matIndex+1)\n>>         > head(kk)\n>>              [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11]\n>>         [,12] [,13]\n>>         [1,] \"a\"  \"c\"  \"e\"  \"g\"  \"i\"  \"k\" \"m\"  \"o\"  \"q\"  \"s\"   \"u\"  \n>>         \"w\"   \"y\"\n>>         [2,] \"b\"  \"d\"  \"f\"  \"h\"  \"j\"  \"l\" \"n\"  \"p\"  \"r\"  \"t\"   \"v\"  \n>>         \"x\"   \"z\"\n>>         [3,] \"a\"  \"c\"  \"e\"  \"g\"  \"i\"  \"k\" \"m\"  \"o\"  \"q\"  \"s\"   \"u\"  \n>>         \"w\"   \"y\"\n>>         [4,] \"b\"  \"d\"  \"f\"  \"h\"  \"j\"  \"l\" \"n\"  \"p\"  \"r\"  \"t\"   \"v\"  \n>>         \"x\"   \"z\"\n>>         [5,] \"a\"  \"c\"  \"e\"  \"g\"  \"i\"  \"k\" \"m\"  \"o\"  \"q\"  \"s\"   \"u\"  \n>>         \"w\"   \"y\"\n>>         [6,] \"b\"  \"d\"  \"f\"  \"h\"  \"j\"  \"l\" \"n\"  \"p\"  \"r\"  \"t\"   \"v\"  \n>>         \"x\"   \"z\"\n>>         >\n>>\n>>         Saludos,\n>>         Carlos Ortega\n>>         www.qualityexcellence.es <http://www.qualityexcellence.es>\n>>\n>>         El 24 de febrero de 2015, 14:10, Fernando Macedo\n>>         <fermace en gmail.com <mailto:fermace en gmail.com>> escribiÃ³:\n>>\n>>              Excelente! Ahora corre muy rÃ¡pido. No conocÃ­a ese\n>>             mÃ©todo, creo que me va a\n>>             resultar muy Ãºtil.\n>>\n>>             Muchas gracias y saludos.\n>>\n>>             Fernando Macedo\n>>\n>>             El 24/02/15 a las 10:51, Jorge I Velez escribiÃ³:\n>>\n>>              Fernando,\n>>\n>>              Podrias intentar\n>>\n>>              R> a <- rep('a', 5)\n>>             R> b <- rep('b', 5)\n>>             R> a\n>>             [1] \"a\" \"a\" \"a\" \"a\" \"a\"\n>>             R> b\n>>             [1] \"b\" \"b\" \"b\" \"b\" \"b\"\n>>             R> c(rbind(a, b))\n>>               [1] \"a\" \"b\" \"a\" \"b\" \"a\" \"b\" \"a\" \"b\" \"a\" \"b\"\n>>\n>>              Saludos,\n>>             Jorge.-\n>>\n>>\n>>             2015-02-24 23:49 GMT+11:00 Fernando Macedo\n>>             <fermace en gmail.com <mailto:fermace en gmail.com>>:\n>>\n>>             >  Buenas a todos.\n>>             > Relato el problema:\n>>             >\n>>             > - tengo un archivo de 316 columnas por 562000 filas\n>>             (aprox.).\n>>             > - esas 316 columnas representan 158 sujetos, o sea dos\n>>             columnas por cada\n>>             > individuo conteniendo informaciÃ³n que debe ser\n>>             condensada en una sola.\n>>             >\n>>             > Lo que necesito es ir tomando las dos columnas de cada\n>>             individuo e\n>>             > intercalar los elementos de los vectores formando uno solo.\n>>             >\n>>             > Ejemplificando serÃ­a algo asÃ­:\n>>             >\n>>             > > a\n>>             > [1] \"a\" \"a\" \"a\" \"a\" \"a\"\n>>             > > b\n>>             > [1] \"b\" \"b\" \"b\" \"b\" \"b\"\n>>             > > c\n>>             >  [1] \"a\" \"b\" \"a\" \"b\" \"a\" \"b\" \"a\" \"b\" \"a\" \"b\"\n>>             >\n>>             >\n>>             > Estoy haciendo con un loop for pero es realmente muy\n>>             lento. He buscado por\n>>             > algÃºn paquete que ya lo haga directamente pero no he\n>>             tenido mucho Ã©xito. Me\n>>             > imagino que con sapply o apply pueda ser mucho mÃ¡s\n>>             efectivo pero me ha\n>>             > resultado complicado para entender la sintaxis de estas\n>>             funciones cuando\n>>             > involucra mÃ¡s de un objeto (vector, matriz, etc...).\n>>             >\n>>             > Desde ya agradezco las sugerencias que puedan verter\n>>             sobre este problema.\n>>             >\n>>             > --\n>>             > Fernando Macedo\n>>             >\n>>             >         [[alternative HTML version deleted]]\n>>             >\n>>             > _______________________________________________\n>>             > R-help-es mailing list\n>>             > R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n>>             > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>             >\n>>\n>>                     [[alternative HTML version deleted]]\n>>\n>>             _______________________________________________\n>>             R-help-es mailing list\n>>             R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n>>             https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>>\n>>\n>>         -- \n>>         Saludos,\n>>         Carlos Ortega\n>>         www.qualityexcellence.es <http://www.qualityexcellence.es>\n>>\n>>\n>>\n>\n>\n>\n>\n> -- \n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es <http://www.qualityexcellence.es>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150821/32dd8774/attachment-0001.html>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: no disponible\nType: image/png\nSize: 77789 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150821/32dd8774/attachment-0004.png>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: no disponible\nType: image/png\nSize: 49354 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150821/32dd8774/attachment-0005.png>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: no disponible\nType: image/png\nSize: 67496 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150821/32dd8774/attachment-0006.png>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: no disponible\nType: image/png\nSize: 55630 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150821/32dd8774/attachment-0007.png>",
+      "body_snippet": "De vuelta a agradecer a ambos, porque justo ahora estaba de nuevo con un \nproblema parecido y he vuelto a consultar el correo.\n\nMuchas gracias por su ayuda!\n\nSaludos\n\nDMTV Fernando Macedo\nAsistente de",
+      "thread_id": "thread-6c6f63f814cf",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-960554bef524",
+      "message_id": "<20150821140223.6F3A4E94831@r-es.org>",
+      "from_name": "web en r-es.org",
+      "from_email_hash": "e1978e02fd0918ebd031d2defb0b90e275fd57a2225ffda51c5cc9c9c5348fa7",
+      "date": "2015-08-21T14:02:23Z",
+      "subject": "[R-es] Nueva publicación en blog en r-es.org",
+      "subject_clean": "[R-es] Nueva publicación en blog en r-es.org",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Nueva publicaciÃ³n en blog: Ofertas de trabajo, \"Statistician for clinical research (Freelance)\", por pBBXtTN9 en 21/08/15 16:02h\n\nVer el blog en:\nhttp://r-es.org/tiki-view_blog_post.php?blogId=2&postId=104\n\nSi no desea recibir estas notificaciones siga este enlace:\nhttp://r-es.org/tiki-user_watches.php?id=5",
+      "body_snippet": "Nueva publicaciÃ³n en blog: Ofertas de trabajo, \"Statistician for clinical research (Freelance)\", por pBBXtTN9 en 21/08/15 16:02h\n\nVer el blog en:\nhttp://r-es.org/tiki-view_blog_post.php?blogId=2&post",
+      "thread_id": "thread-960554bef524",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-c42142312d12",
+      "message_id": "<CAC+BZZczvxdLcLN6iEUdrxJJWehtdCFoVaM59Ghg6YafT2+orA@mail.gmail.com>",
+      "from_name": "carmen cecilia otero villadiego",
+      "from_email_hash": "42a39e2c87ceae117830a7c6b8e4810f39dfdefd2d3b157d79c3c6c83d5831d6",
+      "date": "2015-08-21T10:54:08-05:00",
+      "subject": "[R-es] intercalar elementos de vectores",
+      "subject_clean": "[R-es] intercalar elementos de vectores",
+      "in_reply_to": "<CAKCbn=vT8AwGbNNL3KF5tpFZnNz67wCVrQUGrZ57_hfSn1arMw@mail.gmail.com>",
+      "references": [
+        "<CAKCbn=vT8AwGbNNL3KF5tpFZnNz67wCVrQUGrZ57_hfSn1arMw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola buenos dÃ­as,\n\nLes agradecerÃ­a mucho si me pueden ayudar con la sgte consulta:\n\nR tiene paquetes donde podamos hacer anÃ¡lisis de ecuaciones estructurales o\nanÃ¡lisis path??\n\nsi es asÃ­ me pueden dar una guÃ­a???\n\nDe antemano mil gracias,\n\nSaludos.\n\nEl 24 de febrero de 2015, 7:49, Fernando Macedo <fermace en gmail.com>\nescribiÃ³:\n\n>  Buenas a todos.\n> Relato el problema:\n>\n> - tengo un archivo de 316 columnas por 562000 filas (aprox.).\n> - esas 316 columnas representan 158 sujetos, o sea dos columnas por cada\n> individuo conteniendo informaciÃ³n que debe ser condensada en una sola.\n>\n> Lo que necesito es ir tomando las dos columnas de cada individuo e\n> intercalar los elementos de los vectores formando uno solo.\n>\n> Ejemplificando serÃ­a algo asÃ­:\n>\n> > a\n> [1] \"a\" \"a\" \"a\" \"a\" \"a\"\n> > b\n> [1] \"b\" \"b\" \"b\" \"b\" \"b\"\n> > c\n>  [1] \"a\" \"b\" \"a\" \"b\" \"a\" \"b\" \"a\" \"b\" \"a\" \"b\"\n>\n>\n> Estoy haciendo con un loop for pero es realmente muy lento. He buscado por\n> algÃºn paquete que ya lo haga directamente pero no he tenido mucho Ã©xito. Me\n> imagino que con sapply o apply pueda ser mucho mÃ¡s efectivo pero me ha\n> resultado complicado para entender la sintaxis de estas funciones cuando\n> involucra mÃ¡s de un objeto (vector, matriz, etc...).\n>\n> Desde ya agradezco las sugerencias que puedan verter sobre este problema.\n>\n> --\n> Fernando Macedo\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \n*Cecilia Otero Villadiego*\n\n*EstadÃ­stico - Esp. mercadeo Gerencial*\n*Cel:300 661 92 16 - 301 280 74 16*\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola buenos dÃ­as,\n\nLes agradecerÃ­a mucho si me pueden ayudar con la sgte consulta:\n\nR tiene paquetes donde podamos hacer anÃ¡lisis de ecuaciones estructurales o\nanÃ¡lisis path??\n\nsi es asÃ­ me puede",
+      "thread_id": "thread-c42142312d12",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-85223c1f8a2b",
+      "message_id": "<CAKL8G3FHs=y3HcbBQ-NskExV0GGEkwmxxcpqQ_YEQhLpc+MBpw@mail.gmail.com>",
+      "from_name": "Jorge I Velez",
+      "from_email_hash": "67c2bf707688224843e6206ac537a1bbb935581f8732ea0d93756299922d25cd",
+      "date": "2015-08-22T01:56:39+10:00",
+      "subject": "[R-es] intercalar elementos de vectores",
+      "subject_clean": "[R-es] intercalar elementos de vectores",
+      "in_reply_to": "<CAC+BZZczvxdLcLN6iEUdrxJJWehtdCFoVaM59Ghg6YafT2+orA@mail.gmail.com>",
+      "references": [
+        "<CAKCbn=vT8AwGbNNL3KF5tpFZnNz67wCVrQUGrZ57_hfSn1arMw@mail.gmail.com>",
+        "<CAC+BZZczvxdLcLN6iEUdrxJJWehtdCFoVaM59Ghg6YafT2+orA@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Carmen,\n\nSi, hay varios paquetes.  De ellos, el mas \"famoso\" es sem:\nhttps://cran.r-project.org/web/packages/sem/index.html\n\nHay varios tutoriales en internet.  Podrias comenzar con\nhttp://socserv.socsci.mcmaster.ca/jfox/Misc/sem/SEM-paper.pdf\n<https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCsQFjAAahUKEwizq-rixLrHAhXKlR4KHczkA-M&url=http%3A%2F%2Fsocserv.socsci.mcmaster.ca%2Fjfox%2FMisc%2Fsem%2FSEM-paper.pdf&ei=9knXVbPYMsqreszJj5gO&usg=AFQjCNFd1Wjy6WKJPEybeLNnOq5Mz-VEEw&sig2=-BHZgieK0dD9zFuP5xrM0g>\ny\nsus versiones mas recientes.\n\nSaludos cordiales,\n\nJorge I. VÃ©lez\nJCSMR, Canberra\n?\n\n\n2015-08-22 1:54 GMT+10:00 carmen cecilia otero villadiego <\nccovilladiego en gmail.com>:\n\n> Hola buenos dÃ­as,\n>\n> Les agradecerÃ­a mucho si me pueden ayudar con la sgte consulta:\n>\n> R tiene paquetes donde podamos hacer anÃ¡lisis de ecuaciones estructurales o\n> anÃ¡lisis path??\n>\n> si es asÃ­ me pueden dar una guÃ­a???\n>\n> De antemano mil gracias,\n>\n> Saludos.\n>\n> El 24 de febrero de 2015, 7:49, Fernando Macedo <fermace en gmail.com>\n> escribiÃ³:\n>\n> >  Buenas a todos.\n> > Relato el problema:\n> >\n> > - tengo un archivo de 316 columnas por 562000 filas (aprox.).\n> > - esas 316 columnas representan 158 sujetos, o sea dos columnas por cada\n> > individuo conteniendo informaciÃ³n que debe ser condensada en una sola.\n> >\n> > Lo que necesito es ir tomando las dos columnas de cada individuo e\n> > intercalar los elementos de los vectores formando uno solo.\n> >\n> > Ejemplificando serÃ­a algo asÃ­:\n> >\n> > > a\n> > [1] \"a\" \"a\" \"a\" \"a\" \"a\"\n> > > b\n> > [1] \"b\" \"b\" \"b\" \"b\" \"b\"\n> > > c\n> >  [1] \"a\" \"b\" \"a\" \"b\" \"a\" \"b\" \"a\" \"b\" \"a\" \"b\"\n> >\n> >\n> > Estoy haciendo con un loop for pero es realmente muy lento. He buscado\n> por\n> > algÃºn paquete que ya lo haga directamente pero no he tenido mucho Ã©xito.\n> Me\n> > imagino que con sapply o apply pueda ser mucho mÃ¡s efectivo pero me ha\n> > resultado complicado para entender la sintaxis de estas funciones cuando\n> > involucra mÃ¡s de un objeto (vector, matriz, etc...).\n> >\n> > Desde ya agradezco las sugerencias que puedan verter sobre este problema.\n> >\n> > --\n> > Fernando Macedo\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n>\n>\n>\n> --\n> *Cecilia Otero Villadiego*\n>\n> *EstadÃ­stico - Esp. mercadeo Gerencial*\n> *Cel:300 661 92 16 - 301 280 74 16*\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Carmen,\n\nSi, hay varios paquetes.  De ellos, el mas \"famoso\" es sem:\nhttps://cran.r-project.org/web/packages/sem/index.html\n\nHay varios tutoriales en internet.  Podrias comenzar con\nhttp://socser",
+      "thread_id": "thread-c42142312d12",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-b3ee26ba85e3",
+      "message_id": "<SNT153-W27CCBA89BE23D722B56C4095630@phx.gbl>",
+      "from_name": "Fresia Holguín",
+      "from_email_hash": "112557458cb3726462af9c8458b8f8b2d84d4626b9babf5340a7fd5b197139b6",
+      "date": "2015-08-23T00:11:34-05:00",
+      "subject": "[R-es] Consulta ingreso de datos ponderados y ojiva",
+      "subject_clean": "[R-es] Consulta ingreso de datos ponderados y ojiva",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola estoy dando mis primeros pasos en R, y  he ingresado vectores pero ahora quisiera ingresar datos ponderados, es decir como ingreso la siguiente tabla en R. (no tengo los datos uno a uno, solo cuento con esta informaciÃ³n)\n\n\n\n\n\n\n \n  \n  LONGITUD (intervalos)\n  \n  \n  NÃºmero de Piezas (Frecuencia)\n\n  \n \n \n  \n  67.5\n  â€“ 72.5\n  \n  \n  5\n  \n \n \n  \n  72.5\n  â€“ 77.5\n  \n  \n  95\n  \n \n \n  \n  77.5\n  â€“ 82.5\n  \n  \n  790\n  \n \n \n  \n  82.5\n  â€“ 87.5\n  \n  \n  100\n  \n \n \n  \n  87.5\n  â€“ 92.5\n  \n  \n  10\n  \n \n\n\n\n\nY al tener estos datos agrupados como realizarÃ­a el calculo de la frecuencia relativa para dibujar la ojiva.\nGracias.\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola estoy dando mis primeros pasos en R, y  he ingresado vectores pero ahora quisiera ingresar datos ponderados, es decir como ingreso la siguiente tabla en R. (no tengo los datos uno a uno, solo cue",
+      "thread_id": "thread-b3ee26ba85e3",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-275badcb4068",
+      "message_id": "<SNT153-W7745359E76A90DBD42BA8895630@phx.gbl>",
+      "from_name": "Fresia Holguín",
+      "from_email_hash": "112557458cb3726462af9c8458b8f8b2d84d4626b9babf5340a7fd5b197139b6",
+      "date": "2015-08-23T00:21:06-05:00",
+      "subject": "[R-es] ayuda datos ponderados",
+      "subject_clean": "[R-es] ayuda datos ponderados",
+      "in_reply_to": "<SNT153-W31886C7F30134B19B96C0095630@phx.gbl>",
+      "references": [
+        "<SNT153-W31886C7F30134B19B96C0095630@phx.gbl>"
+      ],
+      "body_plain": "Hola\n estoy dando mis primeros pasos en R, y  he ingresado vectores pero \nahora quisiera ingresar datos ponderados, es decir como ingreso la \nsiguiente tabla en R. (no tengo los datos uno a uno, solo cuento con \nesta informacion)\n\n              \nLongitud = intervalos\nNumero de Piezas = Frecuencia\n\nFavor indicarme como hacer el calculo de frecuencia relativa para dibujar la ojiva.\n\nGracias\n\n \t\t \t   \t\t   \t\t \t   \t\t  \n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150823/09de8036/attachment-0001.html>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: fae.png\nType: image/png\nSize: 29793 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150823/09de8036/attachment-0001.png>",
+      "body_snippet": "Hola\n estoy dando mis primeros pasos en R, y  he ingresado vectores pero \nahora quisiera ingresar datos ponderados, es decir como ingreso la \nsiguiente tabla en R. (no tengo los datos uno a uno, solo ",
+      "thread_id": "thread-275badcb4068",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-45a1cfbcc8e1",
+      "message_id": "<55DADCEA.8000707@telefonica.com>",
+      "from_name": "Pedro Concejero Cerezo",
+      "from_email_hash": "8c10828abb845a57aac97628ade43b9a393a631d64f4c2127633e5fd7705771e",
+      "date": "2015-08-24T10:59:22+02:00",
+      "subject": "[R-es] librerías ecuaciones estructurales",
+      "subject_clean": "[R-es] librerías ecuaciones estructurales",
+      "in_reply_to": "<mailman.17.1440237603.10495.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.17.1440237603.10495.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Para hacer anÃ¡lisis de ecuaciones estructurales ademÃ¡s de sem tienes lavaan:\nhttp://lavaan.ugent.be/\nhttp://www.r-bloggers.com/first-steps-with-structural-equation-modeling/\n\nHay mÃ¡s paquetes relacionados con estos modelos y con path analysis en el apartado correspondiente de la task view Psychometrics:\nhttps://cran.r-project.org/web/views/Psychometrics.html\n\n--\nPedro Concejero\nE-mail: pedro.concejerocerezo en telefonica.com<mailto:pedro.concejerocerezo en telefonica.com>\nskype: pedro.concejero\ntwitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>\nlinkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>\nEntusiasta R, me encontrarÃ©is aquÃ­ gRupo R madRid <http://madrid.r-es.org/>\n\n________________________________\n\nEste mensaje y sus adjuntos se dirigen exclusivamente a su destinatario, puede contener informaciÃ³n privilegiada o confidencial y es para uso exclusivo de la persona o entidad de destino. Si no es usted. el destinatario indicado, queda notificado de que la lectura, utilizaciÃ³n, divulgaciÃ³n y/o copia sin autorizaciÃ³n puede estar prohibida en virtud de la legislaciÃ³n vigente. Si ha recibido este mensaje por error, le rogamos que nos lo comunique inmediatamente por esta misma vÃ­a y proceda a su destrucciÃ³n.\n\nThe information contained in this transmission is privileged and confidential information intended only for the use of the individual or entity named above. If the reader of this message is not the intended recipient, you are hereby notified that any dissemination, distribution or copying of this communication is strictly prohibited. If you have received this transmission in error, do not read it. Please immediately reply to the sender that you have received this communication in error and then delete it.\n\nEsta mensagem e seus anexos se dirigem exclusivamente ao seu destinatÃ¡rio, pode conter informaÃ§Ã£o privilegiada ou confidencial e Ã© para uso exclusivo da pessoa ou entidade de destino. Se nÃ£o Ã© vossa senhoria o destinatÃ¡rio indicado, fica notificado de que a leitura, utilizaÃ§Ã£o, divulgaÃ§Ã£o e/ou cÃ³pia sem autorizaÃ§Ã£o pode estar proibida em virtude da legislaÃ§Ã£o vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos o comunique imediatamente por esta mesma via e proceda a sua destruiÃ§Ã£o\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Para hacer anÃ¡lisis de ecuaciones estructurales ademÃ¡s de sem tienes lavaan:\nhttp://lavaan.ugent.be/\nhttp://www.r-bloggers.com/first-steps-with-structural-equation-modeling/\n\nHay mÃ¡s paquetes relac",
+      "thread_id": "thread-45a1cfbcc8e1",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-e40c3359e2c5",
+      "message_id": "<CAOKbq8gC2YAupwzgXJJEQKeXwuGgxK8VOPr3XHdOE6t+POeMGw@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "b964461817cc8c122ad873c2863e7820aa5a0ffe6e7754b2ed7e86c0aabb1574",
+      "date": "2015-08-25T20:40:06+02:00",
+      "subject": "[R-es] ayuda datos ponderados",
+      "subject_clean": "[R-es] ayuda datos ponderados",
+      "in_reply_to": "<SNT153-W7745359E76A90DBD42BA8895630@phx.gbl>",
+      "references": [
+        "<SNT153-W31886C7F30134B19B96C0095630@phx.gbl>",
+        "<SNT153-W7745359E76A90DBD42BA8895630@phx.gbl>"
+      ],
+      "body_plain": "Hola,\n\nMira la ayuda de las funciones: data.frame, as. data.frame, table, as.table.\n\nNo hace falta que calcules las frecuencias, a partir de tus datos, las\npuedes calcular con la funciÃ³n \"table()\", por eso te sugiero que mires\nestas funciones.\n\nÂ¿QuÃ© es un grÃ¡fico de \"ojiva\"?.\nA partir de una table, lo mÃ¡s tipico es hacer un grÃ¡fico del tipo\n\"barplot()\". Mira tambiÃ©n la ayuda de esta funciÃ³n. Los ejemplos que\nadjunta te van a ayudar mucho.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 23 de agosto de 2015, 7:21, Fresia HolguÃ­n <fresia_hg en hotmail.com>\nescribiÃ³:\n\n>\n>\n> Hola estoy dando mis primeros pasos en R, y  he ingresado vectores pero\n> ahora quisiera ingresar datos ponderados, es decir como ingreso la\n> siguiente tabla en R. (no tengo los datos uno a uno, solo cuento con esta\n> informacion)\n>\n>\n>\n>\n> Longitud = intervalos\n> Numero de Piezas = Frecuencia\n>\n> Favor indicarme como hacer el calculo de frecuencia relativa para dibujar\n> la ojiva.\n>\n> Gracias\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nMira la ayuda de las funciones: data.frame, as. data.frame, table, as.table.\n\nNo hace falta que calcules las frecuencias, a partir de tus datos, las\npuedes calcular con la funciÃ³n \"table()\", p",
+      "thread_id": "thread-275badcb4068",
+      "thread_depth": 1,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-ecbece1c6a09",
+      "message_id": "<2024278884.1417550.1440770688021.JavaMail.yahoo@mail.yahoo.com>",
+      "from_name": "heber sarmiento",
+      "from_email_hash": "64bb73fbf3b144ba879212f6885f439fc2f200777adc8e6213d3f7691da6d7ab",
+      "date": "2015-08-28T14:04:48Z",
+      "subject": "[R-es] Un asunto al margen",
+      "subject_clean": "[R-es] Un asunto al margen",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Cordial Saludo\nHe conversado con algunos amigos y me han comentado que existe una plataforma de trabajo colaborativo, algo parecido a schoology o edmode Â la cual entre otras herramientas trae implementado a R y LaTeX, el problema es que no recuerdo el nombre y si bien entiendo que esta lista no es el espacio mÃ¡s apropiado para la consulta, quedarÃ­a muy agradecido por cualquier orientaciÃ³n al respecto, de antemano me excuso con todos si soy impertinente con mi pregunta y desde ya muchas gracias.Â \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Cordial Saludo\nHe conversado con algunos amigos y me han comentado que existe una plataforma de trabajo colaborativo, algo parecido a schoology o edmode Â la cual entre otras herramientas trae impleme",
+      "thread_id": "thread-ecbece1c6a09",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-6a3574cf4abf",
+      "message_id": "<2067991850.1644789.1440807145937.JavaMail.yahoo@mail.yahoo.com>",
+      "from_name": "heber sarmiento",
+      "from_email_hash": "64bb73fbf3b144ba879212f6885f439fc2f200777adc8e6213d3f7691da6d7ab",
+      "date": "2015-08-29T00:12:25Z",
+      "subject": "[R-es] Una inquietud",
+      "subject_clean": "[R-es] Una inquietud",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estoy elaborando un pequeÃ±o script en el que pido a los usuarios introducir un conjunto de valores, esto lo estoy haciendo con la funciÃ³n cat() el asunto es que no se como hacer para que luego de leÃ­dos, ellos sean asignados a un vector x>-c(???...??) Â  agradezco cualquier orientaciÃ³n y desde ya gracias.Â  \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estoy elaborando un pequeÃ±o script en el que pido a los usuarios introducir un conjunto de valores, esto lo estoy haciendo con la funciÃ³n cat() el asunto es que no se como hacer para que luego de le",
+      "thread_id": "thread-6a3574cf4abf",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-6a1ab0bc80d7",
+      "message_id": "<933028218.1672786.1440808669426.JavaMail.yahoo@mail.yahoo.com>",
+      "from_name": "heber sarmiento",
+      "from_email_hash": "64bb73fbf3b144ba879212f6885f439fc2f200777adc8e6213d3f7691da6d7ab",
+      "date": "2015-08-29T00:37:49Z",
+      "subject": "[R-es] una ayudita",
+      "subject_clean": "[R-es] una ayudita",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estoy elaborando un pequeÃ±o script en el que pido a los usuarios introducir un conjunto de valores, esto lo estoy haciendo con la funciÃ³n cat() el asunto es que no se como hacer para que luego de leÃ­dos, ellos sean asignados a un vector x>-c(???...??) Â  agradezco cualquier orientaciÃ³n y desde ya gracias.Â \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estoy elaborando un pequeÃ±o script en el que pido a los usuarios introducir un conjunto de valores, esto lo estoy haciendo con la funciÃ³n cat() el asunto es que no se como hacer para que luego de le",
+      "thread_id": "thread-6a1ab0bc80d7",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-ea06a3b8910f",
+      "message_id": "<CAAr-_QXTiAD4vf206dJoLPhiYeS7R1oKTh2Cp-vgFob_VC2osw@mail.gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "e97c9cd332424e5be3684b5d81d6fc8dfa7069da1da7acbadbd8deac7ee860ca",
+      "date": "2015-08-29T10:22:59+02:00",
+      "subject": "[R-es] Fwd:  una ayudita",
+      "subject_clean": "[R-es] Fwd:  una ayudita",
+      "in_reply_to": "<CAAr-_QWnBj61=YFTm-wwZDNSK5TKGzRSZ1+c7TgKzMfDy9K_wg@mail.gmail.com>",
+      "references": [
+        "<933028218.1672786.1440808669426.JavaMail.yahoo@mail.yahoo.com>",
+        "<CAAr-_QWnBj61=YFTm-wwZDNSK5TKGzRSZ1+c7TgKzMfDy9K_wg@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nPrueba la funciÃ³n scan, despuÃ©s de tu mensaje con cat:\n\nx <- scan\n\nCuando el usuario pulse \"intro\" sin introducir ningÃºn valor, tendrÃ¡s el\nvector en el objeto x\n\nUn saludo,\nEmilio\n*Emilio L. Cano*\n\nMobile: +34 665 676 225\nskype: emilopezcano\ntwitter: @emilopezcano\nhttp://emilio.lcano.com\n\n\n\nEl 29 de agosto de 2015, 2:37, heber sarmiento via R-help-es <\nr-help-es en r-project.org> escribiÃ³:\n\n> Estoy elaborando un pequeÃ±o script en el que pido a los usuarios\n> introducir un conjunto de valores, esto lo estoy haciendo con la funciÃ³n\n> cat() el asunto es que no se como hacer para que luego de leÃ­dos, ellos\n> sean asignados a un vector x>-c(???...??)   agradezco cualquier orientaciÃ³n\n> y desde ya gracias.\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPrueba la funciÃ³n scan, despuÃ©s de tu mensaje con cat:\n\nx <- scan\n\nCuando el usuario pulse \"intro\" sin introducir ningÃºn valor, tendrÃ¡s el\nvector en el objeto x\n\nUn saludo,\nEmilio\n*Emilio L",
+      "thread_id": "thread-ea06a3b8910f",
+      "thread_depth": 0,
+      "month": "2015-08"
+    },
+    {
+      "id": "msg-81a07d2930bb",
+      "message_id": "<BLU437-SMTP422DECEDD50C60A1AA4F84C56B0@phx.gbl>",
+      "from_name": "Luis Espinola",
+      "from_email_hash": "f7f2369a459dd7f83877deb38643e663702f30fb320b77d55dc88560eae38e50",
+      "date": "2015-08-31T08:37:07-03:00",
+      "subject": "[R-es] modelos nulos",
+      "subject_clean": "[R-es] modelos nulos",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Querida comunidad, \n\nEstoy queriendo usar el paquete EcoSimR, para aplicar modelos nulos. \n\nEn el tutorial no explica algunos resultados. \n\nQuisiera saber si alguien lo ha utilizado y me se podrÃ­an ayudar. \n\nNo se como extraer los valores de los indices C-scores y los otros que menciona \ny tambiÃ©n no me queda claro que significa: set.seed(56) \n\n\nlibrary(EcoSimR)\n\nAlguien me podrÃ­a ayudar?\n\nDesde ya muchas gracias. \n\nAtentamente, Luis\n\n\n\n\n\nDr. Luis A. EspÃ­nola \nBiÃ³logo - Ecologia de Sistemas AcuÃ¡ticos\nInstituto Nacional de LimnologÃ­a (INALI)\nCiudad Universitaria - Paraje \"El Pozo\"\nCP: 3000, Santa Fe. Argentina\nTE: + 54 342 4511645 \n\n\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150831/dce4a5a4/attachment.html>\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image004.jpg\nType: image/jpeg\nSize: 5801 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20150831/dce4a5a4/attachment.jpg>",
+      "body_snippet": "Querida comunidad, \n\nEstoy queriendo usar el paquete EcoSimR, para aplicar modelos nulos. \n\nEn el tutorial no explica algunos resultados. \n\nQuisiera saber si alguien lo ha utilizado y me se podrÃ­an a",
+      "thread_id": "thread-81a07d2930bb",
+      "thread_depth": 0,
+      "month": "2015-08"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-402bb97094bc",
+      "subject": "[R-es] ayuda con análisis de supervivencia",
+      "message_count": 4,
+      "participants": [
+        "Griera",
+        "JM ARBONES",
+        "JM Arbones",
+        "Javier Rubén Marcuzzi"
+      ],
+      "started": "2015-08-02T19:19:45+02:00",
+      "last_reply": "2015-08-04T17:47:19+02:00",
+      "root_message_id": "msg-402bb97094bc"
+    },
+    {
+      "id": "thread-eff14dd6a04e",
+      "subject": "[R-es] Menor que 1000",
+      "message_count": 2,
+      "participants": [
+        "Isidro Hidalgo",
+        "Manuel Máquez"
+      ],
+      "started": "2015-08-03T18:03:50-05:00",
+      "last_reply": "2015-08-04T08:35:47+02:00",
+      "root_message_id": "msg-eff14dd6a04e"
+    },
+    {
+      "id": "thread-c9c74e774d40",
+      "subject": "[R-es] Duda interpolación (package ' gstat ')",
+      "message_count": 6,
+      "participants": [
+        "Freddy Omar López Quintero",
+        "Marcos Bermejo",
+        "rubenfcasal"
+      ],
+      "started": "2015-08-04T11:24:22+02:00",
+      "last_reply": "2015-08-08T23:52:30+02:00",
+      "root_message_id": "msg-c9c74e774d40"
+    },
+    {
+      "id": "thread-29a00203d41d",
+      "subject": "[R-es] php-R",
+      "message_count": 4,
+      "participants": [
+        "Carlos Ortega",
+        "Javier Rubén Marcuzzi",
+        "Jose Manuel Veiga del Baño",
+        "Mario Rodriguez"
+      ],
+      "started": "2015-08-04T20:19:54+02:00",
+      "last_reply": "2015-08-05T18:07:40-03:00",
+      "root_message_id": "msg-29a00203d41d"
+    },
+    {
+      "id": "thread-324cb28026d8",
+      "subject": "[R-es] php-R",
+      "message_count": 1,
+      "participants": [
+        "Patricio Fuenmayor Viteri"
+      ],
+      "started": "2015-08-05T10:14:01-05:00",
+      "last_reply": "2015-08-05T10:14:01-05:00",
+      "root_message_id": "msg-324cb28026d8"
+    },
+    {
+      "id": "thread-d943db207871",
+      "subject": "[R-es] paquetes twitteR",
+      "message_count": 3,
+      "participants": [
+        "Carlos Ortega",
+        "Jose Ramirez Costa"
+      ],
+      "started": "2015-08-05T15:06:56-03:00",
+      "last_reply": "2015-08-05T15:31:14-03:00",
+      "root_message_id": "msg-d943db207871"
+    },
+    {
+      "id": "thread-62f73f00b8d0",
+      "subject": "[R-es] consulta graficas para GLM",
+      "message_count": 4,
+      "participants": [
+        "Jose Luis Cañadas Reche",
+        "Luis Fernando García",
+        "Manuel Spínola"
+      ],
+      "started": "2015-08-06T04:09:06-03:00",
+      "last_reply": "2015-08-06T07:00:17-06:00",
+      "root_message_id": "msg-62f73f00b8d0"
+    },
+    {
+      "id": "thread-72f8ef11a2d0",
+      "subject": "[R-es] php-R",
+      "message_count": 1,
+      "participants": [
+        "Jose Manuel Veiga del Baño"
+      ],
+      "started": "2015-08-07T19:09:27+02:00",
+      "last_reply": "2015-08-07T19:09:27+02:00",
+      "root_message_id": "msg-72f8ef11a2d0"
+    },
+    {
+      "id": "thread-297b28b6895d",
+      "subject": "[R-es] Duda ' proj4string'",
+      "message_count": 1,
+      "participants": [
+        "Marcos Bermejo"
+      ],
+      "started": "2015-08-09T20:38:15+02:00",
+      "last_reply": "2015-08-09T20:38:15+02:00",
+      "root_message_id": "msg-297b28b6895d"
+    },
+    {
+      "id": "thread-799a40933a1e",
+      "subject": "[R-es] Duda ' proj4string'",
+      "message_count": 3,
+      "participants": [
+        "Freddy Omar López Quintero",
+        "Javier Rubén Marcuzzi",
+        "Marcos Bermejo"
+      ],
+      "started": "2015-08-10T12:55:37+02:00",
+      "last_reply": "2015-08-14T11:10:33-03:00",
+      "root_message_id": "msg-799a40933a1e"
+    },
+    {
+      "id": "thread-75472ef2c017",
+      "subject": "[R-es] Knitr problema con xtable",
+      "message_count": 1,
+      "participants": [
+        "Rodrigo López Correa"
+      ],
+      "started": "2015-08-10T16:19:43-03:00",
+      "last_reply": "2015-08-10T16:19:43-03:00",
+      "root_message_id": "msg-75472ef2c017"
+    },
+    {
+      "id": "thread-a6acaa748734",
+      "subject": "[R-es] [Help] Oferta de trabajo en Valencia",
+      "message_count": 1,
+      "participants": [
+        "Javier Villacampa González"
+      ],
+      "started": "2015-08-13T17:27:27+02:00",
+      "last_reply": "2015-08-13T17:27:27+02:00",
+      "root_message_id": "msg-a6acaa748734"
+    },
+    {
+      "id": "thread-a9e79910851b",
+      "subject": "[R-es] if: (5)",
+      "message_count": 1,
+      "participants": [
+        "Fernando Sanchez"
+      ],
+      "started": "2015-08-14T13:54:14+00:00",
+      "last_reply": "2015-08-14T13:54:14+00:00",
+      "root_message_id": "msg-a9e79910851b"
+    },
+    {
+      "id": "thread-3ef41acef112",
+      "subject": "[R-es] pregunta  XLConnect",
+      "message_count": 3,
+      "participants": [
+        "Dr. José A. Betancourt Bethencourt",
+        "JCMld",
+        "miguel.angel.rodriguez.muinos en sergas.es"
+      ],
+      "started": "2015-08-19T08:27:58-04:00",
+      "last_reply": "2015-08-19T20:24:01+00:00",
+      "root_message_id": "msg-3ef41acef112"
+    },
+    {
+      "id": "thread-454c9d40ea83",
+      "subject": "[R-es] ayuda con análisis de supervivencia",
+      "message_count": 1,
+      "participants": [
+        "Francisco Viciana"
+      ],
+      "started": "2015-08-20T10:48:07+02:00",
+      "last_reply": "2015-08-20T10:48:07+02:00",
+      "root_message_id": "msg-454c9d40ea83"
+    },
+    {
+      "id": "thread-fec48895c0f3",
+      "subject": "[R-es] error en \"dudi.pco\"",
+      "message_count": 1,
+      "participants": [
+        "nuria bs"
+      ],
+      "started": "2015-08-20T11:58:52+02:00",
+      "last_reply": "2015-08-20T11:58:52+02:00",
+      "root_message_id": "msg-fec48895c0f3"
+    },
+    {
+      "id": "thread-7bc7ac2f042d",
+      "subject": "[R-es] Intento de script",
+      "message_count": 1,
+      "participants": [
+        "Manuel Máquez"
+      ],
+      "started": "2015-08-21T02:21:19-05:00",
+      "last_reply": "2015-08-21T02:21:19-05:00",
+      "root_message_id": "msg-7bc7ac2f042d"
+    },
+    {
+      "id": "thread-6c6f63f814cf",
+      "subject": "[R-es] intercalar elementos de vectores",
+      "message_count": 1,
+      "participants": [
+        "Fernando Macedo"
+      ],
+      "started": "2015-08-21T09:36:50-03:00",
+      "last_reply": "2015-08-21T09:36:50-03:00",
+      "root_message_id": "msg-6c6f63f814cf"
+    },
+    {
+      "id": "thread-c42142312d12",
+      "subject": "[R-es] intercalar elementos de vectores",
+      "message_count": 2,
+      "participants": [
+        "Jorge I Velez",
+        "carmen cecilia otero villadiego"
+      ],
+      "started": "2015-08-21T10:54:08-05:00",
+      "last_reply": "2015-08-22T01:56:39+10:00",
+      "root_message_id": "msg-c42142312d12"
+    },
+    {
+      "id": "thread-960554bef524",
+      "subject": "[R-es] Nueva publicación en blog en r-es.org",
+      "message_count": 1,
+      "participants": [
+        "web en r-es.org"
+      ],
+      "started": "2015-08-21T14:02:23+00:00",
+      "last_reply": "2015-08-21T14:02:23+00:00",
+      "root_message_id": "msg-960554bef524"
+    },
+    {
+      "id": "thread-b3ee26ba85e3",
+      "subject": "[R-es] Consulta ingreso de datos ponderados y ojiva",
+      "message_count": 1,
+      "participants": [
+        "Fresia Holguín"
+      ],
+      "started": "2015-08-23T00:11:34-05:00",
+      "last_reply": "2015-08-23T00:11:34-05:00",
+      "root_message_id": "msg-b3ee26ba85e3"
+    },
+    {
+      "id": "thread-275badcb4068",
+      "subject": "[R-es] ayuda datos ponderados",
+      "message_count": 2,
+      "participants": [
+        "Carlos Ortega",
+        "Fresia Holguín"
+      ],
+      "started": "2015-08-23T00:21:06-05:00",
+      "last_reply": "2015-08-25T20:40:06+02:00",
+      "root_message_id": "msg-275badcb4068"
+    },
+    {
+      "id": "thread-45a1cfbcc8e1",
+      "subject": "[R-es] librerías ecuaciones estructurales",
+      "message_count": 1,
+      "participants": [
+        "Pedro Concejero Cerezo"
+      ],
+      "started": "2015-08-24T10:59:22+02:00",
+      "last_reply": "2015-08-24T10:59:22+02:00",
+      "root_message_id": "msg-45a1cfbcc8e1"
+    },
+    {
+      "id": "thread-ecbece1c6a09",
+      "subject": "[R-es] Un asunto al margen",
+      "message_count": 1,
+      "participants": [
+        "heber sarmiento"
+      ],
+      "started": "2015-08-28T14:04:48+00:00",
+      "last_reply": "2015-08-28T14:04:48+00:00",
+      "root_message_id": "msg-ecbece1c6a09"
+    },
+    {
+      "id": "thread-6a3574cf4abf",
+      "subject": "[R-es] Una inquietud",
+      "message_count": 1,
+      "participants": [
+        "heber sarmiento"
+      ],
+      "started": "2015-08-29T00:12:25+00:00",
+      "last_reply": "2015-08-29T00:12:25+00:00",
+      "root_message_id": "msg-6a3574cf4abf"
+    },
+    {
+      "id": "thread-6a1ab0bc80d7",
+      "subject": "[R-es] una ayudita",
+      "message_count": 1,
+      "participants": [
+        "heber sarmiento"
+      ],
+      "started": "2015-08-29T00:37:49+00:00",
+      "last_reply": "2015-08-29T00:37:49+00:00",
+      "root_message_id": "msg-6a1ab0bc80d7"
+    },
+    {
+      "id": "thread-ea06a3b8910f",
+      "subject": "[R-es] Fwd:  una ayudita",
+      "message_count": 1,
+      "participants": [
+        "Emilio L. Cano"
+      ],
+      "started": "2015-08-29T10:22:59+02:00",
+      "last_reply": "2015-08-29T10:22:59+02:00",
+      "root_message_id": "msg-ea06a3b8910f"
+    },
+    {
+      "id": "thread-81a07d2930bb",
+      "subject": "[R-es] modelos nulos",
+      "message_count": 1,
+      "participants": [
+        "Luis Espinola"
+      ],
+      "started": "2015-08-31T08:37:07-03:00",
+      "last_reply": "2015-08-31T08:37:07-03:00",
+      "root_message_id": "msg-81a07d2930bb"
+    }
+  ]
+}

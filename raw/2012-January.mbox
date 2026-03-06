@@ -1,0 +1,4177 @@
+From justodejorge en gmail.com  Mon Jan  2 10:50:38 2012
+From: justodejorge en gmail.com (Justo de Jorge Moreno)
+Date: Mon, 2 Jan 2012 10:50:38 +0100
+Subject: [R-es] =?iso-8859-1?q?Duda_sobre_variables_de_impulso_y_escal=F3n?=
+	=?iso-8859-1?q?_en_series?=
+Message-ID: <CAHr7g2XadG-me7fZcW2Sj8z6K+btk5bSh5=FADWuRxwSpmXqBg@mail.gmail.com>
+
+Hola y feliz año,
+
+Estoy trabajando por primera vez (igual ando muy pérdido) con el paquete
+forecast (modelos ARIMA)(Hyndman y Khandakar 2008) y utilizo series
+mensuales de compañías aéreas. Estoy intentando analizar el impacto de
+algunos de los acontecimientos que han podido influir en la variable
+ingresos por viajero transportado (p.e el atentado del 11 de septiembre,
+crisis de la ceniza abril-mayo 2010, crisis). He probado con diferentes
+modelos pero no acabo de ver el impacto. Lo que hago es:
+
+1)       Estimar el modelo ARIMA
+
+2)       Contruir una/s variables de impulso (también escalón)
+
+3)       Comparar modelos
+
+He probado diferentes variantes. Parece que el modelo 4 (al final) mejora
+los resultados.(Parece que los modelos ARIMA con variables exógenas
+funcionan bien con un sólo input)
+
+*\crisis=dummy 1 si t>2007 (variable escalón); 0 otro caso
+
+*\sars(pandemia y 11s) y cen(volcán): dummies sars=> 1 si t>2000 & t<2004 0
+otro caso ; dummy cen=>1 si t=abril y mayo 2010 0 otro caso.
+
+*\Modelo_1
+
+xreg<-model.matrix(~as.factor(crisis))
+
+*model1* <- Arima(Y_IB, order=c(0,1,1), seasonal=list(order=c(0,1,1)),
+xreg=xreg)
+
+*\Modelo_2
+
+xreg<-model.matrix(~as.factor(sars)+~as.factor(cen))
+
+*model2* <- Arima(Y_IB, order=c(0,1,1), seasonal=list(order=c(0,1,1),
+period=12), xreg=xreg)
+
+*\Modelo_3
+
+xreg<-model.matrix(~as.factor(sars)+~as.factor(crisis)+~as.factor(cen))
+
+*model3* <- Arima(Y_IB, order=c(0,1,1), seasonal=list(order=c(0,1,1),
+period=12), xreg=xreg)
+
+*\Comparación
+ACC <- rbind.fill(data.frame(t(accuracy(model))),
+
+data.frame(t(accuracy(model1))),
+
+data.frame(t(accuracy(model2)))
+
+                )
+
+ACC <- round(ACC,2)
+
+ACC <- cbind(Type=c(?Model1?,?Model2?,?Model3?),ACC)
+
+ACC[order(ACC$MAE),]
+
+Type      ME   RMSE    MAE   MPE  MAPE MASE
+
+Model2 -8.88 127.93 95.84 -0.29 2.47 0.43
+
+Model3 -8.81 127.90 95.90 -0.29 2.48 0.43
+
+Model1 -7.87 128.72 97.51 -0.26 2.52 0.44
+
+con modelo 2 ó 3 de forma gráfica no queda muy claro (adjunto gráfico)
+
+*\Modelo_4
+
+xreg<-model.matrix(~as.factor(cen))
+
+*model4* <- Arima(Y_IB, order=c(0,1,1), seasonal=list(order=c(0,1,1),
+period=12), xreg=xreg)
+
+plot(Y_IB)
+
+lines(fitted(model4),col=2):(de forma gráfica no se aprecia muy bien)
+
+fitted(model4) *\comparo con los valores originales en este caso de Ibería
+(Y_IB)
+
+Y_IB
+
+Model4
+
+Abril_2010
+
+4024
+
+3997.621
+
+Mayo_2010
+
+4206
+
+3954.679
+
+Junio_2010
+
+4437
+
+4403.932
+
+Julio_2010
+
+4966
+
+4770.645
+
+Agos_2010
+
+4914
+
+4898.686
+
+Sept_2010
+
+4474
+
+4567.054
+
+Oct_2010
+
+4566
+
+4524.261
+
+Nov_2010
+
+4022
+
+4112.943
+
+Dic_2010
+
+3993
+
+4071.653
+
+  Alguien podría ayudarme.
+
+Gracias por anticipado
+
+Justo
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120102/113b9db0/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: serie_IB.png
+Type: image/png
+Size: 7861 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120102/113b9db0/attachment-0001.png>
+
+From cof en qualityexcellence.es  Tue Jan  3 18:45:55 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 3 Jan 2012 18:45:55 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Duda_sobre_variables_de_impulso_y_escal=F3n?=
+	=?iso-8859-1?q?_en_series?=
+In-Reply-To: <CAHr7g2XadG-me7fZcW2Sj8z6K+btk5bSh5=FADWuRxwSpmXqBg@mail.gmail.com>
+References: <CAHr7g2XadG-me7fZcW2Sj8z6K+btk5bSh5=FADWuRxwSpmXqBg@mail.gmail.com>
+Message-ID: <CAOKbq8g0RXoYGzA-OigYUN=2WPuwkTBfJBxp6u+djdURk+foLw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120103/096aedb2/attachment.pl>
+
+From Guillermo.Vinue en uv.es  Wed Jan  4 10:07:55 2012
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Wed, 4 Jan 2012 10:07:55 +0100 (CET)
+Subject: [R-es] Reemplazar valores en un vector dado otro
+Message-ID: <3477631178vivigui@uv.es>
+
+Hola, 
+
+Tengo un vector llamado “neig” y querría sustituir sus valores dados por
+el vector “etiqs_nuevas”, por los valores de “etiqs_orig” que ocupen la
+misma posición.
+
+Por ejemplo, si neig[1] es un 8, lo reemplazaría por el valor 17 porque
+el valor 17 ocupa la misma posición en “etiqs_orig” que el valor 8 en
+“etiqs_nuevas”.
+
+>neig
+[1] 8  8  8  2  5  5  8  8  8  8  8  2  8 12  5 12 12  5 11 13  7  7 14
+14 13
+ 12 12 14 14 14  8  6 12  8  5  8  5  5 13  8 12  5  8  5  5  3  6
+
+
+>etiqs_nuevas
+
+[1] 1  2  3  4  5  6  7  8  9 10 11 12 13 14
+
+
+>etiqs_orig
+
+[1] 1  6  8 12 14 15 16 17 18 20 21 22 23 24
+
+
+He hecho el siguiente bucle for, pero me encuentro ante un problema.
+
+for(i in 1:length(etiqs_orig)){
+
+ neig[neig == etiqs_nuevas[i]] <- etiqs_orig[i]
+
+}
+
+Se trata de que por ejemplo, para i=2, el valor 2 se me transforma en un
+6 que es lo que quiero, pero cuando i=6, ese valor 6 surgido de
+sustituir a 2 se me transforma en un 15.
+Por tanto, el valor 2 finalmente aparece sustituido por el valor 15,
+cuando yo querría que fuera el valor 6.
+
+¿Cómo podría escribir que un valor ya sustituido no se vuelva a
+sustituir?, ¿alguien conoce una forma rápida de hacerlo?, si no, creo
+que me veo obligado a escribir muchas líneas de código.
+
+También he probado con la función replace pero no me da el resultado que
+necesito.
+
+replace(neig,etiqs_nuevas,etiqs_orig)
+
+
+Muchas gracias de antemano y feliz año a tod en s.
+
+Un saludo,
+
+Guillermo
+
+
+From cof en qualityexcellence.es  Wed Jan  4 10:32:28 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 4 Jan 2012 10:32:28 +0100
+Subject: [R-es] Reemplazar valores en un vector dado otro
+In-Reply-To: <3477631178vivigui@uv.es>
+References: <3477631178vivigui@uv.es>
+Message-ID: <CAOKbq8jbzB1z51eFcgKJBn2ym2XtOpqpF4tuWvdy8VVj_BDC4A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120104/8907b718/attachment.pl>
+
+From Guillermo.Vinue en uv.es  Wed Jan  4 10:52:06 2012
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Wed, 4 Jan 2012 10:52:06 +0100 (CET)
+Subject: [R-es] Reemplazar valores en un vector dado otro
+In-Reply-To: <CAOKbq8jbzB1z51eFcgKJBn2ym2XtOpqpF4tuWvdy8VVj_BDC4A@mail.gmail.com>
+References: <CAOKbq8jbzB1z51eFcgKJBn2ym2XtOpqpF4tuWvdy8VVj_BDC4A@mail.gmail.com>
+Message-ID: <7255251434vivigui@uv.es>
+
+Hola Carlos, sí que hace lo que busco.
+
+Muchas gracias por tu ayuda.
+
+Un saludo,
+
+Guillermo
+
+> Hola,
+> 
+> He planteado el bucle de otra forma y si lo he entendido bien, hace lo que
+> buscas
+> 
+> > > neig<-c(8,8, 8, 2,5,  5,  8,  8,  8,  8,  8,  2,  8, 12,  5, 12,
+12,  5, 11, 13,  7,  7, 14, 14, 13,  12, 12, +         14, 14 ,14,  8, 
+6, 12,  8,  5,  8,  5,  5, 13,  8, 12,  5,  8,  5,  5,  3,  6)> >
+e.or<-c(1,  6,  8, 12, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24)> >
+n.et<-0> for(i in 1:length(neig)) {+   n.et[i]<-e.or[neig[i]]+   }> >
+n.et [1] 17 17 17  6 14 14 17 17 17 17 17  6 17 22 14 22 22 14 21 23 16
+16 24
+> [24] 24 23 22 22 24 24 24 17 15 22 17 14 17 14 14 23 17 22 14 17 14 14  8
+> [47] 15
+> 
+> 
+> >
+> 
+> 
+> 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+> 
+> El 4 de enero de 2012 10:07, <Guillermo.Vinue en uv.es> escribió:
+> 
+> > Hola,
+> >
+> > Tengo un vector llamado “neig” y querría sustituir sus valores dados por
+> > el vector “etiqs_nuevas”, por los valores de “etiqs_orig” que ocupen la
+> > misma posición.
+> >
+> > Por ejemplo, si neig[1] es un 8, lo reemplazaría por el valor 17 porque
+> > el valor 17 ocupa la misma posición en “etiqs_orig” que el valor 8 en
+> > “etiqs_nuevas”.
+> >
+> > >neig
+> > [1] 8  8  8  2  5  5  8  8  8  8  8  2  8 12  5 12 12  5 11 13  7  7 14
+> > 14 13
+> >  12 12 14 14 14  8  6 12  8  5  8  5  5 13  8 12  5  8  5  5  3  6
+> >
+> >
+> > >etiqs_nuevas
+> >
+> > [1] 1  2  3  4  5  6  7  8  9 10 11 12 13 14
+> >
+> >
+> > >etiqs_orig
+> >
+> > [1] 1  6  8 12 14 15 16 17 18 20 21 22 23 24
+> >
+> >
+> > He hecho el siguiente bucle for, pero me encuentro ante un problema.
+> >
+> > for(i in 1:length(etiqs_orig)){
+> >
+> >  neig[neig == etiqs_nuevas[i]] <- etiqs_orig[i]
+> >
+> > }
+> >
+> > Se trata de que por ejemplo, para i=2, el valor 2 se me transforma en un
+> > 6 que es lo que quiero, pero cuando i=6, ese valor 6 surgido de
+> > sustituir a 2 se me transforma en un 15.
+> > Por tanto, el valor 2 finalmente aparece sustituido por el valor 15,
+> > cuando yo querría que fuera el valor 6.
+> >
+> > ¿Cómo podría escribir que un valor ya sustituido no se vuelva a
+> > sustituir?, ¿alguien conoce una forma rápida de hacerlo?, si no, creo
+> > que me veo obligado a escribir muchas líneas de código.
+> >
+> > También he probado con la función replace pero no me da el resultado que
+> > necesito.
+> >
+> > replace(neig,etiqs_nuevas,etiqs_orig)
+> >
+> >
+> > Muchas gracias de antemano y feliz año a tod en s.
+> >
+> > Un saludo,
+> >
+> > Guillermo
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> 
+
+
+From cof en qualityexcellence.es  Wed Jan  4 11:34:50 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 4 Jan 2012 11:34:50 +0100
+Subject: [R-es] Reemplazar valores en un vector dado otro
+In-Reply-To: <7255251434vivigui@uv.es>
+References: <CAOKbq8jbzB1z51eFcgKJBn2ym2XtOpqpF4tuWvdy8VVj_BDC4A@mail.gmail.com>
+	<7255251434vivigui@uv.es>
+Message-ID: <CAOKbq8i8F+NiM7c8+=iw-ZnTAhYo4cyXivEVxmkfDPsvL5rxOg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120104/91cc478a/attachment.pl>
+
+From Guillermo.Vinue en uv.es  Wed Jan  4 12:54:08 2012
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Wed, 4 Jan 2012 12:54:08 +0100 (CET)
+Subject: [R-es] Reemplazar valores en un vector dado otro
+In-Reply-To: <CAOKbq8i8F+NiM7c8+=iw-ZnTAhYo4cyXivEVxmkfDPsvL5rxOg@mail.gmail.com>
+References: <CAOKbq8i8F+NiM7c8+=iw-ZnTAhYo4cyXivEVxmkfDPsvL5rxOg@mail.gmail.com>
+Message-ID: <6821317859vivigui@uv.es>
+
+Hola Carlos, muchas gracias también por esta segunda solución.
+
+Un saludo,
+
+Guillermo
+
+> Hola,
+> 
+> He probado esta opción que **evita el bucle** y funciona igualmente:
+> 
+> > e.or[neig] [1] 17 17 17  6 14 14 17 17 17 17 17  6 17 22 14 22 22 14
+21 23 16 16 24
+> [24] 24 23 22 22 24 24 24 17 15 22 17 14 17 14 14 23 17 22 14 17 14 14  8
+> [47] 15>
+> 
+> 
+> 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+> 
+> El 4 de enero de 2012 10:52, <Guillermo.Vinue en uv.es> escribió:
+> 
+> > Hola Carlos, sí que hace lo que busco.
+> >
+> > Muchas gracias por tu ayuda.
+> >
+> > Un saludo,
+> >
+> > Guillermo
+> >
+> > > Hola,
+> > >
+> > > He planteado el bucle de otra forma y si lo he entendido bien, hace lo
+> > que
+> > > buscas
+> > >
+> > > > > neig<-c(8,8, 8, 2,5,  5,  8,  8,  8,  8,  8,  2,  8, 12,  5, 12,
+> > 12,  5, 11, 13,  7,  7, 14, 14, 13,  12, 12, +         14, 14 ,14,  8,
+> > 6, 12,  8,  5,  8,  5,  5, 13,  8, 12,  5,  8,  5,  5,  3,  6)> >
+> > e.or<-c(1,  6,  8, 12, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24)> >
+> > n.et<-0> for(i in 1:length(neig)) {+   n.et[i]<-e.or[neig[i]]+   }> >
+> > n.et [1] 17 17 17  6 14 14 17 17 17 17 17  6 17 22 14 22 22 14 21 23 16
+> > 16 24
+> > > [24] 24 23 22 22 24 24 24 17 15 22 17 14 17 14 14 23 17 22 14 17
+14 14  8
+> > > [47] 15
+> > >
+> > >
+> > > >
+> > >
+> > >
+> > >
+> > > Saludos,
+> > > Carlos Ortega
+> > > www.qualityexcellence.es
+> > >
+> > > El 4 de enero de 2012 10:07, <Guillermo.Vinue en uv.es> escribió:
+> > >
+> > > > Hola,
+> > > >
+> > > > Tengo un vector llamado “neig” y querría sustituir sus valores dados
+> > por
+> > > > el vector “etiqs_nuevas”, por los valores de “etiqs_orig” que
+ocupen la
+> > > > misma posición.
+> > > >
+> > > > Por ejemplo, si neig[1] es un 8, lo reemplazaría por el valor 17
+porque
+> > > > el valor 17 ocupa la misma posición en “etiqs_orig” que el valor
+8 en
+> > > > “etiqs_nuevas”.
+> > > >
+> > > > >neig
+> > > > [1] 8  8  8  2  5  5  8  8  8  8  8  2  8 12  5 12 12  5 11 13 
+7  7 14
+> > > > 14 13
+> > > >  12 12 14 14 14  8  6 12  8  5  8  5  5 13  8 12  5  8  5  5  3  6
+> > > >
+> > > >
+> > > > >etiqs_nuevas
+> > > >
+> > > > [1] 1  2  3  4  5  6  7  8  9 10 11 12 13 14
+> > > >
+> > > >
+> > > > >etiqs_orig
+> > > >
+> > > > [1] 1  6  8 12 14 15 16 17 18 20 21 22 23 24
+> > > >
+> > > >
+> > > > He hecho el siguiente bucle for, pero me encuentro ante un problema .
+> > > >
+> > > > for(i in 1:length(etiqs_orig)){
+> > > >
+> > > >  neig[neig == etiqs_nuevas[i]] <- etiqs_orig[i]
+> > > >
+> > > > }
+> > > >
+> > > > Se trata de que por ejemplo, para i=2, el valor 2 se me
+transforma en
+> > un
+> > > > 6 que es lo que quiero, pero cuando i=6, ese valor 6 surgido de
+> > > > sustituir a 2 se me transforma en un 15.
+> > > > Por tanto, el valor 2 finalmente aparece sustituido por el valor 15,
+> > > > cuando yo querría que fuera el valor 6.
+> > > >
+> > > > ¿Cómo podría escribir que un valor ya sustituido no se vuelva a
+> > > > sustituir?, ¿alguien conoce una forma rápida de hacerlo?, si no,
+creo
+> > > > que me veo obligado a escribir muchas líneas de código.
+> > > >
+> > > > También he probado con la función replace pero no me da el resultado
+> > que
+> > > > necesito.
+> > > >
+> > > > replace(neig,etiqs_nuevas,etiqs_orig)
+> > > >
+> > > >
+> > > > Muchas gracias de antemano y feliz año a tod en s.
+> > > >
+> > > > Un saludo,
+> > > >
+> > > > Guillermo
+> > > >
+> > > > _______________________________________________
+> > > > R-help-es mailing list
+> > > > R-help-es en r-project.org
+> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> > > >
+> > >
+> >
+> >
+> >
+> 
+
+
+From pedroc en tid.es  Wed Jan  4 12:56:32 2012
+From: pedroc en tid.es (Pedro Concejero Cerezo)
+Date: Wed, 04 Jan 2012 12:56:32 +0100
+Subject: [R-es] rattle y R2.14 en plataforma windows
+Message-ID: <4F043E70.1050306@tid.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120104/f6a935ef/attachment.pl>
+
+From cof en qualityexcellence.es  Wed Jan  4 14:27:17 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 4 Jan 2012 14:27:17 +0100
+Subject: [R-es] rattle y R2.14 en plataforma windows
+In-Reply-To: <4F043E70.1050306@tid.es>
+References: <4F043E70.1050306@tid.es>
+Message-ID: <CAOKbq8j3aeEayC5AV0Gqm1=ogxYOcekR3owM5SAib8V5FbpHug@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120104/f5dfdbac/attachment.pl>
+
+From pedroc en tid.es  Wed Jan  4 16:01:56 2012
+From: pedroc en tid.es (Pedro Concejero Cerezo)
+Date: Wed, 04 Jan 2012 16:01:56 +0100
+Subject: [R-es] rattle y R2.14 en plataforma windows
+In-Reply-To: <CAOKbq8j3aeEayC5AV0Gqm1=ogxYOcekR3owM5SAib8V5FbpHug@mail.gmail.com>
+References: <4F043E70.1050306@tid.es>
+	<CAOKbq8j3aeEayC5AV0Gqm1=ogxYOcekR3owM5SAib8V5FbpHug@mail.gmail.com>
+Message-ID: <4F0469E4.60603@tid.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120104/ec7210ec/attachment.pl>
+
+From cof en qualityexcellence.es  Wed Jan  4 16:44:44 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 4 Jan 2012 16:44:44 +0100
+Subject: [R-es] rattle y R2.14 en plataforma windows
+In-Reply-To: <4F0469E4.60603@tid.es>
+References: <4F043E70.1050306@tid.es>
+	<CAOKbq8j3aeEayC5AV0Gqm1=ogxYOcekR3owM5SAib8V5FbpHug@mail.gmail.com>
+	<4F0469E4.60603@tid.es>
+Message-ID: <CAOKbq8jVnpkJcEPqsy24+cG2tOrz-9iO1cCMiDaH-hZ-UmjB1Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120104/9f2167c5/attachment.pl>
+
+From palazon en um.es  Wed Jan  4 21:45:23 2012
+From: palazon en um.es (=?ISO-8859-1?Q?Jos=E9_Antonio_Palaz=F3n_Ferrando?=)
+Date: Wed, 04 Jan 2012 21:45:23 +0100
+Subject: [R-es] Problema: paquete raster + sweave
+Message-ID: <4F04BA63.9040707@um.es>
+
+Hola:
+
+Feliz 2012 ...  sin bromas, mis mejores deseos
+no los recorta nadie ;-)
+
+He tropezado con un problema al utilizar
+funciones de creación de un raster desde
+un documento Rnw.
+
+Por ejemplo, el siguiente chunk:
+
+<<>>=
+raster(matrix(1:100,10))
+2+2
+@
+
+proporciona un bonito error,
+que pdflatex avisa como:
+
+! File ended while scanning use of \FancyVerbGetLine
+
+Efectivamente al ver el tex producido por
+R veo que el código se acaba precisamente
+así:
+
+\begin{Schunk}
+\begin{Sinput}
+R> raster(matrix(1:100,10))
+
+
+El propmt "R>" se lo indico yo, y el 2+2 es para ver
+en que momento se produce el final del código.
+
+¿Alguien tiene una pista para atacar el problema?
+
+Gracias
+
+
+-- 
+____________________________________________________________
+José Antonio Palazón Ferrando
+Profesor Titular. Departamento de Ecología e Hidrología.
+Facultad de Biología. Universidad de Murcia.
+Campus Universitario de Espinardo
+30100 MURCIA-SPAIN
+Telf: +34 968 36 49 80
+Fax : +34 968 36 39 63
+Email: palazon en um.es
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Jan  4 23:40:20 2012
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Wed, 4 Jan 2012 19:40:20 -0300
+Subject: [R-es] Problema: paquete raster + sweave
+In-Reply-To: <4F04BA63.9040707@um.es>
+References: <4F04BA63.9040707@um.es>
+Message-ID: <CAHo_aERVoMZxmMLMRwoNMoZhVVXB5iP4izUiznf0bd5FxQiyqg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120104/4dad9a55/attachment.pl>
+
+From leonardo.hernandez en etecsa.cu  Fri Jan  6 16:44:45 2012
+From: leonardo.hernandez en etecsa.cu (=?ISO-8859-1?Q?Leonardo_Hern=E1ndez_P=E9rez?=)
+Date: Fri, 06 Jan 2012 10:44:45 -0500
+Subject: [R-es] =?iso-8859-1?q?Pasar_par=E1metros_a_R_desde_PHP?=
+Message-ID: <4F0716ED.4060604@etecsa.cu>
+
+
+Hola Colegas:
+
+Existe la posibilidad de Pasar parámetros a R desde PHP?
+
+Saludos,
+
+Leonardo
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120106/ed6dd9de/attachment.pl>
+
+From cof en qualityexcellence.es  Fri Jan  6 20:44:29 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 6 Jan 2012 20:44:29 +0100
+Subject: [R-es] =?iso-8859-1?q?Pasar_par=E1metros_a_R_desde_PHP?=
+In-Reply-To: <4F0716ED.4060604@etecsa.cu>
+References: <4F0716ED.4060604@etecsa.cu>
+Message-ID: <CAOKbq8j26i=Yu-F3TK+7nD6AipH6W36O6=2FokvC3Zxui_4a3A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120106/91956a6b/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Fri Jan  6 20:54:03 2012
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Fri, 6 Jan 2012 16:54:03 -0300
+Subject: [R-es] =?iso-8859-1?q?Pasar_par=E1metros_a_R_desde_PHP?=
+In-Reply-To: <4F0716ED.4060604@etecsa.cu>
+References: <4F0716ED.4060604@etecsa.cu>
+Message-ID: <CAHo_aEQYs=pH1iXJ295tuiA1e88BexNnnj9RiFE3zTMnMK7=uA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120106/7e405b6b/attachment.pl>
+
+From caaperezan en gmail.com  Tue Jan 10 14:46:37 2012
+From: caaperezan en gmail.com (Carlos Andres Perez Angarita)
+Date: Tue, 10 Jan 2012 08:46:37 -0500
+Subject: [R-es] Submuestreo
+Message-ID: <CAFrddgdvhMMZvw+wcvQLX_RkVB5yTG599z37dyxdE7Xa9EbJWw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120110/d53c13e3/attachment.pl>
+
+From cof en qualityexcellence.es  Tue Jan 10 15:56:12 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 10 Jan 2012 15:56:12 +0100
+Subject: [R-es] Submuestreo
+In-Reply-To: <CAFrddgdvhMMZvw+wcvQLX_RkVB5yTG599z37dyxdE7Xa9EbJWw@mail.gmail.com>
+References: <CAFrddgdvhMMZvw+wcvQLX_RkVB5yTG599z37dyxdE7Xa9EbJWw@mail.gmail.com>
+Message-ID: <CAOKbq8gn1AYbDLvw6G9+5DmU-2=HudYpXCNKRwQPUC_NmJOWcg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120110/9b161e2e/attachment.pl>
+
+From residuo.solow en gmail.com  Tue Jan 10 17:30:13 2012
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Tue, 10 Jan 2012 13:30:13 -0300
+Subject: [R-es] unir en .dbf luego de aplicar read.xls a varios archivos
+Message-ID: <CAMn86NcMhNYNjoO28g6ibU1R+Ot9JegU7MOMEVn-uh0YdMRP6Q@mail.gmail.com>
+
+Estimados:
+
+Tengo un directorio con varios archivos Excel quiero importarlos todos
+y grabarlos en un único archivo .dbf.
+
+Haciendolo uno por uno lo logro de la siguiente manera (solo tomo 2 archivos):
+
+archivos <- list.files(pattern = 'xls')
+
+a1 <- read.xls(archivos[1],
+perl="C:\\strawberry\\perl\\bin\\perl.exe",skip=12,dec=",",header=F,as.is=T)
+a2 <- read.xls(archivos[2],
+perl="C:\\strawberry\\perl\\bin\\perl.exe",skip=12,dec=",",header=F,as.is=T)
+
+a11 <- cbind(a1[1,1:2],a1[4:which(a1=="Art. 14")-1,1:7])
+a21 <- cbind(a2[1,1:2],a1[4:which(a1=="Art. 14")-1,1:7])
+
+a3 <- rbind(a11,a21)
+
+Si lo hago con lapply me queda mal.
+
+Saludos,
+
+Sebastián.
+
+
+From jorgeivanvelez en gmail.com  Tue Jan 10 17:50:18 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Tue, 10 Jan 2012 11:50:18 -0500
+Subject: [R-es] unir en .dbf luego de aplicar read.xls a varios archivos
+In-Reply-To: <CAMn86NcMhNYNjoO28g6ibU1R+Ot9JegU7MOMEVn-uh0YdMRP6Q@mail.gmail.com>
+References: <CAMn86NcMhNYNjoO28g6ibU1R+Ot9JegU7MOMEVn-uh0YdMRP6Q@mail.gmail.com>
+Message-ID: <CAKL8G3FsL6DWCr682EBGLAbOiK8vbstGV=+UL6OLE8mVaEH=vA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120110/3a06b9f8/attachment.pl>
+
+From leonardo.hernandez en etecsa.cu  Tue Jan 10 20:11:40 2012
+From: leonardo.hernandez en etecsa.cu (=?ISO-8859-1?Q?Leonardo_Hern=E1ndez_P=E9rez?=)
+Date: Tue, 10 Jan 2012 14:11:40 -0500
+Subject: [R-es] =?iso-8859-1?q?Pasar_par=E1metros_a_R_desde_PHP?=
+In-Reply-To: <CAOKbq8j26i=Yu-F3TK+7nD6AipH6W36O6=2FokvC3Zxui_4a3A@mail.gmail.com>
+References: <4F0716ED.4060604@etecsa.cu>
+	<CAOKbq8j26i=Yu-F3TK+7nD6AipH6W36O6=2FokvC3Zxui_4a3A@mail.gmail.com>
+Message-ID: <4F0C8D6C.4000403@etecsa.cu>
+
+Hola Amigos:
+
+Gracias por su ayuda, ya he buscado en varios de los link que me han 
+enviado y puedo perfectamente ejecutar R desde PHP y publicar los 
+resultados.
+
+Un abrazo a Todos.
+
+Leonardo
+
+
+
+
+On 06/01/12 14:44, Carlos Ortega wrote:
+> Hola,
+>
+> Esta entrada pueda ayudarte:
+>
+> http://stackoverflow.com/questions/4818641/using-r-through-php
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es>
+>
+> El 6 de enero de 2012 16:44, Leonardo Hernández Pérez 
+> <leonardo.hernandez en etecsa.cu <mailto:leonardo.hernandez en etecsa.cu>> 
+> escribió:
+>
+>
+>     Hola Colegas:
+>
+>     Existe la posibilidad de Pasar parámetros a R desde PHP?
+>
+>     Saludos,
+>
+>     Leonardo
+>     ---
+>     This message was processed by Kaspersky Mail Gateway
+>     5.6.28/RELEASE running at host imx3.etecsa.cu <http://imx3.etecsa.cu>
+>     Visit our web-site: <http://www.kaspersky.com>,
+>     <http://www.viruslist.com>
+>
+>     _______________________________________________
+>     R-help-es mailing list
+>     R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>     https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+> ---
+> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx3.etecsa.cu
+> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120110/b1df4bc4/attachment.html>
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120110/b1df4bc4/attachment.pl>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Wed Jan 11 09:29:49 2012
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Wed, 11 Jan 2012 09:29:49 +0100
+Subject: [R-es] unir en .dbf luego de aplicar read.xls a varios archivos
+In-Reply-To: <CAKL8G3FsL6DWCr682EBGLAbOiK8vbstGV=+UL6OLE8mVaEH=vA@mail.gmail.com>
+References: <CAMn86NcMhNYNjoO28g6ibU1R+Ot9JegU7MOMEVn-uh0YdMRP6Q@mail.gmail.com>
+	<CAKL8G3FsL6DWCr682EBGLAbOiK8vbstGV=+UL6OLE8mVaEH=vA@mail.gmail.com>
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943771BF0FBC609@ASSCCEVS02.sergas.local>
+
+Hola Sebastian.
+
+Otra opción es utilizar XLConnect
+http://cran.r-project.org/web/packages/XLConnect/index.html
+
+Es un poco más "potente" pues te permite manipular libros Excel (o leer parcialmente libros y/o hojas) desde R.
+Creo recordar que con readWorksheetFromFile podrías hacer lo que necesitas.
+
+Un Saludo,
+Miguel.
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Jorge I Velez
+Enviado el: martes, 10 de enero de 2012 17:50
+Para: Sebastian Kruk
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] unir en .dbf luego de aplicar read.xls a varios archivos
+
+Hola Sebastian,
+
+No tengo Windows a la mano, pero podrias intentar con RODBC (que no usa
+Perl):
+
+[...]
+
+
+2012/1/10 Sebastian Kruk <>
+
+> Estimados:
+>
+> Tengo un directorio con varios archivos Excel quiero importarlos todos
+> y grabarlos en un único archivo .dbf.
+>
+>
+>  [...]
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Jan 11 13:19:54 2012
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Wed, 11 Jan 2012 09:19:54 -0300
+Subject: [R-es] unir en .dbf luego de aplicar read.xls a varios archivos
+In-Reply-To: <0A5B869BDC0A7445B15F9A4A537943771BF0FBC609@ASSCCEVS02.sergas.local>
+References: <CAMn86NcMhNYNjoO28g6ibU1R+Ot9JegU7MOMEVn-uh0YdMRP6Q@mail.gmail.com><CAKL8G3FsL6DWCr682EBGLAbOiK8vbstGV=+UL6OLE8mVaEH=vA@mail.gmail.com>
+	<0A5B869BDC0A7445B15F9A4A537943771BF0FBC609@ASSCCEVS02.sergas.local>
+Message-ID: <19AE6F104947448097868DEF30C3BE62@JavierMarcuzzi>
+
+Hola
+
+Por las dudas, a mi me paso el tener algunos archivos *.xls, todos de la 
+misma empresa, sobre el mismo tema, eran idénticos, pero ..., no tan 
+idénticos, tuve que unirlos a mano y me llevo bastante tiempo.
+
+Si tiene problemas verifique los archivos *.xls
+
+-----Mensaje original----- 
+From: miguel.angel.rodriguez.muinos en sergas.es
+Sent: Wednesday, January 11, 2012 5:29 AM
+To: jorgeivanvelez en gmail.com ; residuo.solow en gmail.com
+Cc: r-help-es en r-project.org
+Subject: Re: [R-es] unir en .dbf luego de aplicar read.xls a varios archivos
+
+Hola Sebastian.
+
+Otra opción es utilizar XLConnect
+http://cran.r-project.org/web/packages/XLConnect/index.html
+
+Es un poco más "potente" pues te permite manipular libros Excel (o leer 
+parcialmente libros y/o hojas) desde R.
+Creo recordar que con readWorksheetFromFile podrías hacer lo que necesitas.
+
+Un Saludo,
+Miguel.
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] 
+En nombre de Jorge I Velez
+Enviado el: martes, 10 de enero de 2012 17:50
+Para: Sebastian Kruk
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] unir en .dbf luego de aplicar read.xls a varios archivos
+
+Hola Sebastian,
+
+No tengo Windows a la mano, pero podrias intentar con RODBC (que no usa
+Perl):
+
+[...]
+
+
+2012/1/10 Sebastian Kruk <>
+
+> Estimados:
+>
+> Tengo un directorio con varios archivos Excel quiero importarlos todos
+> y grabarlos en un único archivo .dbf.
+>
+>
+>  [...]
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos 
+adxuntos é privada e confidencial e está dirixida únicamente ó seu 
+destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, 
+por favor elimínea. A distribución ou copia desta mensaxe non está 
+autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos 
+adjuntos es privada y confidencial y está dirigida únicamente a su 
+destinatario/a. Si usted no es el/la destinatario/a original de este 
+mensaje, por favor elimínelo. La distribución o copia de este mensaje no 
+está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From pedroc en tid.es  Thu Jan 12 11:04:46 2012
+From: pedroc en tid.es (Pedro Concejero Cerezo)
+Date: Thu, 12 Jan 2012 11:04:46 +0100
+Subject: [R-es] R portable (consulta concreta)
+Message-ID: <4F0EB03E.2040307@tid.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120112/b7fdb97e/attachment.pl>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Thu Jan 12 12:11:24 2012
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Thu, 12 Jan 2012 12:11:24 +0100
+Subject: [R-es] R portable (consulta concreta)
+In-Reply-To: <4F0EB03E.2040307@tid.es>
+References: <4F0EB03E.2040307@tid.es>
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943771BF0FBCF69@ASSCCEVS02.sergas.local>
+
+Hola Pedro.
+
+Según acabo de comprobar el archivo sigue activo en la misma URL de descarga (http://www.megaupload.com/?d=M0LOT99F)
+De todas formas, voy a explicar cómo he construido los .bat
+
+En la carpeta /etc hay un fichero que se llama Rprofile.site en el que todas las líneas están comentadas, es decir, originariamente es un fichero vacío.
+Cuando llamamos a Rgui.exe (que está en la carpeta /bin/i386) se carga lo que aparezca en ese fichero (por defecto, nada) cuando arranca la consola de R.
+
+Imagina que quiero que, cuando arranque R, se cargue directamente RCommander... lo que hago es modificar ese fichero añadiéndole
+
+# Fichero Rprofile.site
+# Carga de R Commander
+require(Rcmdr)
+
+Hasta ahí todo OK. Si sólo quiero cargar algunas librerías al arrancar R con modificar ese fichero ya me llega.
+
+Para lanzar el programa, simplemente creo un RCommander.bat que llame a /bin/i386/Rgui.exe y listo.
+
+Te adjunto el .bat en cuestión....
+
+@echo off
+cd bin
+cd i386
+start Rgui.exe
+
+Mi problema era algo más complejo... cómo cargar unas u otras librerías dependiendo de las circunstancias?... para eso me creé varios archivos Rprofile.site que cargaba según me interesaba al ejecutar su .bat correspondiente.
+
+Veamos... para cargar el RCommander tenía un RCommander.bat y un Rprofile.Rcmdr.site, para cargar el entorno "limpio" tenía un R.bat y un Rprofile.R.site, para cargar Deducer idem con RDeducer.bat y Rprofile.Deducer.site, ...
+
+La idea es la siguiente... cuando ejecuto un BAT, lo que hago es sobreescribir el Rprofile.site original por el Rprofile.xxx.site correspondiente y ya puedo arrancar con las librerías que me interesan.... te pongo el ejemplo completo con RCommander:
+
+# Fichero RComander.bat
+@echo off
+cd etc
+del Rprofile.site
+copy Rprofile.Rcmdr.site Rprofile.site
+cd..
+cd bin
+cd i386
+start /MIN Rgui.exe
+
+# Fichero Rprofile.Rcmdr.site
+# Carga de R Commander
+require(Rcmdr)
+
+
+Como ves, en el .bat me sitúo en la carpeta /etc, borro el .site original y copio el modificado con el mismo nombre que el original... luego ejecuto Rgui en su carpeta correspondiente (y hago que la consola aparezca minimizada, para que no "estorbe").
+
+Análogamente puedes hacerlo para las librerías que te interesen... Veamos el caso de Deducer...
+
+# Fichero RDeducer.bat
+@echo off
+cd etc
+del Rprofile.site
+copy Rprofile.Deducer.site Rprofile.site
+cd..
+cd bin
+cd i386
+start Rgui.exe
+
+# Fichero Rprofile.Deducer.site
+# Carga de Deducer
+require(Deducer)
+require(DeducerExtras)
+
+Es decir, lo mismo que en el caso anterior pero sin ejecutar minimizada la consola, puesto que el Deducer "añade" sus menús al original de la consola.
+
+Bueno, espero que te haya servido.
+
+Un Saludo,
+_________________________________________________
+Miguel Ángel Rodríguez Muíños
+Dirección Xeral de Innovación e Xestión da Saúde Pública
+Consellería de Sanidade
+Xunta de Galicia
+http://dxsp.sergas.es
+___________________________________________________
+
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Pedro Concejero Cerezo
+Enviado el: jueves, 12 de enero de 2012 11:05
+Para: r-help-es en r-project.org
+Asunto: [R-es] R portable (consulta concreta)
+
+Hola, próximamente comienzo a dar clases en la universidad y como no puede ser de otra manera utilizaré R para las mismas. Recuerdo un mensaje de Miguel Ángel Rodríguez Muíños en el que enlazaba a una versión de R portable para Windows, con las explicaciones detalladísimas. Tengo ese mensaje, pero no me puedo descargar el zip desde megaupload, quizás por el tiempo que ha pasado desde entonces. No pasa nada, porque con las instrucciones tengo suficiente para preparar yo mismo la versión, pero sí me gustaría tener los .bat que mencionaba al final del mensaje...
+
+[...]
+
+
+
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From leonardo.hernandez en etecsa.cu  Thu Jan 12 14:59:03 2012
+From: leonardo.hernandez en etecsa.cu (=?ISO-8859-1?Q?Leonardo_Hern=E1ndez_P=E9rez?=)
+Date: Thu, 12 Jan 2012 08:59:03 -0500
+Subject: [R-es] =?iso-8859-1?q?Pasar_par=E1metros_a_R_desde_PHP?=
+In-Reply-To: <CAPRmSMF_asndL8gqFspxSRCeHXgZLx7rJR-XSAe8yE4PUznatg@mail.gmail.com>
+References: <4F0716ED.4060604@etecsa.cu>
+	<CAOKbq8j26i=Yu-F3TK+7nD6AipH6W36O6=2FokvC3Zxui_4a3A@mail.gmail.com>
+	<4F0C8D6C.4000403@etecsa.cu>
+	<CAPRmSMF_asndL8gqFspxSRCeHXgZLx7rJR-XSAe8yE4PUznatg@mail.gmail.com>
+Message-ID: <4F0EE727.5040307@etecsa.cu>
+
+Hola Gregorio:
+
+Hasta el momento lo que he hecho, como expliqué en este correo, es 
+probar que puede ejecutarse R desde PHP con instrucciones muy sencillas, 
+aún no tengo el resultado de las cosas que quiero hacer que seguramente 
+enviaré a la lista en cuanto los tenga. Solo puedo decirte que es un 
+camino bastante trillado del cual se han publicado varios trabajos y 
+aquí dejo en estos link los más útiles que he visto.
+
+Un abrazo a todos, Leonardo
+
+http://dssm.unipa.it/R-php/
+
+En este primer enlace se desarrolla una interfaz web basada en apache - 
+php para trabajar en R, no la he explorado mucho ya que este no es el 
+objetivo de mi trabajo.
+
+http://steve-chen.net/document/r/r_php
+
+Este es otro similar al anterior
+
+http://stotastic.com/wordpress/2010/08/integrating-php-and-r/
+
+Este es el ejemplo que probé y funciona perfectamente, le hice varios 
+cambios, utilicé otras funcionas y trabaja muy bien.
+
+http://www.math.montana.edu/Rweb/
+
+Esta es otra interfaz web basada en php
+
+Y estos que les relaciono a continuación son PDFs que tratan el tema
+
+www.*r*-project.org/user.../Mineo+Pontillo.pdf
+www.jstatsoft.org/v17/i04/paper
+
+Otros enlaces de interés sobre el tema
+
+http://www.stanford.edu/~mjockers/cgi-bin/rtest/form.html
+https://www.stanford.edu/~mjockers/cgi-bin/drupal/node/25
+www.stanford.edu/~mjockers/cgi-bin/rtest/execRSourceFiles.zip
+http://techerald.com/page/usando-r-con-apache-y-php.html
+http://stackoverflow.com/questions/8642693/php-call-r-image-created-when-executed-in-terminal-but-not-from-web-ui
+http://www.math.montana.edu/Rweb/Rweb.JavaScript.html
+http://foros.cristalab.com/como-llamar-codigo-de-r-desde-php-t72346/
+
+
+
+
+
+
+
+
+On 12/01/12 04:32, Gregorio R. Serrano wrote:
+> Leonardo, no estaría de más que contases cómo hacerlo, por si a 
+> alguien le surge esa duda, así buscando en la lista podría 
+> solucionarlo en vez de volver a preguntar.
+>
+> Un saludo
+> Gregorio R. Serrano
+>
+> El 10 de enero de 2012 20:11, Leonardo Hernández Pérez 
+> <leonardo.hernandez en etecsa.cu <mailto:leonardo.hernandez en etecsa.cu>> 
+> escribió:
+>
+>     Hola Amigos:
+>
+>     Gracias por su ayuda, ya he buscado en varios de los link que me
+>     han enviado y puedo perfectamente ejecutar R desde PHP y publicar
+>     los resultados.
+>
+>     Un abrazo a Todos.
+>
+>     Leonardo
+>
+>
+>
+>
+>     On 06/01/12 14:44, Carlos Ortega wrote:
+>>     Hola,
+>>
+>>     Esta entrada pueda ayudarte:
+>>
+>>     http://stackoverflow.com/questions/4818641/using-r-through-php
+>>
+>>     Saludos,
+>>     Carlos Ortega
+>>     www.qualityexcellence.es <http://www.qualityexcellence.es>
+>>
+>>     El 6 de enero de 2012 16:44, Leonardo Hernández Pérez
+>>     <leonardo.hernandez en etecsa.cu
+>>     <mailto:leonardo.hernandez en etecsa.cu>> escribió:
+>>
+>>
+>>         Hola Colegas:
+>>
+>>         Existe la posibilidad de Pasar parámetros a R desde PHP?
+>>
+>>         Saludos,
+>>
+>>         Leonardo
+>>         ---
+>>         This message was processed by Kaspersky Mail Gateway
+>>         5.6.28/RELEASE running at host imx3.etecsa.cu
+>>         <http://imx3.etecsa.cu>
+>>         Visit our web-site: <http://www.kaspersky.com>,
+>>         <http://www.viruslist.com>
+>>
+>>         _______________________________________________
+>>         R-help-es mailing list
+>>         R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>         https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>>
+>>
+>>     ---
+>>     This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at hostimx3.etecsa.cu  <http://imx3.etecsa.cu>
+>>     Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>
+>
+>
+>     ---
+>     This message was processed by Kaspersky Mail Gateway
+>     5.6.28/RELEASE running at host imx3.etecsa.cu <http://imx3.etecsa.cu>
+>     Visit our web-site: <http://www.kaspersky.com>,
+>     <http://www.viruslist.com>
+>
+>     _______________________________________________
+>     R-help-es mailing list
+>     R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>     https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+> -- 
+> Dr. Gregorio R. Serrano
+> Dpto. Economía Cuantitativa (UCM)
+> Voz:+34 91394 2361
+> Twitter: @grserrano_
+> http://www.grserrano.es
+>
+>
+> ---
+> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx2.etecsa.cu
+> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120112/b14b1cbf/attachment.html>
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120112/b14b1cbf/attachment.pl>
+
+From ericconchamunoz en gmail.com  Thu Jan 12 15:57:54 2012
+From: ericconchamunoz en gmail.com (Eric)
+Date: Thu, 12 Jan 2012 11:57:54 -0300
+Subject: [R-es] Problema al eliminar filas desde un data.frame dentro de un
+	ciclo for ...
+Message-ID: <CALATcDCfYpj-nZLdWgdmVdjRH=TyEezpaFFfUj-3ywCA_wP1rQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120112/e560413b/attachment.pl>
+
+From cgb en datanalytics.com  Thu Jan 12 16:02:08 2012
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 12 Jan 2012 16:02:08 +0100
+Subject: [R-es] Problema al eliminar filas desde un data.frame dentro de
+ un ciclo for ...
+In-Reply-To: <CALATcDCfYpj-nZLdWgdmVdjRH=TyEezpaFFfUj-3ywCA_wP1rQ@mail.gmail.com>
+References: <CALATcDCfYpj-nZLdWgdmVdjRH=TyEezpaFFfUj-3ywCA_wP1rQ@mail.gmail.com>
+Message-ID: <CADg83ecvGXoSm5A_OeysdsXK0tx4jOHj7VxfGVNvPczObaFVVw@mail.gmail.com>
+
+Es que es mucho más simple que eso:
+
+dat <- dat[ dat[,5] != 10000,]
+
+resuelve tu problema.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 12 de enero de 2012 15:57, Eric <ericconchamunoz en gmail.com> escribió:
+> Estimada comunidad tengo el siguiente problema:
+>
+> Tengo un data.frame con 5 columnas y 10.000 filas, tengo que eliminar todas
+> las filas cuyo valor de la 5a columna sea 10.000 ... trato de hacer esto
+> dentro de un ciclo for con el siguiente codigo:
+>
+> j <- 10000
+> for (i in 1:j)
+> {
+>    if (dat12.23hex34_75_1col5[[i]]==10000)
+>    {
+>    dat12.23hex34_75_1col5 <- dat12.23hex34_75_1col5[[-i]]
+>    i <- i-1
+>    j <- j-1
+>    }
+> }
+>
+> y obtengo el siguiente error:
+>
+> Error in dat12.23hex34_75_1col5[[-i]] :
+>  attempt to select more than one element
+>
+>
+> la verdad es que nunca he hecho un ciclo for que me funciones, ni se bien
+> como tratar los data.frame dentro de un ciclo for, por lo que no se bien
+> que significa el error que obtengo ... he googleado obviamente, pero no
+> encuentro observaciones que me conduzcan a una solucion de mi problema ...
+> quiza puede haber otra forma en R de hacer esto ...
+>
+> alguna sugerencia por favor??
+>
+> Muchas gracias a todos por su tiempo,
+>
+> Eric.
+>
+>
+>
+>
+>
+> --
+> Nota: las tildes se han omitido para evitar conflictos con algunos lectores
+> de correo.
+>
+> * Un economista es un experto que sabrá mañana por qué las cosas que predijo
+> ayer no han sucedido hoy (Laurence Peter).
+>
+> * SATYÂT NÂSTI PARO DHARMAH
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From jorgeivanvelez en gmail.com  Thu Jan 12 16:04:37 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Thu, 12 Jan 2012 10:04:37 -0500
+Subject: [R-es] Problema al eliminar filas desde un data.frame dentro de
+ un ciclo for ...
+In-Reply-To: <CALATcDCfYpj-nZLdWgdmVdjRH=TyEezpaFFfUj-3ywCA_wP1rQ@mail.gmail.com>
+References: <CALATcDCfYpj-nZLdWgdmVdjRH=TyEezpaFFfUj-3ywCA_wP1rQ@mail.gmail.com>
+Message-ID: <CAKL8G3FfSACqpw0k=4xAVhsvFtc57b1aZfM2_PSdV+ERW-D66Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120112/48aa5cf8/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Thu Jan 12 16:06:34 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Thu, 12 Jan 2012 10:06:34 -0500
+Subject: [R-es] Problema al eliminar filas desde un data.frame dentro de
+ un ciclo for ...
+In-Reply-To: <CAKL8G3FfSACqpw0k=4xAVhsvFtc57b1aZfM2_PSdV+ERW-D66Q@mail.gmail.com>
+References: <CALATcDCfYpj-nZLdWgdmVdjRH=TyEezpaFFfUj-3ywCA_wP1rQ@mail.gmail.com>
+	<CAKL8G3FfSACqpw0k=4xAVhsvFtc57b1aZfM2_PSdV+ERW-D66Q@mail.gmail.com>
+Message-ID: <CAKL8G3ESNR5cGY18j=Sr70D77ADgbTFBpyDtTw8TyJPbBCJSUg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120112/195eb62e/attachment.pl>
+
+From Guillermo.Vinue en uv.es  Thu Jan 12 16:07:51 2012
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Thu, 12 Jan 2012 16:07:51 +0100 (CET)
+Subject: [R-es] Problema al eliminar filas desde un data.frame dentro de
+	un ciclo for ...
+In-Reply-To: <CALATcDCfYpj-nZLdWgdmVdjRH=TyEezpaFFfUj-3ywCA_wP1rQ@mail.gmail.com>
+References: <CALATcDCfYpj-nZLdWgdmVdjRH=TyEezpaFFfUj-3ywCA_wP1rQ@mail.gmail.com>
+Message-ID: <8717838716vivigui@uv.es>
+
+Hola Eric, suponiendo que el data.frame se llame dat, creo que lo
+siguiente te serviría:
+
+dat[dat[,5] != 10000,]
+
+Un saludo,
+
+Guillermo
+
+> Estimada comunidad tengo el siguiente problema:
+> 
+> Tengo un data.frame con 5 columnas y 10.000 filas, tengo que eliminar
+todas
+> las filas cuyo valor de la 5a columna sea 10.000 ... trato de hacer esto
+> dentro de un ciclo for con el siguiente codigo:
+> 
+> j <- 10000
+> for (i in 1:j)
+> {
+>     if (dat12.23hex34_75_1col5[[i]]==10000)
+>     {
+>     dat12.23hex34_75_1col5 <- dat12.23hex34_75_1col5[[-i]]
+>     i <- i-1
+>     j <- j-1
+>     }
+> }
+> 
+> y obtengo el siguiente error:
+> 
+> Error in dat12.23hex34_75_1col5[[-i]] :
+>   attempt to select more than one element
+> 
+> 
+> la verdad es que nunca he hecho un ciclo for que me funciones, ni se bien
+> como tratar los data.frame dentro de un ciclo for, por lo que no se bien
+> que significa el error que obtengo ... he googleado obviamente, pero no
+> encuentro observaciones que me conduzcan a una solucion de mi problema .. .
+> quiza puede haber otra forma en R de hacer esto ...
+> 
+> alguna sugerencia por favor??
+> 
+> Muchas gracias a todos por su tiempo,
+> 
+> Eric.
+> 
+> 
+> 
+> 
+> 
+> -- 
+> Nota: las tildes se han omitido para evitar conflictos con algunos
+lectores
+> de correo.
+> 
+> * Un economista es un experto que sabrá mañana por qué las cosas que
+predijo
+> ayer no han sucedido hoy (Laurence Peter).
+> 
+> * SATYÂT NÂSTI PARO DHARMAH
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> 
+
+
+From residuo.solow en gmail.com  Fri Jan 13 13:21:32 2012
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Fri, 13 Jan 2012 09:21:32 -0300
+Subject: [R-es] unir en .dbf luego de aplicar read.xls a varios archivos
+In-Reply-To: <CAKL8G3FsL6DWCr682EBGLAbOiK8vbstGV=+UL6OLE8mVaEH=vA@mail.gmail.com>
+References: <CAMn86NcMhNYNjoO28g6ibU1R+Ot9JegU7MOMEVn-uh0YdMRP6Q@mail.gmail.com>
+	<CAKL8G3FsL6DWCr682EBGLAbOiK8vbstGV=+UL6OLE8mVaEH=vA@mail.gmail.com>
+Message-ID: <CAMn86NeLnKaAR1aUb1qPWsijpKTookQO16HTDNoN444oFvciFg@mail.gmail.com>
+
+Hola Jorge. Lamentablemte no funcionó. Cambié worksheet = 1 por
+worksheet = "Hoja1". Las columnas con datos numéricos las importa
+vacías la función FromExcel.
+
+Te paso:
+
+> str(a1)
+'data.frame':   58 obs. of  7 variables:
+ $ V1: chr  "101" "Código" "111" "119" ...
+ $ V2: chr  "BARRACA MAIN                                    "
+"Material" "Alambre negro N° 14
+                                                            " "Arena
+gruesa
+                                          " ...
+ $ V3: chr  "" "Unidad" "kg                  " "m3                  " ...
+ $ V4: chr  "Precio en $" "DICIEMBRE" "62.45" "545.76" ...
+ $ V5: chr  "Precio en $" "ENERO" "" "" ...
+ $ V6: chr  "Variación" "DIC-ENE" "-100" "-100" ...
+ $ V7: chr  "2012-01-01 " "Observaciones " " " " " ...
+
+> str(a2)
+'data.frame':   21 obs. of  7 variables:
+ $ V1: chr  "309" "Código" "701" "702" ...
+ $ V2: chr  "CSA                                         " "Material"
+"Vidrio plano de 3mm. colocado
+                                    " "Vidrio plano de 4 mm. colocado
+
+ " ...
+ $ V3: chr  "" "Unidad" "m2" "m2" ...
+ $ V4: chr  "Precio en $" "DICIEMBRE" "649" "811" ...
+ $ V5: chr  "Precio en $" "ENERO" "" "" ...
+ $ V6: chr  "Variación" "DIC-ENE" "-100" "-100" ...
+ $ V7: chr  "2012-01-01 " "Observaciones " " " " " ...
+
+> str(archivos)
+ chr [1:2] "N° 101 - BARRACA MAIN.xls" "N° 309 - CSA.xls"
+
+Esta versión me anda pero tengo que tener instalado Perl:
+
+
+archivos <- list.files(pattern = 'xls')
+
+library(gdata)
+informacion <- lapply(archivos, read.xls,
+
+perl="C:\\strawberry\\perl\\bin\\perl.exe",skip=12,dec=",",header=F,as.is=T)
+
+res <- lapply(informacion, function(x){
+       cbind(x[1, 1:2], x[4:which(x == "Art. 14") - 1, 1:7])
+})
+out <- do.call(rbind, res)
+
+El día 10 de enero de 2012 13:50, Jorge I Velez
+<jorgeivanvelez en gmail.com> escribió:
+> Hola Sebastian,
+>
+> No tengo Windows a la mano, pero podrias intentar con RODBC (que no usa
+> Perl):
+>
+> # para leer archivos de Excel usando RODBC
+> require(RODBC)  # instalar primero
+> FromExcel <- function(yourfile, worksheet){
+> channel <- odbcConnectExcel(yourfile)
+> mydata <- sqlFetch(channel, worksheet)
+> odbcClose(channel)
+> mydata
+> }
+>
+> archivos <- list.files(pattern = 'xls')
+> info <- lapply(archivos, FromExcel, worksheet = 1)  # asumiendo que la
+> primera hoja tiene la info
+> res <- lapply(info, function(x){
+> y <- x[-c(1:12),]  # este es el "skip" que haces
+> cbind(y[1, 1:2], y[4:which(y == "Art. 14") - 1, 1:7])  # el resto
+> })
+> out <- do.call(rbind, res)
+> out
+>
+> Si no funciona, podrias por favor enviarnos el resultado de str(a1) y
+> str(archivos), asi como el comando lapply(...) que usaste?
+>
+> Un saludo,
+> Jorge.-
+>
+>
+> 2012/1/10 Sebastian Kruk <>
+>>
+>> Estimados:
+>>
+>> Tengo un directorio con varios archivos Excel quiero importarlos todos
+>> y grabarlos en un único archivo .dbf.
+>>
+>> Haciendolo uno por uno lo logro de la siguiente manera (solo tomo 2
+>> archivos):
+>>
+>> archivos <- list.files(pattern = 'xls')
+>>
+>> a1 <- read.xls(archivos[1],
+>>
+>> perl="C:\\strawberry\\perl\\bin\\perl.exe",skip=12,dec=",",header=F,as.is=T)
+>> a2 <- read.xls(archivos[2],
+>>
+>> perl="C:\\strawberry\\perl\\bin\\perl.exe",skip=12,dec=",",header=F,as.is=T)
+>>
+>> a11 <- cbind(a1[1,1:2],a1[4:which(a1=="Art. 14")-1,1:7])
+>> a21 <- cbind(a2[1,1:2],a1[4:which(a1=="Art. 14")-1,1:7])
+>>
+>> a3 <- rbind(a11,a21)
+>>
+>> Si lo hago con lapply me queda mal.
+>>
+>> Saludos,
+>>
+>> Sebastián.
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From palazon en um.es  Fri Jan 13 16:36:18 2012
+From: palazon en um.es (=?ISO-8859-1?Q?Jos=E9_Antonio_Palaz=F3n_Ferrando?=)
+Date: Fri, 13 Jan 2012 16:36:18 +0100
+Subject: [R-es] Taller de Sage con seguimiento on-line
+Message-ID: <4F104F72.7080709@um.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120113/7c6b5856/attachment.pl>
+
+From ofwagner en gmail.com  Sun Jan 15 18:30:36 2012
+From: ofwagner en gmail.com (Otto F. Wagner)
+Date: Sun, 15 Jan 2012 18:30:36 +0100
+Subject: [R-es] diff()
+Message-ID: <CAMGr9PntLdx+0RSFRD06CiMjAJE4cu1dVceqVYK36O9Deq4G8w@mail.gmail.com>
+
+*Hola a todos, estoy intentado hacer una primera diferencia en una serie
+temporal.*
+*
+*
+*Me da error. Os paso el código con los errores y el dato.*
+*
+*
+*Uso R 14 con Rstudio en windows7-64 bits.*
+*
+*
+
+> ejemplo_agregado$total_dif<- diff(ejemplo_agregado$Total)Error en `$<-.data.frame`(`*tmp*`, "total_dif", value = c(-0.03881, -0.0314286960000001,  :
+  replacement has 155 rows, data has 156> >
+ejemplo_agregado$total_dif<- diff(ejemplo_agregado$Total, lag=1,
+differences=1)Error en `$<-.data.frame`(`*tmp*`, "total_dif", value =
+c(-0.03881, -0.0314286960000001,  :
+  replacement has 155 rows, data has 156Error in if (eval(parse(text =
+paste("nrow(", dsnameValue, ")"))) == 0) { :
+  argumento tiene longitud cero
+
+
+
+Muchas gracias y saludos,
+
+Otto
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120115/6978ba8b/attachment.html>
+------------ próxima parte ------------
+fecha2	Total
+01/01/1999	1.15913
+01/02/1999	1.12032
+01/03/1999	1.088891304
+01/04/1999	1.070045455
+01/05/1999	1.062528571
+01/06/1999	1.038059091
+01/07/1999	1.037236364
+01/08/1999	1.060445455
+01/09/1999	1.049936364
+01/10/1999	1.069990476
+01/11/1999	1.032572727
+01/12/1999	1.010995652
+01/01/2000	1.01312381
+01/02/2000	0.984219048
+01/03/2000	0.964595652
+01/04/2000	0.94504
+01/05/2000	0.907904348
+01/06/2000	0.949968182
+01/07/2000	0.939433333
+01/08/2000	0.904195652
+01/09/2000	0.870919048
+01/10/2000	0.853395455
+01/11/2000	0.854759091
+01/12/2000	0.900009524
+01/01/2001	0.938395652
+01/02/2001	0.92093
+01/03/2001	0.908059091
+01/04/2001	0.892709524
+01/05/2001	0.874856522
+01/06/2001	0.852980952
+01/07/2001	0.861027273
+01/08/2001	0.901747826
+01/09/2001	0.911735
+01/10/2001	0.905952174
+01/11/2001	0.888154545
+01/12/2001	0.890742857
+01/01/2002	0.883343478
+01/02/2002	0.870835
+01/03/2002	0.876433333
+01/04/2002	0.886263636
+01/05/2002	0.917582609
+01/06/2002	0.95638
+01/07/2002	0.99253913
+01/08/2002	0.978040909
+01/09/2002	0.980380952
+01/10/2002	0.981334783
+01/11/2002	1.001328571
+01/12/2002	1.020313636
+01/01/2003	1.062634783
+01/02/2003	1.07814
+01/03/2003	1.07987619
+01/04/2003	1.086359091
+01/05/2003	1.157622727
+01/06/2003	1.167685714
+01/07/2003	1.137517391
+01/08/2003	1.115385714
+01/09/2003	1.126109091
+01/10/2003	1.170273913
+01/11/2003	1.170975
+01/12/2003	1.230947826
+01/01/2004	1.262172727
+01/02/2004	1.26434
+01/03/2004	1.226856522
+01/04/2004	1.199181818
+01/05/2004	1.201304762
+01/06/2004	1.214527273
+01/07/2004	1.226918182
+01/08/2004	1.219213636
+01/09/2004	1.222195455
+01/10/2004	1.249795238
+01/11/2004	1.299895455
+01/12/2004	1.34103913
+01/01/2005	1.31162381
+01/02/2005	1.30199
+01/03/2005	1.318447826
+01/04/2005	1.293971429
+01/05/2005	1.268663636
+01/06/2005	1.215513636
+01/07/2005	1.203957143
+01/08/2005	1.229556522
+01/09/2005	1.224581818
+01/10/2005	1.202280952
+01/11/2005	1.178495455
+01/12/2005	1.185945455
+01/01/2006	1.2118
+01/02/2006	1.19395
+01/03/2006	1.202921739
+01/04/2006	1.22783
+01/05/2006	1.276756522
+01/06/2006	1.266422727
+01/07/2006	1.268733333
+01/08/2006	1.280895652
+01/09/2006	1.273119048
+01/10/2006	1.262054545
+01/11/2006	1.288990909
+01/12/2006	1.319752381
+01/01/2007	1.300008696
+01/02/2007	1.30843
+01/03/2007	1.324363636
+01/04/2007	1.351080952
+01/05/2007	1.35136087
+01/06/2007	1.342290476
+01/07/2007	1.372227273
+01/08/2007	1.362486957
+01/09/2007	1.39121
+01/10/2007	1.422682609
+01/11/2007	1.468131818
+01/12/2007	1.45542381
+01/01/2008	1.471421739
+01/02/2008	1.475557143
+01/03/2008	1.553004762
+01/04/2008	1.575159091
+01/05/2008	1.556122727
+01/06/2008	1.55622381
+01/07/2008	1.575834783
+01/08/2008	1.495052381
+01/09/2008	1.435527273
+01/10/2008	1.328226087
+01/11/2008	1.273215
+01/12/2008	1.353382609
+01/01/2009	1.327590909
+01/02/2009	1.28053
+01/03/2009	1.304886364
+01/04/2009	1.32045
+01/05/2009	1.366585714
+01/06/2009	1.401677273
+01/07/2009	1.408708696
+01/08/2009	1.426861905
+01/09/2009	1.456872727
+01/10/2009	1.481309091
+01/11/2009	1.491419048
+01/12/2009	1.457178261
+01/01/2010	1.427961905
+01/02/2010	1.36816
+01/03/2010	1.35736087
+01/04/2010	1.342027273
+01/05/2010	1.255119048
+01/06/2010	1.22185
+01/07/2010	1.279159091
+01/08/2010	1.289936364
+01/09/2010	1.308918182
+01/10/2010	1.389590476
+01/11/2010	1.364072727
+01/12/2010	1.322030435
+01/01/2011	1.336604762
+01/02/2011	1.365755
+01/03/2011	1.401786957
+01/04/2011	1.446128571
+01/05/2011	1.432931818
+01/06/2011	1.440022727
+01/07/2011	1.428842857
+01/08/2011	1.433195652
+01/09/2011	1.375913636
+01/10/2011	1.37222381
+01/11/2011	1.356086364
+01/12/2011	1.340185714
+
+From jorgeivanvelez en gmail.com  Sun Jan 15 18:46:18 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Sun, 15 Jan 2012 12:46:18 -0500
+Subject: [R-es] diff()
+In-Reply-To: <CAMGr9PntLdx+0RSFRD06CiMjAJE4cu1dVceqVYK36O9Deq4G8w@mail.gmail.com>
+References: <CAMGr9PntLdx+0RSFRD06CiMjAJE4cu1dVceqVYK36O9Deq4G8w@mail.gmail.com>
+Message-ID: <CAKL8G3F-M_HyQ310NNzVC1g7NC2CTUNnvjDhObjNBz=y1CPROQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120115/4c451950/attachment.pl>
+
+From ofwagner en gmail.com  Sun Jan 15 20:08:48 2012
+From: ofwagner en gmail.com (Otto F. Wagner)
+Date: Sun, 15 Jan 2012 20:08:48 +0100
+Subject: [R-es] diff()
+In-Reply-To: <CAKL8G3F-M_HyQ310NNzVC1g7NC2CTUNnvjDhObjNBz=y1CPROQ@mail.gmail.com>
+References: <CAMGr9PntLdx+0RSFRD06CiMjAJE4cu1dVceqVYK36O9Deq4G8w@mail.gmail.com>
+	<CAKL8G3F-M_HyQ310NNzVC1g7NC2CTUNnvjDhObjNBz=y1CPROQ@mail.gmail.com>
+Message-ID: <CAMGr9PmmaJqrxk2+pfRxgrf0yy88MJPVqno7DhNVW4-6fsDt=w@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120115/e1c37f38/attachment.pl>
+
+From sandraba en eio.uva.es  Mon Jan 16 19:07:11 2012
+From: sandraba en eio.uva.es (=?iso-8859-1?Q?Sandra_Barrag=E1n?=)
+Date: Mon, 16 Jan 2012 19:07:11 +0100
+Subject: [R-es]  Estructura tipo lista de R en C
+In-Reply-To: <CAMGr9PmmaJqrxk2+pfRxgrf0yy88MJPVqno7DhNVW4-6fsDt=w@mail.gmail.com>
+References: <CAMGr9PntLdx+0RSFRD06CiMjAJE4cu1dVceqVYK36O9Deq4G8w@mail.gmail.com>	<CAKL8G3F-M_HyQ310NNzVC1g7NC2CTUNnvjDhObjNBz=y1CPROQ@mail.gmail.com>
+	<CAMGr9PmmaJqrxk2+pfRxgrf0yy88MJPVqno7DhNVW4-6fsDt=w@mail.gmail.com>
+Message-ID: <!&!AAAAAAAAAAAYAAAAAAAAAFPev00TeOhHksJC67H0SdvCgAAAEAAAAFSTuvyRC29KpWbu+edxof0BAAAAAA==@eio.uva.es>
+
+Hola a todos,
+
+Estoy pasando una parte de mi código de R a C para que se ejecuten más
+rápido unos bucles anidados.
+No sabía nada de C antes de ponerme con ello y me he encontrado con la
+desagradable sorpresa de que parece ser que no existe una estructura en C
+equivalente a las listas de R. Casi todo el código que tengo usa listas así
+que ando un poco perdida. No sé si estoy equivocada (ojala) y realmente sí
+que hay una estructura equivalente a las listas. O si tal vez me
+recomendaríais otro lenguaje como Fortran o C++. 
+A todo esto, soy usuaria de Windows (bastante a mi pesar) y por lo que he
+visto parece que C sea la manera más sencilla de traducir mi código de R y
+conseguir velocidad.
+¿Algún consejo? o ¿alguien que se haya encontrado con el mismo problema?
+
+Muchas gracias anticipadas.
+Un saludo,
+
+Sandra.
+
+ 
+
+__________ Información de ESET NOD32 Antivirus, versión de la base de firmas
+de virus 6800 (20120116) __________
+
+ESET NOD32 Antivirus ha comprobado este mensaje.
+
+http://www.eset.com
+ 
+
+
+From cgb en datanalytics.com  Mon Jan 16 19:12:26 2012
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 16 Jan 2012 19:12:26 +0100
+Subject: [R-es] Estructura tipo lista de R en C
+In-Reply-To: <!&!AAAAAAAAAAAYAAAAAAAAAFPev00TeOhHksJC67H0SdvCgAAAEAAAAFSTuvyRC29KpWbu+edxof0BAAAAAA==@eio.uva.es>
+References: <CAMGr9PntLdx+0RSFRD06CiMjAJE4cu1dVceqVYK36O9Deq4G8w@mail.gmail.com>
+	<CAKL8G3F-M_HyQ310NNzVC1g7NC2CTUNnvjDhObjNBz=y1CPROQ@mail.gmail.com>
+	<CAMGr9PmmaJqrxk2+pfRxgrf0yy88MJPVqno7DhNVW4-6fsDt=w@mail.gmail.com>
+	<!&!AAAAAAAAAAAYAAAAAAAAAFPev00TeOhHksJC67H0SdvCgAAAEAAAAFSTuvyRC29KpWbu+edxof0BAAAAAA==@eio.uva.es>
+Message-ID: <CADg83ecspeSWdXY8rzMZXgMnY7ey79Enq1dLfcZtdviJ7B+=Ng@mail.gmail.com>
+
+¿Te serviría el paquete Rcpp?
+
+De acuerdo con su documentación:
+
+"R data types (SEXP) are matched to C++ objects in a class hierarchy.
+All R types are supported (vectors, functions, environment, etc ...)
+and each type is mapped to a dedicated class. For example, numeric
+vectors are represented as instances of the Rcpp::NumericVector class,
+environments are represented as instances of Rcpp::Environment,
+functions are represented as Rcpp::Function, etc ... The
+??Rcpp-introduction?? vignette provides a good entry point to Rcpp."
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 16 de enero de 2012 19:07, Sandra Barragán
+<sandraba en eio.uva.es> escribió:
+> Hola a todos,
+>
+> Estoy pasando una parte de mi código de R a C para que se ejecuten más
+> rápido unos bucles anidados.
+> No sabía nada de C antes de ponerme coRn ello y me he encontrado con la
+> desagradable sorpresa de que parece ser que no existe una estructura en C
+> equivalente a las listas de R. Casi todo el código que tengo usa listas así
+> que ando un poco perdida. No sé si estoy equivocada (ojala) y realmente sí
+> que hay una estructura equivalente a las listas. O si tal vez me
+> recomendaríais otro lenguaje como Fortran o C++.
+> A todo esto, soy usuaria de Windows (bastante a mi pesar) y por lo que he
+> visto parece que C sea la manera más sencilla de traducir mi código de R y
+> conseguir velocidad.
+> ¿Algún consejo? o ¿alguien que se haya encontrado con el mismo problema?
+>
+> Muchas gracias anticipadas.
+> Un saludo,
+>
+> Sandra.
+>
+>
+>
+> __________ Información de ESET NOD32 Antivirus, versión de la base de firmas
+> de virus 6800 (20120116) __________
+>
+> ESET NOD32 Antivirus ha comprobado este mensaje.
+>
+> http://www.eset.com
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ericconchamunoz en gmail.com  Tue Jan 17 22:12:28 2012
+From: ericconchamunoz en gmail.com (Eric)
+Date: Tue, 17 Jan 2012 18:12:28 -0300
+Subject: [R-es] Problema para integrar una funcion ajustada a un conjunto de
+ datos con la instruccion sm.density(x)
+Message-ID: <CALATcDCZZbwRtqr00XfEQ1t44AzTEbZ=E_MavFAHgPzye37N9w@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120117/de393ddc/attachment.pl>
+
+From cgb en datanalytics.com  Wed Jan 18 00:15:46 2012
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 18 Jan 2012 00:15:46 +0100
+Subject: [R-es] Problema para integrar una funcion ajustada a un
+ conjunto de datos con la instruccion sm.density(x)
+In-Reply-To: <CALATcDCZZbwRtqr00XfEQ1t44AzTEbZ=E_MavFAHgPzye37N9w@mail.gmail.com>
+References: <CALATcDCZZbwRtqr00XfEQ1t44AzTEbZ=E_MavFAHgPzye37N9w@mail.gmail.com>
+Message-ID: <CADg83efaHSrgXepkw417HXEZdK5zJhwrE2iDVd9mq1BVhgYMRQ@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+La función integrate necesita como argumento una función.
+
+La salida de la función density no es una función: es un objeto que,
+entre otras cosas, contiene
+
+x <- rnorm( 1000 )
+densidad <- density( x )
+str( densidad )
+List of 7
+ $ x        : num [1:512] -3.65 -3.63 -3.62 -3.6 -3.59 ...
+ $ y        : num [1:512] 3.50e-05 4.30e-05 5.25e-05 6.37e-05 7.70e-05 ...
+ $ bw       : num 0.221
+ $ n        : int 1000
+ $ call     : language density.default(x = x)
+ $ data.name: chr "x"
+ $ has.na   : logi FALSE
+ - attr(*, "class")= chr "density"
+
+los objetos x e y que son, por decirlo de alguna manera, "puntos por
+los que pasa la función de densidad".
+
+Tienes la opción de convertir esos puntos en una función que luego
+puedes integrar con integrate usando, si no quieres complicarte la
+vida, rectángulos o trapecios.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 17 de enero de 2012 22:12, Eric <ericconchamunoz en gmail.com> escribió:
+> Estimada comunidad, nuevamente con algo que no se como hacer en R, pero
+> aprendiendo ....
+>
+> El problema es el siguiente:
+> 1. tengo un conjunto de 10 mil datos (n) cuyo valor va entre 0 y 10.000 a
+> los que aplico una funcion sm.density() para obtener una especie de
+> histograma pero con una curva que parece continua.
+> 2. Una vez que obtengo esa curva necesito calcular el area bajo la curva en
+> ciertos intervalos, esto equivale a aplicar una integral en esos
+> intervalos. He intentado hacerlo de la siguiente forma:
+> integrand <- function(x){sm.density(x)}
+> lim02ene.via <- integrand(compara.tiempos2[,1])
+> int.lim02ene.via <- integrate(lim02ene.via, -Inf, Inf)
+>
+> pero obtengo el siguiente error:
+>
+> Error in get(as.character(FUN), mode = "function", envir = envir) :
+>  object 'lim02ene.via' of mode 'function' was not found
+>
+> buscando encontre que la funcion a integrar debe ser "vectorizable" y que
+> para eso se puede aplicar la funcion "vectorize", pero sigo obteniendo el
+> mismo error, el problema parece ser que el resultado de aplicar la funcion
+> sm.density no es una funcion si no un conjunto de muchos puntos (x.y) ...
+> entonces.
+>
+> como puedo hacer para calcular un area bajo la curva obtenida con
+> sm.density() ???
+>
+> Muchas gracias por su tiempo y ayuda ...
+>
+> Eric Concha M.
+>
+>
+>
+>
+>
+> --
+> Nota: las tildes se han omitido para evitar conflictos con algunos lectores
+> de correo.
+>
+> * Un economista es un experto que sabrá mañana por qué las cosas que predijo
+> ayer no han sucedido hoy (Laurence Peter).
+>
+> * SATYÂT NÂSTI PARO DHARMAH
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From cof en qualityexcellence.es  Wed Jan 18 00:29:34 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 18 Jan 2012 00:29:34 +0100
+Subject: [R-es] Problema para integrar una funcion ajustada a un
+ conjunto de datos con la instruccion sm.density(x)
+In-Reply-To: <CALATcDCZZbwRtqr00XfEQ1t44AzTEbZ=E_MavFAHgPzye37N9w@mail.gmail.com>
+References: <CALATcDCZZbwRtqr00XfEQ1t44AzTEbZ=E_MavFAHgPzye37N9w@mail.gmail.com>
+Message-ID: <CAOKbq8j6+fQp5_yFhz5Jmw-2HbVdNH7fr2Jeb42N+_Qh5MOh6Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120118/328770e2/attachment.pl>
+
+From cof en qualityexcellence.es  Wed Jan 18 01:13:16 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 18 Jan 2012 01:13:16 +0100
+Subject: [R-es] Problema para integrar una funcion ajustada a un
+ conjunto de datos con la instruccion sm.density(x)
+In-Reply-To: <CAOKbq8j6+fQp5_yFhz5Jmw-2HbVdNH7fr2Jeb42N+_Qh5MOh6Q@mail.gmail.com>
+References: <CALATcDCZZbwRtqr00XfEQ1t44AzTEbZ=E_MavFAHgPzye37N9w@mail.gmail.com>
+	<CAOKbq8j6+fQp5_yFhz5Jmw-2HbVdNH7fr2Jeb42N+_Qh5MOh6Q@mail.gmail.com>
+Message-ID: <CAOKbq8iOs2UeDUEwRN86zT9P9QU2L0jnAJ1HHMQE40Nb839Ouw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120118/ce1c54d6/attachment.pl>
+
+From ericconchamunoz en gmail.com  Wed Jan 18 16:16:48 2012
+From: ericconchamunoz en gmail.com (Eric)
+Date: Wed, 18 Jan 2012 12:16:48 -0300
+Subject: [R-es] Problema para integrar una funcion ajustada a un
+ conjunto de datos con la instruccion sm.density(x)
+In-Reply-To: <CAOKbq8jGr6POYvMnJA-Y+9rH-Py6-jTmG8KD4NBbB23MAYwFgw@mail.gmail.com>
+References: <CALATcDCZZbwRtqr00XfEQ1t44AzTEbZ=E_MavFAHgPzye37N9w@mail.gmail.com>
+	<CAOKbq8j6+fQp5_yFhz5Jmw-2HbVdNH7fr2Jeb42N+_Qh5MOh6Q@mail.gmail.com>
+	<CAOKbq8iOs2UeDUEwRN86zT9P9QU2L0jnAJ1HHMQE40Nb839Ouw@mail.gmail.com>
+	<CAOKbq8jGr6POYvMnJA-Y+9rH-Py6-jTmG8KD4NBbB23MAYwFgw@mail.gmail.com>
+Message-ID: <CALATcDCiLkrOM_aWG9ij02MzSOjhF1NpBd9sbULr38ORdmpnaQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120118/b8a3fe0c/attachment.pl>
+
+From fernand_arce en yahoo.es  Wed Jan 18 19:36:46 2012
+From: fernand_arce en yahoo.es (fernand_arce en yahoo.es)
+Date: Wed, 18 Jan 2012 19:36:46 +0100
+Subject: [R-es] graficos con fechas
+Message-ID: <20120118183646.73710@gmx.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120118/bc05d4bf/attachment.pl>
+
+From cgb en datanalytics.com  Wed Jan 18 19:47:30 2012
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 18 Jan 2012 19:47:30 +0100
+Subject: [R-es] graficos con fechas
+In-Reply-To: <20120118183646.73710@gmx.com>
+References: <20120118183646.73710@gmx.com>
+Message-ID: <CADg83eciDofLG8wWEYaXAxbyaGB7_cxakPiU8k1aP8PGZ7LHwQ@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Para ese tipo de fines, es mejor usar un paquete específico para
+manejar objetos temporales, como xts.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 18 de enero de 2012 19:36,  <fernand_arce en yahoo.es> escribió:
+> Buenas tardes:
+>
+>  A la hora de hacer unos graficos en el eje de las X tengo fechas en formato ad.Date ('aaa-mm-dd', por ejemplo 2011-25-07) y el problema es que no me las considera como tales, sino como factores, y no tiene en cuenta la diferencia entre fechas a la hora de separar las barras entre si (por ejemplo, la distancia entre el 6 de julio y el 8 de julio es la misma que la distancia entre el 8 de julio y el 25 de agosto, por lo que el patrón temporal queda totalmente enmascarado), ni tampoco me acepta un xlim que incluya todos los días del año (intento que el eje X abarque desde el 1 de enero hasta el 31 de diciembre) para que muestre los valores en los dias que tengan datos)
+>
+>  he estado mirando un rato por ahí y ninguna de las soluciones se adapta o funciona (mis datos tienen formato de fecha para el eje X y en el eje y se proyecta la frecuencia de las fechas
+>
+>  ejemplo:
+>
+>  #mis datos
+>  x1<-c(rep(as.Date('2011-10-10'),3),rep(as.Date('2011-01-15'),8),rep(as.Date('2011-01-17'),10))
+>
+> #grafico tal cual, no tiene en cuenta la distancia temporal entre las diferentes fechas
+>
+>  plot(table(x1))
+>
+>
+>  Hay alguna manera de que tenga en cuenta dicha diferencia temporal y de modificar satisfactoriamente el xlim ?
+>
+>
+>  Gracias por adelantado y Feliz año a todos:
+>
+>  Fernando
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From cof en qualityexcellence.es  Wed Jan 18 20:43:26 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 18 Jan 2012 20:43:26 +0100
+Subject: [R-es] graficos con fechas
+In-Reply-To: <20120118183646.73710@gmx.com>
+References: <20120118183646.73710@gmx.com>
+Message-ID: <CAOKbq8if=65freUgqZ-tMsoTW=DgiQW2Vbd6dvVtAn2QM8GRBA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120118/e891325c/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Wed Jan 18 22:08:41 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Wed, 18 Jan 2012 16:08:41 -0500
+Subject: [R-es] graficos con fechas
+In-Reply-To: <20120118183646.73710@gmx.com>
+References: <20120118183646.73710@gmx.com>
+Message-ID: <CAKL8G3HaHKk4vD8PMHg1907L_OT017atC9vLwsW-ebsQM3oUmg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120118/5157bc10/attachment.pl>
+
+From fernand_arce en yahoo.es  Wed Jan 18 22:24:11 2012
+From: fernand_arce en yahoo.es (fernand_arce en yahoo.es)
+Date: Wed, 18 Jan 2012 22:24:11 +0100
+Subject: [R-es] graficos con fechas
+Message-ID: <20120118212411.73710@gmx.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120118/cd87e21f/attachment.pl>
+
+From cof en qualityexcellence.es  Wed Jan 18 22:51:15 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 18 Jan 2012 22:51:15 +0100
+Subject: [R-es] graficos con fechas
+In-Reply-To: <20120118212411.73710@gmx.com>
+References: <20120118212411.73710@gmx.com>
+Message-ID: <CAOKbq8iwMZqU43hH09qMq+yiSeWuF8ToXuyYW3O_z2Qrei0FpQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120118/425f2b54/attachment.pl>
+
+From luis.cayuela en urjc.es  Thu Jan 19 10:38:54 2012
+From: luis.cayuela en urjc.es (luis.cayuela en urjc.es)
+Date: Thu, 19 Jan 2012 10:38:54 +0100
+Subject: [R-es] bug en funcion 'agrep'
+Message-ID: <20120119103854.344791w729320qlq@urano.urjc.es>
+
+Estimados R-users:
+
+Estoy intentando usar la función 'agrep' para hacer búsquedas en  
+cadenas de texto. El parámetro max.distance permite controlar la  
+medida de aproximación de búsqueda de la función de Levenshtein. No  
+obstante, cuando hago búsquedas específicas no obtengo siempre el  
+resultado deseado y no se si es un bug o que no entiendo bien el  
+algoritmo de búsqueda. Por ejemplo:
+
+> agrep("Acacia m1", "Acacia macradenia", value=T, max.distance=list(all=1))
+[1] "Acacia macradenia"
+> agrep("Acacia m1", "Acacia macradenia", value=T,  
+> max.distance=list(deletions=1))
+[1] "Acacia macradenia"
+> agrep("Acacia m1", "Acacia macradenia", value=T,  
+> max.distance=list(insertions=1))
+[1] "Acacia macradenia"
+
+Cuando en cualquiera de los casos no debería de hacer el "matching".  
+Sin embargo si la segunda palabra empieza por otra letra en vez de por  
+"m", entonces funciona bien:
+
+> agrep("Acacia m1", "Acacia pacradenia", value=T, max.distance=list(all=1))
+character(0)
+> agrep("Acacia m1", "Acacia pacradenia", value=T,  
+> max.distance=list(deletions=1))
+character(0)
+> agrep("Acacia m1", "Acacia pacradenia", value=T,  
+> max.distance=list(deletions=2))
+character(0)
+
+¿Alguien sabe qué puede estar pasando? ¿alguna solución?
+
+Estoy usando R 2.12.1 bajo Linux Ubuntu Natty Narwhal 11.04.
+
+Saludos y gracias por la ayuda,
+
+Luis
+
+------------------------------------
+Luis Cayuela
+Área de Biodiversidad y Conservación
+Universidad Rey Juan Carlos
+Departamental 1 DI. 231
+c/ Tulipán s/n.
+E-28933 Móstoles (Madrid)
+España
+Tlf: 914888517
+http://www.escet.urjc.es/biodiversos/espa/personal/luisc/luisc_e.htm
+
+
+From grserrano en ccee.ucm.es  Thu Jan 19 11:15:27 2012
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Thu, 19 Jan 2012 11:15:27 +0100
+Subject: [R-es] bug en funcion 'agrep'
+In-Reply-To: <20120119103854.344791w729320qlq@urano.urjc.es>
+References: <20120119103854.344791w729320qlq@urano.urjc.es>
+Message-ID: <CAPRmSMEgpvGs4yyA7=Tj5rbcxC6UQFyjkw0oOKYRx7NX05p1cg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/93ab0fa9/attachment.pl>
+
+From oscar.perpinan en upm.es  Thu Jan 19 11:49:29 2012
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Thu, 19 Jan 2012 11:49:29 +0100
+Subject: [R-es] graficos con fechas
+In-Reply-To: <20120118212411.73710@gmx.com>
+References: <20120118212411.73710@gmx.com>
+Message-ID: <20120119114929.4ac42db0@OPL-EUITI>
+
+Otra forma más, que para gustos hay colores. Aprovecho el código para
+generar d.d y después dibujo con zoo y lattice:
+
+library(zoo)
+library(lattice)
+
+x1<-c(rep(as.Date('2011-10-10'),3),rep(as.Date('2011-01-15'),8),
+ rep(as.Date('2011-01-17'),10))
+d.d<- as.data.frame(table(x1))
+
+z <- zoo(d.d$Freq, d.d$x1)
+xyplot(z,  type = 'h')
+
+-------------------
+Oscar Perpiñán Lamigueiro
+Dpto. Ingeniería Eléctrica
+EUITI-UPM
+
+http://procomun.wordpress.com
+
+-----------------------------------------
+>Muchas gracias Carlos Ortega y Carlos J. Gil Bellosta.
+>
+> Miraré el paquete xts pero al final he tirado más hacia la solucion
+> de Carlos Ortega porque ya tenía codigo parecido en todas las
+> graficas.
+>
+> Por si alguien le sucede algo parecido y esta tan perdido como yo),
+> para tener formato de barras verticales y todo un periodo anual,
+> primero le he añadido un xlim para que me muestre todo el año. Como
+> además quería formato de barras (por eso me encabezonaba con la
+> funcion table sin pensar en darla posteriormente formato de
+> data.frame) le he pintado de blanco los putos y despues he añadido
+> las barras con 'segments'.
+>
+>
+> x1<-c(rep(as.Date('2011-10-10'),3),rep(as.Date('2011-01-15'),8),
+> rep(as.Date('2011-01-17'),10))
+>
+> d.d<-as.data.frame(table(x1))
+> d.d$x1<-as.Date(d.d$x1)
+>
+> xli=c('2011-01-01','2011-12-31')
+> xli<-as.Date(xli)
+> plot(d.d$x1, d.d$Freq,xlim=xli,col='white')
+> segments(d.d$x1,rep(0,length(unique(d.d$x1))),d.d$x1,d.d[,2],col='blue')
+> Gracias, de nuevo, y próspero 2012!!
+>
+> Fernando
+>----- Mensaje original -----
+>De: Carlos Ortega
+>Enviado: 18-01-12 20:43
+>Para: fernand_arce en yahoo.es
+>Asunto: Re: [R-es] graficos con fechas
+>
+> Hola,
+>
+> Además de la solución de utilizar un paquete específico, de esta
+> manera simplemente usando la función como ya has hecho:
+>
+> x1<-c(rep(as.Date('2011-10-10'),3),rep(as.Date('2011-01-15'),8),
+> rep(as.Date('2011-01-17'),10))
+>
+> d.d<-as.data.frame(table(x1))
+> d.d$x1<-as.Date(d.d$x1)
+>
+> plot(d.d$x1, d.d$Freq)
+>
+> De esta forma, d.d$x1 sí que se considera como fecha y a la hora de
+> hacer el gráfico sí que separa los datos de enero de los de octubre.
+>
+> Saludos,
+> Carlos Ortega
+>http://www.qualityexcellence.es 
+>
+> El 18 de enero de 2012 19:36, < fernand_arce en yahoo.es > escribió:
+> Buenas tardes:
+>
+> A la hora de hacer unos graficos en el eje de las X tengo fechas en
+> formato ad.Date ('aaa-mm-dd', por ejemplo 2011-25-07) y el problema
+> es que no me las considera como tales, sino como factores, y no tiene
+> en cuenta la diferencia entre fechas a la hora de separar las barras
+> entre si (por ejemplo, la distancia entre el 6 de julio y el 8 de
+> julio es la misma que la distancia entre el 8 de julio y el 25 de
+> agosto, por lo que el patrón temporal queda totalmente enmascarado),
+> ni tampoco me acepta un xlim que incluya todos los días del año
+> (intento que el eje X abarque desde el 1 de enero hasta el 31 de
+> diciembre) para que muestre los valores en los dias que tengan datos)
+>
+> he estado mirando un rato por ahí y ninguna de las soluciones se
+> adapta o funciona (mis datos tienen formato de fecha para el eje X y
+> en el eje y se proyecta la frecuencia de las fechas
+>
+> ejemplo:
+>
+> #mis datos
+> x1<-c(rep(as.Date('2011-10-10'),3),rep(as.Date('2011-01-15'),8),rep(as.Date('2011-01-17'),10))
+>
+> #grafico tal cual, no tiene en cuenta la distancia temporal entre las
+> diferentes fechas
+>
+> plot(table(x1))
+>
+>
+> Hay alguna manera de que tenga en cuenta dicha diferencia temporal y
+> de modificar satisfactoriamente el xlim ?
+>
+>
+> Gracias por adelantado y Feliz año a todos:
+>
+> Fernando
+>
+> [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org 
+>https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>	[[alternative HTML version deleted]]
+>
+
+
+From sandraba en eio.uva.es  Thu Jan 19 13:27:24 2012
+From: sandraba en eio.uva.es (=?iso-8859-1?Q?Sandra_Barrag=E1n?=)
+Date: Thu, 19 Jan 2012 13:27:24 +0100
+Subject: [R-es] Estructura tipo lista de R en C
+In-Reply-To: <CADg83ecspeSWdXY8rzMZXgMnY7ey79Enq1dLfcZtdviJ7B+=Ng@mail.gmail.com>
+References: <CAMGr9PntLdx+0RSFRD06CiMjAJE4cu1dVceqVYK36O9Deq4G8w@mail.gmail.com>	<CAKL8G3F-M_HyQ310NNzVC1g7NC2CTUNnvjDhObjNBz=y1CPROQ@mail.gmail.com>	<CAMGr9PmmaJqrxk2+pfRxgrf0yy88MJPVqno7DhNVW4-6fsDt=w@mail.gmail.com>	<!&!AAAAAAAAAAAYAAAAAAAAAFPev00TeOhHksJC67H0SdvCgAAAEAAAAFSTuvyRC29KpWbu+edxof0BAAAAAA==@eio.uva.es>
+	<CADg83ecspeSWdXY8rzMZXgMnY7ey79Enq1dLfcZtdviJ7B+=Ng@mail.gmail.com>
+Message-ID: <!&!AAAAAAAAAAAYAAAAAAAAAFPev00TeOhHksJC67H0SdvCgAAAEAAAAJpyk2k1VMpDmpbGcYxSrGsBAAAAAA==@eio.uva.es>
+
+Muchas gracias por la contestación. 
+He estado mirando el paquete Rcpp y tiene muy buena pinta, el problema es
+que está preparado para C++ y por lo que he visto no lo puedo usar con C.
+Finalmente me he decidido a usar C pero con .Call que es bastante más
+completo. Ya os iré contando porque estoy yendo bastante lenta ya que
+sobrevivo a base de ejemplos que hay colgados por ahí para saber cómo hacer
+cada cosa, no se si no hay o es que no encuentro un manual completo de los
+objetos SEXP.
+Un saludo,
+
+Sandra.
+
+
+-----Mensaje original-----
+De: gilbellosta en gmail.com [mailto:gilbellosta en gmail.com] En nombre de Carlos
+J. Gil Bellosta 
+Enviado el: lunes, 16 de enero de 2012 19:12
+Para: Sandra Barragán
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] Estructura tipo lista de R en C
+
+¿Te serviría el paquete Rcpp?
+
+De acuerdo con su documentación:
+
+"R data types (SEXP) are matched to C++ objects in a class hierarchy.
+All R types are supported (vectors, functions, environment, etc ...)
+and each type is mapped to a dedicated class. For example, numeric
+vectors are represented as instances of the Rcpp::NumericVector class,
+environments are represented as instances of Rcpp::Environment,
+functions are represented as Rcpp::Function, etc ... The
+‘‘Rcpp-introduction’’ vignette provides a good entry point to Rcpp."
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 16 de enero de 2012 19:07, Sandra Barragán
+<sandraba en eio.uva.es> escribió:
+> Hola a todos,
+>
+> Estoy pasando una parte de mi código de R a C para que se ejecuten más
+> rápido unos bucles anidados.
+> No sabía nada de C antes de ponerme coRn ello y me he encontrado con la
+> desagradable sorpresa de que parece ser que no existe una estructura en C
+> equivalente a las listas de R. Casi todo el código que tengo usa listas
+así
+> que ando un poco perdida. No sé si estoy equivocada (ojala) y realmente sí
+> que hay una estructura equivalente a las listas. O si tal vez me
+> recomendaríais otro lenguaje como Fortran o C++.
+> A todo esto, soy usuaria de Windows (bastante a mi pesar) y por lo que he
+> visto parece que C sea la manera más sencilla de traducir mi código de R y
+> conseguir velocidad.
+> ¿Algún consejo? o ¿alguien que se haya encontrado con el mismo problema?
+>
+> Muchas gracias anticipadas.
+> Un saludo,
+>
+> Sandra.
+>
+>
+>
+> __________ Información de ESET NOD32 Antivirus, versión de la base de
+firmas
+> de virus 6800 (20120116) __________
+>
+> ESET NOD32 Antivirus ha comprobado este mensaje.
+>
+> http://www.eset.com
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+__________ Información de ESET NOD32 Antivirus, versión de la base de firmas
+de virus 6800 (20120116) __________
+
+ESET NOD32 Antivirus ha comprobado este mensaje.
+
+http://www.eset.com
+
+
+ 
+
+__________ Información de ESET NOD32 Antivirus, versión de la base de firmas
+de virus 6808 (20120119) __________
+
+ESET NOD32 Antivirus ha comprobado este mensaje.
+
+http://www.eset.com
+ 
+ 
+
+__________ Información de ESET NOD32 Antivirus, versión de la base de firmas
+de virus 6808 (20120119) __________
+
+ESET NOD32 Antivirus ha comprobado este mensaje.
+
+http://www.eset.com
+ 
+
+
+From ericconchamunoz en gmail.com  Thu Jan 19 21:28:19 2012
+From: ericconchamunoz en gmail.com (Eric)
+Date: Thu, 19 Jan 2012 17:28:19 -0300
+Subject: [R-es] Es posible hacer un grafico con persp() e incluir 2
+	superficies a la vez??
+Message-ID: <CALATcDCZXnnUFBssjp9+65ZKR3O76SvzaoOuiFSTdckRhraRQg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/bfea8588/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Thu Jan 19 21:46:51 2012
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Thu, 19 Jan 2012 17:46:51 -0300
+Subject: [R-es] Es posible hacer un grafico con persp() e incluir
+	2superficies a la vez??
+In-Reply-To: <CALATcDCZXnnUFBssjp9+65ZKR3O76SvzaoOuiFSTdckRhraRQg@mail.gmail.com>
+References: <CALATcDCZXnnUFBssjp9+65ZKR3O76SvzaoOuiFSTdckRhraRQg@mail.gmail.com>
+Message-ID: <8006034A3DB14397A5B23EF1C7DAB991@JavierMarcuzzi>
+
+Estimado Eric
+
+http://cran.r-project.org/web/packages/scatterplot3d/vignettes/s3d.pdf
+
+Puede ser que le sirva el archivo que indico en el renglón superior, pero no 
+podría indicarle más que eso, digamos que al respecto soy medio ignorante .
+
+Javier
+
+
+-----Mensaje original----- 
+From: Eric
+Sent: Thursday, January 19, 2012 5:28 PM
+To: r-help-es en r-project.org
+Subject: [R-es] Es posible hacer un grafico con persp() e incluir 
+2superficies a la vez??
+
+Es posible hacer un grafico con persp() e incluir 2 superficies a la vez??
+
+Necesito mostrar 2 superficies en un mismo grafico para destacar la linea
+de interseccion ... es posible?? he intentado con lines(trans3d(...)) pero
+el parametro pmat= me complica pues no comprendo bien que es y parece que
+el objetivo de trans3d no es agregar superficies si no elementos simples
+como lineas, puntos ...
+
+si no es posible con persp() ... se puede con image() u otro comando ??
+
+muchas gracias,
+
+eric.
+
+
+
+
+
+-- 
+Nota: las tildes se han omitido para evitar conflictos con algunos lectores
+de correo.
+
+* Un economista es un experto que sabrá mañana por qué las cosas que predijo
+ayer no han sucedido hoy (Laurence Peter).
+
+* SATYÂT NÂSTI PARO DHARMAH
+
+[[alternative HTML version deleted]]
+
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cof en qualityexcellence.es  Thu Jan 19 22:16:12 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 19 Jan 2012 22:16:12 +0100
+Subject: [R-es] Es posible hacer un grafico con persp() e incluir 2
+ superficies a la vez??
+In-Reply-To: <CALATcDCZXnnUFBssjp9+65ZKR3O76SvzaoOuiFSTdckRhraRQg@mail.gmail.com>
+References: <CALATcDCZXnnUFBssjp9+65ZKR3O76SvzaoOuiFSTdckRhraRQg@mail.gmail.com>
+Message-ID: <CAOKbq8j6pJr_E1FrRHUQy6KV+D0KnPSdXTz3FnpDWtr=tOnZig@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/86fa319d/attachment.pl>
+
+From ericconchamunoz en gmail.com  Thu Jan 19 22:17:51 2012
+From: ericconchamunoz en gmail.com (Eric)
+Date: Thu, 19 Jan 2012 18:17:51 -0300
+Subject: [R-es] Es posible hacer un grafico con persp() e incluir 2
+ superficies a la vez??
+In-Reply-To: <CAOKbq8j6pJr_E1FrRHUQy6KV+D0KnPSdXTz3FnpDWtr=tOnZig@mail.gmail.com>
+References: <CALATcDCZXnnUFBssjp9+65ZKR3O76SvzaoOuiFSTdckRhraRQg@mail.gmail.com>
+	<CAOKbq8j6pJr_E1FrRHUQy6KV+D0KnPSdXTz3FnpDWtr=tOnZig@mail.gmail.com>
+Message-ID: <CALATcDAqiG8BeqQC-SKzS=KeW_omw3-oxNXYpCvZtw+pWP_gHQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/b7e39c67/attachment.pl>
+
+From ofwagner en gmail.com  Thu Jan 19 22:26:27 2012
+From: ofwagner en gmail.com (Otto F. Wagner)
+Date: Thu, 19 Jan 2012 22:26:27 +0100
+Subject: [R-es] sumarizar
+Message-ID: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/f0b853e0/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Thu Jan 19 22:28:04 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Thu, 19 Jan 2012 16:28:04 -0500
+Subject: [R-es] Es posible hacer un grafico con persp() e incluir 2
+ superficies a la vez??
+In-Reply-To: <CAKL8G3Gqo5F5a80VUec1yuX8Yn+TJQ5EePHTpNXDLU9iQ3spXA@mail.gmail.com>
+References: <CALATcDCZXnnUFBssjp9+65ZKR3O76SvzaoOuiFSTdckRhraRQg@mail.gmail.com>
+	<CAKL8G3Gqo5F5a80VUec1yuX8Yn+TJQ5EePHTpNXDLU9iQ3spXA@mail.gmail.com>
+Message-ID: <CAKL8G3EhkMVH0eiB+JX0rCDmkf2qD-KU_mFCkPFv=3--CZ9+LA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/7ae2f0c2/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Thu Jan 19 22:36:57 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Thu, 19 Jan 2012 16:36:57 -0500
+Subject: [R-es] sumarizar
+In-Reply-To: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+References: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+Message-ID: <CAKL8G3Fioz5S+wNF+cQ1aUnPsxCti=HZAYPFMWm5SwiFW_Jt9Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/be15dec1/attachment.pl>
+
+From cof en qualityexcellence.es  Thu Jan 19 23:00:56 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 19 Jan 2012 23:00:56 +0100
+Subject: [R-es] sumarizar
+In-Reply-To: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+References: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+Message-ID: <CAOKbq8ip2V61bNs2PedudS6gbjDRwkicOYbRGQSFLi4gV-Z6fw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/39655cbf/attachment.pl>
+
+From ofwagner en gmail.com  Thu Jan 19 23:28:20 2012
+From: ofwagner en gmail.com (Otto F. Wagner)
+Date: Thu, 19 Jan 2012 23:28:20 +0100
+Subject: [R-es] sumarizar
+In-Reply-To: <CAOKbq8ip2V61bNs2PedudS6gbjDRwkicOYbRGQSFLi4gV-Z6fw@mail.gmail.com>
+References: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+	<CAOKbq8ip2V61bNs2PedudS6gbjDRwkicOYbRGQSFLi4gV-Z6fw@mail.gmail.com>
+Message-ID: <CAMGr9P=DG+3Z0298xE9dU6YaAfyLLvC-kHgKEteEf-qCNBz+=Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120119/47869b2a/attachment.pl>
+
+From oscar.perpinan en upm.es  Thu Jan 19 23:40:39 2012
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Thu, 19 Jan 2012 23:40:39 +0100
+Subject: [R-es] sumarizar
+In-Reply-To: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+References: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+Message-ID: <20120119234039.2dbdc0f1@upm.es>
+
+Hola,
+
+Te propongo una solución con zoo:
+
+library(zoo)
+
+## construyo un data.frame de ejemplo
+EUR.resto <- data.frame(date=seq(as.Date('2009-01-01'),
+                        as.Date('2011-12-31'), by='day'),
+                        moneda1=rnorm(3*365), moneda2=rnorm(3*365),
+                        moneda3=rnorm(3*365))
+
+## y lo convierto a zoo (elimino la columna de fechas de los datos)
+EURz <- zoo(EUR.resto[,-1],EUR.resto$date) 
+
+## Primero un "agregado" (por defecto la media) agrupando por mes-año
+## usando el método aggregate para objetos zoo
+
+EURyearmon <- aggregate(EURz, by=as.yearmon)
+
+## Para calcular medias sólo mensuales o sólo anuales
+## hay que definir primero un par de funciones sencillas
+
+month <- function(x) as.numeric(format(x, "%m"))
+year <- function(x) as.numeric(format(x, "%Y"))
+
+## y después pasarlas a aggregate:
+EURmon <- aggregate(EURz, by=month)
+EURyear <- aggregate(EURz, by=year)
+
+Saludos.
+
+Oscar.
+
+El Thu, 19 Jan 2012 22:26:27 +0100
+"Otto F. Wagner" <ofwagner en gmail.com> escribiÃ³:
+> *Hola!!! resulta que tengo unos datos de divisas ordenados por fechas
+> (días) los que he convertido a formato tipo YYYY-MM-DD donde DD
+> siempre es 01:*
+> *
+> *
+> *
+> EUR.resto$date<-as.Date(EUR.resto$date)
+> 
+> EUR.resto$mo <- substr(EUR.resto$date,6,7)
+> EUR.resto$yr <- substr(EUR.resto$date, 1,4)
+> 
+> 
+> EUR.resto$month<-paste('01-',EUR.resto$mo,'-',EUR.resto$yr,sep='')
+> EUR.resto$month<-as.Date(EUR.resto$month)
+> 
+> 
+> ahora necesito agrupar mis datos por mes-años (01-mes-año) y obtener
+> su valor medio.  En SAS haría un proc summary donde obtendría una
+> nueva tabla con menos registros ya que estarían agrupados por mes.
+> Que función en R puedo usar equivalente a esta?
+> 
+> Si uso: eur.agg<-aggregate(EUR.resto$Yenes.japoneses.por.Euro,
+> by=list(EUR.resto$month),FUN=mean) me da error.
+> 
+> Gracias por vuestra ayuda,
+> 
+> un saludo,
+> 
+> Otto
+> *
+> 
+> 	[[alternative HTML version deleted]]
+> 
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Fri Jan 20 15:11:35 2012
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Fri, 20 Jan 2012 15:11:35 +0100
+Subject: [R-es] R portable
+References: <4F0EB03E.2040307@tid.es> 
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943771BF1614534@ASSCCEVS02.sergas.local>
+
+Hola a tod en s.
+
+Dada la actuación (indiscriminada) del FBI contra Megaupload, me veo en la obligación (necesidad) de publicar en otra URL el fichero de R-Portable. Intentaré, en breve, ofrecer otro enlace de descarga (esperemos que más "estable") alternativo.
+
+No descarto entablar acciones legales contra el FBI.
+
+Un Saludo,
+Miguel.
+
+
+
+
+
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From kjetil1001 en gmail.com  Fri Jan 20 22:19:10 2012
+From: kjetil1001 en gmail.com (Kjetil brinchmann Halvorsen)
+Date: Fri, 20 Jan 2012 15:19:10 -0600
+Subject: [R-es] copula con marginales multivariantes
+In-Reply-To: <SNT134-W22B4F4C2D9F93EA1B33A7396060@phx.gbl>
+References: <SNT134-W22B4F4C2D9F93EA1B33A7396060@phx.gbl>
+Message-ID: <CAH=m5MhGuC9UqcxOX_5QyEmwQXyumnUFmGZsnNpdM8SJBmM3iA@mail.gmail.com>
+
+No he visto una respuesta de esto. El problema es que tu construcción
+no es general,
+tu función no es una cópula para cópulas generales F,G
+
+Kjetil
+
+2011/9/16 tono ferri vidal <tonoferri_vidal en hotmail.com>:
+>
+> Hola,
+>
+> Quiero saber si es posible programar una cópula donde las funciones marginales son multivariantes, siguiendo el esquema
+> del package 'Copula'. Es decir,
+>
+> Copula(F(x,y), G(w,z)))
+>
+> En el caso de funciones marginales univariantes, un ejemplo de la normal multivariante quedaria de la siguiente forma,
+>
+> copulagaussiana<-mvdc(normalCopula(vector_de_correlaciones,dim=3,dispstr ="un"),c(rep("norm",3)),list(param1,param2,param3))
+>
+> donde 'vector_de_correlaciones' es un vector con las componentes del triángulo superior de la matriz de correlaciones ordenadas adecuadamente. La función entiende así que la matriz es simétrica con elementos de la diagonal 1's; y donde param1 se corresponde con los parametros de la primera distribución marginal, es decir la media y la desviacion tipica.
+>
+> Pero si consideramos que las marginales ya no son univariantes, pues la matriz de correlacion deja de ser simetrica, y los parametros ya no son escalares. Me gustaria saber si alguien ha intentado hacer esto.
+>
+> gracias.
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+"If you want a picture of the future - imagine a boot stamping on the
+human face - forever."
+
+George Orwell (1984)
+
+
+From ofwagner en gmail.com  Sat Jan 21 18:52:48 2012
+From: ofwagner en gmail.com (Otto F. Wagner)
+Date: Sat, 21 Jan 2012 18:52:48 +0100
+Subject: [R-es] sumarizar
+In-Reply-To: <CAMGr9P=DG+3Z0298xE9dU6YaAfyLLvC-kHgKEteEf-qCNBz+=Q@mail.gmail.com>
+References: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+	<CAOKbq8ip2V61bNs2PedudS6gbjDRwkicOYbRGQSFLi4gV-Z6fw@mail.gmail.com>
+	<CAMGr9P=DG+3Z0298xE9dU6YaAfyLLvC-kHgKEteEf-qCNBz+=Q@mail.gmail.com>
+Message-ID: <CAMGr9Pm8prukyf=e=WNjeY+2gtNzMX1e-TdOWziU2mhPSs4X7g@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120121/3276cea3/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sat Jan 21 19:48:46 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Sat, 21 Jan 2012 13:48:46 -0500
+Subject: [R-es] sumarizar
+In-Reply-To: <CAMGr9Pm8prukyf=e=WNjeY+2gtNzMX1e-TdOWziU2mhPSs4X7g@mail.gmail.com>
+References: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+	<CAOKbq8ip2V61bNs2PedudS6gbjDRwkicOYbRGQSFLi4gV-Z6fw@mail.gmail.com>
+	<CAMGr9P=DG+3Z0298xE9dU6YaAfyLLvC-kHgKEteEf-qCNBz+=Q@mail.gmail.com>
+	<CAMGr9Pm8prukyf=e=WNjeY+2gtNzMX1e-TdOWziU2mhPSs4X7g@mail.gmail.com>
+Message-ID: <CAKL8G3FfFtyChQZ90rn9fbA26gMonjCMqv8EiukLYVdZa603+Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120121/086eb528/attachment.pl>
+
+From andreselestadistico en hotmail.com  Sat Jan 21 20:34:27 2012
+From: andreselestadistico en hotmail.com (=?iso-8859-1?B?QU5EUslTIEZFTElQRSBGTNNSRVogUklWRVJB?=)
+Date: Sat, 21 Jan 2012 14:34:27 -0500
+Subject: [R-es] =?iso-8859-1?q?Funci=F3n_para_encontar_intervalo?=
+Message-ID: <BLU159-W41A8C7F536755C883C0521A5840@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120121/dabe5da0/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sat Jan 21 20:49:18 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Sat, 21 Jan 2012 14:49:18 -0500
+Subject: [R-es] =?iso-8859-1?q?Funci=F3n_para_encontar_intervalo?=
+In-Reply-To: <BLU159-W41A8C7F536755C883C0521A5840@phx.gbl>
+References: <BLU159-W41A8C7F536755C883C0521A5840@phx.gbl>
+Message-ID: <CAKL8G3HTR+aoFnsEXf3Z+oQZ0QU3CYBR+s1i4NKKAU-Yd5TFrQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120121/3625bebf/attachment.pl>
+
+From ofwagner en gmail.com  Sat Jan 21 21:41:17 2012
+From: ofwagner en gmail.com (Otto F. Wagner)
+Date: Sat, 21 Jan 2012 21:41:17 +0100
+Subject: [R-es] sumarizar
+In-Reply-To: <CAKL8G3FfFtyChQZ90rn9fbA26gMonjCMqv8EiukLYVdZa603+Q@mail.gmail.com>
+References: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+	<CAOKbq8ip2V61bNs2PedudS6gbjDRwkicOYbRGQSFLi4gV-Z6fw@mail.gmail.com>
+	<CAMGr9P=DG+3Z0298xE9dU6YaAfyLLvC-kHgKEteEf-qCNBz+=Q@mail.gmail.com>
+	<CAMGr9Pm8prukyf=e=WNjeY+2gtNzMX1e-TdOWziU2mhPSs4X7g@mail.gmail.com>
+	<CAKL8G3FfFtyChQZ90rn9fbA26gMonjCMqv8EiukLYVdZa603+Q@mail.gmail.com>
+Message-ID: <CAMGr9PnPGwr=O8f1kMJsT+8S74hZ3b9=5_RDH=BQ0jXiTW=Fyw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120121/3b359c44/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sat Jan 21 21:52:26 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Sat, 21 Jan 2012 15:52:26 -0500
+Subject: [R-es] sumarizar
+In-Reply-To: <CAMGr9PnPGwr=O8f1kMJsT+8S74hZ3b9=5_RDH=BQ0jXiTW=Fyw@mail.gmail.com>
+References: <CAMGr9Pmq=NAtuXy4JPMRS07=DzpMwP30Zb9uCVLa2VfXZfbrEQ@mail.gmail.com>
+	<CAOKbq8ip2V61bNs2PedudS6gbjDRwkicOYbRGQSFLi4gV-Z6fw@mail.gmail.com>
+	<CAMGr9P=DG+3Z0298xE9dU6YaAfyLLvC-kHgKEteEf-qCNBz+=Q@mail.gmail.com>
+	<CAMGr9Pm8prukyf=e=WNjeY+2gtNzMX1e-TdOWziU2mhPSs4X7g@mail.gmail.com>
+	<CAKL8G3FfFtyChQZ90rn9fbA26gMonjCMqv8EiukLYVdZa603+Q@mail.gmail.com>
+	<CAMGr9PnPGwr=O8f1kMJsT+8S74hZ3b9=5_RDH=BQ0jXiTW=Fyw@mail.gmail.com>
+Message-ID: <CAKL8G3GLO=HxA=6QBrza69=mXt73jJwxsFKt8=-wGjZG-6g2cA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120121/e1178bcc/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sat Jan 21 22:23:41 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Sat, 21 Jan 2012 16:23:41 -0500
+Subject: [R-es] =?iso-8859-1?q?Funci=F3n_para_encontar_intervalo?=
+In-Reply-To: <CAKL8G3HTR+aoFnsEXf3Z+oQZ0QU3CYBR+s1i4NKKAU-Yd5TFrQ@mail.gmail.com>
+References: <BLU159-W41A8C7F536755C883C0521A5840@phx.gbl>
+	<CAKL8G3HTR+aoFnsEXf3Z+oQZ0QU3CYBR+s1i4NKKAU-Yd5TFrQ@mail.gmail.com>
+Message-ID: <CAKL8G3FdUa_Gcp2dA9dycDmz_PSC--a77Y8b_w9iTuxDE6ZTFA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120121/b3c08cc7/attachment.pl>
+
+From cpfuenmayor en hotmail.com  Mon Jan 23 04:13:45 2012
+From: cpfuenmayor en hotmail.com (Patricio Fuenmayor Viteri)
+Date: Sun, 22 Jan 2012 22:13:45 -0500
+Subject: [R-es] =?iso-8859-1?q?Gr=E1ficas_3d_de_ecuaciones_param=E9tricas?=
+Message-ID: <COL121-W8DD784CA06284CD30EA1AAC8A0@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120122/ffa47892/attachment.pl>
+
+From a_villa43 en hotmail.com  Mon Jan 23 11:40:43 2012
+From: a_villa43 en hotmail.com (Adri V.)
+Date: Mon, 23 Jan 2012 06:40:43 -0400
+Subject: [R-es] Eficiencia
+Message-ID: <BAY166-W415AEA035E4F0194BCA533888A0@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120123/b3f10879/attachment.pl>
+
+From rroa en azti.es  Mon Jan 23 12:17:16 2012
+From: rroa en azti.es (=?iso-8859-1?Q?Rub=E9n_Roa?=)
+Date: Mon, 23 Jan 2012 12:17:16 +0100
+Subject: [R-es] Eficiencia
+In-Reply-To: <BAY166-W415AEA035E4F0194BCA533888A0@phx.gbl>
+References: <BAY166-W415AEA035E4F0194BCA533888A0@phx.gbl>
+Message-ID: <5CD78996B8F8844D963C875D3159B94A03097DAF@DSRCORREO.azti.local>
+
+Puedes hacer algo como esto:
+
+Start.process <- Sys.time()
+Some process ...
+End.process <- Sys.time()
+Exec.time  <-  End.process - Start.process
+
+Rubén
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Adri V.
+Enviado el: lunes, 23 de enero de 2012 11:41
+Para: Lista R
+Asunto: [R-es] Eficiencia
+
+
+Hola a todos...
+
+Solo preguntarles si existe alguna funcion (package) que me permita medir el rendimiento (definido como tiempo de ejecucion) de un programa.
+
+Saludos!!
+ 		 	   		  
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cof en qualityexcellence.es  Mon Jan 23 13:01:12 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 23 Jan 2012 13:01:12 +0100
+Subject: [R-es] Eficiencia
+In-Reply-To: <BAY166-W415AEA035E4F0194BCA533888A0@phx.gbl>
+References: <BAY166-W415AEA035E4F0194BCA533888A0@phx.gbl>
+Message-ID: <CAOKbq8hhoTHyyTWdC65cCpAB4KqqPvXC6X=0pBz5VKP0m_VhSg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120123/0ae45336/attachment.pl>
+
+From ceramos0 en yahoo.com.mx  Mon Jan 23 17:33:35 2012
+From: ceramos0 en yahoo.com.mx (Enrique RAMOS)
+Date: Mon, 23 Jan 2012 08:33:35 -0800 (PST)
+Subject: [R-es] Series de tiempo
+Message-ID: <1327336415.69447.YahooMailNeo@web39406.mail.mud.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120123/f5bff9ef/attachment.pl>
+
+From cof en qualityexcellence.es  Mon Jan 23 17:44:26 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 23 Jan 2012 17:44:26 +0100
+Subject: [R-es] Series de tiempo
+In-Reply-To: <1327336415.69447.YahooMailNeo@web39406.mail.mud.yahoo.com>
+References: <1327336415.69447.YahooMailNeo@web39406.mail.mud.yahoo.com>
+Message-ID: <CAOKbq8iYrGuhZUzUYDiuj-z-jQS=C69aYDDC9TsAm7=M1S3-WA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120123/bf008530/attachment.pl>
+
+From argel.gastelum en gmail.com  Mon Jan 23 22:55:14 2012
+From: argel.gastelum en gmail.com (=?windows-1252?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Mon, 23 Jan 2012 15:55:14 -0600
+Subject: [R-es] Ajuste no lineal con nls no converge
+Message-ID: <4F1DD742.2010305@gmail.com>
+
+Hola compañeros de la lista.
+
+Estoy tratando de hacer el ejercicio de realizar en R un ajuste no 
+lineal publicado en un artículo, originalmente hecho en SAS con el 
+método Gauss-Newton. Se trata de encontrar las constantes Km, Kic, Kiu y 
+k3 del modelo de inhibición mixta de Michaelis-Menten en su forma 
+integrada. El artículo proporciona los datos crudos utilizados para el 
+análisis (Los pongo al final de este mensaje). Mi duda es que no obtengo 
+el mismo resultado que el que indica dicho artículo, estoy usando "nls" 
+con la opción algorithm = "default" y "port". El resultado que obtengo 
+con "default" es el siguiente:
+
+AJUSTE.default <- nls(t ~ 
+((Km+Km*P0/Kic+Km*S0/Kic)*log((S0-(Pt-P0))/S0)+(-Km/Kic+1+P0/Kiu+S0/Kiu)*((S0-(Pt-P0))-S0)+(-1/(2*Kiu))*((S0-(Pt-P0))^2-S0^2))*(-1/(E*k3)), 
+DATOS, start = list (Km = 50, Kic = 6, Kiu = 6, k3 = 0.02), control = 
+nls.control(warnOnly = TRUE), algorithm = "default")
+
+AJUSTE.default
+
+Nonlinear regression model
+model: t ~ ((Km + Km * P0/Kic + Km * S0/Kic) * log((S0 - (Pt - P0))/S0) 
++ (-Km/Kic + 1 + P0/Kiu + S0/Kiu) * ((S0 - (Pt - P0)) - S0) + (-1/(2 * 
+Kiu)) * ((S0 - (Pt - P0))^2 - S0^2)) * (-1/(E * k3))
+data: DATOS
+Km Kic Kiu k3
+4.373e+01 6.808e+00 -5.972e+14 1.825e-02
+residual sum-of-squares: 159.1
+
+Number of iterations till stop: 7
+Achieved convergence tolerance: 1.397
+Reason stopped: singular gradient
+
+
+
+y al usar algorithm = "port" obtengo:
+
+AJUSTE.port <- nls(t ~ 
+((Km+Km*P0/Kic+Km*S0/Kic)*log((S0-(Pt-P0))/S0)+(-Km/Kic+1+P0/Kiu+S0/Kiu)*((S0-(Pt-P0))-S0)+(-1/(2*Kiu))*((S0-(Pt-P0))^2-S0^2))*(-1/(E*k3)), 
+DATOS, start = list (Km = 50, Kic = 6, Kiu = 6, k3 = 0.02), control = 
+nls.control(warnOnly = TRUE), algorithm = "port")
+
+AJUSTE.port
+
+Nonlinear regression model
+model: t ~ ((Km + Km * P0/Kic + Km * S0/Kic) * log((S0 - (Pt - P0))/S0) 
++ (-Km/Kic + 1 + P0/Kiu + S0/Kiu) * ((S0 - (Pt - P0)) - S0) + (-1/(2 * 
+Kiu)) * ((S0 - (Pt - P0))^2 - S0^2)) * (-1/(E * k3))
+data: DATOS
+Km Kic Kiu k3
+4.426e+01 6.928e+00 1.137e+06 1.839e-02
+residual sum-of-squares: 157.1
+
+Algorithm "port", convergence message: singular convergence (7)
+
+
+
+El resultado que indica el artículo es: Km = 46.1, Kic = 9.2, Kiu = 1.2 
+x 10^64, k3 = 0.0183. Como verán, las constantes Km, Kic y k3 obtenidas 
+en R son muy cercanas a las reportadas por SAS, mientras que el valor de 
+Kiu es diferente. Al final de cuentas la interpretación es la misma, la 
+constante Kiu resulta demasiado extrema (negativa con "default" y muy 
+grande con "port") para tener sentido, pero no entiendo por qué no 
+converge a un resultado en R cuando en SAS sí se obtiene (de acuerdo con 
+el artículo). ¿Qué argumento de nls se podría modificar para llegar a un 
+resultado similar al que se reporta con SAS?
+
+Agradezco de antemano la ayuda brindada.
+
+Saludos.
+
+--
+Argel.
+
+
+
+
+
+
+
+Los datos usados son los siguientes ("Bezerra y Dias, 2007. Utilization 
+of Integrated Michaelis-Menten Equation to Determine Kinetic Constants. 
+Biochemistry and molecular biology education. Vol. 35, No. 2, pp. 
+145?150"):
+
+# Datos del artículo: Bezerra y Días (2007).
+# Se trata de evaluar los parámetros cinéticos de una fosfatasa 
+alcalina, sobre 4-nitrofenil fosfato como sustrato.
+# Las reacciones se llevaron a cabo a 37 °C, en volúmenes de 2.75 mL, 
+con 9.5 µg de enzima y 8 concentraciones de sustrato, en amortiguador 
+Tris/HCl 0.1 M, pH 9.0.
+# La cantidad de producto se determinó espectrofotométricamente a 405 nM.
+# Unidades de las variables:
+# Tiempo (t): s
+# Concentración de producto (Pt): µM
+# Concentración inicial de sustrato (S0): µM
+# Concentración inicial de producto (P0): µM
+# Enzima (E): µg/2.75 mL
+#
+"t" "Pt" "S0" "P0" "E"
+0 0 25 0 9.5
+10 0.566 25 0 9.5
+20 1.154 25 0 9.5
+30 1.704 25 0 9.5
+40 2.281 25 0 9.5
+50 2.709 25 0 9.5
+60 3.124 25 0 9.5
+0 0 34.7 0 9.5
+10 0.634 34.7 0 9.5
+20 1.296 34.7 0 9.5
+30 2.01 34.7 0 9.5
+40 2.639 34.7 0 9.5
+50 3.257 34.7 0 9.5
+60 3.844 34.7 0 9.5
+0 0 45 0 9.5
+10 0.966 45 0 9.5
+20 1.749 45 0 9.5
+30 2.558 45 0 9.5
+40 3.275 45 0 9.5
+50 4.014 45 0 9.5
+60 4.611 45 0 9.5
+0 0 90 0 9.5
+10 0.952 90 0 9.5
+20 1.953 90 0 9.5
+30 2.939 90 0 9.5
+40 3.92 90 0 9.5
+50 4.825 90 0 9.5
+60 5.766 90 0 9.5
+0 0 200 0 9.5
+10 1.261 200 0 9.5
+20 2.608 200 0 9.5
+30 3.906 200 0 9.5
+40 5.135 200 0 9.5
+50 6.423 200 0 9.5
+60 7.612 200 0 9.5
+0 0 500 0 9.5
+10 1.363 500 0 9.5
+20 2.928 500 0 9.5
+30 4.37 500 0 9.5
+40 6.015 500 0 9.5
+50 7.78 500 0 9.5
+60 9.363 500 0 9.5
+0 0 1000 0 9.5
+10 1.588 1000 0 9.5
+20 3.125 1000 0 9.5
+30 4.772 1000 0 9.5
+40 6.463 1000 0 9.5
+50 7.77 1000 0 9.5
+60 9.907 1000 0 9.5
+0 0 2000 0 9.5
+10 2.044 2000 0 9.5
+20 3.816 2000 0 9.5
+30 5.346 2000 0 9.5
+40 7.141 2000 0 9.5
+50 8.803 2000 0 9.5
+60 10.441 2000 0 9.5
+
+
+From jorgeivanvelez en gmail.com  Tue Jan 24 00:19:16 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Mon, 23 Jan 2012 18:19:16 -0500
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <4F1DD742.2010305@gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+Message-ID: <CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120123/3f84ae9e/attachment.pl>
+
+From argel.gastelum en gmail.com  Tue Jan 24 01:26:09 2012
+From: argel.gastelum en gmail.com (=?ISO-8859-1?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Mon, 23 Jan 2012 18:26:09 -0600
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <9D3B956B-3BC3-4A84-A514-23E741A550E5@iberstat.es>
+References: <4F1DD742.2010305@gmail.com>
+	<9D3B956B-3BC3-4A84-A514-23E741A550E5@iberstat.es>
+Message-ID: <4F1DFAA1.5060801@gmail.com>
+
+     Hola Olivier, muchas gracias por tus comentarios. Pongo algunas 
+notas más abajo.
+
+El 23/01/12 16:43, Olivier Nuñez escribió:
+> Argel,
+>
+> Kiu = 1.2 x 10^64 es un valor bastante grande para una constante de 
+> inhibición!
+
+    Efectivamente, Kiu = 1.2 x 10^64 es demasiado grande para una 
+constante de inhibición. El problema no es de interpretación del 
+resultado, es más del por qué "nls" no converge hacia los mismos valores 
+que ellos reportan para el mismo set de datos crudos, es más, sólo no 
+converge. Es precisamente por lo que los autores del artículo ajustan a 
+los mismos datos el modelo que considera sólo la inhibición competitiva.
+
+> Y sospecho que el algoritmo de estos autores tampoco converge con 
+> estos datos.
+
+     Los autores mencionan que en SAS encuentran convergencia con este 
+modelo mixto hacia los valores que mencioné anteriormente. Yo realmente 
+desconozco SAS y no tengo acceso a él como para comprobarlo. Pensé que 
+con R y "nls" debería llegar a converger también puesto que con 
+algorithm = "default" se trataría también del método Gauss-Newton que 
+ellos usaron en SAS.
+
+> De hecho si pones trace=TRUE, verás que este parámetro se va al 
+> infinito y el problema parece más bien de identificación del modelo:
+>
+     Ya lo había hecho antes de consultar a la lista y había notado que 
+Kiu se va incrementando hacia valores muy grandes y sin mucho sentido 
+(el comportamiento esperado, ya que el modelo mixto no se ajusta bien a 
+los datos, sino que se ajusta mejor a un modelo con sólo inhibición 
+competitiva), pero como los autores mencionan convergencia creí que en R 
+también pasaría así. Lo que me interesa por el momento es más bien poder 
+obtener los mismos valores ajustados que ellos reportan para los 
+parámetros, sabiendo de antemano que no son los que mejor se ajustan 
+(explico esto con un poco más de detalle más abajo).
+
+> > AJUSTE.default <- nls(t ~ 
+> ((Km+Km*P0/Kic+Km*S0/Kic)*log((S0-(Pt-P0))/S0)+(-Km/Kic+1+P0/Kiu+S0/Kiu)*((S0-(Pt-P0))-S0)+(-1/(2*Kiu))*((S0-(Pt-P0))^2-S0^2))*(-1/(E*k3)), 
+> DATOS, start = list (Km = 50, Kic = 6, Kiu = 6, k3 = 0.02), algorithm 
+> = "default",trace=TRUE)
+> 9689.914 :  50.00  6.00  6.00  0.02
+> 6670.874 :  34.93095937  5.79629581 14.16884101  0.01610926
+> 1896.282 :  37.29205443  5.77977412 32.30063332  0.01671887
+> 840.2903 :  37.3846129  5.7802131 88.8218065  0.0167428
+> 536.3691 :   37.38476020   5.78018175 361.40233750   0.01674285
+> 463.0871 :  3.738474e+01 5.780188e+00 3.765039e+03 1.674285e-02
+> 455.831 :  3.738453e+01 5.780068e+00 3.377163e+05 1.674283e-02
+> 455.8272 :  3.738363e+01 5.780040e+00 3.325798e+08 1.674261e-02
+> Error en nls(t ~ ((Km + Km * P0/Kic + Km * S0/Kic) * log((S0 - (Pt - 
+> P0))/S0) +  :
+>   singular gradient
+>
+> Un saludo. Olivier
+
+     Comento un poco más sobre el artículo. El objetivo en general es 
+ajustar los siguientes modelos de Michaelis-Menten: Sin inhibición, con 
+inhibición competitiva, con inhibición no competitiva, con inhibición 
+acompetitiva y con inhibición mixta (todos en sus formas integradas), y 
+de acuerdo con los resultados de los valores de los parámetros, del 
+número de parámetros y de las sumas de cuadrados decidir cuál es el que 
+mejor se ajusta a los datos.
+
+     En R, "nls" ha reproducido con exactitud los parámetros estimados 
+por los autores para los modelos sin inhibición y con inhibición 
+competitiva, pero no para los que consideran inhibición acompetitiva e 
+inhibición mixta (donde "nls" reporta no convergencia y los autores 
+reportan convergencia con valores de Kiu muy grandes, del orden de 10^38 
+a 10^64). Los autores mencionan que ellos tampoco encontraron 
+convergencia con el modelo de inhibición no competitiva. Sin embargo, al 
+usar en R y "nls" las opciones warnOnly = TRUE, "trrosace" y "port" 
+observo que aunque no reporta convergencia los valores de los parámetros 
+ajustados son muy similares a lo reportado por los autores, excepto para 
+las constantes de inhibición que resultan demasiado grandes, donde "nls" 
+reporta no convergencia y valores finales del orden de 10^5 para Kiu.
+
+     Espero haber aclarado un poco la falta de información preliminar.
+
+     De nuevo muchas gracias por tus comentarios.
+
+     Saludos.
+
+--
+     Argel.
+
+
+From argel.gastelum en gmail.com  Tue Jan 24 01:52:14 2012
+From: argel.gastelum en gmail.com (=?windows-1252?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Mon, 23 Jan 2012 18:52:14 -0600
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+Message-ID: <4F1E00BE.7000002@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120123/01a10830/attachment.pl>
+
+From ceramos0 en yahoo.com.mx  Tue Jan 24 05:42:26 2012
+From: ceramos0 en yahoo.com.mx (Enrique RAMOS)
+Date: Mon, 23 Jan 2012 20:42:26 -0800 (PST)
+Subject: [R-es] Series de tiempo
+In-Reply-To: <CAOKbq8iYrGuhZUzUYDiuj-z-jQS=C69aYDDC9TsAm7=M1S3-WA@mail.gmail.com>
+References: <1327336415.69447.YahooMailNeo@web39406.mail.mud.yahoo.com>
+	<CAOKbq8iYrGuhZUzUYDiuj-z-jQS=C69aYDDC9TsAm7=M1S3-WA@mail.gmail.com>
+Message-ID: <1327380146.67059.YahooMailNeo@web39403.mail.mud.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120123/7653a839/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Tue Jan 24 07:13:44 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Tue, 24 Jan 2012 01:13:44 -0500
+Subject: [R-es] Eficiencia
+In-Reply-To: <BAY166-W415AEA035E4F0194BCA533888A0@phx.gbl>
+References: <BAY166-W415AEA035E4F0194BCA533888A0@phx.gbl>
+Message-ID: <CAKL8G3F627yu+tAzW+Ly0QLG6mVbDnhfsBKiROeHjTVTKV7=cA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/a9c7d4c6/attachment.pl>
+
+From grserrano en ccee.ucm.es  Tue Jan 24 11:31:10 2012
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Tue, 24 Jan 2012 11:31:10 +0100
+Subject: [R-es] Series de tiempo
+In-Reply-To: <CAOKbq8iYrGuhZUzUYDiuj-z-jQS=C69aYDDC9TsAm7=M1S3-WA@mail.gmail.com>
+References: <1327336415.69447.YahooMailNeo@web39406.mail.mud.yahoo.com>
+	<CAOKbq8iYrGuhZUzUYDiuj-z-jQS=C69aYDDC9TsAm7=M1S3-WA@mail.gmail.com>
+Message-ID: <CAPRmSMGNX7oEsc_uKxpyCX95nQe_oLk9ihV=NH0Xjmn7pbCVQA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/e8da4758/attachment.pl>
+
+From ceramos0 en yahoo.com.mx  Tue Jan 24 16:14:54 2012
+From: ceramos0 en yahoo.com.mx (Enrique RAMOS)
+Date: Tue, 24 Jan 2012 07:14:54 -0800 (PST)
+Subject: [R-es] Series de tiempo
+In-Reply-To: <CAPRmSMGNX7oEsc_uKxpyCX95nQe_oLk9ihV=NH0Xjmn7pbCVQA@mail.gmail.com>
+References: <1327336415.69447.YahooMailNeo@web39406.mail.mud.yahoo.com>
+	<CAOKbq8iYrGuhZUzUYDiuj-z-jQS=C69aYDDC9TsAm7=M1S3-WA@mail.gmail.com>
+	<CAPRmSMGNX7oEsc_uKxpyCX95nQe_oLk9ihV=NH0Xjmn7pbCVQA@mail.gmail.com>
+Message-ID: <1327418094.86594.YahooMailNeo@web39402.mail.mud.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/62c96dd7/attachment.pl>
+
+From cof en qualityexcellence.es  Tue Jan 24 16:23:00 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 24 Jan 2012 16:23:00 +0100
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <4F1E00BE.7000002@gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+Message-ID: <CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/62e643b8/attachment.pl>
+
+From grserrano en ccee.ucm.es  Tue Jan 24 20:16:09 2012
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Tue, 24 Jan 2012 20:16:09 +0100
+Subject: [R-es] Series de tiempo
+In-Reply-To: <1327418094.86594.YahooMailNeo@web39402.mail.mud.yahoo.com>
+References: <1327336415.69447.YahooMailNeo@web39406.mail.mud.yahoo.com>
+	<CAOKbq8iYrGuhZUzUYDiuj-z-jQS=C69aYDDC9TsAm7=M1S3-WA@mail.gmail.com>
+	<CAPRmSMGNX7oEsc_uKxpyCX95nQe_oLk9ihV=NH0Xjmn7pbCVQA@mail.gmail.com>
+	<1327418094.86594.YahooMailNeo@web39402.mail.mud.yahoo.com>
+Message-ID: <CAPRmSMHnJqOrbZRjCWu5KU-QPrG=1jEkb3i+rmudxbHrY-inPA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/e87a84e9/attachment.pl>
+
+From argel.gastelum en gmail.com  Tue Jan 24 20:41:25 2012
+From: argel.gastelum en gmail.com (=?windows-1252?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Tue, 24 Jan 2012 13:41:25 -0600
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+	<CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+Message-ID: <4F1F0965.9090707@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/27d62b39/attachment.pl>
+
+From cpfuenmayor en hotmail.com  Tue Jan 24 22:08:56 2012
+From: cpfuenmayor en hotmail.com (Patricio Fuenmayor Viteri)
+Date: Tue, 24 Jan 2012 16:08:56 -0500
+Subject: [R-es]  Series de tiempo
+In-Reply-To: <mailman.5445.1327434105.4521.r-help-es@r-project.org>
+References: <mailman.5445.1327434105.4521.r-help-es@r-project.org>
+Message-ID: <COL121-W186D9831267BC692589223AC8B0@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/92cd7d81/attachment.pl>
+
+From cof en qualityexcellence.es  Tue Jan 24 22:54:01 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 24 Jan 2012 22:54:01 +0100
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <4F1F0965.9090707@gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+	<CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+	<4F1F0965.9090707@gmail.com>
+Message-ID: <CAOKbq8iQQsVzLj0YxCUW-Rypu=TODM=Yeh3f=Ggh3PjN21H3wg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/ced6bb1e/attachment.pl>
+
+From ceramos0 en yahoo.com.mx  Tue Jan 24 23:37:29 2012
+From: ceramos0 en yahoo.com.mx (Enrique RAMOS)
+Date: Tue, 24 Jan 2012 14:37:29 -0800 (PST)
+Subject: [R-es] Series de tiempo
+In-Reply-To: <COL121-W186D9831267BC692589223AC8B0@phx.gbl>
+References: <mailman.5445.1327434105.4521.r-help-es@r-project.org>
+	<COL121-W186D9831267BC692589223AC8B0@phx.gbl>
+Message-ID: <1327444649.98579.YahooMailNeo@web39405.mail.mud.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/060c5bf0/attachment.pl>
+
+From argel.gastelum en gmail.com  Tue Jan 24 23:58:03 2012
+From: argel.gastelum en gmail.com (=?ISO-8859-1?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Tue, 24 Jan 2012 16:58:03 -0600
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <CAOKbq8iQQsVzLj0YxCUW-Rypu=TODM=Yeh3f=Ggh3PjN21H3wg@mail.gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+	<CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+	<4F1F0965.9090707@gmail.com>
+	<CAOKbq8iQQsVzLj0YxCUW-Rypu=TODM=Yeh3f=Ggh3PjN21H3wg@mail.gmail.com>
+Message-ID: <4F1F377B.6000308@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/456c2e7e/attachment.pl>
+
+From marchenamarlene en gmail.com  Wed Jan 25 01:48:25 2012
+From: marchenamarlene en gmail.com (marlene marchena)
+Date: Tue, 24 Jan 2012 22:48:25 -0200
+Subject: [R-es] R CMD check error
+Message-ID: <CAKOtKsV+si6ztGZ3o1rJy=PC32_FGnhFkpZi0YsXOhp0wGHr3g@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120124/68eb1c03/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Wed Jan 25 04:46:29 2012
+From: javier.ruben.marcuzzi en gmail.com (=?utf-8?Q?Marcuzzi=2C_Javier_Rub=C3=A9n?=)
+Date: Wed, 25 Jan 2012 00:46:29 -0300
+Subject: [R-es] R CMD check error
+In-Reply-To: <CAKOtKsV+si6ztGZ3o1rJy=PC32_FGnhFkpZi0YsXOhp0wGHr3g@mail.gmail.com>
+References: <CAKOtKsV+si6ztGZ3o1rJy=PC32_FGnhFkpZi0YsXOhp0wGHr3g@mail.gmail.com>
+Message-ID: <3DF23891EE01421BAD5AD61A1ED6CF98@JavierMarcuzzi>
+
+Marlene
+
+Realmente hace mucho que no uso ubuntu con R, uno de los problemas que yo 
+tenía era que los repositorios de ubuntu estaban desactualizados respecto a 
+la versiones de R (sus librerías), desconozco su caso, pero instalar o 
+actualizar R desde al consola de R no era igual que desde ubuntu, porque 
+desde la consola yo indicaba desde que lugar descargar los archivos 
+necesarios, y estos se compilaban.
+
+Posiblemente mi comentario es obsoleto, pero fue parte de mi experiencia con 
+ubuntu y R, y li le sirve...
+
+Javier
+
+-----Mensaje original----- 
+From: marlene marchena
+Sent: Tuesday, January 24, 2012 9:48 PM
+To: r-help-es en r-project.org
+Subject: [R-es] R CMD check error
+
+Hola,
+
+Queria saber se alguién podia darme alguna idea de cómo resolver este
+mensaje de error que aparece cuando ruedo el comando
+
+R CMD check en mi paquete
+
+Error in find.package(package, lib.loc) :
+  there is no package called ?MASS?
+Calls: <Anonymous> -> lapply -> FUN -> find.package
+Execution halted
+
+He leido algunos post sobre el asunto que dicen de resolver el problema
+declarando el camino de la biblioteca usando el comando R_LIB=" ", el
+problema es que no sé cómo hacer eso. Dónde declaro el camino? en el
+terminal o tengo que hacerlo en el propio código de la función?
+
+Gracias por cualquier ayuda o información que me pueda ayudar a resolver el
+problema,
+
+Marlene
+
+P.S: Rodando R CMD check en Ubuntu 11.10 tengo la siguiente salida:
+
+* using R version 2.14.1 (2011-12-22)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ?SCperf/DESCRIPTION? ... OK
+* checking extension type ... Package
+* this is package ?SCperf? version ?1.0?
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking whether package ?SCperf? can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ...
+OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking for unstated dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+Error in loadNamespace(name) : there is no package called ?codetools?
+Calls: <Anonymous> ... tryCatch -> tryCatchList -> tryCatchOne ->
+<Anonymous>
+Execution halted
+* checking Rd files ... WARNING
+Error : WW.Rd: non-ASCII input and no declared encoding
+
+problem found in ?WW.Rd?
+* checking Rd metadata ... OK
+* checking Rd cross-references ... WARNING
+Error in find.package(package, lib.loc) :
+  there is no package called ?MASS?
+Calls: <Anonymous> -> lapply -> FUN -> find.package
+Execution halted
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking examples ... OK
+* checking PDF version of manual ... OK
+
+[[alternative HTML version deleted]]
+
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From r-uca en uca.es  Wed Jan 25 08:34:10 2012
+From: r-uca en uca.es (Correo proyecto R)
+Date: Wed, 25 Jan 2012 08:34:10 +0100 (CET)
+Subject: [R-es] R CMD check error
+Message-ID: <1413784945.4865.1327476850376.JavaMail.tomcat@cedric>
+
+Hola Marlene:
+
+Hace mucho tiempo que uso R en ubuntu, y si bien es verdad que los 
+paquetes están un poco desactualizados y que no están todos, no he 
+tenido graves problemas.
+
+Mi impresión es que has intentado instalar paquetes a "mano" al 
+tiempo que desde el repositorio de ubuntu y eso te ha dejado el 
+sistema en el que el gestor de paquetes no puede mantener la 
+coherencia.
+
+Mis recomendaciones son dos:
+* Primero borra todo lo que tengas de R
+* Mira http://debian.cran.r-project.org/ y añade este repositorio 
+según las instrucciones que aparecen allí. Este repositorio está 
+un poco más actualizado y los paquetes ya están precompilados por 
+lo que la instalación es más rápida.
+
+Saludos.
+
+
+
+Manuel Muñoz
+Proyecto R-UCA
+
+
+From m.ramon.fernandez en gmail.com  Wed Jan 25 12:24:57 2012
+From: m.ramon.fernandez en gmail.com (Manuel Ramon)
+Date: Wed, 25 Jan 2012 12:24:57 +0100
+Subject: [R-es] R CMD check error
+Message-ID: <CAHB8JpKb3=BLyzgWGdNF_6VhJ_CkdvvsvwZi5mjt+1UqYEkZdw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/d9d3bb62/attachment.pl>
+
+From cof en qualityexcellence.es  Wed Jan 25 14:55:51 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 25 Jan 2012 14:55:51 +0100
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <4F1F377B.6000308@gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+	<CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+	<4F1F0965.9090707@gmail.com>
+	<CAOKbq8iQQsVzLj0YxCUW-Rypu=TODM=Yeh3f=Ggh3PjN21H3wg@mail.gmail.com>
+	<4F1F377B.6000308@gmail.com>
+Message-ID: <CAOKbq8j6EMpcsN-rMV-6J5Wq=fT7X949A7TohiZXC20CdjmU_g@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/42a57389/attachment.pl>
+
+From argel.gastelum en gmail.com  Wed Jan 25 18:50:38 2012
+From: argel.gastelum en gmail.com (=?ISO-8859-1?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Wed, 25 Jan 2012 11:50:38 -0600
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <CAOKbq8j6EMpcsN-rMV-6J5Wq=fT7X949A7TohiZXC20CdjmU_g@mail.gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+	<CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+	<4F1F0965.9090707@gmail.com>
+	<CAOKbq8iQQsVzLj0YxCUW-Rypu=TODM=Yeh3f=Ggh3PjN21H3wg@mail.gmail.com>
+	<4F1F377B.6000308@gmail.com>
+	<CAOKbq8j6EMpcsN-rMV-6J5Wq=fT7X949A7TohiZXC20CdjmU_g@mail.gmail.com>
+Message-ID: <4F2040EE.70703@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/076d4ec0/attachment.pl>
+
+From alejandratauro en gmail.com  Wed Jan 25 18:56:16 2012
+From: alejandratauro en gmail.com (Alejandra Tauro)
+Date: Wed, 25 Jan 2012 11:56:16 -0600
+Subject: [R-es] gravy y modelos HOF
+Message-ID: <CAN4fB9D_ROVj5yW0m7EryyAQ2BGZKZuRJ2xXYCBoKe8Gm0c2Fw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/68bd9bec/attachment.pl>
+
+From ana.ismi.3isa en gmail.com  Wed Jan 25 21:11:05 2012
+From: ana.ismi.3isa en gmail.com (Jesus Armand Calejero Roman)
+Date: Wed, 25 Jan 2012 21:11:05 +0100
+Subject: [R-es] Media en subgrupos de grupos
+Message-ID: <761E3DDD-C033-48B4-9FDF-373A572E098D@gmail.com>
+
+Un saludo a todos.
+
+Es posible que con el asunto no quede claro lo que quiero. Para eso añado una captura.
+
+Dispongo de 3 variables (dos discretas y una continua) y me interesaría sacar la media tanto del grupo como de los subgrupos. Esta creo que es la segunda vez que escribo preguntando algo parecido. En la primera me hablasteis de tapply, pero con este comando sólo sé obtener la media de una de las variables, por ejemplo la media de edad de los grupos de la variable Franja o de la variable Sexo pero no de los dos a la vez como en la tabla dinámica que acompaña a los datos en la captura. Aggregate no me queda muy claro qué es lo que hace.
+
+Espero no volver a ser de mucha molestia.
+
+Muchas gracias de antemano
+
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/2047844d/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura de pantalla 2012-01-25 a la(s) 21.07.00.png
+Type: image/png
+Size: 31938 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/2047844d/attachment-0001.png>
+
+From jorgeivanvelez en gmail.com  Wed Jan 25 21:43:54 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Wed, 25 Jan 2012 15:43:54 -0500
+Subject: [R-es] Media en subgrupos de grupos
+In-Reply-To: <761E3DDD-C033-48B4-9FDF-373A572E098D@gmail.com>
+References: <761E3DDD-C033-48B4-9FDF-373A572E098D@gmail.com>
+Message-ID: <CAKL8G3FdX2NaEqZigj6e8TJ7iqB0SwthXFw5yyGw7WaD+kVr-Q@mail.gmail.com>
+
+Hola Jesus,
+
+Puedes obtener resultados similares utilizando ave(), aggregate(),
+tapply(), todos en base, o a/d/l*ply en la libreria plyr (ver [1]).  Otra
+posibilidad es a traves de la libreria tables (ver [2])
+
+A continuacion un ejemplo con tapply() y aggregate():
+
+n <- 1000
+sexo <- sample(c('hombre', 'mujer'), n, TRUE)
+franja <- sample(c('infantil', 'adulto', 'anciano'), n, TRUE)
+annos <- rnorm(n, 30, 15)
+d <- data.frame(sexo, franja, annos)
+
+with(d, aggregate(annos, list(sexo, franja), mean))
+with(d, tapply(annos, list(sexo, franja), mean))
+
+Para obtener la media global tendrias que hacer un pequeno "truco"  ;-)
+
+Un saludo,
+Jorge.-
+
+[1]  http://www.jstatsoft.org/v40/i01/paper
+ [2]  http://cran.r-project.org/web/packages/tables/index.html
+
+
+
+2012/1/25 Jesus Armand Calejero Roman <>
+
+> Un saludo a todos.
+>
+> Es posible que con el asunto no quede claro lo que quiero. Para eso añado
+> una captura.
+>
+> Dispongo de 3 variables (dos discretas y una continua) y me interesaría
+> sacar la media tanto del grupo como de los subgrupos. Esta creo que es la
+> segunda vez que escribo preguntando algo parecido. En la primera me
+> hablasteis de tapply, pero con este comando sólo sé obtener la media de una
+> de las variables, por ejemplo la media de edad de los grupos de la variable
+> Franja o de la variable Sexo pero no de los dos a la vez como en la tabla
+> dinámica que acompaña a los datos en la captura. Aggregate no me queda muy
+> claro qué es lo que hace.
+>
+> Espero no volver a ser de mucha molestia.
+>
+> Muchas gracias de antemano
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/af8be29d/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: no disponible
+Type: image/png
+Size: 31938 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/af8be29d/attachment-0001.png>
+
+From cof en qualityexcellence.es  Wed Jan 25 23:23:24 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 25 Jan 2012 23:23:24 +0100
+Subject: [R-es] Media en subgrupos de grupos
+In-Reply-To: <761E3DDD-C033-48B4-9FDF-373A572E098D@gmail.com>
+References: <761E3DDD-C033-48B4-9FDF-373A572E098D@gmail.com>
+Message-ID: <CAOKbq8iN1=EOaLoco+cs-QX1NT5G02eJNqsQwG0nEnT4KysPzw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120125/9c07d7a0/attachment.pl>
+
+From leonardo.hernandez en etecsa.cu  Fri Jan 27 17:55:32 2012
+From: leonardo.hernandez en etecsa.cu (=?ISO-8859-1?Q?Leonardo_Hern=E1ndez_P=E9rez?=)
+Date: Fri, 27 Jan 2012 11:55:32 -0500
+Subject: [R-es] Media en subgrupos de grupos
+In-Reply-To: <CAOKbq8iN1=EOaLoco+cs-QX1NT5G02eJNqsQwG0nEnT4KysPzw@mail.gmail.com>
+References: <761E3DDD-C033-48B4-9FDF-373A572E098D@gmail.com>
+	<CAOKbq8iN1=EOaLoco+cs-QX1NT5G02eJNqsQwG0nEnT4KysPzw@mail.gmail.com>
+Message-ID: <4F22D704.6030501@etecsa.cu>
+
+Hola Carlos y demás colegas he tratado de hacer esto que describes aquí 
+pero no he podido porque no tengo el paquete sqldf instalado, he tratado 
+de instalarlo pero no he podido, no encuentro la forma de llegar al Cran 
+mediante un proxy, también lo he bajado manualmente y he tratado de 
+instalarlo desde la Opción que da Rstudio y tampoco he podido. Mi 
+sistema operativo es Ubuntu 11.10
+
+Alguien puede explicarme como hacerlo.
+
+Un abrazo a todos
+
+Leonardo
+
+On 25/01/12 17:23, Carlos Ortega wrote:
+> Hola,
+>
+> Hemos respondido hace poco a una consulta parecida.
+> Jorge comenta todas las funciones *ply y yo suelo responder con un ejemplo
+> del paquete "sqldf"...
+> Que con un poco de conocimiento de sql es inmediato poder utilizarlo.
+>
+> Ahí va el ejemplo:
+>
+>> library(sqldf)>  >  Lines<- "DeployID Date.Time LocationQuality Latitude Longitude+ STM05-1 2005/02/28 17:35 Good -35.562 177.158+ STM05-1 2005/02/28 19:44 Good -35.487 177.129+ STM05-1 2005/02/28 23:01 Unknown -35.399 177.064+ STM05-1 2005/03/01 07:28 Unknown -34.978 177.268+ STM05-1 2005/03/01 18:06 Poor -34.799 177.027+ STM05-1 2005/03/01 18:47 Poor -34.85 177.059+ STM05-2 2005/02/28 12:49 Good -35.928 177.328+ STM05-2 2005/02/28 21:23 Poor -35.926 177.314+ ">  >  DF<- read.table(textConnection(Lines), skip = 1,  as.is = TRUE,+                  col.names = c("Id", "Date", "Time", "Quality", "Lat", "Long"))>  sqldf("select Quality, avg(Lat), avg(Long) from DF group by Quality")  Quality  avg(Lat) avg(Long)
+> 1    Good -35.65900  177.2050
+> 2    Poor -35.19167  177.1333
+> 3 Unknown -35.18850  177.1660>  >
+>
+>
+> Cuidado que sqldf trabaja sobre "data.frames" cuyo nombre no tenga un
+> punto, por eso en el ejemplo se usa "DF".
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El 25 de enero de 2012 21:11, Jesus Armand Calejero Roman<
+> ana.ismi.3isa en gmail.com>  escribió:
+>
+>> Un saludo a todos.
+>>
+>> Es posible que con el asunto no quede claro lo que quiero. Para eso añado
+>> una captura.
+>>
+>> Dispongo de 3 variables (dos discretas y una continua) y me interesaría
+>> sacar la media tanto del grupo como de los subgrupos. Esta creo que es la
+>> segunda vez que escribo preguntando algo parecido. En la primera me
+>> hablasteis de tapply, pero con este comando sólo sé obtener la media de una
+>> de las variables, por ejemplo la media de edad de los grupos de la variable
+>> Franja o de la variable Sexo pero no de los dos a la vez como en la tabla
+>> dinámica que acompaña a los datos en la captura. Aggregate no me queda muy
+>> claro qué es lo que hace.
+>>
+>> Espero no volver a ser de mucha molestia.
+>>
+>> Muchas gracias de antemano
+>>
+>>
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+> 	[[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> ---
+> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx2.etecsa.cu
+> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120127/38755ed8/attachment.html>
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120127/38755ed8/attachment.pl>
+
+From cof en qualityexcellence.es  Fri Jan 27 18:30:54 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 27 Jan 2012 18:30:54 +0100
+Subject: [R-es] Media en subgrupos de grupos
+In-Reply-To: <4F22D704.6030501@etecsa.cu>
+References: <761E3DDD-C033-48B4-9FDF-373A572E098D@gmail.com>
+	<CAOKbq8iN1=EOaLoco+cs-QX1NT5G02eJNqsQwG0nEnT4KysPzw@mail.gmail.com>
+	<4F22D704.6030501@etecsa.cu>
+Message-ID: <CAOKbq8js=n8LKs2fOkKpYuOZHmuKxDN3B4jwQfbAtEosii3zvQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120127/8c60555d/attachment.pl>
+
+From argel.gastelum en gmail.com  Fri Jan 27 19:04:24 2012
+From: argel.gastelum en gmail.com (=?ISO-8859-1?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Fri, 27 Jan 2012 12:04:24 -0600
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <CAOKbq8gQJQucvY4mXJ1sO52EJCBrU0uSXfB_zCBqTqK1qoLB7A@mail.gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+	<CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+	<4F1F0965.9090707@gmail.com>
+	<CAOKbq8iQQsVzLj0YxCUW-Rypu=TODM=Yeh3f=Ggh3PjN21H3wg@mail.gmail.com>
+	<4F1F377B.6000308@gmail.com>
+	<CAOKbq8j6EMpcsN-rMV-6J5Wq=fT7X949A7TohiZXC20CdjmU_g@mail.gmail.com>
+	<4F2040EE.70703@gmail.com>
+	<CAOKbq8gQJQucvY4mXJ1sO52EJCBrU0uSXfB_zCBqTqK1qoLB7A@mail.gmail.com>
+Message-ID: <4F22E728.1020601@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120127/6e44bb21/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Fri Jan 27 21:17:49 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Fri, 27 Jan 2012 15:17:49 -0500
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <4F22E728.1020601@gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+	<CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+	<4F1F0965.9090707@gmail.com>
+	<CAOKbq8iQQsVzLj0YxCUW-Rypu=TODM=Yeh3f=Ggh3PjN21H3wg@mail.gmail.com>
+	<4F1F377B.6000308@gmail.com>
+	<CAOKbq8j6EMpcsN-rMV-6J5Wq=fT7X949A7TohiZXC20CdjmU_g@mail.gmail.com>
+	<4F2040EE.70703@gmail.com>
+	<CAOKbq8gQJQucvY4mXJ1sO52EJCBrU0uSXfB_zCBqTqK1qoLB7A@mail.gmail.com>
+	<4F22E728.1020601@gmail.com>
+Message-ID: <CAKL8G3F2T_PDHb3rnvdY15VH+VnQyCQVBej5o=KQ2pAj=03EAg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120127/c6e3658d/attachment.pl>
+
+From argel.gastelum en gmail.com  Fri Jan 27 23:15:58 2012
+From: argel.gastelum en gmail.com (=?ISO-8859-1?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Fri, 27 Jan 2012 16:15:58 -0600
+Subject: [R-es] Ajuste no lineal con nls no converge
+In-Reply-To: <CAKL8G3F2T_PDHb3rnvdY15VH+VnQyCQVBej5o=KQ2pAj=03EAg@mail.gmail.com>
+References: <4F1DD742.2010305@gmail.com>
+	<CAKL8G3GcorzmNVrw95trtg74eMbOA6D0rNsPS0qD1MMw0k3agw@mail.gmail.com>
+	<4F1E00BE.7000002@gmail.com>
+	<CAOKbq8izBkygsxGi039E23rzj7+8moWehuze91jKTKCnWV5vzg@mail.gmail.com>
+	<4F1F0965.9090707@gmail.com>
+	<CAOKbq8iQQsVzLj0YxCUW-Rypu=TODM=Yeh3f=Ggh3PjN21H3wg@mail.gmail.com>
+	<4F1F377B.6000308@gmail.com>
+	<CAOKbq8j6EMpcsN-rMV-6J5Wq=fT7X949A7TohiZXC20CdjmU_g@mail.gmail.com>
+	<4F2040EE.70703@gmail.com>
+	<CAOKbq8gQJQucvY4mXJ1sO52EJCBrU0uSXfB_zCBqTqK1qoLB7A@mail.gmail.com>
+	<4F22E728.1020601@gmail.com>
+	<CAKL8G3F2T_PDHb3rnvdY15VH+VnQyCQVBej5o=KQ2pAj=03EAg@mail.gmail.com>
+Message-ID: <4F23221E.7010609@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120127/85c3d4a9/attachment.pl>
+
+From mastorvarela en gmail.com  Sat Jan 28 21:33:12 2012
+From: mastorvarela en gmail.com (Miguel Astor Varela)
+Date: Sat, 28 Jan 2012 21:33:12 +0100
+Subject: [R-es] =?iso-8859-1?q?Leer_ficheros_csv_muy_grandes_=28m=E1s_de_u?=
+	=?iso-8859-1?q?n_1_Giga=29?=
+Message-ID: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120128/8e010f30/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Sat Jan 28 21:49:34 2012
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Sat, 28 Jan 2012 17:49:34 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Leer_ficheros_csv_muy_grandes_=28m=E1s_de_u?=
+	=?iso-8859-1?q?n_1_Giga=29?=
+In-Reply-To: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+References: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+Message-ID: <E706A425C44A47E5B4123567F3A83616@JavierMarcuzzi>
+
+Miguel
+
+¿Cuántos gigas de ram tiene disponible? Si usted utiliza una archivo mayor a 
+1 Gb, ¿cuántos Gb son requeridos por R?
+
+Pero debe haber alguna alternativa, en este lugar 
+http://cran.r-project.org/web/views/HighPerformanceComputing.html señalan 
+posibilidades, pero escapa a mi experiencia.
+
+Javier
+
+-----Mensaje original----- 
+From: Miguel Astor Varela
+Sent: Saturday, January 28, 2012 5:33 PM
+To: r-help-es en r-project.org
+Subject: [R-es] Leer ficheros csv muy grandes (más de un 1 Giga)
+
+Hola,
+Estoy intentando leer ficheros csv bastante grandes (más un 1 Giga). Hasta
+ahora con archivos más pequeños siempre he utilizado la función read.csv y
+me ha funcionado bastante bien, pero a partir de ese tamaño el R se me
+queda bloqueado. Además, el ordenador que tengo no es nada potente.
+
+He probado con la función scan pero tengo un problema. Los ficheros csv son
+campos numéricos con decimales salvo un campo que es una letra.
+
+Alguien me podría recomendar alguna otra función para leer esos ficheros?
+Muchas gracias
+
+[[alternative HTML version deleted]]
+
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From emoro en math.uc3m.es  Sat Jan 28 21:56:46 2012
+From: emoro en math.uc3m.es (Esteban Moro Egido)
+Date: Sat, 28 Jan 2012 21:56:46 +0100
+Subject: [R-es]
+ =?iso-8859-1?q?Leer_ficheros_csv_muy_grandes_=28m=E1s_de_u?=
+ =?iso-8859-1?q?n_1_Giga=29?=
+In-Reply-To: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+References: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+Message-ID: <15A3726B-D35B-4626-81B2-AA5D5A4AAAF5@math.uc3m.es>
+
+Hola Miguel
+
+Desde luego depende de la memoria que tengas en la máquina. Aún así lo que preguntas creo que se puede hacer utilizando "what" en scan.
+
+datos <- scan("fichero.dat",what=list(" "," ",0))
+
+La idea es la siguiente: la lista que va en el what da una descripción de cómo son las columnas que tienes. Pon un " " por cada columna alfanumérica y un 0 por una columna numérica. En el ejemplo anterior tendrías 2 columnas alfanumérica y una numérica.
+
+Un saludo
+
+El 28/01/2012, a las 21:33, Miguel Astor Varela escribió:
+
+> Hola,
+> Estoy intentando leer ficheros csv bastante grandes (más un 1 Giga). Hasta
+> ahora con archivos más pequeños siempre he utilizado la función read.csv y
+> me ha funcionado bastante bien, pero a partir de ese tamaño el R se me
+> queda bloqueado. Además, el ordenador que tengo no es nada potente.
+> 
+> He probado con la función scan pero tengo un problema. Los ficheros csv son
+> campos numéricos con decimales salvo un campo que es una letra.
+> 
+> Alguien me podría recomendar alguna otra función para leer esos ficheros?
+> Muchas gracias
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+Esteban Moro Egido
+Dept. Mathematics | Universidad Carlos III de Madrid 
+Tel.: (+34) 916248727 · markov.uc3m.es
+
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120128/be12a627/attachment.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: 4225769.PNG
+Type: image/png
+Size: 2068 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120128/be12a627/attachment.png>
+
+From cof en qualityexcellence.es  Sat Jan 28 23:26:59 2012
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 28 Jan 2012 23:26:59 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Leer_ficheros_csv_muy_grandes_=28m=E1s_de_u?=
+	=?iso-8859-1?q?n_1_Giga=29?=
+In-Reply-To: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+References: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+Message-ID: <CAOKbq8gAKDYPiPTx+QJ6tvUt9O83xNiCDxFdjw9taD-e31s0YQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120128/88ee4cc8/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sun Jan 29 09:03:05 2012
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Sun, 29 Jan 2012 03:03:05 -0500
+Subject: [R-es]
+	=?iso-8859-1?q?Leer_ficheros_csv_muy_grandes_=28m=E1s_de_u?=
+	=?iso-8859-1?q?n_1_Giga=29?=
+In-Reply-To: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+References: <CACk-0rKWnaCHSBM+WF-8adQqjTbJFsaMGCfH6zoEpY=cYp8-vw@mail.gmail.com>
+Message-ID: <CAKL8G3Gk3628KOz=nKgEz5SZDkyuCz-cM9b32eeCAQ4UL3W1aw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120129/8bcaa383/attachment.pl>
+
+From pedroc en tid.es  Mon Jan 30 10:53:31 2012
+From: pedroc en tid.es (Pedro Concejero Cerezo)
+Date: Mon, 30 Jan 2012 10:53:31 +0100
+Subject: [R-es]
+ =?iso-8859-1?q?Leer_ficheros_csv_muy_grandes_=28m=E1s_de_u?=
+ =?iso-8859-1?q?n_1_Giga=29?=
+In-Reply-To: <mailman.542.1327824222.4475.r-help-es@r-project.org>
+References: <mailman.542.1327824222.4475.r-help-es@r-project.org>
+Message-ID: <4F26689B.90305@tid.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20120130/736438e0/attachment.pl>
+
+From cgb en datanalytics.com  Mon Jan 30 23:02:28 2012
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 30 Jan 2012 23:02:28 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?Leer_ficheros_csv_muy_grandes_=28m=E1s_de_u?=
+	=?iso-8859-1?q?n_1_Giga=29?=
+In-Reply-To: <4F26689B.90305@tid.es>
+References: <mailman.542.1327824222.4475.r-help-es@r-project.org>
+	<4F26689B.90305@tid.es>
+Message-ID: <CADg83ecc=FM2AmsfHT1xcYxKypJj20T3VjUAh20K0i8HTwNhcw@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Si tu fichero tiene muchas columnas y sobre todo si muchas de ellas
+son numéricas/categóricas, puedes usar el paquete colbycol que lee
+ficheros columna a columna.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From no_repondais_aqui en demo.usar.org.es  Tue Jan 31 09:33:26 2012
+From: no_repondais_aqui en demo.usar.org.es (no_repondais_aqui en demo.usar.org.es)
+Date: Tue, 31 Jan 2012 12:33:26 +0400
+Subject: [R-es] Nuevo post en blog en demo.usar.org.es
+Message-ID: <lynmfq.grs82d@demo.usar.org.es>
+
+Nuevo post en blog: Ofertas de trabajo, "Eu Initial Training Network Searches For a Phd Student with some programing experience in R (among others)", por Xavi en 09:33h
+
+Ver el blog en:
+http://demo.usar.org.es/tiki-view_blog_post.php?blogId=2&postId=21
+
+Si no desea recibir estas notificaciones siga este enlace:
+http://demo.usar.org.es/tiki-user_watches.php?id=5
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue Jan 31 10:35:37 2012
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 31 Jan 2012 10:35:37 +0100
+Subject: [R-es] International R Users Conference, Nashville
+References: <4F0EB03E.2040307@tid.es>  
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943771BF1929FA3@ASSCCEVS02.sergas.local>
+
+Por si a alguien le interesa....
+
+Registration for International R Users Conference, Nashville TN 12-15 2012
+http://www.r-bloggers.com/user-2012-earlybird-registration-for-international-r-users-conference-nashville-tn-12-15-2012/?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+RBloggers+%28R+bloggers%29
+
+
+Un Saludo,
+Miguel.
+
+
+
+
+
+
+
+
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+

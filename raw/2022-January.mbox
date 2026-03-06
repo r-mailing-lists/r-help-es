@@ -1,0 +1,1034 @@
+From j@utorb|@ @end|ng |rom gm@||@com  Tue Jan 11 14:23:03 2022
+From: j@utorb|@ @end|ng |rom gm@||@com (Jaume Tormo)
+Date: Tue, 11 Jan 2022 14:23:03 +0100
+Subject: [R-es] Espcificar analisis de medidas repetidas en lme()
+Message-ID: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+
+Hola,
+
+Estoy tratando de especificar un modelo de medidas repetidas que es como
+sigue:
+- 4 sitios de estudio. (A-D)
+- Dentro de cada sitio hay 5 puntos donde se mide la variable X
+- Repetimos las medidas en el tiempo. Los lugares y puntos son los mismos
+en cada visita.
+
+Tenemos las siguientes variables:
+id - identificador del punto de medida
+sitio - Los cuatro lugares donde se mide sitio1, sitio2, ... sitio4
+visita - La visitas que se hacen para medir. visita1, visita2,... visitaN
+x - variable medida
+
+Lo voy a analizar con lme pero no estoy seguro de cómo especificar esto en
+la fórmula. Yo creo que es así:
+
+lme(x~sitio, random = ~ 1|id/visita, data = datos)
+
+Porque entiendo que hay que decir id/visita para que R entienda que a lo
+largo de las visitas los id son el mismo punto de medida.
+Pero no estoy seguro de si debe ser al revés ~1|visita/id
+
+¿Que opinais?¿Voy por buen camino?
+
+Muchas gracias.
+
+-- 
+Jaume Tormo.
+https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+https://acercad.wordpress.com/
+
+	[[alternative HTML version deleted]]
+
+
+From cgb @end|ng |rom d@t@n@|yt|c@@com  Tue Jan 11 15:01:07 2022
+From: cgb @end|ng |rom d@t@n@|yt|c@@com (Carlos J. Gil Bellosta)
+Date: Tue, 11 Jan 2022 15:01:07 +0100
+Subject: [R-es] Espcificar analisis de medidas repetidas en lme()
+In-Reply-To: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+References: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+Message-ID: <CADg83eeJmP8+rscxSFTFwDKksk+DikZKn5-+qsAGma6_-dNE7w@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Yo uso lmer habitualmente (y no lme) y me pierdo un poco con la sintaxis.
+Pero vamos, casi seguro que lme no espera que "visita" figure en el modelo.
+
+Tampoco está claro si quieres que los sitios sean efectos fijos o
+aleatorios. Casi me inclino más por lo segundo, pero no sé cuál es el
+contexto exacto. De todos modos, tienes un ejemplo similar al tuyo tratado
+con lmer aqui <http://www.alexanderdemos.org/Mixed5.html> (sección *3 Level
+Random intercepts model*).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+.
+
+El mar, 11 ene 2022 a las 14:24, Jaume Tormo (<jautorbla en gmail.com>)
+escribió:
+
+> Hola,
+>
+> Estoy tratando de especificar un modelo de medidas repetidas que es como
+> sigue:
+> - 4 sitios de estudio. (A-D)
+> - Dentro de cada sitio hay 5 puntos donde se mide la variable X
+> - Repetimos las medidas en el tiempo. Los lugares y puntos son los mismos
+> en cada visita.
+>
+> Tenemos las siguientes variables:
+> id - identificador del punto de medida
+> sitio - Los cuatro lugares donde se mide sitio1, sitio2, ... sitio4
+> visita - La visitas que se hacen para medir. visita1, visita2,... visitaN
+> x - variable medida
+>
+> Lo voy a analizar con lme pero no estoy seguro de cómo especificar esto en
+> la fórmula. Yo creo que es así:
+>
+> lme(x~sitio, random = ~ 1|id/visita, data = datos)
+>
+> Porque entiendo que hay que decir id/visita para que R entienda que a lo
+> largo de las visitas los id son el mismo punto de medida.
+> Pero no estoy seguro de si debe ser al revés ~1|visita/id
+>
+> ¿Que opinais?¿Voy por buen camino?
+>
+> Muchas gracias.
+>
+> --
+> Jaume Tormo.
+> https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+> https://acercad.wordpress.com/
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Tue Jan 11 15:07:33 2022
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Tue, 11 Jan 2022 15:07:33 +0100
+Subject: [R-es] Espcificar analisis de medidas repetidas en lme()
+In-Reply-To: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+References: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+Message-ID: <9dd65427-2cd3-6d5f-8116-e8112719c7fc@urjc.es>
+
+Hola Jaume:
+
+En teoría en cada fila (cada observación)  de la tabla de datos tienes 
+los valores adecuados de "id" y "visita", por lo que R "entiende" de 
+sobra la estructura individual-temporal de las observaciones.
+
+Yo pondría:
+
+lme(x ~ sitio + visita, random = ~ 1|id, data = datos)
+
+
+o
+
+lme(x ~ sitio + visita, random = ~ 1 + sitio + visita |id, data = datos)
+  
+
+o
+
+lme(x ~ sitio * visita, random = ~ 1|id, data = datos)
+
+
+etc, dependiendo de los efectos fijos y aleatorios que quieras testar.
+
+
+Un saludo,
+
+Marcelino
+
+
+El 11/01/2022 a las 14:23, Jaume Tormo escribió:
+> Hola,
+>
+> Estoy tratando de especificar un modelo de medidas repetidas que es como
+> sigue:
+> - 4 sitios de estudio. (A-D)
+> - Dentro de cada sitio hay 5 puntos donde se mide la variable X
+> - Repetimos las medidas en el tiempo. Los lugares y puntos son los mismos
+> en cada visita.
+>
+> Tenemos las siguientes variables:
+> id - identificador del punto de medida
+> sitio - Los cuatro lugares donde se mide sitio1, sitio2, ... sitio4
+> visita - La visitas que se hacen para medir. visita1, visita2,... visitaN
+> x - variable medida
+>
+> Lo voy a analizar con lme pero no estoy seguro de cómo especificar esto en
+> la fórmula. Yo creo que es así:
+>
+> lme(x~sitio, random = ~ 1|id/visita, data = datos)
+>
+> Porque entiendo que hay que decir id/visita para que R entienda que a lo
+> largo de las visitas los id son el mismo punto de medida.
+> Pero no estoy seguro de si debe ser al revés ~1|visita/id
+>
+> ¿Que opinais?¿Voy por buen camino?
+>
+> Muchas gracias.
+>
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Jan 11 20:02:00 2022
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 11 Jan 2022 16:02:00 -0300
+Subject: [R-es] Espcificar analisis de medidas repetidas en lme()
+In-Reply-To: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+References: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+Message-ID: <CAHo_aERhvdCKONNvz_Vh_t5uFV1WsM9mGR9DWy9VfSVmDD0b6g@mail.gmail.com>
+
+Estimado Jaume Tormo
+
+Tal como comenta Carlos Bellosta, hay algo entre lme, lmer, lme4, todo es
+muy semejante pero para ciertas cosas uno es más potente o flexible que el
+otro.
+Justo ahora no estoy al alcance para enviar la cita de un libro donde está
+un ejemplo sobre lo que usted pregunta. Reién mire en internet y encontré
+esto, no es justo pero compara alternativas.
+
+6 Paquete nlme | Modelos Mixtos con R (fhernanb.github.io)
+<https://fhernanb.github.io/libro_modelos_mixtos/pac-nlme.html>
+
+Creo que el libro que tiene lo que usted necesita es The Nlme Package:
+Linear and Nonlinear Mixed Effects Models, si no recuerdo mal, el ejemplo
+es de unos autos o fábrica de autos, los motores, y el tiempo según los
+trabajadores, cada vez lo complican más, digamos que desde un lugar
+realizan la complejidad desde lo simple y sumando paso a paso. Lo
+interesante es cómo agregando parámetros, o reescribiendo a partir de
+lo mismo, avanzan cada vez más.
+
+Mire en GLMM FAQ (bbolker.github.io)
+<https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#additive-and-generalized-additive-mixed-models>
+la
+definición de los modelos.
+
+Pero debe estar por ahí el ejemplo de car motors R time, y cómo lo van
+complicando.
+
+Javier Rubén Marcuzzi
+
+El mar, 11 ene 2022 a las 10:24, Jaume Tormo (<jautorbla en gmail.com>)
+escribió:
+
+> Hola,
+>
+> Estoy tratando de especificar un modelo de medidas repetidas que es como
+> sigue:
+> - 4 sitios de estudio. (A-D)
+> - Dentro de cada sitio hay 5 puntos donde se mide la variable X
+> - Repetimos las medidas en el tiempo. Los lugares y puntos son los mismos
+> en cada visita.
+>
+> Tenemos las siguientes variables:
+> id - identificador del punto de medida
+> sitio - Los cuatro lugares donde se mide sitio1, sitio2, ... sitio4
+> visita - La visitas que se hacen para medir. visita1, visita2,... visitaN
+> x - variable medida
+>
+> Lo voy a analizar con lme pero no estoy seguro de cómo especificar esto en
+> la fórmula. Yo creo que es así:
+>
+> lme(x~sitio, random = ~ 1|id/visita, data = datos)
+>
+> Porque entiendo que hay que decir id/visita para que R entienda que a lo
+> largo de las visitas los id son el mismo punto de medida.
+> Pero no estoy seguro de si debe ser al revés ~1|visita/id
+>
+> ¿Que opinais?¿Voy por buen camino?
+>
+> Muchas gracias.
+>
+> --
+> Jaume Tormo.
+> https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+> https://acercad.wordpress.com/
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@utorb|@ @end|ng |rom gm@||@com  Wed Jan 12 11:37:19 2022
+From: j@utorb|@ @end|ng |rom gm@||@com (Jaume Tormo)
+Date: Wed, 12 Jan 2022 11:37:19 +0100
+Subject: [R-es] Espcificar analisis de medidas repetidas en lme()
+In-Reply-To: <CAHo_aERhvdCKONNvz_Vh_t5uFV1WsM9mGR9DWy9VfSVmDD0b6g@mail.gmail.com>
+References: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+ <CAHo_aERhvdCKONNvz_Vh_t5uFV1WsM9mGR9DWy9VfSVmDD0b6g@mail.gmail.com>
+Message-ID: <CAP3FtZitX0kTi9BsboDr-fgvi=iq5T2g8yqqj31axBGTK=KhLg@mail.gmail.com>
+
+Muchas gracias los tres.
+
+Al final me voy a quedar con
+
+lme(x ~ sitio + visita, random = ~ visita|id, data = datos)
+
+En la parte fija le digo a R que es importante tener en cuenta tanto visita
+como sitio, pero no especifico * por que no espero que haya una
+interacción, el efecto sitio será parecido en todas las visitas.
+En la parte aleatoria aviso a R de que los puntos de medida son los mismos
+a lo largo de las visitas.
+
+Recopilo Algunos enlaces que me han sido útiles incluyendo los vuestros:
+- https://m-clark.github.io/docs/mixedModels/anovamixed.html#mixed_model
+- Apartado 2.4. de
+https://www.researchgate.net/profile/Hensley-Mariathas-3/post/How_should_I_construct_my_multilevel_model_in_R/attachment/59d646d579197b80779a1cb9/AS%3A459836811943936%401486645047128/download/Appendix-Mixed-Models.pdf
+- Apartado 3 de
+https://www.crumplab.com/psyc7709_2019/book/docs/a-tutorial-for-using-the-lme-function-from-the-nlme-package-.html
+
+Gracias de nuevo,
+
+Jaume.
+
+
+
+
+
+
+El mar, 11 ene 2022 a las 20:02, Javier Marcuzzi (<
+javier.ruben.marcuzzi en gmail.com>) escribió:
+
+> Estimado Jaume Tormo
+>
+> Tal como comenta Carlos Bellosta, hay algo entre lme, lmer, lme4, todo es
+> muy semejante pero para ciertas cosas uno es más potente o flexible que el
+> otro.
+> Justo ahora no estoy al alcance para enviar la cita de un libro donde está
+> un ejemplo sobre lo que usted pregunta. Reién mire en internet y encontré
+> esto, no es justo pero compara alternativas.
+>
+> 6 Paquete nlme | Modelos Mixtos con R (fhernanb.github.io)
+> <https://fhernanb.github.io/libro_modelos_mixtos/pac-nlme.html>
+>
+> Creo que el libro que tiene lo que usted necesita es The Nlme Package:
+> Linear and Nonlinear Mixed Effects Models, si no recuerdo mal, el ejemplo
+> es de unos autos o fábrica de autos, los motores, y el tiempo según los
+> trabajadores, cada vez lo complican más, digamos que desde un lugar
+> realizan la complejidad desde lo simple y sumando paso a paso. Lo
+> interesante es cómo agregando parámetros, o reescribiendo a partir de
+> lo mismo, avanzan cada vez más.
+>
+> Mire en GLMM FAQ (bbolker.github.io)
+> <https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#additive-and-generalized-additive-mixed-models> la
+> definición de los modelos.
+>
+> Pero debe estar por ahí el ejemplo de car motors R time, y cómo lo van
+> complicando.
+>
+> Javier Rubén Marcuzzi
+>
+> El mar, 11 ene 2022 a las 10:24, Jaume Tormo (<jautorbla en gmail.com>)
+> escribió:
+>
+>> Hola,
+>>
+>> Estoy tratando de especificar un modelo de medidas repetidas que es como
+>> sigue:
+>> - 4 sitios de estudio. (A-D)
+>> - Dentro de cada sitio hay 5 puntos donde se mide la variable X
+>> - Repetimos las medidas en el tiempo. Los lugares y puntos son los mismos
+>> en cada visita.
+>>
+>> Tenemos las siguientes variables:
+>> id - identificador del punto de medida
+>> sitio - Los cuatro lugares donde se mide sitio1, sitio2, ... sitio4
+>> visita - La visitas que se hacen para medir. visita1, visita2,... visitaN
+>> x - variable medida
+>>
+>> Lo voy a analizar con lme pero no estoy seguro de cómo especificar esto en
+>> la fórmula. Yo creo que es así:
+>>
+>> lme(x~sitio, random = ~ 1|id/visita, data = datos)
+>>
+>> Porque entiendo que hay que decir id/visita para que R entienda que a lo
+>> largo de las visitas los id son el mismo punto de medida.
+>> Pero no estoy seguro de si debe ser al revés ~1|visita/id
+>>
+>> ¿Que opinais?¿Voy por buen camino?
+>>
+>> Muchas gracias.
+>>
+>> --
+>> Jaume Tormo.
+>> https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+>> https://acercad.wordpress.com/
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+-- 
+Jaume Tormo.
+https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+https://acercad.wordpress.com/
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed Jan 12 12:48:07 2022
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 12 Jan 2022 08:48:07 -0300
+Subject: [R-es] Espcificar analisis de medidas repetidas en lme()
+In-Reply-To: <CAP3FtZitX0kTi9BsboDr-fgvi=iq5T2g8yqqj31axBGTK=KhLg@mail.gmail.com>
+References: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+ <CAHo_aERhvdCKONNvz_Vh_t5uFV1WsM9mGR9DWy9VfSVmDD0b6g@mail.gmail.com>
+ <CAP3FtZitX0kTi9BsboDr-fgvi=iq5T2g8yqqj31axBGTK=KhLg@mail.gmail.com>
+Message-ID: <CAHo_aERdnXWGGaDW8T9fzg2aXzaz9V_eLu4dv1XPxjqu7R9kBg@mail.gmail.com>
+
+Estimado Jaume Tormo
+
+Desconozco lo que busca o de que son sus datos, pero, la relación sitio y
+visita, depende que, tiene por ejemplo efecto climático y se espera que el
+clima no sea el mismo en cada sitio, lógicamente, si es en una misma
+localidad el clima entre los sitios no tendría diferencia. La escritura en
+R no cambia tanto, demora algo más el cálculo, pero si es necesario no
+queda otra.
+
+Javier Rubén Marcuzzi
+
+El mié, 12 ene 2022 a las 7:38, Jaume Tormo (<jautorbla en gmail.com>)
+escribió:
+
+> Muchas gracias los tres.
+>
+> Al final me voy a quedar con
+>
+> lme(x ~ sitio + visita, random = ~ visita|id, data = datos)
+>
+> En la parte fija le digo a R que es importante tener en cuenta tanto visita
+> como sitio, pero no especifico * por que no espero que haya una
+> interacción, el efecto sitio será parecido en todas las visitas.
+> En la parte aleatoria aviso a R de que los puntos de medida son los mismos
+> a lo largo de las visitas.
+>
+> Recopilo Algunos enlaces que me han sido útiles incluyendo los vuestros:
+> - https://m-clark.github.io/docs/mixedModels/anovamixed.html#mixed_model
+> - Apartado 2.4. de
+>
+> https://www.researchgate.net/profile/Hensley-Mariathas-3/post/How_should_I_construct_my_multilevel_model_in_R/attachment/59d646d579197b80779a1cb9/AS%3A459836811943936%401486645047128/download/Appendix-Mixed-Models.pdf
+> - Apartado 3 de
+>
+> https://www.crumplab.com/psyc7709_2019/book/docs/a-tutorial-for-using-the-lme-function-from-the-nlme-package-.html
+>
+> Gracias de nuevo,
+>
+> Jaume.
+>
+>
+>
+>
+>
+>
+> El mar, 11 ene 2022 a las 20:02, Javier Marcuzzi (<
+> javier.ruben.marcuzzi en gmail.com>) escribió:
+>
+> > Estimado Jaume Tormo
+> >
+> > Tal como comenta Carlos Bellosta, hay algo entre lme, lmer, lme4, todo es
+> > muy semejante pero para ciertas cosas uno es más potente o flexible que
+> el
+> > otro.
+> > Justo ahora no estoy al alcance para enviar la cita de un libro donde
+> está
+> > un ejemplo sobre lo que usted pregunta. Reién mire en internet y encontré
+> > esto, no es justo pero compara alternativas.
+> >
+> > 6 Paquete nlme | Modelos Mixtos con R (fhernanb.github.io)
+> > <https://fhernanb.github.io/libro_modelos_mixtos/pac-nlme.html>
+> >
+> > Creo que el libro que tiene lo que usted necesita es The Nlme Package:
+> > Linear and Nonlinear Mixed Effects Models, si no recuerdo mal, el ejemplo
+> > es de unos autos o fábrica de autos, los motores, y el tiempo según los
+> > trabajadores, cada vez lo complican más, digamos que desde un lugar
+> > realizan la complejidad desde lo simple y sumando paso a paso. Lo
+> > interesante es cómo agregando parámetros, o reescribiendo a partir de
+> > lo mismo, avanzan cada vez más.
+> >
+> > Mire en GLMM FAQ (bbolker.github.io)
+> > <
+> https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#additive-and-generalized-additive-mixed-models>
+> la
+> > definición de los modelos.
+> >
+> > Pero debe estar por ahí el ejemplo de car motors R time, y cómo lo van
+> > complicando.
+> >
+> > Javier Rubén Marcuzzi
+> >
+> > El mar, 11 ene 2022 a las 10:24, Jaume Tormo (<jautorbla en gmail.com>)
+> > escribió:
+> >
+> >> Hola,
+> >>
+> >> Estoy tratando de especificar un modelo de medidas repetidas que es como
+> >> sigue:
+> >> - 4 sitios de estudio. (A-D)
+> >> - Dentro de cada sitio hay 5 puntos donde se mide la variable X
+> >> - Repetimos las medidas en el tiempo. Los lugares y puntos son los
+> mismos
+> >> en cada visita.
+> >>
+> >> Tenemos las siguientes variables:
+> >> id - identificador del punto de medida
+> >> sitio - Los cuatro lugares donde se mide sitio1, sitio2, ... sitio4
+> >> visita - La visitas que se hacen para medir. visita1, visita2,...
+> visitaN
+> >> x - variable medida
+> >>
+> >> Lo voy a analizar con lme pero no estoy seguro de cómo especificar esto
+> en
+> >> la fórmula. Yo creo que es así:
+> >>
+> >> lme(x~sitio, random = ~ 1|id/visita, data = datos)
+> >>
+> >> Porque entiendo que hay que decir id/visita para que R entienda que a lo
+> >> largo de las visitas los id son el mismo punto de medida.
+> >> Pero no estoy seguro de si debe ser al revés ~1|visita/id
+> >>
+> >> ¿Que opinais?¿Voy por buen camino?
+> >>
+> >> Muchas gracias.
+> >>
+> >> --
+> >> Jaume Tormo.
+> >> https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+> >> https://acercad.wordpress.com/
+> >>
+> >>         [[alternative HTML version deleted]]
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+>
+> --
+> Jaume Tormo.
+> https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+> https://acercad.wordpress.com/
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@utorb|@ @end|ng |rom gm@||@com  Thu Jan 13 07:22:55 2022
+From: j@utorb|@ @end|ng |rom gm@||@com (Jaume Tormo)
+Date: Thu, 13 Jan 2022 07:22:55 +0100
+Subject: [R-es] Espcificar analisis de medidas repetidas en lme()
+In-Reply-To: <CAHo_aERdnXWGGaDW8T9fzg2aXzaz9V_eLu4dv1XPxjqu7R9kBg@mail.gmail.com>
+References: <CAP3FtZikW-pn+eS++XwTbTMjapEQ7zbAEoAdiCtrGwEuwyasrw@mail.gmail.com>
+ <CAHo_aERhvdCKONNvz_Vh_t5uFV1WsM9mGR9DWy9VfSVmDD0b6g@mail.gmail.com>
+ <CAP3FtZitX0kTi9BsboDr-fgvi=iq5T2g8yqqj31axBGTK=KhLg@mail.gmail.com>
+ <CAHo_aERdnXWGGaDW8T9fzg2aXzaz9V_eLu4dv1XPxjqu7R9kBg@mail.gmail.com>
+Message-ID: <CAP3FtZiM6zjuqD0Z9Z4MZ_+iPw_u3tY4tx9S4-v=8W6XTP+mrA@mail.gmail.com>
+
+Hola Javier,
+
+No, los sitios están muy cercanos, menos de 500 m, así que cuando es
+invierno es invierno igual para todos.
+
+Muchas gracias.
+
+El mié, 12 ene 2022 a las 12:48, Javier Marcuzzi (<
+javier.ruben.marcuzzi en gmail.com>) escribió:
+
+> Estimado Jaume Tormo
+>
+> Desconozco lo que busca o de que son sus datos, pero, la relación sitio y
+> visita, depende que, tiene por ejemplo efecto climático y se espera que el
+> clima no sea el mismo en cada sitio, lógicamente, si es en una misma
+> localidad el clima entre los sitios no tendría diferencia. La escritura en
+> R no cambia tanto, demora algo más el cálculo, pero si es necesario no
+> queda otra.
+>
+> Javier Rubén Marcuzzi
+>
+> El mié, 12 ene 2022 a las 7:38, Jaume Tormo (<jautorbla en gmail.com>)
+> escribió:
+>
+>> Muchas gracias los tres.
+>>
+>> Al final me voy a quedar con
+>>
+>> lme(x ~ sitio + visita, random = ~ visita|id, data = datos)
+>>
+>> En la parte fija le digo a R que es importante tener en cuenta tanto
+>> visita
+>> como sitio, pero no especifico * por que no espero que haya una
+>> interacción, el efecto sitio será parecido en todas las visitas.
+>> En la parte aleatoria aviso a R de que los puntos de medida son los mismos
+>> a lo largo de las visitas.
+>>
+>> Recopilo Algunos enlaces que me han sido útiles incluyendo los vuestros:
+>> - https://m-clark.github.io/docs/mixedModels/anovamixed.html#mixed_model
+>> - Apartado 2.4. de
+>>
+>> https://www.researchgate.net/profile/Hensley-Mariathas-3/post/How_should_I_construct_my_multilevel_model_in_R/attachment/59d646d579197b80779a1cb9/AS%3A459836811943936%401486645047128/download/Appendix-Mixed-Models.pdf
+>> - Apartado 3 de
+>>
+>> https://www.crumplab.com/psyc7709_2019/book/docs/a-tutorial-for-using-the-lme-function-from-the-nlme-package-.html
+>>
+>> Gracias de nuevo,
+>>
+>> Jaume.
+>>
+>>
+>>
+>>
+>>
+>>
+>> El mar, 11 ene 2022 a las 20:02, Javier Marcuzzi (<
+>> javier.ruben.marcuzzi en gmail.com>) escribió:
+>>
+>> > Estimado Jaume Tormo
+>> >
+>> > Tal como comenta Carlos Bellosta, hay algo entre lme, lmer, lme4, todo
+>> es
+>> > muy semejante pero para ciertas cosas uno es más potente o flexible que
+>> el
+>> > otro.
+>> > Justo ahora no estoy al alcance para enviar la cita de un libro donde
+>> está
+>> > un ejemplo sobre lo que usted pregunta. Reién mire en internet y
+>> encontré
+>> > esto, no es justo pero compara alternativas.
+>> >
+>> > 6 Paquete nlme | Modelos Mixtos con R (fhernanb.github.io)
+>> > <https://fhernanb.github.io/libro_modelos_mixtos/pac-nlme.html>
+>> >
+>> > Creo que el libro que tiene lo que usted necesita es The Nlme Package:
+>> > Linear and Nonlinear Mixed Effects Models, si no recuerdo mal, el
+>> ejemplo
+>> > es de unos autos o fábrica de autos, los motores, y el tiempo según los
+>> > trabajadores, cada vez lo complican más, digamos que desde un lugar
+>> > realizan la complejidad desde lo simple y sumando paso a paso. Lo
+>> > interesante es cómo agregando parámetros, o reescribiendo a partir de
+>> > lo mismo, avanzan cada vez más.
+>> >
+>> > Mire en GLMM FAQ (bbolker.github.io)
+>> > <
+>> https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#additive-and-generalized-additive-mixed-models>
+>> la
+>> > definición de los modelos.
+>> >
+>> > Pero debe estar por ahí el ejemplo de car motors R time, y cómo lo van
+>> > complicando.
+>> >
+>> > Javier Rubén Marcuzzi
+>> >
+>> > El mar, 11 ene 2022 a las 10:24, Jaume Tormo (<jautorbla en gmail.com>)
+>> > escribió:
+>> >
+>> >> Hola,
+>> >>
+>> >> Estoy tratando de especificar un modelo de medidas repetidas que es
+>> como
+>> >> sigue:
+>> >> - 4 sitios de estudio. (A-D)
+>> >> - Dentro de cada sitio hay 5 puntos donde se mide la variable X
+>> >> - Repetimos las medidas en el tiempo. Los lugares y puntos son los
+>> mismos
+>> >> en cada visita.
+>> >>
+>> >> Tenemos las siguientes variables:
+>> >> id - identificador del punto de medida
+>> >> sitio - Los cuatro lugares donde se mide sitio1, sitio2, ... sitio4
+>> >> visita - La visitas que se hacen para medir. visita1, visita2,...
+>> visitaN
+>> >> x - variable medida
+>> >>
+>> >> Lo voy a analizar con lme pero no estoy seguro de cómo especificar
+>> esto en
+>> >> la fórmula. Yo creo que es así:
+>> >>
+>> >> lme(x~sitio, random = ~ 1|id/visita, data = datos)
+>> >>
+>> >> Porque entiendo que hay que decir id/visita para que R entienda que a
+>> lo
+>> >> largo de las visitas los id son el mismo punto de medida.
+>> >> Pero no estoy seguro de si debe ser al revés ~1|visita/id
+>> >>
+>> >> ¿Que opinais?¿Voy por buen camino?
+>> >>
+>> >> Muchas gracias.
+>> >>
+>> >> --
+>> >> Jaume Tormo.
+>> >> https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+>> >> https://acercad.wordpress.com/
+>> >>
+>> >>         [[alternative HTML version deleted]]
+>> >>
+>> >> _______________________________________________
+>> >> R-help-es mailing list
+>> >> R-help-es en r-project.org
+>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>
+>> >
+>>
+>> --
+>> Jaume Tormo.
+>> https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+>> https://acercad.wordpress.com/
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+-- 
+Jaume Tormo.
+https://flipboard.com/@jaumetormo/hallazgos-interesantes-bj8opmboy
+https://acercad.wordpress.com/
+
+	[[alternative HTML version deleted]]
+
+
+From jmcontrer@@ @end|ng |rom ugr@e@  Mon Jan 24 21:01:14 2022
+From: jmcontrer@@ @end|ng |rom ugr@e@ (Jose Miguel Contreras)
+Date: Mon, 24 Jan 2022 21:01:14 +0100
+Subject: [R-es] =?utf-8?q?Incluir_im=C3=A1genes_externas_en_r_markdown?=
+In-Reply-To: <39D7A614-8D34-4F86-B06D-3730578AEC70@ugr.es>
+References: <mailman.14542.7.1631613601.46107.r-help-es@r-project.org>
+ <39D7A614-8D34-4F86-B06D-3730578AEC70@ugr.es>
+Message-ID: <4A396BDD-A3D5-4E8E-AB46-FEF6A1B03857@ugr.es>
+
+Hola a todos
+
+Una pregunta
+
+Quiero meter en Rmarkdown una imagen externa  a partir de un vector formado por url?s
+
+
+Me funciona si lo hago manualmente con:
+
+![flor](https://flores.com/1.jpg) # url ficticia 
+
+O con 
+
+<div>
+<p style = 'text-align:center;'>
+<img src="https://flores.com/1.jpg" alt="JuveYell" width="300px">
+</p>
+</div>
+
+
+Pero quisiera que la dirección la tomara de un valor que le diera yo antes, por ejemplo:
+
+
+Flores <- c("https://flores.com/1.jpg"," https://flores.com/2.jpg <https://flores.com/2.jpg>, https://flores.com/3.jpg?)
+
+Y luego llamar a la imagen según la posición
+
+Gracias por la ayuda
+	[[alternative HTML version deleted]]
+
+
+From d|ego@hern@ngomezherrero @end|ng |rom gm@||@com  Mon Jan 24 21:21:54 2022
+From: d|ego@hern@ngomezherrero @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Hernang=C3=B3mez_Herrero?=)
+Date: Mon, 24 Jan 2022 21:21:54 +0100
+Subject: [R-es] =?utf-8?q?Incluir_im=C3=A1genes_externas_en_r_markdown?=
+In-Reply-To: <4A396BDD-A3D5-4E8E-AB46-FEF6A1B03857@ugr.es>
+References: <mailman.14542.7.1631613601.46107.r-help-es@r-project.org>
+ <39D7A614-8D34-4F86-B06D-3730578AEC70@ugr.es>
+ <4A396BDD-A3D5-4E8E-AB46-FEF6A1B03857@ugr.es>
+Message-ID: <CAA-ibaz7FfFVJ_rDWJk7=4saRrwrc80194vwxeZXQVHC8oZjpA@mail.gmail.com>
+
+Buenas,
+
+Puedes probar con
+knitr::include_graphics() dentro de un chunk de R y con echo=FALSE para que
+solo te muestre el resultado y oculte el código al renderizar:
+
+```{r, echo=FALSE}
+
+Flores <- c("https://flores.com/1.jpg",
+"https://flores.com/2.jpg",
+"https://flores.com/3.jpg")
+
+knitr::include_graphics(Flores[1])
+
+```
+
+
+El El lun, 24 ene 2022 a las 21:01, Jose Miguel Contreras <
+jmcontreras en ugr.es> escribió:
+
+> Hola a todos
+>
+> Una pregunta
+>
+> Quiero meter en Rmarkdown una imagen externa  a partir de un vector
+> formado por url?s
+>
+>
+> Me funciona si lo hago manualmente con:
+>
+> ![flor](https://flores.com/1.jpg) # url ficticia
+>
+> O con
+>
+> <div>
+> <p style = 'text-align:center;'>
+> <img src="https://flores.com/1.jpg" alt="JuveYell" width="300px">
+> </p>
+> </div>
+>
+>
+> Pero quisiera que la dirección la tomara de un valor que le diera yo
+> antes, por ejemplo:
+>
+>
+> Flores <- c("https://flores.com/1.jpg"," https://flores.com/2.jpg <
+> https://flores.com/2.jpg>, https://flores.com/3.jpg?)
+>
+> Y luego llamar a la imagen según la posición
+>
+> Gracias por la ayuda
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+-- 
+
+
+
+Have a nice day!
+
+	[[alternative HTML version deleted]]
+
+
+From d|ego@hern@ngomezherrero @end|ng |rom gm@||@com  Mon Jan 24 21:27:37 2022
+From: d|ego@hern@ngomezherrero @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Hernang=C3=B3mez_Herrero?=)
+Date: Mon, 24 Jan 2022 21:27:37 +0100
+Subject: [R-es] =?utf-8?q?Incluir_im=C3=A1genes_externas_en_r_markdown?=
+In-Reply-To: <CAA-ibaz7FfFVJ_rDWJk7=4saRrwrc80194vwxeZXQVHC8oZjpA@mail.gmail.com>
+References: <mailman.14542.7.1631613601.46107.r-help-es@r-project.org>
+ <39D7A614-8D34-4F86-B06D-3730578AEC70@ugr.es>
+ <4A396BDD-A3D5-4E8E-AB46-FEF6A1B03857@ugr.es>
+ <CAA-ibaz7FfFVJ_rDWJk7=4saRrwrc80194vwxeZXQVHC8oZjpA@mail.gmail.com>
+Message-ID: <CAA-ibazZcGpXK1g7m5XggehthCD08xbUB_dmRA8kOGbmksjN0g@mail.gmail.com>
+
+Buenas,
+
+Puedes probar con knitr::include_graphics() dentro de un chunk de R con la
+opción echo=FALSE para que sólo te muestre el output y no el código cuando
+lo renderices:
+
+```{r echo=FALSE}
+fotos <- c("https://picsum.photos/200/300", "https://picsum.photos/700/500")
+
+knitr::include_graphics(fotos[2])
+
+
+```
+
+
+
+El lun, 24 ene 2022 a las 21:21, Diego Hernangómez Herrero (<
+diego.hernangomezherrero en gmail.com>) escribió:
+
+> Buenas,
+>
+> Puedes probar con
+> knitr::include_graphics() dentro de un chunk de R y con echo=FALSE para
+> que solo te muestre el resultado y oculte el código al renderizar:
+>
+> ```{r, echo=FALSE}
+>
+> Flores <- c("https://flores.com/1.jpg",
+> "https://flores.com/2.jpg",
+> "https://flores.com/3.jpg")
+>
+> knitr::include_graphics(Flores[1])
+>
+> ```
+>
+>
+> El El lun, 24 ene 2022 a las 21:01, Jose Miguel Contreras <
+> jmcontreras en ugr.es> escribió:
+>
+>> Hola a todos
+>>
+>> Una pregunta
+>>
+>> Quiero meter en Rmarkdown una imagen externa  a partir de un vector
+>> formado por url?s
+>>
+>>
+>> Me funciona si lo hago manualmente con:
+>>
+>> ![flor](https://flores.com/1.jpg) # url ficticia
+>>
+>> O con
+>>
+>> <div>
+>> <p style = 'text-align:center;'>
+>> <img src="https://flores.com/1.jpg" alt="JuveYell" width="300px">
+>> </p>
+>> </div>
+>>
+>>
+>> Pero quisiera que la dirección la tomara de un valor que le diera yo
+>> antes, por ejemplo:
+>>
+>>
+>> Flores <- c("https://flores.com/1.jpg"," https://flores.com/2.jpg <
+>> https://flores.com/2.jpg>, https://flores.com/3.jpg?)
+>>
+>> Y luego llamar a la imagen según la posición
+>>
+>> Gracias por la ayuda
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+> --
+>
+>
+>
+> Have a nice day!
+>
+
+
+-- 
+
+
+
+Have a nice day!
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Jan 25 09:05:41 2022
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 25 Jan 2022 05:05:41 -0300
+Subject: [R-es] =?utf-8?q?Incluir_im=C3=A1genes_externas_en_r_markdown?=
+In-Reply-To: <4A396BDD-A3D5-4E8E-AB46-FEF6A1B03857@ugr.es>
+References: <mailman.14542.7.1631613601.46107.r-help-es@r-project.org>
+ <39D7A614-8D34-4F86-B06D-3730578AEC70@ugr.es>
+ <4A396BDD-A3D5-4E8E-AB46-FEF6A1B03857@ugr.es>
+Message-ID: <CAHo_aETeV=3hLhCNiN35LUtU+Vw8A3KH56M=sfgfAFMGvUrb1w@mail.gmail.com>
+
+Estimado José Contreras
+
+Yo iría por escribir una función en R con parámetros, Parameters
+(rstudio.com)
+<https://rmarkdown.rstudio.com/lesson-6.html#:~:text=Parameters%20R%20Markdown%20documents%20can%20include%20one%20or,parameter%20that%20determines%20which%20data%20set%20to%20plot.>
+
+Se me ocurre utilizar un loop para recorrer los datos e introducirlos como
+parámetros donde cambia la dirección a sus flores. El problema es que se
+puede escribir de muchas formas y depende de cómo a usted le resulte más
+cómodo.
+
+Javier Rubén Marcuzzi
+
+El lun, 24 ene 2022 a las 17:01, Jose Miguel Contreras (<jmcontreras en ugr.es>)
+escribió:
+
+> Hola a todos
+>
+> Una pregunta
+>
+> Quiero meter en Rmarkdown una imagen externa  a partir de un vector
+> formado por url?s
+>
+>
+> Me funciona si lo hago manualmente con:
+>
+> ![flor](https://flores.com/1.jpg) # url ficticia
+>
+> O con
+>
+> <div>
+> <p style = 'text-align:center;'>
+> <img src="https://flores.com/1.jpg" alt="JuveYell" width="300px">
+> </p>
+> </div>
+>
+>
+> Pero quisiera que la dirección la tomara de un valor que le diera yo
+> antes, por ejemplo:
+>
+>
+> Flores <- c("https://flores.com/1.jpg"," https://flores.com/2.jpg <
+> https://flores.com/2.jpg>, https://flores.com/3.jpg?)
+>
+> Y luego llamar a la imagen según la posición
+>
+> Gracias por la ayuda
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Mon Jan 31 22:02:23 2022
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Mon, 31 Jan 2022 21:02:23 +0000
+Subject: [R-es] Curso datascience que merezca la pena
+Message-ID: <VI1PR01MB3023917E6C8B661E8A2C4851CC259@VI1PR01MB3023.eurprd01.prod.exchangelabs.com>
+
+Buenas,
+
+Se que es un poco offtopic, pero internet est? a d?a de hoy inundado de cursos sobre datascience, por lo que se hace complicado distinguir los cursos de calidad de los cutrecursos.
+
+?Hay alguno que conozcais y que recomendeis?
+
+Un saludo
+
+	[[alternative HTML version deleted]]
+
+

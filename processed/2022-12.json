@@ -1,0 +1,241 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2022-12",
+  "messages": [
+    {
+      "id": "msg-ba6ced6ccdf1",
+      "message_id": "<CAF3uytVMsHgTHdSLuHbSJNZEJK4YQBQPoAQ=RkEZWvCmrbxx0A@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-12-03T09:14:11+01:00",
+      "subject": "[R-es] eliminar outliers en un tapply",
+      "subject_clean": "[R-es] eliminar outliers en un tapply",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, utilizo:\n\nmax <- tapply (Data$varnum, Data$varcat, max)\n\npara obtener el mÃ¡ximo de varnum en cada una de las categorÃ­as de varcat\n\nÂ¿cÃ³mo podrÃ­a obtener los mÃ¡ximos, pero sin los outliers (Q75 + 1.5*IQR)?\n\nEs fÃ¡cil quitar los outliers superiores de varnum, pero no es eso lo que\nnecesito quitar, sino los outliers dentro ya de cada categorÃ­a de varcat.\n\nGracias, como siempre,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as, utilizo:\n\nmax <- tapply (Data$varnum, Data$varcat, max)\n\npara obtener el mÃ¡ximo de varnum en cada una de las categorÃ­as de varcat\n\nÂ¿cÃ³mo podrÃ­a obtener los mÃ¡ximos, pero sin los ou",
+      "thread_id": "thread-ba6ced6ccdf1",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-e26175b83379",
+      "message_id": "<CACEaGhMoy7gTRA-_eH06=xog-VmCjHXgN8m2vDgwpLfYYXXbAA@mail.gmail.com>",
+      "from_name": "patricio fuenmayor",
+      "from_email_hash": "59b445396ac723c905e0d4234add3713852acb63455a0cf9f26748b90720a213",
+      "date": "2022-12-04T10:40:18-05:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 166, Envío 1",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 166, Envío 1",
+      "in_reply_to": "<mailman.14882.4.1670065202.31845.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.14882.4.1670065202.31845.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Hola, adjunto proceso con lo que hago identificaciÃ³n y exclusiÃ³n de outliers\n\n# analiza y filtra atÃ­picos\n# ingresos disponibles\ning_dsp_out1 <- dlookr::imputate_outlier(eda1,ing_dsp_vl,method=\"capping\")\ning_dsp_out2 <-\ndata.table(out_pos=attr(ing_dsp_out1,\"outlier_pos\"),out_vl=attr(ing_dsp_out1,\"outliers\"))[order(out_vl)]\n# estadÃ­sticas de atÃ­picos\nout_sta1 <- data.table(smbinning.eda(ing_dsp_out2,rounding=3,pbar=0)$eda) #\nTable with basic statistics\n# filtra valores menores al Q50 de los atÃ­picos\neda2 <- eda1[ing_dsp_vl<=out_sta1[Field==\"out_vl\",Q50]]\n\ndlookr::plot_outlier(eda2[,.(ing_dsp_vl)])\n\nEl sÃ¡b, 3 dic 2022 a la(s) 06:00, <r-help-es-request en r-project.org>\nescribiÃ³:\n\n> EnvÃ­e los mensajes para la lista R-help-es a\n>         r-help-es en r-project.org\n>\n> Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n>         https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n>         r-help-es-request en r-project.org\n>\n> Puede contactar con el responsable de la lista escribiendo a:\n>         r-help-es-owner en r-project.org\n>\n> Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> respondiendo.\n> Asuntos del dÃ­a:\n>\n>    1. eliminar outliers en un tapply (Manuel Mendoza)\n>\n>\n> ---------- Forwarded message ----------\n> From: Manuel Mendoza <mmendoza en fulbrightmail.org>\n> To: Lista R <r-help-es en r-project.org>\n> Cc:\n> Bcc:\n> Date: Sat, 3 Dec 2022 09:14:11 +0100\n> Subject: [R-es] eliminar outliers en un tapply\n> Buenos dÃ­as, utilizo:\n>\n> max <- tapply (Data$varnum, Data$varcat, max)\n>\n> para obtener el mÃ¡ximo de varnum en cada una de las categorÃ­as de varcat\n>\n> Â¿cÃ³mo podrÃ­a obtener los mÃ¡ximos, pero sin los outliers (Q75 + 1.5*IQR)?\n>\n> Es fÃ¡cil quitar los outliers superiores de varnum, pero no es eso lo que\n> necesito quitar, sino los outliers dentro ya de cada categorÃ­a de varcat.\n>\n> Gracias, como siempre,\n> Manuel\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, adjunto proceso con lo que hago identificaciÃ³n y exclusiÃ³n de outliers\n\n# analiza y filtra atÃ­picos\n# ingresos disponibles\ning_dsp_out1 <- dlookr::imputate_outlier(eda1,ing_dsp_vl,method=\"cap",
+      "thread_id": "thread-e26175b83379",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-5c220f8934e9",
+      "message_id": "<fa44a648-7935-d875-657b-83fbe3e044f4@gmail.com>",
+      "from_name": "Francisco Rodriguez Sanchez",
+      "from_email_hash": "4a5eb885002ba2873468400dbe25575bdd347c849eedeeb20eb06ac47ed79b49",
+      "date": "2022-12-05T12:09:29+01:00",
+      "subject": "[R-es] eliminar outliers en un tapply",
+      "subject_clean": "[R-es] eliminar outliers en un tapply",
+      "in_reply_to": "<CAF3uytVMsHgTHdSLuHbSJNZEJK4YQBQPoAQ=RkEZWvCmrbxx0A@mail.gmail.com>",
+      "references": [
+        "<CAF3uytVMsHgTHdSLuHbSJNZEJK4YQBQPoAQ=RkEZWvCmrbxx0A@mail.gmail.com>"
+      ],
+      "body_plain": "Buenos dÃ­as Manuel\n\nPues le he pedido a ChatGPT (https://openai.com/blog/chatgpt/) \nexactamente esto\n\n\"Write R code to remove outliers from a numeric vector stratified by \nlevels of a factor\"\n\ny me ha devuelto literalmente esta soluciÃ³n que pego abajo (que a mÃ­ \nsinceramente no se me habrÃ­a ocurrido)\n\nEstoy alucinando con el potencial de estas nuevas herramientas\n\nSaludos\n\n\n|# Generate a sample dataset with 30 data points set.seed(123) x <- \nrnorm(30, mean = 10, sd = 2) factor <- sample(c(\"A\", \"B\", \"C\", \"D\", \n\"E\"), 30, replace = TRUE) # Create a boxplot of the numeric vector, \nstratified by the levels of the factor boxplot(x ~ factor)|\n\n|# Identify the outliers outliers <- boxplot(x ~ factor, plot = \nFALSE)$out # Subset the data to remove the outliers x_no_outliers <- \nsubset(x, !x %in% outliers) # View the resulting vector x_no_outliers #> \n[1] 8.879049 9.539645 10.141017 10.258575 13.430130 10.921832 7.469878 \n#> [8] 8.626294 9.108676 12.448164 10.719628 10.801543 10.221365 \n8.888318 #> [15] 13.573826 10.995701 6.066766 11.402712 9.054417 \n9.564050 7.947991 #> [22] 8.542218 8.749921 6.626613 11.675574 10.306746 \n7.723726 12.507630|\n\n^Created on 2022-12-05 with reprex v2.0.2 <https://reprex.tidyverse.org>\n\n\n\n^\n\nOn 3/12/22 9:14, Manuel Mendoza wrote:\n> Buenos dÃ­as, utilizo:\n>\n> max <- tapply (Data$varnum, Data$varcat, max)\n>\n> para obtener el mÃ¡ximo de varnum en cada una de las categorÃ­as de varcat\n>\n> Â¿cÃ³mo podrÃ­a obtener los mÃ¡ximos, pero sin los outliers (Q75 + 1.5*IQR)?\n>\n> Es fÃ¡cil quitar los outliers superiores de varnum, pero no es eso lo que\n> necesito quitar, sino los outliers dentro ya de cada categorÃ­a de varcat.\n>\n> Gracias, como siempre,\n> Manuel\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n-- \nDr Francisco RodrÃ­guez-SÃ¡nchez\nhttps://frodriguezsanchez.net\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as Manuel\n\nPues le he pedido a ChatGPT (https://openai.com/blog/chatgpt/) \nexactamente esto\n\n\"Write R code to remove outliers from a numeric vector stratified by \nlevels of a factor\"\n\ny me h",
+      "thread_id": "thread-ba6ced6ccdf1",
+      "thread_depth": 1,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-11806fd75e1c",
+      "message_id": "<CAF3uytUsUgk-0pEK8Q5xFysdzUVYyRq8EM697SCKYWjan_Dopw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-12-05T13:57:32+01:00",
+      "subject": "[R-es] eliminar outliers en un tapply",
+      "subject_clean": "[R-es] eliminar outliers en un tapply",
+      "in_reply_to": "<fa44a648-7935-d875-657b-83fbe3e044f4@gmail.com>",
+      "references": [
+        "<CAF3uytVMsHgTHdSLuHbSJNZEJK4YQBQPoAQ=RkEZWvCmrbxx0A@mail.gmail.com>",
+        "<fa44a648-7935-d875-657b-83fbe3e044f4@gmail.com>"
+      ],
+      "body_plain": "Gracias Francisco, Carlos me ayudÃ³ a resolver el problema, pero revisarÃ©\ntambiÃ©n el tuyo, pues parece interesante.\nUn saludo\n\nEl lun, 5 dic 2022 a las 12:09, Francisco Rodriguez Sanchez (<\nf.rodriguez.sanc en gmail.com>) escribiÃ³:\n\n> Buenos dÃ­as Manuel\n>\n> Pues le he pedido a ChatGPT (https://openai.com/blog/chatgpt/)\n> exactamente esto\n>\n> \"Write R code to remove outliers from a numeric vector stratified by\n> levels of a factor\"\n>\n> y me ha devuelto literalmente esta soluciÃ³n que pego abajo (que a mÃ­\n> sinceramente no se me habrÃ­a ocurrido)\n>\n> Estoy alucinando con el potencial de estas nuevas herramientas\n>\n> Saludos\n>\n>\n> |# Generate a sample dataset with 30 data points set.seed(123) x <-\n> rnorm(30, mean = 10, sd = 2) factor <- sample(c(\"A\", \"B\", \"C\", \"D\",\n> \"E\"), 30, replace = TRUE) # Create a boxplot of the numeric vector,\n> stratified by the levels of the factor boxplot(x ~ factor)|\n>\n> |# Identify the outliers outliers <- boxplot(x ~ factor, plot =\n> FALSE)$out # Subset the data to remove the outliers x_no_outliers <-\n> subset(x, !x %in% outliers) # View the resulting vector x_no_outliers #>\n> [1] 8.879049 9.539645 10.141017 10.258575 13.430130 10.921832 7.469878\n> #> [8] 8.626294 9.108676 12.448164 10.719628 10.801543 10.221365\n> 8.888318 #> [15] 13.573826 10.995701 6.066766 11.402712 9.054417\n> 9.564050 7.947991 #> [22] 8.542218 8.749921 6.626613 11.675574 10.306746\n> 7.723726 12.507630|\n>\n> ^Created on 2022-12-05 with reprex v2.0.2 <https://reprex.tidyverse.org>\n>\n>\n>\n> ^\n>\n> On 3/12/22 9:14, Manuel Mendoza wrote:\n> > Buenos dÃ­as, utilizo:\n> >\n> > max <- tapply (Data$varnum, Data$varcat, max)\n> >\n> > para obtener el mÃ¡ximo de varnum en cada una de las categorÃ­as de varcat\n> >\n> > Â¿cÃ³mo podrÃ­a obtener los mÃ¡ximos, pero sin los outliers (Q75 + 1.5*IQR)?\n> >\n> > Es fÃ¡cil quitar los outliers superiores de varnum, pero no es eso lo que\n> > necesito quitar, sino los outliers dentro ya de cada categorÃ­a de varcat.\n> >\n> > Gracias, como siempre,\n> > Manuel\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> --\n> Dr Francisco RodrÃ­guez-SÃ¡nchez\n> https://frodriguezsanchez.net\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Francisco, Carlos me ayudÃ³ a resolver el problema, pero revisarÃ©\ntambiÃ©n el tuyo, pues parece interesante.\nUn saludo\n\nEl lun, 5 dic 2022 a las 12:09, Francisco Rodriguez Sanchez (<\nf.rodrig",
+      "thread_id": "thread-ba6ced6ccdf1",
+      "thread_depth": 2,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-603575264053",
+      "message_id": "<1800602284.2015825.1670247238566@mail.yahoo.com>",
+      "from_name": "jose luis",
+      "from_email_hash": "366e5d72c42474765304ce6e1ff2b89106b4e8a5f008b5f68ee1b66b826d3ec8",
+      "date": "2022-12-05T13:33:58Z",
+      "subject": "[R-es] eliminar outliers en un tapply",
+      "subject_clean": "[R-es] eliminar outliers en un tapply",
+      "in_reply_to": "<CAF3uytVMsHgTHdSLuHbSJNZEJK4YQBQPoAQ=RkEZWvCmrbxx0A@mail.gmail.com>",
+      "references": [
+        "<CAF3uytVMsHgTHdSLuHbSJNZEJK4YQBQPoAQ=RkEZWvCmrbxx0A@mail.gmail.com>"
+      ],
+      "body_plain": "Hola\nOtra posibilidad:\nperformance::checkoutliers(Data[,c(\"varnum\", \"varcat\")])\n    En sÃ¡bado, 3 de diciembre de 2022, 09:15:28 CET, Manuel Mendoza <mmendoza en fulbrightmail.org> escribiÃ³:  \n \n Buenos dÃ­as, utilizo:\n\nmax <- tapply (Data$varnum, Data$varcat, max)\n\npara obtener el mÃ¡ximo de varnum en cada una de las categorÃ­as de varcat\n\nÂ¿cÃ³mo podrÃ­a obtener los mÃ¡ximos, pero sin los outliers (Q75 + 1.5*IQR)?\n\nEs fÃ¡cil quitar los outliers superiores de varnum, pero no es eso lo que\nnecesito quitar, sino los outliers dentro ya de cada categorÃ­a de varcat.\n\nGracias, como siempre,\nManuel\n\nÂ Â Â  [[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola\nOtra posibilidad:\nperformance::checkoutliers(Data[,c(\"varnum\", \"varcat\")])\n    En sÃ¡bado, 3 de diciembre de 2022, 09:15:28 CET, Manuel Mendoza <mmendoza en fulbrightmail.org> escribiÃ³:  \n \n Bue",
+      "thread_id": "thread-ba6ced6ccdf1",
+      "thread_depth": 1,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-1e104da08824",
+      "message_id": "<CAF3uytWUOJE3w3v-Mu=9yu275-VPaTwVbmRHzMq1kuQLXrQg_A@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-12-06T06:15:05+01:00",
+      "subject": "[R-es] eliminar outliers en un tapply",
+      "subject_clean": "[R-es] eliminar outliers en un tapply",
+      "in_reply_to": "<1800602284.2015825.1670247238566@mail.yahoo.com>",
+      "references": [
+        "<CAF3uytVMsHgTHdSLuHbSJNZEJK4YQBQPoAQ=RkEZWvCmrbxx0A@mail.gmail.com>",
+        "<1800602284.2015825.1670247238566@mail.yahoo.com>"
+      ],
+      "body_plain": "Gracias Jose Luis, le echarÃ© tambiÃ©n un vistazo a tu alternativa, que\nparece muy sencilla.\nUn saludo,\nManuel\n\nEl lun, 5 dic 2022 a las 14:34, jose luis (<pepeceb en yahoo.es>) escribiÃ³:\n\n> Hola\n> Otra posibilidad:\n>\n> performance::checkoutliers(Data[,c(\"varnum\", \"varcat\")])\n> En sÃ¡bado, 3 de diciembre de 2022, 09:15:28 CET, Manuel Mendoza <\n> mmendoza en fulbrightmail.org> escribiÃ³:\n>\n>\n> Buenos dÃ­as, utilizo:\n>\n> max <- tapply (Data$varnum, Data$varcat, max)\n>\n> para obtener el mÃ¡ximo de varnum en cada una de las categorÃ­as de varcat\n>\n> Â¿cÃ³mo podrÃ­a obtener los mÃ¡ximos, pero sin los outliers (Q75 + 1.5*IQR)?\n>\n> Es fÃ¡cil quitar los outliers superiores de varnum, pero no es eso lo que\n> necesito quitar, sino los outliers dentro ya de cada categorÃ­a de varcat.\n>\n> Gracias, como siempre,\n> Manuel\n>\n>     [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Jose Luis, le echarÃ© tambiÃ©n un vistazo a tu alternativa, que\nparece muy sencilla.\nUn saludo,\nManuel\n\nEl lun, 5 dic 2022 a las 14:34, jose luis (<pepeceb en yahoo.es>) escribiÃ³:\n\n> Hola\n> O",
+      "thread_id": "thread-ba6ced6ccdf1",
+      "thread_depth": 2,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-870da9fcd9c9",
+      "message_id": "<CAF3uytX_ZF7kyneUz7=XQ-3h7QDqRu=yZKx=DFdfCa9YCiL-wA@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-12-13T12:26:45+01:00",
+      "subject": "[R-es] \"bivariate.map\" Function",
+      "subject_clean": "[R-es] \"bivariate.map\" Function",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, he empezado a utilizar bivariate.map. El cÃ³digo aparece aquÃ­:\n\nhttps://rfunctions.blogspot.com/2015/03/bivariate-maps-bivariatemap-function.html\n\nHice algunas pruebas y funcionÃ³ perfectamente.  Al aplicarlo a las\nvariables que me interesa representar me dio este error:\n\nError in cut.default(quanmean, breaks = brks, labels = 2:length(brks), :\n'breaks' are not unique\n\nComo verÃ©is, al final de la pÃ¡gina le preguntan al autor por ese mismo\nerror, y contesta que ese \"problema estÃ¡ probablemente relacionado con la\nbaja varianza de los valores de sus variables. Probablemente sean demasiado\nsimilares. He visto este error antes cuando se utilizan valores altos para\nel nÃºmero de cuantiles. 10 deberÃ­a ser demasiado alto para tus valores.\"\n\nYo he bajado hasta 3 (nquantiles=3) pero me sigue dando el mismo error.\nComo podÃ©is ver, mis datos estÃ¡n llenos de 0s:\n\nquantile(var1, probs = seq(0, 1, 0.1))\n  0%  10%  20%  30%  40%  50%  60%  70%  80%  90% 100%\n   0    0    0    0    0    0    0    0    0    0  156\n\n quantile(var2, probs = seq(0, 1, 0.1))\n  0%  10%  20%  30%  40%  50%  60%  70%  80%  90% 100%\n   0    0    0    0    0    0    0    0    0    0   41\n\npero no estÃ¡n en las mismas muestras para ambas variables, por lo que he\nprobado quitando las muestras para la que ambas variables son 0, pero\nsiguen habiendo muchos 0s y sigue dando el mismo error.\n\nA ver si se os ocurre algo.\nGracias por vuestro tiempo,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as, he empezado a utilizar bivariate.map. El cÃ³digo aparece aquÃ­:\n\nhttps://rfunctions.blogspot.com/2015/03/bivariate-maps-bivariatemap-function.html\n\nHice algunas pruebas y funcionÃ³ perfe",
+      "thread_id": "thread-870da9fcd9c9",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-cdf51a6c30c5",
+      "message_id": "<CAEK8QGKPma60eiBZ6mTpE05jNgQ4d+j7fkRMR4GAsBOOePNfHw@mail.gmail.com>",
+      "from_name": "Jimmy Erney Reyes Velasco",
+      "from_email_hash": "ad70bac28029e778ec1fa03a5b3f2f3ec8ac1b471e0a8f20b34fcd0be82af104",
+      "date": "2022-12-14T17:30:14-05:00",
+      "subject": "[R-es] help",
+      "subject_clean": "[R-es] help",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buen dÃ­a estimados\nEspero que se encuentren bien\nMe dirijo hacia ustedes con el objetivo de pedirles su ayuda en un problema\nque tengo al realizar un Anova bidireccional de medidas repetidas.\nLo que pasa es que tengo el archivo adjunto y estoy tratando de correr el\nanova de dos vÃ­as de medidas repetidas, pero cuando corro el cÃ³digo me\narroja el siguiente error:\nres.aov <- anova_test( data = Cometa, dv = Valor, wid = ID,\n  within = c(Experimento, ConcentraciÃ³n)\nError: Each row of output must be identified by a unique combination of\nkeys.\nKeys are shared for 7200 rows\nÂ¿Existe alguna soluciÃ³n a este problema?\nSi es asÃ­, estarÃ­a muy agradecido con su ayuda.\nEstoy al tanto\nGracias\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20221214/d128f806/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: Cometa.xlsx\nType: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\nSize: 143528 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20221214/d128f806/attachment-0001.xlsx>",
+      "body_snippet": "Buen dÃ­a estimados\nEspero que se encuentren bien\nMe dirijo hacia ustedes con el objetivo de pedirles su ayuda en un problema\nque tengo al realizar un Anova bidireccional de medidas repetidas.\nLo que ",
+      "thread_id": "thread-cdf51a6c30c5",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-ba7527dbe128",
+      "message_id": "<CANuuowM=3K4tmzJuVSxWZ_Rc5=Mt6wZvLGBjQEtieiK9A5busw@mail.gmail.com>",
+      "from_name": "Jose Betancourt Bethencourt",
+      "from_email_hash": "b90847c8177ef52d350c4c371ce07cae9ff1f09ff64386c1848f72e6cd6a3d95",
+      "date": "2022-12-17T08:17:08-05:00",
+      "subject": "[R-es] meta",
+      "subject_clean": "[R-es] meta",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados\nCuando uso este script el forest plot no muestra los bordes derecho e\nizquierdo,\npregunto como se pudiera ordenar que no se salga de los bordes y se\npudiera ver completo.  Adjunto datos\n\nlibrary(readr)\ndataset01 <- read_csv(\"~/000 EN DISEÃ±O/00 Meta/LIBRO/dataset01.csv\")\nlibrary(meta)\nm <- metacont(Ne, Me, Se, Nc, Mc, Sc,\n              studlab=paste(author, year),\n              data=dataset01)\nforest(m)\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: dataset01.csv\nType: text/csv\nSize: 757 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20221217/904ec465/attachment.csv>",
+      "body_snippet": "Estimados\nCuando uso este script el forest plot no muestra los bordes derecho e\nizquierdo,\npregunto como se pudiera ordenar que no se salga de los bordes y se\npudiera ver completo.  Adjunto datos\n\nlib",
+      "thread_id": "thread-ba7527dbe128",
+      "thread_depth": 0,
+      "month": "2022-12"
+    },
+    {
+      "id": "msg-80a9abf1b04c",
+      "message_id": "<27BFD5A1-9600-43BF-B137-2CEE865EBDD0@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-12-22T19:51:00-03:00",
+      "subject": "[R-es] help",
+      "subject_clean": "[R-es] help",
+      "in_reply_to": "<CAEK8QGKPma60eiBZ6mTpE05jNgQ4d+j7fkRMR4GAsBOOePNfHw@mail.gmail.com>",
+      "references": [
+        "<CAEK8QGKPma60eiBZ6mTpE05jNgQ4d+j7fkRMR4GAsBOOePNfHw@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Jimmy Erney Reyes Velasco\n\nHoy leo algo, ya pasaron algunos dÃ­as de su pregunta.\n\nEl mensaje expresa que hay un problema, ese problema se repite tantas veces como columnas usted tiene en el archivo de excel.\n\nMiro algo y puede ser que usted no lo tenga como factor, usted usa as.factor ??? \n\nwid\t\n(factor) column name containing individuals/subjects identifier. Should be unique per individual.\n\n\nJavier RubÃ©n Marcuzzi\n\n> El 14 dic. 2022, a las 19:30, Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribiÃ³:\n> \n> anova_test\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado Jimmy Erney Reyes Velasco\n\nHoy leo algo, ya pasaron algunos dÃ­as de su pregunta.\n\nEl mensaje expresa que hay un problema, ese problema se repite tantas veces como columnas usted tiene en el ",
+      "thread_id": "thread-cdf51a6c30c5",
+      "thread_depth": 1,
+      "month": "2022-12"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-ba6ced6ccdf1",
+      "subject": "[R-es] eliminar outliers en un tapply",
+      "message_count": 5,
+      "participants": [
+        "Francisco Rodriguez Sanchez",
+        "Manuel Mendoza",
+        "jose luis"
+      ],
+      "started": "2022-12-03T09:14:11+01:00",
+      "last_reply": "2022-12-06T06:15:05+01:00",
+      "root_message_id": "msg-ba6ced6ccdf1"
+    },
+    {
+      "id": "thread-e26175b83379",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 166, Envío 1",
+      "message_count": 1,
+      "participants": [
+        "patricio fuenmayor"
+      ],
+      "started": "2022-12-04T10:40:18-05:00",
+      "last_reply": "2022-12-04T10:40:18-05:00",
+      "root_message_id": "msg-e26175b83379"
+    },
+    {
+      "id": "thread-870da9fcd9c9",
+      "subject": "[R-es] \"bivariate.map\" Function",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2022-12-13T12:26:45+01:00",
+      "last_reply": "2022-12-13T12:26:45+01:00",
+      "root_message_id": "msg-870da9fcd9c9"
+    },
+    {
+      "id": "thread-cdf51a6c30c5",
+      "subject": "[R-es] help",
+      "message_count": 2,
+      "participants": [
+        "Javier Marcuzzi",
+        "Jimmy Erney Reyes Velasco"
+      ],
+      "started": "2022-12-14T17:30:14-05:00",
+      "last_reply": "2022-12-22T19:51:00-03:00",
+      "root_message_id": "msg-cdf51a6c30c5"
+    },
+    {
+      "id": "thread-ba7527dbe128",
+      "subject": "[R-es] meta",
+      "message_count": 1,
+      "participants": [
+        "Jose Betancourt Bethencourt"
+      ],
+      "started": "2022-12-17T08:17:08-05:00",
+      "last_reply": "2022-12-17T08:17:08-05:00",
+      "root_message_id": "msg-ba7527dbe128"
+    }
+  ]
+}

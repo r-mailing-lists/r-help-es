@@ -1,0 +1,200 @@
+From em|||@nod||or|o @end|ng |rom hotm@||@com  Sun Jan  7 20:59:07 2024
+From: em|||@nod||or|o @end|ng |rom hotm@||@com (emiliano di iorio)
+Date: Sun, 7 Jan 2024 19:59:07 +0000
+Subject: [R-es] conectar R con base de datos Access
+Message-ID: <MN0PR22MB36676CF37FD6CBAA8DF9FBB3B4642@MN0PR22MB3667.namprd22.prod.outlook.com>
+
+Hola me interesar?a realizar esa conexi?n, para poder manipular las tablas Access desde R. Alguien sabe el procedimiento y que paquetes debo bajar y si hay alguna otra especificaci?n t?cnica respecto a la configuraci?n del Windows en 64 bits? Saludos
+
+Enviado desde Correo<https://go.microsoft.com/fwlink/?LinkId=550986> para Windows
+
+
+	[[alternative HTML version deleted]]
+
+
+From |jro@r @end|ng |rom hotm@||@com  Sun Jan  7 21:10:00 2024
+From: |jro@r @end|ng |rom hotm@||@com (=?utf-8?B?RnJhbmNpc2NvIFJvZHLDrWd1ZXo=?=)
+Date: Sun, 7 Jan 2024 20:10:00 +0000
+Subject: [R-es] conectar R con base de datos Access
+In-Reply-To: <MN0PR22MB36676CF37FD6CBAA8DF9FBB3B4642@MN0PR22MB3667.namprd22.prod.outlook.com>
+References: <MN0PR22MB36676CF37FD6CBAA8DF9FBB3B4642@MN0PR22MB3667.namprd22.prod.outlook.com>
+Message-ID: <AM7P194MB0834972EA02DEB30BED075D1CD642@AM7P194MB0834.EURP194.PROD.OUTLOOK.COM>
+
+Hola buenas tardes, si nada ha cambiado, con R 64 bits no te puedes conectar a access. Para hacerlo te tienes que ir a 32 bits,
+
+Te mando un ejemplo de cómo podría hacerse, una vez que le digas a RStudio que tome la versión 32bits (entiendo que es una chapuza, pero por alguna razón creo que no se puede usar la 64)
+
+library(RODBC)
+
+con <- odbcConnectAccess("path_to_bbdd/xxxx.mdb")
+
+sqlTables(con)
+
+
+Un saludo,
+
+Francisco J.
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de emiliano di iorio <emilianodiiorio en hotmail.com>
+Enviado: domingo, 7 de enero de 2024 20:59
+Para: r-help-es en r-project.org <r-help-es en r-project.org>
+Asunto: [R-es] conectar R con base de datos Access
+
+Hola me interesar?a realizar esa conexi?n, para poder manipular las tablas Access desde R. Alguien sabe el procedimiento y que paquetes debo bajar y si hay alguna otra especificaci?n t?cnica respecto a la configuraci?n del Windows en 64 bits? Saludos
+
+Enviado desde Correo<https://go.microsoft.com/fwlink/?LinkId=550986> para Windows
+
+
+        [[alternative HTML version deleted]]
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Mon Jan  8 13:24:31 2024
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Mon, 8 Jan 2024 09:24:31 -0300
+Subject: [R-es] conectar R con base de datos Access
+In-Reply-To: <MN0PR22MB36676CF37FD6CBAA8DF9FBB3B4642@MN0PR22MB3667.namprd22.prod.outlook.com>
+References: <MN0PR22MB36676CF37FD6CBAA8DF9FBB3B4642@MN0PR22MB3667.namprd22.prod.outlook.com>
+Message-ID: <7F8CB172-0231-4001-9FE8-7F46FD36D796@gmail.com>
+
+Estimado Emiliano De Iorio
+
+¿Que posibilidades hay de tomar access y pasarlo a otro base de datos, o sqlite para tener todo en un archivo?
+
+Si puede migrar los datos ganaría en una cantidad de herramientas disponibles en R para trabajar con los datos.
+
+Javier Rubén Marcuzzi
+
+ 
+
+> El 7 ene 2024, a las 16:59, emiliano di iorio <emilianodiiorio en hotmail.com> escribió:
+> 
+> Hola me interesaría realizar esa conexión, para poder manipular las tablas Access desde R. Alguien sabe el procedimiento y que paquetes debo bajar y si hay alguna otra especificación técnica respecto a la configuración del Windows en 64 bits? Saludos
+> 
+> Enviado desde Correo<https://go.microsoft.com/fwlink/?LinkId=550986> para Windows
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Mon Jan  8 13:52:34 2024
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Mon, 8 Jan 2024 12:52:34 +0000 (UTC)
+Subject: [R-es] conectar R con base de datos Access
+In-Reply-To: <7F8CB172-0231-4001-9FE8-7F46FD36D796@gmail.com>
+References: <MN0PR22MB36676CF37FD6CBAA8DF9FBB3B4642@MN0PR22MB3667.namprd22.prod.outlook.com>
+ <7F8CB172-0231-4001-9FE8-7F46FD36D796@gmail.com>
+Message-ID: <1884121613.14460603.1704718354621@mail.yahoo.com>
+
+ Asi es. Yo el truco que hago mientras no conozca otra herramienta es el siguiente: reinicio R en versión 32. Importo la base de datos como dijo Francisco. Entonces guardo la sesión (Save Workspace As...). Cierro y vuelvo abrir R en modo 64 y cargo la sesión anterior (Load Workspace) y ya puedo trabajar perfectamente.Un saludo
+    En lunes, 8 de enero de 2024, 13:24:57 CET, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:  
+ 
+ Estimado Emiliano De Iorio
+
+¿Que posibilidades hay de tomar access y pasarlo a otro base de datos, o sqlite para tener todo en un archivo?
+
+Si puede migrar los datos ganaría en una cantidad de herramientas disponibles en R para trabajar con los datos.
+
+Javier Rubén Marcuzzi
+
+ 
+
+> El 7 ene 2024, a las 16:59, emiliano di iorio <emilianodiiorio en hotmail.com> escribió:
+> 
+> Hola me interesaría realizar esa conexión, para poder manipular las tablas Access desde R. Alguien sabe el procedimiento y que paquetes debo bajar y si hay alguna otra especificación técnica respecto a la configuración del Windows en 64 bits? Saludos
+> 
+> Enviado desde Correo<https://go.microsoft.com/fwlink/?LinkId=550986> para Windows
+> 
+> 
+>     [[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+  
+	[[alternative HTML version deleted]]
+
+
+From em|||@nod||or|o @end|ng |rom hotm@||@com  Thu Jan 11 17:14:10 2024
+From: em|||@nod||or|o @end|ng |rom hotm@||@com (emiliano di iorio)
+Date: Thu, 11 Jan 2024 16:14:10 +0000
+Subject: [R-es] =?iso-8859-1?q?nueva_consulta_R_versi=F3n_32_bit_ultima_v?=
+ =?iso-8859-1?q?ersion?=
+Message-ID: <MN0PR22MB3667B07EA989F153F20E44ABB4682@MN0PR22MB3667.namprd22.prod.outlook.com>
+
+La ultima versi?n de R desde p?gina oficial, Download R-4.3.2 for Windows<https://cran.r-project.org/bin/windows/base/R-4.3.2-win.exe> (79 megabytes, 64 bit), no tiene la opci?n de 32 bit. Es as? o hay otro modo de obtener la descarga con ambas versiones de bit? Gracias
+
+
+Enviado desde Correo<https://go.microsoft.com/fwlink/?LinkId=550986> para Windows
+
+
+	[[alternative HTML version deleted]]
+
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Thu Jan 11 18:56:00 2024
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Thu, 11 Jan 2024 17:56:00 +0000
+Subject: [R-es] 
+ =?utf-8?q?nueva_consulta_R_versi=C3=B3n_32_bit_ultima_ver?=
+ =?utf-8?q?sion?=
+In-Reply-To: <MN0PR22MB3667B07EA989F153F20E44ABB4682@MN0PR22MB3667.namprd22.prod.outlook.com>
+References: <MN0PR22MB3667B07EA989F153F20E44ABB4682@MN0PR22MB3667.namprd22.prod.outlook.com>
+Message-ID: <6b92c7ea9eb54173a5080c3afe0b2996@sergas.es>
+
+Hola Emiliano.
+
+
+Desde la versión 4.2.0 de R ya no se proporcionan compilaciones de 32 bits.
+
+
+Puedes comprobarlo en el apartado 2.27 de las FAQ
+
+https://cran.r-project.org/bin/windows/base/rw-FAQ.R-4.3.2.html#Should-I-run-32_002dbit-or-64_002dbit-R_003f
+
+
+Un saludo,
+
+Miguel.
+
+
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de emiliano di iorio <emilianodiiorio en hotmail.com>
+Enviado: jueves, 11 de enero de 2024 17:14
+Para: r-help-es en r-project.org
+Asunto: [R-es] nueva consulta R versión 32 bit ultima version
+
+La ultima versi?n de R desde p?gina oficial, Download R-4.3.2 for Windows<https://cran.r-project.org/bin/windows/base/R-4.3.2-win.exe> (79 megabytes, 64 bit), no tiene la opci?n de 32 bit. Es as? o hay otro modo de obtener la descarga con ambas versiones de bit? Gracias
+
+
+Enviado desde Correo<https://go.microsoft.com/fwlink/?LinkId=550986> para Windows
+
+
+        [[alternative HTML version deleted]]
+
+
+________________________________
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+

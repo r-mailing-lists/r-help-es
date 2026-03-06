@@ -1,0 +1,2302 @@
+From bet@n@ter @end|ng |rom gm@||@com  Fri Aug  2 15:25:55 2019
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt B.)
+Date: Fri, 2 Aug 2019 09:25:55 -0400
+Subject: [R-es] CJ
+Message-ID: <CANuuowNtNTQTQbaqK2AMMSrtX21UWjXXf0WgP5_ZNZv2ReszBw@mail.gmail.com>
+
+Estimados
+
+A partir de estos datos
+
+2011 2012 2013
+Ampicillin            23.00 27.40  31.8
+Oxacillin             53.80 11.10 32.45
+Peniclina            46.10  5.50  13.6
+Ciprofloxacina     7.60 14.40  13.6
+Amikacina            69.10 55.50  27.2
+Gentamicina         54.70 38.80  31.8
+Kanamicina           23.40 16.60  13.6
+Ceftriaxone           7.60 44.40    50.1
+Ceftazidima          32.55 33.30  31.8
+Cefotaxima           27.00 22.20  31.8
+Cefazolina           32.30 55.60     9.01
+Cefuroxima           7.60  5.50  36.3
+Aztreonam            7.60 11.10   4.5
+Cloranfenicol         7.60 11.10  18.1
+Vancomicina          15.30 33.30   4.5
+Eritromicina         30.70 44.40  68.1
+Clindamicina         20.65 27.70  13.6
+Fosfomicina          14.60 11.10  18.1
+Amoxicilina          20.15 22.20  18.1
+Imipenem              7.60  6.05 4.5
+Azitromicina          7.60 22.20  14.9
+
+datos <- read.table("clipboard", header = TRUE)
+
+Realizo este análisis
+
+library(FactoMineR)
+res.hcpc <- HCPC(datos, nb.clust=0, conso=0, min=2, max=5)
+
+quisiera poder hacer exactamente el mismo análisis y obtener la misma
+salida a partir de la lectura de los datos en un archivo csv, lo he
+hecho y no me salen los nombres de los antibióticos debajo
+
+
+Saludos cordiales
+Aureliano
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sat Aug  3 16:10:19 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sat, 3 Aug 2019 11:10:19 -0300
+Subject: [R-es] CJ
+In-Reply-To: <CANuuowNtNTQTQbaqK2AMMSrtX21UWjXXf0WgP5_ZNZv2ReszBw@mail.gmail.com>
+References: <CANuuowNtNTQTQbaqK2AMMSrtX21UWjXXf0WgP5_ZNZv2ReszBw@mail.gmail.com>
+Message-ID: <CAHo_aEQHsxwXx-y4DeRbgoSyaNAkTccyTJJVn95kNvsPnoctkQ@mail.gmail.com>
+
+Estimado Aureliano
+
+El ejemplo como usted lo envía no sirve de mucho, por un lado sería bueno
+conocer los datos desde donde se trabaja a partir de un data.frame o un
+archivo csv con su correspondiente lectura a partir de R, porque el primer
+paso es importar correctamente los datos, y el segundo es relacionado a R y
+como se escribe el modelo, en esto veo un problema, un fármaco con tres
+números, es una análisis muy extraño, se podría decir este año tubo un
+efecto en la receta de tal fármaco, pero estos no se recetan por año
+calendario, podría ser que en un año particular una gran inundación aportó
+cierta bacteria que en la población se refleja en un aumento de patologías,
+pero ese estudio es de epidemiología, es medicina, no visualizo ese trabajo
+con lo que usted envía.
+
+Javier Rubén Marcuzzi
+
+El vie., 2 ago. 2019 a las 10:26, Jose Betancourt B. (<betanster en gmail.com>)
+escribió:
+
+> Estimados
+>
+> A partir de estos datos
+>
+> 2011 2012 2013
+> Ampicillin            23.00 27.40  31.8
+> Oxacillin             53.80 11.10 32.45
+> Peniclina            46.10  5.50  13.6
+> Ciprofloxacina     7.60 14.40  13.6
+> Amikacina            69.10 55.50  27.2
+> Gentamicina         54.70 38.80  31.8
+> Kanamicina           23.40 16.60  13.6
+> Ceftriaxone           7.60 44.40    50.1
+> Ceftazidima          32.55 33.30  31.8
+> Cefotaxima           27.00 22.20  31.8
+> Cefazolina           32.30 55.60     9.01
+> Cefuroxima           7.60  5.50  36.3
+> Aztreonam            7.60 11.10   4.5
+> Cloranfenicol         7.60 11.10  18.1
+> Vancomicina          15.30 33.30   4.5
+> Eritromicina         30.70 44.40  68.1
+> Clindamicina         20.65 27.70  13.6
+> Fosfomicina          14.60 11.10  18.1
+> Amoxicilina          20.15 22.20  18.1
+> Imipenem              7.60  6.05 4.5
+> Azitromicina          7.60 22.20  14.9
+>
+> datos <- read.table("clipboard", header = TRUE)
+>
+> Realizo este análisis
+>
+> library(FactoMineR)
+> res.hcpc <- HCPC(datos, nb.clust=0, conso=0, min=2, max=5)
+>
+> quisiera poder hacer exactamente el mismo análisis y obtener la misma
+> salida a partir de la lectura de los datos en un archivo csv, lo he
+> hecho y no me salen los nombres de los antibióticos debajo
+>
+>
+> Saludos cordiales
+> Aureliano
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Aug  3 18:53:30 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 3 Aug 2019 18:53:30 +0200
+Subject: [R-es] CJ
+In-Reply-To: <CANuuowNtNTQTQbaqK2AMMSrtX21UWjXXf0WgP5_ZNZv2ReszBw@mail.gmail.com>
+References: <CANuuowNtNTQTQbaqK2AMMSrtX21UWjXXf0WgP5_ZNZv2ReszBw@mail.gmail.com>
+Message-ID: <CAOKbq8iJ0XpcXE+SDrFiL6W8rw3zZx1KserRU_+pBwgsvkrTzw@mail.gmail.com>
+
+Hola,
+
+Lo he guardado en un fichero de texto tal y como lo has compartido y lo he
+importado sin problemas...
+Los nombres de las columnas son los años y cada fila tiene como nombre un
+antibiotótico.
+
+> setwd("~/Downloads")
+> datIn <- read.table('fileR.txt', header = T, as.is = T)
+> datIn
+               X2011 X2012 X2013
+Ampicillin     23.00 27.40 31.80
+Oxacillin      53.80 11.10 32.45
+Peniclina      46.10  5.50 13.60
+Ciprofloxacina  7.60 14.40 13.60
+Amikacina      69.10 55.50 27.20
+Gentamicina    54.70 38.80 31.80
+Kanamicina     23.40 16.60 13.60
+Ceftriaxone     7.60 44.40 50.10
+Ceftazidima    32.55 33.30 31.80
+Cefotaxima     27.00 22.20 31.80
+Cefazolina     32.30 55.60  9.01
+Cefuroxima      7.60  5.50 36.30
+Aztreonam       7.60 11.10  4.50
+Cloranfenicol   7.60 11.10 18.10
+Vancomicina    15.30 33.30  4.50
+Eritromicina   30.70 44.40 68.10
+Clindamicina   20.65 27.70 13.60
+Fosfomicina    14.60 11.10 18.10
+Amoxicilina    20.15 22.20 18.10
+Imipenem        7.60  6.05  4.50
+Azitromicina    7.60 22.20 14.90
+
+¿No es así cómo lo quieres?.
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El vie., 2 ago. 2019 a las 15:26, Jose Betancourt B. (<betanster en gmail.com>)
+escribió:
+
+> Estimados
+>
+> A partir de estos datos
+>
+> 2011 2012 2013
+> Ampicillin            23.00 27.40  31.8
+> Oxacillin             53.80 11.10 32.45
+> Peniclina            46.10  5.50  13.6
+> Ciprofloxacina     7.60 14.40  13.6
+> Amikacina            69.10 55.50  27.2
+> Gentamicina         54.70 38.80  31.8
+> Kanamicina           23.40 16.60  13.6
+> Ceftriaxone           7.60 44.40    50.1
+> Ceftazidima          32.55 33.30  31.8
+> Cefotaxima           27.00 22.20  31.8
+> Cefazolina           32.30 55.60     9.01
+> Cefuroxima           7.60  5.50  36.3
+> Aztreonam            7.60 11.10   4.5
+> Cloranfenicol         7.60 11.10  18.1
+> Vancomicina          15.30 33.30   4.5
+> Eritromicina         30.70 44.40  68.1
+> Clindamicina         20.65 27.70  13.6
+> Fosfomicina          14.60 11.10  18.1
+> Amoxicilina          20.15 22.20  18.1
+> Imipenem              7.60  6.05 4.5
+> Azitromicina          7.60 22.20  14.9
+>
+> datos <- read.table("clipboard", header = TRUE)
+>
+> Realizo este análisis
+>
+> library(FactoMineR)
+> res.hcpc <- HCPC(datos, nb.clust=0, conso=0, min=2, max=5)
+>
+> quisiera poder hacer exactamente el mismo análisis y obtener la misma
+> salida a partir de la lectura de los datos en un archivo csv, lo he
+> hecho y no me salen los nombres de los antibióticos debajo
+>
+>
+> Saludos cordiales
+> Aureliano
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Tue Aug  6 17:16:22 2019
+From: gr|er@ @end|ng |rom y@ndex@com (Griera-)
+Date: Tue, 6 Aug 2019 17:16:22 +0200
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fico_tiempos_de_supervivencia?=
+In-Reply-To: <ff2a04c2-88af-ac8e-9259-4397011f0873@juntadeandalucia.es>
+References: <mailman.13444.11.1563444002.43692.r-help-es@r-project.org>
+ <590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>
+ <20190718130517.4d5a9143@debian-dde>
+ <CAOKbq8gGLs9fgL-JaBQncWHBGAbvJhnH=f8PH9cLc+GvFpJUeQ@mail.gmail.com>
+ <20190719150318.3c0c458e@debian-dde>
+ <ff2a04c2-88af-ac8e-9259-4397011f0873@juntadeandalucia.es>
+Message-ID: <20190806171622.509c6927@debian-dde>
+
+Hola Francisco:
+
+Muchas gracias por este refinamiento. 
+
+Tienes razón, el gráfico de Lexis representa mucho mejor los datos. 
+
+Y gracias por el código. Lo guardo también para el futuro.
+
+Saludos
+
+On Tue, 6 Aug 2019 10:37:24 +0200
+Francisco Viciana <franciscoj.viciana en juntadeandalucia.es> wrote:
+
+> Hola, aunque con un poco de retraso, hago una aportación a este hilo:
+> 
+> Si tienes un problema con dos escalas de tiempo sobre las que 
+> evolucionan las lineas de seguimiento, creo que es mejor que hacer un 
+> solo gráfico en forma de   diagrama de Lexis, que dos gráficos 
+> independientes. Muestro ejemplo usando el paquete "Epi":
+> 
+> # Código ----------------------------------------------------
+> 
+> #---- Generar Datos ----
+> rm(list = ls())
+> set.seed(20)
+> XTIEMPO_2 = c(38, 2, 34, 29, 30, 3, 14, 8, 18, 31) # Per fe el gràfic 
+> amb t=0
+> set.seed(30)
+> XTIEMPO_0 = sample(1:40, 10, replace=F)
+> XTIEMPO_F = XTIEMPO_0 + XTIEMPO_2
+> set.seed(20)
+> XDEF = as.factor(sample(c("Mort", "Viu"), 10, replace=T))
+> 
+> DATOS <- data.frame (
+>    ID         = c (1:10)
+>    , TIEMPO_0 = XTIEMPO_0
+>    , TIEMPO_F = XTIEMPO_F
+>    , TIEMPO_2 = XTIEMPO_2 # Per fe el gràfic amb t=0
+>    , DEF      = XDEF
+> )
+> 
+> 
+> names(DATOS)[2:5] <- c('marriage.age',
+>                         'output.age',
+>                         'duration','output')
+> 
+> DATOS$output <- factor(DATOS$output,levels = c('Casado','Viu','Mort'))
+> DATOS$entry  <- factor('Casado',levels = c('Casado','Viu','Mort'))
+> 
+> # Crea objeto Lexis:
+> library(Epi)
+> lx.Datos <- Lexis( entry=list(antiguedad.del.matrimonio=0,
+>                                 edad=marriage.age),
+>                      exit=list(edad=output.age),
+>                      entry.status = entry ,
+>                      exit.status = output ,id=ID,data=DATOS,merge=F)
+> 
+> #----  Muestra datos originales y transformados
+> DATOS
+> lx.Datos
+> 
+> #---- Grafica: ----
+> 
+> plot.Lexis(lx.Datos,time.scale = 1:2,col='blue')
+> with(lx.Datos, points(x=lex.dur,y=edad+lex.dur,
+> pch=c(NA,19,3)[as.integer(lex.Xst)],
+>                        col=1 ))
+> grid()
+> legend('bottomright',legend = levels(lx.Datos$lex.Xst)[-1],
+>         pch=c(19,3),col=1)
+> 
+> ## ----------------------------------------------
+> 
+> On 19/7/19 15:03, Griera wrote:
+> > Hola:
+> >
+> > Por si a alguien le interesa para un curso, aquí coloco la versión
+> > definitiva de los dos gráficos que quería hacer (uno en escala del tiempo del calendario y la otra el tiempo de seguimiento) realizados gracias a la ayuda
+> > de Carlos Ortega.
+> >
+> > Muchas gracias y saludos.
+> >
+> > # Código ----------------------------------------------------
+> > set.seed(20)
+> > # TIEMPO_2 = sample(1:40, 10, replace=F)
+> > XTIEMPO_2 = c(38, 2, 34, 29, 30, 3, 14, 8, 18, 31) # Per fe el gràfic amb t=0
+> > set.seed(30)
+> > XTIEMPO_0 = sample(1:40, 10, replace=F)
+> > XTIEMPO_F = XTIEMPO_0 + XTIEMPO_2
+> > set.seed(20)
+> > # XDEF     = as.factor(sample(c(0,1), 10, replace=T))
+> > XDEF = as.factor(sample(c("Mort", "Viu"), 10, replace=T))
+> >
+> > DATOS <- data.frame (
+> > 	  ID         = c (1:10)
+> > 	, TIEMPO_0 = XTIEMPO_0
+> > 	, TIEMPO_F = XTIEMPO_F
+> > 	, TIEMPO_2 = XTIEMPO_2 # Per fe el gràfic amb t=0
+> > 	, DEF      = XDEF
+> > )
+> >
+> > library(ggplot2)
+> >
+> > ## Gràfic amb temps calendari
+> > ggplot( data = DATOS ) +
+> >    geom_point( aes(x = TIEMPO_F, y = ID , shape = DEF), size = 5 ) +
+> >    geom_segment( aes( x = TIEMPO_0, y = ID,   xend = TIEMPO_F, yend = ID ) ) +
+> >    scale_shape_manual (values = c(4, 16))  +
+> >    xlim (0, 70) +
+> >    xlab ("Data (temps del calendari)") +
+> >    ylab ("Persones") +
+> >     guides(colour = FALSE) +
+> >     labs(shape = ' ', values = c(4, 16)) +
+> >     scale_y_discrete() +
+> >    theme_classic() +
+> >    theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+> > ## Modificat
+> > str (DATOS)
+> > ggplot( data = DATOS ) +
+> >    geom_point( aes(x = TIEMPO_2, y = ID , shape = DEF), size = 5 ) +
+> >    scale_shape_manual (values = c(4, 16))  +
+> >    geom_segment( aes( x = 0, y = ID,   xend = TIEMPO_2, yend = ID ) ) +
+> >    xlim (0, 70) +
+> >    xlab ("Temps de seguiment") +
+> >    ylab ("Persones") +
+> >     guides(colour = FALSE) +
+> >     labs(shape = ' ', values = c(4, 16)) +
+> >     scale_y_discrete() +
+> >    theme_classic()
+> >
+> > # Código ----------------------------------------------------
+> >
+> >
+> > On Thu, 18 Jul 2019 14:21:24 +0200
+> > Carlos Ortega <cof en qualityexcellence.es> wrote:
+> >  
+> >> Hola,
+> >>
+> >> Sí, lo puedes hacer de esta forma...
+> >>
+> >> #-----------------
+> >> set.seed(20)
+> >> DATOS <- data.frame (
+> >>      ID      = c (1:10)
+> >>    , TIEMPO  = sample(1:40, 10, replace=F)
+> >>    , DEF     = as.factor(sample(c(0,1), 10, replace=T))
+> >> )
+> >>
+> >> library(ggplot2)
+> >>
+> >>    ggplot( data = DATOS ) +
+> >>     geom_point( aes(x = TIEMPO, y = ID , shape = DEF, color = DEF), size = 5
+> >> ) +
+> >>     geom_segment( aes( x = 0, y = ID,  xend = TIEMPO, yend = ID ) ) +
+> >>      guides(colour = FALSE) +
+> >>      labs(shape = 'LEGEND') +
+> >>      scale_y_discrete() +
+> >>     theme_minimal()
+> >> #-----------------
+> >>
+> >> E incluso puedes reproducirlo usando fuentes parecidas a la de los comics
+> >> con el paquete "xkcd".
+> >>
+> >> Saludos,
+> >> Carlos Ortega
+> >> www.qualityexcellence.es
+> >>
+> >>
+> >>
+> >> El jue., 18 jul. 2019 a las 13:05, Griera-yandex (<griera en yandex.com>)
+> >> escribió:
+> >>  
+> >>> Hola Pedro:
+> >>>
+> >>> Gracias por la ayuda. No conocía esta manera más elegante de mostrar las
+> >>> curvas de Kaplan-Meier. Te la compro.
+> >>>
+> >>> En realidad quería mostrar un gráfico con la longitud de les tiempos de
+> >>> seguimiento y al final un símbolo para indicar el estado. Seria un gráfico
+> >>> similar a:
+> >>>
+> >>> https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png
+> >>>
+> >>> Pero no encuentro la manera de hacerlo. Igual no se puede.
+> >>>
+> >>> Muchas gracias y saludos.
+> >>>
+> >>> On Thu, 18 Jul 2019 10:28:37 +0000
+> >>> PEDRO CONCEJERO CEREZO <pedro.concejerocerezo en telefonica.com> wrote:
+> >>>  
+> >>>> Hola, te vale esto? Es forma estandar de representar graficos  
+> >>> supervivencia  
+> >>>> Basado en esto:
+> >>>>
+> >>>> https://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/
+> >>>>
+> >>>> set.seed(20)
+> >>>>
+> >>>> DATOS <- data.frame (
+> >>>>    ID      = c (1:10)
+> >>>>    , TIEMPO  = sample(1:40, 10, replace=F)
+> >>>>    , DEF     = sample(0:1, 10, replace=T)
+> >>>> )
+> >>>>
+> >>>> DATOS
+> >>>>
+> >>>> library(survival)
+> >>>>
+> >>>> DATOS$DEF <- as.numeric(DATOS$DEF)
+> >>>> DATOS$TIEMPO <- as.numeric(DATOS$TIEMPO)
+> >>>>
+> >>>> s <- Surv(DATOS$TIEMPO, DATOS$DEF)
+> >>>> head(s)
+> >>>>
+> >>>> ## Kaplan-Meier estimator.
+> >>>> km <- survfit(s ~ 1,
+> >>>>                data = DATOS,
+> >>>>                conf.type = "log-log")
+> >>>>
+> >>>> ## Show object
+> >>>> km
+> >>>>
+> >>>> summary(km)
+> >>>>
+> >>>> plot(km)
+> >>>>
+> >>>> # Instala las librerías necesarias:
+> >>>> library(ranger)
+> >>>> library(ggplot2)
+> >>>> library(dplyr)
+> >>>> library(ggfortify)
+> >>>>
+> >>>> autoplot(km)
+> >>>>
+> >>>>
+> >>>> El 18/07/2019 a las 12:00, r-help-es-request en r-project.org<mailto:  
+> >>> r-help-es-request en r-project.org> escribió:  
+> >>>> Envíe los mensajes para la lista R-help-es a
+> >>>>          r-help-es en r-project.org<mailto:r-help-es en r-project.org>
+> >>>>
+> >>>> Para subscribirse o anular su subscripción a través de la WEB
+> >>>>          https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>>
+> >>>> O por correo electrónico, enviando un mensaje con el texto "help" en
+> >>>> el asunto (subject) o en el cuerpo a:
+> >>>>          r-help-es-request en r-project.org<mailto:  
+> >>> r-help-es-request en r-project.org>  
+> >>>> Puede contactar con el responsable de la lista escribiendo a:
+> >>>>          r-help-es-owner en r-project.org<mailto:  
+> >>> r-help-es-owner en r-project.org>  
+> >>>> Si responde a algún contenido de este mensaje, por favor, edite la
+> >>>> linea del asunto (subject) para que el texto sea mas especifico que:
+> >>>> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> >>>> la respuesta sólo aquellas partes del mensaje a las que está
+> >>>> respondiendo.
+> >>>>
+> >>>>
+> >>>> Asuntos del día:
+> >>>>
+> >>>>     1. Gráfico tiempos de supervivencia (Griera-yandex)
+> >>>>
+> >>>> ----------------------------------------------------------------------
+> >>>>
+> >>>> Message: 1
+> >>>> Date: Thu, 18 Jul 2019 10:18:42 +0200
+> >>>> From: Griera-yandex <griera en yandex.com><mailto:griera en yandex.com>
+> >>>> To: Lista R <r-help-es en r-project.org><mailto:r-help-es en r-project.org>
+> >>>> Subject: [R-es] Gráfico tiempos de supervivencia
+> >>>> Message-ID: <20190718101842.280414d5 en debian-dde>
+> >>>> Content-Type: text/plain; charset="utf-8"
+> >>>>
+> >>>> Buenos días a todos:
+> >>>>
+> >>>> Alguien me puede ayudar a hacer (si se puede) con unos datos similares a:
+> >>>>
+> >>>> set.seed(20)
+> >>>> DATOS <- data.frame (
+> >>>>        ID      = c (1:10)
+> >>>>      , TIEMPO  = sample(1:40, 10, replace=F)
+> >>>>      , DEF     = sample(0:1, 10, replace=T)
+> >>>>                      );DATOS
+> >>>>
+> >>>> un gráfico que muestre los tiempos de supervivencia similar a:
+> >>>> https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png
+> >>>>
+> >>>> Lo he intentado con la función followup.plot del paquete
+> >>>> "epiDisplay" (  
+> >>> https://cran.r-project.org/web/packages/epiDisplay/index.html),  
+> >>>> pero no encuentro la forma.
+> >>>>
+> >>>> Muchas gracias y saludos.
+> >>>>
+> >>>>
+> >>>>
+> >>>>
+> >>>> ------------------------------
+> >>>>
+> >>>> Subject: Pié de página del digest
+> >>>>
+> >>>> _______________________________________________
+> >>>> R-help-es mailing list
+> >>>> R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>>
+> >>>>
+> >>>> ------------------------------
+> >>>>
+> >>>> Fin de Resumen de R-help-es, Vol 125, Envío 7
+> >>>> *********************************************
+> >>>>
+> >>>>
+> >>>> --
+> >>>> Pedro Concejero
+> >>>> Telefónica CDO - 4th Platform - Internal Use Cases
+> >>>> E-mail: pedro.concejerocerezo en telefonica.com<mailto:
+> >>> pedro.concejerocerezo en telefonica.com>
+> >>>> skype: pedro.concejero
+> >>>> twitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>
+> >>>> linkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>
+> >>>> eRReRo feliz, me puedes encontrar en gRupo R madRid <  
+> >>> http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>  
+> >>>> ________________________________
+> >>>>
+> >>>> Este mensaje y sus adjuntos se dirigen exclusivamente a su destinatario,  
+> >>> puede contener información privilegiada o confidencial y es para uso
+> >>> exclusivo de la persona o entidad de destino. Si no es usted. el
+> >>> destinatario indicado, queda notificado de que la lectura, utilización,
+> >>> divulgación y/o copia sin autorización puede estar prohibida en virtud de
+> >>> la legislación vigente. Si ha recibido este mensaje por error, le rogamos
+> >>> que nos lo comunique inmediatamente por esta misma vía y proceda a su
+> >>> destrucción.  
+> >>>> The information contained in this transmission is privileged and  
+> >>> confidential information intended only for the use of the individual or
+> >>> entity named above. If the reader of this message is not the intended
+> >>> recipient, you are hereby notified that any dissemination, distribution or
+> >>> copying of this communication is strictly prohibited. If you have received
+> >>> this transmission in error, do not read it. Please immediately reply to the
+> >>> sender that you have received this communication in error and then delete
+> >>> it.  
+> >>>> Esta mensagem e seus anexos se dirigem exclusivamente ao seu  
+> >>> destinatário, pode conter informação privilegiada ou confidencial e é para
+> >>> uso exclusivo da pessoa ou entidade de destino. Se não é vossa senhoria o
+> >>> destinatário indicado, fica notificado de que a leitura, utilização,
+> >>> divulgação e/ou cópia sem autorização pode estar proibida em virtude da
+> >>> legislação vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos
+> >>> o comunique imediatamente por esta mesma via e proceda a sua destruição  
+> >>>>        [[alternative HTML version deleted]]
+> >>>>
+> >>>> _______________________________________________
+> >>>> R-help-es mailing list
+> >>>> R-help-es en r-project.org
+> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es  
+> >>> _______________________________________________
+> >>> R-help-es mailing list
+> >>> R-help-es en r-project.org
+> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>  
+> >>
+> >> -- 
+> >> Saludos,
+> >> Carlos Ortega
+> >> www.qualityexcellence.es  
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >  
+> -- 
+> +--------------------------------------------------------------
+> | Francisco J. Viciana Fernández
+> | Dpto. Indicadores Demográficos
+> | Servicio de Estadísticas Demográficas y Sociales
+> | Instituto de Estadística y Cartografía de Andalucía
+> | Leonardo Da Vinci, nº 21. Isla de La Cartuja.
+> | 41071 SEVILLA.
+> | franciscoj.viciana en juntadeandalucia.es
+> +--------------------------------------------------------------
+> 
+
+
+From |r@nc|@coj@v|c|@n@ @end|ng |rom junt@de@nd@|uc|@@e@  Thu Aug  8 09:42:50 2019
+From: |r@nc|@coj@v|c|@n@ @end|ng |rom junt@de@nd@|uc|@@e@ (Francisco Viciana)
+Date: Thu, 8 Aug 2019 09:42:50 +0200
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fico_tiempos_de_supervivencia?=
+In-Reply-To: <20190719150318.3c0c458e@debian-dde>
+References: <mailman.13444.11.1563444002.43692.r-help-es@r-project.org>
+ <590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>
+ <20190718130517.4d5a9143@debian-dde>
+ <CAOKbq8gGLs9fgL-JaBQncWHBGAbvJhnH=f8PH9cLc+GvFpJUeQ@mail.gmail.com>
+ <20190719150318.3c0c458e@debian-dde>
+Message-ID: <3feac219-b6b2-c375-72c1-898749bab35c@juntadeandalucia.es>
+
+Hola, aunque con un poco de retraso, hago una aportación a este hilo:
+
+Si tienes un problema con dos escalas de tiempo sobre las que 
+evolucionan las lineas de seguimiento, creo que es mejor que hacer un 
+solo gráfico en forma de   diagrama de Lexis, que dos gráficos 
+independientes. Muestro ejemplo usando el paquete "Epi":
+
+# Código ----------------------------------------------------
+
+#---- Generar Datos ----
+rm(list = ls())
+set.seed(20)
+XTIEMPO_2 = c(38, 2, 34, 29, 30, 3, 14, 8, 18, 31) # Per fe el gràfic 
+amb t=0
+set.seed(30)
+XTIEMPO_0 = sample(1:40, 10, replace=F)
+XTIEMPO_F = XTIEMPO_0 + XTIEMPO_2
+set.seed(20)
+XDEF = as.factor(sample(c("Mort", "Viu"), 10, replace=T))
+
+DATOS <- data.frame (
+   ID         = c (1:10)
+   , TIEMPO_0 = XTIEMPO_0
+   , TIEMPO_F = XTIEMPO_F
+   , TIEMPO_2 = XTIEMPO_2 # Per fe el gràfic amb t=0
+   , DEF      = XDEF
+)
+
+
+names(DATOS)[2:5] <- c('marriage.age',
+                        'output.age',
+                        'duration','output')
+
+DATOS$output <- factor(DATOS$output,levels = c('Casado','Viu','Mort'))
+DATOS$entry  <- factor('Casado',levels = c('Casado','Viu','Mort'))
+
+# Crea objeto Lexis:
+library(Epi)
+lx.Datos <- Lexis( entry=list(antiguedad.del.matrimonio=0,
+                                edad=marriage.age),
+                     exit=list(edad=output.age),
+                     entry.status = entry ,
+                     exit.status = output ,id=ID,data=DATOS,merge=F)
+
+#----  Muestra datos originales y transformados
+DATOS
+lx.Datos
+
+#---- Grafica: ----
+
+plot.Lexis(lx.Datos,time.scale = 1:2,col='blue')
+with(lx.Datos, points(x=lex.dur,y=edad+lex.dur,
+pch=c(NA,19,3)[as.integer(lex.Xst)],
+                       col=1 ))
+grid()
+legend('bottomright',legend = levels(lx.Datos$lex.Xst)[-1],
+        pch=c(19,3),col=1)
+
+## ----------------------------------------------
+
+On 19/7/19 15:03, Griera wrote:
+> Hola:
+>
+> Por si a alguien le interesa para un curso, aquí coloco la versión
+> definitiva de los dos gráficos que quería hacer (uno en escala del tiempo del calendario y la otra el tiempo de seguimiento) realizados gracias a la ayuda
+> de Carlos Ortega.
+>
+> Muchas gracias y saludos.
+>
+> # Código ----------------------------------------------------
+> set.seed(20)
+> # TIEMPO_2 = sample(1:40, 10, replace=F)
+> XTIEMPO_2 = c(38, 2, 34, 29, 30, 3, 14, 8, 18, 31) # Per fe el gràfic amb t=0
+> set.seed(30)
+> XTIEMPO_0 = sample(1:40, 10, replace=F)
+> XTIEMPO_F = XTIEMPO_0 + XTIEMPO_2
+> set.seed(20)
+> # XDEF     = as.factor(sample(c(0,1), 10, replace=T))
+> XDEF = as.factor(sample(c("Mort", "Viu"), 10, replace=T))
+>
+> DATOS <- data.frame (
+> 	  ID         = c (1:10)
+> 	, TIEMPO_0 = XTIEMPO_0
+> 	, TIEMPO_F = XTIEMPO_F
+> 	, TIEMPO_2 = XTIEMPO_2 # Per fe el gràfic amb t=0
+> 	, DEF      = XDEF
+> )
+>
+> library(ggplot2)
+>
+> ## Gràfic amb temps calendari
+> ggplot( data = DATOS ) +
+>    geom_point( aes(x = TIEMPO_F, y = ID , shape = DEF), size = 5 ) +
+>    geom_segment( aes( x = TIEMPO_0, y = ID,   xend = TIEMPO_F, yend = ID ) ) +
+>    scale_shape_manual (values = c(4, 16))  +
+>    xlim (0, 70) +
+>    xlab ("Data (temps del calendari)") +
+>    ylab ("Persones") +
+>     guides(colour = FALSE) +
+>     labs(shape = ' ', values = c(4, 16)) +
+>     scale_y_discrete() +
+>    theme_classic() +
+>    theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+> ## Modificat
+> str (DATOS)
+> ggplot( data = DATOS ) +
+>    geom_point( aes(x = TIEMPO_2, y = ID , shape = DEF), size = 5 ) +
+>    scale_shape_manual (values = c(4, 16))  +
+>    geom_segment( aes( x = 0, y = ID,   xend = TIEMPO_2, yend = ID ) ) +
+>    xlim (0, 70) +
+>    xlab ("Temps de seguiment") +
+>    ylab ("Persones") +
+>     guides(colour = FALSE) +
+>     labs(shape = ' ', values = c(4, 16)) +
+>     scale_y_discrete() +
+>    theme_classic()
+>
+> # Código ----------------------------------------------------
+>
+>
+> On Thu, 18 Jul 2019 14:21:24 +0200
+> Carlos Ortega <cof en qualityexcellence.es> wrote:
+>
+>> Hola,
+>>
+>> Sí, lo puedes hacer de esta forma...
+>>
+>> #-----------------
+>> set.seed(20)
+>> DATOS <- data.frame (
+>>      ID      = c (1:10)
+>>    , TIEMPO  = sample(1:40, 10, replace=F)
+>>    , DEF     = as.factor(sample(c(0,1), 10, replace=T))
+>> )
+>>
+>> library(ggplot2)
+>>
+>>    ggplot( data = DATOS ) +
+>>     geom_point( aes(x = TIEMPO, y = ID , shape = DEF, color = DEF), size = 5
+>> ) +
+>>     geom_segment( aes( x = 0, y = ID,  xend = TIEMPO, yend = ID ) ) +
+>>      guides(colour = FALSE) +
+>>      labs(shape = 'LEGEND') +
+>>      scale_y_discrete() +
+>>     theme_minimal()
+>> #-----------------
+>>
+>> E incluso puedes reproducirlo usando fuentes parecidas a la de los comics
+>> con el paquete "xkcd".
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>
+>>
+>> El jue., 18 jul. 2019 a las 13:05, Griera-yandex (<griera en yandex.com>)
+>> escribió:
+>>
+>>> Hola Pedro:
+>>>
+>>> Gracias por la ayuda. No conocía esta manera más elegante de mostrar las
+>>> curvas de Kaplan-Meier. Te la compro.
+>>>
+>>> En realidad quería mostrar un gráfico con la longitud de les tiempos de
+>>> seguimiento y al final un símbolo para indicar el estado. Seria un gráfico
+>>> similar a:
+>>>
+>>> https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png
+>>>
+>>> Pero no encuentro la manera de hacerlo. Igual no se puede.
+>>>
+>>> Muchas gracias y saludos.
+>>>
+>>> On Thu, 18 Jul 2019 10:28:37 +0000
+>>> PEDRO CONCEJERO CEREZO <pedro.concejerocerezo en telefonica.com> wrote:
+>>>
+>>>> Hola, te vale esto? Es forma estandar de representar graficos
+>>> supervivencia
+>>>> Basado en esto:
+>>>>
+>>>> https://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/
+>>>>
+>>>> set.seed(20)
+>>>>
+>>>> DATOS <- data.frame (
+>>>>    ID      = c (1:10)
+>>>>    , TIEMPO  = sample(1:40, 10, replace=F)
+>>>>    , DEF     = sample(0:1, 10, replace=T)
+>>>> )
+>>>>
+>>>> DATOS
+>>>>
+>>>> library(survival)
+>>>>
+>>>> DATOS$DEF <- as.numeric(DATOS$DEF)
+>>>> DATOS$TIEMPO <- as.numeric(DATOS$TIEMPO)
+>>>>
+>>>> s <- Surv(DATOS$TIEMPO, DATOS$DEF)
+>>>> head(s)
+>>>>
+>>>> ## Kaplan-Meier estimator.
+>>>> km <- survfit(s ~ 1,
+>>>>                data = DATOS,
+>>>>                conf.type = "log-log")
+>>>>
+>>>> ## Show object
+>>>> km
+>>>>
+>>>> summary(km)
+>>>>
+>>>> plot(km)
+>>>>
+>>>> # Instala las librerías necesarias:
+>>>> library(ranger)
+>>>> library(ggplot2)
+>>>> library(dplyr)
+>>>> library(ggfortify)
+>>>>
+>>>> autoplot(km)
+>>>>
+>>>>
+>>>> El 18/07/2019 a las 12:00, r-help-es-request en r-project.org<mailto:
+>>> r-help-es-request en r-project.org> escribió:
+>>>> Envíe los mensajes para la lista R-help-es a
+>>>>          r-help-es en r-project.org<mailto:r-help-es en r-project.org>
+>>>>
+>>>> Para subscribirse o anular su subscripción a través de la WEB
+>>>>          https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>> O por correo electrónico, enviando un mensaje con el texto "help" en
+>>>> el asunto (subject) o en el cuerpo a:
+>>>>          r-help-es-request en r-project.org<mailto:
+>>> r-help-es-request en r-project.org>
+>>>> Puede contactar con el responsable de la lista escribiendo a:
+>>>>          r-help-es-owner en r-project.org<mailto:
+>>> r-help-es-owner en r-project.org>
+>>>> Si responde a algún contenido de este mensaje, por favor, edite la
+>>>> linea del asunto (subject) para que el texto sea mas especifico que:
+>>>> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+>>>> la respuesta sólo aquellas partes del mensaje a las que está
+>>>> respondiendo.
+>>>>
+>>>>
+>>>> Asuntos del día:
+>>>>
+>>>>     1. Gráfico tiempos de supervivencia (Griera-yandex)
+>>>>
+>>>> ----------------------------------------------------------------------
+>>>>
+>>>> Message: 1
+>>>> Date: Thu, 18 Jul 2019 10:18:42 +0200
+>>>> From: Griera-yandex <griera en yandex.com><mailto:griera en yandex.com>
+>>>> To: Lista R <r-help-es en r-project.org><mailto:r-help-es en r-project.org>
+>>>> Subject: [R-es] Gráfico tiempos de supervivencia
+>>>> Message-ID: <20190718101842.280414d5 en debian-dde>
+>>>> Content-Type: text/plain; charset="utf-8"
+>>>>
+>>>> Buenos días a todos:
+>>>>
+>>>> Alguien me puede ayudar a hacer (si se puede) con unos datos similares a:
+>>>>
+>>>> set.seed(20)
+>>>> DATOS <- data.frame (
+>>>>        ID      = c (1:10)
+>>>>      , TIEMPO  = sample(1:40, 10, replace=F)
+>>>>      , DEF     = sample(0:1, 10, replace=T)
+>>>>                      );DATOS
+>>>>
+>>>> un gráfico que muestre los tiempos de supervivencia similar a:
+>>>> https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png
+>>>>
+>>>> Lo he intentado con la función followup.plot del paquete
+>>>> "epiDisplay" (
+>>> https://cran.r-project.org/web/packages/epiDisplay/index.html),
+>>>> pero no encuentro la forma.
+>>>>
+>>>> Muchas gracias y saludos.
+>>>>
+>>>>
+>>>>
+>>>>
+>>>> ------------------------------
+>>>>
+>>>> Subject: Pié de página del digest
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>>
+>>>> ------------------------------
+>>>>
+>>>> Fin de Resumen de R-help-es, Vol 125, Envío 7
+>>>> *********************************************
+>>>>
+>>>>
+>>>> --
+>>>> Pedro Concejero
+>>>> Telefónica CDO - 4th Platform - Internal Use Cases
+>>>> E-mail: pedro.concejerocerezo en telefonica.com<mailto:
+>>> pedro.concejerocerezo en telefonica.com>
+>>>> skype: pedro.concejero
+>>>> twitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>
+>>>> linkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>
+>>>> eRReRo feliz, me puedes encontrar en gRupo R madRid <
+>>> http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>
+>>>> ________________________________
+>>>>
+>>>> Este mensaje y sus adjuntos se dirigen exclusivamente a su destinatario,
+>>> puede contener información privilegiada o confidencial y es para uso
+>>> exclusivo de la persona o entidad de destino. Si no es usted. el
+>>> destinatario indicado, queda notificado de que la lectura, utilización,
+>>> divulgación y/o copia sin autorización puede estar prohibida en virtud de
+>>> la legislación vigente. Si ha recibido este mensaje por error, le rogamos
+>>> que nos lo comunique inmediatamente por esta misma vía y proceda a su
+>>> destrucción.
+>>>> The information contained in this transmission is privileged and
+>>> confidential information intended only for the use of the individual or
+>>> entity named above. If the reader of this message is not the intended
+>>> recipient, you are hereby notified that any dissemination, distribution or
+>>> copying of this communication is strictly prohibited. If you have received
+>>> this transmission in error, do not read it. Please immediately reply to the
+>>> sender that you have received this communication in error and then delete
+>>> it.
+>>>> Esta mensagem e seus anexos se dirigem exclusivamente ao seu
+>>> destinatário, pode conter informação privilegiada ou confidencial e é para
+>>> uso exclusivo da pessoa ou entidade de destino. Se não é vossa senhoria o
+>>> destinatário indicado, fica notificado de que a leitura, utilização,
+>>> divulgação e/ou cópia sem autorização pode estar proibida em virtude da
+>>> legislação vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos
+>>> o comunique imediatamente por esta mesma via e proceda a sua destruição
+>>>>        [[alternative HTML version deleted]]
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>> -- 
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+-- 
++--------------------------------------------------------------
+| Francisco J. Viciana Fernández
+| Dpto. Indicadores Demográficos
+| Servicio de Estadísticas Demográficas y Sociales
+| Instituto de Estadística y Cartografía de Andalucía
+| Leonardo Da Vinci, nº 21. Isla de La Cartuja.
+| 41071 SEVILLA.
+| franciscoj.viciana en juntadeandalucia.es
++--------------------------------------------------------------
+
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: franciscoj_viciana.vcf
+Type: text/x-vcard
+Size: 4 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190808/c07f7445/attachment.vcf>
+
+From c|e|ver_y@m @end|ng |rom hotm@||@com  Thu Aug  8 13:58:30 2019
+From: c|e|ver_y@m @end|ng |rom hotm@||@com (Clei Y)
+Date: Thu, 8 Aug 2019 11:58:30 +0000
+Subject: [R-es] =?utf-8?q?Completar_datos_buscando_informaci=C3=B3n_en_ot?=
+ =?utf-8?q?ro_Data_Frame?=
+In-Reply-To: <DM6PR14MB38389DA8299D9479FCD104FB87D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+References: <DM6PR14MB38389DA8299D9479FCD104FB87D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+Message-ID: <DM6PR14MB38383031A9423FC4392539E887D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+
+
+Hola a todos
+
+Tengo una duda, puede ser un poco básica pero no encuentro la respuesta, tengo dos base de datos como la siguiente:
+
+Data frame 1:
+
+Id_1    Id_2    Dato
+1       1       3
+1       2       6
+1       2       5
+2       1       2
+2       1       4
+2       3       5
+
+
+Data frame 2:
+Id_1    Id_2    Calificación
+1       1       10
+1       2       8
+2       1       9
+2       3       6
+
+Lo que necesito es que R tome las primeras dos columnas del data frame 1, realice la búsqueda en el data frame 2 y pueda agregar otra columna con el dato que le corresponda para quedar de la siguiente manera:
+
+Data frame 1 modificada:
+Id_1    Id_2    Dato    Calificación
+1       1       3       10
+1       2       6       8
+1       2       5       8
+2       1       2       9
+2       1       4       9
+2       3       5       6
+
+Estuve tratando con Merge pero el número de filas es distinto y me termina duplicando algunos registros. Es algo como la función BUSCARV del excel.
+
+Saludos a todos
+
+Cleiver Yam
+
+[https://ipmcdn.avast.com/images/icons/icon-envelope-tick-round-orange-animated-no-repeat-v1.gif]<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>  Libre de virus. www.avast.com<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+
+	[[alternative HTML version deleted]]
+
+
+From m@mon@@|vo @end|ng |rom gm@||@com  Thu Aug  8 14:05:31 2019
+From: m@mon@@|vo @end|ng |rom gm@||@com (Mauricio Monsalvo)
+Date: Thu, 8 Aug 2019 09:05:31 -0300
+Subject: [R-es] 
+	=?utf-8?q?Completar_datos_buscando_informaci=C3=B3n_en_ot?=
+	=?utf-8?q?ro_Data_Frame?=
+In-Reply-To: <DM6PR14MB38383031A9423FC4392539E887D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+References: <DM6PR14MB38389DA8299D9479FCD104FB87D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+ <DM6PR14MB38383031A9423FC4392539E887D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+Message-ID: <CAKXoZH_XOoSVKw3Vr++w5kUmwTuXcJk7P+-6OTEP_bKpyou0iw@mail.gmail.com>
+
+Hola.
+Como las dos tablas tienen la variable común definida, podés hacerlo simple
+con
+library(tidyverse)
+datos <- inner_join(df1, df2)
+Saludos.
+
+El jue., 8 ago. 2019 a las 8:59, Clei Y (<cleiver_yam en hotmail.com>)
+escribió:
+
+>
+> Hola a todos
+>
+> Tengo una duda, puede ser un poco básica pero no encuentro la respuesta,
+> tengo dos base de datos como la siguiente:
+>
+> Data frame 1:
+>
+> Id_1    Id_2    Dato
+> 1       1       3
+> 1       2       6
+> 1       2       5
+> 2       1       2
+> 2       1       4
+> 2       3       5
+>
+>
+> Data frame 2:
+> Id_1    Id_2    Calificación
+> 1       1       10
+> 1       2       8
+> 2       1       9
+> 2       3       6
+>
+> Lo que necesito es que R tome las primeras dos columnas del data frame 1,
+> realice la búsqueda en el data frame 2 y pueda agregar otra columna con el
+> dato que le corresponda para quedar de la siguiente manera:
+>
+> Data frame 1 modificada:
+> Id_1    Id_2    Dato    Calificación
+> 1       1       3       10
+> 1       2       6       8
+> 1       2       5       8
+> 2       1       2       9
+> 2       1       4       9
+> 2       3       5       6
+>
+> Estuve tratando con Merge pero el número de filas es distinto y me termina
+> duplicando algunos registros. Es algo como la función BUSCARV del excel.
+>
+> Saludos a todos
+>
+> Cleiver Yam
+>
+> [
+> https://ipmcdn.avast.com/images/icons/icon-envelope-tick-round-orange-animated-no-repeat-v1.gif
+> ]<
+> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+> Libre de virus. www.avast.com<
+> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Mauricio
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu Aug  8 14:52:12 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 8 Aug 2019 09:52:12 -0300
+Subject: [R-es] 
+	=?utf-8?q?Completar_datos_buscando_informaci=C3=B3n_en_ot?=
+	=?utf-8?q?ro_Data_Frame?=
+In-Reply-To: <DM6PR14MB38383031A9423FC4392539E887D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+References: <DM6PR14MB38389DA8299D9479FCD104FB87D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+ <DM6PR14MB38383031A9423FC4392539E887D70@DM6PR14MB3838.namprd14.prod.outlook.com>
+Message-ID: <CAHo_aETyvm8cO2WwL9Dq1AwjAdvKr=OAQg-vP7JA+76uG8oE1Q@mail.gmail.com>
+
+Estimado Cleiver Yam
+
+Pienso que usted está bien encaminado, pero habría una llave combinada
+entre las dos primeras columnas, ¿El id en la base de datos está compuesto
+por ambas?, o posiblemente no pero usted podría estar requiriendo esto, es
+simple, intente creando una columna con una combinación de ambos y realice
+la búsqueda con la misma lógica.
+
+Javier Rubén Marcuzzi
+
+El jue., 8 ago. 2019 a las 8:59, Clei Y (<cleiver_yam en hotmail.com>)
+escribió:
+
+>
+> Hola a todos
+>
+> Tengo una duda, puede ser un poco básica pero no encuentro la respuesta,
+> tengo dos base de datos como la siguiente:
+>
+> Data frame 1:
+>
+> Id_1    Id_2    Dato
+> 1       1       3
+> 1       2       6
+> 1       2       5
+> 2       1       2
+> 2       1       4
+> 2       3       5
+>
+>
+> Data frame 2:
+> Id_1    Id_2    Calificación
+> 1       1       10
+> 1       2       8
+> 2       1       9
+> 2       3       6
+>
+> Lo que necesito es que R tome las primeras dos columnas del data frame 1,
+> realice la búsqueda en el data frame 2 y pueda agregar otra columna con el
+> dato que le corresponda para quedar de la siguiente manera:
+>
+> Data frame 1 modificada:
+> Id_1    Id_2    Dato    Calificación
+> 1       1       3       10
+> 1       2       6       8
+> 1       2       5       8
+> 2       1       2       9
+> 2       1       4       9
+> 2       3       5       6
+>
+> Estuve tratando con Merge pero el número de filas es distinto y me termina
+> duplicando algunos registros. Es algo como la función BUSCARV del excel.
+>
+> Saludos a todos
+>
+> Cleiver Yam
+>
+> [
+> https://ipmcdn.avast.com/images/icons/icon-envelope-tick-round-orange-animated-no-repeat-v1.gif
+> ]<
+> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+> Libre de virus. www.avast.com<
+> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Thu Aug  8 17:20:53 2019
+From: gr|er@ @end|ng |rom y@ndex@com (Griera)
+Date: Thu, 8 Aug 2019 17:20:53 +0200
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fico_tiempos_de_supervivencia?=
+In-Reply-To: <3feac219-b6b2-c375-72c1-898749bab35c@juntadeandalucia.es>
+References: <mailman.13444.11.1563444002.43692.r-help-es@r-project.org>
+ <590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>
+ <20190718130517.4d5a9143@debian-dde>
+ <CAOKbq8gGLs9fgL-JaBQncWHBGAbvJhnH=f8PH9cLc+GvFpJUeQ@mail.gmail.com>
+ <20190719150318.3c0c458e@debian-dde>
+ <3feac219-b6b2-c375-72c1-898749bab35c@juntadeandalucia.es>
+Message-ID: <20190808172053.34511598@debian-dde>
+
+Hola Francisco:
+
+Muchas gracias por este refinamiento. 
+
+Tienes razón, el gráfico de Lexis representa mucho mejor los datos. 
+
+Y gracias por el código. Lo guardo también para el futuro.
+
+Saludos
+
+
+On Thu, 8 Aug 2019 09:42:50 +0200
+Francisco Viciana <franciscoj.viciana en juntadeandalucia.es> wrote:
+
+> Hola, aunque con un poco de retraso, hago una aportación a este hilo:
+> 
+> Si tienes un problema con dos escalas de tiempo sobre las que 
+> evolucionan las lineas de seguimiento, creo que es mejor que hacer un 
+> solo gráfico en forma de   diagrama de Lexis, que dos gráficos 
+> independientes. Muestro ejemplo usando el paquete "Epi":
+> 
+> # Código ----------------------------------------------------
+> 
+> #---- Generar Datos ----
+> rm(list = ls())
+> set.seed(20)
+> XTIEMPO_2 = c(38, 2, 34, 29, 30, 3, 14, 8, 18, 31) # Per fe el gràfic 
+> amb t=0
+> set.seed(30)
+> XTIEMPO_0 = sample(1:40, 10, replace=F)
+> XTIEMPO_F = XTIEMPO_0 + XTIEMPO_2
+> set.seed(20)
+> XDEF = as.factor(sample(c("Mort", "Viu"), 10, replace=T))
+> 
+> DATOS <- data.frame (
+>    ID         = c (1:10)
+>    , TIEMPO_0 = XTIEMPO_0
+>    , TIEMPO_F = XTIEMPO_F
+>    , TIEMPO_2 = XTIEMPO_2 # Per fe el gràfic amb t=0
+>    , DEF      = XDEF
+> )
+> 
+> 
+> names(DATOS)[2:5] <- c('marriage.age',
+>                         'output.age',
+>                         'duration','output')
+> 
+> DATOS$output <- factor(DATOS$output,levels = c('Casado','Viu','Mort'))
+> DATOS$entry  <- factor('Casado',levels = c('Casado','Viu','Mort'))
+> 
+> # Crea objeto Lexis:
+> library(Epi)
+> lx.Datos <- Lexis( entry=list(antiguedad.del.matrimonio=0,
+>                                 edad=marriage.age),
+>                      exit=list(edad=output.age),
+>                      entry.status = entry ,
+>                      exit.status = output ,id=ID,data=DATOS,merge=F)
+> 
+> #----  Muestra datos originales y transformados
+> DATOS
+> lx.Datos
+> 
+> #---- Grafica: ----
+> 
+> plot.Lexis(lx.Datos,time.scale = 1:2,col='blue')
+> with(lx.Datos, points(x=lex.dur,y=edad+lex.dur,
+> pch=c(NA,19,3)[as.integer(lex.Xst)],
+>                        col=1 ))
+> grid()
+> legend('bottomright',legend = levels(lx.Datos$lex.Xst)[-1],
+>         pch=c(19,3),col=1)
+> 
+> ## ----------------------------------------------
+> 
+> On 19/7/19 15:03, Griera wrote:
+> > Hola:
+> >
+> > Por si a alguien le interesa para un curso, aquí coloco la versión
+> > definitiva de los dos gráficos que quería hacer (uno en escala del tiempo del calendario y la otra el tiempo de seguimiento) realizados gracias a la ayuda
+> > de Carlos Ortega.
+> >
+> > Muchas gracias y saludos.
+> >
+> > # Código ----------------------------------------------------
+> > set.seed(20)
+> > # TIEMPO_2 = sample(1:40, 10, replace=F)
+> > XTIEMPO_2 = c(38, 2, 34, 29, 30, 3, 14, 8, 18, 31) # Per fe el gràfic amb t=0
+> > set.seed(30)
+> > XTIEMPO_0 = sample(1:40, 10, replace=F)
+> > XTIEMPO_F = XTIEMPO_0 + XTIEMPO_2
+> > set.seed(20)
+> > # XDEF     = as.factor(sample(c(0,1), 10, replace=T))
+> > XDEF = as.factor(sample(c("Mort", "Viu"), 10, replace=T))
+> >
+> > DATOS <- data.frame (
+> > 	  ID         = c (1:10)
+> > 	, TIEMPO_0 = XTIEMPO_0
+> > 	, TIEMPO_F = XTIEMPO_F
+> > 	, TIEMPO_2 = XTIEMPO_2 # Per fe el gràfic amb t=0
+> > 	, DEF      = XDEF
+> > )
+> >
+> > library(ggplot2)
+> >
+> > ## Gràfic amb temps calendari
+> > ggplot( data = DATOS ) +
+> >    geom_point( aes(x = TIEMPO_F, y = ID , shape = DEF), size = 5 ) +
+> >    geom_segment( aes( x = TIEMPO_0, y = ID,   xend = TIEMPO_F, yend = ID ) ) +
+> >    scale_shape_manual (values = c(4, 16))  +
+> >    xlim (0, 70) +
+> >    xlab ("Data (temps del calendari)") +
+> >    ylab ("Persones") +
+> >     guides(colour = FALSE) +
+> >     labs(shape = ' ', values = c(4, 16)) +
+> >     scale_y_discrete() +
+> >    theme_classic() +
+> >    theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+> > ## Modificat
+> > str (DATOS)
+> > ggplot( data = DATOS ) +
+> >    geom_point( aes(x = TIEMPO_2, y = ID , shape = DEF), size = 5 ) +
+> >    scale_shape_manual (values = c(4, 16))  +
+> >    geom_segment( aes( x = 0, y = ID,   xend = TIEMPO_2, yend = ID ) ) +
+> >    xlim (0, 70) +
+> >    xlab ("Temps de seguiment") +
+> >    ylab ("Persones") +
+> >     guides(colour = FALSE) +
+> >     labs(shape = ' ', values = c(4, 16)) +
+> >     scale_y_discrete() +
+> >    theme_classic()
+> >
+> > # Código ----------------------------------------------------
+> >
+> >
+> > On Thu, 18 Jul 2019 14:21:24 +0200
+> > Carlos Ortega <cof en qualityexcellence.es> wrote:
+> >  
+> >> Hola,
+> >>
+> >> Sí, lo puedes hacer de esta forma...
+> >>
+> >> #-----------------
+> >> set.seed(20)
+> >> DATOS <- data.frame (
+> >>      ID      = c (1:10)
+> >>    , TIEMPO  = sample(1:40, 10, replace=F)
+> >>    , DEF     = as.factor(sample(c(0,1), 10, replace=T))
+> >> )
+> >>
+> >> library(ggplot2)
+> >>
+> >>    ggplot( data = DATOS ) +
+> >>     geom_point( aes(x = TIEMPO, y = ID , shape = DEF, color = DEF), size = 5
+> >> ) +
+> >>     geom_segment( aes( x = 0, y = ID,  xend = TIEMPO, yend = ID ) ) +
+> >>      guides(colour = FALSE) +
+> >>      labs(shape = 'LEGEND') +
+> >>      scale_y_discrete() +
+> >>     theme_minimal()
+> >> #-----------------
+> >>
+> >> E incluso puedes reproducirlo usando fuentes parecidas a la de los comics
+> >> con el paquete "xkcd".
+> >>
+> >> Saludos,
+> >> Carlos Ortega
+> >> www.qualityexcellence.es
+> >>
+> >>
+> >>
+> >> El jue., 18 jul. 2019 a las 13:05, Griera-yandex (<griera en yandex.com>)
+> >> escribió:
+> >>  
+> >>> Hola Pedro:
+> >>>
+> >>> Gracias por la ayuda. No conocía esta manera más elegante de mostrar las
+> >>> curvas de Kaplan-Meier. Te la compro.
+> >>>
+> >>> En realidad quería mostrar un gráfico con la longitud de les tiempos de
+> >>> seguimiento y al final un símbolo para indicar el estado. Seria un gráfico
+> >>> similar a:
+> >>>
+> >>> https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png
+> >>>
+> >>> Pero no encuentro la manera de hacerlo. Igual no se puede.
+> >>>
+> >>> Muchas gracias y saludos.
+> >>>
+> >>> On Thu, 18 Jul 2019 10:28:37 +0000
+> >>> PEDRO CONCEJERO CEREZO <pedro.concejerocerezo en telefonica.com> wrote:
+> >>>  
+> >>>> Hola, te vale esto? Es forma estandar de representar graficos  
+> >>> supervivencia  
+> >>>> Basado en esto:
+> >>>>
+> >>>> https://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/
+> >>>>
+> >>>> set.seed(20)
+> >>>>
+> >>>> DATOS <- data.frame (
+> >>>>    ID      = c (1:10)
+> >>>>    , TIEMPO  = sample(1:40, 10, replace=F)
+> >>>>    , DEF     = sample(0:1, 10, replace=T)
+> >>>> )
+> >>>>
+> >>>> DATOS
+> >>>>
+> >>>> library(survival)
+> >>>>
+> >>>> DATOS$DEF <- as.numeric(DATOS$DEF)
+> >>>> DATOS$TIEMPO <- as.numeric(DATOS$TIEMPO)
+> >>>>
+> >>>> s <- Surv(DATOS$TIEMPO, DATOS$DEF)
+> >>>> head(s)
+> >>>>
+> >>>> ## Kaplan-Meier estimator.
+> >>>> km <- survfit(s ~ 1,
+> >>>>                data = DATOS,
+> >>>>                conf.type = "log-log")
+> >>>>
+> >>>> ## Show object
+> >>>> km
+> >>>>
+> >>>> summary(km)
+> >>>>
+> >>>> plot(km)
+> >>>>
+> >>>> # Instala las librerías necesarias:
+> >>>> library(ranger)
+> >>>> library(ggplot2)
+> >>>> library(dplyr)
+> >>>> library(ggfortify)
+> >>>>
+> >>>> autoplot(km)
+> >>>>
+> >>>>
+> >>>> El 18/07/2019 a las 12:00, r-help-es-request en r-project.org<mailto:  
+> >>> r-help-es-request en r-project.org> escribió:  
+> >>>> Envíe los mensajes para la lista R-help-es a
+> >>>>          r-help-es en r-project.org<mailto:r-help-es en r-project.org>
+> >>>>
+> >>>> Para subscribirse o anular su subscripción a través de la WEB
+> >>>>          https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>>
+> >>>> O por correo electrónico, enviando un mensaje con el texto "help" en
+> >>>> el asunto (subject) o en el cuerpo a:
+> >>>>          r-help-es-request en r-project.org<mailto:  
+> >>> r-help-es-request en r-project.org>  
+> >>>> Puede contactar con el responsable de la lista escribiendo a:
+> >>>>          r-help-es-owner en r-project.org<mailto:  
+> >>> r-help-es-owner en r-project.org>  
+> >>>> Si responde a algún contenido de este mensaje, por favor, edite la
+> >>>> linea del asunto (subject) para que el texto sea mas especifico que:
+> >>>> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> >>>> la respuesta sólo aquellas partes del mensaje a las que está
+> >>>> respondiendo.
+> >>>>
+> >>>>
+> >>>> Asuntos del día:
+> >>>>
+> >>>>     1. Gráfico tiempos de supervivencia (Griera-yandex)
+> >>>>
+> >>>> ----------------------------------------------------------------------
+> >>>>
+> >>>> Message: 1
+> >>>> Date: Thu, 18 Jul 2019 10:18:42 +0200
+> >>>> From: Griera-yandex <griera en yandex.com><mailto:griera en yandex.com>
+> >>>> To: Lista R <r-help-es en r-project.org><mailto:r-help-es en r-project.org>
+> >>>> Subject: [R-es] Gráfico tiempos de supervivencia
+> >>>> Message-ID: <20190718101842.280414d5 en debian-dde>
+> >>>> Content-Type: text/plain; charset="utf-8"
+> >>>>
+> >>>> Buenos días a todos:
+> >>>>
+> >>>> Alguien me puede ayudar a hacer (si se puede) con unos datos similares a:
+> >>>>
+> >>>> set.seed(20)
+> >>>> DATOS <- data.frame (
+> >>>>        ID      = c (1:10)
+> >>>>      , TIEMPO  = sample(1:40, 10, replace=F)
+> >>>>      , DEF     = sample(0:1, 10, replace=T)
+> >>>>                      );DATOS
+> >>>>
+> >>>> un gráfico que muestre los tiempos de supervivencia similar a:
+> >>>> https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png
+> >>>>
+> >>>> Lo he intentado con la función followup.plot del paquete
+> >>>> "epiDisplay" (  
+> >>> https://cran.r-project.org/web/packages/epiDisplay/index.html),  
+> >>>> pero no encuentro la forma.
+> >>>>
+> >>>> Muchas gracias y saludos.
+> >>>>
+> >>>>
+> >>>>
+> >>>>
+> >>>> ------------------------------
+> >>>>
+> >>>> Subject: Pié de página del digest
+> >>>>
+> >>>> _______________________________________________
+> >>>> R-help-es mailing list
+> >>>> R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>>
+> >>>>
+> >>>> ------------------------------
+> >>>>
+> >>>> Fin de Resumen de R-help-es, Vol 125, Envío 7
+> >>>> *********************************************
+> >>>>
+> >>>>
+> >>>> --
+> >>>> Pedro Concejero
+> >>>> Telefónica CDO - 4th Platform - Internal Use Cases
+> >>>> E-mail: pedro.concejerocerezo en telefonica.com<mailto:
+> >>> pedro.concejerocerezo en telefonica.com>
+> >>>> skype: pedro.concejero
+> >>>> twitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>
+> >>>> linkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>
+> >>>> eRReRo feliz, me puedes encontrar en gRupo R madRid <  
+> >>> http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>  
+> >>>> ________________________________
+> >>>>
+> >>>> Este mensaje y sus adjuntos se dirigen exclusivamente a su destinatario,  
+> >>> puede contener información privilegiada o confidencial y es para uso
+> >>> exclusivo de la persona o entidad de destino. Si no es usted. el
+> >>> destinatario indicado, queda notificado de que la lectura, utilización,
+> >>> divulgación y/o copia sin autorización puede estar prohibida en virtud de
+> >>> la legislación vigente. Si ha recibido este mensaje por error, le rogamos
+> >>> que nos lo comunique inmediatamente por esta misma vía y proceda a su
+> >>> destrucción.  
+> >>>> The information contained in this transmission is privileged and  
+> >>> confidential information intended only for the use of the individual or
+> >>> entity named above. If the reader of this message is not the intended
+> >>> recipient, you are hereby notified that any dissemination, distribution or
+> >>> copying of this communication is strictly prohibited. If you have received
+> >>> this transmission in error, do not read it. Please immediately reply to the
+> >>> sender that you have received this communication in error and then delete
+> >>> it.  
+> >>>> Esta mensagem e seus anexos se dirigem exclusivamente ao seu  
+> >>> destinatário, pode conter informação privilegiada ou confidencial e é para
+> >>> uso exclusivo da pessoa ou entidade de destino. Se não é vossa senhoria o
+> >>> destinatário indicado, fica notificado de que a leitura, utilização,
+> >>> divulgação e/ou cópia sem autorização pode estar proibida em virtude da
+> >>> legislação vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos
+> >>> o comunique imediatamente por esta mesma via e proceda a sua destruição  
+> >>>>        [[alternative HTML version deleted]]
+> >>>>
+> >>>> _______________________________________________
+> >>>> R-help-es mailing list
+> >>>> R-help-es en r-project.org
+> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es  
+> >>> _______________________________________________
+> >>> R-help-es mailing list
+> >>> R-help-es en r-project.org
+> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>  
+> >>
+> >> -- 
+> >> Saludos,
+> >> Carlos Ortega
+> >> www.qualityexcellence.es  
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >  
+> -- 
+> +--------------------------------------------------------------
+> | Francisco J. Viciana Fernández
+> | Dpto. Indicadores Demográficos
+> | Servicio de Estadísticas Demográficas y Sociales
+> | Instituto de Estadística y Cartografía de Andalucía
+> | Leonardo Da Vinci, nº 21. Isla de La Cartuja.
+> | 41071 SEVILLA.
+> | franciscoj.viciana en juntadeandalucia.es
+> +--------------------------------------------------------------
+> 
+
+
+From @ndre@h|r|goyen @end|ng |rom gm@||@com  Tue Aug 13 21:27:39 2019
+From: @ndre@h|r|goyen @end|ng |rom gm@||@com (=?UTF-8?Q?Andr=C3=A9s_Hirigoyen?=)
+Date: Tue, 13 Aug 2019 16:27:39 -0300
+Subject: [R-es] Acceso a elemento de una lista
+Message-ID: <CAOaTypUMWLfrKW+G-rb3xOYE+NLA4v9OKJ3Yj2jWAfN+SVzi_A@mail.gmail.com>
+
+Buenas tardes,
+Tengo una lista con 420 data frame  (numerados del ID 1 al  ID 420, ), como
+se ve en el str(), cada data frame tiene 45 observaciones de 30 variables:
+
+str(lista1)
+$ 1:'data.frame': 45 obs. of  30 variables:...
+
+¿Cómo puedo generar los 420 objetos diferentes para poder
+usarlos/guardarlos de manera independiente?
+
+Muchas gracias desde ya por la ayuda
+
+-- 
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSc) *
+
+	[[alternative HTML version deleted]]
+
+
+From m@c_j@v| @end|ng |rom hotm@||@com  Tue Aug 13 22:16:28 2019
+From: m@c_j@v| @end|ng |rom hotm@||@com (Javier Nieto)
+Date: Tue, 13 Aug 2019 20:16:28 +0000
+Subject: [R-es] Acceso a elemento de una lista
+In-Reply-To: <CAOaTypUMWLfrKW+G-rb3xOYE+NLA4v9OKJ3Yj2jWAfN+SVzi_A@mail.gmail.com>
+References: <CAOaTypUMWLfrKW+G-rb3xOYE+NLA4v9OKJ3Yj2jWAfN+SVzi_A@mail.gmail.com>
+Message-ID: <BN6PR11MB3892D27D2D04AF691D94E23DEBD20@BN6PR11MB3892.namprd11.prod.outlook.com>
+
+Hola
+
+Tal vez te sirva esto:
+
+prueba <- iris
+prueba <- rbind(prueba, prueba[1:3, ])
+n <- 10
+nr <- nrow(prueba)
+prueba <- split(prueba, rep(1:ceiling(nr/n), each=n, length.out=nr))
+# Forma 1:
+lapply(prueba, function(x) {
+fwrite(x, paste0("file", parent.frame()$i))
+print("Guardado.")
+}
+)
+# Forma 2:
+lapply(seq_along(prueba), function(i, datos, nombres) {
+fwrite(datos[[i]], paste0("file", i))
+print("Guardado.")
+}, prueba, names(prueba)
+)
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Andr?s Hirigoyen <andreshirigoyen en gmail.com>
+Enviado: martes, 13 de agosto de 2019 02:27 p. m.
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] Acceso a elemento de una lista
+
+Buenas tardes,
+Tengo una lista con 420 data frame  (numerados del ID 1 al  ID 420, ), como
+se ve en el str(), cada data frame tiene 45 observaciones de 30 variables:
+
+str(lista1)
+$ 1:'data.frame': 45 obs. of  30 variables:...
+
+?C?mo puedo generar los 420 objetos diferentes para poder
+usarlos/guardarlos de manera independiente?
+
+Muchas gracias desde ya por la ayuda
+
+--
+*Andr?s Hirigoyen*
+* Prof. Ciencias Biol?gicas*
+*Ing. Agr. Forestal (MSc) *
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From mercepeyrou @end|ng |rom gm@||@com  Mon Aug 19 21:40:53 2019
+From: mercepeyrou @end|ng |rom gm@||@com (Mercedes Peyrou)
+Date: Mon, 19 Aug 2019 16:40:53 -0300
+Subject: [R-es] Darme de baja del grupo
+Message-ID: <CADV-pxerSLS4GpjuU7T1Oc31eNPrL_2YaZ52n6FkBJ+DN534Dw@mail.gmail.com>
+
+Gracias
+
+-- 
+Ing. Agr. Mercedes Peyrou MSc
+Biología Molecular
+Inst. Inv. Biol.Clemente Estable
+Av. Italia 3318
+Montevideo
+Uruguay
+
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+Libre
+de virus. www.avast.com
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+
+	[[alternative HTML version deleted]]
+
+
+From m@rt|nv|d@|on @end|ng |rom gm@||@com  Tue Aug 20 21:47:20 2019
+From: m@rt|nv|d@|on @end|ng |rom gm@||@com (Martin Vidalon)
+Date: Tue, 20 Aug 2019 14:47:20 -0500
+Subject: [R-es] qcc con par
+Message-ID: <CAHZ0dj3xzh4PFctbOrUu4n4Jh8N26Yt725yhNJAqDoP9itZq7w@mail.gmail.com>
+
+Hola colegas, por favor si me indican que estoy haciendo mal.
+Estoy tratando de usar el paquete QCC y colocar mas de gráfico de control
+en una sola ventana usando función "par" con "qcc" para presentar varios
+gráficos en la misma ventana.
+He probado pero no funciona, solo muestra un gráfico miren el código
+
+# set unequal sample sizes
+n <- c(rep(50,5), rep(100,5), rep(25, 5))
+# generate randomly the number of successes
+x <- rbinom(length(n), n, 0.2)
+par(mfrow=c(1,2))
+# plot the control chart with variable limits
+qcc(x, type="p", size=n)
+# plot the standardized control chart
+qcc(x, type="np", size=n)
+
+Gracias si alguien me ayuda
+Atentamente
+
+Martin Vidalon
+
+	[[alternative HTML version deleted]]
+
+
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Wed Aug 21 18:08:20 2019
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Wed, 21 Aug 2019 18:08:20 +0200
+Subject: [R-es] qcc con par
+In-Reply-To: <CAHZ0dj3xzh4PFctbOrUu4n4Jh8N26Yt725yhNJAqDoP9itZq7w@mail.gmail.com>
+References: <CAHZ0dj3xzh4PFctbOrUu4n4Jh8N26Yt725yhNJAqDoP9itZq7w@mail.gmail.com>
+Message-ID: <CAKHhLBJA81O=b9cQLVAnvy9DHmRcHzegLYp4BeC3GUaTKzh+wA@mail.gmail.com>
+
+Saludos:
+
+        No conozco la librería qcc, así que cabe que pudiera estar errando
+en la interpretación de lo que buscas, estimado Martin. En todo caso déjame
+que te haga la siguiente sugerencia. A mí me ha ido, pero insisto, no sé si
+te valdrá.
+
+library(qcc)
+n <- c(rep(50,5), rep(100,5), rep(25, 5))
+x <- rbinom(length(n), n, 0.2)
+
+g1 <- qcc(x, type="p", size=n, plot = FALSE)
+g2 <- qcc(x, type="np", size=n, plot = FALSE)
+
+vpar <- par(no.readonly = TRUE)
+par(mfrow=c(1,2), mar=c(5,5,3,0))
+plot(g1, title="Gráfico 1", ylim=c(0,0.5),
+     add.stats=FALSE, restore.par=FALSE)
+par("mar"=c(5,0,3,3), yaxt="n")
+plot(g2, title="Gráfico 2", add.stats=FALSE, ylim=c(0,0.5))
+par(vpar)
+
+
+        Afectuosamente.
+
+El mar., 20 ago. 2019 a las 21:48, Martin Vidalon (<martinvidalon en gmail.com>)
+escribió:
+
+> Hola colegas, por favor si me indican que estoy haciendo mal.
+> Estoy tratando de usar el paquete QCC y colocar mas de gráfico de control
+> en una sola ventana usando función "par" con "qcc" para presentar varios
+> gráficos en la misma ventana.
+> He probado pero no funciona, solo muestra un gráfico miren el código
+>
+> # set unequal sample sizes
+> n <- c(rep(50,5), rep(100,5), rep(25, 5))
+> # generate randomly the number of successes
+> x <- rbinom(length(n), n, 0.2)
+> par(mfrow=c(1,2))
+> # plot the control chart with variable limits
+> qcc(x, type="p", size=n)
+> # plot the standardized control chart
+> qcc(x, type="np", size=n)
+>
+> Gracias si alguien me ayuda
+> Atentamente
+>
+> Martin Vidalon
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Wed Aug 21 18:42:56 2019
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Wed, 21 Aug 2019 18:42:56 +0200
+Subject: [R-es] 
+ =?utf-8?q?Resumen_de_R-help-es=2C_Vol_126=2C_Env=C3=ADo_9?=
+In-Reply-To: <mailman.13473.11.1566381602.64995.r-help-es@r-project.org>
+References: <mailman.13473.11.1566381602.64995.r-help-es@r-project.org>
+Message-ID: <92E480C4-C0C0-4600-9588-60F09A0740DE@gmail.com>
+
+Estimado Martín,
+
+Prueba a usar el parámetro ?restore.par = FALSE? a la hora de imprimir.
+
+Ejemplo reproducible en el código de mi libro ?Quality Control with R?:
+
+http://qualitycontrolwithr.com/chapters.html <http://qualitycontrolwithr.com/chapters.html>
+
+(Descarga el código del capítulo 9)
+
+Un saludo,
+Emilio
+
+
+> 
+> 
+> Asuntos del día:
+> 
+>   1. qcc con par (Martin Vidalon)
+> 
+> ----------------------------------------------------------------------
+> 
+> Message: 1
+> Date: Tue, 20 Aug 2019 14:47:20 -0500
+> From: Martin Vidalon <martinvidalon en gmail.com>
+> To: r-help-es en r-project.org
+> Subject: [R-es] qcc con par
+> Message-ID:
+> 	<CAHZ0dj3xzh4PFctbOrUu4n4Jh8N26Yt725yhNJAqDoP9itZq7w en mail.gmail.com>
+> Content-Type: text/plain; charset="utf-8"
+> 
+> Hola colegas, por favor si me indican que estoy haciendo mal.
+> Estoy tratando de usar el paquete QCC y colocar mas de gráfico de control
+> en una sola ventana usando función "par" con "qcc" para presentar varios
+> gráficos en la misma ventana.
+> He probado pero no funciona, solo muestra un gráfico miren el código
+> 
+> # set unequal sample sizes
+> n <- c(rep(50,5), rep(100,5), rep(25, 5))
+> # generate randomly the number of successes
+> x <- rbinom(length(n), n, 0.2)
+> par(mfrow=c(1,2))
+> # plot the control chart with variable limits
+> qcc(x, type="p", size=n)
+> # plot the standardized control chart
+> qcc(x, type="np", size=n)
+> 
+> Gracias si alguien me ayuda
+> Atentamente
+> 
+> Martin Vidalon
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From m@rt|nv|d@|on @end|ng |rom gm@||@com  Wed Aug 21 19:20:34 2019
+From: m@rt|nv|d@|on @end|ng |rom gm@||@com (Martin Vidalon)
+Date: Wed, 21 Aug 2019 12:20:34 -0500
+Subject: [R-es] qcc con par
+In-Reply-To: <CAKHhLBJA81O=b9cQLVAnvy9DHmRcHzegLYp4BeC3GUaTKzh+wA@mail.gmail.com>
+References: <CAHZ0dj3xzh4PFctbOrUu4n4Jh8N26Yt725yhNJAqDoP9itZq7w@mail.gmail.com>
+ <CAKHhLBJA81O=b9cQLVAnvy9DHmRcHzegLYp4BeC3GUaTKzh+wA@mail.gmail.com>
+Message-ID: <CAHZ0dj2CignGm2BRvF7ACJucUAPP=Aphjm4RO5W_59x9V1vEqg@mail.gmail.com>
+
+Muchas gracias, lo probaré.
+Atentamente
+
+Martin Vidalon
+
+
+El mié., 21 ago. 2019 a las 11:08, Diego Martín (<ako.sistemas en gmail.com>)
+escribió:
+
+> Saludos:
+>
+>         No conozco la librería qcc, así que cabe que pudiera estar errando
+> en la interpretación de lo que buscas, estimado Martin. En todo caso déjame
+> que te haga la siguiente sugerencia. A mí me ha ido, pero insisto, no sé si
+> te valdrá.
+>
+> library(qcc)
+> n <- c(rep(50,5), rep(100,5), rep(25, 5))
+> x <- rbinom(length(n), n, 0.2)
+>
+> g1 <- qcc(x, type="p", size=n, plot = FALSE)
+> g2 <- qcc(x, type="np", size=n, plot = FALSE)
+>
+> vpar <- par(no.readonly = TRUE)
+> par(mfrow=c(1,2), mar=c(5,5,3,0))
+> plot(g1, title="Gráfico 1", ylim=c(0,0.5),
+>      add.stats=FALSE, restore.par=FALSE)
+> par("mar"=c(5,0,3,3), yaxt="n")
+> plot(g2, title="Gráfico 2", add.stats=FALSE, ylim=c(0,0.5))
+> par(vpar)
+>
+>
+>         Afectuosamente.
+>
+> El mar., 20 ago. 2019 a las 21:48, Martin Vidalon (<
+> martinvidalon en gmail.com>) escribió:
+>
+>> Hola colegas, por favor si me indican que estoy haciendo mal.
+>> Estoy tratando de usar el paquete QCC y colocar mas de gráfico de control
+>> en una sola ventana usando función "par" con "qcc" para presentar varios
+>> gráficos en la misma ventana.
+>> He probado pero no funciona, solo muestra un gráfico miren el código
+>>
+>> # set unequal sample sizes
+>> n <- c(rep(50,5), rep(100,5), rep(25, 5))
+>> # generate randomly the number of successes
+>> x <- rbinom(length(n), n, 0.2)
+>> par(mfrow=c(1,2))
+>> # plot the control chart with variable limits
+>> qcc(x, type="p", size=n)
+>> # plot the standardized control chart
+>> qcc(x, type="np", size=n)
+>>
+>> Gracias si alguien me ayuda
+>> Atentamente
+>>
+>> Martin Vidalon
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From @nede@querr@ @end|ng |rom gm@||@com  Wed Aug 21 23:42:11 2019
+From: @nede@querr@ @end|ng |rom gm@||@com (Aned Esquerra)
+Date: Wed, 21 Aug 2019 16:42:11 -0500
+Subject: [R-es] Respuesta a Martin Vidalon
+Message-ID: <CALoB=0Yw0TD8HggYTkWxWCd-Gx9zACNgxxCj4h___bOOX0013Q@mail.gmail.com>
+
+Hola Martin!
+
+Necesitas en la linea de comandos o consola de R install.packages("qcc"), y
+en tu código insertar library(qcc)
+
+library(qcc)
+n <- c(rep(50,5), rep(100,5), rep(25, 5))
+# generate randomly the number of successes
+x <- rbinom(length(n), n, 0.2)
+par(mfrow=c(1,2))
+# plot the control chart with variable limits
+qcc(x, type="p", size=n)
+# plot the standardized control chart
+qcc(x, type="np", size=n)
+
+[image: Martin Vidalon.png]
+
+*ANED ESQUERRA ARGUELLES*
+*_______________________________*
+"Without data, you're just another person with an opinion."
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190821/8d7ad4c8/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Martin Vidalon.png
+Type: image/png
+Size: 7491 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190821/8d7ad4c8/attachment-0001.png>
+
+From m@rt|nv|d@|on @end|ng |rom gm@||@com  Thu Aug 22 00:51:08 2019
+From: m@rt|nv|d@|on @end|ng |rom gm@||@com (Martin Vidalon)
+Date: Wed, 21 Aug 2019 17:51:08 -0500
+Subject: [R-es] 
+ =?utf-8?q?Resumen_de_R-help-es=2C_Vol_126=2C_Env=C3=ADo_9?=
+In-Reply-To: <92E480C4-C0C0-4600-9588-60F09A0740DE@gmail.com>
+References: <mailman.13473.11.1566381602.64995.r-help-es@r-project.org>
+ <92E480C4-C0C0-4600-9588-60F09A0740DE@gmail.com>
+Message-ID: <CAHZ0dj1wwXA9xJnQPumF-E3j3YFA1wSwS4d-OVfMv0OvDynfjw@mail.gmail.com>
+
+Estimado Emilio efectivamente ese parámetro faltaba.
+Por otro  lado estoy investigando los mismos graficos pero para variables
+multivariantes, tendrás alguna referencia sobre este tema
+
+Muchas gracias
+
+[image: image.png]
+Atentamente
+
+Martin Vidalon
+
+
+El mié., 21 ago. 2019 a las 11:43, Emilio L. Cano (<emilopezcano en gmail.com>)
+escribió:
+
+> Estimado Martín,
+>
+> Prueba a usar el parámetro ?restore.par = FALSE? a la hora de imprimir.
+>
+> Ejemplo reproducible en el código de mi libro ?Quality Control with R?:
+>
+> http://qualitycontrolwithr.com/chapters.html
+>
+> (Descarga el código del capítulo 9)
+>
+> Un saludo,
+> Emilio
+>
+>
+>
+>
+> Asuntos del día:
+>
+>   1. qcc con par (Martin Vidalon)
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Tue, 20 Aug 2019 14:47:20 -0500
+> From: Martin Vidalon <martinvidalon en gmail.com>
+> To: r-help-es en r-project.org
+> Subject: [R-es] qcc con par
+> Message-ID:
+> <CAHZ0dj3xzh4PFctbOrUu4n4Jh8N26Yt725yhNJAqDoP9itZq7w en mail.gmail.com>
+> Content-Type: text/plain; charset="utf-8"
+>
+> Hola colegas, por favor si me indican que estoy haciendo mal.
+> Estoy tratando de usar el paquete QCC y colocar mas de gráfico de control
+> en una sola ventana usando función "par" con "qcc" para presentar varios
+> gráficos en la misma ventana.
+> He probado pero no funciona, solo muestra un gráfico miren el código
+>
+> # set unequal sample sizes
+> n <- c(rep(50,5), rep(100,5), rep(25, 5))
+> # generate randomly the number of successes
+> x <- rbinom(length(n), n, 0.2)
+> par(mfrow=c(1,2))
+> # plot the control chart with variable limits
+> qcc(x, type="p", size=n)
+> # plot the standardized control chart
+> qcc(x, type="np", size=n)
+>
+> Gracias si alguien me ayuda
+> Atentamente
+>
+> Martin Vidalon
+>
+> [[alternative HTML version deleted]]
+>
+>
+>
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190821/c10d6fe4/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 63188 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190821/c10d6fe4/attachment-0001.png>
+
+From em||opezc@no @end|ng |rom gm@||@com  Thu Aug 22 11:13:29 2019
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Thu, 22 Aug 2019 11:13:29 +0200
+Subject: [R-es] 
+ =?utf-8?q?Resumen_de_R-help-es=2C_Vol_126=2C_Env=C3=ADo_9?=
+In-Reply-To: <CAHZ0dj1wwXA9xJnQPumF-E3j3YFA1wSwS4d-OVfMv0OvDynfjw@mail.gmail.com>
+References: <mailman.13473.11.1566381602.64995.r-help-es@r-project.org>
+ <92E480C4-C0C0-4600-9588-60F09A0740DE@gmail.com>
+ <CAHZ0dj1wwXA9xJnQPumF-E3j3YFA1wSwS4d-OVfMv0OvDynfjw@mail.gmail.com>
+Message-ID: <C00C65E1-715F-46CF-8610-447F3FE86D50@gmail.com>
+
+Martín,
+
+Para datos multivariantes te recomiendo este libro:
+
+https://www.springer.com/gp/book/9781461454526 <https://www.springer.com/gp/book/9781461454526>
+
+En el paquete relacionado del mismo autor (MSQC) tienes la función gen.var para el gráfico de la varíanza generalizada (el ?equivalente? a los R y S en univariante) para controlar variabilidad.
+
+Un saludo,
+Emilio
+
+> El 22 ago 2019, a las 0:51, Martin Vidalon <martinvidalon en gmail.com> escribió:
+> 
+> Estimado Emilio efectivamente ese parámetro faltaba.
+> Por otro  lado estoy investigando los mismos graficos pero para variables multivariantes, tendrás alguna referencia sobre este tema
+> 
+> Muchas gracias
+> 
+> <image.png>
+> Atentamente
+> 
+> Martin Vidalon
+> 
+> 
+> El mié., 21 ago. 2019 a las 11:43, Emilio L. Cano (<emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>) escribió:
+> Estimado Martín,
+> 
+> Prueba a usar el parámetro ?restore.par = FALSE? a la hora de imprimir.
+> 
+> Ejemplo reproducible en el código de mi libro ?Quality Control with R?:
+> 
+> http://qualitycontrolwithr.com/chapters.html <http://qualitycontrolwithr.com/chapters.html>
+> 
+> (Descarga el código del capítulo 9)
+> 
+> Un saludo,
+> Emilio
+> 
+> 
+>> 
+>> 
+>> Asuntos del día:
+>> 
+>>   1. qcc con par (Martin Vidalon)
+>> 
+>> ----------------------------------------------------------------------
+>> 
+>> Message: 1
+>> Date: Tue, 20 Aug 2019 14:47:20 -0500
+>> From: Martin Vidalon <martinvidalon en gmail.com <mailto:martinvidalon en gmail.com>>
+>> To: r-help-es en r-project.org <mailto:r-help-es en r-project.org>
+>> Subject: [R-es] qcc con par
+>> Message-ID:
+>> 	<CAHZ0dj3xzh4PFctbOrUu4n4Jh8N26Yt725yhNJAqDoP9itZq7w en mail.gmail.com <mailto:CAHZ0dj3xzh4PFctbOrUu4n4Jh8N26Yt725yhNJAqDoP9itZq7w en mail.gmail.com>>
+>> Content-Type: text/plain; charset="utf-8"
+>> 
+>> Hola colegas, por favor si me indican que estoy haciendo mal.
+>> Estoy tratando de usar el paquete QCC y colocar mas de gráfico de control
+>> en una sola ventana usando función "par" con "qcc" para presentar varios
+>> gráficos en la misma ventana.
+>> He probado pero no funciona, solo muestra un gráfico miren el código
+>> 
+>> # set unequal sample sizes
+>> n <- c(rep(50,5), rep(100,5), rep(25, 5))
+>> # generate randomly the number of successes
+>> x <- rbinom(length(n), n, 0.2)
+>> par(mfrow=c(1,2))
+>> # plot the control chart with variable limits
+>> qcc(x, type="p", size=n)
+>> # plot the standardized control chart
+>> qcc(x, type="np", size=n)
+>> 
+>> Gracias si alguien me ayuda
+>> Atentamente
+>> 
+>> Martin Vidalon
+>> 
+>> 	[[alternative HTML version deleted]]
+>> 
+>> 
+> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From bon|no|@cundo @end|ng |rom gm@||@com  Fri Aug 23 14:36:20 2019
+From: bon|no|@cundo @end|ng |rom gm@||@com (Facundo Bonino)
+Date: Fri, 23 Aug 2019 09:36:20 -0300
+Subject: [R-es] anamorfosis gaussiana
+Message-ID: <CAJPUuxhu8_pPDVKtv5-MuwrVMLP2Urko_nU9ZPwu=+TEi6tHdw@mail.gmail.com>
+
+Estimados, estoy tratando de hacer simulación pero no comprendo como
+transformar mi variable regionalizada a una variable Gaussiana. si alguien
+puede ayudarme se lo agradezco.
+Saludos.
+Facundo Bonino
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Fri Aug 23 17:43:05 2019
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Fri, 23 Aug 2019 12:43:05 -0300
+Subject: [R-es] Agregar quintiles a un data set
+Message-ID: <CAOF0weHeixpxBa4xZJP_M7acbZkh9NhcTKSpo6oT_yXcdgvfiQ@mail.gmail.com>
+
+Hola,
+
+Tengo una base de datos con pacientes asistidos por institución y partir de
+la variable "cantidad de asistidos" quiero genera el quintil para cada
+institución según la cantidad de asistidos.
+
+Lo hago del siguiente modo y me arroja que falta algo en la sintaxis.
+Alguien se le ocurre como resolverlo?
+
+datos_2<-(mutate(datos,quin=(quantile(datos$CUENTA_PACIENTES_ASISTIDOS)
+
+Muchas gracias. Saludos, Juan.
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Fri Aug 23 18:13:15 2019
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Fri, 23 Aug 2019 13:13:15 -0300
+Subject: [R-es] Agregar quintiles a un data set
+In-Reply-To: <CAOF0weHeixpxBa4xZJP_M7acbZkh9NhcTKSpo6oT_yXcdgvfiQ@mail.gmail.com>
+References: <CAOF0weHeixpxBa4xZJP_M7acbZkh9NhcTKSpo6oT_yXcdgvfiQ@mail.gmail.com>
+Message-ID: <CAOF0weE3YOFq1mP74EqkxkxQV_R8Pr-Sm+4dbQBy4pX8mb7e_w@mail.gmail.com>
+
+Hola,
+Lo resolví de este modo. muchas gracias!
+
+mydata<-datos
+df1 = mutate(mydata, quantile_rank =
+ntile(mydata$CUENTA_PACIENTES_ASISTIDOS,5))
+View(df1)
+
+El vie., 23 ago. 2019 a las 12:43, juan manuel dias (<juamadias en gmail.com>)
+escribió:
+
+> Hola,
+>
+> Tengo una base de datos con pacientes asistidos por institución y partir
+> de la variable "cantidad de asistidos" quiero genera el quintil para cada
+> institución según la cantidad de asistidos.
+>
+> Lo hago del siguiente modo y me arroja que falta algo en la sintaxis.
+> Alguien se le ocurre como resolverlo?
+>
+> datos_2<-(mutate(datos,quin=(quantile(datos$CUENTA_PACIENTES_ASISTIDOS)
+>
+> Muchas gracias. Saludos, Juan.
+>
+>
+>
+
+	[[alternative HTML version deleted]]
+
+

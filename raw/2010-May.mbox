@@ -1,0 +1,2138 @@
+From residuo.solow en gmail.com  Sat May  1 00:36:38 2010
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Fri, 30 Apr 2010 19:36:38 -0300
+Subject: [R-es] Data frame en vectores por variable
+In-Reply-To: <m2p317737de1004300627jddb7cf96pe3b1db06b9822051@mail.gmail.com>
+References: <r2ua7961d101004300542u2c0d0fc6yd62ff76323992122@mail.gmail.com>
+	<z2oa7961d101004300544s33ce03dl2f71d7f49190f67a@mail.gmail.com>
+	<m2p317737de1004300627jddb7cf96pe3b1db06b9822051@mail.gmail.com>
+Message-ID: <u2wa7961d101004301536hc6821763gdf898ddba9bfe2b0@mail.gmail.com>
+
+Buenas noches Jorge:
+
+Si luego tengo un vector con nombres que es larguísimo y quiero
+quitarle a cada nombre el último caracter, no se cual es el largo de
+cada nombre. Lo estoy haciendo así:
+
+for (i in 1:100000) {
+                           largo <- nchar(nombre[i]-1)
+                           nombre[i] <- substring (nombre[i],1,largo]
+                          }
+
+¿Hay alguna forma de hacerlo más rápido/óptimo?
+
+Saludos,
+
+Sebastián.
+
+
+El día 30 de abril de 2010 10:27, Jorge Ivan Velez
+<jorgeivanvelez en gmail.com> escribió:
+> Buenos dias Sebastian,
+> Quizas el siguiente ejemplo ilustre tu situacion:
+>
+> # algunos datos con la misma estructura
+>
+> # dada por "algo espacio algo espacio algo espacio algo"
+>
+> x <- sample(100, replace = TRUE)
+>
+> y <- sample(x)
+>
+> texto <- paste('x =', x," y =", y, sep = '')
+>
+> d <- data.frame(texto)
+>
+> d
+>
+> # separando las lineas por los espacios
+>
+> res <- sapply(d$texto, function(x) strsplit(as.character(x), " "))
+>
+> do.call(rbind, res)
+>
+> En tu data.frame, lo anterior conservaria el formato de cada variable.
+>
+> Saludos,
+>            Jorge Ivan Velez
+>
+> 2010/4/30 Sebastian Kruk <>
+>>
+>> Hola, tengo un data frame formado por n-lineas las cuales tienen el
+>> siguiente formato:
+>>
+>> "Fecha Hora Nombre Apellido"
+>>
+>> donde
+>>          Fecha: aaaa-mm-dd
+>>         Hora: hh:mm:ss
+>>
+>> Quiero convertirlo en cuatro vectores, que tengan igual nombre que la
+>> variable en cuestión donde la fecha y horas tengan formato de fecha y
+>> hora y el nombre y apellido sean carácter.
+>>
+>> Probé con lapply y otros de igual tipo pero me queda una lista de n
+>> elementos, no queda cada Nombre entre comillas sino que todos los
+>> nombres.
+>>
+>> Saludos,
+>>
+>> Sebastián.
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From jorgeivanvelez en gmail.com  Sat May  1 03:11:52 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 30 Apr 2010 21:11:52 -0400
+Subject: [R-es] Data frame en vectores por variable
+In-Reply-To: <u2wa7961d101004301536hc6821763gdf898ddba9bfe2b0@mail.gmail.com>
+References: <r2ua7961d101004300542u2c0d0fc6yd62ff76323992122@mail.gmail.com> 
+	<z2oa7961d101004300544s33ce03dl2f71d7f49190f67a@mail.gmail.com> 
+	<m2p317737de1004300627jddb7cf96pe3b1db06b9822051@mail.gmail.com> 
+	<u2wa7961d101004301536hc6821763gdf898ddba9bfe2b0@mail.gmail.com>
+Message-ID: <g2j317737de1004301811rc59465b6sd1e708920206b710@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100430/df974e84/attachment.pl>
+
+From cgb en datanalytics.com  Sat May  1 17:23:03 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Sat, 1 May 2010 17:23:03 +0200
+Subject: [R-es] =?iso-8859-1?q?Consultas_=E1rboles_de_clasificaci=F3n?=
+In-Reply-To: <o2zb0914b351004300941z2127675dja2af404318a0af57@mail.gmail.com>
+References: <o2yb0914b351004300937j807fd51fh8a311f61bc2730aa@mail.gmail.com>
+	<o2zb0914b351004300941z2127675dja2af404318a0af57@mail.gmail.com>
+Message-ID: <k2nb028350f1005010823t240d5176s6380bbb4b6bdda1b@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Éste es un buen documento para iniciarse en el funcionamiento y uso de rpart:
+
+www.stanford.edu/class/stats315b/minitech.pdf
+
+El paquete "party" incluye métodos para representar árboles
+gráficamente que son algo más "vistosos". Aunque no sé cuáles son esos
+paquetes estadísticos y/o formas de graficar árboles a los que te
+refieres.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+El día 30 de abril de 2010 18:41, Julián Escobar
+<julianescobar77 en gmail.com> escribió:
+> Hola
+>
+> He venido trabajando utilizando árboles de clasificación con las librerías
+> tree y rpart.
+>
+> Tengo algunas inquietudes:
+>
+> 1. Existe una mejor forma de graficar los árboles, así como por ejemplo
+> salen en otros paquetes estadísticoss?
+>
+> 2. Cómo hago para poder obtener la matriz de costos?
+>
+> 3. Cuál es la opción para realizar una partición de los datos y validar los
+> resultados?
+>
+> Cordial saludo
+>
+> Julián
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From diegocumeiro en hotmail.com  Sun May  2 21:02:48 2010
+From: diegocumeiro en hotmail.com (DIEGO LOPEZ)
+Date: Sun, 2 May 2010 19:02:48 +0000
+Subject: [R-es] Imprimir comandos R en una interfaz tcl tk
+Message-ID: <SNT134-w2972E652315D2029AB81F4C5F10@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100502/0294a329/attachment.pl>
+
+From jmcontreras en ugr.es  Mon May  3 16:00:34 2010
+From: jmcontreras en ugr.es (=?iso-8859-1?Q?Jos=E9_Miguel_Contreras_Garc=EDa?=)
+Date: Mon, 3 May 2010 16:00:34 +0200 (CEST)
+Subject: [R-es] toma de muestras
+Message-ID: <3539.85.61.26.93.1272895234.squirrel@goliat3.ugr.es>
+
+Buenas tardes a todos.
+
+Mi problema es el siguiente:
+
+Calculo una muestra de unos índices (s) y a partir de esa muestra elijo
+aquellos elementos de una tabla de datos que tengo (en este caso XP4) que
+cumplen la condición de que el índice de XYP sea el de la muestra. Ahora
+comienza mi problema, la única forma que he encontrado para que me R me
+tome todos los elementos que necesito es creando un archivo (xs1) y
+convertirlo en una matriz, si no hago esto cuando llamo a los datos xs1
+solo me aparece los datos pertenecientes al último índice. El problema es
+el que como tengo que hacer esto muchas veces el programa se ralentiza una
+barbaridad. ¿Hay alguna forma de arreglarlo sin tener que crear ficheros?
+
+
+#lo hace bien pero...
+
+s<- sample(M,m)
+sort(s)->s
+
+for (i in s) {
+subset(XP4,XYP[,1]==i)->xs1
+write.table(xs1,file="xs1.txt",append=TRUE,row.names=FALSE,col.names=FALSE,
+quote = FALSE)
+	     }
+as.matrix(read.table("xs1.txt"))->xs1
+
+> xs1
+      V1 V2 V3 V4 V5 V6
+ [1,]  1  0  1  0  0  0
+ [2,]  0  1  1  0  0  0
+ [3,]  1  0  1  0  0  0
+ [4,]  1  0  0  0  0  1
+ [5,]  0  1  1  0  0  0
+ [6,]  0  1  1  0  0  0
+ [7,]  1  0  1  0  0  0
+ [8,]  1  0  0  0  0  1
+ [9,]  0  1  0  1  0  0
+[10,]  1  0  1  0  0  0
+....
+....
+
+
+
+#lo hace mal...
+
+> for (i in s) {
++ subset(XP4,XYP[,1]==i)->xs1
++      }
+> xs1
+     V1 V2 V3 V4 V5 V6
+9055  0  1  1  0  0  0
+
+-- 
+
+
+Gracias y pasad un buen día de la Cruz (Fiesta en Granada)
+                             \|||/
+                             (o o)
++-----------------------oOOo-(_)-oOOo------------------------------+
+| José Miguel Contreras García                                     |
+
+| e-mail: jmcontreras en ugr.es                                       |
+|                                                  |
++----------------------oooO-------Oooo-----------------------------+
+
+
+From luciano.selzer en gmail.com  Mon May  3 16:16:57 2010
+From: luciano.selzer en gmail.com (Luciano Selzer)
+Date: Mon, 3 May 2010 11:16:57 -0300
+Subject: [R-es] toma de muestras
+In-Reply-To: <3539.85.61.26.93.1272895234.squirrel@goliat3.ugr.es>
+References: <3539.85.61.26.93.1272895234.squirrel@goliat3.ugr.es>
+Message-ID: <g2r13549e791005030716if0567a97v4a9724e30d28061c@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100503/a3d2e4e1/attachment.pl>
+
+From cgb en datanalytics.com  Mon May  3 17:33:42 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 3 May 2010 17:33:42 +0200
+Subject: [R-es] toma de muestras
+In-Reply-To: <g2r13549e791005030716if0567a97v4a9724e30d28061c@mail.gmail.com>
+References: <3539.85.61.26.93.1272895234.squirrel@goliat3.ugr.es>
+	<g2r13549e791005030716if0567a97v4a9724e30d28061c@mail.gmail.com>
+Message-ID: <x2gb028350f1005030833n13b05384h90abd0df4aa8a940@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+No entiendo muy bien el proceso, pero creo que bastaría algo así como
+
+subset( XP4, XYP[,1] %in% s )
+
+Si el proceso de filtrado es más complejo, se puede meter en la
+función foo y hacer algo así como
+
+xs1 <- do.call( rbind, sapply( vector.de.indices, foo ) )
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 3 de mayo de 2010 16:16, Luciano Selzer
+<luciano.selzer en gmail.com> escribió:
+> Hola José, lo que está haciendo R es devolverte la última iteración.
+> Para evitar eso tenes que agregar un indice a xs1.
+>
+> j <- 1
+> for (i in s) {
+> subset(XP4,XYP[,1]==i)->xs1[j,]
+> j <- j+1
+> }
+>
+>
+> Luciano
+
+
+From mauro8824 en gmail.com  Tue May  4 04:55:29 2010
+From: mauro8824 en gmail.com (Carlos Mauricio camelo charry)
+Date: Mon, 3 May 2010 21:55:29 -0500
+Subject: [R-es] Contar rachas en una matriz
+Message-ID: <j2s611773911005031955i99376ff4qfae3f52d0439a09b@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100503/1f68f88b/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Tue May  4 05:16:29 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Mon, 3 May 2010 23:16:29 -0400
+Subject: [R-es] Contar rachas en una matriz
+In-Reply-To: <j2s611773911005031955i99376ff4qfae3f52d0439a09b@mail.gmail.com>
+References: <j2s611773911005031955i99376ff4qfae3f52d0439a09b@mail.gmail.com>
+Message-ID: <l2u317737de1005032016sdb81c6b0o889e933bff82b204@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100503/c09e7c45/attachment.pl>
+
+From dirienzo.julio en gmail.com  Tue May  4 05:39:43 2010
+From: dirienzo.julio en gmail.com (Julio Alejandro Di Rienzo)
+Date: Tue, 4 May 2010 00:39:43 -0300
+Subject: [R-es] Contar rachas en una matriz
+In-Reply-To: <j2s611773911005031955i99376ff4qfae3f52d0439a09b@mail.gmail.com>
+References: <j2s611773911005031955i99376ff4qfae3f52d0439a09b@mail.gmail.com>
+Message-ID: <w2k616ad5c41005032039jb504b25bh7f0f53c8f59de67f@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100504/27fc2c95/attachment.pl>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue May  4 14:18:54 2010
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 4 May 2010 14:18:54 +0200
+Subject: [R-es] Imprimir comandos R en una interfaz tcl tk
+In-Reply-To: <SNT134-w2972E652315D2029AB81F4C5F10@phx.gbl>
+References: <SNT134-w2972E652315D2029AB81F4C5F10@phx.gbl>
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943771895B8A954@ASSCCEVS02.sergas.local>
+
+Hola Diego.
+
+Te vale controlar la salida con "sink()" ? 
+
+Un saludo,
+Miguel.
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de DIEGO LOPEZ
+Enviado el: domingo, 02 de mayo de 2010 21:03
+Para: r-help-es en r-project.org
+Asunto: [R-es] Imprimir comandos R en una interfaz tcl tk
+
+
+Hola a todos,
+me gustaría saber si hay alguna forma de hacer que los mensajes que se muestran en la ventana de comandos de R  se muestren en una interfaz en tcl tk.
+Me gustaría modificar la salida del comando cat y que se muestre tanto en la ventana de comandos R, como en una variable de tipo tktext dentro de la interfaz.
+
+Muchas gracias.
+
+ 		 	   		  
+_________________________________________________________________
+¡Citas! ¡Ligues! ¿Salimos? ¿Cómo es tu pareja ideal? Búscala en[[elided Hotmail spam]]
+
+	[[alternative HTML version deleted]]
+
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada. 
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm 
+
+XACOBEO 2010: http://www.xacobeo.org
+
+
+From a.lopez.wrf en gmail.com  Tue May  4 17:49:20 2010
+From: a.lopez.wrf en gmail.com (Luis Alfonso LOPEZ ALVAREZ)
+Date: Tue, 4 May 2010 10:49:20 -0500
+Subject: [R-es] Asesoria en epidemiologia...
+Message-ID: <n2m6dcdebe31005040849i44ad5880g2768a2260dcbf423@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100504/cfce3c5f/attachment.pl>
+
+From gcendoya en balcarce.inta.gov.ar  Tue May  4 18:46:36 2010
+From: gcendoya en balcarce.inta.gov.ar (Gabriela Cendoya)
+Date: Tue, 4 May 2010 13:46:36 -0300
+Subject: [R-es] Contar rachas en una matriz
+References: <j2s611773911005031955i99376ff4qfae3f52d0439a09b@mail.gmail.com>
+Message-ID: <BD50E35BBAC64EB596B602252A11807B@balcarce.inta.gov.ar>
+
+Hola:
+te sirve
+M=matrix(c(
+0, 0, 0, 1, 5, 0,
+0, 0, 0, 0, 0, 1,
+0, 1, 0, 0, 0, 0,
+0, 0, 0, 1, 6, 0,
+0, 0, 0, 0, 0, 0,
+0, 0, 1, 4, 0, 1,
+0, 7, 2, 9, 0, 1),byrow=TRUE,ncol=6)
+
+rowSums(M!=0)
+
+Gabriela
+
+______________________________
+Lic. María Gabriela Cendoya
+Magíster en Biometría
+Profesor Adjunto
+Cátedra de Estadística y Diseño
+Facultad de Ciencias Agrarias
+Universidad Nacional de Mar del Plata
+______________________________
+----- Original Message ----- 
+From: "Carlos Mauricio camelo charry" <mauro8824 en gmail.com>
+To: <r-help-es en r-project.org>
+Sent: Monday, May 03, 2010 11:55 PM
+Subject: [R-es] Contar rachas en una matriz
+
+
+Buen día a todos
+el problema que tengo es el siguiente:
+tengo una matriz
+
+0 0 0 1 5 0
+0 0 0 0 0 1
+0 1 0 0 0 0
+0 0 0 1 6 0
+0 0 0 0 0 0
+0 0 1 4 0 1
+0 7 2 9 0 1
+necesito hacer el primer conteo de números hasta que encuentre
+el primer cero.
+para la fila 1: tiene 1 y 5 son dos elementos
+fila 2: solo tiene 1 elemento
+fila 3: tiene 1
+fila 4: 1 y 6  dos elementos
+fila 5: no tiene elementos distintos de cero=0
+fila 6: tiene como primera racha 1 y 4 osea dos elementos
+fila 7: tiene 3 elementos en su primera racha
+
+
+me gustaría saber si el R tiene un comando que me haga dichos conteos. Ó una
+forma de cómo poder hacer estos conteos.
+
+
+Gracias por su atención
+
+-- 
+Carlos Mauricio Camelo Charry
+
+[[alternative HTML version deleted]]
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+___________________________________________________________________________
+
+Aviso:
+=====
+
+El contenido del presente e-mail y sus posibles adjuntos pertenecen al INTA y pueden contener información confidencial. Si usted no es el destinatario original de este mensaje y por este medio pudo acceder a dicha información, por favor solicitamos contactar al remitente y eliminar el mensaje de inmediato. Se encuentra prohibida la divulgación, copia, distribución o cualquier otro uso de la información contenida en el presente e-mail por parte de personas distintas al destinatario. 
+
+
+This e-mail contents and its possible attachments belong to INTA and may contain confidential information. If this message was not originally addressed to you, but you have accessed to such information by this means, please contact the sender and eliminate this message immediately. Circulation, copy, distribution, or any other use of the information contained in this e-mail is not allowed on part of those different from the addressee.
+
+
+Antes de imprimir este mensaje, asegúrese de que sea necesario. Proteger el medio ambiente está también en su mano.
+
+
+From gcendoya en balcarce.inta.gov.ar  Tue May  4 19:20:17 2010
+From: gcendoya en balcarce.inta.gov.ar (Gabriela Cendoya)
+Date: Tue, 4 May 2010 14:20:17 -0300
+Subject: [R-es] Contar rachas en una matriz
+References: <j2s611773911005031955i99376ff4qfae3f52d0439a09b@mail.gmail.com>
+Message-ID: <E512ED8A7B5B4CA59BFD4BDD405657C8@balcarce.inta.gov.ar>
+
+Hola de nuevo:
+                         leí muy rápido el mensaje y la solución no es 
+correcta, si ahora entendí bien tu pregunta, quieres determinar el número de 
+elementos distintos de cero en la primer racha distinta de cero,
+entonces quizas esta sí sea la respuesta
+usando la misma matriz M
+
+mlogi <- M!=0
+nelem <- rowSums( mlogi)
+for(i in 1:length(nelem )){
+ if (nelem [i]>1){ nelem [i] <- sum(( mlogi)[i,1:which.min(diff(( 
+mlogi)[i,]))]) }}
+
+nelem
+
+Gabriela
+______________________________
+Lic. María Gabriela Cendoya
+Magíster en Biometría
+Profesor Adjunto
+Cátedra de Estadística y Diseño
+Facultad de Ciencias Agrarias
+Universidad Nacional de Mar del Plata
+______________________________
+
+----- Original Message ----- 
+From: "Carlos Mauricio camelo charry" <mauro8824 en gmail.com>
+To: <r-help-es en r-project.org>
+Sent: Monday, May 03, 2010 11:55 PM
+Subject: [R-es] Contar rachas en una matriz
+
+
+Buen día a todos
+el problema que tengo es el siguiente:
+tengo una matriz
+
+0 0 0 1 5 0
+0 0 0 0 0 1
+0 1 0 0 0 0
+0 0 0 1 6 0
+0 0 0 0 0 0
+0 0 1 4 0 1
+0 7 2 9 0 1
+necesito hacer el primer conteo de números hasta que encuentre
+el primer cero.
+para la fila 1: tiene 1 y 5 son dos elementos
+fila 2: solo tiene 1 elemento
+fila 3: tiene 1
+fila 4: 1 y 6  dos elementos
+fila 5: no tiene elementos distintos de cero=0
+fila 6: tiene como primera racha 1 y 4 osea dos elementos
+fila 7: tiene 3 elementos en su primera racha
+
+
+me gustaría saber si el R tiene un comando que me haga dichos conteos. Ó una
+forma de cómo poder hacer estos conteos.
+
+
+Gracias por su atención
+
+-- 
+Carlos Mauricio Camelo Charry
+
+[[alternative HTML version deleted]]
+
+
+
+
+--------------------------------------------------------------------------------
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+___________________________________________________________________________
+
+Aviso:
+=====
+
+El contenido del presente e-mail y sus posibles adjuntos pertenecen al INTA y pueden contener información confidencial. Si usted no es el destinatario original de este mensaje y por este medio pudo acceder a dicha información, por favor solicitamos contactar al remitente y eliminar el mensaje de inmediato. Se encuentra prohibida la divulgación, copia, distribución o cualquier otro uso de la información contenida en el presente e-mail por parte de personas distintas al destinatario. 
+
+
+This e-mail contents and its possible attachments belong to INTA and may contain confidential information. If this message was not originally addressed to you, but you have accessed to such information by this means, please contact the sender and eliminate this message immediately. Circulation, copy, distribution, or any other use of the information contained in this e-mail is not allowed on part of those different from the addressee.
+
+
+Antes de imprimir este mensaje, asegúrese de que sea necesario. Proteger el medio ambiente está también en su mano.
+
+
+From andreselestadistico en hotmail.com  Tue May  4 23:37:12 2010
+From: andreselestadistico en hotmail.com (=?iso-8859-1?B?QU5EUslTIEZFTElQRSBGTNNSRVogUklWRVJB?=)
+Date: Tue, 4 May 2010 16:37:12 -0500
+Subject: [R-es] help
+Message-ID: <COL121-W416E541CF3DD3190CEC593A5F30@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100504/fe3c5b68/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Wed May  5 02:59:17 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Tue, 4 May 2010 20:59:17 -0400
+Subject: [R-es] help
+In-Reply-To: <COL121-W416E541CF3DD3190CEC593A5F30@phx.gbl>
+References: <COL121-W416E541CF3DD3190CEC593A5F30@phx.gbl>
+Message-ID: <h2s317737de1005041759i7a757ff3hbb33593f4fc355d3@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100504/5f01185a/attachment.pl>
+
+From cgb en datanalytics.com  Wed May  5 19:01:40 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 5 May 2010 19:01:40 +0200
+Subject: [R-es] =?iso-8859-1?q?R=2C_=BFla_herramienta_m=E1s_popular_de_min?=
+	=?iso-8859-1?q?er=EDa_de_datos=3F?=
+Message-ID: <h2gb028350f1005051001v3bd6dfdcxcbefd31815a4ee1b@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Pues en este preciso momento, parece que sí. Al menos, según la
+encuesta anual de uso de distintas herramientas (tanto libres como
+comerciales) que realiza el portal http://www.kdnuggets.com.
+
+Los resultados pueden verse en tiempo real en:
+
+http://vote.sparklit.com/poll.spark?pollID=203792
+
+Igual alguien está, además, interesado en votar...
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From a.lopez.wrf en gmail.com  Wed May  5 20:49:14 2010
+From: a.lopez.wrf en gmail.com (Luis Alfonso LOPEZ ALVAREZ)
+Date: Wed, 5 May 2010 13:49:14 -0500
+Subject: [R-es] calcular medios horarios...
+Message-ID: <u2t6dcdebe31005051149se7aa1ab5qf6a5b3f0acd18887@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100505/4e5c6096/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Wed May  5 20:54:44 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 5 May 2010 14:54:44 -0400
+Subject: [R-es] calcular medios horarios...
+In-Reply-To: <u2t6dcdebe31005051149se7aa1ab5qf6a5b3f0acd18887@mail.gmail.com>
+References: <u2t6dcdebe31005051149se7aa1ab5qf6a5b3f0acd18887@mail.gmail.com>
+Message-ID: <x2r317737de1005051154k321bcce3h76253d1c44ea581c@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100505/a6620bdc/attachment.pl>
+
+From luialopezg en bt.unal.edu.co  Fri May  7 00:56:38 2010
+From: luialopezg en bt.unal.edu.co (Luis Alberto Lopez Gonzalez)
+Date: Thu, 6 May 2010 17:56:38 -0500
+Subject: [R-es] matriz de distancias chi Cuadrado
+Message-ID: <v2x6e07d2ac1005061556ief7c46e5g91bde800a4803913@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100506/2a044787/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Fri May  7 01:34:37 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Thu, 6 May 2010 19:34:37 -0400
+Subject: [R-es] matriz de distancias chi Cuadrado
+In-Reply-To: <v2x6e07d2ac1005061556ief7c46e5g91bde800a4803913@mail.gmail.com>
+References: <v2x6e07d2ac1005061556ief7c46e5g91bde800a4803913@mail.gmail.com>
+Message-ID: <j2m317737de1005061634qfdc2e423xc2d796b229baedeb@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100506/53854099/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Fri May  7 01:50:25 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Thu, 6 May 2010 19:50:25 -0400
+Subject: [R-es] matriz de distancias chi Cuadrado
+In-Reply-To: <j2m317737de1005061634qfdc2e423xc2d796b229baedeb@mail.gmail.com>
+References: <v2x6e07d2ac1005061556ief7c46e5g91bde800a4803913@mail.gmail.com> 
+	<j2m317737de1005061634qfdc2e423xc2d796b229baedeb@mail.gmail.com>
+Message-ID: <t2s317737de1005061650n8b3fac9fqbf560a6c418eba45@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100506/c523d014/attachment.pl>
+
+From okktawio en yahoo.com.ar  Fri May  7 15:38:36 2010
+From: okktawio en yahoo.com.ar (Octavio Bruzzone)
+Date: Fri, 7 May 2010 10:38:36 -0300
+Subject: [R-es] matriz de distancias chi Cuadrado
+Message-ID: <201005071038.37004.okktawio@yahoo.com.ar>
+
+> Hola a todos... saludos cordiales....
+> Quiero hacer una función que me calcule la matriz de distancias chi
+> cuadrado, pero obtengo este mensaje de error:
+> 
+> Error en d.chiCol[i, j] = 0 : objeto de tipo 'closure' no es subconjunto
+> 
+> 
+> d.chiCol<- function(A)
+> {
+> m <- dim(A)[2]
+> n <- dim(A)[1]
+> B <- prop.table(A,2)
+> C <- prop.table(A)
+> pesos <- apply(C,1,sum)
+> dchi.Col <- matrix(,m,m)
+
+Ya alguien parece haberlo resuelto antes que lo lea, te hago una sugerencia 
+(que tal vez no te sirva, pero va igual),  cuando haces un par de bucles sobre 
+una matriz cuadrada puedes hacerlo mas rápido así:
+
+en lugar de :
+for (i in 1:m){
+ for(j in 1:m) {
+   if(i==j) ...
+
+hacer:
+for(i in 1:(m-1)){
+  d.chiCol[i,i] = 0
+  for(j in (i+1):m)
+     dhci.Col[i,j] = ...
+     dhci.Col[j,i] = ...
+  }
+}
+dhci.Col[m,m]=...
+
+de esa manera ganas mucho tiempo en matrices grandes (o en muchas iteraciones)
+
+>       d.chiCol[i,j]=0
+>     else
+>       x <- (B[,i]-B[,j])^2
+>       val <- x/pesos
+>       dchi.Col[i,j]=sqrt(sum(val))
+>   }
+> }
+> dchi.Col
+> }
+> Alguien me puede colaborar, gracias.
+> 
+__________________________________________________
+Correo Yahoo!
+Espacio para todos tus mensajes, antivirus y antispam ¡gratis!
+
+
+From ottavioaugusto en yahoo.com.ar  Fri May  7 16:09:02 2010
+From: ottavioaugusto en yahoo.com.ar (Octavio Bruzzone)
+Date: Fri, 7 May 2010 11:09:02 -0300
+Subject: [R-es] matriz de distancias chi Cuadrado
+Message-ID: <201005071109.02139.ottavioaugusto@yahoo.com.ar>
+
+> Hola a todos... saludos cordiales....
+> Quiero hacer una función que me calcule la matriz de distancias chi
+> cuadrado, pero obtengo este mensaje de error:
+> 
+> Error en d.chiCol[i, j] = 0 : objeto de tipo 'closure' no es subconjunto
+> 
+> 
+> d.chiCol<- function(A)
+> {
+> m <- dim(A)[2]
+> n <- dim(A)[1]
+> B <- prop.table(A,2)
+> C <- prop.table(A)
+> pesos <- apply(C,1,sum)
+> dchi.Col <- matrix(,m,m)
+
+Ya alguien parece haberlo resuelto antes que lo lea, te hago una sugerencia 
+(que tal vez no te sirva, pero va igual),  cuando haces un par de bucles sobre 
+una matriz cuadrada puedes hacerlo mas rápido así:
+
+en lugar de :
+for (i in 1:m){
+ for(j in 1:m) {
+   if(i==j) ...
+
+hacer:
+for(i in 1:(m-1)){
+  d.chiCol[i,i] = 0
+  for(j in (i+1):m)
+     dhci.Col[i,j] = ...
+     dhci.Col[j,i] = ...
+  }
+}
+dhci.Col[m,m]=...
+
+de esa manera ganas mucho tiempo en matrices grandes (o en muchas iteraciones)
+
+>       d.chiCol[i,j]=0
+>     else
+>       x <- (B[,i]-B[,j])^2
+>       val <- x/pesos
+>       dchi.Col[i,j]=sqrt(sum(val))
+>   }
+> }
+> dchi.Col
+> }
+> Alguien me puede colaborar, gracias.
+> 
+__________________________________________________
+Correo Yahoo!
+Espacio para todos tus mensajes, antivirus y antispam ¡gratis!
+
+
+From jmcontreras en ugr.es  Fri May  7 16:50:01 2010
+From: jmcontreras en ugr.es (=?ISO-8859-1?Q?Jos=E9_Miguel_Contreras?=)
+Date: Fri, 07 May 2010 16:50:01 +0200
+Subject: [R-es] Moda
+In-Reply-To: <mailman.19.1273226405.2634.r-help-es@r-project.org>
+References: <mailman.19.1273226405.2634.r-help-es@r-project.org>
+Message-ID: <4BE42899.9070009@ugr.es>
+
+Una pregunta un poco tonta...
+
+Qué función calcula la moda  o el intervalo modal
+
+Gracias
+
+José Miguel
+
+
+From gellusco en gmail.com  Fri May  7 16:58:48 2010
+From: gellusco en gmail.com (genaro llusco)
+Date: Fri, 7 May 2010 16:58:48 +0200
+Subject: [R-es] Outliers in time series
+Message-ID: <t2x9d1d33591005070758q999620a5x262a3e96406b5a99@mail.gmail.com>
+
+los outliers en series temporales pueden sertratados como valores missing?
+en R esta implementado en alguna libreria para detectar los outliers?
+
+genaro  llusco
+universidad mayor de san andres
+Bolivia
+gellusco en gmail.com
+
+
+From gellusco en gmail.com  Fri May  7 16:59:24 2010
+From: gellusco en gmail.com (genaro llusco)
+Date: Fri, 7 May 2010 16:59:24 +0200
+Subject: [R-es] Outliers
+Message-ID: <i2g9d1d33591005070759n771ad21axa0d52ed06c094d05@mail.gmail.com>
+
+los outliers en series temporales pueden sertratados como valores missing?
+en R esta implementado en alguna libreria para detectar los outliers?
+
+genaro  llusco
+universidad mayor de san andres
+Bolivia
+gellusco en gmail.com
+
+
+From xaviblas en gmail.com  Fri May  7 16:59:59 2010
+From: xaviblas en gmail.com (Xavi de Blas)
+Date: Fri, 7 May 2010 22:59:59 +0800
+Subject: [R-es] Moda
+In-Reply-To: <4BE42899.9070009@ugr.es>
+References: <mailman.19.1273226405.2634.r-help-es@r-project.org> 
+	<4BE42899.9070009@ugr.es>
+Message-ID: <o2p256a87491005070759k828e0031v8954406ea85b146a@mail.gmail.com>
+
+Mode, del paquete prettyR
+
+Saludos
+
+
+2010/5/7 José Miguel Contreras <jmcontreras en ugr.es>:
+> Una pregunta un poco tonta...
+>
+> Qué función calcula la moda  o el intervalo modal
+>
+> Gracias
+>
+> José Miguel
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From jorgeivanvelez en gmail.com  Fri May  7 17:23:36 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 7 May 2010 11:23:36 -0400
+Subject: [R-es] Moda
+In-Reply-To: <4BE42899.9070009@ugr.es>
+References: <mailman.19.1273226405.2634.r-help-es@r-project.org> 
+	<4BE42899.9070009@ugr.es>
+Message-ID: <AANLkTinVqdKN1_4lJESqfm5nknz3YQo3Vyf4dQRH81Mj@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100507/7feee8f7/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Fri May  7 17:45:31 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 7 May 2010 11:45:31 -0400
+Subject: [R-es] Outliers in time series
+In-Reply-To: <t2x9d1d33591005070758q999620a5x262a3e96406b5a99@mail.gmail.com>
+References: <t2x9d1d33591005070758q999620a5x262a3e96406b5a99@mail.gmail.com>
+Message-ID: <AANLkTinvvPuNGdFeZaxL71b9BfdkhhzvZablvGVHAx9Y@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100507/9cd2fe44/attachment.pl>
+
+From r.user.spain en gmail.com  Fri May  7 17:50:29 2010
+From: r.user.spain en gmail.com (Usuario R)
+Date: Fri, 7 May 2010 17:50:29 +0200
+Subject: [R-es] Moda
+In-Reply-To: <o2p256a87491005070759k828e0031v8954406ea85b146a@mail.gmail.com>
+References: <mailman.19.1273226405.2634.r-help-es@r-project.org>
+	<4BE42899.9070009@ugr.es>
+	<o2p256a87491005070759k828e0031v8954406ea85b146a@mail.gmail.com>
+Message-ID: <h2re013b3631005070850k553b236fl8caf5885c9e51857@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100507/1bdff386/attachment.pl>
+
+From gellusco en gmail.com  Fri May  7 18:18:35 2010
+From: gellusco en gmail.com (genaro llusco)
+Date: Fri, 7 May 2010 12:18:35 -0400
+Subject: [R-es] outliers
+Message-ID: <t2k9d1d33591005070918kcd31f286w5c8c3970a557e4aa@mail.gmail.com>
+
+es decir no se elimina los datos outliers en series temporales como en
+datos de cross-section?
+
+
+From aramir21 en eafit.edu.co  Sat May  8 03:25:32 2010
+From: aramir21 en eafit.edu.co (Andres Ramirez Hassan)
+Date: Fri, 07 May 2010 20:25:32 -0500
+Subject: [R-es] outliers in R
+Message-ID: <004201caee4d$59f918f0$0deb4ad0$@edu.co>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100507/1e26023c/attachment.pl>
+
+From kjetil1001 en gmail.com  Sat May  8 03:35:14 2010
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Fri, 7 May 2010 21:35:14 -0400
+Subject: [R-es] Aprendiendo RMySQL
+Message-ID: <q2u1f6d6c821005071835g5db2bb6cr99ba8dcd625a6272@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100507/86c959e6/attachment.pl>
+
+From kjetil1001 en gmail.com  Sat May  8 03:38:11 2010
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Fri, 7 May 2010 21:38:11 -0400
+Subject: [R-es] Aprendiendo RMySQL
+In-Reply-To: <q2u1f6d6c821005071835g5db2bb6cr99ba8dcd625a6272@mail.gmail.com>
+References: <q2u1f6d6c821005071835g5db2bb6cr99ba8dcd625a6272@mail.gmail.com>
+Message-ID: <r2k1f6d6c821005071838i566b9302r2f1cdd57636f490f@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100507/010850b5/attachment.pl>
+
+From xaviblas en gmail.com  Sat May  8 04:01:38 2010
+From: xaviblas en gmail.com (Xavi de Blas)
+Date: Sat, 8 May 2010 10:01:38 +0800
+Subject: [R-es] Aprendiendo RMySQL
+In-Reply-To: <r2k1f6d6c821005071838i566b9302r2f1cdd57636f490f@mail.gmail.com>
+References: <q2u1f6d6c821005071835g5db2bb6cr99ba8dcd625a6272@mail.gmail.com> 
+	<r2k1f6d6c821005071838i566b9302r2f1cdd57636f490f@mail.gmail.com>
+Message-ID: <i2y256a87491005071901xfb092d10m7946001ced082034@mail.gmail.com>
+
+Hola Kjetil
+
+No tengo experiencia con RMySQL pero sí que uso RSQLite. Si nunca has
+usado una base de datos, Sqlite te será más sencillo de conectar
+porque no hay configuraciones de permisos, grant, ...
+
+Este es un ejemplo de uso de RSQLite:
+
+library(RSQLite)
+drv = dbDriver("SQLite")
+file = "ruta-completa-al-archivo.db"
+con = dbConnect(drv, file)
+
+datos <- dbGetQuery(con, "SELECT ...")
+
+Por otro lado, deberás estudiar SQL porque si no lo haces, no serás
+nada productivo. A mi siempre me ha gustado el primer capítulo del
+libro MySQL de Paul Dubois.
+
+@BOOK{Dubois2001,
+  title = {Edición especial MySQL},
+  publisher = {Pearson Educación, S.A.},
+  year = {2001},
+  author = {Dubois, P},
+  address = {Madrid},
+}
+
+Saludos
+
+
+2010/5/8 Kjetil Halvorsen <kjetil1001 en gmail.com>:
+> fue mandado por error antes de terminar .... continuando abajo
+>
+> 2010/5/7 Kjetil Halvorsen <kjetil1001 en gmail.com>
+>
+>> Hola!
+>>
+>> Estoy tratando de aprender como usar un base de datos con R. Nunca he usado
+>> un base de
+>> datos antes. Trato con RMySQL, todo instalado en ubuntu linux 10.04.
+>>
+>> library(RMySQL)
+>> myBase <- dbDriver("MySQL")
+>>
+>>  con <- dbConnect(myBase)
+>> Error in mysqlNewConnection(drv, ...) :
+>>   RS-DBI driver: (Failed to connect to database: Error: Access denied for
+>> user 'kjetil'@'localhost' (using password: NO)
+>> )
+>>
+>>
+>> Que debo hacer? Es necesario iniciar MySQL antes, afuera de R?
+>>
+>> Mi intención por el momento simplemente es iniciar un base nuevo, llenarlo
+>> con algunos
+>>
+> datos de un data.frame, almacenarlo, t talvez tratar de accederlo desde
+> afuera de R como un control.
+>
+> Kjetil
+>
+>> --
+>> The good Christian should beware of mathematicians, and all those who make
+>> empty prophecies.
+>> The danger already exists that the mathematicians have made a covenant with
+>> the devil to darken
+>> the spirit and to confine man in the bonds of Hell.
+>>
+>> St. Augustine, De Genesi ad Litteram, Book II, xviii, 37
+>>
+>>
+>>
+>>
+>
+>
+> --
+> The good Christian should beware of mathematicians, and all those who make
+> empty prophecies. The danger already exists that the mathematicians have
+> made a covenant with the devil to darken the spirit and to confine man in
+> the bonds of Hell.
+>
+> St. Augustine, De Genesi ad Litteram, Book II, xviii, 37
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From residuo.solow en gmail.com  Sat May  8 09:09:42 2010
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Sat, 8 May 2010 04:09:42 -0300
+Subject: [R-es] contar casos en un vector
+Message-ID: <AANLkTinIPHYuzid4p2ouUoZvZmrGxKxh1-Z3Mknexgo6@mail.gmail.com>
+
+Buenas noches, tengo dos vectores con nombres. El primero es largo,
+nombreL, y el segundo corto, nombreC. Quiero contar cuantas veces
+aparece alguno de los nombres del vector corto en el largo.
+
+Lo que estoy haciendo es lo siguiente:
+
+cuenta <- 0
+topL <- length(nombreL)
+topC <- length(nombreC)
+for (i in 1:topL) {
+                      for (j in 1:topC) {
+                                            k <-
+grep(noquote(nombreL[i]),nombreC[j])
+                                            if (length(k) > 0){
+
+cuenta <- cuenta + 1
+    				   }
+                                             }
+
+¿Hay alguna forma de vectorizarlo?
+
+Saludos,
+
+Sebastián.
+
+
+From jorgeivanvelez en gmail.com  Sat May  8 16:25:29 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Sat, 8 May 2010 10:25:29 -0400
+Subject: [R-es] contar casos en un vector
+In-Reply-To: <AANLkTinIPHYuzid4p2ouUoZvZmrGxKxh1-Z3Mknexgo6@mail.gmail.com>
+References: <AANLkTinIPHYuzid4p2ouUoZvZmrGxKxh1-Z3Mknexgo6@mail.gmail.com>
+Message-ID: <AANLkTindnP74MQiIdy-tFSa_xur8gRUMDwbV3POMuMgN@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100508/17506dd9/attachment.pl>
+
+From cgb en datanalytics.com  Sat May  8 17:55:41 2010
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Sat, 08 May 2010 17:55:41 +0200
+Subject: [R-es] Aprendiendo RMySQL
+In-Reply-To: <r2k1f6d6c821005071838i566b9302r2f1cdd57636f490f@mail.gmail.com>
+References: <q2u1f6d6c821005071835g5db2bb6cr99ba8dcd625a6272@mail.gmail.com>
+	<r2k1f6d6c821005071838i566b9302r2f1cdd57636f490f@mail.gmail.com>
+Message-ID: <4BE5897D.4020905@datanalytics.com>
+
+Hola, ¿qué tal?
+
+MySQL no funciona de manera muy distinta a como lo hace Postgres, así 
+que te puede valer esta información:
+
+http://extats.blogspot.com/2009/12/connecting-r-and-postgres-via-jdbc.html
+
+Esencialmente, necesitas hacer:
+
+library( RJDBC )
+postgres <- JDBC( "org.postgresql.Driver", 
+"/path/to/postgresql-8.3-604.jdbc4.jar")
+con <- dbConnect(postgres, "jdbc:postgresql://localhost:5432/mydbname", 
+user = "myusername", password = "xxx" )
+
+Una vez hecho eso, ya puedes leer (por ejemplo) una tabla así:
+
+my.r.df <- dbReadTable( con, "myschema.mytablename" )
+
+
+Caveats:
+
+1) MySQL tiene que estar levantado. Puedes hacer un "ps -ef" para 
+comprobar que el demonio está levantado en Ubuntu.
+
+2) MySQL tiene que estar escuchando en algún puerto. El puerto por 
+defecto de MySQL es el 3306. Puedes verificar eso con netstat.
+
+3) Necesitarás el _driver_ correcto de JDBC para tu versión de MySQL.
+
+4) Es posible que tengas que modificar algún tipo de parámetro de 
+seguridad en MySQL para que acepte las conexiones. Creo que por defecto 
+se aceptan las de la misma máquina, pero pudiera no ser así.
+
+
+A veces resulta más fácil comprobar que los demonios, cadenas de 
+conexión, permisos, etc. son los correctos tratando de conectarse a la 
+base de datos a través de algún GUI (tipo PgAdmin para Postgres; no sé 
+cuáles hay para MySQL).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+On 05/08/2010 03:38 AM, Kjetil Halvorsen wrote:
+> fue mandado por error antes de terminar .... continuando abajo
+>
+> 2010/5/7 Kjetil Halvorsen<kjetil1001 en gmail.com>
+>
+>> Hola!
+>>
+>> Estoy tratando de aprender como usar un base de datos con R. Nunca he usado
+>> un base de
+>> datos antes. Trato con RMySQL, todo instalado en ubuntu linux 10.04.
+>>
+>> library(RMySQL)
+>> myBase<- dbDriver("MySQL")
+>>
+>>   con<- dbConnect(myBase)
+>> Error in mysqlNewConnection(drv, ...) :
+>>    RS-DBI driver: (Failed to connect to database: Error: Access denied for
+>> user 'kjetil'@'localhost' (using password: NO)
+>> )
+>>
+>>
+>> Que debo hacer? Es necesario iniciar MySQL antes, afuera de R?
+>>
+>> Mi intención por el momento simplemente es iniciar un base nuevo, llenarlo
+>> con algunos
+>>
+> datos de un data.frame, almacenarlo, t talvez tratar de accederlo desde
+> afuera de R como un control.
+>
+> Kjetil
+>
+>> --
+>> The good Christian should beware of mathematicians, and all those who make
+>> empty prophecies.
+>> The danger already exists that the mathematicians have made a covenant with
+>> the devil to darken
+>> the spirit and to confine man in the bonds of Hell.
+>>
+>> St. Augustine, De Genesi ad Litteram, Book II, xviii, 37
+>>
+>>
+>>
+>>
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jorgeivanvelez en gmail.com  Sat May  8 20:05:17 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Sat, 8 May 2010 14:05:17 -0400
+Subject: [R-es] contar casos en un vector
+In-Reply-To: <AANLkTindnP74MQiIdy-tFSa_xur8gRUMDwbV3POMuMgN@mail.gmail.com>
+References: <AANLkTinIPHYuzid4p2ouUoZvZmrGxKxh1-Z3Mknexgo6@mail.gmail.com> 
+	<AANLkTindnP74MQiIdy-tFSa_xur8gRUMDwbV3POMuMgN@mail.gmail.com>
+Message-ID: <AANLkTin63kPCtoznTCC9yT7TYQrBgQLZXZ6FAh0f1DQI@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100508/506dbeda/attachment.pl>
+
+From xfim.ll en gmail.com  Sat May  8 20:11:42 2010
+From: xfim.ll en gmail.com (Xavier =?utf-8?Q?Fern=C3=A1ndez_i_Mar=C3=ADn?=)
+Date: Sat, 8 May 2010 20:11:42 +0200
+Subject: [R-es] Aprendiendo RMySQL
+In-Reply-To: <r2k1f6d6c821005071838i566b9302r2f1cdd57636f490f@mail.gmail.com>
+References: <q2u1f6d6c821005071835g5db2bb6cr99ba8dcd625a6272@mail.gmail.com>
+	<r2k1f6d6c821005071838i566b9302r2f1cdd57636f490f@mail.gmail.com>
+Message-ID: <20100508181142.GA3605@deu.xfim>
+
+Kjetil Halvorsen vas escriure el dia dv, 07 mai 2010:
+
+> fue mandado por error antes de terminar .... continuando abajo
+> 
+> 2010/5/7 Kjetil Halvorsen <kjetil1001 en gmail.com>
+> 
+> > Hola!
+> >
+> > Estoy tratando de aprender como usar un base de datos con R. Nunca he usado
+> > un base de
+> > datos antes. Trato con RMySQL, todo instalado en ubuntu linux 10.04.
+> >
+> > library(RMySQL)
+> > myBase <- dbDriver("MySQL")
+> >
+> >  con <- dbConnect(myBase)
+> > Error in mysqlNewConnection(drv, ...) :
+> >   RS-DBI driver: (Failed to connect to database: Error: Access denied for
+> > user 'kjetil'@'localhost' (using password: NO)
+> > )
+> >
+> >
+> > Que debo hacer? Es necesario iniciar MySQL antes, afuera de R?
+> >
+> > Mi intenci?n por el momento simplemente es iniciar un base nuevo, llenarlo
+> > con algunos
+> >
+> datos de un data.frame, almacenarlo, t talvez tratar de accederlo desde
+> afuera de R como un control.
+
+Hola,
+                                                                      
+El error parece indicar que MySQL está funcionando, pero que no hay
+permisos para acceder a la base de datos.                        
+                                                                  
+Has intentado acceder a la base de datos desde la línea de comandos? Te da
+el mismo error? Si es así, debes asegurarte de dar permisos a tu usuario.
+                                                                    
+En toto caso, asegúrate de que MySQL está funcionando (en Ubuntu es algo
+como "/etc/init.d/mysqld" ... ¿status?.                    
+                                                                
+Para evitar pasar argumentos a MySQL puedes utilizar el archivo ~/.my.cnf,
+donde puedes añadir tu usuario y contraseña (asegurándote de dar los
+permisos de lectura y escritura adecuados para que otros usuarios no puedan
+acceder).                                                                        
+                                                                 
+Te dejo una pequeña función que uso para cargar los datos desde MySQL:
+
+                                                                                                                                                                                      
+-----8<---------------                                                                                                                                                                
+                                                                                                                                                                                      
+bdd <- function(dfoutput, database, query) {                                                                                                                                          
+  mgr <- dbDriver("MySQL")                                                                                                                                                            
+  con <- dbConnect(mgr, dbname=database)                                                                                                                                              
+  assign(dfoutput, dbGetQuery(con, query), env=.GlobalEnv)
+  dbDisconnect(con)                                                                                                                                                                   
+  dbUnloadDriver(mgr)                                                                                                                                                                 
+}                                                                                                                                                                                     
+                                                                                                                                                                                      
+select <- "SELECT ..........."                                                                                                                                                        
+ # este es el punto donde debes aprender MySQL, como ha dicho Xavi en el                                                                                                              
+ # mensaje anterior                                                                                                                                                                   
+                                                                                                                                                                                      
+# Para recuperar los datos desde la base de datos                                                                                                                                     
+bdd("nombre.objeto.en.R", "base de datos", query=select)                                                                                                                              
+                                                                                                                                                                                      
+-----8<---------------                                                                                                                                                                
+                                                                                                                                                                                      
+                                                                                                                                                                                      
+Un saludo,            
+
+-- 
+-  Xavier  -
+
+
+From diegocumeiro en hotmail.com  Sun May  9 18:47:04 2010
+From: diegocumeiro en hotmail.com (DIEGO LOPEZ)
+Date: Sun, 9 May 2010 16:47:04 +0000
+Subject: [R-es] capturar salida R
+Message-ID: <SNT134-w53FC33872B6B33193EF3BC5F80@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100509/a1aad36e/attachment.pl>
+
+From dirienzo.julio en gmail.com  Mon May 10 04:12:54 2010
+From: dirienzo.julio en gmail.com (Julio Alejandro Di Rienzo)
+Date: Sun, 9 May 2010 23:12:54 -0300
+Subject: [R-es] Interfaz con R
+Message-ID: <v2g616ad5c41005091912ob3c3661eqcc3eaae447ca3bd0@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100509/2c79416c/attachment.pl>
+
+From residuo.solow en gmail.com  Mon May 10 14:04:47 2010
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Mon, 10 May 2010 09:04:47 -0300
+Subject: [R-es] Interfaz con R
+Message-ID: <AANLkTimxS-detXzVKjIPtB3SXTNRRn-63onRtNXfBImT@mail.gmail.com>
+
+Hola, ¿esta interfaz con R permite que los comandos que uno vaya
+utilizando se guarden en un script?
+
+Saludos,
+
+Sebastián.
+
+
+From kjetil1001 en gmail.com  Mon May 10 19:12:19 2010
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Mon, 10 May 2010 13:12:19 -0400
+Subject: [R-es] capturar salida R
+In-Reply-To: <SNT134-w53FC33872B6B33193EF3BC5F80@phx.gbl>
+References: <SNT134-w53FC33872B6B33193EF3BC5F80@phx.gbl>
+Message-ID: <AANLkTim-THJfRTqFzZV4Tx-oKSkHSOkyQDjsBwjPYusP@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100510/5781b372/attachment.pl>
+
+From residuo.solow en gmail.com  Tue May 11 00:33:16 2010
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Mon, 10 May 2010 19:33:16 -0300
+Subject: [R-es] contar casos en un vector
+In-Reply-To: <AANLkTindnP74MQiIdy-tFSa_xur8gRUMDwbV3POMuMgN@mail.gmail.com>
+References: <AANLkTinIPHYuzid4p2ouUoZvZmrGxKxh1-Z3Mknexgo6@mail.gmail.com>
+	<AANLkTindnP74MQiIdy-tFSa_xur8gRUMDwbV3POMuMgN@mail.gmail.com>
+Message-ID: <AANLkTilYcAnYxY4HNHbGDNqlFuA6RXJJ0Cg7wMORss5p@mail.gmail.com>
+
+Buenas noches JIV, la solución que propones no funciona porque los
+elementos que tengo son tipo "character". Además preciso su posición.
+
+Saludos,
+
+Sebastián.
+
+
+El día 8 de mayo de 2010 11:25, Jorge Ivan Velez
+<jorgeivanvelez en gmail.com> escribió:
+> Buenos dias Sebastian,
+> Puesto que lo que necesitas es el numero de entradas en las que ambos
+> vectores coinciden, podrias explorar las siguientes dos opciones:
+>
+> set.seed(123)
+>
+> x <- rpois(50, 6)
+>
+> x
+>
+> y <- c(1, 3, 7)
+>
+> y
+>
+> # Opcion 1
+>
+> sum(y %in% x)
+>
+> # Opcion 2
+>
+> length(intersect(x, y))
+>
+> Saludos,
+> Jorge Ivan Velez
+>
+> 2010/5/8 Sebastian Kruk <>
+>>
+>> Buenas noches, tengo dos vectores con nombres. El primero es largo,
+>> nombreL, y el segundo corto, nombreC. Quiero contar cuantas veces
+>> aparece alguno de los nombres del vector corto en el largo.
+>>
+>> Lo que estoy haciendo es lo siguiente:
+>>
+>> cuenta <- 0
+>> topL <- length(nombreL)
+>> topC <- length(nombreC)
+>> for (i in 1:topL) {
+>>                      for (j in 1:topC) {
+>>                                            k <-
+>> grep(noquote(nombreL[i]),nombreC[j])
+>>                                            if (length(k) > 0){
+>>
+>> cuenta <- cuenta + 1
+>>                                   }
+>>                                             }
+>>
+>> ¿Hay alguna forma de vectorizarlo?
+>>
+>> Saludos,
+>>
+>> Sebastián.
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From jorgeivanvelez en gmail.com  Tue May 11 01:39:31 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Mon, 10 May 2010 19:39:31 -0400
+Subject: [R-es] contar casos en un vector
+In-Reply-To: <AANLkTilYcAnYxY4HNHbGDNqlFuA6RXJJ0Cg7wMORss5p@mail.gmail.com>
+References: <AANLkTinIPHYuzid4p2ouUoZvZmrGxKxh1-Z3Mknexgo6@mail.gmail.com> 
+	<AANLkTindnP74MQiIdy-tFSa_xur8gRUMDwbV3POMuMgN@mail.gmail.com> 
+	<AANLkTilYcAnYxY4HNHbGDNqlFuA6RXJJ0Cg7wMORss5p@mail.gmail.com>
+Message-ID: <AANLkTimHb7lJvZDV_hhIUwRGCkAYKsbg6LZ1UQYEU8Ep@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100510/c82efe42/attachment.pl>
+
+From dirienzo.julio en gmail.com  Tue May 11 03:19:01 2010
+From: dirienzo.julio en gmail.com (Julio Alejandro Di Rienzo)
+Date: Mon, 10 May 2010 22:19:01 -0300
+Subject: [R-es] contar casos en un vector
+In-Reply-To: <AANLkTin63kPCtoznTCC9yT7TYQrBgQLZXZ6FAh0f1DQI@mail.gmail.com>
+References: <AANLkTinIPHYuzid4p2ouUoZvZmrGxKxh1-Z3Mknexgo6@mail.gmail.com>
+	<AANLkTindnP74MQiIdy-tFSa_xur8gRUMDwbV3POMuMgN@mail.gmail.com>
+	<AANLkTin63kPCtoznTCC9yT7TYQrBgQLZXZ6FAh0f1DQI@mail.gmail.com>
+Message-ID: <AANLkTim1devD2c1NQqVJOPVdGDQgM3lqFh4YP3txEGti@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100510/e52cf289/attachment.pl>
+
+From mauro8824 en gmail.com  Fri May 14 06:15:20 2010
+From: mauro8824 en gmail.com (Carlos Mauricio camelo charry)
+Date: Thu, 13 May 2010 23:15:20 -0500
+Subject: [R-es] SOBRE ARL
+Message-ID: <AANLkTilY8hkMvNpYvVqSa2qphF6GTi5J4H75s28NHiTd@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100513/00f0b32a/attachment.pl>
+
+From kjetil1001 en gmail.com  Fri May 14 15:54:06 2010
+From: kjetil1001 en gmail.com (Kjetil brinchmann Halvorsen)
+Date: Fri, 14 May 2010 09:54:06 -0400
+Subject: [R-es] outliers
+In-Reply-To: <t2k9d1d33591005070918kcd31f286w5c8c3970a557e4aa@mail.gmail.com>
+References: <t2k9d1d33591005070918kcd31f286w5c8c3970a557e4aa@mail.gmail.com>
+Message-ID: <AANLkTim4jEpBZ5CcwUsC7bJmewioTwRPPutULjq4sczr@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100514/6784fdf4/attachment.pl>
+
+From gellusco en gmail.com  Sat May 15 19:04:13 2010
+From: gellusco en gmail.com (genaro llusco)
+Date: Sat, 15 May 2010 13:04:13 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_15=2C_Env=EDo_1?=
+	=?iso-8859-1?q?4?=
+In-Reply-To: <mailman.13.1273917606.2070.r-help-es@r-project.org>
+References: <mailman.13.1273917606.2070.r-help-es@r-project.org>
+Message-ID: <AANLkTinHxRn3h9i7MTcVONvEwn7rmeHd7ePCWmUCPfae@mail.gmail.com>
+
+bueno aca les envio el grafico de los errores del modelo VAR, tanto
+con estimadores robustos y no robustos, sin eliminar ninguin dato.
+
+-----------------------------------------------------------------------------
+
+
+El día 15 de mayo de 2010 06:00,  <r-help-es-request en r-project.org> escribió:
+> Envíe los mensajes para la lista R-help-es a
+>        r-help-es en r-project.org
+>
+> Para subscribirse o anular su subscripción a través de la WEB
+>        https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+>        r-help-es-request en r-project.org
+>
+> Puede contactar con el responsable de la lista escribiendo a:
+>        r-help-es-owner en r-project.org
+>
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+>
+>
+> Asuntos del día:
+>
+>   1. Re: outliers (Kjetil brinchmann Halvorsen)
+>
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Fri, 14 May 2010 09:54:06 -0400
+> From: Kjetil brinchmann Halvorsen <kjetil1001 en gmail.com>
+> To: genaro llusco <gellusco en gmail.com>
+> Cc: r-help-es en r-project.org
+> Subject: Re: [R-es] outliers
+> Message-ID:
+>        <AANLkTim4jEpBZ5CcwUsC7bJmewioTwRPPutULjq4sczr en mail.gmail.com>
+> Content-Type: text/plain
+>
+> "Eliminar outliers" es una práctica potencialmente peogroso! Obviamente, si
+> se puede detectar
+> que un outlier es un error, se puede eliminarlo, pero en casos de duda --- y
+> muchos outliers son
+> datos verdaderos --- no se puede simplemente eliminar. Esto en lo meno
+> cambia las propiedades
+> de los métodos estadísticos, etc, algo que casi nunca se toma en serio.
+> ¿Porque no piensas en usar métodos robustos?
+>
+> Kjetil
+>
+> On Fri, May 7, 2010 at 12:18, genaro llusco <gellusco en gmail.com> wrote:
+>
+>> es decir no se elimina los datos outliers en series temporales como en
+>> datos de cross-section?
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+> --
+> The good Christian should beware of mathematicians, and all those who make
+> empty prophecies. The danger already exists that the mathematicians have
+> made a covenant with the devil to darken the spirit and to confine man in
+> the bonds of Hell.
+>
+> St. Augustine, De Genesi ad Litteram, Book II, xviii, 37
+>
+>        [[alternative HTML version deleted]]
+>
+>
+>
+> ------------------------------
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> Fin de Resumen de R-help-es, Vol 15, Envío 14
+> *********************************************
+>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: ACF DE LOS ERRORES.docx
+Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+Size: 68982 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100515/bd1932e1/attachment-0001.bin>
+
+From jojeda en unizar.es  Tue May 18 14:38:59 2010
+From: jojeda en unizar.es (Jorge Luis Ojeda Cabrera)
+Date: Tue, 18 May 2010 14:38:59 +0200
+Subject: [R-es] SOBRE ARL
+In-Reply-To: <AANLkTilY8hkMvNpYvVqSa2qphF6GTi5J4H75s28NHiTd@mail.gmail.com>
+References: <AANLkTilY8hkMvNpYvVqSa2qphF6GTi5J4H75s28NHiTd@mail.gmail.com>
+Message-ID: <4BF28A63.3060803@unizar.es>
+
+Échale un vistazo a qcc () en CRAN. Es posible que lo tengas ya 
+implementado.
+
+
+Saludos, Jorge.
+
+
+
+El 14/05/10 06:15, Carlos Mauricio camelo charry escribió:
+> HOla a todos,
+> Me gustaría saber si alguna persona usuario de esta pagina me podría
+> colaborar con el pseudocódigo para realizar una prueba de ARL general para
+> una carta de control cualquiera. (A partir de la fase II de un proceso de
+> control hace el conteo de los puntos que se salen de control los va contando
+> y los va guardando por ultimo los promedia.... algo así por el estilo)
+>
+> No sé si el R hace este tipo de Arl.
+>
+> gracias por su atención.
+>
+> --
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From kjetil1001 en gmail.com  Wed May 19 02:47:30 2010
+From: kjetil1001 en gmail.com (Kjetil brinchmann Halvorsen)
+Date: Tue, 18 May 2010 20:47:30 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_15=2C_Env=EDo_1?=
+	=?iso-8859-1?q?4?=
+In-Reply-To: <AANLkTinHxRn3h9i7MTcVONvEwn7rmeHd7ePCWmUCPfae@mail.gmail.com>
+References: <mailman.13.1273917606.2070.r-help-es@r-project.org>
+	<AANLkTinHxRn3h9i7MTcVONvEwn7rmeHd7ePCWmUCPfae@mail.gmail.com>
+Message-ID: <AANLkTinRXmoHUO7EYs-kMYC3be6Vl3DH0pu1ufHvXnr1@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100518/e149825b/attachment.pl>
+
+From joseramirezcosta en gmail.com  Wed May 19 19:45:40 2010
+From: joseramirezcosta en gmail.com (jose ramirez costa)
+Date: Wed, 19 May 2010 16:45:40 -0100
+Subject: [R-es] Imputacion hot-deck
+Message-ID: <AANLkTilDKQjMziOttnlDs2ZgdcHGX4-y90IzVfuj-5hr@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100519/d8f26249/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Wed May 19 21:21:38 2010
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 19 May 2010 15:21:38 -0400
+Subject: [R-es] Imputacion hot-deck
+In-Reply-To: <AANLkTilDKQjMziOttnlDs2ZgdcHGX4-y90IzVfuj-5hr@mail.gmail.com>
+References: <AANLkTilDKQjMziOttnlDs2ZgdcHGX4-y90IzVfuj-5hr@mail.gmail.com>
+Message-ID: <AANLkTinJ2N46rBN8kZCjhfWg_lbH-GikiLj3eRIuCDfC@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100519/519911cc/attachment.pl>
+
+From advilmu en doctor.upv.es  Thu May 20 10:45:41 2010
+From: advilmu en doctor.upv.es (Adriana Villa Murillo)
+Date: Thu, 20 May 2010 10:45:41 +0200
+Subject: [R-es] Problemas con package GALGO
+In-Reply-To: <mailman.25.1274263208.9425.r-help-es@r-project.org>
+References: <mailman.25.1274263208.9425.r-help-es@r-project.org>
+Message-ID: <1274345141.4bf4f6b54b65b@webmail.upv.es>
+
+Hola a todos...
+
+Estoy trabajando con algoritmos geneticos y me gustaria realizarlo con R.
+Buscando bibliografia encontre un package llamado GALGO pero no logro
+instalarmelo. Existen packages mas sencillos como el "rgenoud" o "genalg" pero
+son para cromosomas binarios, conoceis algun otro??
+El package galgo no esta en la pagina principal de R ni lo consigo seleccionado
+diferentes espejos. Si alguien sabe como instalarlo por favor avisadme.!!
+
+Saludos
+Adriana Villa
+
+
+From kjetil1001 en gmail.com  Sat May 22 02:52:51 2010
+From: kjetil1001 en gmail.com (Kjetil brinchmann Halvorsen)
+Date: Fri, 21 May 2010 20:52:51 -0400
+Subject: [R-es] Problemas con package GALGO
+In-Reply-To: <1274345141.4bf4f6b54b65b@webmail.upv.es>
+References: <mailman.25.1274263208.9425.r-help-es@r-project.org>
+	<1274345141.4bf4f6b54b65b@webmail.upv.es>
+Message-ID: <AANLkTinhGyTwNs_jP1yPn_Rs-5DrxD2WtrbeXyS5IQ6J@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100521/74c51609/attachment.pl>
+
+From gellusco en gmail.com  Tue May 25 18:13:30 2010
+From: gellusco en gmail.com (genaro llusco)
+Date: Tue, 25 May 2010 11:13:30 -0500
+Subject: [R-es] RMSE
+Message-ID: <AANLkTinQB6n1Oi1sVluuWO-5j4xDdBHHR39t4gAS5uRm@mail.gmail.com>
+
+Saludos:
+
+bueno estoy trabajando con modelos FAVAR con series mensuales de N=5,
+T=172, y bueno
+1) determine el orden de rezago en la cual obtuve un rezago de 2 por
+los criterios AIC y BIC, pero los errores no cumplen los supuestos, de
+No-autocorrelacion u NO-heterocedasticidad,
+pero claro es donde el error de pronostico es minimo, pero por otro
+lado obtuve un modelo menos eficiente un VAR(12) basado simplemente en
+el MSE y tambien mediante el test LR
+ H_{0} :  A_{i}=0, pero con el VAR(12)(si cumple con los supuestos de
+los residuos) se desminuye el sesgo asi para recompensar el
+MSE(obviamente menos parsimonioso). Por otro lado, los PRMSE de ambos
+modelos son aproximadamente iguales(te envio los datos calulados tipo
+.txt).
+
+CONSULTA:
+1) si el error de pronostico se hace minimo en rezago 2, me parece
+demasiado extender el rezago a orden 12.  Pero la verdad no se como
+justificar el rezago de orden 12?
+2) para hallar el RMSE se proyecta para 3 periodos adelante ej:se toma
+datos hasta diciembre hacia atras para generar pronosticos de enero,
+feb, marzo, luego para genera los siguientes pronosticos (feb,
+marzo,abril) se actualizan las variables endogenas con los datos mas
+recientes. Por que se pronostica para 3 periodos tambien puede ser 2
+periodos o 4 periodos, es decir por que se toma tres periodos?
+3) del enciso 2) cuantas de estos agrupaciones o proyeciones se debe hacer?
+------------ próxima parte ------------
+1)$selection
+AIC(n)  HQ(n)  SC(n) FPE(n) 
+     2      2      1      2 
+
+$criteria
+               1         2         3         4         5
+AIC(n)  3.787968  3.527462  3.548320  3.559319  3.568965
+HQ(n)   4.015307  3.944251  4.154559  4.355009  4.554104
+SC(n)   4.348086  4.554346  5.041970  5.519735  5.996145
+FPE(n) 44.173379 34.069986 34.857476 35.375205 35.935649
+ 
+
+2) test de LR para H_{0}:A_{i}=0
+
+      Lags    Log-Det    Chi^2      p-value
+---------------------------------------------
+ [1,]   14 -1.3613699 37.92518 4.704504e-02
+ [2,]   13 -0.9254484 32.04680 1.566625e-01
+ [3,]   12 -0.5771136 46.15732 6.153525e-03
+ [4,]   11 -0.1012649 60.08856 1.016567e-04
+ [5,]   10  0.4878386 44.15681 1.041534e-02
+ [6,]    9  0.9005190 28.67643 2.776677e-01
+ [7,]    8  1.1565586 21.54100 6.620897e-01
+ [8,]    7  1.3406697 15.73518 9.224872e-01
+ [9,]    6  1.4696466 37.73240 4.911767e-02
+[10,]    5  1.7667521 39.79437 3.061412e-02
+[11,]    4  2.0682246 48.31043 3.422998e-03
+[12,]    3  2.4208554 40.15324 2.812448e-02
+[13,]    2  2.7036247 91.65500 1.533389e-09
+[14,]    1  3.3271281  0.00000 0.000000e+00
+
+
+3)diagnost
+------------------------------------------!-----------------------------
+                        VAR(2)            !            VAR(12)
+------------------------------------------!-----------------------------
+            Statistics  g.l.    p-value   ! Statistics   g.l.   p-value
+JB--VAR      946.52952   10   0.000000e+00!  1225.88757   10   0.0000000
+ARCH--VAR   1245.00604 1125   6.963536e-03!  1097.64719   1125 0.7147465
+Portmanteau 1151.74768  950   6.768695e-06!  746.14900    700  0.1102878
+Skewness      24.71555    5   1.581043e-04!  96.09931     5    0.0000000
+Kurtosis     921.81397    5   0.000000e+00!  1129.78826   5    0.0000000
+
+
+
+
+4)result
+ RMSE-MAPE     VAR(2)     VAR(2)     VAR(12)    VAR(12)
+------------------------------------------------------------
+Julio-Sept    2.3985697 0.020953702 2.6715388 0.023358440
+Agos-Oct      2.3165999 0.020145472 1.6148832 0.013643679
+Sept-Nov      1.8195352 0.015167225 1.8401584 0.015789247
+Oct-Dic       0.8662240 0.007147114 1.5242311 0.012220599
+Nov-Ene       0.8750749 0.007541200 0.9955535 0.006848410
+Dic-Feb       0.5855205 0.004192831 0.6467009 0.003635713
+Enero-Marzo   0.7298595 0.005223897 0.7037542 0.005024562
+Febrero-Abril 1.0830057 0.008033597 1.3054747 0.010073539
+Marzo-Mayo    1.4240308 0.010539730 1.2359335 0.008183120
+Abril-Junio   0.9721559 0.007794409 0.6947928 0.005305666
+------------------------------------------------------------
+Promedio      1.3070576 0.010673918 1.3233021 0.010408297
+               PRMSE     PMAPE       PRMSE        PMAPE
+
+From javi.martinez.lopez en gmail.com  Wed May 26 18:16:10 2010
+From: javi.martinez.lopez en gmail.com (Javier Martinez)
+Date: Wed, 26 May 2010 18:16:10 +0200
+Subject: [R-es] regresion mixta
+Message-ID: <AANLkTimeqmU7Ivylw8o2ZKdj4O5AKp_w8gYIhaO1HcHN@mail.gmail.com>
+
+Hola a tod en s,
+
+estoy trabajando con modelos de regresión mixta con el paquete "nlme",
+concretamente con la función "lme". Una vez que hago mi modelo y el
+summary del mismo obtengo por ejemplo la significación (valor p) de la
+variable independiente, así como el valor del AIC para comparar mi
+modelo con otro similar, pero no sé cómo obtener un valor del grado de
+ajuste de la recta de regresión resultante a los datos observados,
+algo así como el R al cuadrado ajustado que me da el modelo "lm".
+¿Alguien sabe cómo obtenerlo?
+
+Muchas gracias de antemano,
+
+Salu2,
+
+Javier
+
+
+From luciano.selzer en gmail.com  Wed May 26 19:01:38 2010
+From: luciano.selzer en gmail.com (Luciano Selzer)
+Date: Wed, 26 May 2010 14:01:38 -0300
+Subject: [R-es] regresion mixta
+In-Reply-To: <AANLkTimeqmU7Ivylw8o2ZKdj4O5AKp_w8gYIhaO1HcHN@mail.gmail.com>
+References: <AANLkTimeqmU7Ivylw8o2ZKdj4O5AKp_w8gYIhaO1HcHN@mail.gmail.com>
+Message-ID: <AANLkTimVauFOGTV5_VrxUXFK3caeX3MtNdX_UDF-wpir@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100526/eafd96ec/attachment.pl>
+
+From javi.martinez.lopez en gmail.com  Thu May 27 10:25:35 2010
+From: javi.martinez.lopez en gmail.com (Javier Martinez)
+Date: Thu, 27 May 2010 10:25:35 +0200
+Subject: [R-es] regresion mixta
+In-Reply-To: <AANLkTimVauFOGTV5_VrxUXFK3caeX3MtNdX_UDF-wpir@mail.gmail.com>
+References: <AANLkTimeqmU7Ivylw8o2ZKdj4O5AKp_w8gYIhaO1HcHN@mail.gmail.com>
+	<AANLkTimVauFOGTV5_VrxUXFK3caeX3MtNdX_UDF-wpir@mail.gmail.com>
+Message-ID: <AANLkTinQ_fKLpgqsU3l_5Hn3tvqCqg6G7TckW2MF5Tmr@mail.gmail.com>
+
+Muchas gracias a ambos por las respuestas. Me gustaría saber qué
+método o cita sigue la función 'RSqare' del paquete 'lsmeans' y si se
+puede calcular la R2 ajustada, aunque por algún motivo no me funciona
+con modelos generados con la función 'lm'. Dice: 'Error en
+mymodel$call[[3]] : subíndice fuera de  los límites'. ¿Hay que hacer
+también objetos agrupados previamente sobre la matriz de datos del
+modelo 'lm'? He probado con ambos métodos y los resultados son:
+
+> RSquare(lme_modelo)
+       R2_0      R2_1
+1 0.2780425 0.9560489
+
+> cor(fitted(lme_modelo), getResponse(lme_modelo))^2
+[1] 0.9560489
+
+El valor de R2 sería entonces 0.95, ¿no? ¿Se supone que es la media de
+cada una de las rectas de regresión en base a mis grupos? Cuando hago
+un 'lm' normal con los mismo datos la regresión sale no significativa
+y con un R2 de 0.278, en cambio teniendo en cuenta los grupos con
+'lme' paso a 0.95 con una p<0.05!
+
+Por otro lado he encontrado un material de clases de estadística en el
+siguiente link, donde hablan de un pseudo R2 de nivel 1:
+http://www.unc.edu/courses/2006spring/ecol/145/001/docs/lectures/lecture43.htm
+y al calcularlo da otro valor:
+
+> (as.numeric(VarCorr(lme_modelo0)[2,1]) - as.numeric(VarCorr(lme_modelo)[2,1]))/ as.numeric(VarCorr(lme_modelo0)[2,1])
+[1] 0.5376202
+
+Gracias por vuestra ayuda y saludos,
+
+Javier
+
+
+
+2010/5/26 Luciano Selzer <luciano.selzer en gmail.com>:
+> Hola Javier, no existe una manera que de ese valor automáticamente. Pero
+> podes calcularlo fácilmente:
+> cor(fitted(modelo), getResponse(modelo))^2
+> Esto lo encontre buscando en los foros es la respuesta de Pinherio
+> http://www.biostat.wustl.edu/archives/html/s-news/2002-04/msg00075.html
+> También dice que no es lo mismo que el R cuadrado de una regresión lineal
+> porque el método de ajuste no es LS.
+> Este otro link apunta a un articulo sobre el R cuadrado para la selección de
+> efectos fijos en modelos mixtos.
+> http://portal.acm.org/citation.cfm?id=1316079.1316196
+> Un saludo.
+> Luciano
+>
+>
+> El 26 de mayo de 2010 13:16, Javier Martinez <javi.martinez.lopez en gmail.com>
+> escribió:
+>>
+>> Hola a tod en s,
+>>
+>> estoy trabajando con modelos de regresión mixta con el paquete "nlme",
+>> concretamente con la función "lme". Una vez que hago mi modelo y el
+>> summary del mismo obtengo por ejemplo la significación (valor p) de la
+>> variable independiente, así como el valor del AIC para comparar mi
+>> modelo con otro similar, pero no sé cómo obtener un valor del grado de
+>> ajuste de la recta de regresión resultante a los datos observados,
+>> algo así como el R al cuadrado ajustado que me da el modelo "lm".
+>> ¿Alguien sabe cómo obtenerlo?
+>>
+>> Muchas gracias de antemano,
+>>
+>> Salu2,
+>>
+>> Javier
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Thu May 27 12:18:13 2010
+From: PabloEmilio.Verde en uni-duesseldorf.de (Pablo Emilio Verde)
+Date: Thu, 27 May 2010 12:18:13 +0200
+Subject: [R-es] regresion mixta
+References: <AANLkTimeqmU7Ivylw8o2ZKdj4O5AKp_w8gYIhaO1HcHN@mail.gmail.com>
+	<AANLkTimVauFOGTV5_VrxUXFK3caeX3MtNdX_UDF-wpir@mail.gmail.com>
+	<AANLkTinQ_fKLpgqsU3l_5Hn3tvqCqg6G7TckW2MF5Tmr@mail.gmail.com>
+Message-ID: <000a01cafd85$ea79d0d0$7d8f6386@VMED.UKD>
+
+Cualquiera sea el criterio de ajuste que usen, en general es recomendable
+graficar
+el ajuste vs las respuestas. Aca les mando un ejemplo en el que contamino
+una sola
+observacion y el R2 *no* representa el ajuste del modelo.
+
+#...
+library(nlme)
+
+Orthodont2[1,1]<-0
+
+summary(fm1 <-lme(distance ~ age, random = ~ 1|Subject ,data = Orthodont))
+summary(fm2 <-lme(distance ~ age, random = ~ 1|Subject ,data = Orthodont2))
+
+cor(fitted(fm1), getResponse(fm1))^2
+cor(fitted(fm2), getResponse(fm2))^2
+
+par(mfrow=c(1,2))
+ plot(fitted(fm1), getResponse(fm1))
+ plot(fitted(fm2), getResponse(fm2))
+par(mfrow=c(1,1))
+
+#...
+
+Pablo
+
+
+
+----- Original Message -----
+From: "Javier Martinez" <javi.martinez.lopez en gmail.com>
+To: <r-help-es en r-project.org>
+Sent: Thursday, May 27, 2010 10:25 AM
+Subject: Re: [R-es] regresion mixta
+
+
+Muchas gracias a ambos por las respuestas. Me gustaría saber qué
+método o cita sigue la función 'RSqare' del paquete 'lsmeans' y si se
+puede calcular la R2 ajustada, aunque por algún motivo no me funciona
+con modelos generados con la función 'lm'. Dice: 'Error en
+mymodel$call[[3]] : subíndice fuera de  los límites'. ¿Hay que hacer
+también objetos agrupados previamente sobre la matriz de datos del
+modelo 'lm'? He probado con ambos métodos y los resultados son:
+
+> RSquare(lme_modelo)
+       R2_0      R2_1
+1 0.2780425 0.9560489
+
+> cor(fitted(lme_modelo), getResponse(lme_modelo))^2
+[1] 0.9560489
+
+El valor de R2 sería entonces 0.95, ¿no? ¿Se supone que es la media de
+cada una de las rectas de regresión en base a mis grupos? Cuando hago
+un 'lm' normal con los mismo datos la regresión sale no significativa
+y con un R2 de 0.278, en cambio teniendo en cuenta los grupos con
+'lme' paso a 0.95 con una p<0.05!
+
+Por otro lado he encontrado un material de clases de estadística en el
+siguiente link, donde hablan de un pseudo R2 de nivel 1:
+http://www.unc.edu/courses/2006spring/ecol/145/001/docs/lectures/lecture43.h
+tm
+y al calcularlo da otro valor:
+
+> (as.numeric(VarCorr(lme_modelo0)[2,1]) -
+as.numeric(VarCorr(lme_modelo)[2,1]))/ as.numeric(VarCorr(lme_modelo0)[2,1])
+[1] 0.5376202
+
+Gracias por vuestra ayuda y saludos,
+
+Javier
+
+
+
+2010/5/26 Luciano Selzer <luciano.selzer en gmail.com>:
+> Hola Javier, no existe una manera que de ese valor automáticamente. Pero
+> podes calcularlo fácilmente:
+> cor(fitted(modelo), getResponse(modelo))^2
+> Esto lo encontre buscando en los foros es la respuesta de Pinherio
+> http://www.biostat.wustl.edu/archives/html/s-news/2002-04/msg00075.html
+> También dice que no es lo mismo que el R cuadrado de una regresión lineal
+> porque el método de ajuste no es LS.
+> Este otro link apunta a un articulo sobre el R cuadrado para la selección
+de
+> efectos fijos en modelos mixtos.
+> http://portal.acm.org/citation.cfm?id=1316079.1316196
+> Un saludo.
+> Luciano
+>
+>
+> El 26 de mayo de 2010 13:16, Javier Martinez
+<javi.martinez.lopez en gmail.com>
+> escribió:
+>>
+>> Hola a tod en s,
+>>
+>> estoy trabajando con modelos de regresión mixta con el paquete "nlme",
+>> concretamente con la función "lme". Una vez que hago mi modelo y el
+>> summary del mismo obtengo por ejemplo la significación (valor p) de la
+>> variable independiente, así como el valor del AIC para comparar mi
+>> modelo con otro similar, pero no sé cómo obtener un valor del grado de
+>> ajuste de la recta de regresión resultante a los datos observados,
+>> algo así como el R al cuadrado ajustado que me da el modelo "lm".
+>> ¿Alguien sabe cómo obtenerlo?
+>>
+>> Muchas gracias de antemano,
+>>
+>> Salu2,
+>>
+>> Javier
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From residuo.solow en gmail.com  Thu May 27 18:06:34 2010
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Thu, 27 May 2010 13:06:34 -0300
+Subject: [R-es] problema instalacion
+Message-ID: <AANLkTilNLjyL_vIwWOhEd4fcN-6uJHTJLfB_rSmvfwdp@mail.gmail.com>
+
+Tengo un problema, instale el R 2.11.0 sin privilegios de
+administrador en Windows XP y al finalizar la instalación ejecuto el
+acceso directo para Rgui y me dio el siguiente error:
+
+"Error fatal: imposible restaurar datos guardados en .RData"
+
+¿Cuál será el problema? En la maquina estaba instalado con privilegios
+de administrador el R 2.8.1.
+
+Saludos,
+
+Sebastián.
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Fri May 28 08:12:56 2010
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Fri, 28 May 2010 08:12:56 +0200
+Subject: [R-es] problema instalacion
+In-Reply-To: <AANLkTilNLjyL_vIwWOhEd4fcN-6uJHTJLfB_rSmvfwdp@mail.gmail.com>
+References: <AANLkTilNLjyL_vIwWOhEd4fcN-6uJHTJLfB_rSmvfwdp@mail.gmail.com>
+Message-ID: <0A5B869BDC0A7445B15F9A4A53794377189B758E5E@ASSCCEVS02.sergas.local>
+
+Hola Sebastián.
+
+El problema parece precisamente ese, has instalado R sin privilegios (y seguramente en "C:\Archivos de Programas"). Aquí pueden pasar varias cosas: o no se han escrito en el registro de windows las asignaciones a los tipos de archivos (por cuestión de permisos de usuario) o no tienes permisos para leer/modificar algún archivo en la carpeta de instalación. Yo probaría a instalar R (para todos los usuarios) con permisos de Admin. En esta versión, cada usuario tendrá sus propios packages dentro de la carpeta "Mis Documentos\R\Win-library". En caso de que quieras isntalarlo sin permisos de Admin, probaría a hacerlo en un PATH diferente (por ejemplo C:\R).
+
+NOTA: Creo que si pruebas, en la instalación que ya tienes hecha, a ejecutar Rgui como Admin te funcionaría perfectamente.
+
+Un Saludo,
+================================================
+Miguel Ángel Rodríguez Muíños
+Servicio de Epidemioloxía
+Dirección Xeral de Saúde Pública e Planificación
+Consellería de Sanidade
+Xunta de Galicia
+web: http://www.galiciasaude.es/dxsp
+================================================
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Sebastian Kruk
+Enviado el: jueves, 27 de mayo de 2010 18:07
+Para: r-help-es en r-project.org
+Asunto: [R-es] problema instalacion
+
+Tengo un problema, instale el R 2.11.0 sin privilegios de administrador en Windows XP y al finalizar la instalación ejecuto el acceso directo para Rgui y me dio el siguiente error:
+
+"Error fatal: imposible restaurar datos guardados en .RData"
+
+¿Cuál será el problema? En la maquina estaba instalado con privilegios de administrador el R 2.8.1.
+
+Saludos,
+
+Sebastián.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada. 
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm 
+
+XACOBEO 2010: http://www.xacobeo.org
+
+

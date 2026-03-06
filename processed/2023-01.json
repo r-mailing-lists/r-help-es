@@ -1,0 +1,588 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2023-01",
+  "messages": [
+    {
+      "id": "msg-db381c68bb93",
+      "message_id": "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2023-01-02T06:31:53+01:00",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "subject_clean": "[R-es] Sumar positivos y negativos por separado",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de los\nvalores positivos de cada fila, por una parte, y la de los negativos por\notra. QuÃ© variables toman valores positivos y negativos varÃ­a de una fila a\notra, claro.\nGracias por vuestra ayuda,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de los\nvalores positivos de cada fila, por una parte, y la de los negativos por\notra. QuÃ© variables toman valores positivos y negativ",
+      "thread_id": "thread-db381c68bb93",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-a28c8c6ec961",
+      "message_id": "<E49A2E2A-B0E6-45D3-A720-CE9DC8618E10@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2023-01-02T09:02:16+01:00",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "subject_clean": "[R-es] Sumar positivos y negativos por separado",
+      "in_reply_to": "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>",
+      "references": [
+        "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nEste serÃ­a un ejemplo reproducible rÃ¡pido. A mÃ­ para esto me gusta rowise() de {dplyr}. En c_across() se pueden seleccionar las columnas a conveniencia. Seguramente haya una forma de evitar crear las funciones. Si la suma la quieres en valor absoluto multiplicas por -1 en suma_neg y listo.\n\nUn saludo,\nEmilio\n\n\n> set.seed(2023)\n> d <- data.frame(a = round(rnorm(10), 1),\n+                 b = round(rnorm(10), 1),\n+                 c = round(rnorm(10), 1))\n> d\n      a    b    c\n1  -0.1  0.3 -0.4\n2  -1.0 -0.4 -0.3\n3  -1.9  0.6  1.2\n4  -0.2  0.7  0.2\n5  -0.6 -0.6 -0.4\n6   1.1  0.7 -1.8\n7  -0.9  0.6 -0.6\n8   1.0  0.5 -0.9\n9  -0.4  0.9  1.5\n10 -0.5  0.6  2.7\n> \n> library(dplyr)\n> \n> suma_pos <- function(x){\n+   sum((x>0)*x)\n+ }\n> suma_neg <- function(x){\n+   sum((x<0)*x)\n+ }\n> \n> d |> \n+   rowwise() |> \n+   mutate(positivos = suma_pos(c_across()),\n+          negativos = suma_neg(c_across()))\n# A tibble: 10 Ã— 5\n# Rowwise: \n       a     b     c positivos negativos\n   <dbl> <dbl> <dbl>     <dbl>     <dbl>\n 1  -0.1   0.3  -0.4       0.3      -0.5\n 2  -1    -0.4  -0.3       0        -1.7\n 3  -1.9   0.6   1.2       1.8      -1.9\n 4  -0.2   0.7   0.2       0.9      -0.2\n 5  -0.6  -0.6  -0.4       0        -1.6\n 6   1.1   0.7  -1.8       1.8      -1.8\n 7  -0.9   0.6  -0.6       0.6      -1.5\n 8   1     0.5  -0.9       1.5      -0.9\n 9  -0.4   0.9   1.5       2.4      -0.4\n10  -0.5   0.6   2.7       3.3      -0.5\n\n\n\n> El 2 ene 2023, a las 6:31, Manuel Mendoza <mmendoza en fulbrightmail.org> escribiÃ³:\n> \n> Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de los\n> valores positivos de cada fila, por una parte, y la de los negativos por\n> otra. QuÃ© variables toman valores positivos y negativos varÃ­a de una fila a\n> otra, claro.\n> Gracias por vuestra ayuda,\n> Manuel\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEste serÃ­a un ejemplo reproducible rÃ¡pido. A mÃ­ para esto me gusta rowise() de {dplyr}. En c_across() se pueden seleccionar las columnas a conveniencia. Seguramente haya una forma de evitar ",
+      "thread_id": "thread-db381c68bb93",
+      "thread_depth": 1,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-5ef1a4d16695",
+      "message_id": "<15506afd286a6bf82a10925541b0b6d200b073a4.camel@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2023-01-02T10:23:30+01:00",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "subject_clean": "[R-es] Sumar positivos y negativos por separado",
+      "in_reply_to": "<E49A2E2A-B0E6-45D3-A720-CE9DC8618E10@gmail.com>",
+      "references": [
+        "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>",
+        "<E49A2E2A-B0E6-45D3-A720-CE9DC8618E10@gmail.com>"
+      ],
+      "body_plain": "Buenas,\n\nSin usar dplyr,\n\nSe puede hacer un bucle en las columnas y para cada columna\n\nsum(x[x>0])\n\nsum(x[x < 0])\n\nUn saludo.\n\nEl lun, 02-01-2023 a las 09:02 +0100, Emilio L. Cano escribiÃ³:\n> Hola,\n> \n> Este serÃ­a un ejemplo reproducible rÃ¡pido. A mÃ­ para esto me gusta rowise() de {dplyr}. En c_across() se pueden seleccionar las columnas a\n> conveniencia. Seguramente haya una forma de evitar crear las funciones. Si la suma la quieres en valor absoluto multiplicas por -1 en\n> suma_neg y listo.\n> \n> Un saludo,\n> Emilio\n> \n> \n> > set.seed(2023)\n> > d <- data.frame(a = round(rnorm(10), 1),\n> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  b = round(rnorm(10), 1),\n> +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  c = round(rnorm(10), 1))\n> > d\n> Â Â Â Â Â  aÂ Â Â  bÂ Â Â  c\n> 1Â  -0.1Â  0.3 -0.4\n> 2Â  -1.0 -0.4 -0.3\n> 3Â  -1.9Â  0.6Â  1.2\n> 4Â  -0.2Â  0.7Â  0.2\n> 5Â  -0.6 -0.6 -0.4\n> 6Â Â  1.1Â  0.7 -1.8\n> 7Â  -0.9Â  0.6 -0.6\n> 8Â Â  1.0Â  0.5 -0.9\n> 9Â  -0.4Â  0.9Â  1.5\n> 10 -0.5Â  0.6Â  2.7\n> > \n> > library(dplyr)\n> > \n> > suma_pos <- function(x){\n> +Â Â  sum((x>0)*x)\n> + }\n> > suma_neg <- function(x){\n> +Â Â  sum((x<0)*x)\n> + }\n> > \n> > d |> \n> +Â Â  rowwise() |> \n> +Â Â  mutate(positivos = suma_pos(c_across()),\n> +Â Â Â Â Â Â Â Â Â  negativos = suma_neg(c_across()))\n> # A tibble: 10 Ã— 5\n> # Rowwise: \n> Â Â Â Â Â Â  aÂ Â Â Â  bÂ Â Â Â  c positivos negativos\n> Â Â  <dbl> <dbl> <dbl>Â Â Â Â  <dbl>Â Â Â Â  <dbl>\n> Â 1Â  -0.1Â Â  0.3Â  -0.4Â Â Â Â Â Â  0.3Â Â Â Â Â  -0.5\n> Â 2Â  -1Â Â Â  -0.4Â  -0.3Â Â Â Â Â Â  0Â Â Â Â Â Â Â  -1.7\n> Â 3Â  -1.9Â Â  0.6Â Â  1.2Â Â Â Â Â Â  1.8Â Â Â Â Â  -1.9\n> Â 4Â  -0.2Â Â  0.7Â Â  0.2Â Â Â Â Â Â  0.9Â Â Â Â Â  -0.2\n> Â 5Â  -0.6Â  -0.6Â  -0.4Â Â Â Â Â Â  0Â Â Â Â Â Â Â  -1.6\n> Â 6Â Â  1.1Â Â  0.7Â  -1.8Â Â Â Â Â Â  1.8Â Â Â Â Â  -1.8\n> Â 7Â  -0.9Â Â  0.6Â  -0.6Â Â Â Â Â Â  0.6Â Â Â Â Â  -1.5\n> Â 8Â Â  1Â Â Â Â  0.5Â  -0.9Â Â Â Â Â Â  1.5Â Â Â Â Â  -0.9\n> Â 9Â  -0.4Â Â  0.9Â Â  1.5Â Â Â Â Â Â  2.4Â Â Â Â Â  -0.4\n> 10Â  -0.5Â Â  0.6Â Â  2.7Â Â Â Â Â Â  3.3Â Â Â Â Â  -0.5\n> \n> \n> \n> > El 2 ene 2023, a las 6:31, Manuel Mendoza <mmendoza en fulbrightmail.org> escribiÃ³:\n> > \n> > Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de los\n> > valores positivos de cada fila, por una parte, y la de los negativos por\n> > otra. QuÃ© variables toman valores positivos y negativos varÃ­a de una fila a\n> > otra, claro.\n> > Gracias por vuestra ayuda,\n> > Manuel\n> > \n> > Â Â Â Â Â Â Â Â [[alternative HTML version deleted]]\n> > \n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n> > Â \n> \n> \n> Â Â Â Â Â Â Â Â [[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n>",
+      "body_snippet": "Buenas,\n\nSin usar dplyr,\n\nSe puede hacer un bucle en las columnas y para cada columna\n\nsum(x[x>0])\n\nsum(x[x < 0])\n\nUn saludo.\n\nEl lun, 02-01-2023 a las 09:02 +0100, Emilio L. Cano escribiÃ³:\n> Hola,\n>",
+      "thread_id": "thread-db381c68bb93",
+      "thread_depth": 2,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-3377a1026641",
+      "message_id": "<CAF3uytXs8vqgD_VeotQRAoVucQXT7sbz5S0uiicgYG8jzfp8Dw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2023-01-02T11:23:33+01:00",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "subject_clean": "[R-es] Sumar positivos y negativos por separado",
+      "in_reply_to": "<15506afd286a6bf82a10925541b0b6d200b073a4.camel@uca.es>",
+      "references": [
+        "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>",
+        "<E49A2E2A-B0E6-45D3-A720-CE9DC8618E10@gmail.com>",
+        "<15506afd286a6bf82a10925541b0b6d200b073a4.camel@uca.es>"
+      ],
+      "body_plain": "Gracias Emilio y Proyecto R-UCA, no consigo implementar ninguna de vuestras\npropuestas.\nEn la de Emilio sale bien hasta las funciones, incluidas, pero no entiendo\na partir de: d |>\ny me da error.\n\nRespecto a sum(x[x>0]), lamento deciros que  tampoco  lo entiendo ni\nconsigo implementarlo\n\nÂ¿PodrÃ­ais darme mÃ¡s detalles?\n\nGracias,\nManuel\n\n\nEl lun, 2 ene 2023 a las 10:23, Proyecto R-UCA (<r-uca en uca.es>) escribiÃ³:\n\n> Buenas,\n>\n> Sin usar dplyr,\n>\n> Se puede hacer un bucle en las columnas y para cada columna\n>\n> sum(x[x>0])\n>\n> sum(x[x < 0])\n>\n> Un saludo.\n>\n> El lun, 02-01-2023 a las 09:02 +0100, Emilio L. Cano escribiÃ³:\n> > Hola,\n> >\n> > Este serÃ­a un ejemplo reproducible rÃ¡pido. A mÃ­ para esto me gusta\n> rowise() de {dplyr}. En c_across() se pueden seleccionar las columnas a\n> > conveniencia. Seguramente haya una forma de evitar crear las funciones.\n> Si la suma la quieres en valor absoluto multiplicas por -1 en\n> > suma_neg y listo.\n> >\n> > Un saludo,\n> > Emilio\n> >\n> >\n> > > set.seed(2023)\n> > > d <- data.frame(a = round(rnorm(10), 1),\n> > +                 b = round(rnorm(10), 1),\n> > +                 c = round(rnorm(10), 1))\n> > > d\n> >       a    b    c\n> > 1  -0.1  0.3 -0.4\n> > 2  -1.0 -0.4 -0.3\n> > 3  -1.9  0.6  1.2\n> > 4  -0.2  0.7  0.2\n> > 5  -0.6 -0.6 -0.4\n> > 6   1.1  0.7 -1.8\n> > 7  -0.9  0.6 -0.6\n> > 8   1.0  0.5 -0.9\n> > 9  -0.4  0.9  1.5\n> > 10 -0.5  0.6  2.7\n> > >\n> > > library(dplyr)\n> > >\n> > > suma_pos <- function(x){\n> > +   sum((x>0)*x)\n> > + }\n> > > suma_neg <- function(x){\n> > +   sum((x<0)*x)\n> > + }\n> > >\n> > > d |>\n> > +   rowwise() |>\n> > +   mutate(positivos = suma_pos(c_across()),\n> > +          negativos = suma_neg(c_across()))\n> > # A tibble: 10 Ã— 5\n> > # Rowwise:\n> >        a     b     c positivos negativos\n> >    <dbl> <dbl> <dbl>     <dbl>     <dbl>\n> >  1  -0.1   0.3  -0.4       0.3      -0.5\n> >  2  -1    -0.4  -0.3       0        -1.7\n> >  3  -1.9   0.6   1.2       1.8      -1.9\n> >  4  -0.2   0.7   0.2       0.9      -0.2\n> >  5  -0.6  -0.6  -0.4       0        -1.6\n> >  6   1.1   0.7  -1.8       1.8      -1.8\n> >  7  -0.9   0.6  -0.6       0.6      -1.5\n> >  8   1     0.5  -0.9       1.5      -0.9\n> >  9  -0.4   0.9   1.5       2.4      -0.4\n> > 10  -0.5   0.6   2.7       3.3      -0.5\n> >\n> >\n> >\n> > > El 2 ene 2023, a las 6:31, Manuel Mendoza <mmendoza en fulbrightmail.org>\n> escribiÃ³:\n> > >\n> > > Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de los\n> > > valores positivos de cada fila, por una parte, y la de los negativos\n> por\n> > > otra. QuÃ© variables toman valores positivos y negativos varÃ­a de una\n> fila a\n> > > otra, claro.\n> > > Gracias por vuestra ayuda,\n> > > Manuel\n> > >\n> > >         [[alternative HTML version deleted]]\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org\n> > >\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n> > >\n> >\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> >\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n> >\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Emilio y Proyecto R-UCA, no consigo implementar ninguna de vuestras\npropuestas.\nEn la de Emilio sale bien hasta las funciones, incluidas, pero no entiendo\na partir de: d |>\ny me da error.\n\nRes",
+      "thread_id": "thread-db381c68bb93",
+      "thread_depth": 3,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-94ae960b903c",
+      "message_id": "<7A066100-1390-4C5C-AECF-68A7A1277092@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2023-01-02T11:47:34+01:00",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "subject_clean": "[R-es] Sumar positivos y negativos por separado",
+      "in_reply_to": "<CAF3uytXs8vqgD_VeotQRAoVucQXT7sbz5S0uiicgYG8jzfp8Dw@mail.gmail.com>",
+      "references": [
+        "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>",
+        "<E49A2E2A-B0E6-45D3-A720-CE9DC8618E10@gmail.com>",
+        "<15506afd286a6bf82a10925541b0b6d200b073a4.camel@uca.es>",
+        "<CAF3uytXs8vqgD_VeotQRAoVucQXT7sbz5S0uiicgYG8jzfp8Dw@mail.gmail.com>"
+      ],
+      "body_plain": "TendrÃ­as que ser mÃ¡s especÃ­fico con lo del error para poderte ayudar.\n\nPara entender mi ejemplo tendrÃ­as que estar familiarizado con el pipe ( |> nativo que yo uso, o %>% que es equivalente) y con el ?tidyverse?. Para el caso concreto de las operaciones por columnas te recomiendo que leas este artÃ­culo: https://dplyr.tidyverse.org/articles/rowwise.html\n\nSaludos,\nEmilio\n\nPS: La soluciÃ³n sum(x[x>0]) servirÃ­a pero haciendo el bucle por FILAS, que es lo que quieres, y guardÃ¡ndolo en algÃºn vector.\n\n\n\n> El 2 ene 2023, a las 11:23, Manuel Mendoza <mmendoza en fulbrightmail.org> escribiÃ³:\n> \n> Gracias Emilio y Proyecto R-UCA, no consigo implementar ninguna de vuestras\n> propuestas.\n> En la de Emilio sale bien hasta las funciones, incluidas, pero no entiendo\n> a partir de: d |>\n> y me da error.\n> \n> Respecto a sum(x[x>0]), lamento deciros que  tampoco  lo entiendo ni\n> consigo implementarlo\n> \n> Â¿PodrÃ­ais darme mÃ¡s detalles?\n> \n> Gracias,\n> Manuel\n> \n> \n> El lun, 2 ene 2023 a las 10:23, Proyecto R-UCA (<r-uca en uca.es>) escribiÃ³:\n> \n>> Buenas,\n>> \n>> Sin usar dplyr,\n>> \n>> Se puede hacer un bucle en las columnas y para cada columna\n>> \n>> sum(x[x>0])\n>> \n>> sum(x[x < 0])\n>> \n>> Un saludo.\n>> \n>> El lun, 02-01-2023 a las 09:02 +0100, Emilio L. Cano escribiÃ³:\n>>> Hola,\n>>> \n>>> Este serÃ­a un ejemplo reproducible rÃ¡pido. A mÃ­ para esto me gusta\n>> rowise() de {dplyr}. En c_across() se pueden seleccionar las columnas a\n>>> conveniencia. Seguramente haya una forma de evitar crear las funciones.\n>> Si la suma la quieres en valor absoluto multiplicas por -1 en\n>>> suma_neg y listo.\n>>> \n>>> Un saludo,\n>>> Emilio\n>>> \n>>> \n>>>> set.seed(2023)\n>>>> d <- data.frame(a = round(rnorm(10), 1),\n>>> +                 b = round(rnorm(10), 1),\n>>> +                 c = round(rnorm(10), 1))\n>>>> d\n>>>      a    b    c\n>>> 1  -0.1  0.3 -0.4\n>>> 2  -1.0 -0.4 -0.3\n>>> 3  -1.9  0.6  1.2\n>>> 4  -0.2  0.7  0.2\n>>> 5  -0.6 -0.6 -0.4\n>>> 6   1.1  0.7 -1.8\n>>> 7  -0.9  0.6 -0.6\n>>> 8   1.0  0.5 -0.9\n>>> 9  -0.4  0.9  1.5\n>>> 10 -0.5  0.6  2.7\n>>>> \n>>>> library(dplyr)\n>>>> \n>>>> suma_pos <- function(x){\n>>> +   sum((x>0)*x)\n>>> + }\n>>>> suma_neg <- function(x){\n>>> +   sum((x<0)*x)\n>>> + }\n>>>> \n>>>> d |>\n>>> +   rowwise() |>\n>>> +   mutate(positivos = suma_pos(c_across()),\n>>> +          negativos = suma_neg(c_across()))\n>>> # A tibble: 10 Ã— 5\n>>> # Rowwise:\n>>>       a     b     c positivos negativos\n>>>   <dbl> <dbl> <dbl>     <dbl>     <dbl>\n>>> 1  -0.1   0.3  -0.4       0.3      -0.5\n>>> 2  -1    -0.4  -0.3       0        -1.7\n>>> 3  -1.9   0.6   1.2       1.8      -1.9\n>>> 4  -0.2   0.7   0.2       0.9      -0.2\n>>> 5  -0.6  -0.6  -0.4       0        -1.6\n>>> 6   1.1   0.7  -1.8       1.8      -1.8\n>>> 7  -0.9   0.6  -0.6       0.6      -1.5\n>>> 8   1     0.5  -0.9       1.5      -0.9\n>>> 9  -0.4   0.9   1.5       2.4      -0.4\n>>> 10  -0.5   0.6   2.7       3.3      -0.5\n>>> \n>>> \n>>> \n>>>> El 2 ene 2023, a las 6:31, Manuel Mendoza <mmendoza en fulbrightmail.org>\n>> escribiÃ³:\n>>>> \n>>>> Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de los\n>>>> valores positivos de cada fila, por una parte, y la de los negativos\n>> por\n>>>> otra. QuÃ© variables toman valores positivos y negativos varÃ­a de una\n>> fila a\n>>>> otra, claro.\n>>>> Gracias por vuestra ayuda,\n>>>> Manuel\n>>>> \n>>>>        [[alternative HTML version deleted]]\n>>>> \n>>>> _______________________________________________\n>>>> R-help-es mailing list\n>>>> R-help-es en r-project.org\n>>>> \n>> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n>>>> \n>>> \n>>> \n>>>        [[alternative HTML version deleted]]\n>>> \n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> \n>> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n>>> \n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "TendrÃ­as que ser mÃ¡s especÃ­fico con lo del error para poderte ayudar.\n\nPara entender mi ejemplo tendrÃ­as que estar familiarizado con el pipe ( |> nativo que yo uso, o %>% que es equivalente) y con",
+      "thread_id": "thread-db381c68bb93",
+      "thread_depth": 4,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-ac626a44d054",
+      "message_id": "<CAF3uytVAqG-w4gCZ_9nRYOEhTcK+e5KgGDrMFShA=o6YvKg0aw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2023-01-02T11:50:48+01:00",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "subject_clean": "[R-es] Sumar positivos y negativos por separado",
+      "in_reply_to": "<15506afd286a6bf82a10925541b0b6d200b073a4.camel@uca.es>",
+      "references": [
+        "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>",
+        "<E49A2E2A-B0E6-45D3-A720-CE9DC8618E10@gmail.com>",
+        "<15506afd286a6bf82a10925541b0b6d200b073a4.camel@uca.es>"
+      ],
+      "body_plain": "Bueno, funcionÃ³ con:\n\npos<-c(0)\nfor (i in 1:nrow(data)) {\n    x<-data[i,]\n    pos[i]<-sum(x[x>0])\n}\n\ny x<0 para los negativos\n\nGracias nuevamente,\nManuel\n\n\nEl lun, 2 ene 2023 a las 10:23, Proyecto R-UCA (<r-uca en uca.es>) escribiÃ³:\n\n> Buenas,\n>\n> Sin usar dplyr,\n>\n> Se puede hacer un bucle en las columnas y para cada columna\n>\n> sum(x[x>0])\n>\n> sum(x[x < 0])\n>\n> Un saludo.\n>\n> El lun, 02-01-2023 a las 09:02 +0100, Emilio L. Cano escribiÃ³:\n> > Hola,\n> >\n> > Este serÃ­a un ejemplo reproducible rÃ¡pido. A mÃ­ para esto me gusta\n> rowise() de {dplyr}. En c_across() se pueden seleccionar las columnas a\n> > conveniencia. Seguramente haya una forma de evitar crear las funciones.\n> Si la suma la quieres en valor absoluto multiplicas por -1 en\n> > suma_neg y listo.\n> >\n> > Un saludo,\n> > Emilio\n> >\n> >\n> > > set.seed(2023)\n> > > d <- data.frame(a = round(rnorm(10), 1),\n> > +                 b = round(rnorm(10), 1),\n> > +                 c = round(rnorm(10), 1))\n> > > d\n> >       a    b    c\n> > 1  -0.1  0.3 -0.4\n> > 2  -1.0 -0.4 -0.3\n> > 3  -1.9  0.6  1.2\n> > 4  -0.2  0.7  0.2\n> > 5  -0.6 -0.6 -0.4\n> > 6   1.1  0.7 -1.8\n> > 7  -0.9  0.6 -0.6\n> > 8   1.0  0.5 -0.9\n> > 9  -0.4  0.9  1.5\n> > 10 -0.5  0.6  2.7\n> > >\n> > > library(dplyr)\n> > >\n> > > suma_pos <- function(x){\n> > +   sum((x>0)*x)\n> > + }\n> > > suma_neg <- function(x){\n> > +   sum((x<0)*x)\n> > + }\n> > >\n> > > d |>\n> > +   rowwise() |>\n> > +   mutate(positivos = suma_pos(c_across()),\n> > +          negativos = suma_neg(c_across()))\n> > # A tibble: 10 Ã— 5\n> > # Rowwise:\n> >        a     b     c positivos negativos\n> >    <dbl> <dbl> <dbl>     <dbl>     <dbl>\n> >  1  -0.1   0.3  -0.4       0.3      -0.5\n> >  2  -1    -0.4  -0.3       0        -1.7\n> >  3  -1.9   0.6   1.2       1.8      -1.9\n> >  4  -0.2   0.7   0.2       0.9      -0.2\n> >  5  -0.6  -0.6  -0.4       0        -1.6\n> >  6   1.1   0.7  -1.8       1.8      -1.8\n> >  7  -0.9   0.6  -0.6       0.6      -1.5\n> >  8   1     0.5  -0.9       1.5      -0.9\n> >  9  -0.4   0.9   1.5       2.4      -0.4\n> > 10  -0.5   0.6   2.7       3.3      -0.5\n> >\n> >\n> >\n> > > El 2 ene 2023, a las 6:31, Manuel Mendoza <mmendoza en fulbrightmail.org>\n> escribiÃ³:\n> > >\n> > > Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de los\n> > > valores positivos de cada fila, por una parte, y la de los negativos\n> por\n> > > otra. QuÃ© variables toman valores positivos y negativos varÃ­a de una\n> fila a\n> > > otra, claro.\n> > > Gracias por vuestra ayuda,\n> > > Manuel\n> > >\n> > >         [[alternative HTML version deleted]]\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org\n> > >\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n> > >\n> >\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> >\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n> >\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Bueno, funcionÃ³ con:\n\npos<-c(0)\nfor (i in 1:nrow(data)) {\n    x<-data[i,]\n    pos[i]<-sum(x[x>0])\n}\n\ny x<0 para los negativos\n\nGracias nuevamente,\nManuel\n\n\nEl lun, 2 ene 2023 a las 10:23, Proyecto R-",
+      "thread_id": "thread-db381c68bb93",
+      "thread_depth": 3,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-ecaf7ff2f5eb",
+      "message_id": "<CAF3uytUWvSEFjjdt13GubmGYbpKEzt2S29Qj6sL=pP2qDOAT8Q@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2023-01-02T13:45:26+01:00",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "subject_clean": "[R-es] Sumar positivos y negativos por separado",
+      "in_reply_to": "<CAOKbq8ifV4M=gpQHvESg=aH=J_OMJ=WKEVzfaPFaZN5_mF1=LA@mail.gmail.com>",
+      "references": [
+        "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>",
+        "<E49A2E2A-B0E6-45D3-A720-CE9DC8618E10@gmail.com>",
+        "<15506afd286a6bf82a10925541b0b6d200b073a4.camel@uca.es>",
+        "<CAF3uytVAqG-w4gCZ_9nRYOEhTcK+e5KgGDrMFShA=o6YvKg0aw@mail.gmail.com>",
+        "<CAOKbq8ifV4M=gpQHvESg=aH=J_OMJ=WKEVzfaPFaZN5_mF1=LA@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Carlos, y aprovecho para felicitaros tambiÃ©n el aÃ±o nuevo..\nManuel\n\nEl lun, 2 ene 2023 a las 13:03, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Hola,\n>\n> Feliz AÃ±o!.\n> Por no dejar pasar la oportunidad de usar algo mÃ¡s vectorizado... y\n> rapidito...\n> Incluyo tiempos comprativos.\n>\n> #-----------------\n> > library(mlbench)\n> > library(data.table)\n> > library(dplyr)\n> > library(tictoc)\n> >\n> > data(Ionosphere)\n> > head(Ionosphere)\n>   V1 V2      V3       V4       V5       V6       V7       V8      V9\n>  V10     V11      V12     V13      V14\n> 1  1  0 0.99539 -0.05889  0.85243  0.02306  0.83398 -0.37708 1.00000\n>  0.03760 0.85243 -0.17755 0.59755 -0.44945\n> 2  1  0 1.00000 -0.18829  0.93035 -0.36156 -0.10868 -0.93597 1.00000\n> -0.04549 0.50874 -0.67743 0.34432 -0.69707\n> 3  1  0 1.00000 -0.03365  1.00000  0.00485  1.00000 -0.12062 0.88965\n>  0.01198 0.73082  0.05346 0.85443  0.00827\n> 4  1  0 1.00000 -0.45161  1.00000  1.00000  0.71216 -1.00000 0.00000\n>  0.00000 0.00000  0.00000 0.00000  0.00000\n> 5  1  0 1.00000 -0.02401  0.94140  0.06531  0.92106 -0.23255 0.77152\n> -0.16399 0.52798 -0.20275 0.56409 -0.00712\n> 6  1  0 0.02337 -0.00592 -0.09924 -0.11949 -0.00763 -0.11824 0.14706\n>  0.06637 0.03786 -0.06302 0.00000  0.00000\n>        V15      V16      V17      V18      V19      V20      V21      V22\n>      V23      V24      V25      V26\n> 1  0.60536 -0.38223  0.84356 -0.38542  0.58212 -0.32192  0.56971 -0.29674\n>  0.36946 -0.47357  0.56811 -0.51171\n> 2 -0.51685 -0.97515  0.05499 -0.62237  0.33109 -1.00000 -0.13151 -0.45300\n> -0.18056 -0.35734 -0.20332 -0.26569\n> 3  0.54591  0.00299  0.83775 -0.13644  0.75535 -0.08540  0.70887 -0.27502\n>  0.43385 -0.12062  0.57528 -0.40220\n> 4 -1.00000  0.14516  0.54094 -0.39330 -1.00000 -0.54467 -0.69975  1.00000\n>  0.00000  0.00000  1.00000  0.90695\n> 5  0.34395 -0.27457  0.52940 -0.21780  0.45107 -0.17813  0.05982 -0.35575\n>  0.02309 -0.52879  0.03286 -0.65158\n> 6 -0.04572 -0.15540 -0.00343 -0.10196 -0.11575 -0.05414  0.01838  0.03669\n>  0.01519  0.00888  0.03513 -0.01535\n>        V27      V28      V29      V30      V31      V32      V33      V34\n> Class\n> 1  0.41078 -0.46168  0.21266 -0.34090  0.42267 -0.54487  0.18641 -0.45300\n>  good\n> 2 -0.20468 -0.18401 -0.19040 -0.11593 -0.16626 -0.06288 -0.13738 -0.02447\n>   bad\n> 3  0.58984 -0.22145  0.43100 -0.17365  0.60436 -0.24180  0.56045 -0.38238\n>  good\n> 4  0.51613  1.00000  1.00000 -0.20099  0.25682  1.00000 -0.32382  1.00000\n>   bad\n> 5  0.13290 -0.53206  0.02431 -0.62197 -0.05707 -0.59573 -0.04608 -0.65697\n>  good\n> 6 -0.03240  0.09223 -0.07859  0.00732  0.00000  0.00000 -0.00039  0.12011\n>   bad\n> >\n> > data <- Ionosphere %>% select(where(is.numeric)) %>% as.data.frame()\n> >\n> *> #------ Vectorizado*\n> > tic()\n> > myfun <- function(x) {\n> +\n> +   pos <- sum(x[x > 0])\n> +   neg <- sum(x[x < 0])\n> +\n> +   return(list(pos = pos, neg = neg))\n> + }\n> >\n> > resout <- apply(data, 1, myfun)\n> > resend <- rbindlist(resout)\n> > toc()\n> *0.012 sec elapsed*\n> > head(resend)\n>         pos      neg\n>       <num>    <num>\n> 1:  9.96328 -5.23501\n> 2:  4.16949 -8.80629\n> 3: 11.59911 -2.19323\n> 4: 12.07816 -5.61414\n> 5:  6.38876 -5.34692\n> 6:  0.60859 -1.01667\n> >\n> >\n> *> #-------- Bucle*\n> > tic()\n> > pos <-c(rep(0, nrow(data)))\n> > neg <- c(rep(0, nrow(data)))\n> >\n> > for (i in 1:nrow(data)) {\n> +   x<-data[i,]\n> +   pos[i]<-sum(x[x>0])\n> +   neg[i]<-sum(x[x<0])\n> + }\n> > toc()\n> *0.609 sec elapsed*\n> > head(pos)\n> [1]  9.96328  4.16949 11.59911 12.07816  6.38876  0.60859\n> > head(neg)\n> [1] -5.23501 -8.80629 -2.19323 -5.61414 -5.34692 -1.01667\n>\n>\n> #-----------------\n>\n>\n>\n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n>\n> El lun, 2 ene 2023 a las 11:58, Manuel Mendoza (<\n> mmendoza en fulbrightmail.org>) escribiÃ³:\n>\n>> Bueno, funcionÃ³ con:\n>>\n>> pos<-c(0)\n>> for (i in 1:nrow(data)) {\n>>     x<-data[i,]\n>>     pos[i]<-sum(x[x>0])\n>> }\n>>\n>> y x<0 para los negativos\n>>\n>> Gracias nuevamente,\n>> Manuel\n>>\n>>\n>> El lun, 2 ene 2023 a las 10:23, Proyecto R-UCA (<r-uca en uca.es>) escribiÃ³:\n>>\n>> > Buenas,\n>> >\n>> > Sin usar dplyr,\n>> >\n>> > Se puede hacer un bucle en las columnas y para cada columna\n>> >\n>> > sum(x[x>0])\n>> >\n>> > sum(x[x < 0])\n>> >\n>> > Un saludo.\n>> >\n>> > El lun, 02-01-2023 a las 09:02 +0100, Emilio L. Cano escribiÃ³:\n>> > > Hola,\n>> > >\n>> > > Este serÃ­a un ejemplo reproducible rÃ¡pido. A mÃ­ para esto me gusta\n>> > rowise() de {dplyr}. En c_across() se pueden seleccionar las columnas a\n>> > > conveniencia. Seguramente haya una forma de evitar crear las\n>> funciones.\n>> > Si la suma la quieres en valor absoluto multiplicas por -1 en\n>> > > suma_neg y listo.\n>> > >\n>> > > Un saludo,\n>> > > Emilio\n>> > >\n>> > >\n>> > > > set.seed(2023)\n>> > > > d <- data.frame(a = round(rnorm(10), 1),\n>> > > +                 b = round(rnorm(10), 1),\n>> > > +                 c = round(rnorm(10), 1))\n>> > > > d\n>> > >       a    b    c\n>> > > 1  -0.1  0.3 -0.4\n>> > > 2  -1.0 -0.4 -0.3\n>> > > 3  -1.9  0.6  1.2\n>> > > 4  -0.2  0.7  0.2\n>> > > 5  -0.6 -0.6 -0.4\n>> > > 6   1.1  0.7 -1.8\n>> > > 7  -0.9  0.6 -0.6\n>> > > 8   1.0  0.5 -0.9\n>> > > 9  -0.4  0.9  1.5\n>> > > 10 -0.5  0.6  2.7\n>> > > >\n>> > > > library(dplyr)\n>> > > >\n>> > > > suma_pos <- function(x){\n>> > > +   sum((x>0)*x)\n>> > > + }\n>> > > > suma_neg <- function(x){\n>> > > +   sum((x<0)*x)\n>> > > + }\n>> > > >\n>> > > > d |>\n>> > > +   rowwise() |>\n>> > > +   mutate(positivos = suma_pos(c_across()),\n>> > > +          negativos = suma_neg(c_across()))\n>> > > # A tibble: 10 Ã— 5\n>> > > # Rowwise:\n>> > >        a     b     c positivos negativos\n>> > >    <dbl> <dbl> <dbl>     <dbl>     <dbl>\n>> > >  1  -0.1   0.3  -0.4       0.3      -0.5\n>> > >  2  -1    -0.4  -0.3       0        -1.7\n>> > >  3  -1.9   0.6   1.2       1.8      -1.9\n>> > >  4  -0.2   0.7   0.2       0.9      -0.2\n>> > >  5  -0.6  -0.6  -0.4       0        -1.6\n>> > >  6   1.1   0.7  -1.8       1.8      -1.8\n>> > >  7  -0.9   0.6  -0.6       0.6      -1.5\n>> > >  8   1     0.5  -0.9       1.5      -0.9\n>> > >  9  -0.4   0.9   1.5       2.4      -0.4\n>> > > 10  -0.5   0.6   2.7       3.3      -0.5\n>> > >\n>> > >\n>> > >\n>> > > > El 2 ene 2023, a las 6:31, Manuel Mendoza <\n>> mmendoza en fulbrightmail.org>\n>> > escribiÃ³:\n>> > > >\n>> > > > Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de\n>> los\n>> > > > valores positivos de cada fila, por una parte, y la de los negativos\n>> > por\n>> > > > otra. QuÃ© variables toman valores positivos y negativos varÃ­a de una\n>> > fila a\n>> > > > otra, claro.\n>> > > > Gracias por vuestra ayuda,\n>> > > > Manuel\n>> > > >\n>> > > >         [[alternative HTML version deleted]]\n>> > > >\n>> > > > _______________________________________________\n>> > > > R-help-es mailing list\n>> > > > R-help-es en r-project.org\n>> > > >\n>> >\n>> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n>> > > >\n>> > >\n>> > >\n>> > >         [[alternative HTML version deleted]]\n>> > >\n>> > > _______________________________________________\n>> > > R-help-es mailing list\n>> > > R-help-es en r-project.org\n>> > >\n>> >\n>> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n>> > >\n>> > _______________________________________________\n>> > R-help-es mailing list\n>> > R-help-es en r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Carlos, y aprovecho para felicitaros tambiÃ©n el aÃ±o nuevo..\nManuel\n\nEl lun, 2 ene 2023 a las 13:03, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Hola,\n>\n> Feliz AÃ±o!.\n> Por n",
+      "thread_id": "thread-ecaf7ff2f5eb",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-ca7888ae07bf",
+      "message_id": "<c4c1c7e5632dd71af54ce42da57a3012edf6558f.camel@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2023-01-02T22:17:20+01:00",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "subject_clean": "[R-es] Sumar positivos y negativos por separado",
+      "in_reply_to": "<CAF3uytXs8vqgD_VeotQRAoVucQXT7sbz5S0uiicgYG8jzfp8Dw@mail.gmail.com>",
+      "references": [
+        "<CAF3uytXs=bEyq32YB_7qo_ZBHavgFZwjQnERrwz=zU_V+mhipQ@mail.gmail.com>",
+        "<E49A2E2A-B0E6-45D3-A720-CE9DC8618E10@gmail.com>",
+        "<15506afd286a6bf82a10925541b0b6d200b073a4.camel@uca.es>",
+        "<CAF3uytXs8vqgD_VeotQRAoVucQXT7sbz5S0uiicgYG8jzfp8Dw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nHe usado el data.frame Chile, pero puedes usar cualquier otro.\n\nDe las sumas se han omitido los NA, de lo contrario la suma siempre saldrÃ­a NA. AdemÃ¡s para las columnas no numÃ©ricas el resultado es NA.\n\nlibrary(carData)\ndata(Chile)\n\nsump <- function(x) {\n    if (is.numeric(x)) {\n        sum(x[x > 0], na.rm = TRUE) }\n    else {\n            NA\n        }\n}\n\nsumn <- function(x) {\n    if (is.numeric(x)) {\n        sum(x[x < 0], na.rm = TRUE)\n    } else {\n        NA\n    }\n}\n\nsapply(Chile, FUN = sump)\n\nsapply(Chile, FUN = sumn)\n\n> sapply(Chile, FUN = sump)\n      region   population          sex          age    education       income \n          NA 4.110000e+08           NA 1.040430e+05           NA 8.814500e+07 \n   statusquo         vote \n1.203598e+03           NA \n> sapply(Chile, FUN = sumn)\n    region population        sex        age  education     income  statusquo \n        NA      0.000         NA      0.000         NA      0.000  -1203.598 \n      vote \n        NA \n\nSi no te importa que salga un aviso entonces las definiciones de sumn y sump se pueden simplificar como sigue:\n\n\nsump <- function(x) {\n   sum(x[x > 0], na.rm = TRUE) }\n}\n\nsumn <- function(x) {\n   sum(x[x < 0], na.rm = TRUE)\n}\n\nUn saludo.\n\nEl lun, 02-01-2023 a las 11:23 +0100, Manuel Mendoza escribiÃ³:\n> Gracias Emilio y Proyecto R-UCA, no consigo implementar ninguna de vuestras propuestas.\n> En la de Emilio sale bien hasta las funciones, incluidas, pero no entiendo a partir de: d |>\n> y me da error.\n> \n> Respecto a sum(x[x>0]), lamento deciros queÂ  tampocoÂ Â lo entiendo ni consigo implementarlo\n> \n> Â¿PodrÃ­ais darme mÃ¡s detalles?\n> \n> Gracias,\n> Manuel\n> \n> \n> El lun, 2 ene 2023 a las 10:23, Proyecto R-UCA (<r-uca en uca.es>) escribiÃ³:\n> > Buenas,\n> > \n> > Sin usar dplyr,\n> > \n> > Se puede hacer un bucle en las columnas y para cada columna\n> > \n> > sum(x[x>0])\n> > \n> > sum(x[x < 0])\n> > \n> > Un saludo.\n> > \n> > El lun, 02-01-2023 a las 09:02 +0100, Emilio L. Cano escribiÃ³:\n> > > Hola,\n> > > \n> > > Este serÃ­a un ejemplo reproducible rÃ¡pido. A mÃ­ para esto me gusta rowise() de {dplyr}. En c_across() se pueden seleccionar las\n> > > columnas a\n> > > conveniencia. Seguramente haya una forma de evitar crear las funciones. Si la suma la quieres en valor absoluto multiplicas por -1 en\n> > > suma_neg y listo.\n> > > \n> > > Un saludo,\n> > > Emilio\n> > > \n> > > \n> > > > set.seed(2023)\n> > > > d <- data.frame(a = round(rnorm(10), 1),\n> > > +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  b = round(rnorm(10), 1),\n> > > +Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â Â  c = round(rnorm(10), 1))\n> > > > d\n> > > Â Â Â Â Â  aÂ Â Â  bÂ Â Â  c\n> > > 1Â  -0.1Â  0.3 -0.4\n> > > 2Â  -1.0 -0.4 -0.3\n> > > 3Â  -1.9Â  0.6Â  1.2\n> > > 4Â  -0.2Â  0.7Â  0.2\n> > > 5Â  -0.6 -0.6 -0.4\n> > > 6Â Â  1.1Â  0.7 -1.8\n> > > 7Â  -0.9Â  0.6 -0.6\n> > > 8Â Â  1.0Â  0.5 -0.9\n> > > 9Â  -0.4Â  0.9Â  1.5\n> > > 10 -0.5Â  0.6Â  2.7\n> > > > \n> > > > library(dplyr)\n> > > > \n> > > > suma_pos <- function(x){\n> > > +Â Â  sum((x>0)*x)\n> > > + }\n> > > > suma_neg <- function(x){\n> > > +Â Â  sum((x<0)*x)\n> > > + }\n> > > > \n> > > > d |> \n> > > +Â Â  rowwise() |> \n> > > +Â Â  mutate(positivos = suma_pos(c_across()),\n> > > +Â Â Â Â Â Â Â Â Â  negativos = suma_neg(c_across()))\n> > > # A tibble: 10 Ã— 5\n> > > # Rowwise: \n> > > Â Â Â Â Â Â  aÂ Â Â Â  bÂ Â Â Â  c positivos negativos\n> > > Â Â  <dbl> <dbl> <dbl>Â Â Â Â  <dbl>Â Â Â Â  <dbl>\n> > > Â 1Â  -0.1Â Â  0.3Â  -0.4Â Â Â Â Â Â  0.3Â Â Â Â Â  -0.5\n> > > Â 2Â  -1Â Â Â  -0.4Â  -0.3Â Â Â Â Â Â  0Â Â Â Â Â Â Â  -1.7\n> > > Â 3Â  -1.9Â Â  0.6Â Â  1.2Â Â Â Â Â Â  1.8Â Â Â Â Â  -1.9\n> > > Â 4Â  -0.2Â Â  0.7Â Â  0.2Â Â Â Â Â Â  0.9Â Â Â Â Â  -0.2\n> > > Â 5Â  -0.6Â  -0.6Â  -0.4Â Â Â Â Â Â  0Â Â Â Â Â Â Â  -1.6\n> > > Â 6Â Â  1.1Â Â  0.7Â  -1.8Â Â Â Â Â Â  1.8Â Â Â Â Â  -1.8\n> > > Â 7Â  -0.9Â Â  0.6Â  -0.6Â Â Â Â Â Â  0.6Â Â Â Â Â  -1.5\n> > > Â 8Â Â  1Â Â Â Â  0.5Â  -0.9Â Â Â Â Â Â  1.5Â Â Â Â Â  -0.9\n> > > Â 9Â  -0.4Â Â  0.9Â Â  1.5Â Â Â Â Â Â  2.4Â Â Â Â Â  -0.4\n> > > 10Â  -0.5Â Â  0.6Â Â  2.7Â Â Â Â Â Â  3.3Â Â Â Â Â  -0.5\n> > > \n> > > \n> > > \n> > > > El 2 ene 2023, a las 6:31, Manuel Mendoza <mmendoza en fulbrightmail.org> escribiÃ³:\n> > > > \n> > > > Buenos dÃ­as, de un conjunto de variables, quiero obtener la suma de los\n> > > > valores positivos de cada fila, por una parte, y la de los negativos por\n> > > > otra. QuÃ© variables toman valores positivos y negativos varÃ­a de una fila a\n> > > > otra, claro.\n> > > > Gracias por vuestra ayuda,\n> > > > Manuel\n> > > > \n> > > > Â Â Â Â Â Â Â Â [[alternative HTML version deleted]]\n> > > > \n> > > > _______________________________________________\n> > > > R-help-es mailing list\n> > > > R-help-es en r-project.org\n> > > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n> > > > Â \n> > > \n> > > \n> > > Â Â Â Â Â Â Â Â [[alternative HTML version deleted]]\n> > > \n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org\n> > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XPbjkJgKEEP5dmap64bNfzfAmIe4ArK_nN4H9-QIBPAihE4aO-RS6q6YAaM3IT-sP9qA0PqeGoqQF7gIlec$\n> > > Â \n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Hola,\n\nHe usado el data.frame Chile, pero puedes usar cualquier otro.\n\nDe las sumas se han omitido los NA, de lo contrario la suma siempre saldrÃ­a NA. AdemÃ¡s para las columnas no numÃ©ricas el resul",
+      "thread_id": "thread-db381c68bb93",
+      "thread_depth": 4,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-a43710cb00ff",
+      "message_id": "<98D5B435-2A33-41D3-846D-A54CF599CCB3@galicia.com>",
+      "from_name": "Jesús López Témez",
+      "from_email_hash": "db3b4b214cdd6b4798a2036623e8157e28418d03d0e81da1cc293b1a85152ead",
+      "date": "2023-01-09T16:57:04+01:00",
+      "subject": "[R-es] Problemas con locale",
+      "subject_clean": "[R-es] Problemas con locale",
+      "in_reply_to": null,
+      "references": [
+        "<1242662F-A9B4-4FE2-98CB-960C527A072D@gmail.com>"
+      ],
+      "body_plain": "Buenas tardes. Â¿CÃ³mo puedo guardar el locale en espaÃ±ol en Rstudio? Me sale por defecto en inglÃ©s, despuÃ©s de actualizar a 4.2.0, y pese a que lo cambio con Sys.setlocale(category = \"LC_ALL\", locale = \"es_ES.UTF-8?) y lo guardo con Sys.setenv(LANG = \"es_ES.UTF-8?), al reiniciar me vuelve siempre al inglÃ©s.\n\nRstudio VersiÃ³n 2022.12.0+353 (2022.12.0+353) en un Mac, con el idioma de sistema en espaÃ±ol.\n\nGracias.",
+      "body_snippet": "Buenas tardes. Â¿CÃ³mo puedo guardar el locale en espaÃ±ol en Rstudio? Me sale por defecto en inglÃ©s, despuÃ©s de actualizar a 4.2.0, y pese a que lo cambio con Sys.setlocale(category = \"LC_ALL\", loc",
+      "thread_id": "thread-a43710cb00ff",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-5b6b8761bc10",
+      "message_id": "<FD7CF073-1609-4DD0-AB61-3B431CC6E9BC@galicia.com>",
+      "from_name": "Jesús López Témez",
+      "from_email_hash": "db3b4b214cdd6b4798a2036623e8157e28418d03d0e81da1cc293b1a85152ead",
+      "date": "2023-01-09T17:22:59+01:00",
+      "subject": "[R-es] Problemas con locale",
+      "subject_clean": "[R-es] Problemas con locale",
+      "in_reply_to": "<98D5B435-2A33-41D3-846D-A54CF599CCB3@galicia.com>",
+      "references": [
+        "<1242662F-A9B4-4FE2-98CB-960C527A072D@gmail.com>",
+        "<98D5B435-2A33-41D3-846D-A54CF599CCB3@galicia.com>"
+      ],
+      "body_plain": "Me respondo a mi mismo por si alguien tiene el mismo problema:\n\nLo he solucionado en el terminal mediante este comando: defaults write org.R-project.R force.LANG es_ES.UTF-8\nParece que era un problema de R, no de RStudio\n\nSaludos\n\n\n> El 9 ene 2023, a las 16:57, JesÃºs LÃ³pez TÃ©mez <jesusl.temez en galicia.com> escribiÃ³:\n> \n> Buenas tardes. Â¿CÃ³mo puedo guardar el locale en espaÃ±ol en Rstudio? Me sale por defecto en inglÃ©s, despuÃ©s de actualizar a 4.2.0, y pese a que lo cambio con Sys.setlocale(category = \"LC_ALL\", locale = \"es_ES.UTF-8?) y lo guardo con Sys.setenv(LANG = \"es_ES.UTF-8?), al reiniciar me vuelve siempre al inglÃ©s.\n> \n> Rstudio VersiÃ³n 2022.12.0+353 (2022.12.0+353) en un Mac, con el idioma de sistema en espaÃ±ol.\n> \n> Gracias.\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Me respondo a mi mismo por si alguien tiene el mismo problema:\n\nLo he solucionado en el terminal mediante este comando: defaults write org.R-project.R force.LANG es_ES.UTF-8\nParece que era un problema",
+      "thread_id": "thread-a43710cb00ff",
+      "thread_depth": 1,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-811583d806f8",
+      "message_id": "<CABaOv1H4cVf-KYoND537P0FAwvjWP43ud4e8=j3m8Cf2isdc1g@mail.gmail.com>",
+      "from_name": "David Camilo Gomez Medina",
+      "from_email_hash": "e47f2c2004507eeacc3537fc29662f55217a99e7fc4199db1185d095750fe133",
+      "date": "2023-01-18T13:29:21-05:00",
+      "subject": "[R-es] Suma de datos de una tabla",
+      "subject_clean": "[R-es] Suma de datos de una tabla",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola, espero que se encuentren muy bien.\n\nTengo una tabla de datos de precipitaciÃ³n y quiero sumar por columnas y asÃ­\nobtener la precipitaciÃ³n anual. Es decir, quiero sumar solo los datos del\naÃ±o 2000 y guardarlos en una lista y asÃ­ sucesivamente con los demÃ¡s aÃ±os,\npero no encuentro todavÃ­a una funciÃ³n o una manera eficiente de hacerlo.\n\nAgradecerÃ­a mucho si alguien me puede guiar.\n\nSaludos\n\n[image: image.png]\n\n-- \n*Aviso legal:*Â El contenido de este mensaje y los archivos adjuntos son \nconfidenciales y de uso exclusivo de la Universidad Nacional de Colombia. \nSe encuentran dirigidos sÃ³lo para el uso del destinatario al cual van \nenviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a \ncualquier persona diferente a este y puede ser ilegal. Si usted lo ha \nrecibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos \nPersonales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra \nPolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina webÂ \nwww.unal.edu.co <http://www.unal.edu.co/>.*Â *Las opiniones, informaciones, \nconclusiones y cualquier otro tipo de dato contenido en este correo \nelectrÃ³nico, no relacionados con la actividad de la Universidad Nacional de \nColombia, se entenderÃ¡ como personales y de ninguna manera son avaladas por \nla Universidad.\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230118/ce36ce08/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 18015 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230118/ce36ce08/attachment-0001.png>",
+      "body_snippet": "Hola, espero que se encuentren muy bien.\n\nTengo una tabla de datos de precipitaciÃ³n y quiero sumar por columnas y asÃ­\nobtener la precipitaciÃ³n anual. Es decir, quiero sumar solo los datos del\naÃ±o ",
+      "thread_id": "thread-811583d806f8",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-4d1bd464fdb0",
+      "message_id": "<CABaOv1ENQn8UagqRp6hPH-1K8hiQZDU9HQ=c-g9XkjLrXn4QfQ@mail.gmail.com>",
+      "from_name": "David Camilo Gomez Medina",
+      "from_email_hash": "e47f2c2004507eeacc3537fc29662f55217a99e7fc4199db1185d095750fe133",
+      "date": "2023-01-18T14:13:18-05:00",
+      "subject": "[R-es] Suma de datos de una tabla",
+      "subject_clean": "[R-es] Suma de datos de una tabla",
+      "in_reply_to": "<CAOKbq8huoCtNSbwgc_K-aJCRHy8--UP8vNZ+1UPrC6u17yPYPQ@mail.gmail.com>",
+      "references": [
+        "<CABaOv1H4cVf-KYoND537P0FAwvjWP43ud4e8=j3m8Cf2isdc1g@mail.gmail.com>",
+        "<CAOKbq8huoCtNSbwgc_K-aJCRHy8--UP8vNZ+1UPrC6u17yPYPQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Carlos.\n\nPor ejemplo la segunda columna (16040050), quiero sumar todos los datos de\nesa columna correspondientes al aÃ±o 2000 (quiero relacionarlos con la\nprimera columna donde estÃ¡ la fecha) y ese valor almacenarlo en una lista y\nasÃ­ sucesivamente con los demÃ¡s aÃ±os y con las demÃ¡s columnas.\n\nTengo pensado una lista asÃ­:\n\nest_16040050\n\n[[2000]]\n[1] 2.3\n\n[[2001]]\n[1] 1.7\n\n[[2002]]\n[1] 4.8\n\nQuedo muy atento a sus sugerencias o guÃ­as.\n\nSaludos.\n\nOn Wed, 18 Jan 2023 at 13:52, Carlos Ortega <cof en qualityexcellence.es>\nwrote:\n\n> Hola,\n>\n> Por entenderlo mejor, quieres que para las filas, para cada aÃ±o:\n>\n>    1. se sumen las columnas y por tanto tengas tantas sumas como columnas.\n>    2. o sumar todas las columnas y obtener una Ãºnica suma.\n>\n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El miÃ©, 18 ene 2023 a las 19:29, David Camilo Gomez Medina (<\n> dcgomezme en unal.edu.co>) escribiÃ³:\n>\n>> Hola, espero que se encuentren muy bien.\n>>\n>> Tengo una tabla de datos de precipitaciÃ³n y quiero sumar por columnas y\n>> asÃ­ obtener la precipitaciÃ³n anual. Es decir, quiero sumar solo los datos\n>> del aÃ±o 2000 y guardarlos en una lista y asÃ­ sucesivamente con los demÃ¡s\n>> aÃ±os, pero no encuentro todavÃ­a una funciÃ³n o una manera eficiente de\n>> hacerlo.\n>>\n>> AgradecerÃ­a mucho si alguien me puede guiar.\n>>\n>> Saludos\n>>\n>> [image: image.png]\n>>\n>> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son\n>> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.\n>> Se encuentran dirigidos sÃ³lo para el uso del destinatario al cual van\n>> enviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a\n>> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha\n>> recibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos\n>> Personales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra\n>> PolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina web\n>> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier\n>> otro tipo de dato contenido en este correo electrÃ³nico, no relacionados con\n>> la actividad de la Universidad Nacional de Colombia, se entenderÃ¡ como\n>> personales y de ninguna manera son avaladas por la Universidad.\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n-- \n*Aviso legal:*Â El contenido de este mensaje y los archivos adjuntos son \nconfidenciales y de uso exclusivo de la Universidad Nacional de Colombia. \nSe encuentran dirigidos sÃ³lo para el uso del destinatario al cual van \nenviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a \ncualquier persona diferente a este y puede ser ilegal. Si usted lo ha \nrecibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos \nPersonales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra \nPolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina webÂ \nwww.unal.edu.co <http://www.unal.edu.co/>.*Â *Las opiniones, informaciones, \nconclusiones y cualquier otro tipo de dato contenido en este correo \nelectrÃ³nico, no relacionados con la actividad de la Universidad Nacional de \nColombia, se entenderÃ¡ como personales y de ninguna manera son avaladas por \nla Universidad.\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230118/f31b03dc/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 18015 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230118/f31b03dc/attachment-0001.png>",
+      "body_snippet": "Hola Carlos.\n\nPor ejemplo la segunda columna (16040050), quiero sumar todos los datos de\nesa columna correspondientes al aÃ±o 2000 (quiero relacionarlos con la\nprimera columna donde estÃ¡ la fecha) y ",
+      "thread_id": "thread-4d1bd464fdb0",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-9d062a45d288",
+      "message_id": "<CABaOv1HtvNXGpZqEbdNs9FvZahjKbkZ8odzD+A4P_mYzk_p+vw@mail.gmail.com>",
+      "from_name": "David Camilo Gomez Medina",
+      "from_email_hash": "e47f2c2004507eeacc3537fc29662f55217a99e7fc4199db1185d095750fe133",
+      "date": "2023-01-18T14:14:19-05:00",
+      "subject": "[R-es] Suma de datos de una tabla",
+      "subject_clean": "[R-es] Suma de datos de una tabla",
+      "in_reply_to": "<CABaOv1ENQn8UagqRp6hPH-1K8hiQZDU9HQ=c-g9XkjLrXn4QfQ@mail.gmail.com>",
+      "references": [
+        "<CABaOv1H4cVf-KYoND537P0FAwvjWP43ud4e8=j3m8Cf2isdc1g@mail.gmail.com>",
+        "<CAOKbq8huoCtNSbwgc_K-aJCRHy8--UP8vNZ+1UPrC6u17yPYPQ@mail.gmail.com>",
+        "<CABaOv1ENQn8UagqRp6hPH-1K8hiQZDU9HQ=c-g9XkjLrXn4QfQ@mail.gmail.com>"
+      ],
+      "body_plain": "No sÃ© si olvidÃ© aclarar, pero quiero crear una lista para cada columna y\nasÃ­ almacenar esos valores.\n\nOn Wed, 18 Jan 2023 at 14:13, David Camilo Gomez Medina <\ndcgomezme en unal.edu.co> wrote:\n\n> Hola Carlos.\n>\n> Por ejemplo la segunda columna (16040050), quiero sumar todos los datos de\n> esa columna correspondientes al aÃ±o 2000 (quiero relacionarlos con la\n> primera columna donde estÃ¡ la fecha) y ese valor almacenarlo en una lista y\n> asÃ­ sucesivamente con los demÃ¡s aÃ±os y con las demÃ¡s columnas.\n>\n> Tengo pensado una lista asÃ­:\n>\n> est_16040050\n>\n> [[2000]]\n> [1] 2.3\n>\n> [[2001]]\n> [1] 1.7\n>\n> [[2002]]\n> [1] 4.8\n>\n> Quedo muy atento a sus sugerencias o guÃ­as.\n>\n> Saludos.\n>\n> On Wed, 18 Jan 2023 at 13:52, Carlos Ortega <cof en qualityexcellence.es>\n> wrote:\n>\n>> Hola,\n>>\n>> Por entenderlo mejor, quieres que para las filas, para cada aÃ±o:\n>>\n>>    1. se sumen las columnas y por tanto tengas tantas sumas como\n>>    columnas.\n>>    2. o sumar todas las columnas y obtener una Ãºnica suma.\n>>\n>> Gracias,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>> El miÃ©, 18 ene 2023 a las 19:29, David Camilo Gomez Medina (<\n>> dcgomezme en unal.edu.co>) escribiÃ³:\n>>\n>>> Hola, espero que se encuentren muy bien.\n>>>\n>>> Tengo una tabla de datos de precipitaciÃ³n y quiero sumar por columnas y\n>>> asÃ­ obtener la precipitaciÃ³n anual. Es decir, quiero sumar solo los datos\n>>> del aÃ±o 2000 y guardarlos en una lista y asÃ­ sucesivamente con los demÃ¡s\n>>> aÃ±os, pero no encuentro todavÃ­a una funciÃ³n o una manera eficiente de\n>>> hacerlo.\n>>>\n>>> AgradecerÃ­a mucho si alguien me puede guiar.\n>>>\n>>> Saludos\n>>>\n>>> [image: image.png]\n>>>\n>>> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son\n>>> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.\n>>> Se encuentran dirigidos sÃ³lo para el uso del destinatario al cual van\n>>> enviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a\n>>> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha\n>>> recibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos\n>>> Personales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra\n>>> PolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina web\n>>> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier\n>>> otro tipo de dato contenido en este correo electrÃ³nico, no relacionados con\n>>> la actividad de la Universidad Nacional de Colombia, se entenderÃ¡ como\n>>> personales y de ninguna manera son avaladas por la Universidad.\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>\n>>\n>> --\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>\n\n-- \n*Aviso legal:*Â El contenido de este mensaje y los archivos adjuntos son \nconfidenciales y de uso exclusivo de la Universidad Nacional de Colombia. \nSe encuentran dirigidos sÃ³lo para el uso del destinatario al cual van \nenviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a \ncualquier persona diferente a este y puede ser ilegal. Si usted lo ha \nrecibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos \nPersonales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra \nPolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina webÂ \nwww.unal.edu.co <http://www.unal.edu.co/>.*Â *Las opiniones, informaciones, \nconclusiones y cualquier otro tipo de dato contenido en este correo \nelectrÃ³nico, no relacionados con la actividad de la Universidad Nacional de \nColombia, se entenderÃ¡ como personales y de ninguna manera son avaladas por \nla Universidad.\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230118/da51dd9c/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 18015 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230118/da51dd9c/attachment-0001.png>",
+      "body_snippet": "No sÃ© si olvidÃ© aclarar, pero quiero crear una lista para cada columna y\nasÃ­ almacenar esos valores.\n\nOn Wed, 18 Jan 2023 at 14:13, David Camilo Gomez Medina <\ndcgomezme en unal.edu.co> wrote:\n\n> H",
+      "thread_id": "thread-4d1bd464fdb0",
+      "thread_depth": 1,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-153671223af2",
+      "message_id": "<CACEaGhNAMGXGWSDJw6FGMmjQDiBqcSV_rxq9aByZf5xr2Wp2+w@mail.gmail.com>",
+      "from_name": "patricio fuenmayor",
+      "from_email_hash": "59b445396ac723c905e0d4234add3713852acb63455a0cf9f26748b90720a213",
+      "date": "2023-01-18T22:19:26-05:00",
+      "subject": "[R-es] función dinámica con lapply en un data.table",
+      "subject_clean": "[R-es] función dinámica con lapply en un data.table",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola a todos, espero que se encuentren bien.!!!\n\nAndo buscando la forma \"elegante\" de hacer esto.\n\nTengo un data.table al que a ciertas columnas debo mullicarlas por un\nfactor, pero ese factor es distinto para cada columna y lo tengo en\nun data.table a parte de parÃ¡metros\n\ntengo pensado esto pero no logro implementarlo:\n\ncol_mdf <- c(\"A\",\"B\") # lista de columnas a multiplicar por un factor\n\ndt[,c(col_mdf):=lapply(.SD,\\(x,y) x*y),.SDcols=col_mdf]\n\nlo que no logro es que \"y\" sea el factor que debe ser correspondiente a \"x\"\nen la tabla de parÃ¡metros\n\nGracias por si se les ocurre una manera\n\nPD: ya lo hice con un bucle for, pero me gustaria hacerlo con la familia\napply y/o map\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos, espero que se encuentren bien.!!!\n\nAndo buscando la forma \"elegante\" de hacer esto.\n\nTengo un data.table al que a ciertas columnas debo mullicarlas por un\nfactor, pero ese factor es dist",
+      "thread_id": "thread-153671223af2",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-0d71b953d4be",
+      "message_id": "<d54de55f6a0d982c4797617a932a6fcb3a9b2963.camel@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2023-01-19T09:02:30+01:00",
+      "subject": "[R-es] Suma de datos de una tabla",
+      "subject_clean": "[R-es] Suma de datos de una tabla",
+      "in_reply_to": "<CABaOv1HtvNXGpZqEbdNs9FvZahjKbkZ8odzD+A4P_mYzk_p+vw@mail.gmail.com>",
+      "references": [
+        "<CABaOv1H4cVf-KYoND537P0FAwvjWP43ud4e8=j3m8Cf2isdc1g@mail.gmail.com>",
+        "<CAOKbq8huoCtNSbwgc_K-aJCRHy8--UP8vNZ+1UPrC6u17yPYPQ@mail.gmail.com>",
+        "<CABaOv1ENQn8UagqRp6hPH-1K8hiQZDU9HQ=c-g9XkjLrXn4QfQ@mail.gmail.com>",
+        "<CABaOv1HtvNXGpZqEbdNs9FvZahjKbkZ8odzD+A4P_mYzk_p+vw@mail.gmail.com>"
+      ],
+      "body_plain": "Buenas, \n\nCreo que el siguiente cÃ³digo hace lo que pides, cambiando Chile y las columnas por los de tu caso.\n\nlibrary(carData)\ndata(Chile)\nindice <- sort(unique(Chile$population))\n\nf <- function(valor, data, indice) {\n    sum(data[indice == valor], na.rm = TRUE)\n}\n\n## Una lista con las sumas de income segÃºn population\nlapply(indice, f, Chile$income, Chile$population)\n\nff <- function(data, indice) {\n    index <- sort(unique(indice))\n    lapply(index, f, data, indice)\n    }\n\n## Una lista con tantos elementos como columnas\n## Cada elemento es una lista con los valores de las sumas\ndata <- Chile[, c('population', 'income')]\napply(data, 2, ff, Chile$population)\n\nManuel, un saludo\n\n\n\nEl miÃ©, 18-01-2023 a las 14:14 -0500, David Camilo Gomez Medina escribiÃ³:\n> No sÃ© si olvidÃ© aclarar, pero quiero crear una lista para cada columna y asÃ­ almacenar esos valores.\n> \n> On Wed, 18 Jan 2023 at 14:13, David Camilo Gomez Medina <dcgomezme en unal.edu.co> wrote:\n> > Hola Carlos.\n> > \n> > Por ejemplo la segunda columna (16040050), quiero sumar todos los datos de esa columna correspondientes al aÃ±o 2000 (quiero\n> > relacionarlos con la primera columna donde estÃ¡ la fecha) y ese valor almacenarlo en una lista y asÃ­ sucesivamente con los demÃ¡s aÃ±os y\n> > con las demÃ¡s columnas.\n> > \n> > Tengo pensado una lista asÃ­:\n> > \n> > est_16040050Â \n> > \n> > [[2000]]\n> > [1] 2.3\n> > \n> > [[2001]]\n> > [1] 1.7\n> > \n> > [[2002]]\n> > [1] 4.8\n> > \n> > Quedo muy atento a sus sugerencias o guÃ­as.\n> > \n> > Saludos.\n> > \n> > On Wed, 18 Jan 2023 at 13:52, Carlos Ortega <cof en qualityexcellence.es> wrote:\n> > > Hola, \n> > > \n> > > Por entenderlo mejor, quieres que para las filas, para cada aÃ±o:\n> > > Â Â Â 1. se sumen las columnas y por tanto tengas tantas sumas como columnas.\n> > > Â Â Â 2. o sumar todas las columnas y obtener una Ãºnica suma.\n> > > Gracias,\n> > > Carlos Ortega\n> > > www.qualityexcellence.es\n> > > \n> > > El miÃ©, 18 ene 2023 a las 19:29, David Camilo Gomez Medina (<dcgomezme en unal.edu.co>) escribiÃ³:\n> > > > Hola, espero que se encuentren muy bien.\n> > > > \n> > > > Tengo una tabla de datos de precipitaciÃ³n y quiero sumar por columnas y asÃ­ obtener la precipitaciÃ³n anual. Es decir, quiero sumar\n> > > > solo los datos del aÃ±o 2000 y guardarlos en una lista y asÃ­ sucesivamente con los demÃ¡s aÃ±os, pero no encuentro todavÃ­a una funciÃ³n\n> > > > o una manera eficiente de hacerlo.Â \n> > > > \n> > > > AgradecerÃ­a mucho si alguien me puede guiar.\n> > > > \n> > > > Saludos\n> > > > \n> > > > image.png\n> > > > \n> > > > Aviso legal:Â El contenido de este mensaje y los archivos adjuntos son confidenciales y de uso exclusivo de la Universidad Nacional\n> > > > de Colombia. Se encuentran dirigidos sÃ³lo para el uso del destinatario al cual van enviados. La reproducciÃ³n, lectura y/o copia se\n> > > > encuentran prohibidas a cualquier persona diferente a este y puede ser ilegal. Si usted lo ha recibido por error, infÃ³rmenos y\n> > > > elimÃ­nelo de su correo. Los Datos Personales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra PolÃ­tica de Datos Personales\n> > > > que podrÃ¡ consultar en la pÃ¡gina webÂ www.unal.edu.co.Â Las opiniones, informaciones, conclusiones y cualquier otro tipo de dato\n> > > > contenido en este correo electrÃ³nico, no relacionados con la actividad de la Universidad Nacional de Colombia, se entenderÃ¡ como\n> > > > personales y de ninguna manera son avaladas por la Universidad.\n> > > > _______________________________________________\n> > > > R-help-es mailing list\n> > > > R-help-es en r-project.org\n> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > > \n> > > \n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org\n> > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!Tgeig9lQK2J7Ho1714GCysi3CyV1Wuw9nLrzOWXrbyFyjgdlIlc5RIm24iXMtqtfVhg0EZrc2a06dVQLIOE$\n> > >",
+      "body_snippet": "Buenas, \n\nCreo que el siguiente cÃ³digo hace lo que pides, cambiando Chile y las columnas por los de tu caso.\n\nlibrary(carData)\ndata(Chile)\nindice <- sort(unique(Chile$population))\n\nf <- function(valo",
+      "thread_id": "thread-4d1bd464fdb0",
+      "thread_depth": 2,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-664df1e19bc1",
+      "message_id": "<CACEaGhO2B7bWdQnRVxwjJqgzTU7kvjX0wXSJM7aALiEht2DWQA@mail.gmail.com>",
+      "from_name": "patricio fuenmayor",
+      "from_email_hash": "59b445396ac723c905e0d4234add3713852acb63455a0cf9f26748b90720a213",
+      "date": "2023-01-19T08:44:37-05:00",
+      "subject": "[R-es]  función dinámica con lapply en un data.table",
+      "subject_clean": "[R-es]  función dinámica con lapply en un data.table",
+      "in_reply_to": "<CAOKbq8hSv326q11MpcSE68Zaw3F7OeM_zsUbmViX8Zrq_WOhLQ@mail.gmail.com>",
+      "references": [
+        "<CACEaGhNAMGXGWSDJw6FGMmjQDiBqcSV_rxq9aByZf5xr2Wp2+w@mail.gmail.com>",
+        "<CAOKbq8hSv326q11MpcSE68Zaw3F7OeM_zsUbmViX8Zrq_WOhLQ@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Carlos\nte cuento que el factor debe multiplicar a la columna\nen lo que envÃ­as ... estÃ¡ multiplicando a cada fila consecutivamente\nle metÃ­ un poco de cabeza y logrÃ© hacerlo con furrr::future_imap\n\ndat1[,c(col_mdf):=furrr::future_imap(.SD,~as.integer(.x)/cfg3[hmlg_col_nm==.y,fct_vl]),.SDcols=col_mdf]\n\ndonde cfg3 es ta tabla de parÃ¡metros que arroja el factor cuando el nombre\nde la variable coincide con el .y del barrido\n\ngracias por tu apoyo !!!\n\n\n\n\n\n\n\n\n\nEl jue, 19 ene 2023 a la(s) 02:36, Carlos Ortega (cof en qualityexcellence.es)\nescribiÃ³:\n\n> Hola,\n>\n> SÃ­, puede ser asÃ­:\n>\n> #------------------------\n> library(data.table)\n>\n> # Convertir iris en un data.table\n> iris_dt <- as.data.table(iris)\n> iris_dt\n>\n> # Crear vectores con nombres de columnas y factores\n> cols_to_mult <- c(\"Sepal.Length\", \"Sepal.Width\", \"Petal.Length\")\n> factors <- c(2,3,4)\n>\n> iris_dt[, (cols_to_mult) := lapply(.SD, function(x) x*factors), .SDcols =\n> cols_to_mult]\n>\n> #---------------------------\n>\n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El jue, 19 ene 2023 a las 4:20, patricio fuenmayor (<\n> patricio.fuenmayor en gmail.com>) escribiÃ³:\n>\n>> Hola a todos, espero que se encuentren bien.!!!\n>>\n>> Ando buscando la forma \"elegante\" de hacer esto.\n>>\n>> Tengo un data.table al que a ciertas columnas debo mullicarlas por un\n>> factor, pero ese factor es distinto para cada columna y lo tengo en\n>> un data.table a parte de parÃ¡metros\n>>\n>> tengo pensado esto pero no logro implementarlo:\n>>\n>> col_mdf <- c(\"A\",\"B\") # lista de columnas a multiplicar por un factor\n>>\n>> dt[,c(col_mdf):=lapply(.SD,\\(x,y) x*y),.SDcols=col_mdf]\n>>\n>> lo que no logro es que \"y\" sea el factor que debe ser correspondiente a\n>> \"x\"\n>> en la tabla de parÃ¡metros\n>>\n>> Gracias por si se les ocurre una manera\n>>\n>> PD: ya lo hice con un bucle for, pero me gustaria hacerlo con la familia\n>> apply y/o map\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Carlos\nte cuento que el factor debe multiplicar a la columna\nen lo que envÃ­as ... estÃ¡ multiplicando a cada fila consecutivamente\nle metÃ­ un poco de cabeza y logrÃ© hacerlo con furrr::futur",
+      "thread_id": "thread-664df1e19bc1",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-b3241e6143d7",
+      "message_id": "<CABaOv1GOZz-i=5OeCw+XkJVSiJmaPfr1W36vGF6rd9JonRiwYQ@mail.gmail.com>",
+      "from_name": "David Camilo Gomez Medina",
+      "from_email_hash": "e47f2c2004507eeacc3537fc29662f55217a99e7fc4199db1185d095750fe133",
+      "date": "2023-01-19T14:33:40-05:00",
+      "subject": "[R-es] Suma de datos de una tabla",
+      "subject_clean": "[R-es] Suma de datos de una tabla",
+      "in_reply_to": "<CAOKbq8ipYx7dD4KYbST4zoDF+DrTuDJ2EkfKZSqrN=XiAPG7vQ@mail.gmail.com>",
+      "references": [
+        "<CABaOv1H4cVf-KYoND537P0FAwvjWP43ud4e8=j3m8Cf2isdc1g@mail.gmail.com>",
+        "<CAOKbq8huoCtNSbwgc_K-aJCRHy8--UP8vNZ+1UPrC6u17yPYPQ@mail.gmail.com>",
+        "<CABaOv1ENQn8UagqRp6hPH-1K8hiQZDU9HQ=c-g9XkjLrXn4QfQ@mail.gmail.com>",
+        "<CABaOv1HtvNXGpZqEbdNs9FvZahjKbkZ8odzD+A4P_mYzk_p+vw@mail.gmail.com>",
+        "<CAOKbq8jr+qwARSkpyF12kTtgfAswtB7HF9L-WzfBVmXUVxw_TQ@mail.gmail.com>",
+        "<CABaOv1FE1bTeX3pNgd228bb5nWDPDSCpjbqS+WCefmqLeZo9SA@mail.gmail.com>",
+        "<CAOKbq8ipYx7dD4KYbST4zoDF+DrTuDJ2EkfKZSqrN=XiAPG7vQ@mail.gmail.com>"
+      ],
+      "body_plain": "Muchas gracias Carlos y Manuel por el aporte, me ayudÃ³ bastante.\n\nOn Thu, 19 Jan 2023 at 04:12, Carlos Ortega <cof en qualityexcellence.es>\nwrote:\n\n> Hola,\n>\n> SÃ­, he cambiado de forma de hacerlo, asÃ­ lo tienes directo en un\n> data.table...\n> Y sale el 2000 que no sÃ© porquÃ© no salÃ­a antes.\n>\n> #---------------------------------\n> library(readxl)\n> library(data.table)\n> library(tidytable)\n> library(lubridate)\n>\n> datos <- read_excel(\"PPT.xlsx\") %>%\n>   as.data.table() %>%\n>   rename.(fecha = Fecha) %>%\n>   mutate.( year = as.factor(year(ymd(fecha)) )) %>%\n>   select.(-fecha) %>%\n>   as.data.table()\n>\n> # Crear vectores con nombres de columnas y factores\n> cols_to_sum <- datos %>% select.(where(is.numeric)) %>% names()\n> resultado <- datos[, lapply(.SD, function(x) sum(x, na.rm = TRUE )),\n> .SDcols = cols_to_sum, by = year]\n> #--------------------------------\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El miÃ©, 18 ene 2023 a las 23:57, David Camilo Gomez Medina (<\n> dcgomezme en unal.edu.co>) escribiÃ³:\n>\n>> Hola Carlos, muchÃ­simas gracias. Me sirviÃ³ muchÃ­simo y me hiciste caer en\n>> cuenta en que es mejor dejarlo en un dataframe y no en lista. Estoy\n>> iniciando en esto porque manejar ese volumen de datos en Excel es muy\n>> tedioso.\n>>\n>> SeguÃ­ tu cÃ³digo y lo apliquÃ©, pero mira que no me estÃ¡ dando la suma de\n>> manera correcta y tambiÃ©n no me aparece el aÃ±o 2000 y 2020. Adjunto una\n>> captura del resultado, de cÃ³mo apliquÃ© el cÃ³digo y tambiÃ©n el archivo con\n>> el que estoy trabajando.\n>>\n>> library(readxl)\n>> library(tidyverse)\n>>\n>> ppt <- read_excel(\"PPT.xlsx\")\n>>\n>> ppt <- transform(ppt, Fecha = as.Date(Fecha))\n>>\n>> ppt$year <- as.integer(format(as.Date(ppt$Fecha), \"%Y\"))\n>>\n>> result <- aggregate(. ~ year, data = ppt[, -1], sum, na.rm = T)\n>>\n>> Saludos,\n>>\n>> [image: image.png]\n>>\n>> On Wed, 18 Jan 2023 at 16:10, Carlos Ortega <cof en qualityexcellence.es>\n>> wrote:\n>>\n>>> Hola,\n>>>\n>>> De esta forma se aproxima bastante a lo que quieres...\n>>>\n>>> #-----------------------------------------------------\n>>> #--- Generar datos de forma sintÃ©tica.\n>>> library(dplyr)\n>>>\n>>> # nÃºmero de sitios\n>>> N <- 5\n>>>\n>>> # nÃºmero de fechas\n>>> num_dates <- 365\n>>>\n>>> # generar fechas para 2019, 2021 y 2022\n>>> dates_2019 <- seq(as.Date(\"2019-01-01\"), as.Date(\"2019-12-31\"), by =\n>>> \"day\")\n>>> dates_2021 <- seq(as.Date(\"2021-01-01\"), as.Date(\"2021-12-31\"), by =\n>>> \"day\")\n>>> dates_2022 <- seq(as.Date(\"2022-01-01\"), as.Date(\"2022-12-31\"), by =\n>>> \"day\")\n>>> dates <-\n>>> c(rep(dates_2019,num_dates),rep(dates_2021,num_dates),rep(dates_2022,num_dates))\n>>>\n>>> # generar nombres de columnas\n>>> colnames <- c(\"fecha\", paste0(\"Sitio_\", 1:N))\n>>>\n>>> # generar dataframe vacÃ­o\n>>> df <- data.frame(matrix(nrow = length(dates), ncol = N + 1))\n>>> colnames(df) <- colnames\n>>> df$fecha <- dates\n>>>\n>>> # generar valores aleatorios\n>>> for (i in 2:(N + 1)) {\n>>>   df[,i] <- rnorm(length(dates), mean = 50, sd = 10)\n>>> }\n>>>\n>>> #----- CÃ¡lculo como dataframe.\n>>> df$year <- as.integer(format(as.Date(df$fecha), \"%Y\"))\n>>> result <- aggregate(. ~ year, data=df[, -1], sum)\n>>>\n>>> #----- Como lista...\n>>> result_list <- list()\n>>> # Aplicar aggregate() a cada columna de sitio\n>>> agg_list <- lapply(df[,-1], function(x) aggregate(x ~ year, data =\n>>> df[,-1], sum))\n>>>\n>>> # Aplicar split() a cada elemento de la lista de aggregate()\n>>> result_list <- lapply(agg_list, function(x) split(x, x$year))\n>>>\n>>>\n>>> Saludos,\n>>> Carlos Ortega\n>>> www.qualityexcellence.es\n>>>\n>>> El miÃ©, 18 ene 2023 a las 20:14, David Camilo Gomez Medina (<\n>>> dcgomezme en unal.edu.co>) escribiÃ³:\n>>>\n>>>> No sÃ© si olvidÃ© aclarar, pero quiero crear una lista para cada columna\n>>>> y asÃ­ almacenar esos valores.\n>>>>\n>>>> On Wed, 18 Jan 2023 at 14:13, David Camilo Gomez Medina <\n>>>> dcgomezme en unal.edu.co> wrote:\n>>>>\n>>>>> Hola Carlos.\n>>>>>\n>>>>> Por ejemplo la segunda columna (16040050), quiero sumar todos los\n>>>>> datos de esa columna correspondientes al aÃ±o 2000 (quiero relacionarlos con\n>>>>> la primera columna donde estÃ¡ la fecha) y ese valor almacenarlo en una\n>>>>> lista y asÃ­ sucesivamente con los demÃ¡s aÃ±os y con las demÃ¡s columnas.\n>>>>>\n>>>>> Tengo pensado una lista asÃ­:\n>>>>>\n>>>>> est_16040050\n>>>>>\n>>>>> [[2000]]\n>>>>> [1] 2.3\n>>>>>\n>>>>> [[2001]]\n>>>>> [1] 1.7\n>>>>>\n>>>>> [[2002]]\n>>>>> [1] 4.8\n>>>>>\n>>>>> Quedo muy atento a sus sugerencias o guÃ­as.\n>>>>>\n>>>>> Saludos.\n>>>>>\n>>>>> On Wed, 18 Jan 2023 at 13:52, Carlos Ortega <cof en qualityexcellence.es>\n>>>>> wrote:\n>>>>>\n>>>>>> Hola,\n>>>>>>\n>>>>>> Por entenderlo mejor, quieres que para las filas, para cada aÃ±o:\n>>>>>>\n>>>>>>    1. se sumen las columnas y por tanto tengas tantas sumas como\n>>>>>>    columnas.\n>>>>>>    2. o sumar todas las columnas y obtener una Ãºnica suma.\n>>>>>>\n>>>>>> Gracias,\n>>>>>> Carlos Ortega\n>>>>>> www.qualityexcellence.es\n>>>>>>\n>>>>>> El miÃ©, 18 ene 2023 a las 19:29, David Camilo Gomez Medina (<\n>>>>>> dcgomezme en unal.edu.co>) escribiÃ³:\n>>>>>>\n>>>>>>> Hola, espero que se encuentren muy bien.\n>>>>>>>\n>>>>>>> Tengo una tabla de datos de precipitaciÃ³n y quiero sumar por\n>>>>>>> columnas y asÃ­ obtener la precipitaciÃ³n anual. Es decir, quiero sumar solo\n>>>>>>> los datos del aÃ±o 2000 y guardarlos en una lista y asÃ­ sucesivamente con\n>>>>>>> los demÃ¡s aÃ±os, pero no encuentro todavÃ­a una funciÃ³n o una manera\n>>>>>>> eficiente de hacerlo.\n>>>>>>>\n>>>>>>> AgradecerÃ­a mucho si alguien me puede guiar.\n>>>>>>>\n>>>>>>> Saludos\n>>>>>>>\n>>>>>>> [image: image.png]\n>>>>>>>\n>>>>>>> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos\n>>>>>>> son confidenciales y de uso exclusivo de la Universidad Nacional de\n>>>>>>> Colombia. Se encuentran dirigidos sÃ³lo para el uso del destinatario al cual\n>>>>>>> van enviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a\n>>>>>>> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha\n>>>>>>> recibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos\n>>>>>>> Personales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra\n>>>>>>> PolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina web\n>>>>>>> www.unal.edu.co. Las opiniones, informaciones, conclusiones y\n>>>>>>> cualquier otro tipo de dato contenido en este correo electrÃ³nico, no\n>>>>>>> relacionados con la actividad de la Universidad Nacional de Colombia, se\n>>>>>>> entenderÃ¡ como personales y de ninguna manera son avaladas por la\n>>>>>>> Universidad.\n>>>>>>> _______________________________________________\n>>>>>>> R-help-es mailing list\n>>>>>>> R-help-es en r-project.org\n>>>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>>>>>\n>>>>>>\n>>>>>>\n>>>>>> --\n>>>>>> Saludos,\n>>>>>> Carlos Ortega\n>>>>>> www.qualityexcellence.es\n>>>>>>\n>>>>>\n>>>> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos\n>>>> son confidenciales y de uso exclusivo de la Universidad Nacional de\n>>>> Colombia. Se encuentran dirigidos sÃ³lo para el uso del destinatario al cual\n>>>> van enviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a\n>>>> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha\n>>>> recibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos\n>>>> Personales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra\n>>>> PolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina web\n>>>> www.unal.edu.co. Las opiniones, informaciones, conclusiones y\n>>>> cualquier otro tipo de dato contenido en este correo electrÃ³nico, no\n>>>> relacionados con la actividad de la Universidad Nacional de Colombia, se\n>>>> entenderÃ¡ como personales y de ninguna manera son avaladas por la\n>>>> Universidad.\n>>>>\n>>>\n>>>\n>>> --\n>>> Saludos,\n>>> Carlos Ortega\n>>> www.qualityexcellence.es\n>>>\n>>\n>> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son\n>> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.\n>> Se encuentran dirigidos sÃ³lo para el uso del destinatario al cual van\n>> enviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a\n>> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha\n>> recibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos\n>> Personales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra\n>> PolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina web\n>> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier\n>> otro tipo de dato contenido en este correo electrÃ³nico, no relacionados con\n>> la actividad de la Universidad Nacional de Colombia, se entenderÃ¡ como\n>> personales y de ninguna manera son avaladas por la Universidad.\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n-- \n*Aviso legal:*Â El contenido de este mensaje y los archivos adjuntos son \nconfidenciales y de uso exclusivo de la Universidad Nacional de Colombia. \nSe encuentran dirigidos sÃ³lo para el uso del destinatario al cual van \nenviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a \ncualquier persona diferente a este y puede ser ilegal. Si usted lo ha \nrecibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos \nPersonales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra \nPolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina webÂ \nwww.unal.edu.co <http://www.unal.edu.co/>.*Â *Las opiniones, informaciones, \nconclusiones y cualquier otro tipo de dato contenido en este correo \nelectrÃ³nico, no relacionados con la actividad de la Universidad Nacional de \nColombia, se entenderÃ¡ como personales y de ninguna manera son avaladas por \nla Universidad.\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230119/5d1ab833/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 18015 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230119/5d1ab833/attachment-0002.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 31349 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230119/5d1ab833/attachment-0003.png>",
+      "body_snippet": "Muchas gracias Carlos y Manuel por el aporte, me ayudÃ³ bastante.\n\nOn Thu, 19 Jan 2023 at 04:12, Carlos Ortega <cof en qualityexcellence.es>\nwrote:\n\n> Hola,\n>\n> SÃ­, he cambiado de forma de hacerlo, a",
+      "thread_id": "thread-b3241e6143d7",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-326b72261983",
+      "message_id": "<20230126094657.15145502@debian-dde-tosh>",
+      "from_name": "Griera",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2023-01-26T09:46:57+01:00",
+      "subject": "[R-es] Modificar una serie columnas de un dataframe",
+      "subject_clean": "[R-es] Modificar una serie columnas de un dataframe",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola:\n\nLo vuelvo a enviar para ver si tengo mÃ¡s suerte:\n\nTengo una tabla con pares de variables (V1a, V1b, V2a, V2b, ...) similar a esta:\n\ndf <- data.frame( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n\t\t, V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n\t\t, V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n\t\t, V2b = sample(c(\"1\",\"0\"), 10, TRUE))\n\n   V1a V1b V2a V2b\n1    0   1   0   0\n2    0   0   1   0\n3    0   1   0   0\n...\n\ny quiero que V1a valga \"1\" si V1a o V1b valen 1, V2a valga \"1\" si V2a o\nV2b valen 1 y asÃ­ sucesivamente. Lo hago mediante un transform con una lÃ­nia para cada pareja de variables:\n\ndf <- transform (df\n\t, V1a = ifelse (V1a == \"1\" | V1b == \"1\", \"1, \"0\")\n\t, V2a = ifelse (V2a == \"1\" | V2b == \"1\", \"1, \"0\"))\n\t\t\t\t\t\t\t\t\t\t)\nÂ¿Habria forma de hacerlo (Â¿con un funciÃ³n?) de manera que no tenga que escribir una lÃ­nia para cada par de variables?\n\nMuchas gracias a todos y saludos.",
+      "body_snippet": "Hola:\n\nLo vuelvo a enviar para ver si tengo mÃ¡s suerte:\n\nTengo una tabla con pares de variables (V1a, V1b, V2a, V2b, ...) similar a esta:\n\ndf <- data.frame( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n\t\t, V1b",
+      "thread_id": "thread-326b72261983",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-9c8d011920a5",
+      "message_id": "<CACEaGhPuR4N3WSD9vdaJO4yCLYVPrsRZeAuRzUyzRN+FRPKX_Q@mail.gmail.com>",
+      "from_name": "patricio fuenmayor",
+      "from_email_hash": "59b445396ac723c905e0d4234add3713852acb63455a0cf9f26748b90720a213",
+      "date": "2023-01-26T09:33:31-05:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "in_reply_to": "<mailman.14909.10.1674730802.20965.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.14909.10.1674730802.20965.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Hola esta es una soluciÃ³n\n\nlibrary(data.table)\nlibrary(stringr)\n\n\ndt <- data.table( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V2b = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V3a = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V3b = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V4a = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V4b = sample(c(\"1\",\"0\"), 10, TRUE))\ndt[,\":=\"(seq=.I)]\nsetcolorder(dt,\"seq\")\n\ndt1 <- melt(dt,id.vars=1,measure.vars=2:ncol(dt),variable.name=\"vrb\",\nvalue.name=\"vl\")\ndt1[,\":=\"(vrb_nm=str_sub(vrb,end=2),vrb_tp=str_sub(vrb,start=-1))]\ndt2 <- dcast(dt1,seq+vrb_nm~vrb_tp,fun.aggregate=\\(x)\npaste0(x,collapse=\"|\"),value.var=\"vl\")\ndt2[,\":=\"(c=fifelse(a==\"1\"|b==\"1\",\"1\",\"0\"))]\ndt3 <-dcast(dt2,seq~vrb_nm,fun.aggregate=\\(x)\npaste0(x,collapse=\"|\"),value.var=\"c\")\nsetnames(dt3,paste0(colnames(dt3),\"c\"))\ndt <- dt[dt3,on=.(seq=seqc)]\n\nTe crea un grupo de variables tipo c que es la lÃ³gica que necesitas .. pero\nle puedes reemplazar por el nombre de \"a\", quÃ© es lo que muestras en el\nejemplo\n\n\nSaludos\n\n\n\n\nEl jue, 26 ene 2023 a la(s) 06:02, <r-help-es-request en r-project.org>\nescribiÃ³:\n\n> EnvÃ­e los mensajes para la lista R-help-es a\n>         r-help-es en r-project.org\n>\n> Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n>         https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n>         r-help-es-request en r-project.org\n>\n> Puede contactar con el responsable de la lista escribiendo a:\n>         r-help-es-owner en r-project.org\n>\n> Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> respondiendo.\n> Asuntos del dÃ­a:\n>\n>    1. Modificar una serie columnas de un dataframe (Griera)\n>\n>\n> ---------- Forwarded message ----------\n> From: Griera <griera en yandex.com>\n> To: r-help-es en r-project.org, griera en yandex.com\n> Cc:\n> Bcc:\n> Date: Thu, 26 Jan 2023 09:46:57 +0100\n> Subject: [R-es] Modificar una serie columnas de un dataframe\n> Hola:\n>\n> Lo vuelvo a enviar para ver si tengo mÃ¡s suerte:\n>\n> Tengo una tabla con pares de variables (V1a, V1b, V2a, V2b, ...) similar a\n> esta:\n>\n> df <- data.frame( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE))\n>\n>    V1a V1b V2a V2b\n> 1    0   1   0   0\n> 2    0   0   1   0\n> 3    0   1   0   0\n> ...\n>\n> y quiero que V1a valga \"1\" si V1a o V1b valen 1, V2a valga \"1\" si V2a o\n> V2b valen 1 y asÃ­ sucesivamente. Lo hago mediante un transform con una\n> lÃ­nia para cada pareja de variables:\n>\n> df <- transform (df\n>         , V1a = ifelse (V1a == \"1\" | V1b == \"1\", \"1, \"0\")\n>         , V2a = ifelse (V2a == \"1\" | V2b == \"1\", \"1, \"0\"))\n>\n>       )\n> Â¿Habria forma de hacerlo (Â¿con un funciÃ³n?) de manera que no tenga que\n> escribir una lÃ­nia para cada par de variables?\n>\n> Muchas gracias a todos y saludos.\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola esta es una soluciÃ³n\n\nlibrary(data.table)\nlibrary(stringr)\n\n\ndt <- data.table( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n                , V2a = sam",
+      "thread_id": "thread-9c8d011920a5",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-6d3be2a000b8",
+      "message_id": "<20230126175103.17ef4ba7@debian-dde-tosh>",
+      "from_name": "Griera-yandex",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2023-01-26T17:51:03+01:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "in_reply_to": "<CACEaGhPuR4N3WSD9vdaJO4yCLYVPrsRZeAuRzUyzRN+FRPKX_Q@mail.gmail.com>",
+      "references": [
+        "<mailman.14909.10.1674730802.20965.r-help-es@r-project.org>",
+        "<CACEaGhPuR4N3WSD9vdaJO4yCLYVPrsRZeAuRzUyzRN+FRPKX_Q@mail.gmail.com>"
+      ],
+      "body_plain": "Muchas gracias por responder!\n\nDespuÃ©s lo hago.\n\nSaludos.\n\nOn Thu, 26 Jan 2023 09:33:31 -0500\npatricio fuenmayor <patricio.fuenmayor en gmail.com> wrote:\n\n> Hola esta es una soluciÃ³n\n> \n> library(data.table)\n> library(stringr)\n> \n> \n> dt <- data.table( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V3a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V3b = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V4a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V4b = sample(c(\"1\",\"0\"), 10, TRUE))\n> dt[,\":=\"(seq=.I)]\n> setcolorder(dt,\"seq\")\n> \n> dt1 <- melt(dt,id.vars=1,measure.vars=2:ncol(dt),variable.name=\"vrb\",\n> value.name=\"vl\")\n> dt1[,\":=\"(vrb_nm=str_sub(vrb,end=2),vrb_tp=str_sub(vrb,start=-1))]\n> dt2 <- dcast(dt1,seq+vrb_nm~vrb_tp,fun.aggregate=\\(x)\n> paste0(x,collapse=\"|\"),value.var=\"vl\")\n> dt2[,\":=\"(c=fifelse(a==\"1\"|b==\"1\",\"1\",\"0\"))]\n> dt3 <-dcast(dt2,seq~vrb_nm,fun.aggregate=\\(x)\n> paste0(x,collapse=\"|\"),value.var=\"c\")\n> setnames(dt3,paste0(colnames(dt3),\"c\"))\n> dt <- dt[dt3,on=.(seq=seqc)]\n> \n> Te crea un grupo de variables tipo c que es la lÃ³gica que necesitas .. pero\n> le puedes reemplazar por el nombre de \"a\", quÃ© es lo que muestras en el\n> ejemplo\n> \n> \n> Saludos\n> \n> \n> \n> \n> El jue, 26 ene 2023 a la(s) 06:02, <r-help-es-request en r-project.org>\n> escribiÃ³:\n> \n> > EnvÃ­e los mensajes para la lista R-help-es a\n> >         r-help-es en r-project.org\n> >\n> > Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n> >         https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> > O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> > el asunto (subject) o en el cuerpo a:\n> >         r-help-es-request en r-project.org\n> >\n> > Puede contactar con el responsable de la lista escribiendo a:\n> >         r-help-es-owner en r-project.org\n> >\n> > Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> > linea del asunto (subject) para que el texto sea mas especifico que:\n> > \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> > la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> > respondiendo.\n> > Asuntos del dÃ­a:\n> >\n> >    1. Modificar una serie columnas de un dataframe (Griera)\n> >\n> >\n> > ---------- Forwarded message ----------\n> > From: Griera <griera en yandex.com>\n> > To: r-help-es en r-project.org, griera en yandex.com\n> > Cc:\n> > Bcc:\n> > Date: Thu, 26 Jan 2023 09:46:57 +0100\n> > Subject: [R-es] Modificar una serie columnas de un dataframe\n> > Hola:\n> >\n> > Lo vuelvo a enviar para ver si tengo mÃ¡s suerte:\n> >\n> > Tengo una tabla con pares de variables (V1a, V1b, V2a, V2b, ...) similar a\n> > esta:\n> >\n> > df <- data.frame( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n> >                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n> >                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n> >                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE))\n> >\n> >    V1a V1b V2a V2b\n> > 1    0   1   0   0\n> > 2    0   0   1   0\n> > 3    0   1   0   0\n> > ...\n> >\n> > y quiero que V1a valga \"1\" si V1a o V1b valen 1, V2a valga \"1\" si V2a o\n> > V2b valen 1 y asÃ­ sucesivamente. Lo hago mediante un transform con una\n> > lÃ­nia para cada pareja de variables:\n> >\n> > df <- transform (df\n> >         , V1a = ifelse (V1a == \"1\" | V1b == \"1\", \"1, \"0\")\n> >         , V2a = ifelse (V2a == \"1\" | V2b == \"1\", \"1, \"0\"))\n> >\n> >       )\n> > Â¿Habria forma de hacerlo (Â¿con un funciÃ³n?) de manera que no tenga que\n> > escribir una lÃ­nia para cada par de variables?\n> >\n> > Muchas gracias a todos y saludos.\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >",
+      "body_snippet": "Muchas gracias por responder!\n\nDespuÃ©s lo hago.\n\nSaludos.\n\nOn Thu, 26 Jan 2023 09:33:31 -0500\npatricio fuenmayor <patricio.fuenmayor en gmail.com> wrote:\n\n> Hola esta es una soluciÃ³n\n> \n> library(da",
+      "thread_id": "thread-9c8d011920a5",
+      "thread_depth": 1,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-1bea0c5c47c2",
+      "message_id": "<20230126195456.2ae1248b@debian-dde-tosh>",
+      "from_name": "Griera-yandex",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2023-01-26T19:54:56+01:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "in_reply_to": "<CACEaGhPuR4N3WSD9vdaJO4yCLYVPrsRZeAuRzUyzRN+FRPKX_Q@mail.gmail.com>",
+      "references": [
+        "<mailman.14909.10.1674730802.20965.r-help-es@r-project.org>",
+        "<CACEaGhPuR4N3WSD9vdaJO4yCLYVPrsRZeAuRzUyzRN+FRPKX_Q@mail.gmail.com>"
+      ],
+      "body_plain": "Hola:\n\nFunciona a la perfecciÃ³n. Y los nombres de las nuevas variables tipo \"V1c\" \"V2c\"... ya me estÃ¡ bien.\n\nGracias por habertelo currado tanto! Me has ahorrado copiar, pegar y modificar un monton de linias. Y no\ntenia conciencia de que podia ser tan complicado.\n\nGracias por la ayuda. Saludos.\n\nOn Thu, 26 Jan 2023 09:33:31 -0500\npatricio fuenmayor <patricio.fuenmayor en gmail.com> wrote:\n\n> Hola esta es una soluciÃ³n\n> \n> library(data.table)\n> library(stringr)\n> \n> \n> dt <- data.table( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V3a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V3b = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V4a = sample(c(\"1\",\"0\"), 10, TRUE)\n>                 , V4b = sample(c(\"1\",\"0\"), 10, TRUE))\n> dt[,\":=\"(seq=.I)]\n> setcolorder(dt,\"seq\")\n> \n> dt1 <- melt(dt,id.vars=1,measure.vars=2:ncol(dt),variable.name=\"vrb\",\n> value.name=\"vl\")\n> dt1[,\":=\"(vrb_nm=str_sub(vrb,end=2),vrb_tp=str_sub(vrb,start=-1))]\n> dt2 <- dcast(dt1,seq+vrb_nm~vrb_tp,fun.aggregate=\\(x)\n> paste0(x,collapse=\"|\"),value.var=\"vl\")\n> dt2[,\":=\"(c=fifelse(a==\"1\"|b==\"1\",\"1\",\"0\"))]\n> dt3 <-dcast(dt2,seq~vrb_nm,fun.aggregate=\\(x)\n> paste0(x,collapse=\"|\"),value.var=\"c\")\n> setnames(dt3,paste0(colnames(dt3),\"c\"))\n> dt <- dt[dt3,on=.(seq=seqc)]\n> \n> Te crea un grupo de variables tipo c que es la lÃ³gica que necesitas .. pero\n> le puedes reemplazar por el nombre de \"a\", quÃ© es lo que muestras en el\n> ejemplo\n> \n> \n> Saludos\n> \n> \n> \n> \n> El jue, 26 ene 2023 a la(s) 06:02, <r-help-es-request en r-project.org>\n> escribiÃ³:\n> \n> > EnvÃ­e los mensajes para la lista R-help-es a\n> >         r-help-es en r-project.org\n> >\n> > Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n> >         https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> > O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> > el asunto (subject) o en el cuerpo a:\n> >         r-help-es-request en r-project.org\n> >\n> > Puede contactar con el responsable de la lista escribiendo a:\n> >         r-help-es-owner en r-project.org\n> >\n> > Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> > linea del asunto (subject) para que el texto sea mas especifico que:\n> > \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> > la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> > respondiendo.\n> > Asuntos del dÃ­a:\n> >\n> >    1. Modificar una serie columnas de un dataframe (Griera)\n> >\n> >\n> > ---------- Forwarded message ----------\n> > From: Griera <griera en yandex.com>\n> > To: r-help-es en r-project.org, griera en yandex.com\n> > Cc:\n> > Bcc:\n> > Date: Thu, 26 Jan 2023 09:46:57 +0100\n> > Subject: [R-es] Modificar una serie columnas de un dataframe\n> > Hola:\n> >\n> > Lo vuelvo a enviar para ver si tengo mÃ¡s suerte:\n> >\n> > Tengo una tabla con pares de variables (V1a, V1b, V2a, V2b, ...) similar a\n> > esta:\n> >\n> > df <- data.frame( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n> >                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n> >                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n> >                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE))\n> >\n> >    V1a V1b V2a V2b\n> > 1    0   1   0   0\n> > 2    0   0   1   0\n> > 3    0   1   0   0\n> > ...\n> >\n> > y quiero que V1a valga \"1\" si V1a o V1b valen 1, V2a valga \"1\" si V2a o\n> > V2b valen 1 y asÃ­ sucesivamente. Lo hago mediante un transform con una\n> > lÃ­nia para cada pareja de variables:\n> >\n> > df <- transform (df\n> >         , V1a = ifelse (V1a == \"1\" | V1b == \"1\", \"1, \"0\")\n> >         , V2a = ifelse (V2a == \"1\" | V2b == \"1\", \"1, \"0\"))\n> >\n> >       )\n> > Â¿Habria forma de hacerlo (Â¿con un funciÃ³n?) de manera que no tenga que\n> > escribir una lÃ­nia para cada par de variables?\n> >\n> > Muchas gracias a todos y saludos.\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >",
+      "body_snippet": "Hola:\n\nFunciona a la perfecciÃ³n. Y los nombres de las nuevas variables tipo \"V1c\" \"V2c\"... ya me estÃ¡ bien.\n\nGracias por habertelo currado tanto! Me has ahorrado copiar, pegar y modificar un monton ",
+      "thread_id": "thread-9c8d011920a5",
+      "thread_depth": 1,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-58891989c591",
+      "message_id": "<20230127125532.41791d12@debian-dde-tosh>",
+      "from_name": "Griera-yandex",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2023-01-27T12:55:32+01:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "in_reply_to": "<CAOKbq8jQC1+Jiz-89=7fhoN=pXZtL4o8VWwpgeay9m=rQ1OdqA@mail.gmail.com>",
+      "references": [
+        "<mailman.14909.10.1674730802.20965.r-help-es@r-project.org>",
+        "<CACEaGhPuR4N3WSD9vdaJO4yCLYVPrsRZeAuRzUyzRN+FRPKX_Q@mail.gmail.com>",
+        "<20230126195456.2ae1248b@debian-dde-tosh>",
+        "<CAOKbq8jQC1+Jiz-89=7fhoN=pXZtL4o8VWwpgeay9m=rQ1OdqA@mail.gmail.com>"
+      ],
+      "body_plain": "Hola:\n\nMuchas gracias por responder. Lo pruebo.\n\nSaludos.\n\n\nOn Fri, 27 Jan 2023 01:40:48 +0100\nCarlos Ortega <cof en qualityexcellence.es> wrote:\n\n> Hola,\n> \n> Otra alternativa...\n> \n> #--------------------\n> > library(data.table)\n> > library(tidytable)\n> > library(stringi)\n> >\n> > df <- data.frame(   V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n> +                   , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n> +                   , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n> +                   , V2b = sample(c(\"1\",\"0\"), 10, TRUE))\n> > df\n>    V1a V1b V2a V2b\n> 1    1   0   1   1\n> 2    1   1   0   1\n> 3    0   0   0   0\n> 4    1   0   1   0\n> 5    0   1   0   0\n> 6    0   0   1   0\n> 7    1   0   0   0\n> 8    1   1   1   0\n> 9    0   0   0   0\n> 10   0   1   1   1\n> > > #--- FunciÃ³n compara parejas de columnas comienzan por mismas 2 letras.\n> > *colcompare <- function(df)* {\n> +\n> +    nam_val <- names(df) %>% stri_sub(from = 1, to = 2) %>% unique()\n> +    res_df  <- data.table()\n> +    for (i in 1:length(nam_val)) {\n> +      cols_tmp <- nam_val[i]\n> +      df_tmp <- df %>% select.(starts_with(cols_tmp)) %>%\n> +        rename.( a = 1) %>%\n> +        rename.( b = 2) %>%\n> +        mutate.( c = if_else.( a == 1 | b == 1, 1, 0)) %>%\n> +        select.(c) %>%\n> +        as.data.table()\n> +        names(df_tmp) <- paste0(cols_tmp, \"c\")\n> +        res_df <- cbind(res_df, df_tmp)\n> +    }\n> +    return(res_df)\n> + }\n> >\n> > #--- Sobre df creado\n> > *resultado <- colcompare(df)*\n> > resultado\n>       V1c   V2c\n>     <num> <num>\n>  1:     0     1\n>  2:     1     0\n>  3:     1     1\n>  4:     1     1\n>  5:     1     1\n>  6:     1     1\n>  7:     1     1\n>  8:     0     0\n>  9:     1     1\n> 10:     0     1\n> #--------------------\n> \n> \n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n> \n> El jue, 26 ene 2023 a las 19:55, Griera-yandex (<griera en yandex.com>)\n> escribiÃ³:\n> \n> > Hola:\n> >\n> > Funciona a la perfecciÃ³n. Y los nombres de las nuevas variables tipo \"V1c\"\n> > \"V2c\"... ya me estÃ¡ bien.\n> >\n> > Gracias por habertelo currado tanto! Me has ahorrado copiar, pegar y\n> > modificar un monton de linias. Y no\n> > tenia conciencia de que podia ser tan complicado.\n> >\n> > Gracias por la ayuda. Saludos.\n> >\n> > On Thu, 26 Jan 2023 09:33:31 -0500\n> > patricio fuenmayor <patricio.fuenmayor en gmail.com> wrote:\n> >\n> > > Hola esta es una soluciÃ³n\n> > >\n> > > library(data.table)\n> > > library(stringr)\n> > >\n> > >\n> > > dt <- data.table( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V3a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V3b = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V4a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V4b = sample(c(\"1\",\"0\"), 10, TRUE))\n> > > dt[,\":=\"(seq=.I)]\n> > > setcolorder(dt,\"seq\")\n> > >\n> > > dt1 <- melt(dt,id.vars=1,measure.vars=2:ncol(dt),variable.name=\"vrb\",\n> > > value.name=\"vl\")\n> > > dt1[,\":=\"(vrb_nm=str_sub(vrb,end=2),vrb_tp=str_sub(vrb,start=-1))]\n> > > dt2 <- dcast(dt1,seq+vrb_nm~vrb_tp,fun.aggregate=\\(x)\n> > > paste0(x,collapse=\"|\"),value.var=\"vl\")\n> > > dt2[,\":=\"(c=fifelse(a==\"1\"|b==\"1\",\"1\",\"0\"))]\n> > > dt3 <-dcast(dt2,seq~vrb_nm,fun.aggregate=\\(x)\n> > > paste0(x,collapse=\"|\"),value.var=\"c\")\n> > > setnames(dt3,paste0(colnames(dt3),\"c\"))\n> > > dt <- dt[dt3,on=.(seq=seqc)]\n> > >\n> > > Te crea un grupo de variables tipo c que es la lÃ³gica que necesitas ..\n> > pero\n> > > le puedes reemplazar por el nombre de \"a\", quÃ© es lo que muestras en el\n> > > ejemplo\n> > >\n> > >\n> > > Saludos\n> > >\n> > >\n> > >\n> > >\n> > > El jue, 26 ene 2023 a la(s) 06:02, <r-help-es-request en r-project.org>\n> > > escribiÃ³:\n> > >\n> > > > EnvÃ­e los mensajes para la lista R-help-es a\n> > > >         r-help-es en r-project.org\n> > > >\n> > > > Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n> > > >         https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > > >\n> > > > O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> > > > el asunto (subject) o en el cuerpo a:\n> > > >         r-help-es-request en r-project.org\n> > > >\n> > > > Puede contactar con el responsable de la lista escribiendo a:\n> > > >         r-help-es-owner en r-project.org\n> > > >\n> > > > Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> > > > linea del asunto (subject) para que el texto sea mas especifico que:\n> > > > \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> > > > la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> > > > respondiendo.\n> > > > Asuntos del dÃ­a:\n> > > >\n> > > >    1. Modificar una serie columnas de un dataframe (Griera)\n> > > >\n> > > >\n> > > > ---------- Forwarded message ----------\n> > > > From: Griera <griera en yandex.com>\n> > > > To: r-help-es en r-project.org, griera en yandex.com\n> > > > Cc:\n> > > > Bcc:\n> > > > Date: Thu, 26 Jan 2023 09:46:57 +0100\n> > > > Subject: [R-es] Modificar una serie columnas de un dataframe\n> > > > Hola:\n> > > >\n> > > > Lo vuelvo a enviar para ver si tengo mÃ¡s suerte:\n> > > >\n> > > > Tengo una tabla con pares de variables (V1a, V1b, V2a, V2b, ...)\n> > similar a\n> > > > esta:\n> > > >\n> > > > df <- data.frame( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > > >                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n> > > >                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > > >                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE))\n> > > >\n> > > >    V1a V1b V2a V2b\n> > > > 1    0   1   0   0\n> > > > 2    0   0   1   0\n> > > > 3    0   1   0   0\n> > > > ...\n> > > >\n> > > > y quiero que V1a valga \"1\" si V1a o V1b valen 1, V2a valga \"1\" si V2a o\n> > > > V2b valen 1 y asÃ­ sucesivamente. Lo hago mediante un transform con una\n> > > > lÃ­nia para cada pareja de variables:\n> > > >\n> > > > df <- transform (df\n> > > >         , V1a = ifelse (V1a == \"1\" | V1b == \"1\", \"1, \"0\")\n> > > >         , V2a = ifelse (V2a == \"1\" | V2b == \"1\", \"1, \"0\"))\n> > > >\n> > > >       )\n> > > > Â¿Habria forma de hacerlo (Â¿con un funciÃ³n?) de manera que no tenga que\n> > > > escribir una lÃ­nia para cada par de variables?\n> > > >\n> > > > Muchas gracias a todos y saludos.\n> > > >\n> > > >\n> > > > _______________________________________________\n> > > > R-help-es mailing list\n> > > > R-help-es en r-project.org\n> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > > >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> \n> \n> -- \n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es",
+      "body_snippet": "Hola:\n\nMuchas gracias por responder. Lo pruebo.\n\nSaludos.\n\n\nOn Fri, 27 Jan 2023 01:40:48 +0100\nCarlos Ortega <cof en qualityexcellence.es> wrote:\n\n> Hola,\n> \n> Otra alternativa...\n> \n> #--------------",
+      "thread_id": "thread-58891989c591",
+      "thread_depth": 0,
+      "month": "2023-01"
+    },
+    {
+      "id": "msg-bebf872dba43",
+      "message_id": "<20230128192851.53f2b601@debian-dde-tosh>",
+      "from_name": "Griera",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2023-01-28T19:28:51+01:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "in_reply_to": "<CAOKbq8jQC1+Jiz-89=7fhoN=pXZtL4o8VWwpgeay9m=rQ1OdqA@mail.gmail.com>",
+      "references": [
+        "<mailman.14909.10.1674730802.20965.r-help-es@r-project.org>",
+        "<CACEaGhPuR4N3WSD9vdaJO4yCLYVPrsRZeAuRzUyzRN+FRPKX_Q@mail.gmail.com>",
+        "<20230126195456.2ae1248b@debian-dde-tosh>",
+        "<CAOKbq8jQC1+Jiz-89=7fhoN=pXZtL4o8VWwpgeay9m=rQ1OdqA@mail.gmail.com>"
+      ],
+      "body_plain": "Hola, Carlos:\n\nGracias, funciona tambiÃ©n a la perfecciÃ³n y muy ingeniosa la soluciÃ³n.\n\nDisculpa si no te he respondido antes, pero hasta ahora no he podido privarlo.\n\nGracias por la ayuda y saludos.\n\nOn Fri, 27 Jan 2023 01:40:48 +0100\nCarlos Ortega <cof en qualityexcellence.es> wrote:\n\n> Hola,\n> \n> Otra alternativa...\n> \n> #--------------------\n> > library(data.table)\n> > library(tidytable)\n> > library(stringi)\n> >\n> > df <- data.frame(   V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n> +                   , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n> +                   , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n> +                   , V2b = sample(c(\"1\",\"0\"), 10, TRUE))\n> > df\n>    V1a V1b V2a V2b\n> 1    1   0   1   1\n> 2    1   1   0   1\n> 3    0   0   0   0\n> 4    1   0   1   0\n> 5    0   1   0   0\n> 6    0   0   1   0\n> 7    1   0   0   0\n> 8    1   1   1   0\n> 9    0   0   0   0\n> 10   0   1   1   1\n> > > #--- FunciÃ³n compara parejas de columnas comienzan por mismas 2 letras.\n> > *colcompare <- function(df)* {\n> +\n> +    nam_val <- names(df) %>% stri_sub(from = 1, to = 2) %>% unique()\n> +    res_df  <- data.table()\n> +    for (i in 1:length(nam_val)) {\n> +      cols_tmp <- nam_val[i]\n> +      df_tmp <- df %>% select.(starts_with(cols_tmp)) %>%\n> +        rename.( a = 1) %>%\n> +        rename.( b = 2) %>%\n> +        mutate.( c = if_else.( a == 1 | b == 1, 1, 0)) %>%\n> +        select.(c) %>%\n> +        as.data.table()\n> +        names(df_tmp) <- paste0(cols_tmp, \"c\")\n> +        res_df <- cbind(res_df, df_tmp)\n> +    }\n> +    return(res_df)\n> + }\n> >\n> > #--- Sobre df creado\n> > *resultado <- colcompare(df)*\n> > resultado\n>       V1c   V2c\n>     <num> <num>\n>  1:     0     1\n>  2:     1     0\n>  3:     1     1\n>  4:     1     1\n>  5:     1     1\n>  6:     1     1\n>  7:     1     1\n>  8:     0     0\n>  9:     1     1\n> 10:     0     1\n> #--------------------\n> \n> \n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n> \n> El jue, 26 ene 2023 a las 19:55, Griera-yandex (<griera en yandex.com>)\n> escribiÃ³:\n> \n> > Hola:\n> >\n> > Funciona a la perfecciÃ³n. Y los nombres de las nuevas variables tipo \"V1c\"\n> > \"V2c\"... ya me estÃ¡ bien.\n> >\n> > Gracias por habertelo currado tanto! Me has ahorrado copiar, pegar y\n> > modificar un monton de linias. Y no\n> > tenia conciencia de que podia ser tan complicado.\n> >\n> > Gracias por la ayuda. Saludos.\n> >\n> > On Thu, 26 Jan 2023 09:33:31 -0500\n> > patricio fuenmayor <patricio.fuenmayor en gmail.com> wrote:\n> >\n> > > Hola esta es una soluciÃ³n\n> > >\n> > > library(data.table)\n> > > library(stringr)\n> > >\n> > >\n> > > dt <- data.table( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V3a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V3b = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V4a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > >                 , V4b = sample(c(\"1\",\"0\"), 10, TRUE))\n> > > dt[,\":=\"(seq=.I)]\n> > > setcolorder(dt,\"seq\")\n> > >\n> > > dt1 <- melt(dt,id.vars=1,measure.vars=2:ncol(dt),variable.name=\"vrb\",\n> > > value.name=\"vl\")\n> > > dt1[,\":=\"(vrb_nm=str_sub(vrb,end=2),vrb_tp=str_sub(vrb,start=-1))]\n> > > dt2 <- dcast(dt1,seq+vrb_nm~vrb_tp,fun.aggregate=\\(x)\n> > > paste0(x,collapse=\"|\"),value.var=\"vl\")\n> > > dt2[,\":=\"(c=fifelse(a==\"1\"|b==\"1\",\"1\",\"0\"))]\n> > > dt3 <-dcast(dt2,seq~vrb_nm,fun.aggregate=\\(x)\n> > > paste0(x,collapse=\"|\"),value.var=\"c\")\n> > > setnames(dt3,paste0(colnames(dt3),\"c\"))\n> > > dt <- dt[dt3,on=.(seq=seqc)]\n> > >\n> > > Te crea un grupo de variables tipo c que es la lÃ³gica que necesitas ..\n> > pero\n> > > le puedes reemplazar por el nombre de \"a\", quÃ© es lo que muestras en el\n> > > ejemplo\n> > >\n> > >\n> > > Saludos\n> > >\n> > >\n> > >\n> > >\n> > > El jue, 26 ene 2023 a la(s) 06:02, <r-help-es-request en r-project.org>\n> > > escribiÃ³:\n> > >\n> > > > EnvÃ­e los mensajes para la lista R-help-es a\n> > > >         r-help-es en r-project.org\n> > > >\n> > > > Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n> > > >         https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > > >\n> > > > O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> > > > el asunto (subject) o en el cuerpo a:\n> > > >         r-help-es-request en r-project.org\n> > > >\n> > > > Puede contactar con el responsable de la lista escribiendo a:\n> > > >         r-help-es-owner en r-project.org\n> > > >\n> > > > Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> > > > linea del asunto (subject) para que el texto sea mas especifico que:\n> > > > \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> > > > la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> > > > respondiendo.\n> > > > Asuntos del dÃ­a:\n> > > >\n> > > >    1. Modificar una serie columnas de un dataframe (Griera)\n> > > >\n> > > >\n> > > > ---------- Forwarded message ----------\n> > > > From: Griera <griera en yandex.com>\n> > > > To: r-help-es en r-project.org, griera en yandex.com\n> > > > Cc:\n> > > > Bcc:\n> > > > Date: Thu, 26 Jan 2023 09:46:57 +0100\n> > > > Subject: [R-es] Modificar una serie columnas de un dataframe\n> > > > Hola:\n> > > >\n> > > > Lo vuelvo a enviar para ver si tengo mÃ¡s suerte:\n> > > >\n> > > > Tengo una tabla con pares de variables (V1a, V1b, V2a, V2b, ...)\n> > similar a\n> > > > esta:\n> > > >\n> > > > df <- data.frame( V1a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > > >                 , V1b = sample(c(\"1\",\"0\"), 10, TRUE)\n> > > >                 , V2a = sample(c(\"1\",\"0\"), 10, TRUE)\n> > > >                 , V2b = sample(c(\"1\",\"0\"), 10, TRUE))\n> > > >\n> > > >    V1a V1b V2a V2b\n> > > > 1    0   1   0   0\n> > > > 2    0   0   1   0\n> > > > 3    0   1   0   0\n> > > > ...\n> > > >\n> > > > y quiero que V1a valga \"1\" si V1a o V1b valen 1, V2a valga \"1\" si V2a o\n> > > > V2b valen 1 y asÃ­ sucesivamente. Lo hago mediante un transform con una\n> > > > lÃ­nia para cada pareja de variables:\n> > > >\n> > > > df <- transform (df\n> > > >         , V1a = ifelse (V1a == \"1\" | V1b == \"1\", \"1, \"0\")\n> > > >         , V2a = ifelse (V2a == \"1\" | V2b == \"1\", \"1, \"0\"))\n> > > >\n> > > >       )\n> > > > Â¿Habria forma de hacerlo (Â¿con un funciÃ³n?) de manera que no tenga que\n> > > > escribir una lÃ­nia para cada par de variables?\n> > > >\n> > > > Muchas gracias a todos y saludos.\n> > > >\n> > > >\n> > > > _______________________________________________\n> > > > R-help-es mailing list\n> > > > R-help-es en r-project.org\n> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > > >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> \n> \n> -- \n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es",
+      "body_snippet": "Hola, Carlos:\n\nGracias, funciona tambiÃ©n a la perfecciÃ³n y muy ingeniosa la soluciÃ³n.\n\nDisculpa si no te he respondido antes, pero hasta ahora no he podido privarlo.\n\nGracias por la ayuda y saludos",
+      "thread_id": "thread-bebf872dba43",
+      "thread_depth": 0,
+      "month": "2023-01"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-db381c68bb93",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "message_count": 7,
+      "participants": [
+        "Emilio L. Cano",
+        "Manuel Mendoza",
+        "Proyecto R-UCA"
+      ],
+      "started": "2023-01-02T06:31:53+01:00",
+      "last_reply": "2023-01-02T22:17:20+01:00",
+      "root_message_id": "msg-db381c68bb93"
+    },
+    {
+      "id": "thread-ecaf7ff2f5eb",
+      "subject": "[R-es] Sumar positivos y negativos por separado",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2023-01-02T13:45:26+01:00",
+      "last_reply": "2023-01-02T13:45:26+01:00",
+      "root_message_id": "msg-ecaf7ff2f5eb"
+    },
+    {
+      "id": "thread-a43710cb00ff",
+      "subject": "[R-es] Problemas con locale",
+      "message_count": 2,
+      "participants": [
+        "Jesús López Témez"
+      ],
+      "started": "2023-01-09T16:57:04+01:00",
+      "last_reply": "2023-01-09T17:22:59+01:00",
+      "root_message_id": "msg-a43710cb00ff"
+    },
+    {
+      "id": "thread-811583d806f8",
+      "subject": "[R-es] Suma de datos de una tabla",
+      "message_count": 1,
+      "participants": [
+        "David Camilo Gomez Medina"
+      ],
+      "started": "2023-01-18T13:29:21-05:00",
+      "last_reply": "2023-01-18T13:29:21-05:00",
+      "root_message_id": "msg-811583d806f8"
+    },
+    {
+      "id": "thread-4d1bd464fdb0",
+      "subject": "[R-es] Suma de datos de una tabla",
+      "message_count": 3,
+      "participants": [
+        "David Camilo Gomez Medina",
+        "Proyecto R-UCA"
+      ],
+      "started": "2023-01-18T14:13:18-05:00",
+      "last_reply": "2023-01-19T09:02:30+01:00",
+      "root_message_id": "msg-4d1bd464fdb0"
+    },
+    {
+      "id": "thread-153671223af2",
+      "subject": "[R-es] función dinámica con lapply en un data.table",
+      "message_count": 1,
+      "participants": [
+        "patricio fuenmayor"
+      ],
+      "started": "2023-01-18T22:19:26-05:00",
+      "last_reply": "2023-01-18T22:19:26-05:00",
+      "root_message_id": "msg-153671223af2"
+    },
+    {
+      "id": "thread-664df1e19bc1",
+      "subject": "[R-es]  función dinámica con lapply en un data.table",
+      "message_count": 1,
+      "participants": [
+        "patricio fuenmayor"
+      ],
+      "started": "2023-01-19T08:44:37-05:00",
+      "last_reply": "2023-01-19T08:44:37-05:00",
+      "root_message_id": "msg-664df1e19bc1"
+    },
+    {
+      "id": "thread-b3241e6143d7",
+      "subject": "[R-es] Suma de datos de una tabla",
+      "message_count": 1,
+      "participants": [
+        "David Camilo Gomez Medina"
+      ],
+      "started": "2023-01-19T14:33:40-05:00",
+      "last_reply": "2023-01-19T14:33:40-05:00",
+      "root_message_id": "msg-b3241e6143d7"
+    },
+    {
+      "id": "thread-9c8d011920a5",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "message_count": 3,
+      "participants": [
+        "Griera-yandex",
+        "patricio fuenmayor"
+      ],
+      "started": "2023-01-26T09:33:31-05:00",
+      "last_reply": "2023-01-26T19:54:56+01:00",
+      "root_message_id": "msg-9c8d011920a5"
+    },
+    {
+      "id": "thread-326b72261983",
+      "subject": "[R-es] Modificar una serie columnas de un dataframe",
+      "message_count": 1,
+      "participants": [
+        "Griera"
+      ],
+      "started": "2023-01-26T09:46:57+01:00",
+      "last_reply": "2023-01-26T09:46:57+01:00",
+      "root_message_id": "msg-326b72261983"
+    },
+    {
+      "id": "thread-58891989c591",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "message_count": 1,
+      "participants": [
+        "Griera-yandex"
+      ],
+      "started": "2023-01-27T12:55:32+01:00",
+      "last_reply": "2023-01-27T12:55:32+01:00",
+      "root_message_id": "msg-58891989c591"
+    },
+    {
+      "id": "thread-bebf872dba43",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 167, Envío 10",
+      "message_count": 1,
+      "participants": [
+        "Griera"
+      ],
+      "started": "2023-01-28T19:28:51+01:00",
+      "last_reply": "2023-01-28T19:28:51+01:00",
+      "root_message_id": "msg-bebf872dba43"
+    }
+  ]
+}

@@ -1,0 +1,336 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2022-08",
+  "messages": [
+    {
+      "id": "msg-36c4f3c75ec0",
+      "message_id": "<CAMn86NexyY9pqjtoCAt7PLj4F0Rx9EG6NF3gMi8RKxvHcc3GCg@mail.gmail.com>",
+      "from_name": "Sebastian Kruk",
+      "from_email_hash": "a65e9b3040f8f1811b3bf74d2c4f13fa3313fea406ff0de967af7111620a34d2",
+      "date": "2022-08-03T12:22:51-03:00",
+      "subject": "[R-es] Rglpk_solve_LP",
+      "subject_clean": "[R-es] Rglpk_solve_LP",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados usuarios-R:\n\nEstoy probando el solver GLPK.\n\nMe pasaron un programa en Octave y lo convertÃ­ a R pero me da siempre\nque la soluciÃ³n es 0.\n\nEn R me quedÃ³ asÃ­:\n\n######################################################\n\n#1) Datos\n\n#PerÃ­odo de estudio (dÃ­as)\nT = 10\n\n#Demanda diaria\ndda = 10*matrix(1,T,1)\n\n#Capacidad de camiÃ³n (m3)\nK=30\n\n#Capacidad de tanque (m3)\ncap_tqe=40\n\n#Stock inicial (m3)\ns0=15\n\n#Max cantdad diaria de camiones\nx_max=10\n\n##################################\n#2) Modelo simple, puede entregar todos los dÃ­as, camiones enteros\n#\n# Variables: z=[x; s], cant camiones x(t) y stock final s(t)\nc = matrix(rep(1:0,each = T))\nvlb = matrix(rep(0,2*T))\nvub = matrix(c(x_max*rep(1,T),cap_tqe*rep(1,T)))\n\n#Rest de balance:  s(t)=s(t-1)+K*x(t)-dda(t)\nA1=matrix(0,nrow=T,ncol=2*T)\nA1[,1:T]=diag(K,dim(A1[,1:T]))\nT2 = T+1\nT3 = 2*T\nlibrary(pracma)\nA1[,T2:T3]=-diag(1,T,T)+Diag(rep(1,T-1),-1)\nb1 = dda\nb1[1] = b1[1]-s0\n\n#Tipo de variables y restricciones\nvarint=rep(\"I\",T)\nvarcont=rep(\"C\",T)\nctype=rep(\"S\",T)\n\n#vartype=[varint varcont];\nvartype=c(varcont, varcont)\n#-----\nsense=1;\n\nRglpk_solve_LP(obj = c, mat =A1, dir = rep(\"<=\",nrow(A1)),rhs = b1,max\n= F, types = vartype)\n\n######################################################\n\nÂ¿CuÃ¡l serÃ¡ el problema?\n\nGracias,\n\nSebastiÃ¡n.",
+      "body_snippet": "Estimados usuarios-R:\n\nEstoy probando el solver GLPK.\n\nMe pasaron un programa en Octave y lo convertÃ­ a R pero me da siempre\nque la soluciÃ³n es 0.\n\nEn R me quedÃ³ asÃ­:\n\n############################",
+      "thread_id": "thread-36c4f3c75ec0",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-f81fd5a58e7d",
+      "message_id": "<FFEE27EE-4626-43C8-A667-0349D1E95907@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-08-03T17:01:19-03:00",
+      "subject": "[R-es] Rglpk_solve_LP",
+      "subject_clean": "[R-es] Rglpk_solve_LP",
+      "in_reply_to": "<CAMn86NexyY9pqjtoCAt7PLj4F0Rx9EG6NF3gMi8RKxvHcc3GCg@mail.gmail.com>",
+      "references": [
+        "<CAMn86NexyY9pqjtoCAt7PLj4F0Rx9EG6NF3gMi8RKxvHcc3GCg@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado SebastiÃ¡n Kruk\n\nMire porque me parecÃ­a ?\n\nhttp://rtutorial.altervista.org/lp_solvers.html <http://rtutorial.altervista.org/lp_solvers.html>\n\nQuizÃ¡s hay algo como para escribir un poco distinto, o enfocar y salir del 0.\n\nPero lo importante, busque optimizaciÃ³n R, hace un tiempo yo preguntÃ© algo parecido, y si no recuerdo mal hay dos tomos en espaÃ±ol escritos por alguien de esta lista.\n\nCreo, no estoy seguro, que es esto https://cran.r-project.org/doc/contrib/Optimizacion_Matematica_con_R_Volumen_I.pdf <https://cran.r-project.org/doc/contrib/Optimizacion_Matematica_con_R_Volumen_I.pdf> , pero no esa Rglpk, si no recuerdo mal.\n\n\nJavier RubÃ©n Marcuzzi\n\n> El 3 ago. 2022, a las 12:22, Sebastian Kruk <residuo.solow en gmail.com> escribiÃ³:\n> \n> solver GLPK\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado SebastiÃ¡n Kruk\n\nMire porque me parecÃ­a ?\n\nhttp://rtutorial.altervista.org/lp_solvers.html <http://rtutorial.altervista.org/lp_solvers.html>\n\nQuizÃ¡s hay algo como para escribir un poco dist",
+      "thread_id": "thread-36c4f3c75ec0",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-42fa4f3fd790",
+      "message_id": "<98343EF2-6096-4526-83E0-524EAC71CB07@hxcore.ol>",
+      "from_name": "Sebastián Kruk Gencarelli",
+      "from_email_hash": "a65e9b3040f8f1811b3bf74d2c4f13fa3313fea406ff0de967af7111620a34d2",
+      "date": "2022-08-04T22:49:23-03:00",
+      "subject": "[R-es] Rglpk_solve_LP",
+      "subject_clean": "[R-es] Rglpk_solve_LP",
+      "in_reply_to": "<FFEE27EE-4626-43C8-A667-0349D1E95907@gmail.com>",
+      "references": [
+        "<CAMn86NexyY9pqjtoCAt7PLj4F0Rx9EG6NF3gMi8RKxvHcc3GCg@mail.gmail.com>",
+        "<FFEE27EE-4626-43C8-A667-0349D1E95907@gmail.com>"
+      ],
+      "body_plain": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220804/82bc41cd/attachment.html>",
+      "body_snippet": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220804/82bc41cd/attachment.html>",
+      "thread_id": "thread-36c4f3c75ec0",
+      "thread_depth": 2,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-71f3abc93bba",
+      "message_id": "<CAOaTypVJYYEJHoDbsq4h=X4fq39N2eFFG57NTXtwvipYDpYHtQ@mail.gmail.com>",
+      "from_name": "Andrés Hirigoyen",
+      "from_email_hash": "f1ca5972ec5b856e86d6d010a324dd69310a1075eb3c8ba38019d5199ce60a3a",
+      "date": "2022-08-08T11:13:41-03:00",
+      "subject": "[R-es] Tratamientos antagónicos o sinérgicos",
+      "subject_clean": "[R-es] Tratamientos antagónicos o sinérgicos",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dias.\nÂ¿Conocen algÃºn paquete para comparar tratamientos (con un modelo mixto) y\nevaluar si son iguales, antagÃ³nicos o sinÃ©rgicos\"?\nDesde ya gracias por la ayuda\n\n-- \n\nScholar AndrÃ©s\n<https://scholar.google.com/citations?hl=es&user=ubpY7s4AAAAJ&view_op=list_works&sortby=pubdate>\nResearchgate AndrÃ©s <https://www.researchgate.net/profile/Andres-Hirigoyen>\n\n   -\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias.\nÂ¿Conocen algÃºn paquete para comparar tratamientos (con un modelo mixto) y\nevaluar si son iguales, antagÃ³nicos o sinÃ©rgicos\"?\nDesde ya gracias por la ayuda\n\n-- \n\nScholar AndrÃ©s\n<https",
+      "thread_id": "thread-71f3abc93bba",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-acbd6fb7c00b",
+      "message_id": "<77CDD859-F23F-41E7-A25A-E7C732AD1E51@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-08-08T12:01:44-03:00",
+      "subject": "[R-es]  Tratamientos antagónicos o sinérgicos",
+      "subject_clean": "[R-es]  Tratamientos antagónicos o sinérgicos",
+      "in_reply_to": "<CAOaTypVJYYEJHoDbsq4h=X4fq39N2eFFG57NTXtwvipYDpYHtQ@mail.gmail.com>",
+      "references": [
+        "<CAOaTypVJYYEJHoDbsq4h=X4fq39N2eFFG57NTXtwvipYDpYHtQ@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado AndrÃ©s Hirigoyen\n\nCreo que podrÃ­as utilizar cualquiera actual.\n\nAnteriormente: \n\nPackage ?mixlow? was removed from the CRAN repository.\n\nFormerly available versions can be obtained from the archive <https://cran.r-project.org/src/contrib/Archive/mixlow>.\n\nArchived on 2015-08-05 as requested by the maintainer <john.boik en newearthbiomed.org>.\n\nPlease use the canonical form https://CRAN.R-project.org/package=mixlow <https://cran.r-project.org/package=mixlow> to link to this page.\n\n\nPosiblemente pueda acceder al cÃ³digo fuente y ver como funcionaba.\n\nJavier RubÃ©n Marcuzzi\n\n> El 8 ago. 2022, a las 11:13, AndrÃ©s Hirigoyen <andreshirigoyen en gmail.com> escribiÃ³:\n> \n> Buenos dias.\n> Â¿Conocen algÃºn paquete para comparar tratamientos (con un modelo mixto) y\n> evaluar si son iguales, antagÃ³nicos o sinÃ©rgicos\"?\n> Desde ya gracias por la ayuda\n> \n> -- \n> \n> Scholar AndrÃ©s\n> <https://scholar.google.com/citations?hl=es&user=ubpY7s4AAAAJ&view_op=list_works&sortby=pubdate>\n> Researchgate AndrÃ©s <https://www.researchgate.net/profile/Andres-Hirigoyen>\n> \n>   -\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado AndrÃ©s Hirigoyen\n\nCreo que podrÃ­as utilizar cualquiera actual.\n\nAnteriormente: \n\nPackage ?mixlow? was removed from the CRAN repository.\n\nFormerly available versions can be obtained from the",
+      "thread_id": "thread-71f3abc93bba",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-a42c83f557a9",
+      "message_id": "<CAGdQXwEMH0H7KkCNfKvW7s3NQA9JmcmeDCin3Vw8qRKwpwB-Hg@mail.gmail.com>",
+      "from_name": "Andrey Rojas Jiménez",
+      "from_email_hash": "d150b61f7640edd859a2952fea4ec89c582963d507c7170f065ae9d927e6bc2f",
+      "date": "2022-08-17T12:02:57-06:00",
+      "subject": "[R-es] Ordered probit model",
+      "subject_clean": "[R-es] Ordered probit model",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as,\n\nActualmente estoy elaborando un modelo ordenado logit, el cual consta de\nuna variable dependiente ordinal categÃ³rica y una variable independiente\nbinomial (dummy). Los datos son de corte transversal. Mi consulta es la\nsiguiente:\nÂ¿Que tipo de pruebas de diagnÃ³stico debo realizar para validar el modelo?\n\nla variable dependiente es una variable de desarrollo humano:\n1= DH bajo\n2= DH medio\n3= DH alto\n\nLa variable independiente es una variable dummy donde el 1 representa a las\npersonas con empleo informal.\n0=No empleo informal\n1=Empleo informal\n\nEl objetivo es determinar el efecto que tiene la informalidad del empleo\nsobre el desarrollo humano.\n\nQuedo atento, muchas gracias!\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as,\n\nActualmente estoy elaborando un modelo ordenado logit, el cual consta de\nuna variable dependiente ordinal categÃ³rica y una variable independiente\nbinomial (dummy). Los datos son de cor",
+      "thread_id": "thread-a42c83f557a9",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-df1f5797c0db",
+      "message_id": "<CAPWhxdEDKnMic5c4A0rWOFC6Tzf-PL1YmzcPUW-Ssbo82p0tpw@mail.gmail.com>",
+      "from_name": "Agustín Nieto",
+      "from_email_hash": "5b3069588e43e9a62c30f949918200ad7694a21af944b5f30cac2d316e3a6cf6",
+      "date": "2022-08-17T22:25:49-03:00",
+      "subject": "[R-es] app shiny + learnr + VPS",
+      "subject_clean": "[R-es] app shiny + learnr + VPS",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola, Â¿quiero saber si es posible publicar una aplicaciÃ³n brillante que usa\nla librerÃ­a learnr para correr cÃ³digo r en lÃ­nea, en un servidor shiny auto\nalojado en una mÃ¡quina virtual?\nGracias\nAgustÃ­n\n\n[image: width=]\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\nLibre\nde virus.www.avast.com\n<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\n<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, Â¿quiero saber si es posible publicar una aplicaciÃ³n brillante que usa\nla librerÃ­a learnr para correr cÃ³digo r en lÃ­nea, en un servidor shiny auto\nalojado en una mÃ¡quina virtual?\nGracias\nAg",
+      "thread_id": "thread-df1f5797c0db",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-7122d573467f",
+      "message_id": "<02C61BAA-BB3A-4D3B-9FD7-DDBC79989A85@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2022-08-18T08:23:49+02:00",
+      "subject": "[R-es] app shiny + learnr + VPS",
+      "subject_clean": "[R-es] app shiny + learnr + VPS",
+      "in_reply_to": "<CAPWhxdEDKnMic5c4A0rWOFC6Tzf-PL1YmzcPUW-Ssbo82p0tpw@mail.gmail.com>",
+      "references": [
+        "<CAPWhxdEDKnMic5c4A0rWOFC6Tzf-PL1YmzcPUW-Ssbo82p0tpw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nDesde luego, es posible. Si solo usas la mÃ¡quina virtual para la app shiny, es mejor ejecutarlo en un contenedor, por ejemplo docker. AquÃ­ tienes un ejemplo, las ideas te sirven igual para la mÃ¡quina virtual:\n\nhttps://blog.sellorm.com/2021/04/25/shiny-app-in-docker/ <https://blog.sellorm.com/2021/04/25/shiny-app-in-docker/>\n\nUn saludo,\nEmilio\n\n\n\n\n\n> El 18 ago 2022, a las 3:25, AgustÃ­n Nieto <agustin.nieto77 en gmail.com> escribiÃ³:\n> \n> Hola, Â¿quiero saber si es posible publicar una aplicaciÃ³n brillante que usa\n> la librerÃ­a learnr para correr cÃ³digo r en lÃ­nea, en un servidor shiny auto\n> alojado en una mÃ¡quina virtual?\n> Gracias\n> AgustÃ­n\n> \n> [image: width=]\n> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\n> Libre\n> de virus.www.avast.com\n> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>\n> <#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nDesde luego, es posible. Si solo usas la mÃ¡quina virtual para la app shiny, es mejor ejecutarlo en un contenedor, por ejemplo docker. AquÃ­ tienes un ejemplo, las ideas te sirven igual para la",
+      "thread_id": "thread-df1f5797c0db",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-0e8e70ad3397",
+      "message_id": "<CAPWhxdHkXwKK4+_ggSo39cLQ0cYAJCgikuo_KBdc=BDG4Rvp3w@mail.gmail.com>",
+      "from_name": "Agustín Nieto",
+      "from_email_hash": "5b3069588e43e9a62c30f949918200ad7694a21af944b5f30cac2d316e3a6cf6",
+      "date": "2022-08-18T13:28:08-03:00",
+      "subject": "[R-es] app shiny + learnr + VPS",
+      "subject_clean": "[R-es] app shiny + learnr + VPS",
+      "in_reply_to": "<02C61BAA-BB3A-4D3B-9FD7-DDBC79989A85@gmail.com>",
+      "references": [
+        "<CAPWhxdEDKnMic5c4A0rWOFC6Tzf-PL1YmzcPUW-Ssbo82p0tpw@mail.gmail.com>",
+        "<02C61BAA-BB3A-4D3B-9FD7-DDBC79989A85@gmail.com>"
+      ],
+      "body_plain": "Muchas gracias Emilio. Pero me expresÃ© mal, el problema no lo tengo con las\napp en shiny, lo tengo con los archivos Rmd en los que usÃ³ la librerÃ­a\nlearnr con estos parÃ¡metros:\n\noutput:\n  learnr::tutorial:\n    progressive: true\n    allow_skip: true\n    theme: cerulean\nruntime: shiny_prerendered\n\nCuando subo el archivo Rmd y su resultante, el archivo html, ninguno de los\ndos funciona en el servidor de Shiny:\n\n[image: image.png]\n\nEl jue, 18 ago 2022 a las 3:23, Emilio L. Cano (<emilopezcano en gmail.com>)\nescribiÃ³:\n\n> Hola,\n>\n> Desde luego, es posible. Si solo usas la mÃ¡quina virtual para la app\n> shiny, es mejor ejecutarlo en un contenedor, por ejemplo docker. AquÃ­\n> tienes un ejemplo, las ideas te sirven igual para la mÃ¡quina virtual:\n>\n> https://blog.sellorm.com/2021/04/25/shiny-app-in-docker/\n>\n> Un saludo,\n> Emilio\n>\n>\n>\n>\n>\n> El 18 ago 2022, a las 3:25, AgustÃ­n Nieto <agustin.nieto77 en gmail.com>\n> escribiÃ³:\n>\n> Hola, Â¿quiero saber si es posible publicar una aplicaciÃ³n brillante que usa\n> la librerÃ­a learnr para correr cÃ³digo r en lÃ­nea, en un servidor shiny auto\n> alojado en una mÃ¡quina virtual?\n> Gracias\n> AgustÃ­n\n>\n> [image: width=]\n> <\n> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail\n> >\n> Libre\n> de virus.www.avast.com\n> <\n> https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail\n> >\n> <#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n>\n> [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220818/81279ecc/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 16032 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220818/81279ecc/attachment-0001.png>",
+      "body_snippet": "Muchas gracias Emilio. Pero me expresÃ© mal, el problema no lo tengo con las\napp en shiny, lo tengo con los archivos Rmd en los que usÃ³ la librerÃ­a\nlearnr con estos parÃ¡metros:\n\noutput:\n  learnr::t",
+      "thread_id": "thread-df1f5797c0db",
+      "thread_depth": 2,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-faba267341ea",
+      "message_id": "<4F076AD8-CFB7-48C5-B6C8-3C64D7BA5B32@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2022-08-19T09:07:22+02:00",
+      "subject": "[R-es] app shiny + learnr + VPS",
+      "subject_clean": "[R-es] app shiny + learnr + VPS",
+      "in_reply_to": "<CAPWhxdHkXwKK4+_ggSo39cLQ0cYAJCgikuo_KBdc=BDG4Rvp3w@mail.gmail.com>",
+      "references": [
+        "<CAPWhxdEDKnMic5c4A0rWOFC6Tzf-PL1YmzcPUW-Ssbo82p0tpw@mail.gmail.com>",
+        "<02C61BAA-BB3A-4D3B-9FD7-DDBC79989A85@gmail.com>",
+        "<CAPWhxdHkXwKK4+_ggSo39cLQ0cYAJCgikuo_KBdc=BDG4Rvp3w@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nYo apostarÃ­a a que falta alguna dependencia de sistema o incluso algÃºn paquete de R.\n\nRevisa los logs de Shiny Server que te darÃ¡n mÃ¡s informaciÃ³n que el mensaje devuelto al navegador, mira aquÃ­: https://support.rstudio.com/hc/en-us/articles/115003717168-Shiny-Server-Error-Logs <https://support.rstudio.com/hc/en-us/articles/115003717168-Shiny-Server-Error-Logs>\n\nY en todo caso entrando en tu mÃ¡quina virtual puedes renderizar el .Rmd desde la consola de R y ver si ahÃ­ tienes algÃºn otro mensaje.\n\nSaludos,\nEmilio\n\n\n\n\n> El 18 ago 2022, a las 18:28, AgustÃ­n Nieto <agustin.nieto77 en gmail.com> escribiÃ³:\n> \n> Muchas gracias Emilio. Pero me expresÃ© mal, el problema no lo tengo con las app en shiny, lo tengo con los archivos Rmd en los que usÃ³ la librerÃ­a learnr con estos parÃ¡metros:\n> \n> output: \n>   learnr::tutorial:\n>     progressive: true\n>     allow_skip: true\n>     theme: cerulean\n> runtime: shiny_prerendered\n> \n> Cuando subo el archivo Rmd y su resultante, el archivo html, ninguno de los dos funciona en el servidor de Shiny:\n> \n> <image.png>\n> \n> El jue, 18 ago 2022 a las 3:23, Emilio L. Cano (<emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>) escribiÃ³:\n> Hola,\n> \n> Desde luego, es posible. Si solo usas la mÃ¡quina virtual para la app shiny, es mejor ejecutarlo en un contenedor, por ejemplo docker. AquÃ­ tienes un ejemplo, las ideas te sirven igual para la mÃ¡quina virtual:\n> \n> https://blog.sellorm.com/2021/04/25/shiny-app-in-docker/ <https://blog.sellorm.com/2021/04/25/shiny-app-in-docker/>\n> \n> Un saludo,\n> Emilio\n> \n> \n> \n> \n> \n>> El 18 ago 2022, a las 3:25, AgustÃ­n Nieto <agustin.nieto77 en gmail.com <mailto:agustin.nieto77 en gmail.com>> escribiÃ³:\n>> \n>> Hola, Â¿quiero saber si es posible publicar una aplicaciÃ³n brillante que usa\n>> la librerÃ­a learnr para correr cÃ³digo r en lÃ­nea, en un servidor shiny auto\n>> alojado en una mÃ¡quina virtual?\n>> Gracias\n>> AgustÃ­n\n>> \n>> [image: width=]\n>> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>>\n>> Libre\n>> de virus.www.avast.com <http://virus.www.avast.com/>\n>> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>>\n>> <#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>\n>> \n>> \t[[alternative HTML version deleted]]\n>> \n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n> \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nYo apostarÃ­a a que falta alguna dependencia de sistema o incluso algÃºn paquete de R.\n\nRevisa los logs de Shiny Server que te darÃ¡n mÃ¡s informaciÃ³n que el mensaje devuelto al navegador, mir",
+      "thread_id": "thread-df1f5797c0db",
+      "thread_depth": 3,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-719db324b8cb",
+      "message_id": "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>",
+      "from_name": "Sebastian Kruk",
+      "from_email_hash": "a65e9b3040f8f1811b3bf74d2c4f13fa3313fea406ff0de967af7111620a34d2",
+      "date": "2022-08-22T17:06:34-03:00",
+      "subject": "[R-es] ceiling con max duplica tamaño matriz",
+      "subject_clean": "[R-es] ceiling con max duplica tamaño matriz",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados,\n\nTengo:\nv1\nv_DEM_i_d_m\n\nDonde\n\n>IN_ES_NUM = 469\n\n>v1 = 1:IN_ES_NUM\n\n> head(v_DEM_i_d_m)\n            Mes 1        Mes 2        Mes 3        Mes 4        Mes 5\n      Mes 6        Mes 7        Mes 8        Mes 9       Mes 10\nMes 11       Mes 12\nES 1  7.811032258  8.982678571  9.563935484  8.411500000  7.788354839\n8.976933333  9.517419355  8.902258065  9.328600000  9.391096774\n9.866800000 10.317838710\nES 2  0.641419355  1.174714286  1.353838710  1.299900000  1.387096774\n0.905033333  1.140935484  0.880387097  1.237766667  1.292677419\n1.327166667  1.387838710\nES 3  0.003225806  0.003571429  0.003225806  0.003333333  0.003225806\n0.003333333  0.003225806  0.003225806  0.003333333  0.003225806\n0.003333333  0.003483871\nES 4 13.475258065 13.240285714 15.168838710 11.492233333 12.792774194\n12.989566667 14.996064516 12.911774194 13.835400000 14.635612903\n14.541266667 15.206000000\nES 5 18.711258065 23.263535714 24.875967742 23.478000000 27.372548387\n27.509800000 28.649096774 26.986935484 33.831833333 20.810419355\n24.669400000 25.797096774\nES 6 16.112419355 17.903678571 18.250548387 16.712066667 17.353741935\n17.137233333 18.501000000 17.613258065 19.115766667 20.773354839\n20.990566667 21.950096774\n\n> class((v_DEM_i_d_m))\n[1] \"matrix\" \"array\"\n\n> str(v_DEM_i_d_m)\n num [1:469, 1:12] 7.81103 0.64142 0.00323 13.47526 18.71126 ...\n - attr(*, \"dimnames\")=List of 2\n  ..$ : chr [1:469] \"ES 1\" \"ES 2\" \"ES 3\" \"ES 4\" ...\n  ..$ : chr [1:12] \"Mes 1\" \"Mes 2\" \"Mes 3\" \"Mes 4\" ...\n\nSi hago:\n\nfor (i in idx_epsilon) {\nv1[i] = ceiling(max(v_DEM_i_d_m[i,]))\n}\n\nv1 queda asÃ­:\n\n> head(v1)\n\n1 2 3 4 5 6\n\n> class(v1)\n[1] \"numeric\"\n\n> str(v1)\n Named num [1:938] 1 2 3 4 5 6 7 8 9 10 ...\n - attr(*, \"names\")= chr [1:938] \"\" \"\" \"\" \"\" ...\n\nNo entiendo porque los primeros 469 son los nÃºmeros de 1 a 469.\n\nÂ¿Que estoy haciendo mal?\n\nSaludos,\n\nSebastiÃ¡n.",
+      "body_snippet": "Estimados,\n\nTengo:\nv1\nv_DEM_i_d_m\n\nDonde\n\n>IN_ES_NUM = 469\n\n>v1 = 1:IN_ES_NUM\n\n> head(v_DEM_i_d_m)\n            Mes 1        Mes 2        Mes 3        Mes 4        Mes 5\n      Mes 6        Mes 7       ",
+      "thread_id": "thread-719db324b8cb",
+      "thread_depth": 0,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-0a96018b3e9c",
+      "message_id": "<C5585AF6-A17F-486F-9B89-7840AD9AEF83@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-08-23T20:00:24-03:00",
+      "subject": "[R-es] ceiling con max duplica tamaño matriz",
+      "subject_clean": "[R-es] ceiling con max duplica tamaño matriz",
+      "in_reply_to": "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>",
+      "references": [
+        "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado SebastiÃ¡n Kruk\n\nPueden ser datos confidenciales, si no lo son, y puedes enviar un script en R, yo puedo colocarlo en mi computadora tal cuÃ¡l, que ejecute sin que yo toque nada, y ver si el resultado es el mismo. Por si es un problema de versiÃ³n, sistema, algo que no dependa de usted. La semana pasada me pasÃ³ que el mismo cÃ³digo estaba andando en cuatro sistemas operativos diferentes y luego de una actualizaciÃ³n un sistema comenzÃ³ a fallar. Mismo cÃ³digo, dependiendo dÃ³nde, daba resultados distintos, y con R ya pasÃ³ con fechas, entre distintas personas de esta lista de correos nos daba diferencias.\n\nJavier RubÃ©n Marcuzzi\n\n\n> El 22 ago. 2022, a las 17:06, Sebastian Kruk <residuo.solow en gmail.com> escribiÃ³:\n> \n> Estimados,\n> \n> Tengo:\n> v1\n> v_DEM_i_d_m\n> \n> Donde\n> \n>> IN_ES_NUM = 469\n> \n>> v1 = 1:IN_ES_NUM\n> \n>> head(v_DEM_i_d_m)\n>            Mes 1        Mes 2        Mes 3        Mes 4        Mes 5\n>      Mes 6        Mes 7        Mes 8        Mes 9       Mes 10\n> Mes 11       Mes 12\n> ES 1  7.811032258  8.982678571  9.563935484  8.411500000  7.788354839\n> 8.976933333  9.517419355  8.902258065  9.328600000  9.391096774\n> 9.866800000 10.317838710\n> ES 2  0.641419355  1.174714286  1.353838710  1.299900000  1.387096774\n> 0.905033333  1.140935484  0.880387097  1.237766667  1.292677419\n> 1.327166667  1.387838710\n> ES 3  0.003225806  0.003571429  0.003225806  0.003333333  0.003225806\n> 0.003333333  0.003225806  0.003225806  0.003333333  0.003225806\n> 0.003333333  0.003483871\n> ES 4 13.475258065 13.240285714 15.168838710 11.492233333 12.792774194\n> 12.989566667 14.996064516 12.911774194 13.835400000 14.635612903\n> 14.541266667 15.206000000\n> ES 5 18.711258065 23.263535714 24.875967742 23.478000000 27.372548387\n> 27.509800000 28.649096774 26.986935484 33.831833333 20.810419355\n> 24.669400000 25.797096774\n> ES 6 16.112419355 17.903678571 18.250548387 16.712066667 17.353741935\n> 17.137233333 18.501000000 17.613258065 19.115766667 20.773354839\n> 20.990566667 21.950096774\n> \n>> class((v_DEM_i_d_m))\n> [1] \"matrix\" \"array\"\n> \n>> str(v_DEM_i_d_m)\n> num [1:469, 1:12] 7.81103 0.64142 0.00323 13.47526 18.71126 ...\n> - attr(*, \"dimnames\")=List of 2\n>  ..$ : chr [1:469] \"ES 1\" \"ES 2\" \"ES 3\" \"ES 4\" ...\n>  ..$ : chr [1:12] \"Mes 1\" \"Mes 2\" \"Mes 3\" \"Mes 4\" ...\n> \n> Si hago:\n> \n> for (i in idx_epsilon) {\n> v1[i] = ceiling(max(v_DEM_i_d_m[i,]))\n> }\n> \n> v1 queda asÃ­:\n> \n>> head(v1)\n> \n> 1 2 3 4 5 6\n> \n>> class(v1)\n> [1] \"numeric\"\n> \n>> str(v1)\n> Named num [1:938] 1 2 3 4 5 6 7 8 9 10 ...\n> - attr(*, \"names\")= chr [1:938] \"\" \"\" \"\" \"\" ...\n> \n> No entiendo porque los primeros 469 son los nÃºmeros de 1 a 469.\n> \n> Â¿Que estoy haciendo mal?\n> \n> Saludos,\n> \n> SebastiÃ¡n.\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Estimado SebastiÃ¡n Kruk\n\nPueden ser datos confidenciales, si no lo son, y puedes enviar un script en R, yo puedo colocarlo en mi computadora tal cuÃ¡l, que ejecute sin que yo toque nada, y ver si el ",
+      "thread_id": "thread-719db324b8cb",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-51ee485516b4",
+      "message_id": "<CAKL8G3GcCMg+-4Nj62sQyeLBHKXVR2jTpXDgg5pDP1i4cJHbnQ@mail.gmail.com>",
+      "from_name": "Jorge I Velez",
+      "from_email_hash": "874dca51563da807a88f095f0afa53c85d1ee3dc475fa731dd1d5c0887e5ea41",
+      "date": "2022-08-23T20:30:21-05:00",
+      "subject": "[R-es] ceiling con max duplica tamaño matriz",
+      "subject_clean": "[R-es] ceiling con max duplica tamaño matriz",
+      "in_reply_to": "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>",
+      "references": [
+        "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>"
+      ],
+      "body_plain": "QuÃ© pasa cuando usas\n\napply(v_fDEM_i_d_m, 1, function(x) ceiling(max(x)))\n\n?\n\nJorge.-\n\nEl El lun, 22 de ago. de 2022 a la(s) 3:06 p. m., Sebastian Kruk <\nresiduo.solow en gmail.com> escribiÃ³:\n\n> Estimados,\n>\n> Tengo:\n> v1\n> v_DEM_i_d_m\n>\n> Donde\n>\n> >IN_ES_NUM = 469\n>\n> >v1 = 1:IN_ES_NUM\n>\n> > head(v_fDEM_i_d_m)\n>             Mes 1        Mes 2        Mes 3        Mes 4        Mes 5\n>       Mes 6        Mes 7        Mes 8        Mes 9       Mes 10\n> Mes 11       Mes 12\n> ES 1  7.811032258  8.982678571  9.563935484  8.411500000  7.788354839\n> 8.976933333  9.517419355  8.902258065  9.328600000  9.391096774\n> 9.866800000 10.317838710\n> ES 2  0.641419355  1.174714286  1.353838710  1.299900000  1.387096774\n> 0.905033333  1.140935484  0.880387097  1.237766667  1.292677419\n> 1.327166667  1.387838710\n> ES 3  0.003225806  0.003571429  0.003225806  0.003333333  0.003225806\n> 0.003333333  0.003225806  0.003225806  0.003333333  0.003225806\n> 0.003333333  0.003483871\n> ES 4 13.475258065 13.240285714 15.168838710 11.492233333 12.792774194\n> 12.989566667 14.996064516 12.911774194 13.835400000 14.635612903\n> 14.541266667 15.206000000\n> ES 5 18.711258065 23.263535714 24.875967742 23.478000000 27.372548387\n> 27.509800000 28.649096774 26.986935484 33.831833333 20.810419355\n> 24.669400000 25.797096774\n> ES 6 16.112419355 17.903678571 18.250548387 16.712066667 17.353741935\n> 17.137233333 18.501000000 17.613258065 19.115766667 20.773354839\n> 20.990566667 21.950096774\n>\n> > class((v_DEM_i_d_m))\n> [1] \"matrix\" \"array\"\n>\n> > str(v_DEM_i_d_m)\n>  num [1:469, 1:12] 7.81103 0.64142 0.00323 13.47526 18.71126 ...\n>  - attr(*, \"dimnames\")=List of 2\n>   ..$ : chr [1:469] \"ES 1\" \"ES 2\" \"ES 3\" \"ES 4\" ...\n>   ..$ : chr [1:12] \"Mes 1\" \"Mes 2\" \"Mes 3\" \"Mes 4\" ...\n>\n> Si hago:\n>\n> for (i in idx_epsilon) {\n> v1[i] = ceiling(max(v_DEM_i_d_m[i,]))\n> }\n>\n> v1 queda asÃ­:\n>\n> > head(v1)\n>\n> 1 2 3 4 5 6\n>\n> > class(v1)\n> [1] \"numeric\"\n>\n> > str(v1)\n>  Named num [1:938] 1 2 3 4 5 6 7 8 9 10 ...\n>  - attr(*, \"names\")= chr [1:938] \"\" \"\" \"\" \"\" ...\n>\n> No entiendo porque los primeros 469 son los nÃºmeros de 1 a 469.\n>\n> Â¿Que estoy haciendo mal?\n>\n> Saludos,\n>\n> SebastiÃ¡n.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n-- \nSent from my phone. Please excuse my brevity and misspelling.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "QuÃ© pasa cuando usas\n\napply(v_fDEM_i_d_m, 1, function(x) ceiling(max(x)))\n\n?\n\nJorge.-\n\nEl El lun, 22 de ago. de 2022 a la(s) 3:06 p. m., Sebastian Kruk <\nresiduo.solow en gmail.com> escribiÃ³:\n\n> Est",
+      "thread_id": "thread-719db324b8cb",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-bdd4813a8bfa",
+      "message_id": "<640363e5-73cc-62d4-e730-5d35074457d0@urjc.es>",
+      "from_name": "Marcelino de la Cruz Rot",
+      "from_email_hash": "65c46abb4ca1a5f27552f6f219887e1db849802ef689daa85efcb102d34b2127",
+      "date": "2022-08-24T10:49:39+02:00",
+      "subject": "[R-es] ceiling con max duplica tamaño matriz",
+      "subject_clean": "[R-es] ceiling con max duplica tamaño matriz",
+      "in_reply_to": "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>",
+      "references": [
+        "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>"
+      ],
+      "body_plain": "Hola SebastiÃ¡n:\n\nNo nos has enseÃ±ado cÃ³mo es idx_epsilon.\n\nHaz\n\nhead(idx_epsilon)\n\ny comprueba que sus valores vayan de 1 a 469. Si no incluyen estos \nvalores es normal que despuÃ©s del bucle las posiciones 1:469 de v1 se \nqueden como estaban.\n\nSaludos,\nMarcelino\n\n\nEl 22/08/2022 a las 22:06, Sebastian Kruk escribiÃ³:\n> Estimados,\n>\n> Tengo:\n> v1\n> v_DEM_i_d_m\n>\n> Donde\n>\n>> IN_ES_NUM = 469\n>> v1 = 1:IN_ES_NUM\n>> head(v_DEM_i_d_m)\n>              Mes 1        Mes 2        Mes 3        Mes 4        Mes 5\n>        Mes 6        Mes 7        Mes 8        Mes 9       Mes 10\n> Mes 11       Mes 12\n> ES 1  7.811032258  8.982678571  9.563935484  8.411500000  7.788354839\n> 8.976933333  9.517419355  8.902258065  9.328600000  9.391096774\n> 9.866800000 10.317838710\n> ES 2  0.641419355  1.174714286  1.353838710  1.299900000  1.387096774\n> 0.905033333  1.140935484  0.880387097  1.237766667  1.292677419\n> 1.327166667  1.387838710\n> ES 3  0.003225806  0.003571429  0.003225806  0.003333333  0.003225806\n> 0.003333333  0.003225806  0.003225806  0.003333333  0.003225806\n> 0.003333333  0.003483871\n> ES 4 13.475258065 13.240285714 15.168838710 11.492233333 12.792774194\n> 12.989566667 14.996064516 12.911774194 13.835400000 14.635612903\n> 14.541266667 15.206000000\n> ES 5 18.711258065 23.263535714 24.875967742 23.478000000 27.372548387\n> 27.509800000 28.649096774 26.986935484 33.831833333 20.810419355\n> 24.669400000 25.797096774\n> ES 6 16.112419355 17.903678571 18.250548387 16.712066667 17.353741935\n> 17.137233333 18.501000000 17.613258065 19.115766667 20.773354839\n> 20.990566667 21.950096774\n>\n>> class((v_DEM_i_d_m))\n> [1] \"matrix\" \"array\"\n>\n>> str(v_DEM_i_d_m)\n>   num [1:469, 1:12] 7.81103 0.64142 0.00323 13.47526 18.71126 ...\n>   - attr(*, \"dimnames\")=List of 2\n>    ..$ : chr [1:469] \"ES 1\" \"ES 2\" \"ES 3\" \"ES 4\" ...\n>    ..$ : chr [1:12] \"Mes 1\" \"Mes 2\" \"Mes 3\" \"Mes 4\" ...\n>\n> Si hago:\n>\n> for (i in idx_epsilon) {\n> v1[i] = ceiling(max(v_DEM_i_d_m[i,]))\n> }\n>\n> v1 queda asÃ­:\n>\n>> head(v1)\n> 1 2 3 4 5 6\n>\n>> class(v1)\n> [1] \"numeric\"\n>\n>> str(v1)\n>   Named num [1:938] 1 2 3 4 5 6 7 8 9 10 ...\n>   - attr(*, \"names\")= chr [1:938] \"\" \"\" \"\" \"\" ...\n>\n> No entiendo porque los primeros 469 son los nÃºmeros de 1 a 469.\n>\n> Â¿Que estoy haciendo mal?\n>\n> Saludos,\n>\n> SebastiÃ¡n.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n-- \nMarcelino de la Cruz Rot\nDepto. de BiologÃ­a y GeologÃ­a\nFÃ­sica y QuÃ­mica InorgÃ¡nica\nUniversidad Rey Juan Carlos\nMÃ³stoles EspaÃ±a",
+      "body_snippet": "Hola SebastiÃ¡n:\n\nNo nos has enseÃ±ado cÃ³mo es idx_epsilon.\n\nHaz\n\nhead(idx_epsilon)\n\ny comprueba que sus valores vayan de 1 a 469. Si no incluyen estos \nvalores es normal que despuÃ©s del bucle las p",
+      "thread_id": "thread-719db324b8cb",
+      "thread_depth": 1,
+      "month": "2022-08"
+    },
+    {
+      "id": "msg-b788a7dfa776",
+      "message_id": "<0dff371b-6101-9e64-fcda-a893ad4ad889@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2022-08-25T10:19:16+02:00",
+      "subject": "[R-es] ceiling con max duplica tamaño matriz",
+      "subject_clean": "[R-es] ceiling con max duplica tamaño matriz",
+      "in_reply_to": "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>",
+      "references": [
+        "<CAMn86Nc717cDuLQa_qtsUx6G+p01K_TY2beXDfhWHokk2Y=j+g@mail.gmail.com>"
+      ],
+      "body_plain": "Buenas, SebastiÃ¡n:\n\nNo veo quÃ© valor asignas a idx_epsilon.\n\nUn saludo.\n\nEl 22/8/22 a las 22:06, Sebastian Kruk escribiÃ³:\n> Estimados,\n>\n> Tengo:\n> v1\n> v_DEM_i_d_m\n>\n> Donde\n>\n>> IN_ES_NUM = 469\n>> v1 = 1:IN_ES_NUM\n>> head(v_DEM_i_d_m)\n>              Mes 1        Mes 2        Mes 3        Mes 4        Mes 5\n>        Mes 6        Mes 7        Mes 8        Mes 9       Mes 10\n> Mes 11       Mes 12\n> ES 1  7.811032258  8.982678571  9.563935484  8.411500000  7.788354839\n> 8.976933333  9.517419355  8.902258065  9.328600000  9.391096774\n> 9.866800000 10.317838710\n> ES 2  0.641419355  1.174714286  1.353838710  1.299900000  1.387096774\n> 0.905033333  1.140935484  0.880387097  1.237766667  1.292677419\n> 1.327166667  1.387838710\n> ES 3  0.003225806  0.003571429  0.003225806  0.003333333  0.003225806\n> 0.003333333  0.003225806  0.003225806  0.003333333  0.003225806\n> 0.003333333  0.003483871\n> ES 4 13.475258065 13.240285714 15.168838710 11.492233333 12.792774194\n> 12.989566667 14.996064516 12.911774194 13.835400000 14.635612903\n> 14.541266667 15.206000000\n> ES 5 18.711258065 23.263535714 24.875967742 23.478000000 27.372548387\n> 27.509800000 28.649096774 26.986935484 33.831833333 20.810419355\n> 24.669400000 25.797096774\n> ES 6 16.112419355 17.903678571 18.250548387 16.712066667 17.353741935\n> 17.137233333 18.501000000 17.613258065 19.115766667 20.773354839\n> 20.990566667 21.950096774\n>\n>> class((v_DEM_i_d_m))\n> [1] \"matrix\" \"array\"\n>\n>> str(v_DEM_i_d_m)\n>   num [1:469, 1:12] 7.81103 0.64142 0.00323 13.47526 18.71126 ...\n>   - attr(*, \"dimnames\")=List of 2\n>    ..$ : chr [1:469] \"ES 1\" \"ES 2\" \"ES 3\" \"ES 4\" ...\n>    ..$ : chr [1:12] \"Mes 1\" \"Mes 2\" \"Mes 3\" \"Mes 4\" ...\n>\n> Si hago:\n>\n> for (i in idx_epsilon) {\n> v1[i] = ceiling(max(v_DEM_i_d_m[i,]))\n> }\n>\n> v1 queda asÃ­:\n>\n>> head(v1)\n> 1 2 3 4 5 6\n>\n>> class(v1)\n> [1] \"numeric\"\n>\n>> str(v1)\n>   Named num [1:938] 1 2 3 4 5 6 7 8 9 10 ...\n>   - attr(*, \"names\")= chr [1:938] \"\" \"\" \"\" \"\" ...\n>\n> No entiendo porque los primeros 469 son los nÃºmeros de 1 a 469.\n>\n> Â¿Que estoy haciendo mal?\n>\n> Saludos,\n>\n> SebastiÃ¡n.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> Return-Path: <r-help-es-bounces en r-project.org>\n> Delivered-To: cuentar en buzon9.uca.es\n> Received: from buzon9.uca.es\n> \tby buzon9.uca.es with LMTP\n> \tid gEkuOtSS6mITUgAATVNi1Q\n> \t(envelope-from <r-help-es-bounces en r-project.org>)\n> \tfor <cuentar en buzon9.uca.es>; Wed, 03 Aug 2022 17:23:00 +0200\n> Received: from smtp22.uca.es (bellatrix.uca.es [10.84.3.16])\n> \tby buzon9.uca.es (Postfix) with ESMTP id EDB00120431\n> \tfor <cuentar en buzon9.uca.es>; Wed,  3 Aug 2022 17:23:00 +0200 (CEST)\n> Received: from localhost (localhost [127.0.0.1])\n> \tby smtp22.uca.es (Postfix) with ESMTP id EAE9B600E5\n> \tfor <cuentar en buzon9.uca.es>; Wed,  3 Aug 2022 17:23:00 +0200 (CEST)\n> Authentication-Results: smtp22.uca.es (amavisd-new); dkim=ss (1024-bit key)\n> \theader.d=project.org\n> Received: from smtp22.uca.es ([127.0.0.1])\n> \tby localhost (smtp22.uca.es [127.0.0.1]) (amavisd-new, port 10024)\n> \twith LMTP id uCsQhgWulO0z for <cuentar en buzon9.uca.es>;\n> \tWed,  3 Aug 2022 17:23:00 +0200 (CEST)\n> Received: from mx02.puc.rediris.es (outbound1sev.lav.puc.rediris.es [130.206.19.170])\n> \tby smtp22.uca.es (Postfix) with ESMTPS id CAFAE600E3\n> \tfor <r-uca en uca.es>; Wed,  3 Aug 2022 17:23:00 +0200 (CEST)\n> Authentication-Results: mx02.puc.rediris.es;\n> \tspf=ss (rediris.es: domain of r-help-es-bounces en r-project.org designates 129.132.119.208 as permitted sender) smtp.mailfrom=r-help-es-bounces en r-project.org;\n> \tdkim=ss header.i=@r-project.org\n> Received: from hypatia.math.ethz.ch (hypatia.math.ethz.ch [129.132.119.208])\n> \tby mx02.puc.rediris.es  with ESMTP id 273FMxpp005763-273FMxpr005763\n> \t(version=Sv1.2 cipherÃ¬DHE-RSA-AES256-GCM-SHA384 bits%6 verify=NO)\n> \tfor <r-uca en uca.es>; Wed, 3 Aug 2022 17:22:59 +0200\n> Received: from localhost (localhost [127.0.0.1])\n> \tby hypatia.math.ethz.ch (Postfix) with ESMTP id E9669E55;\n> \tWed,  3 Aug 2022 17:22:58 +0200 (CEST)\n> DKIM-Signature: v= a=rsa-sha256; c=relaxed/simple; d=r-project.org; h\tcontent-transfer-encoding:content-type:content-type\n> \t:list-subscribe:list-help:list-post:list-archive\n> \t:list-unsubscribe:list-id:precedence:subject:subject:message-id\n> \t:date:date:from:from:mime-version:received:received:received\n> \t:received:received:received:received; s=im20211220; t\t1659540178; x\u001662132179; bhÂ³ygmbSEvIN6C0kLWWD8wwyCyanahf5CboV\n> \tkCOW1InE=b=O1rK0aSk9JiEIbPGO2rbvfSReXPi+OTtIHpesudLTCb5s90KVzj\n> \t41laTdi4h2pSKA73IfAYqtu8CQQ3d0D3sdv9t4U/G/CgKOWz0T3w1EXEgSn2bQg4\n> \tExpXmU+LQa1S8k0fqyravKy7EmD/ZceMUT0UftTuDnYiIyIbx0wO8S2AX-Virus-Scanned: amavisd-new at r-project.org\n> Received: from hypatia.math.ethz.ch ([127.0.0.1])\n> \tby localhost (hypatia.math.ethz.ch [127.0.0.1]) (amavisd-new, port 10024)\n> \twith LMTP id bE3c2oFIs0ot; Wed,  3 Aug 2022 17:22:58 +0200 (CEST)\n> Received: from hypatia.math.ethz.ch (localhost [127.0.0.1])\n> \tby hypatia.math.ethz.ch (Postfix) with ESMTP id 8D4F61EB0;\n> \tWed,  3 Aug 2022 17:22:53 +0200 (CEST)\n> Received: from localhost (localhost [127.0.0.1])\n>   by hypatia.math.ethz.ch (Postfix) with ESMTP id 0874D652\n>   for <r-help-es en r-project.org>; Wed,  3 Aug 2022 17:22:52 +0200 (CEST)\n> X-Virus-Scanned: amavisd-new at r-project.org\n> X-Spam-Flag: NO\n> X-Spam-Score: 0.161\n> X-Spam-Level:\n> X-Spam-Status: No, score=161 tagged_above=-999 required=6.2\n>   tests=AYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,\n>   DKIM_VALID_AU=.1, FORGED_SPF_HELO=1,\n>   FREEMAIL_FORGED_FROMDOMAIN=0248, FREEMAIL_FROM=0.001,\n>   HEADER_FROM_DIFFERENT_DOMAINS=248, SPF_HELO_PASS=-0.001,\n>   SPF_SOFTFAIL=665] autolearn=no autolearn_force=no\n> Received: from hypatia.math.ethz.ch ([127.0.0.1])\n>   by localhost (hypatia.math.ethz.ch [127.0.0.1]) (amavisd-new, port 10024)\n>   with LMTP id qCGJfLYz_8S5 for <r-help-es en r-project.org>;\n>   Wed,  3 Aug 2022 17:22:47 +0200 (CEST)\n> Received: from ethz.ch (mc1.ethz.ch [129.132.80.150])\n>   (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))\n>   (No client certificate requested)\n>   by hypatia.math.ethz.ch (Postfix) with ESMTPS id 896B3E55\n>   for <r-help-es en r-project.org>; Wed,  3 Aug 2022 17:22:47 +0200 (CEST)\n> Received: from mail-il1-f170.google.com ([209.85.166.170])\n>   by ethz.ch stage1 with esmtps (Exim MailCleaner)\n>   id 1oJGCY-00039I-Jv for <r-help-es en r-project.org>\n>   from <residuo.solow en gmail.com>; Wed, 03 Aug 2022 17:22:26 +0200\n> Received: by mail-il1-f170.google.com with SMTP id g14so3982956ile.11\n>   for <r-help-es en r-project.org>; Wed, 03 Aug 2022 08:22:26 -0700 (PDT)\n> X-MailCleaner-SPF: pass\n> X-Google-DKIM-Signature: v= a=rsa-sha256; c=relaxed/relaxed;\n>   d\n100.net; s 210112;\n>   h=ntent-transfer-encoding:to:subject:message-id:date:from\n>   :mime-version:x-gm-message-state:from:to:cc;\n>   bh=WLxmAnsIOOynn+5yRdphCblQt6+2ybaZlEyE24kZE=;\n>   b=SjD+vzAWfmKwjV/ixl9ef8kMSjDpbjemDAEveJybIJmk5WNYEUF7aUXPkqjdW1igwr\n>   QJiu/1sY3HB5QR+LJXglbe9DJlFUwuFYNX/i9Ltp5ozV9raDTyt4jx2k/JtCO/J+gVIE\n>   LOdVNZDN26SSIuFCA7t8PdBW2kgyQMWUQ/u2LW6OuBF0oNPdWyDd4uN/Vw15NUXUciAe\n>   xcHPTar9hdeCvQZpsaWqn8bpdbB+Ns853zmzXBHbS1nRtWqpb0HMK0iO5kWhPqTOljwG\n>   vUkMjmeezlLYhIe05pjSELvnqcz68bjorsVkARSfXp/qLk02c0IS8CvATsnZgm4NJFUg\n>   KMzQ=X-Gm-Message-State: AJIora8il7dg3XsAt6wmwYUUAnu4lol+LT9Ce1I5+T9dNWhET3qVKV06\n>   WeOql6MybYgtkkHiEgogckC+YyPoT5uj9i1lJ0BCclI9mN2y+A=X-Google-Smtp-Source: AGRyM1tqeufBEs6oS5HawbBkNWLxPgDiQYTBQnfeUEhEVfy7cApP3kEN92xFN8Ud4q+uD2V8cA0JA055r00ZSdStlFIX-Received: by 2002:a05:6e02:1c86:b0:2de:89f:ccd1 with SMTP id\n>   w6-20020a056e021c8600b002de089fccd1mr10638086ill.5.1659540144772; Wed, 03 Aug\n>   2022 08:22:24 -0700 (PDT)\n> MIME-Version: 1.0\n> From: Sebastian Kruk <residuo.solow en gmail.com>\n> Date: Wed, 3 Aug 2022 12:22:51 -0300\n> Message-ID: <CAMn86NexyY9pqjtoCAt7PLj4F0Rx9EG6NF3gMi8RKxvHcc3GCg en mail.gmail.com>\n> To: Lista R <r-help-es en r-project.org>\n> X-Newsl: is not newsletter (2.0/5.0) position : 0, not decisive\n> X-MailCleaner-MachineLearning0: is not spam (23.714926838874817%)\n>   (200728-ALL-10L) (es)\n> X-MailCleaner-MachineLearning1: is not spam (92.98120141029358%)\n>   (200728-ALL-50S) (es)\n> X-NiceBayes: is not spam (50.13%) position : 3, not decisive\n> X-Spamc: is not spam (0.0/5.0) position : 7, ham decisive\n> X-MailCleaner-Information: Please contact servicedesk en id.ethz.ch for more\n>   information\n> X-MailCleaner-ID: 1oJGCY-00039v-Oi\n> X-MailCleaner: Found to be clean\n> X-MailCleaner-SpamCheck: not spam, Newsl (score=0, required=5.0,\n>   MC_NEWS_NIPRBL= position : 0, not decisive),\n>   MachineLearning (23.714926838874817% es, position : 2, not decisive),\n>   MachineLearning (92.98120141029358% es, position : 2, not decisive),\n>   NiceBayes (50.13%, position : 3, not decisive), Spamc (score=0,\n>   required=0, FREEMAIL_FROM 0.0, RCVD_IN_DNSWL_NONE -0.0,\n>   DKIM_VALID -0.3, MC_SPF_PASS -0.0, DKIM_VALID_AU -0.3,\n>   RCVD_IN_MSPIKE_H2 -0.0, DKIM_SIGNED 0.6, position : 7, ham decisive)\n> X-MailCleaner-ReportURL: https://mailcleaner.ethz.ch/rs.php\n> Subject: [R-es] Rglpk_solve_LP\n> X-BeenThere: r-help-es en r-project.org\n> X-Mailman-Version: 2.1.25+j1\n> Precedence: list\n> List-Id: =so-8859-1?q?Ayuda_sobre_R_en_espaÃ±ol?= <r-help-es.r-project.org>\n> List-Unsubscribe: <https://stat.ethz.ch/mailman/options/r-help-es>,\n>   <mailto:r-help-es-request en r-project.org?subject=subscribe>\n> List-Archive: <https://stat.ethz.ch/pipermail/r-help-es/>\n> List-Post: <mailto:r-help-es en r-project.org>\n> List-Help: <mailto:r-help-es-request en r-project.org?subject=lp>\n> List-Subscribe: <https://stat.ethz.ch/mailman/listinfo/r-help-es>,\n>   <mailto:r-help-es-request en r-project.org?subject=bscribe>\n> Content-Type: text/plain; charset=so-8859-1\"\n> Content-Transfer-Encoding: quoted-printable\n> Errors-To: r-help-es-bounces en r-project.org\n> Sender: \"R-help-es\" <r-help-es-bounces en r-project.org>\n> X-FEAS-SPF: spf-result=ss, ip\u00129.132.119.208, helo=hypatia.math.ethz.ch, mailFrom=r-help-es-bounces en r-project.org\n> X-FEAS-DKIM: Valid\n> X-FE-Policy-ID: 21:3:1:uca.es\n>\n> Estimados usuarios-R:\n>\n> Estoy probando el solver GLPK.\n>\n> Me pasaron un programa en Octave y lo convertÃ­ a R pero me da siempre\n> que la soluciÃ³n es 0.\n>\n> En R me quedÃ³ asÃ­:\n>\n> ######################################################\n>\n> #1) Datos\n>\n> #PerÃ­odo de estudio (dÃ­as)\n> T = 10\n>\n> #Demanda diaria\n> dda = 10*matrix(1,T,1)\n>\n> #Capacidad de camiÃ³n (m3)\n> K=30\n>\n> #Capacidad de tanque (m3)\n> cap_tqe=40\n>\n> #Stock inicial (m3)\n> s0=15\n>\n> #Max cantdad diaria de camiones\n> x_max=10\n>\n> ##################################\n> #2) Modelo simple, puede entregar todos los dÃ­as, camiones enteros\n> #\n> # Variables: z=[x; s], cant camiones x(t) y stock final s(t)\n> c = matrix(rep(1:0,each = T))\n> vlb = matrix(rep(0,2*T))\n> vub = matrix(c(x_max*rep(1,T),cap_tqe*rep(1,T)))\n>\n> #Rest de balance:  s(t)=s(t-1)+K*x(t)-dda(t)\n> A1=matrix(0,nrow=T,ncol=2*T)\n> A1[,1:T]=diag(K,dim(A1[,1:T]))\n> T2 = T+1\n> T3 = 2*T\n> library(pracma)\n> A1[,T2:T3]=-diag(1,T,T)+Diag(rep(1,T-1),-1)\n> b1 = dda\n> b1[1] = b1[1]-s0\n>\n> #Tipo de variables y restricciones\n> varint=rep(\"I\",T)\n> varcont=rep(\"C\",T)\n> ctype=rep(\"S\",T)\n>\n> #vartype=[varint varcont];\n> vartype=c(varcont, varcont)\n> #-----\n> sense=1;\n>\n> Rglpk_solve_LP(obj = c, mat =A1, dir = rep(\"<=\",nrow(A1)),rhs = b1,max\n> = F, types = vartype)\n>\n> ######################################################\n>\n> Â¿CuÃ¡l serÃ¡ el problema?\n>\n> Gracias,\n>\n> SebastiÃ¡n.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Buenas, SebastiÃ¡n:\n\nNo veo quÃ© valor asignas a idx_epsilon.\n\nUn saludo.\n\nEl 22/8/22 a las 22:06, Sebastian Kruk escribiÃ³:\n> Estimados,\n>\n> Tengo:\n> v1\n> v_DEM_i_d_m\n>\n> Donde\n>\n>> IN_ES_NUM = 469\n>",
+      "thread_id": "thread-719db324b8cb",
+      "thread_depth": 1,
+      "month": "2022-08"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-36c4f3c75ec0",
+      "subject": "[R-es] Rglpk_solve_LP",
+      "message_count": 3,
+      "participants": [
+        "Javier Marcuzzi",
+        "Sebastian Kruk",
+        "Sebastián Kruk Gencarelli"
+      ],
+      "started": "2022-08-03T12:22:51-03:00",
+      "last_reply": "2022-08-04T22:49:23-03:00",
+      "root_message_id": "msg-36c4f3c75ec0"
+    },
+    {
+      "id": "thread-71f3abc93bba",
+      "subject": "[R-es] Tratamientos antagónicos o sinérgicos",
+      "message_count": 2,
+      "participants": [
+        "Andrés Hirigoyen",
+        "Javier Marcuzzi"
+      ],
+      "started": "2022-08-08T11:13:41-03:00",
+      "last_reply": "2022-08-08T12:01:44-03:00",
+      "root_message_id": "msg-71f3abc93bba"
+    },
+    {
+      "id": "thread-a42c83f557a9",
+      "subject": "[R-es] Ordered probit model",
+      "message_count": 1,
+      "participants": [
+        "Andrey Rojas Jiménez"
+      ],
+      "started": "2022-08-17T12:02:57-06:00",
+      "last_reply": "2022-08-17T12:02:57-06:00",
+      "root_message_id": "msg-a42c83f557a9"
+    },
+    {
+      "id": "thread-df1f5797c0db",
+      "subject": "[R-es] app shiny + learnr + VPS",
+      "message_count": 4,
+      "participants": [
+        "Agustín Nieto",
+        "Emilio L. Cano"
+      ],
+      "started": "2022-08-17T22:25:49-03:00",
+      "last_reply": "2022-08-19T09:07:22+02:00",
+      "root_message_id": "msg-df1f5797c0db"
+    },
+    {
+      "id": "thread-719db324b8cb",
+      "subject": "[R-es] ceiling con max duplica tamaño matriz",
+      "message_count": 5,
+      "participants": [
+        "Javier Marcuzzi",
+        "Jorge I Velez",
+        "Marcelino de la Cruz Rot",
+        "Proyecto R-UCA",
+        "Sebastian Kruk"
+      ],
+      "started": "2022-08-22T17:06:34-03:00",
+      "last_reply": "2022-08-25T10:19:16+02:00",
+      "root_message_id": "msg-719db324b8cb"
+    }
+  ]
+}

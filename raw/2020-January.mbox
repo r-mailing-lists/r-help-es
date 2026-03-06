@@ -1,0 +1,1709 @@
+From jonb@r987 @end|ng |rom gm@||@com  Thu Jan  2 05:39:19 2020
+From: jonb@r987 @end|ng |rom gm@||@com (Jonathan bartolo pinzon)
+Date: Wed, 1 Jan 2020 23:39:19 -0500
+Subject: [R-es] Como cambiar el formato de fecha de ymd_hms a dmy_hms
+Message-ID: <CAMeWT9GDzhH3rUk090CUZ=JB9v5EVqBU9yqoCP5JieKpcUgOag@mail.gmail.com>
+
+Buen día para todos,
+
+Tengo un dataframe nombrado como mydata en donde una de sus variables en
+columna de nombre *date* tiene una secuencia de fechas en formato *ymd_hms*.
+
+Ahora quiero convertir este formato a *dmy_hms * en toda la variable *date.*
+
+Me podrían ayudar a saber como debo hacerlo?
+
+Quedo atento a sus comentarios.
+
+Saludos,
+
+Gracias,
+
+*JONATHAN BARTOLO PINZON *
+
+
+*"En los momentos de crisis, sólo la imaginación es más importante que el
+conocimiento".
+
+                                       Albert Einstein *
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Thu Jan  2 08:45:04 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Thu, 2 Jan 2020 08:45:04 +0100
+Subject: [R-es] Como cambiar el formato de fecha de ymd_hms a dmy_hms
+In-Reply-To: <CAMeWT9GDzhH3rUk090CUZ=JB9v5EVqBU9yqoCP5JieKpcUgOag@mail.gmail.com>
+References: <CAMeWT9GDzhH3rUk090CUZ=JB9v5EVqBU9yqoCP5JieKpcUgOag@mail.gmail.com>
+Message-ID: <79BB0C4E-6C35-442A-8142-8E4FD0BD1ED3@gmail.com>
+
+Hola,
+
+Esto debería servirte:
+
+f <- "20200102_083010"
+f2 <- format(as.POSIXct(f, format = "%Y%m%d_%H%M%S"), "%d%m%Y_%H%M%S?)
+
+> f2
+[1] "02012020_083010"
+
+Si el año está en dos dígitos, cambia ?Y? por ?y?. Funciona igual para un vector (columna del data.frame).
+
+Saludos y Feliz 2020,
+Emilio
+http://emilio.lcano.com/
+
+
+> El 2 ene 2020, a las 5:39, Jonathan bartolo pinzon <jonbar987 en gmail.com> escribió:
+> 
+> Buen día para todos,
+> 
+> Tengo un dataframe nombrado como mydata en donde una de sus variables en
+> columna de nombre *date* tiene una secuencia de fechas en formato *ymd_hms*.
+> 
+> Ahora quiero convertir este formato a *dmy_hms * en toda la variable *date.*
+> 
+> Me podrían ayudar a saber como debo hacerlo?
+> 
+> Quedo atento a sus comentarios.
+> 
+> Saludos,
+> 
+> Gracias,
+> 
+> *JONATHAN BARTOLO PINZON *
+> 
+> 
+> *"En los momentos de crisis, sólo la imaginación es más importante que el
+> conocimiento".
+> 
+>                                       Albert Einstein *
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Thu Jan  2 13:41:43 2020
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt B.)
+Date: Thu, 2 Jan 2020 07:41:43 -0500
+Subject: [R-es] titanic
+Message-ID: <CANuuowNjoMGHj0BvSbBvnZ2U35F+1OfxyMgFdpGDtX49QBm3FA@mail.gmail.com>
+
+Estimados
+quisiera poder salvar a csv y  a excell la base de datos titanic
+
+data("titanic", package = "prLogistic")
+
+saludos
+José
+
+
+From cgb @end|ng |rom d@t@n@|yt|c@@com  Thu Jan  2 13:51:47 2020
+From: cgb @end|ng |rom d@t@n@|yt|c@@com (Carlos J. Gil Bellosta)
+Date: Thu, 2 Jan 2020 13:51:47 +0100
+Subject: [R-es] titanic
+In-Reply-To: <CANuuowNjoMGHj0BvSbBvnZ2U35F+1OfxyMgFdpGDtX49QBm3FA@mail.gmail.com>
+References: <CANuuowNjoMGHj0BvSbBvnZ2U35F+1OfxyMgFdpGDtX49QBm3FA@mail.gmail.com>
+Message-ID: <CADg83ec1Hk1wDB8RPotT_YCYaXqWi2Hurn0TiAz=xxZ1UV1Zag@mail.gmail.com>
+
+?write.csv
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El jue., 2 ene. 2020 a las 13:41, Jose Betancourt B. (<betanster en gmail.com>)
+escribió:
+
+> Estimados
+> quisiera poder salvar a csv y  a excell la base de datos titanic
+>
+> data("titanic", package = "prLogistic")
+>
+> saludos
+> José
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Thu Jan  2 16:12:05 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Thu, 2 Jan 2020 16:12:05 +0100
+Subject: [R-es] titanic
+In-Reply-To: <CANuuowNjoMGHj0BvSbBvnZ2U35F+1OfxyMgFdpGDtX49QBm3FA@mail.gmail.com>
+References: <CANuuowNjoMGHj0BvSbBvnZ2U35F+1OfxyMgFdpGDtX49QBm3FA@mail.gmail.com>
+Message-ID: <A60AB488-9FB4-4198-A1ED-593204FCBA7B@gmail.com>
+
+Hola José,
+
+Para csv, decide si quieres separado por comas o por punto y coma (habitual en español, símbolo decimal la coma). Además, si no quieres que incluya los nombres de fila (lo normal) se lo tienes que indicar explícitamente.
+Para Excel tienes que usar algún paquete. A mí me gusta openxlsx.
+
+data("titanic", package = "prLogistic")
+openxlsx::write.xlsx(titanic, "foo.xlsx")
+write.csv2(titanic, "foo.csv", row.names = FALSE)
+
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 2 ene 2020, a las 13:41, Jose Betancourt B. <betanster en gmail.com> escribió:
+> 
+> Estimados
+> quisiera poder salvar a csv y  a excell la base de datos titanic
+> 
+> data("titanic", package = "prLogistic")
+> 
+> saludos
+> José
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From jonb@r987 @end|ng |rom gm@||@com  Thu Jan  2 16:16:18 2020
+From: jonb@r987 @end|ng |rom gm@||@com (Jonathan bartolo pinzon)
+Date: Thu, 2 Jan 2020 10:16:18 -0500
+Subject: [R-es] Como cambiar el formato de fecha de ymd_hms a dmy_hms
+In-Reply-To: <79BB0C4E-6C35-442A-8142-8E4FD0BD1ED3@gmail.com>
+References: <CAMeWT9GDzhH3rUk090CUZ=JB9v5EVqBU9yqoCP5JieKpcUgOag@mail.gmail.com>
+ <79BB0C4E-6C35-442A-8142-8E4FD0BD1ED3@gmail.com>
+Message-ID: <CAMeWT9HrFF5Gmv384_+wyMPsaNfB4Ni7KGwwTY4eWL7SyC_Z1Q@mail.gmail.com>
+
+Emilio,
+
+Muchas gracias por tu ayuda, efectivamente funcionó!
+
+Un abrazo y feliz año!
+
+*JONATHAN BARTOLO PINZON *
+
+
+*"En los momentos de crisis, sólo la imaginación es más importante que el
+conocimiento".
+
+                                       Albert Einstein *
+
+
+El jue., 2 ene. 2020 a las 2:45, Emilio L. Cano (<emilopezcano en gmail.com>)
+escribió:
+
+> Hola,
+>
+> Esto debería servirte:
+>
+> f <- "20200102_083010"
+> f2 <- format(as.POSIXct(f, format = "%Y%m%d_%H%M%S"), "%d%m%Y_%H%M%S?)
+>
+> > f2
+> [1] "02012020_083010"
+>
+> Si el año está en dos dígitos, cambia ?Y? por ?y?. Funciona igual para un
+> vector (columna del data.frame).
+>
+> Saludos y Feliz 2020,
+> Emilio
+> http://emilio.lcano.com/
+>
+>
+> El 2 ene 2020, a las 5:39, Jonathan bartolo pinzon <jonbar987 en gmail.com>
+> escribió:
+>
+> Buen día para todos,
+>
+> Tengo un dataframe nombrado como mydata en donde una de sus variables en
+> columna de nombre *date* tiene una secuencia de fechas en formato
+> *ymd_hms*.
+>
+> Ahora quiero convertir este formato a *dmy_hms * en toda la variable
+> *date.*
+>
+> Me podrían ayudar a saber como debo hacerlo?
+>
+> Quedo atento a sus comentarios.
+>
+> Saludos,
+>
+> Gracias,
+>
+> *JONATHAN BARTOLO PINZON *
+>
+>
+> *"En los momentos de crisis, sólo la imaginación es más importante que el
+> conocimiento".
+>
+>                                       Albert Einstein *
+>
+> [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Thu Jan  2 16:36:48 2020
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt B.)
+Date: Thu, 2 Jan 2020 10:36:48 -0500
+Subject: [R-es] titanic
+In-Reply-To: <A60AB488-9FB4-4198-A1ED-593204FCBA7B@gmail.com>
+References: <CANuuowNjoMGHj0BvSbBvnZ2U35F+1OfxyMgFdpGDtX49QBm3FA@mail.gmail.com>
+ <A60AB488-9FB4-4198-A1ED-593204FCBA7B@gmail.com>
+Message-ID: <CANuuowPpssLpZD+A6oVSzKhaezvR6f6L6dVKS3mrA+76ejSUdQ@mail.gmail.com>
+
+Gracias y feliz 2020!
+
+El 2/1/20, Emilio L. Cano <emilopezcano en gmail.com> escribió:
+> Hola José,
+>
+> Para csv, decide si quieres separado por comas o por punto y coma (habitual
+> en español, símbolo decimal la coma). Además, si no quieres que incluya los
+> nombres de fila (lo normal) se lo tienes que indicar explícitamente.
+> Para Excel tienes que usar algún paquete. A mí me gusta openxlsx.
+>
+> data("titanic", package = "prLogistic")
+> openxlsx::write.xlsx(titanic, "foo.xlsx")
+> write.csv2(titanic, "foo.csv", row.names = FALSE)
+>
+>
+> Un saludo,
+>
+> Emilio L. Cano
+> http://emilio.lcano.com
+>
+>
+>
+>> El 2 ene 2020, a las 13:41, Jose Betancourt B. <betanster en gmail.com>
+>> escribió:
+>>
+>> Estimados
+>> quisiera poder salvar a csv y  a excell la base de datos titanic
+>>
+>> data("titanic", package = "prLogistic")
+>>
+>> saludos
+>> José
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+-- 
+Dr. Jose A. Betancourt Bethencourt
+Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Fri Jan  3 08:20:24 2020
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Fri, 3 Jan 2020 08:20:24 +0100
+Subject: [R-es] Error en salida de lubridate::seconds_to_period() en
+ Rmarkdown
+Message-ID: <CA+8ueyaebC9rBPmW0V+Spyoy+Xt4e9v_3WEQBxKTzR2zYZCQmg@mail.gmail.com>
+
+Buas y feliz año y decada nueva, compañeRos,
+
+Me estoy encontrando con un problema tonto que no consigo resolver.
+
+Explico, tengo un dato que necesito sacar en un documento con codigo on
+line y no me saca el resultado de consola.
+
+dato <- 2272.13
+
+round(lubridate::seconds_to_period(seconds(dato))), 0)
+
+En consola me da:
+"37M 52S"
+
+Pero en el documento
+
+```Rmarkdown
+
++ Duración total `r round(lubridate::seconds_to_period(seconds(sum(dato))),
+0)`
+
+```
+
+Me da:
+
+   - *Duración total 52*
+
+Lo de envolverlo en seconds() lo puse para ver si funciona, y no hay
+cambio. Daría lo mismo seconds_to_period(dato), pero lo dejé para mostrar
+que lo tomé en cuenta.
+
+---
+En realidad y de momento, es un solo dato que lo puedo copiar a mano, pero
+la curiosidad mató al gato y a mí me pone nervioso
+
+Que sigan bien
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Jan  3 09:21:05 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 3 Jan 2020 09:21:05 +0100
+Subject: [R-es] Error en salida de lubridate::seconds_to_period() en
+ Rmarkdown
+In-Reply-To: <CA+8ueyaebC9rBPmW0V+Spyoy+Xt4e9v_3WEQBxKTzR2zYZCQmg@mail.gmail.com>
+References: <CA+8ueyaebC9rBPmW0V+Spyoy+Xt4e9v_3WEQBxKTzR2zYZCQmg@mail.gmail.com>
+Message-ID: <CAOKbq8hi2L79axSzrW6wbv9T2nKkHP1Se-N+v4WBdRzY+cLXPg@mail.gmail.com>
+
+Hola,
+
+Feliz Año!.
+No sé porqué se produce, tiene pinta de bug.. pero puedes forzar a que la
+salida sea como quieres así:
+
+
++ Duración total *`r sprintf('%2.0fM : %2.0fS',
+round(minute(seconds_to_period(dato)),0),
+round(second(seconds_to_period(dato)),0) )`*
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El vie., 3 ene. 2020 a las 8:20, Juan Abasolo (<juan.abasolo en ehu.eus>)
+escribió:
+
+> Buas y feliz año y decada nueva, compañeRos,
+>
+> Me estoy encontrando con un problema tonto que no consigo resolver.
+>
+> Explico, tengo un dato que necesito sacar en un documento con codigo on
+> line y no me saca el resultado de consola.
+>
+> dato <- 2272.13
+>
+> round(lubridate::seconds_to_period(seconds(dato))), 0)
+>
+> En consola me da:
+> "37M 52S"
+>
+> Pero en el documento
+>
+> ```Rmarkdown
+>
+> + Duración total `r round(lubridate::seconds_to_period(seconds(sum(dato))),
+> 0)`
+>
+> ```
+>
+> Me da:
+>
+>    - *Duración total 52*
+>
+> Lo de envolverlo en seconds() lo puse para ver si funciona, y no hay
+> cambio. Daría lo mismo seconds_to_period(dato), pero lo dejé para mostrar
+> que lo tomé en cuenta.
+>
+> ---
+> En realidad y de momento, es un solo dato que lo puedo copiar a mano, pero
+> la curiosidad mató al gato y a mí me pone nervioso
+>
+> Que sigan bien
+>
+> --
+> Juan Abasolo
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri Jan  3 09:31:09 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 3 Jan 2020 09:31:09 +0100
+Subject: [R-es] Error en salida de lubridate::seconds_to_period() en
+ Rmarkdown
+In-Reply-To: <CA+8ueyaebC9rBPmW0V+Spyoy+Xt4e9v_3WEQBxKTzR2zYZCQmg@mail.gmail.com>
+References: <CA+8ueyaebC9rBPmW0V+Spyoy+Xt4e9v_3WEQBxKTzR2zYZCQmg@mail.gmail.com>
+Message-ID: <483D352D-1C7C-40C6-A204-B0ACCAFC5B64@gmail.com>
+
+Hola,
+
+Creo que es porque los chunks ?en línea? realmente hacen ?cat? de la expresión que hay dentro. Entonces:
+
+> cat(round(lubridate::seconds_to_period(lubridate::seconds(dato))), 0)
+52 0
+
+Si lo pasas a carácter en el chunk en línea creo que te saldrá bien:
+
+
++ Duración total `r as.character(round(lubridate::seconds_to_period(lubridate::seconds(sum(dato))), 0))`
+
+O cualquier función que dé formato como texto, como ha sugerido Carlos.
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 3 ene 2020, a las 8:20, Juan Abasolo <juan.abasolo en ehu.eus> escribió:
+> 
+> Buas y feliz año y decada nueva, compañeRos,
+> 
+> Me estoy encontrando con un problema tonto que no consigo resolver.
+> 
+> Explico, tengo un dato que necesito sacar en un documento con codigo on
+> line y no me saca el resultado de consola.
+> 
+> dato <- 2272.13
+> 
+> round(lubridate::seconds_to_period(seconds(dato))), 0)
+> 
+> En consola me da:
+> "37M 52S"
+> 
+> Pero en el documento
+> 
+> ```Rmarkdown
+> 
+> + Duración total `r round(lubridate::seconds_to_period(seconds(sum(dato))),
+> 0)`
+> 
+> ```
+> 
+> Me da:
+> 
+>   - *Duración total 52*
+> 
+> Lo de envolverlo en seconds() lo puse para ver si funciona, y no hay
+> cambio. Daría lo mismo seconds_to_period(dato), pero lo dejé para mostrar
+> que lo tomé en cuenta.
+> 
+> ---
+> En realidad y de momento, es un solo dato que lo puedo copiar a mano, pero
+> la curiosidad mató al gato y a mí me pone nervioso
+> 
+> Que sigan bien
+> 
+> -- 
+> Juan Abasolo
+> 
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+> 
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+> 
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+> 
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Fri Jan  3 16:46:20 2020
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Fri, 3 Jan 2020 16:46:20 +0100
+Subject: [R-es] Error en salida de lubridate::seconds_to_period() en
+ Rmarkdown
+In-Reply-To: <483D352D-1C7C-40C6-A204-B0ACCAFC5B64@gmail.com>
+References: <CA+8ueyaebC9rBPmW0V+Spyoy+Xt4e9v_3WEQBxKTzR2zYZCQmg@mail.gmail.com>
+ <483D352D-1C7C-40C6-A204-B0ACCAFC5B64@gmail.com>
+Message-ID: <CA+8ueybzUdE5BGkp2D9FuiMnHQLuo65zVKaro44cWYmWKpj8Vg@mail.gmail.com>
+
+Muchas gracias, Carlos y Emilio!
+Los dos modos lo resuelven.
+Aprovecho también para aprender. Más no sea intentarlo.
+
+Hau idatzi du Emilio L. Cano (emilopezcano en gmail.com) erabiltzaileak (2020
+urt. 3, or. (09:31)):
+
+> Hola,
+>
+> Creo que es porque los chunks ?en línea? realmente hacen ?cat? de la
+> expresión que hay dentro. Entonces:
+>
+> > cat(round(lubridate::seconds_to_period(lubridate::seconds(dato))), 0)
+> 52 0
+>
+> Si lo pasas a carácter en el chunk en línea creo que te saldrá bien:
+>
+>
+> + Duración total `r as.character(round(lubridate::seconds_to_period(lubridate::seconds(sum(dato))),
+> 0))`
+>
+> O cualquier función que dé formato como texto, como ha sugerido Carlos.
+>
+> Un saludo,
+>
+> Emilio L. Cano
+> http://emilio.lcano.com
+>
+>
+>
+> El 3 ene 2020, a las 8:20, Juan Abasolo <juan.abasolo en ehu.eus> escribió:
+>
+> Buas y feliz año y decada nueva, compañeRos,
+>
+> Me estoy encontrando con un problema tonto que no consigo resolver.
+>
+> Explico, tengo un dato que necesito sacar en un documento con codigo on
+> line y no me saca el resultado de consola.
+>
+> dato <- 2272.13
+>
+> round(lubridate::seconds_to_period(seconds(dato))), 0)
+>
+> En consola me da:
+> "37M 52S"
+>
+> Pero en el documento
+>
+> ```Rmarkdown
+>
+> + Duración total `r round(lubridate::seconds_to_period(seconds(sum(dato))),
+> 0)`
+>
+> ```
+>
+> Me da:
+>
+>   - *Duración total 52*
+>
+> Lo de envolverlo en seconds() lo puse para ver si funciona, y no hay
+> cambio. Daría lo mismo seconds_to_period(dato), pero lo dejé para mostrar
+> que lo tomé en cuenta.
+>
+> ---
+> En realidad y de momento, es un solo dato que lo puedo copiar a mano, pero
+> la curiosidad mató al gato y a mí me pone nervioso
+>
+> Que sigan bien
+>
+> --
+> Juan Abasolo
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>
+> [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Fri Jan  3 19:59:46 2020
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Fri, 3 Jan 2020 19:59:46 +0100
+Subject: [R-es] A modern object-oriented machine learning framework in R
+Message-ID: <CAKHhLBLCDxU44dPCD7VtbZRs9=_4xGQBqL-qbmFW9f+j8VEaiQ@mail.gmail.com>
+
+Estimados amigos:
+
+                             Esta tarde he estado probando la librería
+mlr3, que me resulta muy interesante para trabajos de clasificación. En
+concreto, para entender su funcionamiento he probado un ejemplo simple
+(viene en CRAN). Sin embargo, cuando cambio el parámetro de clasifiación en
+la función de aprendizaje, me aparece el error siguiente:
+
+
+*Error: Element with key 'classif.ranger' not found in DictionaryLearner!*
+
+                           La situación es la siguiente:
+
+library(ranger)
+library(mlr3)
+task_iris <- TaskClassif$new(id = "iris",
+                             backend = iris,
+                             target = "Species",
+                             positive = NULL)
+# learner <- lrn("classif.rpart", cp = 0.01)
+learner <- lrn("classif.ranger", cp = 0.01)
+
+                             De forma que, no entiende, no halla,
+"classif.ranger". Lo cual no ocurre con "classif.rpart". Si bien es el que
+usa en el ejemplo de CRAN. No veo dónde está el problema. La librería
+"ranger" carga perfectamente, he consultado
+*https://mlr3book.mlr-org.com/list-learners.html
+<https://mlr3book.mlr-org.com/list-learners.html>*, y es una de las
+posibilidades.
+
+                            La ayuda de lrn(), con la que cuento cuando
+hago help("lrn"), en mi opinión no es precisa, y no se trata de que esté en
+inglés, se trata de que no va al grano y, de modo muy genéricio, habla del
+aprendizaje en esta librería.
+
+                            No corresponde, pero por curiosidad he empleado
+también la opción "classif.xgboost", y obtengo el mismo error. No me digan,
+por favor, que xgboost, no sirve para variables categóricas, lo sé, se
+trata solo de una prueba para ver si esa sí la encontraba en el directorio
+de la librería.
+
+                           Por adelantado agradezco a todos su atención a
+mi duda y, por supuesto, la dedicación que le otorguen.
+
+                           Gracias.
+                           Diego Martín-Oliva.
+                           Geógrafo.
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Jan  3 23:41:56 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 3 Jan 2020 23:41:56 +0100
+Subject: [R-es] A modern object-oriented machine learning framework in R
+In-Reply-To: <CAKHhLBLCDxU44dPCD7VtbZRs9=_4xGQBqL-qbmFW9f+j8VEaiQ@mail.gmail.com>
+References: <CAKHhLBLCDxU44dPCD7VtbZRs9=_4xGQBqL-qbmFW9f+j8VEaiQ@mail.gmail.com>
+Message-ID: <CAOKbq8ggJ-BCmm8rgsEk3wkaYaO8JreaoL8Myz_2f=ngRtaP8A@mail.gmail.com>
+
+Hola Diego,
+
+El problema que estás teniendo es por el hiperparámetro "cp" que has usado.
+
+Ese hiperparámetro es propio del algoritmo de árbol de decisión "rpart",
+pero no de "ranger".
+Mira los hiperparámetros propios de "ranger" y prueba con uno de ellos (por
+ejemplo n.trees o también mtry).
+
+De igual forma, tienes el mismo problema usando xgboost que tampoco tiene
+"cp" como hiperparámetro.
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El vie., 3 ene. 2020 a las 20:00, Diego Martín (<ako.sistemas en gmail.com>)
+escribió:
+
+> Estimados amigos:
+>
+>                              Esta tarde he estado probando la librería
+> mlr3, que me resulta muy interesante para trabajos de clasificación. En
+> concreto, para entender su funcionamiento he probado un ejemplo simple
+> (viene en CRAN). Sin embargo, cuando cambio el parámetro de clasifiación en
+> la función de aprendizaje, me aparece el error siguiente:
+>
+>
+> *Error: Element with key 'classif.ranger' not found in DictionaryLearner!*
+>
+>                            La situación es la siguiente:
+>
+> library(ranger)
+> library(mlr3)
+> task_iris <- TaskClassif$new(id = "iris",
+>                              backend = iris,
+>                              target = "Species",
+>                              positive = NULL)
+> # learner <- lrn("classif.rpart", cp = 0.01)
+> learner <- lrn("classif.ranger", cp = 0.01)
+>
+>                              De forma que, no entiende, no halla,
+> "classif.ranger". Lo cual no ocurre con "classif.rpart". Si bien es el que
+> usa en el ejemplo de CRAN. No veo dónde está el problema. La librería
+> "ranger" carga perfectamente, he consultado
+> *https://mlr3book.mlr-org.com/list-learners.html
+> <https://mlr3book.mlr-org.com/list-learners.html>*, y es una de las
+> posibilidades.
+>
+>                             La ayuda de lrn(), con la que cuento cuando
+> hago help("lrn"), en mi opinión no es precisa, y no se trata de que esté en
+> inglés, se trata de que no va al grano y, de modo muy genéricio, habla del
+> aprendizaje en esta librería.
+>
+>                             No corresponde, pero por curiosidad he empleado
+> también la opción "classif.xgboost", y obtengo el mismo error. No me digan,
+> por favor, que xgboost, no sirve para variables categóricas, lo sé, se
+> trata solo de una prueba para ver si esa sí la encontraba en el directorio
+> de la librería.
+>
+>                            Por adelantado agradezco a todos su atención a
+> mi duda y, por supuesto, la dedicación que le otorguen.
+>
+>                            Gracias.
+>                            Diego Martín-Oliva.
+>                            Geógrafo.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From brew5157 @end|ng |rom gm@||@com  Sat Jan  4 09:41:22 2020
+From: brew5157 @end|ng |rom gm@||@com (Maria Ruiz)
+Date: Sat, 4 Jan 2020 09:41:22 +0100
+Subject: [R-es] =?utf-8?q?Olvide_contrase=C3=B1a?=
+Message-ID: <CAC=4rBs5CyRvKxQj4+XrOpWqFjBBaeM5v0j_t2u-b-wKe51miA@mail.gmail.com>
+
+e-mail: brew5157 en gmail.com
+
+-- 
+*María *
+
+	[[alternative HTML version deleted]]
+
+
+From brew5157 @end|ng |rom gm@||@com  Sat Jan  4 09:41:25 2020
+From: brew5157 @end|ng |rom gm@||@com (Maria Ruiz)
+Date: Sat, 4 Jan 2020 09:41:25 +0100
+Subject: [R-es] =?utf-8?q?OLvide_contrase=C3=B1a_tenai_este_problerma_que?=
+	=?utf-8?q?_queria_publicar?=
+Message-ID: <CAC=4rBsKyOO1jAOWxi0_WmfWVMwQm8MHe-u5W3zGqeVE8VOn1g@mail.gmail.com>
+
+estoy haciendo este ejercicio y en
+Crear una variable de rango basada en la importancia
+
+rankImportance% mutate
+(Rank = paste0 ('#', dense_rank (desc (Importance))))
+
+Me da este error
+Error en varImportance%>% mutate (Rank = paste0 ("#", dense_rank (desc
+(Importance)))):
+no se pudo encontrar la función "%>%"
+
+NO porque necesito ayuda Gracias
+-- 
+*María *
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Sat Jan  4 11:12:44 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Sat, 4 Jan 2020 11:12:44 +0100
+Subject: [R-es] 
+ =?utf-8?q?OLvide_contrase=C3=B1a_tenai_este_problerma_que?=
+ =?utf-8?q?_queria_publicar?=
+In-Reply-To: <CAC=4rBsKyOO1jAOWxi0_WmfWVMwQm8MHe-u5W3zGqeVE8VOn1g@mail.gmail.com>
+References: <CAC=4rBsKyOO1jAOWxi0_WmfWVMwQm8MHe-u5W3zGqeVE8VOn1g@mail.gmail.com>
+Message-ID: <0A026A17-424C-4E7F-B3DC-D4A8994085B3@gmail.com>
+
+Hola María,
+
+Como indica el mensaje de error, para poder utilizar ?%>%? debes antes cargar el paquete que lo contiene (no está en la instalación base de R), por ejemplo:
+
+library(dplyr)
+
+Con respecto a cuestiones de usuario/contraseña de la lista, por favor utiliza las opciones que encontrarás aquí:
+
+https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+
+Introduciendo tu e-mail en la última caja de texto recibirás instrucciones para recuperar tu contraseña.
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 4 ene 2020, a las 9:41, Maria Ruiz <brew5157 en gmail.com> escribió:
+> 
+> estoy haciendo este ejercicio y en
+> Crear una variable de rango basada en la importancia
+> 
+> rankImportance% mutate
+> (Rank = paste0 ('#', dense_rank (desc (Importance))))
+> 
+> Me da este error
+> Error en varImportance%>% mutate (Rank = paste0 ("#", dense_rank (desc
+> (Importance)))):
+> no se pudo encontrar la función "%>%"
+> 
+> NO porque necesito ayuda Gracias
+> -- 
+> *María *
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Sat Jan  4 13:46:08 2020
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Sat, 4 Jan 2020 13:46:08 +0100
+Subject: [R-es] A modern object-oriented machine learning framework in R
+In-Reply-To: <CAOKbq8ggJ-BCmm8rgsEk3wkaYaO8JreaoL8Myz_2f=ngRtaP8A@mail.gmail.com>
+References: <CAKHhLBLCDxU44dPCD7VtbZRs9=_4xGQBqL-qbmFW9f+j8VEaiQ@mail.gmail.com>
+ <CAOKbq8ggJ-BCmm8rgsEk3wkaYaO8JreaoL8Myz_2f=ngRtaP8A@mail.gmail.com>
+Message-ID: <CAKHhLBJQbUcykUHaamoSzpooc7E5bvwpa5f1MC1qADcSZD4deQ@mail.gmail.com>
+
+Estimadísimo Carlos:
+
+                                Muchísimas gracias por responderme y
+hacerlo tan rápido. Contemplé esa posibilidad, es decir, que el
+hiperparámetro estuviera suponiendo un problema, y probé de esta forma:
+
+> learner <- lrn("classif.ranger", num.trees = 5, mtry = NULL)
+
+Error: Element with key 'classif.ranger' not found in DictionaryLearner!
+
+                                Pero obtuve el mismo error. Como muestro.
+Reconozco el error de imprecisión al plantear la duda, por no poner esta
+experiencia. Este resultado, por decirlo de alguna manera, me mueve a
+pensar que el problema está en el reposititorio de la librería mlr3, al
+buscar la técnica de clasificación.
+
+                                No sé si hay algo más que no he hecho,
+además de cargar las librerías que entiendo deben estar, es decir:
+library(ranger)
+library(mlr3)
+
+                                Agradeceré cualquier comentario que me
+hagáis. Gracias Carlos.
+
+                                Diego Martín-Oliva.
+                                Geógrafo.
+
+PS. Hoja del libro sobre mlr3, donde estuve buscando los *Learners*
+integrados en el paquete.
+
+
+El vie., 3 ene. 2020 a las 23:42, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola Diego,
+>
+> El problema que estás teniendo es por el hiperparámetro "cp" que has usado.
+>
+> Ese hiperparámetro es propio del algoritmo de árbol de decisión "rpart",
+> pero no de "ranger".
+> Mira los hiperparámetros propios de "ranger" y prueba con uno de ellos
+> (por ejemplo n.trees o también mtry).
+>
+> De igual forma, tienes el mismo problema usando xgboost que tampoco tiene
+> "cp" como hiperparámetro.
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El vie., 3 ene. 2020 a las 20:00, Diego Martín (<ako.sistemas en gmail.com>)
+> escribió:
+>
+>> Estimados amigos:
+>>
+>>                              Esta tarde he estado probando la librería
+>> mlr3, que me resulta muy interesante para trabajos de clasificación. En
+>> concreto, para entender su funcionamiento he probado un ejemplo simple
+>> (viene en CRAN). Sin embargo, cuando cambio el parámetro de clasifiación
+>> en
+>> la función de aprendizaje, me aparece el error siguiente:
+>>
+>>
+>> *Error: Element with key 'classif.ranger' not found in DictionaryLearner!*
+>>
+>>                            La situación es la siguiente:
+>>
+>> library(ranger)
+>> library(mlr3)
+>> task_iris <- TaskClassif$new(id = "iris",
+>>                              backend = iris,
+>>                              target = "Species",
+>>                              positive = NULL)
+>> # learner <- lrn("classif.rpart", cp = 0.01)
+>> learner <- lrn("classif.ranger", cp = 0.01)
+>>
+>>                              De forma que, no entiende, no halla,
+>> "classif.ranger". Lo cual no ocurre con "classif.rpart". Si bien es el que
+>> usa en el ejemplo de CRAN. No veo dónde está el problema. La librería
+>> "ranger" carga perfectamente, he consultado
+>> *https://mlr3book.mlr-org.com/list-learners.html
+>> <https://mlr3book.mlr-org.com/list-learners.html>*, y es una de las
+>> posibilidades.
+>>
+>>                             La ayuda de lrn(), con la que cuento cuando
+>> hago help("lrn"), en mi opinión no es precisa, y no se trata de que esté
+>> en
+>> inglés, se trata de que no va al grano y, de modo muy genéricio, habla del
+>> aprendizaje en esta librería.
+>>
+>>                             No corresponde, pero por curiosidad he
+>> empleado
+>> también la opción "classif.xgboost", y obtengo el mismo error. No me
+>> digan,
+>> por favor, que xgboost, no sirve para variables categóricas, lo sé, se
+>> trata solo de una prueba para ver si esa sí la encontraba en el directorio
+>> de la librería.
+>>
+>>                            Por adelantado agradezco a todos su atención a
+>> mi duda y, por supuesto, la dedicación que le otorguen.
+>>
+>>                            Gracias.
+>>                            Diego Martín-Oliva.
+>>                            Geógrafo.
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Jan  4 14:17:31 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 4 Jan 2020 14:17:31 +0100
+Subject: [R-es] A modern object-oriented machine learning framework in R
+In-Reply-To: <CAKHhLBJQbUcykUHaamoSzpooc7E5bvwpa5f1MC1qADcSZD4deQ@mail.gmail.com>
+References: <CAKHhLBLCDxU44dPCD7VtbZRs9=_4xGQBqL-qbmFW9f+j8VEaiQ@mail.gmail.com>
+ <CAOKbq8ggJ-BCmm8rgsEk3wkaYaO8JreaoL8Myz_2f=ngRtaP8A@mail.gmail.com>
+ <CAKHhLBJQbUcykUHaamoSzpooc7E5bvwpa5f1MC1qADcSZD4deQ@mail.gmail.com>
+Message-ID: <CAOKbq8j2_ed+4FK=bLzRw1Vo7KM15Ku3aSDNszY5cfe6YZrV7A@mail.gmail.com>
+
+Hola Diego,
+
+Ya, la nueva versión de "mlr" es mucho más modular que la versión anterior.
+Y para poder usar los diferentes algoritmos ("learners") hay que cargar la
+librería "mlr3learners" que no se invoca por defecto cuando usas "mlr3".
+
+Mira este ejemplo reproducible que adjunto, antes de cargar la librería
+(mlr3learners) y probar con "ranger" tuve el mismo mensaje de error que has
+obtenido.
+Es interesante mirar también la página donde están todos los algoritmos que
+están contemplados ahora mismo.
+
+#--------------------------------------------------------
+#----------------------------------
+#------- RANGER
+# Load available learners
+# https://mlr3learners.mlr-org.com/
+library(mlr3learners)
+
+learner = mlr3::lrn("classif.ranger")
+print(learner)
+# available parameters:
+learner$param_set$ids()
+
+# create learning task
+task_iris = TaskClassif$new(id = "iris", backend = iris, target = "Species")
+task_iris
+
+# load learner and set hyperparamter
+learner = lrn("classif.ranger", num.trees = 100)
+
+# train/test split
+train_set = sample(task_iris$nrow, 0.8 * task_iris$nrow)
+test_set = setdiff(seq_len(task_iris$nrow), train_set)
+
+# train the model
+learner$train(task_iris, row_ids = train_set)
+
+# predict data
+prediction = learner$predict(task_iris, row_ids = test_set)
+
+# calculate performance
+prediction$confusion
+
+measure = msr("classif.acc")
+prediction$score(measure)
+#--------------------------------------------------------
+
+
+
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El sáb., 4 ene. 2020 a las 13:46, Diego Martín (<ako.sistemas en gmail.com>)
+escribió:
+
+> Estimadísimo Carlos:
+>
+>                                 Muchísimas gracias por responderme y
+> hacerlo tan rápido. Contemplé esa posibilidad, es decir, que el
+> hiperparámetro estuviera suponiendo un problema, y probé de esta forma:
+>
+> > learner <- lrn("classif.ranger", num.trees = 5, mtry = NULL)
+>
+> Error: Element with key 'classif.ranger' not found in DictionaryLearner!
+>
+>                                 Pero obtuve el mismo error. Como muestro.
+> Reconozco el error de imprecisión al plantear la duda, por no poner esta
+> experiencia. Este resultado, por decirlo de alguna manera, me mueve a
+> pensar que el problema está en el reposititorio de la librería mlr3, al
+> buscar la técnica de clasificación.
+>
+>                                 No sé si hay algo más que no he hecho,
+> además de cargar las librerías que entiendo deben estar, es decir:
+> library(ranger)
+> library(mlr3)
+>
+>                                 Agradeceré cualquier comentario que me
+> hagáis. Gracias Carlos.
+>
+>                                 Diego Martín-Oliva.
+>                                 Geógrafo.
+>
+> PS. Hoja del libro sobre mlr3, donde estuve buscando los *Learners*
+> integrados en el paquete.
+>
+>
+> El vie., 3 ene. 2020 a las 23:42, Carlos Ortega (<cof en qualityexcellence.es>)
+> escribió:
+>
+>> Hola Diego,
+>>
+>> El problema que estás teniendo es por el hiperparámetro "cp" que has
+>> usado.
+>>
+>> Ese hiperparámetro es propio del algoritmo de árbol de decisión "rpart",
+>> pero no de "ranger".
+>> Mira los hiperparámetros propios de "ranger" y prueba con uno de ellos
+>> (por ejemplo n.trees o también mtry).
+>>
+>> De igual forma, tienes el mismo problema usando xgboost que tampoco tiene
+>> "cp" como hiperparámetro.
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>> El vie., 3 ene. 2020 a las 20:00, Diego Martín (<ako.sistemas en gmail.com>)
+>> escribió:
+>>
+>>> Estimados amigos:
+>>>
+>>>                              Esta tarde he estado probando la librería
+>>> mlr3, que me resulta muy interesante para trabajos de clasificación. En
+>>> concreto, para entender su funcionamiento he probado un ejemplo simple
+>>> (viene en CRAN). Sin embargo, cuando cambio el parámetro de clasifiación
+>>> en
+>>> la función de aprendizaje, me aparece el error siguiente:
+>>>
+>>>
+>>> *Error: Element with key 'classif.ranger' not found in
+>>> DictionaryLearner!*
+>>>
+>>>                            La situación es la siguiente:
+>>>
+>>> library(ranger)
+>>> library(mlr3)
+>>> task_iris <- TaskClassif$new(id = "iris",
+>>>                              backend = iris,
+>>>                              target = "Species",
+>>>                              positive = NULL)
+>>> # learner <- lrn("classif.rpart", cp = 0.01)
+>>> learner <- lrn("classif.ranger", cp = 0.01)
+>>>
+>>>                              De forma que, no entiende, no halla,
+>>> "classif.ranger". Lo cual no ocurre con "classif.rpart". Si bien es el
+>>> que
+>>> usa en el ejemplo de CRAN. No veo dónde está el problema. La librería
+>>> "ranger" carga perfectamente, he consultado
+>>> *https://mlr3book.mlr-org.com/list-learners.html
+>>> <https://mlr3book.mlr-org.com/list-learners.html>*, y es una de las
+>>> posibilidades.
+>>>
+>>>                             La ayuda de lrn(), con la que cuento cuando
+>>> hago help("lrn"), en mi opinión no es precisa, y no se trata de que esté
+>>> en
+>>> inglés, se trata de que no va al grano y, de modo muy genéricio, habla
+>>> del
+>>> aprendizaje en esta librería.
+>>>
+>>>                             No corresponde, pero por curiosidad he
+>>> empleado
+>>> también la opción "classif.xgboost", y obtengo el mismo error. No me
+>>> digan,
+>>> por favor, que xgboost, no sirve para variables categóricas, lo sé, se
+>>> trata solo de una prueba para ver si esa sí la encontraba en el
+>>> directorio
+>>> de la librería.
+>>>
+>>>                            Por adelantado agradezco a todos su atención a
+>>> mi duda y, por supuesto, la dedicación que le otorguen.
+>>>
+>>>                            Gracias.
+>>>                            Diego Martín-Oliva.
+>>>                            Geógrafo.
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Sat Jan  4 17:54:24 2020
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Sat, 4 Jan 2020 17:54:24 +0100
+Subject: [R-es] A modern object-oriented machine learning framework in R
+In-Reply-To: <CAOKbq8j2_ed+4FK=bLzRw1Vo7KM15Ku3aSDNszY5cfe6YZrV7A@mail.gmail.com>
+References: <CAKHhLBLCDxU44dPCD7VtbZRs9=_4xGQBqL-qbmFW9f+j8VEaiQ@mail.gmail.com>
+ <CAOKbq8ggJ-BCmm8rgsEk3wkaYaO8JreaoL8Myz_2f=ngRtaP8A@mail.gmail.com>
+ <CAKHhLBJQbUcykUHaamoSzpooc7E5bvwpa5f1MC1qADcSZD4deQ@mail.gmail.com>
+ <CAOKbq8j2_ed+4FK=bLzRw1Vo7KM15Ku3aSDNszY5cfe6YZrV7A@mail.gmail.com>
+Message-ID: <CAKHhLBKuuwjQmSkRy888wWbDxn9Ba5nmG_eeB0hDfHR+gkD5Cg@mail.gmail.com>
+
+Querido amigo Carlos:
+
+                                   Muchísimas gracias. Efectivamente, ahí
+estaba la clave. ¡Qué simple me siento!. Afortunadamente me has orientado y
+ahí está. Sin menospreciar tu ejemplo, por supuesto. Solo he instalado y
+cargado la librería mlr3learners y corrido mi ejemplo con el método
+classif.ranger, sin más problemas. No entrando a valorar los resultados,
+puedo decir que todo ha funcionado perfectamente. Luego, era eso, la
+librearía.
+
+                                   Ahora voy a estudiar un poco todo esto,
+me parece muy interesante estoy haciendo incursiones de R en SIG (qgis,
+para ser más exacto) y tengo en mente un tema de clasificación para el que
+creo que usar mlr3 (en este caso le vendría muy bien).
+
+                                   Un abrazo muy fuerte y nuevamente
+gracias.
+                                   Diego Martín-Oliva.
+                                   Geógrafo.
+
+El sáb., 4 ene. 2020 a las 14:17, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola Diego,
+>
+> Ya, la nueva versión de "mlr" es mucho más modular que la versión anterior.
+> Y para poder usar los diferentes algoritmos ("learners") hay que cargar la
+> librería "mlr3learners" que no se invoca por defecto cuando usas "mlr3".
+>
+> Mira este ejemplo reproducible que adjunto, antes de cargar la librería
+> (mlr3learners) y probar con "ranger" tuve el mismo mensaje de error que has
+> obtenido.
+> Es interesante mirar también la página donde están todos los algoritmos
+> que están contemplados ahora mismo.
+>
+> #--------------------------------------------------------
+> #----------------------------------
+> #------- RANGER
+> # Load available learners
+> # https://mlr3learners.mlr-org.com/
+> library(mlr3learners)
+>
+> learner = mlr3::lrn("classif.ranger")
+> print(learner)
+> # available parameters:
+> learner$param_set$ids()
+>
+> # create learning task
+> task_iris = TaskClassif$new(id = "iris", backend = iris, target =
+> "Species")
+> task_iris
+>
+> # load learner and set hyperparamter
+> learner = lrn("classif.ranger", num.trees = 100)
+>
+> # train/test split
+> train_set = sample(task_iris$nrow, 0.8 * task_iris$nrow)
+> test_set = setdiff(seq_len(task_iris$nrow), train_set)
+>
+> # train the model
+> learner$train(task_iris, row_ids = train_set)
+>
+> # predict data
+> prediction = learner$predict(task_iris, row_ids = test_set)
+>
+> # calculate performance
+> prediction$confusion
+>
+> measure = msr("classif.acc")
+> prediction$score(measure)
+> #--------------------------------------------------------
+>
+>
+>
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El sáb., 4 ene. 2020 a las 13:46, Diego Martín (<ako.sistemas en gmail.com>)
+> escribió:
+>
+>> Estimadísimo Carlos:
+>>
+>>                                 Muchísimas gracias por responderme y
+>> hacerlo tan rápido. Contemplé esa posibilidad, es decir, que el
+>> hiperparámetro estuviera suponiendo un problema, y probé de esta forma:
+>>
+>> > learner <- lrn("classif.ranger", num.trees = 5, mtry = NULL)
+>>
+>> Error: Element with key 'classif.ranger' not found in DictionaryLearner!
+>>
+>>                                 Pero obtuve el mismo error. Como muestro.
+>> Reconozco el error de imprecisión al plantear la duda, por no poner esta
+>> experiencia. Este resultado, por decirlo de alguna manera, me mueve a
+>> pensar que el problema está en el reposititorio de la librería mlr3, al
+>> buscar la técnica de clasificación.
+>>
+>>                                 No sé si hay algo más que no he hecho,
+>> además de cargar las librerías que entiendo deben estar, es decir:
+>> library(ranger)
+>> library(mlr3)
+>>
+>>                                 Agradeceré cualquier comentario que me
+>> hagáis. Gracias Carlos.
+>>
+>>                                 Diego Martín-Oliva.
+>>                                 Geógrafo.
+>>
+>> PS. Hoja del libro sobre mlr3, donde estuve buscando los *Learners*
+>> integrados en el paquete.
+>>
+>>
+>> El vie., 3 ene. 2020 a las 23:42, Carlos Ortega (<
+>> cof en qualityexcellence.es>) escribió:
+>>
+>>> Hola Diego,
+>>>
+>>> El problema que estás teniendo es por el hiperparámetro "cp" que has
+>>> usado.
+>>>
+>>> Ese hiperparámetro es propio del algoritmo de árbol de decisión "rpart",
+>>> pero no de "ranger".
+>>> Mira los hiperparámetros propios de "ranger" y prueba con uno de ellos
+>>> (por ejemplo n.trees o también mtry).
+>>>
+>>> De igual forma, tienes el mismo problema usando xgboost que tampoco
+>>> tiene "cp" como hiperparámetro.
+>>>
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>> El vie., 3 ene. 2020 a las 20:00, Diego Martín (<ako.sistemas en gmail.com>)
+>>> escribió:
+>>>
+>>>> Estimados amigos:
+>>>>
+>>>>                              Esta tarde he estado probando la librería
+>>>> mlr3, que me resulta muy interesante para trabajos de clasificación. En
+>>>> concreto, para entender su funcionamiento he probado un ejemplo simple
+>>>> (viene en CRAN). Sin embargo, cuando cambio el parámetro de
+>>>> clasifiación en
+>>>> la función de aprendizaje, me aparece el error siguiente:
+>>>>
+>>>>
+>>>> *Error: Element with key 'classif.ranger' not found in
+>>>> DictionaryLearner!*
+>>>>
+>>>>                            La situación es la siguiente:
+>>>>
+>>>> library(ranger)
+>>>> library(mlr3)
+>>>> task_iris <- TaskClassif$new(id = "iris",
+>>>>                              backend = iris,
+>>>>                              target = "Species",
+>>>>                              positive = NULL)
+>>>> # learner <- lrn("classif.rpart", cp = 0.01)
+>>>> learner <- lrn("classif.ranger", cp = 0.01)
+>>>>
+>>>>                              De forma que, no entiende, no halla,
+>>>> "classif.ranger". Lo cual no ocurre con "classif.rpart". Si bien es el
+>>>> que
+>>>> usa en el ejemplo de CRAN. No veo dónde está el problema. La librería
+>>>> "ranger" carga perfectamente, he consultado
+>>>> *https://mlr3book.mlr-org.com/list-learners.html
+>>>> <https://mlr3book.mlr-org.com/list-learners.html>*, y es una de las
+>>>> posibilidades.
+>>>>
+>>>>                             La ayuda de lrn(), con la que cuento cuando
+>>>> hago help("lrn"), en mi opinión no es precisa, y no se trata de que
+>>>> esté en
+>>>> inglés, se trata de que no va al grano y, de modo muy genéricio, habla
+>>>> del
+>>>> aprendizaje en esta librería.
+>>>>
+>>>>                             No corresponde, pero por curiosidad he
+>>>> empleado
+>>>> también la opción "classif.xgboost", y obtengo el mismo error. No me
+>>>> digan,
+>>>> por favor, que xgboost, no sirve para variables categóricas, lo sé, se
+>>>> trata solo de una prueba para ver si esa sí la encontraba en el
+>>>> directorio
+>>>> de la librería.
+>>>>
+>>>>                            Por adelantado agradezco a todos su atención
+>>>> a
+>>>> mi duda y, por supuesto, la dedicación que le otorguen.
+>>>>
+>>>>                            Gracias.
+>>>>                            Diego Martín-Oliva.
+>>>>                            Geógrafo.
+>>>>
+>>>>         [[alternative HTML version deleted]]
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>>>
+>>> --
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From drm@|don@dog @end|ng |rom y@hoo@e@  Fri Jan 10 05:01:22 2020
+From: drm@|don@dog @end|ng |rom y@hoo@e@ (Diego Maldonado)
+Date: Fri, 10 Jan 2020 04:01:22 +0000 (UTC)
+Subject: [R-es] ERROR EN LECTURA DE PAGINAS HTML GIGANTES
+References: <1021383628.15241990.1578628882615.ref@mail.yahoo.com>
+Message-ID: <1021383628.15241990.1578628882615@mail.yahoo.com>
+
+Saludos estimado foro, por comentarles que estoy haciendo un proceso de webscrapping con Rselenium por medio de contenedores docker y al automatizar la cargar paginas html con el paquete XML por medio de la función read_html me sale el siguiente mensaje de error:
+
+ Error in doc_parse_raw(x, encoding = encoding, base_url = base_url, as_html = as_html,  : 
+  Excessive depth in document: 256 use XML_PARSE_HUGE option [1]
+
+Si alguien me puede guiar como solventarlo les agradecería del fondo de mi alma ya que voy algunos días tratando de resolverlo pero no lo logro.
+
+De Antemano agradezco su atención
+
+Atte
+
+Diego Maldonado
+Chiefanalytics officer
+Mentalytica
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Fri Jan 10 15:07:01 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Fri, 10 Jan 2020 11:07:01 -0300
+Subject: [R-es] ERROR EN LECTURA DE PAGINAS HTML GIGANTES
+In-Reply-To: <1021383628.15241990.1578628882615@mail.yahoo.com>
+References: <1021383628.15241990.1578628882615.ref@mail.yahoo.com>
+ <1021383628.15241990.1578628882615@mail.yahoo.com>
+Message-ID: <CAHo_aETTogat9+Zra7kfjLozDGChuH0wyzagu6xb+uK9KshWcw@mail.gmail.com>
+
+Estimado Diego Maldonado
+
+Por ahí leí que hay un error pendiente, pero está fechado en el año 2019,
+hace muuccchhooo.
+
+Puede ser que una actualización tenga solucionado el problema?
+
+Yo en lo personal opte por casi el mismo camino, excepto que no uso R y no
+uso contenedores. C# me resulta una opción más adecuada para extraer los
+datos, luego analizo con R.
+
+Javier Rubén Marcuzzi
+
+El vie., 10 ene. 2020 a las 1:01, Diego Maldonado via R-help-es (<
+r-help-es en r-project.org>) escribió:
+
+> Saludos estimado foro, por comentarles que estoy haciendo un proceso de
+> webscrapping con Rselenium por medio de contenedores docker y al
+> automatizar la cargar paginas html con el paquete XML por medio de la
+> función read_html me sale el siguiente mensaje de error:
+>
+>  Error in doc_parse_raw(x, encoding = encoding, base_url = base_url,
+> as_html = as_html,  :
+>   Excessive depth in document: 256 use XML_PARSE_HUGE option [1]
+>
+> Si alguien me puede guiar como solventarlo les agradecería del fondo de mi
+> alma ya que voy algunos días tratando de resolverlo pero no lo logro.
+>
+> De Antemano agradezco su atención
+>
+> Atte
+>
+> Diego Maldonado
+> Chiefanalytics officer
+> Mentalytica
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Fri Jan 24 10:09:04 2020
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Fri, 24 Jan 2020 09:09:04 +0000 (UTC)
+Subject: [R-es] Problema Fechas
+References: <1521457068.27764502.1579856945652.ref@mail.yahoo.com>
+Message-ID: <1521457068.27764502.1579856945652@mail.yahoo.com>
+
+Hola a todosestoy atascado con unas fechas, creo que en su día lo había solucionado pero no recuerdo cómo.Tengo un DF con un formato de fechas en tipo Factor
+
+
+He probado bastantes cosas para ponerlo en formato fecha tipo 11/01/2019 y siempre me da error. ¿Alguien puede echarme un cable?
+Gracias y saludos
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200124/43a487a5/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: 1579856863415blob.jpg
+Type: image/png
+Size: 9074 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200124/43a487a5/attachment.png>
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri Jan 24 10:58:21 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 24 Jan 2020 10:58:21 +0100
+Subject: [R-es] Problema Fechas
+In-Reply-To: <1521457068.27764502.1579856945652@mail.yahoo.com>
+References: <1521457068.27764502.1579856945652.ref@mail.yahoo.com>
+ <1521457068.27764502.1579856945652@mail.yahoo.com>
+Message-ID: <0D3DBF88-9570-4593-8530-47743BD43D3B@gmail.com>
+
+Hola José Luis,
+
+Si son fechas, yo lo primero convertiría a clase ?Date?. Y después ya puedes darle el formato que quieras. Esto debería funcionar si trabajas con LOCALE español:
+
+fecha_como_factor <- factor("11-ENE-19")
+fecha_como_fecha <- as.Date(fecha_como_factor, format="%d-%b-%y")
+format(fecha_como_fecha, "%d/%m/%Y")
+
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 24 ene 2020, a las 10:09, jose luis via R-help-es <r-help-es en r-project.org> escribió:
+> 
+> Hola a todos
+> estoy atascado con unas fechas, creo que en su día lo había solucionado pero no recuerdo cómo.
+> Tengo un DF con un formato de fechas en tipo Factor
+> <1579856863415blob.jpg>
+> 
+> 
+> He probado bastantes cosas para ponerlo en formato fecha tipo 11/01/2019 y siempre me da error. ¿Alguien puede echarme un cable?
+> 
+> Gracias y saludos
+> <1579856863415blob.jpg>_______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Fri Jan 24 12:21:01 2020
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Fri, 24 Jan 2020 11:21:01 +0000 (UTC)
+Subject: [R-es] Problema Fechas
+In-Reply-To: <0D3DBF88-9570-4593-8530-47743BD43D3B@gmail.com>
+References: <1521457068.27764502.1579856945652.ref@mail.yahoo.com>
+ <1521457068.27764502.1579856945652@mail.yahoo.com>
+ <0D3DBF88-9570-4593-8530-47743BD43D3B@gmail.com>
+Message-ID: <1682303352.27847701.1579864861169@mail.yahoo.com>
+
+ Bueno, lo arregle con lubridate (dmy). Lo que pasa que tuve que cambiar las fechas en español por su versión en inglés, si no lo hacía me daba NA en los meses de Enero, Abril y Agosto.
+
+  Gracias !!    En viernes, 24 de enero de 2020 10:58:26 CET, Emilio L. Cano <emilopezcano en gmail.com> escribió:  
+ 
+ Hola José Luis,
+Si son fechas, yo lo primero convertiría a clase ?Date?. Y después ya puedes darle el formato que quieras. Esto debería funcionar si trabajas con LOCALE español:
+fecha_como_factor <- factor("11-ENE-19")fecha_como_fecha <- as.Date(fecha_como_factor, format="%d-%b-%y")format(fecha_como_fecha, "%d/%m/%Y")
+
+Un saludo,
+Emilio L. Canohttp://emilio.lcano.com
+
+
+
+El 24 ene 2020, a las 10:09, jose luis via R-help-es <r-help-es en r-project.org> escribió:
+Hola a todosestoy atascado con unas fechas, creo que en su día lo había solucionado pero no recuerdo cómo.Tengo un DF con un formato de fechas en tipo Factor<1579856863415blob.jpg>
+
+
+He probado bastantes cosas para ponerlo en formato fecha tipo 11/01/2019 y siempre me da error. ¿Alguien puede echarme un cable?
+Gracias y saludos<1579856863415blob.jpg>_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+  
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200124/9f2d9a1a/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: 1579864800831blob.jpg
+Type: image/png
+Size: 12437 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200124/9f2d9a1a/attachment.png>
+

@@ -1,0 +1,7038 @@
+From vyj20 en hotmail.com  Mon Sep  2 19:10:46 2013
+From: vyj20 en hotmail.com (=?ISO-8859-1?Q?Victoria_Ya=F1ez?=)
+Date: Mon, 2 Sep 2013 19:10:46 +0200
+Subject: [R-es] como hacer grafico de un modelo setar
+Message-ID: <BLU0-SMTP2852FFEAD41B8564D88BE42A8300@phx.gbl>
+
+Hola,
+Estoy intentando realizar un ajuste a un modelo setar con R y me surgen 
+problemas a la hora de representar el modelo setar sin la constante. El 
+código es el siguiente:
+
+# Estimacion TAR(2;2,2) con delta 1:
+mod.setar <- setar(x, m = 2, mL = 2, mH = 2, thDelay = 1)
+mod.setar
+summary(mod.setar)
+
+mod.setarc<-setar(x, m=2, mL=2, mH=2, thDelay=1, include=c("none")) 
+##eliminamos la constante del modelo
+mod.setarc
+summary(mod.setarc)
+
+#Ajustamos el modelo para los primeros 104 valores de la serie
+set.seed(10)
+mod.test <- list()
+x.train <- window(x, end = 1924)
+x.test <- window(x, start = 1925)
+mod.test[["linear"]] <- linear(x.train, m = 2)
+mod.test[["setar"]] <- setar(x.train, m = 2, thDelay = 1)
+mod.test[["setarc"]] <- setar(x.train, m = 2, thDelay = 1, 
+include=c("none"))
+mod.test[["nnet"]] <- nnetTs(x.train, m = 2, size = 3, control = 
+list(maxit = 1e+05))
+mod.test[["aar"]] <- aar(x.train, m = 2)
+
+#ahora la predicción:
+frc.test <- lapply(mod.test, predict, n.ahead = 10)
+
+#Dibujamos en una misma gráfica todas las predicciones que hemos 
+calculado para los modelos estimados:
+plot(x.test, ylim = range(x))
+for (i in 1:length(frc.test))
+     lines(frc.test[[i]], lty = i+1, col = i + 1)
+     legend(1925, 2.4, lty=1:(length(frc.test)+1), 
+col=1:(length(frc.test)+1), legend=c("observed", names(frc.test)))
+
+y el resultado que obtengo es:
+
+en el que como pueden ver noaparece la representacion del modelo setarc, 
+que es el setar sin la constante.
+¿Alguien ha trabajado con esto y me puede ayudar?
+
+Muchas gracias de antemano por la atención.
+Reciban un cordial saludo.
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130902/18d5f6fb/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: djbfedab.jpg
+Type: image/jpeg
+Size: 86214 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130902/18d5f6fb/attachment-0001.jpg>
+
+From onunez en unex.es  Mon Sep  2 19:47:53 2013
+From: onunez en unex.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Mon, 2 Sep 2013 19:47:53 +0200
+Subject: [R-es] como hacer grafico de un modelo setar
+In-Reply-To: <BLU0-SMTP2852FFEAD41B8564D88BE42A8300@phx.gbl>
+References: <BLU0-SMTP2852FFEAD41B8564D88BE42A8300@phx.gbl>
+Message-ID: <550719A5-BE16-4A5B-A3B2-BBD0CD57ECE8@unex.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130902/db115914/attachment.pl>
+
+From onunez en unex.es  Mon Sep  2 22:25:59 2013
+From: onunez en unex.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Mon, 2 Sep 2013 22:25:59 +0200
+Subject: [R-es] como hacer grafico de un modelo setar
+In-Reply-To: <BLU0-SMTP12322B7F7030318B1C9ADCCA8300@phx.gbl>
+References: <BLU0-SMTP2852FFEAD41B8564D88BE42A8300@phx.gbl>
+	<550719A5-BE16-4A5B-A3B2-BBD0CD57ECE8@unex.es>
+	<BLU0-SMTP12322B7F7030318B1C9ADCCA8300@phx.gbl>
+Message-ID: <1A66A6C9-514C-4953-81FF-65BBD5F068F8@unex.es>
+
+Quitar la constante del modelo, no parece una buena estrategia para  
+estos datos.
+En cualquier caso, si quieres visualizar las predicciones del modelo  
+setarc con las de los demás modelos,
+prueba sustituir la linea
+
+plot(x.test, ylim = range(x))
+
+por
+
+plot(x.test, ylim = range( union( x , frc.test[["setarc"]] )))
+
+Un saludo. Olivier
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 02/09/2013, a las 21:03, Victoria Yañez escribió:
+
+> y sabrías decirme  cómo puedo solucionar esto, por favor?
+
+
+From gilbellosta en gmail.com  Tue Sep  3 14:21:36 2013
+From: gilbellosta en gmail.com (Carlos J. Gil Bellosta )
+Date: Tue, 3 Sep 2013 14:21:36 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Bienvenido_a_la_lista_de_distribuci=F3n_R-h?=
+	=?iso-8859-1?q?elp-es?=
+In-Reply-To: <CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org>
+	<CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com>
+Message-ID: <CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Tienes que escribir a la dirección r-help-es en r-project.org, no a las
+que has usado (que son de administración de la lista).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+El día 3 de septiembre de 2013 12:39, Jose Betancourt B.
+<betanster en gmail.com> escribió:
+> Quisiera saber en el paquete Epiestim
+>
+> Como lograr concatenar dos vectores, en este caso
+> $Incidence
+>  [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+>  0  2  0  0  0
+> [28]  0  2  0  2  0
+>
+> $SI.Distr
+>  [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002 0.001
+>
+> Y hacer posible que lea ambos vectores con el comando
+> data("Flu2009")
+>
+> ¿Cómo calculan SI.Distr?
+> saludos
+>
+>
+>
+>
+>
+>
+>
+> Quisiera saber en el paquete Epiestim
+>
+> Como lograr concatenar dos vectores, en este caso
+> $Incidence
+>  [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+>  0  2  0  0  0
+> [28]  0  2  0  2  0
+>
+> $SI.Distr
+>  [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002 0.001
+>
+> Y hacer posible que lea ambos vectores con el comando
+> data("Flu2009")
+>
+> ¿Cómo calculan SI.Distr?
+> saludos
+>
+
+
+From javier.ruben.marcuzzi en gmail.com  Tue Sep  3 19:59:39 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Tue, 3 Sep 2013 14:59:39 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Bienvenido_a_la_lista_de_distribuci=F3n_R-h?=
+	=?iso-8859-1?q?elp-es?=
+In-Reply-To: <CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org><CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com>
+	<CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+Message-ID: <87C8316210EF43DCB71FA76C5FA89070@JavierMarcuzzi>
+
+Estimado José betancourt
+
+No lo intenté como para decir que es la solución (estoy con poco tiempo), 
+pero posiblemente lo siguiente pueda ser útil para usted.
+
+Lst <- list(name="Fred", wife="Mary", no.children=3,
+            child.ages=c(4,7,9))
+Lst
+str(Lst)
+
+Ejemplo tomado de:
+http://cran.r-project.org/doc/manuals/R-intro.html#Lists
+punto 6.1
+
+Intente y pruebe, cualquier cosa entre todos buscaremos la forma.
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: Carlos J. Gil Bellosta
+Sent: Tuesday, September 03, 2013 9:21 AM
+To: betanster en gmail.com ; r-help-es
+Subject: Re: [R-es]Bienvenido a la lista de distribución R-help-es
+
+Hola, ¿qué tal?
+
+Tienes que escribir a la dirección r-help-es en r-project.org, no a las
+que has usado (que son de administración de la lista).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+El día 3 de septiembre de 2013 12:39, Jose Betancourt B.
+<betanster en gmail.com> escribió:
+> Quisiera saber en el paquete Epiestim
+>
+> Como lograr concatenar dos vectores, en este caso
+> $Incidence
+>  [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+>  0  2  0  0  0
+> [28]  0  2  0  2  0
+>
+> $SI.Distr
+>  [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002 
+> 0.001
+>
+> Y hacer posible que lea ambos vectores con el comando
+> data("Flu2009")
+>
+> ¿Cómo calculan SI.Distr?
+> saludos
+>
+>
+>
+>
+>
+>
+>
+> Quisiera saber en el paquete Epiestim
+>
+> Como lograr concatenar dos vectores, en este caso
+> $Incidence
+>  [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+>  0  2  0  0  0
+> [28]  0  2  0  2  0
+>
+> $SI.Distr
+>  [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002 
+> 0.001
+>
+> Y hacer posible que lea ambos vectores con el comando
+> data("Flu2009")
+>
+> ¿Cómo calculan SI.Distr?
+> saludos
+>
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From betanster en gmail.com  Wed Sep  4 00:41:31 2013
+From: betanster en gmail.com (Jose Betancourt B.)
+Date: Tue, 3 Sep 2013 18:41:31 -0400
+Subject: [R-es] =?iso-8859-1?q?Fwd=3A_Bienvenido_a_la_lista_de_distribuci?=
+	=?iso-8859-1?q?=F3n_R-help-es?=
+In-Reply-To: <CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org>
+	<CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com>
+	<CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+Message-ID: <CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com>
+
+ Quisiera saber en el paquete Epiestim
+
+ Como lograr concatenar dos vectores, en este caso
+> $Incidence
+  [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+  0  2  0  0  0
+ [28]  0  2  0  2  0
+
+ $SI.Distr
+  [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002 0.001
+
+ Y hacer posible que lea ambos vectores con el comando
+ data("Flu2009")
+
+ ¿Cómo calculan SI.Distr?
+> saludos
+>
+>
+>
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Sep  4 01:01:39 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Tue, 3 Sep 2013 20:01:39 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Fwd=3A_Bienvenido_a_la_lista_de_distribuci?=
+	=?iso-8859-1?q?=F3n_R-help-es?=
+In-Reply-To: <CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org><CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com><CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+	<CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com>
+Message-ID: <28C9506E2E6C47C38DB282D29021C734@JavierMarcuzzi>
+
+Estimado José Betancourt
+
+Yo le envié un correo, seguramente se mezclaron los correos de la lista con 
+algunos otros, se produjo un error o me explique muy mal.
+
+Paso el mismo con un ejemplo esperando que en este caso le llegue y sea de 
+utilidad.
+
+# listas generales
+a <-c(1,2,3,4,5)
+b <-c(6,7,8,9,0)
+listado <- list(a=a, b=b)
+listado
+str(listado)
+
+# para ver su ejemplo
+library('EpiEstim')
+data('Flu2009')
+
+# ahora con los nombres para adecuar a su ejemplo
+a <-c(1,2,3,4,5)
+b <-c(6,7,8,9,0)
+listado <- list(a=a, b=b, .Names = c("Incidence", "SI.Distr"))
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: Jose Betancourt B.
+Sent: Tuesday, September 03, 2013 7:41 PM
+To: r-help-es en r-project.org
+Subject: [R-es] Fwd: Bienvenido a la lista de distribución R-help-es
+
+Quisiera saber en el paquete Epiestim
+
+Como lograr concatenar dos vectores, en este caso
+> $Incidence
+  [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+  0  2  0  0  0
+[28]  0  2  0  2  0
+
+$SI.Distr
+  [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002 
+0.001
+
+Y hacer posible que lea ambos vectores con el comando
+data("Flu2009")
+
+¿Cómo calculan SI.Distr?
+> saludos
+>
+>
+>
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Sep  4 14:59:44 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Wed, 4 Sep 2013 09:59:44 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Fwd=3A_Bienvenido_a_la_lista_de_distribuci?=
+	=?iso-8859-1?q?=F3n_R-help-es?=
+In-Reply-To: <CANuuowMPy=mEVNFrwAJzb_pU_Od-Ac+_skTP3DC-KwyT=85E-w@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org><CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com><CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com><CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com><28C9506E2E6C47C38DB282D29021C734@JavierMarcuzzi>
+	<CANuuowMPy=mEVNFrwAJzb_pU_Od-Ac+_skTP3DC-KwyT=85E-w@mail.gmail.com>
+Message-ID: <F2D6003B4F174B2BA5845691DA3F6271@JavierMarcuzzi>
+
+Estimado José Betancourt
+
+Dos sugerencias:
+
+Debes responder a toda la lista, no solo a quien envía un correo.
+
+Es un conjunto de datos y esas son probabilidades. Entiendo que puedes 
+utilizar el método de cálculo que le resulte adecuado.
+
+Flu2009 {EpiEstim}    R Documentation
+Data on the 2009 H1N1 influenza pandemic in a school in Pennsylvania
+
+Description
+
+This data set gives
+
+1/ the daily incidence of onset of acute respiratory illness (ARI, defined 
+as at least two symptoms among fever, cough, sore throat, and runny nose) 
+amongst children in a school in Pennsylvania during the 2009 H1N1 influenza 
+pandemic (see source and references),
+
+2/ the discrete daily distribution of the serial interval for influenza, 
+assuming a shifted Gamma distribution with mean 2.6 days, standard deviation 
+1.5 days and shift 1 day (see references).
+
+Usage
+
+Flu2009
+Format
+
+A list of two elements:
+
+1/ "Incidence": a vector containing 32 days of observation,
+
+2/ "SI.Distr": a vector containing a set of 12 probabilities.
+
+-----Original Message----- 
+From: Jose Betancourt B.
+Sent: Wednesday, September 04, 2013 7:13 AM
+To: Marcuzzi, Javier Rubén
+Subject: Re: [R-es] Fwd: Bienvenido a la lista de distribución R-help-es
+
+entendido
+¿Cómo calculan SI.Distr?
+
+    saludos
+
+El 03/09/13, Marcuzzi, Javier Rubén <javier.ruben.marcuzzi en gmail.com> 
+escribió:
+> Estimado José Betancourt
+>
+> Yo le envié un correo, seguramente se mezclaron los correos de la lista 
+> con
+>
+> algunos otros, se produjo un error o me explique muy mal.
+>
+> Paso el mismo con un ejemplo esperando que en este caso le llegue y sea de
+> utilidad.
+>
+> # listas generales
+> a <-c(1,2,3,4,5)
+> b <-c(6,7,8,9,0)
+> listado <- list(a=a, b=b)
+> listado
+> str(listado)
+>
+> # para ver su ejemplo
+> library('EpiEstim')
+> data('Flu2009')
+>
+> # ahora con los nombres para adecuar a su ejemplo
+> a <-c(1,2,3,4,5)
+> b <-c(6,7,8,9,0)
+> listado <- list(a=a, b=b, .Names = c("Incidence", "SI.Distr"))
+>
+> Javier Marcuzzi
+>
+> -----Original Message-----
+> From: Jose Betancourt B.
+> Sent: Tuesday, September 03, 2013 7:41 PM
+> To: r-help-es en r-project.org
+> Subject: [R-es] Fwd: Bienvenido a la lista de distribución R-help-es
+>
+> Quisiera saber en el paquete Epiestim
+>
+> Como lograr concatenar dos vectores, en este caso
+>> $Incidence
+>   [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+>   0  2  0  0  0
+> [28]  0  2  0  2  0
+>
+> $SI.Distr
+>   [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002
+> 0.001
+>
+> Y hacer posible que lea ambos vectores con el comando
+> data("Flu2009")
+>
+> ¿Cómo calculan SI.Distr?
+>> saludos
+>>
+>>
+>>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From ericconchamunoz en gmail.com  Wed Sep  4 22:16:32 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Wed, 04 Sep 2013 16:16:32 -0400
+Subject: [R-es]
+ =?iso-8859-1?q?Fwd=3A_Bienvenido_a_la_lista_de_distribuci?=
+ =?iso-8859-1?q?=F3n_R-help-es?=
+In-Reply-To: <CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org>
+	<CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com>
+	<CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+	<CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com>
+Message-ID: <52279520.4050801@gmail.com>
+
+Hola Jose, si CONCATENAR significa APILAR, es decir, concantenar
+verticalmente, por decirlo de algun modo, podrias hacerlo con rbind():
+
+nuevovector <- rbind(vector1,vector2)
+
+Si ademas quieres que cada valor de los vectores originales sea
+identificado en el nuevovector, puedes usar:
+
+nuevovector <- stack(vector1,vector2)
+
+en este ultimo caso se agrega una columna adicional tipo factor, con el
+nombre de la columna de los vectores originales.
+
+lo demas no lo entiendo :)
+
+ojala te sirva,
+
+Slds, Eric.
+
+
+
+On 09/03/2013 06:41 PM, Jose Betancourt B. wrote:
+>  Quisiera saber en el paquete Epiestim
+> 
+>  Como lograr concatenar dos vectores, en este caso
+>> $Incidence
+>   [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+>   0  2  0  0  0
+>  [28]  0  2  0  2  0
+> 
+>  $SI.Distr
+>   [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002 0.001
+> 
+>  Y hacer posible que lea ambos vectores con el comando
+>  data("Flu2009")
+> 
+>  ¿Cómo calculan SI.Distr?
+>> saludos
+>>
+>>
+>>
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From ericconchamunoz en gmail.com  Wed Sep  4 22:35:31 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Wed, 04 Sep 2013 16:35:31 -0400
+Subject: [R-es] Stack de un data.frame
+Message-ID: <52279993.9010501@gmail.com>
+
+Estimada comunidad, voy a describir lo que necesito hacer y no he
+encontrado como, pues no se si hay funciones en R para esto.
+
+Tengo la siguiente tabla de doble entrada que obtuve con la funcion CAST:
+
+
+  sol          1           2           3           4           5
+1 con 0.00259587         NaN         NaN 0.001905260         NaN
+2 dec        NaN 0.002719438         NaN 0.002339808 0.002970884
+3 dol        NaN         NaN 0.005443161 0.005642238 0.004310739
+4 lim        NaN 0.021966246 0.018511593 0.014790364 0.012644154
+
+
+La primera fila es el nombre de las columnas (sol, 1, 2 ...).
+Necesito hacer un grafico con esa tabla, en el eje X irian los valores q
+son los nombres de las columnas (1,2,3 ...), en el eje Y van los valores
+contenidos en la tabla bajo esos nombres de columnas, pero separados de
+acuerdo a la columna SOL, me explico ??
+
+En la practica, la primera columna (la q tiene el encabezado SOL)
+funcionaria como un FACTOR.
+
+Mi pregunta es, existe alguna funcion en R para transformar esa tabla de
+doble entrada en una tabla que se pueda graficar directamente ?
+
+En el caso de tablas de una entrada, es decir, un data.frame con un
+nombre de columna, podemos usar la funcion STACK, la que transforma ese
+df en un vector con una columna adicional que identifica el origen del
+dato. Aqui necesito algo similar, pero para la tabla de doble entrada.
+
+Espero que me puedan ayudar pues no encuentro pistas en internet ... no
+lo quiero hacer a mano, pues ya lo hice, calculando incluso la tabla que
+ahora hice con CAST, pero para que, si quiza existe la funcion ...
+
+Saludos, Eric.
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Sep  4 22:45:57 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Wed, 4 Sep 2013 17:45:57 -0300
+Subject: [R-es] Stack de un data.frame
+In-Reply-To: <52279993.9010501@gmail.com>
+References: <52279993.9010501@gmail.com>
+Message-ID: <C3D06A906A1A4816A96F02A5E2773C91@JavierMarcuzzi>
+
+Estiamdo Eric
+
+No comprendo bien su pregunta, cuándo usted dice sql como factor, ¿necesita 
+correr ese código sql? Porque si es así podría usar sqldf.
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: neo
+Sent: Wednesday, September 04, 2013 5:35 PM
+To: Lista R
+Subject: [R-es] Stack de un data.frame
+
+Estimada comunidad, voy a describir lo que necesito hacer y no he
+encontrado como, pues no se si hay funciones en R para esto.
+
+Tengo la siguiente tabla de doble entrada que obtuve con la funcion CAST:
+
+
+  sol          1           2           3           4           5
+1 con 0.00259587         NaN         NaN 0.001905260         NaN
+2 dec        NaN 0.002719438         NaN 0.002339808 0.002970884
+3 dol        NaN         NaN 0.005443161 0.005642238 0.004310739
+4 lim        NaN 0.021966246 0.018511593 0.014790364 0.012644154
+
+
+La primera fila es el nombre de las columnas (sol, 1, 2 ...).
+Necesito hacer un grafico con esa tabla, en el eje X irian los valores q
+son los nombres de las columnas (1,2,3 ...), en el eje Y van los valores
+contenidos en la tabla bajo esos nombres de columnas, pero separados de
+acuerdo a la columna SOL, me explico ??
+
+En la practica, la primera columna (la q tiene el encabezado SOL)
+funcionaria como un FACTOR.
+
+Mi pregunta es, existe alguna funcion en R para transformar esa tabla de
+doble entrada en una tabla que se pueda graficar directamente ?
+
+En el caso de tablas de una entrada, es decir, un data.frame con un
+nombre de columna, podemos usar la funcion STACK, la que transforma ese
+df en un vector con una columna adicional que identifica el origen del
+dato. Aqui necesito algo similar, pero para la tabla de doble entrada.
+
+Espero que me puedan ayudar pues no encuentro pistas en internet ... no
+lo quiero hacer a mano, pues ya lo hice, calculando incluso la tabla que
+ahora hice con CAST, pero para que, si quiza existe la funcion ...
+
+Saludos, Eric.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Sep  4 22:46:55 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Wed, 4 Sep 2013 17:46:55 -0300
+Subject: [R-es] Stack de un data.frame
+In-Reply-To: <52279993.9010501@gmail.com>
+References: <52279993.9010501@gmail.com>
+Message-ID: <D212F3F565F2425A82C3852C4CEECECB@JavierMarcuzzi>
+
+Perdón, leí mal, SOL no SQL
+
+-----Original Message----- 
+From: neo
+Sent: Wednesday, September 04, 2013 5:35 PM
+To: Lista R
+Subject: [R-es] Stack de un data.frame
+
+Estimada comunidad, voy a describir lo que necesito hacer y no he
+encontrado como, pues no se si hay funciones en R para esto.
+
+Tengo la siguiente tabla de doble entrada que obtuve con la funcion CAST:
+
+
+  sol          1           2           3           4           5
+1 con 0.00259587         NaN         NaN 0.001905260         NaN
+2 dec        NaN 0.002719438         NaN 0.002339808 0.002970884
+3 dol        NaN         NaN 0.005443161 0.005642238 0.004310739
+4 lim        NaN 0.021966246 0.018511593 0.014790364 0.012644154
+
+
+La primera fila es el nombre de las columnas (sol, 1, 2 ...).
+Necesito hacer un grafico con esa tabla, en el eje X irian los valores q
+son los nombres de las columnas (1,2,3 ...), en el eje Y van los valores
+contenidos en la tabla bajo esos nombres de columnas, pero separados de
+acuerdo a la columna SOL, me explico ??
+
+En la practica, la primera columna (la q tiene el encabezado SOL)
+funcionaria como un FACTOR.
+
+Mi pregunta es, existe alguna funcion en R para transformar esa tabla de
+doble entrada en una tabla que se pueda graficar directamente ?
+
+En el caso de tablas de una entrada, es decir, un data.frame con un
+nombre de columna, podemos usar la funcion STACK, la que transforma ese
+df en un vector con una columna adicional que identifica el origen del
+dato. Aqui necesito algo similar, pero para la tabla de doble entrada.
+
+Espero que me puedan ayudar pues no encuentro pistas en internet ... no
+lo quiero hacer a mano, pues ya lo hice, calculando incluso la tabla que
+ahora hice con CAST, pero para que, si quiza existe la funcion ...
+
+Saludos, Eric.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From onunez en unex.es  Wed Sep  4 22:52:53 2013
+From: onunez en unex.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Wed, 4 Sep 2013 22:52:53 +0200
+Subject: [R-es] Stack de un data.frame
+In-Reply-To: <52279993.9010501@gmail.com>
+References: <52279993.9010501@gmail.com>
+Message-ID: <EF04A5C4-387F-4B85-B9AF-4341BF423685@unex.es>
+
+?matplot
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 04/09/2013, a las 22:35, neo escribió:
+
+>   sol          1           2           3           4           5
+> 1 con 0.00259587         NaN         NaN 0.001905260         NaN
+> 2 dec        NaN 0.002719438         NaN 0.002339808 0.002970884
+> 3 dol        NaN         NaN 0.005443161 0.005642238 0.004310739
+> 4 lim        NaN 0.021966246 0.018511593 0.014790364 0.012644154
+>
+
+
+From cgb en datanalytics.com  Wed Sep  4 22:53:42 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 4 Sep 2013 22:53:42 +0200
+Subject: [R-es] Stack de un data.frame
+In-Reply-To: <52279993.9010501@gmail.com>
+References: <52279993.9010501@gmail.com>
+Message-ID: <CADg83ec0kjJTRJkHVOp4XyNHA+VBqp=nj9_gNGf+kwxLT2-O3w@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Creo que las funciones melt (particularmente) y cast del paquete
+reshape te pueden ayudar.
+
+Con melt podrías transformar tu df en algo con el aspecto
+
+sol   col   valor
+con   1   0.000...
+con   2   NaN
+...
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 4 de septiembre de 2013 22:35, neo <ericconchamunoz en gmail.com> escribió:
+> Estimada comunidad, voy a describir lo que necesito hacer y no he
+> encontrado como, pues no se si hay funciones en R para esto.
+>
+> Tengo la siguiente tabla de doble entrada que obtuve con la funcion CAST:
+>
+>
+>   sol          1           2           3           4           5
+> 1 con 0.00259587         NaN         NaN 0.001905260         NaN
+> 2 dec        NaN 0.002719438         NaN 0.002339808 0.002970884
+> 3 dol        NaN         NaN 0.005443161 0.005642238 0.004310739
+> 4 lim        NaN 0.021966246 0.018511593 0.014790364 0.012644154
+>
+>
+> La primera fila es el nombre de las columnas (sol, 1, 2 ...).
+> Necesito hacer un grafico con esa tabla, en el eje X irian los valores q
+> son los nombres de las columnas (1,2,3 ...), en el eje Y van los valores
+> contenidos en la tabla bajo esos nombres de columnas, pero separados de
+> acuerdo a la columna SOL, me explico ??
+>
+> En la practica, la primera columna (la q tiene el encabezado SOL)
+> funcionaria como un FACTOR.
+>
+> Mi pregunta es, existe alguna funcion en R para transformar esa tabla de
+> doble entrada en una tabla que se pueda graficar directamente ?
+>
+> En el caso de tablas de una entrada, es decir, un data.frame con un
+> nombre de columna, podemos usar la funcion STACK, la que transforma ese
+> df en un vector con una columna adicional que identifica el origen del
+> dato. Aqui necesito algo similar, pero para la tabla de doble entrada.
+>
+> Espero que me puedan ayudar pues no encuentro pistas en internet ... no
+> lo quiero hacer a mano, pues ya lo hice, calculando incluso la tabla que
+> ahora hice con CAST, pero para que, si quiza existe la funcion ...
+>
+> Saludos, Eric.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ericconchamunoz en gmail.com  Wed Sep  4 23:16:29 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Wed, 04 Sep 2013 17:16:29 -0400
+Subject: [R-es] Stack de un data.frame
+In-Reply-To: <CADg83ec0kjJTRJkHVOp4XyNHA+VBqp=nj9_gNGf+kwxLT2-O3w@mail.gmail.com>
+References: <52279993.9010501@gmail.com>
+	<CADg83ec0kjJTRJkHVOp4XyNHA+VBqp=nj9_gNGf+kwxLT2-O3w@mail.gmail.com>
+Message-ID: <5227A32D.9040502@gmail.com>
+
+Perfecto, MELT era lo que necesitaba, me han ahorrado mucho trabajo 
+muchachos, un abrazo a todos y larga vida a la comunidad.
+
+Eric.
+
+
+
+
+
+On Wed 04 Sep 2013 04:53:42 PM CLT, Carlos J. Gil Bellosta  wrote:
+> Hola, ¿qué tal?
+>
+> Creo que las funciones melt (particularmente) y cast del paquete
+> reshape te pueden ayudar.
+>
+> Con melt podrías transformar tu df en algo con el aspecto
+>
+> sol   col   valor
+> con   1   0.000...
+> con   2   NaN
+> ...
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> El día 4 de septiembre de 2013 22:35, neo <ericconchamunoz en gmail.com> escribió:
+>> Estimada comunidad, voy a describir lo que necesito hacer y no he
+>> encontrado como, pues no se si hay funciones en R para esto.
+>>
+>> Tengo la siguiente tabla de doble entrada que obtuve con la funcion CAST:
+>>
+>>
+>>   sol          1           2           3           4           5
+>> 1 con 0.00259587         NaN         NaN 0.001905260         NaN
+>> 2 dec        NaN 0.002719438         NaN 0.002339808 0.002970884
+>> 3 dol        NaN         NaN 0.005443161 0.005642238 0.004310739
+>> 4 lim        NaN 0.021966246 0.018511593 0.014790364 0.012644154
+>>
+>>
+>> La primera fila es el nombre de las columnas (sol, 1, 2 ...).
+>> Necesito hacer un grafico con esa tabla, en el eje X irian los valores q
+>> son los nombres de las columnas (1,2,3 ...), en el eje Y van los valores
+>> contenidos en la tabla bajo esos nombres de columnas, pero separados de
+>> acuerdo a la columna SOL, me explico ??
+>>
+>> En la practica, la primera columna (la q tiene el encabezado SOL)
+>> funcionaria como un FACTOR.
+>>
+>> Mi pregunta es, existe alguna funcion en R para transformar esa tabla de
+>> doble entrada en una tabla que se pueda graficar directamente ?
+>>
+>> En el caso de tablas de una entrada, es decir, un data.frame con un
+>> nombre de columna, podemos usar la funcion STACK, la que transforma ese
+>> df en un vector con una columna adicional que identifica el origen del
+>> dato. Aqui necesito algo similar, pero para la tabla de doble entrada.
+>>
+>> Espero que me puedan ayudar pues no encuentro pistas en internet ... no
+>> lo quiero hacer a mano, pues ya lo hice, calculando incluso la tabla que
+>> ahora hice con CAST, pero para que, si quiza existe la funcion ...
+>>
+>> Saludos, Eric.
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From ceramos0 en yahoo.com.mx  Thu Sep  5 19:23:21 2013
+From: ceramos0 en yahoo.com.mx (Enrique RAMOS)
+Date: Thu, 5 Sep 2013 10:23:21 -0700 (PDT)
+Subject: [R-es] =?iso-8859-1?q?Pron=F3sticos_con_modelos_robusto_de_series?=
+	=?iso-8859-1?q?_de_tiempo?=
+Message-ID: <1378401801.16621.YahooMailNeo@web122902.mail.ne1.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130905/f7a3525e/attachment.pl>
+
+From betanster en gmail.com  Fri Sep  6 00:27:35 2013
+From: betanster en gmail.com (Jose Betancourt B.)
+Date: Thu, 5 Sep 2013 18:27:35 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?Pron=F3sticos_con_modelos_robusto_de_series?=
+	=?iso-8859-1?q?_de_tiempo?=
+In-Reply-To: <1378401801.16621.YahooMailNeo@web122902.mail.ne1.yahoo.com>
+References: <1378401801.16621.YahooMailNeo@web122902.mail.ne1.yahoo.com>
+Message-ID: <CANuuowMKmtK4PtV7L+m6iG4hNSTqnvrsSdOf4bPgVs-xQfipDw@mail.gmail.com>
+
+este ha sido bastante bueno
+f52<-scan("f52.txt")
+sb<-f52[1:200]; sp<-f52[201:245];
+sb.ts <- ts(sb, start=c(2008, 1), frequency=52)
+sb.ts # is important to see the end of this time series.
+sp.ts<- ts(sp, start=c(2011, 45), frequency=52)
+plot(sb.ts,ylab="No. focos")
+
+# Main function
+predAll<-function(x,h,tsname){
+  # INPUTS:
+  #      x: time serie
+  #      h: number of values to predict.
+  # tsname: maximun number of element in the hidden layer (nhmax=20).
+  #
+  ##---- PACKAGES -----
+  library(forecast)
+  ##---- MODELS -------
+  m1<-stl(x, s.window='periodic') #STL Decomposition
+  m2<-auto.arima(x) # arima
+  m3<-nnetar(x,lambda=0) #neural networks
+  # Predictions
+  f1<-forecast(m1, h=h);
+  f2<-forecast(m2, h=h);
+  f3<-forecast(m3, h=h);
+  # Fit accuracy
+  rmse1 <- mean((x-f1$fitted)^2)/var(x);
+  rmse2 <- mean((x-f2$fitted)^2)/var(x);
+  fitted<-f3$fitted;#fitted[1:52]<-x[1:52];
+  rmse3 <-
+    mean((x[(frequency(x)+1):length(x)]-fitted[(frequency(x)+1):length(x)])^2)/var(x[(frequency(x)+1):length(x)]);
+  #lab<-data.frame("F","R2","R2a","RSS")
+  mat<-cbind(c(rmse1),c(rmse2),c(rmse3))
+  tab<-as.data.frame(mat)
+  dimnames(tab)[[1]]<-c("RMSE")
+  dimnames(tab)[[2]] <-c("STL","ARIMA","NNAR")
+  print(tab)
+  # Plot all predictions together
+  par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+  plot(f1,xlab="Time in Weeks",ylab=tsname,main="All models")
+  lines(f2$mean,col=1,lwd=2)
+  lines(f3$mean,col=3,lwd=2)
+  lines(x,col=2,lwd=2)
+  legend.txt = c("STL","ARIMA","NNAR","Observed");
+  legend("topright",inset=c(-0.32,0),legend.txt,col = c(4,1,3,2),
+         lwd=c(2,2,2,2),lty = c(1,1,1,1,1), pch =
+           c(NA,NA,NA,NA),title="Models",bty="n");
+  return(list(stl=f1, arima=f2, nnar=f3))
+}
+result<-predAll(sb.ts,45,"Foci Number")
+lines(sp.ts,col=2,lwd=2)# to test these predictions
+
+
+ve al paquete AER
+
+
+
+
+El 05/09/13, Enrique RAMOS <ceramos0 en yahoo.com.mx> escribió:
+> Alguien me podría sugerir un paquete en R para generar pronóticos con
+> modelos robusto de series de tiempo.
+>
+> Saludos
+> Enrique RAMOS
+> 	[[alternative HTML version deleted]]
+>
+>
+
+
+From betanster en gmail.com  Fri Sep  6 00:29:27 2013
+From: betanster en gmail.com (Jose Betancourt B.)
+Date: Thu, 5 Sep 2013 18:29:27 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?Pron=F3sticos_con_modelos_robusto_de_series?=
+	=?iso-8859-1?q?_de_tiempo?=
+In-Reply-To: <CANuuowMKmtK4PtV7L+m6iG4hNSTqnvrsSdOf4bPgVs-xQfipDw@mail.gmail.com>
+References: <1378401801.16621.YahooMailNeo@web122902.mail.ne1.yahoo.com>
+	<CANuuowMKmtK4PtV7L+m6iG4hNSTqnvrsSdOf4bPgVs-xQfipDw@mail.gmail.com>
+Message-ID: <CANuuowP=HUhoNVup4q4_wMc4cdWcvf2PASH3FwjtK22BmJ449g@mail.gmail.com>
+
+con el paquete EpiEstim
+
+por favor ?como exactamente calculan las probabilidades para conformar
+el segundo vector, aqui yo puse uno de SAR2003
+
+#Análisis paso a paso
+
+rm(list = ls())
+
+#existe información de la incidencia de casos de una enfermedad
+
+incidencia <-c (1,0,0,0,0,0,0,0,2,1,1,0,1,2,0,2,0,2,2,2,3, 1, 2, 0,2,
+0,  1, 1, 2, 1,  1,  2,  3, 0, 1,   2, 0, 2,  1,  3, 1, 6, 3,  3,7, 4,
+       4, 3, 6, 4,5,2,4, 2,3, 1, 4, 4,8, 9, 13, 1, 0, 0, 0, 0, 0,
+0,0, 0, 0,0,  0, 0, 0,0,            0, 0,
+       0,            0,            0, 28,          35,          8,
+       59,          13, 14,          1,            26,          15, 1,
+       1,            9,            41, 18,          56,          104,
+       54,          59, 50,          20,          2,            1, 1,
+       42,                20,          21, 24,          37,          34,
+       26,          50, 30,          17,          28,          14,
+       75, 62,          37,          19,                12, 11,
+       17,          27,          0,            34, 12,          0,
+       15,          0, 3,            8,            14,          11, 10,
+       11,          9,            5, 31,          11,          3,
+       2, 3,            0,            0,            0, 26,
+       0,            0,            0, 0,            16,          0,
+       8, 3,            2,            0,            0, 25,          2,
+       14,          5, 5,            2,            0,                5, 0,
+       2,            2,            3, 2,            0,
+       8,            2, 5,            3,            2,            1,
+         1)
+
+
+#se explora la información
+
+
+library (epicalc)
+summ (incidencia)
+hist(incidencia)
+
+
+
+##  se calcula el intervalo serial
+MeanFluSI <- 9.418994  #puse los datos de la incidencia
+SdFluSI <- 16.06
+DicreteSIDistr <- vector()
+for(i in 0:35)
+{
+  DicreteSIDistr[i+1] <- DiscrSI(i, MeanFluSI, SdFluSI)
+}
+plot(0:35, DicreteSIDistr, type="h", lwd=10, lend=1, xlab="tiempo
+(dias)", ylab="frequencia")
+title(main="distribution Discreta del intervalo  serial  ")
+
+
+# voy a poner unas probabilidades SARS 2003; no se como calcularlas
+para este caso a partir de la incidencia y esa es mi duda en este
+trabajo
+
+SI.Distr<- c (0.000, 0.001, 0.012, 0.043, 0.078, 0.104, 0.117, 0.116,
+0.108, 0.094, 0.078, 0.063, 0.049,
+   0.038, 0.028, 0.021, 0.015, 0.011, 0.008, 0.005, 0.004, 0.003,
+0.002, 0.001, 0.001)
+
+#Calculando R
+
+EstimateR(incidencia, T.Start=90:140, T.End=95:145,
+method="NonParametricSI",SI.Distr=SI.Distr, plot=TRUE,
+          leg.pos=xy.coords(1,7))
+
+
+#uniendo os dos vectores
+
+enfermedad <- list(incidencia, SI.Distr, .Names = c("Incidence",
+"SI.Distr"))#como combinar los dos vectores
+enfermedad<- list(incidence=a, SI.Distr=b)
+enfermedad
+
+#metodo Wallinga...
+
+WT(incidencia, T.Start=90:140, T.End=95:145, method="NonParametricSI",
+   SI.Distr=SI.Distr, plot=TRUE, leg.pos=xy.coords(1,1.75), nSim=100)
+
+
+WT(incidencia, T.Start=90:140, T.End=95:145, method="ParametricSI",
+   Mean.SI=9.418994, Std.SI=16.06, plot=TRUE, nSim=100)
+
+
+#calcular infectividad general
+lambda <- OverallInfectivity(incidencia, SI.Distr)
+par(mfrow=c(2,1))
+plot(incidence, type="s", xlab="tiempo (dias)", ylab="Incidencia")
+title(main="Curva epidemica ")
+plot(lambda, type="s", xlab="tiempo (dias)", ylab="Infectividad")
+title(main="Infectividad general")
+lambda
+
+
+2013/9/5, Jose Betancourt B. <betanster en gmail.com>:
+> este ha sido bastante bueno
+> f52<-scan("f52.txt")
+> sb<-f52[1:200]; sp<-f52[201:245];
+> sb.ts <- ts(sb, start=c(2008, 1), frequency=52)
+> sb.ts # is important to see the end of this time series.
+> sp.ts<- ts(sp, start=c(2011, 45), frequency=52)
+> plot(sb.ts,ylab="No. focos")
+>
+> # Main function
+> predAll<-function(x,h,tsname){
+>   # INPUTS:
+>   #      x: time serie
+>   #      h: number of values to predict.
+>   # tsname: maximun number of element in the hidden layer (nhmax=20).
+>   #
+>   ##---- PACKAGES -----
+>   library(forecast)
+>   ##---- MODELS -------
+>   m1<-stl(x, s.window='periodic') #STL Decomposition
+>   m2<-auto.arima(x) # arima
+>   m3<-nnetar(x,lambda=0) #neural networks
+>   # Predictions
+>   f1<-forecast(m1, h=h);
+>   f2<-forecast(m2, h=h);
+>   f3<-forecast(m3, h=h);
+>   # Fit accuracy
+>   rmse1 <- mean((x-f1$fitted)^2)/var(x);
+>   rmse2 <- mean((x-f2$fitted)^2)/var(x);
+>   fitted<-f3$fitted;#fitted[1:52]<-x[1:52];
+>   rmse3 <-
+>
+> mean((x[(frequency(x)+1):length(x)]-fitted[(frequency(x)+1):length(x)])^2)/var(x[(frequency(x)+1):length(x)]);
+>   #lab<-data.frame("F","R2","R2a","RSS")
+>   mat<-cbind(c(rmse1),c(rmse2),c(rmse3))
+>   tab<-as.data.frame(mat)
+>   dimnames(tab)[[1]]<-c("RMSE")
+>   dimnames(tab)[[2]] <-c("STL","ARIMA","NNAR")
+>   print(tab)
+>   # Plot all predictions together
+>   par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+>   plot(f1,xlab="Time in Weeks",ylab=tsname,main="All models")
+>   lines(f2$mean,col=1,lwd=2)
+>   lines(f3$mean,col=3,lwd=2)
+>   lines(x,col=2,lwd=2)
+>   legend.txt = c("STL","ARIMA","NNAR","Observed");
+>   legend("topright",inset=c(-0.32,0),legend.txt,col = c(4,1,3,2),
+>          lwd=c(2,2,2,2),lty = c(1,1,1,1,1), pch =
+>            c(NA,NA,NA,NA),title="Models",bty="n");
+>   return(list(stl=f1, arima=f2, nnar=f3))
+> }
+> result<-predAll(sb.ts,45,"Foci Number")
+> lines(sp.ts,col=2,lwd=2)# to test these predictions
+>
+>
+> ve al paquete AER
+>
+>
+>
+>
+> El 05/09/13, Enrique RAMOS <ceramos0 en yahoo.com.mx> escribió:
+>> Alguien me podría sugerir un paquete en R para generar pronóticos con
+>> modelos robusto de series de tiempo.
+>>
+>> Saludos
+>> Enrique RAMOS
+>> 	[[alternative HTML version deleted]]
+>>
+>>
+>
+
+
+From ericconchamunoz en gmail.com  Sat Sep  7 00:57:50 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Fri, 06 Sep 2013 18:57:50 -0400
+Subject: [R-es] Problema con filtros de datos en un data.frame
+Message-ID: <522A5DEE.7020200@gmail.com>
+
+Estimados, tengo el siguiente problema: estoy trabajando con un
+data.frame que tiene 892 filas y 9 columnas, el cual adjunto para que
+puedan probar.
+
+Cuando consulto por las filas que cumplen una cierta condicion, por
+ejemplo, ...
+
+graph[graph$NCar==c("160s"),]
+
+obtengo el siguiente conjunto de datos:
+
+    sol   con dia NCar NIns isom      area rep tipo
+1   con 0.001   1 160s    0    s 0.6083543   1
+8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+10  con 0.001   3 160s    0    s 0.6873404   1 <NA>
+13  con 0.001   4 160s    0    s 0.6476428   1 <NA>
+20  con 0.001   1 160s    0    s 0.6094205   2 <NA>
+23  con 0.001   3 160s    0    s 0.6624022   2 <NA>
+25  con 0.001   4 160s    0    s 0.6486783   2 <NA>
+31  con 0.001   1 160s    0    s 0.6131645   3 <NA>
+34  con 0.001   4 160s    0    s 0.6788893   3 <NA>
+36  dec 0.051   2 160s    0    s 0.6822148   1 <NA>
+39  dec 0.051   3 160s    0    s 0.6661846   1 <NA>
+41  dec 0.051   4 160s    0    s 0.6575084   1 <NA>
+43  dec 0.051   5 160s    0    s 0.6233795   1 <NA>
+45  dec 0.051   2 160s    0    s 0.6158327   2 <NA>
+...
+
+Cuando amplio el conjunto de datos, haciendo mas flexible el filtro, por
+ejemplo:
+
+graph[graph$NCar==c("160s","180s"),]
+
+obtengo este otro conjunto de datos:
+
+
+    sol   con dia NCar NIns isom         area rep tipo
+1   con 0.001   1 160s    0    s 6.083543e-01   1
+4   con 0.001   1 180s    0    s 3.791027e-01   1 <NA>
+13  con 0.001   4 160s    0    s 6.476428e-01   1 <NA>
+18  con 0.001   4 180s    0    s 3.378795e-01   1 <NA>
+23  con 0.001   3 160s    0    s 6.624022e-01   2 <NA>
+24  con 0.001   3 180s    0    s 3.375978e-01   2 <NA>
+25  con 0.001   4 160s    0    s 6.486783e-01   2 <NA>
+28  con 0.001   4 180s    0    s 3.457121e-01   2 <NA>
+31  con 0.001   1 160s    0    s 6.131645e-01   3 <NA>
+32  con 0.001   1 180s    0    s 3.816533e-01   3 <NA>
+39  dec 0.051   3 160s    0    s 6.661846e-01   1 <NA>
+40  dec 0.051   3 180s    0    s 3.338154e-01   1 <NA>
+41  dec 0.051   4 160s    0    s 6.575084e-01   1 <NA>
+42  dec 0.051   4 180s    0    s 3.424916e-01   1 <NA>
+43  dec 0.051   5 160s    0    s 6.233795e-01   1 <NA>
+...
+
+mi pregunta es porque no aparecen algunos datos como el siguiente:
+
+    sol   con dia NCar NIns isom         area rep tipo
+8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+
+
+el que segun yo deberia aparecer, ya que el filtro es menos restrictivo
+y el segundo conjunto de datos deberia contener el primero.
+
+Alguien puede orientarme en que estoy haciendo mal ?
+
+Saludos a todos y gracias de antemano.
+
+Eric.
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: graph.csv
+Type: text/csv
+Size: 52796 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130906/1e29072f/attachment-0001.bin>
+
+From cgb en datanalytics.com  Sat Sep  7 01:25:43 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Sat, 7 Sep 2013 01:25:43 +0200
+Subject: [R-es] Problema con filtros de datos en un data.frame
+In-Reply-To: <522A5DEE.7020200@gmail.com>
+References: <522A5DEE.7020200@gmail.com>
+Message-ID: <CADg83edEK9GbVmuSjQ_8KK_CLz_D5_Vs3kYxdqidh+vTNREYuA@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+No uses == sino %in%.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 7 de septiembre de 2013 00:57, neo <ericconchamunoz en gmail.com> escribió:
+> Estimados, tengo el siguiente problema: estoy trabajando con un
+> data.frame que tiene 892 filas y 9 columnas, el cual adjunto para que
+> puedan probar.
+>
+> Cuando consulto por las filas que cumplen una cierta condicion, por
+> ejemplo, ...
+>
+> graph[graph$NCar==c("160s"),]
+>
+> obtengo el siguiente conjunto de datos:
+>
+>     sol   con dia NCar NIns isom      area rep tipo
+> 1   con 0.001   1 160s    0    s 0.6083543   1
+> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+> 10  con 0.001   3 160s    0    s 0.6873404   1 <NA>
+> 13  con 0.001   4 160s    0    s 0.6476428   1 <NA>
+> 20  con 0.001   1 160s    0    s 0.6094205   2 <NA>
+> 23  con 0.001   3 160s    0    s 0.6624022   2 <NA>
+> 25  con 0.001   4 160s    0    s 0.6486783   2 <NA>
+> 31  con 0.001   1 160s    0    s 0.6131645   3 <NA>
+> 34  con 0.001   4 160s    0    s 0.6788893   3 <NA>
+> 36  dec 0.051   2 160s    0    s 0.6822148   1 <NA>
+> 39  dec 0.051   3 160s    0    s 0.6661846   1 <NA>
+> 41  dec 0.051   4 160s    0    s 0.6575084   1 <NA>
+> 43  dec 0.051   5 160s    0    s 0.6233795   1 <NA>
+> 45  dec 0.051   2 160s    0    s 0.6158327   2 <NA>
+> ...
+>
+> Cuando amplio el conjunto de datos, haciendo mas flexible el filtro, por
+> ejemplo:
+>
+> graph[graph$NCar==c("160s","180s"),]
+>
+> obtengo este otro conjunto de datos:
+>
+>
+>     sol   con dia NCar NIns isom         area rep tipo
+> 1   con 0.001   1 160s    0    s 6.083543e-01   1
+> 4   con 0.001   1 180s    0    s 3.791027e-01   1 <NA>
+> 13  con 0.001   4 160s    0    s 6.476428e-01   1 <NA>
+> 18  con 0.001   4 180s    0    s 3.378795e-01   1 <NA>
+> 23  con 0.001   3 160s    0    s 6.624022e-01   2 <NA>
+> 24  con 0.001   3 180s    0    s 3.375978e-01   2 <NA>
+> 25  con 0.001   4 160s    0    s 6.486783e-01   2 <NA>
+> 28  con 0.001   4 180s    0    s 3.457121e-01   2 <NA>
+> 31  con 0.001   1 160s    0    s 6.131645e-01   3 <NA>
+> 32  con 0.001   1 180s    0    s 3.816533e-01   3 <NA>
+> 39  dec 0.051   3 160s    0    s 6.661846e-01   1 <NA>
+> 40  dec 0.051   3 180s    0    s 3.338154e-01   1 <NA>
+> 41  dec 0.051   4 160s    0    s 6.575084e-01   1 <NA>
+> 42  dec 0.051   4 180s    0    s 3.424916e-01   1 <NA>
+> 43  dec 0.051   5 160s    0    s 6.233795e-01   1 <NA>
+> ...
+>
+> mi pregunta es porque no aparecen algunos datos como el siguiente:
+>
+>     sol   con dia NCar NIns isom         area rep tipo
+> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+>
+>
+> el que segun yo deberia aparecer, ya que el filtro es menos restrictivo
+> y el segundo conjunto de datos deberia contener el primero.
+>
+> Alguien puede orientarme en que estoy haciendo mal ?
+>
+> Saludos a todos y gracias de antemano.
+>
+> Eric.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From ericconchamunoz en gmail.com  Sat Sep  7 01:49:23 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Fri, 06 Sep 2013 19:49:23 -0400
+Subject: [R-es] Problema con filtros de datos en un data.frame
+In-Reply-To: <CADg83edEK9GbVmuSjQ_8KK_CLz_D5_Vs3kYxdqidh+vTNREYuA@mail.gmail.com>
+References: <522A5DEE.7020200@gmail.com>
+	<CADg83edEK9GbVmuSjQ_8KK_CLz_D5_Vs3kYxdqidh+vTNREYuA@mail.gmail.com>
+Message-ID: <522A6A03.3040209@gmail.com>
+
+Me funciono perfecto, muchas gracias Carlos ... si no es mucha la 
+molestia, alguien podria explicarme la diferencia tecnica entre ambos 
+signos, y porque == produce el resultado que produce ? en que casos 
+deberia usar == y en que casos %in% ... cual es el significado de cada 
+uno ?
+
+Disculpen que no me conforme solo con obtener el resultado adecuado, es 
+solo que no me suena logico que == no produzca el resultado que uno se 
+imagina al ver el signo :)
+
+Saludos cordiales y muchas gracias,
+
+Eric.
+
+
+
+
+
+On Fri 06 Sep 2013 07:25:43 PM CLT, Carlos J. Gil Bellosta  wrote:
+> Hola, ¿qué tal?
+>
+> No uses == sino %in%.
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> El día 7 de septiembre de 2013 00:57, neo <ericconchamunoz en gmail.com> escribió:
+>> Estimados, tengo el siguiente problema: estoy trabajando con un
+>> data.frame que tiene 892 filas y 9 columnas, el cual adjunto para que
+>> puedan probar.
+>>
+>> Cuando consulto por las filas que cumplen una cierta condicion, por
+>> ejemplo, ...
+>>
+>> graph[graph$NCar==c("160s"),]
+>>
+>> obtengo el siguiente conjunto de datos:
+>>
+>>     sol   con dia NCar NIns isom      area rep tipo
+>> 1   con 0.001   1 160s    0    s 0.6083543   1
+>> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+>> 10  con 0.001   3 160s    0    s 0.6873404   1 <NA>
+>> 13  con 0.001   4 160s    0    s 0.6476428   1 <NA>
+>> 20  con 0.001   1 160s    0    s 0.6094205   2 <NA>
+>> 23  con 0.001   3 160s    0    s 0.6624022   2 <NA>
+>> 25  con 0.001   4 160s    0    s 0.6486783   2 <NA>
+>> 31  con 0.001   1 160s    0    s 0.6131645   3 <NA>
+>> 34  con 0.001   4 160s    0    s 0.6788893   3 <NA>
+>> 36  dec 0.051   2 160s    0    s 0.6822148   1 <NA>
+>> 39  dec 0.051   3 160s    0    s 0.6661846   1 <NA>
+>> 41  dec 0.051   4 160s    0    s 0.6575084   1 <NA>
+>> 43  dec 0.051   5 160s    0    s 0.6233795   1 <NA>
+>> 45  dec 0.051   2 160s    0    s 0.6158327   2 <NA>
+>> ...
+>>
+>> Cuando amplio el conjunto de datos, haciendo mas flexible el filtro, por
+>> ejemplo:
+>>
+>> graph[graph$NCar==c("160s","180s"),]
+>>
+>> obtengo este otro conjunto de datos:
+>>
+>>
+>>     sol   con dia NCar NIns isom         area rep tipo
+>> 1   con 0.001   1 160s    0    s 6.083543e-01   1
+>> 4   con 0.001   1 180s    0    s 3.791027e-01   1 <NA>
+>> 13  con 0.001   4 160s    0    s 6.476428e-01   1 <NA>
+>> 18  con 0.001   4 180s    0    s 3.378795e-01   1 <NA>
+>> 23  con 0.001   3 160s    0    s 6.624022e-01   2 <NA>
+>> 24  con 0.001   3 180s    0    s 3.375978e-01   2 <NA>
+>> 25  con 0.001   4 160s    0    s 6.486783e-01   2 <NA>
+>> 28  con 0.001   4 180s    0    s 3.457121e-01   2 <NA>
+>> 31  con 0.001   1 160s    0    s 6.131645e-01   3 <NA>
+>> 32  con 0.001   1 180s    0    s 3.816533e-01   3 <NA>
+>> 39  dec 0.051   3 160s    0    s 6.661846e-01   1 <NA>
+>> 40  dec 0.051   3 180s    0    s 3.338154e-01   1 <NA>
+>> 41  dec 0.051   4 160s    0    s 6.575084e-01   1 <NA>
+>> 42  dec 0.051   4 180s    0    s 3.424916e-01   1 <NA>
+>> 43  dec 0.051   5 160s    0    s 6.233795e-01   1 <NA>
+>> ...
+>>
+>> mi pregunta es porque no aparecen algunos datos como el siguiente:
+>>
+>>     sol   con dia NCar NIns isom         area rep tipo
+>> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+>>
+>>
+>> el que segun yo deberia aparecer, ya que el filtro es menos restrictivo
+>> y el segundo conjunto de datos deberia contener el primero.
+>>
+>> Alguien puede orientarme en que estoy haciendo mal ?
+>>
+>> Saludos a todos y gracias de antemano.
+>>
+>> Eric.
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+
+From jorgeivanvelez en gmail.com  Sat Sep  7 02:47:05 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Fri, 6 Sep 2013 19:47:05 -0500
+Subject: [R-es] Problema con filtros de datos en un data.frame
+In-Reply-To: <522A6A03.3040209@gmail.com>
+References: <522A5DEE.7020200@gmail.com>
+	<CADg83edEK9GbVmuSjQ_8KK_CLz_D5_Vs3kYxdqidh+vTNREYuA@mail.gmail.com>
+	<522A6A03.3040209@gmail.com>
+Message-ID: <313388722310833720@unknownmsgid>
+
+Hola Eric,
+Si tienes una condicion, usa == ; cuando tengas mas de una, usa %in%.
+Saludos,
+Jorge.-
+
+Sent from my phone. Please excuse my brevity and misspelling.
+
+On Sep 6, 2013, at 6:49 PM, neo <ericconchamunoz en gmail.com> wrote:
+
+> Me funciono perfecto, muchas gracias Carlos ... si no es mucha la
+> molestia, alguien podria explicarme la diferencia tecnica entre ambos
+> signos, y porque == produce el resultado que produce ? en que casos
+> deberia usar == y en que casos %in% ... cual es el significado de cada
+> uno ?
+>
+> Disculpen que no me conforme solo con obtener el resultado adecuado, es
+> solo que no me suena logico que == no produzca el resultado que uno se
+> imagina al ver el signo :)
+>
+> Saludos cordiales y muchas gracias,
+>
+> Eric.
+>
+>
+>
+>
+>
+> On Fri 06 Sep 2013 07:25:43 PM CLT, Carlos J. Gil Bellosta  wrote:
+>> Hola, ¿qué tal?
+>>
+>> No uses == sino %in%.
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>> El día 7 de septiembre de 2013 00:57, neo <ericconchamunoz en gmail.com> escribió:
+>>> Estimados, tengo el siguiente problema: estoy trabajando con un
+>>> data.frame que tiene 892 filas y 9 columnas, el cual adjunto para que
+>>> puedan probar.
+>>>
+>>> Cuando consulto por las filas que cumplen una cierta condicion, por
+>>> ejemplo, ...
+>>>
+>>> graph[graph$NCar==c("160s"),]
+>>>
+>>> obtengo el siguiente conjunto de datos:
+>>>
+>>>    sol   con dia NCar NIns isom      area rep tipo
+>>> 1   con 0.001   1 160s    0    s 0.6083543   1
+>>> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+>>> 10  con 0.001   3 160s    0    s 0.6873404   1 <NA>
+>>> 13  con 0.001   4 160s    0    s 0.6476428   1 <NA>
+>>> 20  con 0.001   1 160s    0    s 0.6094205   2 <NA>
+>>> 23  con 0.001   3 160s    0    s 0.6624022   2 <NA>
+>>> 25  con 0.001   4 160s    0    s 0.6486783   2 <NA>
+>>> 31  con 0.001   1 160s    0    s 0.6131645   3 <NA>
+>>> 34  con 0.001   4 160s    0    s 0.6788893   3 <NA>
+>>> 36  dec 0.051   2 160s    0    s 0.6822148   1 <NA>
+>>> 39  dec 0.051   3 160s    0    s 0.6661846   1 <NA>
+>>> 41  dec 0.051   4 160s    0    s 0.6575084   1 <NA>
+>>> 43  dec 0.051   5 160s    0    s 0.6233795   1 <NA>
+>>> 45  dec 0.051   2 160s    0    s 0.6158327   2 <NA>
+>>> ...
+>>>
+>>> Cuando amplio el conjunto de datos, haciendo mas flexible el filtro, por
+>>> ejemplo:
+>>>
+>>> graph[graph$NCar==c("160s","180s"),]
+>>>
+>>> obtengo este otro conjunto de datos:
+>>>
+>>>
+>>>    sol   con dia NCar NIns isom         area rep tipo
+>>> 1   con 0.001   1 160s    0    s 6.083543e-01   1
+>>> 4   con 0.001   1 180s    0    s 3.791027e-01   1 <NA>
+>>> 13  con 0.001   4 160s    0    s 6.476428e-01   1 <NA>
+>>> 18  con 0.001   4 180s    0    s 3.378795e-01   1 <NA>
+>>> 23  con 0.001   3 160s    0    s 6.624022e-01   2 <NA>
+>>> 24  con 0.001   3 180s    0    s 3.375978e-01   2 <NA>
+>>> 25  con 0.001   4 160s    0    s 6.486783e-01   2 <NA>
+>>> 28  con 0.001   4 180s    0    s 3.457121e-01   2 <NA>
+>>> 31  con 0.001   1 160s    0    s 6.131645e-01   3 <NA>
+>>> 32  con 0.001   1 180s    0    s 3.816533e-01   3 <NA>
+>>> 39  dec 0.051   3 160s    0    s 6.661846e-01   1 <NA>
+>>> 40  dec 0.051   3 180s    0    s 3.338154e-01   1 <NA>
+>>> 41  dec 0.051   4 160s    0    s 6.575084e-01   1 <NA>
+>>> 42  dec 0.051   4 180s    0    s 3.424916e-01   1 <NA>
+>>> 43  dec 0.051   5 160s    0    s 6.233795e-01   1 <NA>
+>>> ...
+>>>
+>>> mi pregunta es porque no aparecen algunos datos como el siguiente:
+>>>
+>>>    sol   con dia NCar NIns isom         area rep tipo
+>>> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+>>>
+>>>
+>>> el que segun yo deberia aparecer, ya que el filtro es menos restrictivo
+>>> y el segundo conjunto de datos deberia contener el primero.
+>>>
+>>> Alguien puede orientarme en que estoy haciendo mal ?
+>>>
+>>> Saludos a todos y gracias de antemano.
+>>>
+>>> Eric.
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From betanster en gmail.com  Sun Sep  8 13:06:56 2013
+From: betanster en gmail.com (Jose Betancourt B.)
+Date: Sun, 8 Sep 2013 07:06:56 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?Fwd=3A_Bienvenido_a_la_lista_de_distribuci?=
+	=?iso-8859-1?q?=F3n_R-help-es?=
+In-Reply-To: <52279520.4050801@gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org>
+	<CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com>
+	<CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+	<CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com>
+	<52279520.4050801@gmail.com>
+Message-ID: <CANuuowN+dbRHqc4mY6-ySKADNNtVZCTG17rZoMOdPi=uT4bsrQ@mail.gmail.com>
+
+por favor
+como se calculan las probabilidades para conformar el segundo vector
+SI.Distr, en este ejemplo puse la existente en SARS2003
+
+#Análisis paso a paso
+
+rm(list = ls())
+
+#existe información de la incidencia de casos de una enfermedad
+
+incidencia <-c (1,0,0,0,0,0,0,0,2,1,1,0,1,2,0,2,0,2,2,2,3, 1, 2, 0,2,
+0,  1, 1, 2, 1,  1,  2,  3, 0, 1,   2, 0, 2,  1,  3, 1, 6, 3,  3,7, 4,
+       4, 3, 6, 4,5,2,4, 2,3, 1, 4, 4,8, 9, 13, 1, 0, 0, 0, 0, 0,
+0,0, 0, 0,0,  0, 0, 0,0,            0, 0,
+       0,            0,            0, 28,          35,          8,
+       59,          13, 14,          1,            26,          15, 1,
+       1,            9,            41, 18,          56,          104,
+       54,          59, 50,          20,          2,            1, 1,
+       42,                20,          21, 24,          37,          34,
+       26,          50, 30,          17,          28,          14,
+       75, 62,          37,          19,                12, 11,
+       17,          27,          0,            34, 12,          0,
+       15,          0, 3,            8,            14,          11, 10,
+       11,          9,            5, 31,          11,          3,
+       2, 3,            0,            0,            0, 26,
+       0,            0,            0, 0,            16,          0,
+       8, 3,            2,            0,            0, 25,          2,
+       14,          5, 5,            2,            0,                5, 0,
+       2,            2,            3, 2,            0,
+       8,            2, 5,            3,            2,            1,
+         1)
+
+
+#se explora la información
+
+
+library (epicalc)
+summ (incidencia)
+
+
+library(EpiEstim)
+
+##  se calcula el intervalo serial
+MeanFluSI <- 9.418994  #puse los datos de la incidencia
+SdFluSI <- 16.06
+DicreteSIDistr <- vector()
+for(i in 0:35)
+{
+  DicreteSIDistr[i+1] <- DiscrSI(i, MeanFluSI, SdFluSI)
+}
+plot(0:35, DicreteSIDistr, type="h", lwd=10, lend=1, xlab="tiempo
+(dias)", ylab="frequencia")
+title(main="distribution Discreta del intervalo  serial  ")
+
+# voy a poner unas probabilidades SARS 2003; no se como calcularlas
+para este caso a partir de la incidencia y esa es mi duda en este
+trabajo
+
+SI.Distr<- c (0.000, 0.001, 0.012, 0.043, 0.078, 0.104, 0.117, 0.116,
+0.108, 0.094, 0.078, 0.063, 0.049,
+   0.038, 0.028, 0.021, 0.015, 0.011, 0.008, 0.005, 0.004, 0.003,
+0.002, 0.001, 0.001)
+
+#Calculando R
+
+EstimateR(incidencia, T.Start=90:140, T.End=95:145,
+method="NonParametricSI",SI.Distr=SI.Distr, plot=TRUE,
+          leg.pos=xy.coords(1,7))
+
+
+#uniendo os dos vectores
+
+enfermedad <- list(incidencia, SI.Distr, .Names = c("Incidence",
+"SI.Distr"))#como combinar los dos vectores
+enfermedad<- list(incidence=a, SI.Distr=b)
+enfermedad
+
+#metodo Wallinga...
+
+WT(incidencia, T.Start=90:140, T.End=95:145, method="NonParametricSI",
+   SI.Distr=SI.Distr, plot=TRUE, leg.pos=xy.coords(1,1.75), nSim=100)
+
+
+WT(incidencia, T.Start=90:140, T.End=95:145, method="ParametricSI",
+   Mean.SI=9.418994, Std.SI=16.06, plot=TRUE, nSim=100)
+
+
+#calcular infectividad general
+lambda <- OverallInfectivity(incidencia, SI.Distr)
+par(mfrow=c(2,1))
+plot(incidence, type="s", xlab="tiempo (dias)", ylab="Incidencia")
+title(main="Curva epidemica ")
+plot(lambda, type="s", xlab="tiempo (dias)", ylab="Infectividad")
+title(main="Infectividad general")
+lambda
+
+
+El 04/09/13, neo <ericconchamunoz en gmail.com> escribió:
+> Hola Jose, si CONCATENAR significa APILAR, es decir, concantenar
+> verticalmente, por decirlo de algun modo, podrias hacerlo con rbind():
+>
+> nuevovector <- rbind(vector1,vector2)
+>
+> Si ademas quieres que cada valor de los vectores originales sea
+> identificado en el nuevovector, puedes usar:
+>
+> nuevovector <- stack(vector1,vector2)
+>
+> en este ultimo caso se agrega una columna adicional tipo factor, con el
+> nombre de la columna de los vectores originales.
+>
+> lo demas no lo entiendo :)
+>
+> ojala te sirva,
+>
+> Slds, Eric.
+>
+>
+>
+> On 09/03/2013 06:41 PM, Jose Betancourt B. wrote:
+>>  Quisiera saber en el paquete Epiestim
+>>
+>>  Como lograr concatenar dos vectores, en este caso
+>>> $Incidence
+>>   [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+>>   0  2  0  0  0
+>>  [28]  0  2  0  2  0
+>>
+>>  $SI.Distr
+>>   [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002
+>> 0.001
+>>
+>>  Y hacer posible que lea ambos vectores con el comando
+>>  data("Flu2009")
+>>
+>>  ¿Cómo calculan SI.Distr?
+>>> saludos
+>>>
+>>>
+>>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+
+From betanster en gmail.com  Sun Sep  8 16:24:47 2013
+From: betanster en gmail.com (Jose Betancourt B.)
+Date: Sun, 8 Sep 2013 10:24:47 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?Fwd=3A_Bienvenido_a_la_lista_de_distribuci?=
+	=?iso-8859-1?q?=F3n_R-help-es?=
+In-Reply-To: <CANuuowN+dbRHqc4mY6-ySKADNNtVZCTG17rZoMOdPi=uT4bsrQ@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org>
+	<CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com>
+	<CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+	<CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com>
+	<52279520.4050801@gmail.com>
+	<CANuuowN+dbRHqc4mY6-ySKADNNtVZCTG17rZoMOdPi=uT4bsrQ@mail.gmail.com>
+Message-ID: <CANuuowP9V-ODtbCePk6RR_Bnj-xCM+T0HQRg1vOi2gbkOc6-Sg@mail.gmail.com>
+
+por favor necesito los comandos
+para crear un vector conformados por las fechas
+inicio 4 marzo 2012
+final 12 diciembre 2012
+
+
+From jorge.nayamacias en gmail.com  Mon Sep  9 09:35:53 2013
+From: jorge.nayamacias en gmail.com (Jorge Naya Macias)
+Date: Mon, 9 Sep 2013 09:35:53 +0200
+Subject: [R-es] usando RasterBricks
+Message-ID: <CAGmK6We=tmqA19J63o4XS9DSjiGE_6aEhPFJXFuQAj65pzv3MQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130909/2d1f0af2/attachment.ksh>
+
+From lobo en mucharuina.com  Mon Sep  9 11:12:45 2013
+From: lobo en mucharuina.com (=?ISO-8859-1?Q?Rub=E9n_G=F3mez_Antol=ED?=)
+Date: Mon, 09 Sep 2013 11:12:45 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?Fwd=3A_Bienvenido_a_la_lista_de_distribuci?=
+ =?iso-8859-1?q?=F3n_R-help-es?=
+In-Reply-To: <CANuuowP9V-ODtbCePk6RR_Bnj-xCM+T0HQRg1vOi2gbkOc6-Sg@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org>
+	<CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com>
+	<CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com>
+	<CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com>
+	<52279520.4050801@gmail.com>
+	<CANuuowN+dbRHqc4mY6-ySKADNNtVZCTG17rZoMOdPi=uT4bsrQ@mail.gmail.com>
+	<CANuuowP9V-ODtbCePk6RR_Bnj-xCM+T0HQRg1vOi2gbkOc6-Sg@mail.gmail.com>
+Message-ID: <522D910D.3070301@mucharuina.com>
+
+
+
+El 08/09/13 16:24, Jose Betancourt B. escribió:
+> por favor necesito los comandos
+> para crear un vector conformados por las fechas
+> inicio 4 marzo 2012
+> final 12 diciembre 2012
+
+?ts
+
+?vignette("zoo",package="zoo")
+
+Salud y Revolución.
+
+Lobo.
+-- 
+Libertad es poder elegir en cualquier momento. Ahora yo elijo GNU/Linux,
+para no atar mis manos con las cadenas del soft propietario.
+Porque la libertad no es tu derecho, es tu responsabilidad.
+http://www.mucharuina.com
+---------
+Desde El Ejido, en Almería, usuario registrado Linux #294013
+http://www.counter.li.org
+
+
+From jbetancourt en iscmc.cmw.sld.cu  Mon Sep  9 13:46:53 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Mon, 9 Sep 2013 07:46:53 -0400
+Subject: [R-es] =?iso-8859-1?q?=28sin_asunto=29?=
+Message-ID: <000901cead52$48fc7070$daf55150$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130909/4848c409/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Mon Sep  9 14:20:42 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Mon, 9 Sep 2013 09:20:42 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Fwd=3A_Bienvenido_a_la_lista_de_distribuci?=
+	=?iso-8859-1?q?=F3n_R-help-es?=
+In-Reply-To: <CANuuowN+dbRHqc4mY6-ySKADNNtVZCTG17rZoMOdPi=uT4bsrQ@mail.gmail.com>
+References: <mailman.526.1378204497.4515.r-help-es@r-project.org><CANuuowMdq8kR0TkdqWuGUPhVDAXxsmMLeQJ10de1JjFYDhHpGA@mail.gmail.com><CADg83ee4k1LZpV4N9LtkKw2DRHmX0LWEwYugKj10OfvocwQFFg@mail.gmail.com><CANuuowOSODrBZbWqqBo+vceioSqq=WinAq+xBUu-_Unq8yJ=gQ@mail.gmail.com><52279520.4050801@gmail.com>
+	<CANuuowN+dbRHqc4mY6-ySKADNNtVZCTG17rZoMOdPi=uT4bsrQ@mail.gmail.com>
+Message-ID: <D0F5BC550427442EA87F5421D780312E@JavierMarcuzzi>
+
+Estimado José Betancourt
+
+Esa respuesta es difícil, porque de R se podría decir para el calculo de 
+probabilidad: pchisq(7,5,2)
+
+Sin embargo ese comando de R que calcula probabilidad en su caso puede ser 
+un gran error. Hay que ver algunos libros de R y su uso en probabilidades, 
+de Epidemiología y estudiar R en epidemiología, algún ejemplo se puede 
+adecuar a sus requerimientos específicos, lo que usted solicita a nosotros 
+fuera de contexto puede hacer que indiquemos código R inadecuado, donde la 
+computadora calcula bien pero ese resultado es errado.
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: Jose Betancourt B.
+Sent: Sunday, September 08, 2013 8:06 AM
+To: neo
+Cc: r-help-es en r-project.org
+Subject: Re: [R-es]Fwd: Bienvenido a la lista de distribución R-help-es
+
+por favor
+como se calculan las probabilidades para conformar el segundo vector
+SI.Distr, en este ejemplo puse la existente en SARS2003
+
+#Análisis paso a paso
+
+rm(list = ls())
+
+#existe información de la incidencia de casos de una enfermedad
+
+incidencia <-c (1,0,0,0,0,0,0,0,2,1,1,0,1,2,0,2,0,2,2,2,3, 1, 2, 0,2,
+0,  1, 1, 2, 1,  1,  2,  3, 0, 1,   2, 0, 2,  1,  3, 1, 6, 3,  3,7, 4,
+       4, 3, 6, 4,5,2,4, 2,3, 1, 4, 4,8, 9, 13, 1, 0, 0, 0, 0, 0,
+0,0, 0, 0,0,  0, 0, 0,0,            0, 0,
+       0,            0,            0, 28,          35,          8,
+       59,          13, 14,          1,            26,          15, 1,
+       1,            9,            41, 18,          56,          104,
+       54,          59, 50,          20,          2,            1, 1,
+       42,                20,          21, 24,          37,          34,
+       26,          50, 30,          17,          28,          14,
+       75, 62,          37,          19,                12, 11,
+       17,          27,          0,            34, 12,          0,
+       15,          0, 3,            8,            14,          11, 10,
+       11,          9,            5, 31,          11,          3,
+       2, 3,            0,            0,            0, 26,
+       0,            0,            0, 0,            16,          0,
+       8, 3,            2,            0,            0, 25,          2,
+       14,          5, 5,            2,            0,                5, 0,
+       2,            2,            3, 2,            0,
+       8,            2, 5,            3,            2,            1,
+         1)
+
+
+#se explora la información
+
+
+library (epicalc)
+summ (incidencia)
+
+
+library(EpiEstim)
+
+##  se calcula el intervalo serial
+MeanFluSI <- 9.418994  #puse los datos de la incidencia
+SdFluSI <- 16.06
+DicreteSIDistr <- vector()
+for(i in 0:35)
+{
+  DicreteSIDistr[i+1] <- DiscrSI(i, MeanFluSI, SdFluSI)
+}
+plot(0:35, DicreteSIDistr, type="h", lwd=10, lend=1, xlab="tiempo
+(dias)", ylab="frequencia")
+title(main="distribution Discreta del intervalo  serial  ")
+
+# voy a poner unas probabilidades SARS 2003; no se como calcularlas
+para este caso a partir de la incidencia y esa es mi duda en este
+trabajo
+
+SI.Distr<- c (0.000, 0.001, 0.012, 0.043, 0.078, 0.104, 0.117, 0.116,
+0.108, 0.094, 0.078, 0.063, 0.049,
+   0.038, 0.028, 0.021, 0.015, 0.011, 0.008, 0.005, 0.004, 0.003,
+0.002, 0.001, 0.001)
+
+#Calculando R
+
+EstimateR(incidencia, T.Start=90:140, T.End=95:145,
+method="NonParametricSI",SI.Distr=SI.Distr, plot=TRUE,
+          leg.pos=xy.coords(1,7))
+
+
+#uniendo os dos vectores
+
+enfermedad <- list(incidencia, SI.Distr, .Names = c("Incidence",
+"SI.Distr"))#como combinar los dos vectores
+enfermedad<- list(incidence=a, SI.Distr=b)
+enfermedad
+
+#metodo Wallinga...
+
+WT(incidencia, T.Start=90:140, T.End=95:145, method="NonParametricSI",
+   SI.Distr=SI.Distr, plot=TRUE, leg.pos=xy.coords(1,1.75), nSim=100)
+
+
+WT(incidencia, T.Start=90:140, T.End=95:145, method="ParametricSI",
+   Mean.SI=9.418994, Std.SI=16.06, plot=TRUE, nSim=100)
+
+
+#calcular infectividad general
+lambda <- OverallInfectivity(incidencia, SI.Distr)
+par(mfrow=c(2,1))
+plot(incidence, type="s", xlab="tiempo (dias)", ylab="Incidencia")
+title(main="Curva epidemica ")
+plot(lambda, type="s", xlab="tiempo (dias)", ylab="Infectividad")
+title(main="Infectividad general")
+lambda
+
+
+El 04/09/13, neo <ericconchamunoz en gmail.com> escribió:
+> Hola Jose, si CONCATENAR significa APILAR, es decir, concantenar
+> verticalmente, por decirlo de algun modo, podrias hacerlo con rbind():
+>
+> nuevovector <- rbind(vector1,vector2)
+>
+> Si ademas quieres que cada valor de los vectores originales sea
+> identificado en el nuevovector, puedes usar:
+>
+> nuevovector <- stack(vector1,vector2)
+>
+> en este ultimo caso se agrega una columna adicional tipo factor, con el
+> nombre de la columna de los vectores originales.
+>
+> lo demas no lo entiendo :)
+>
+> ojala te sirva,
+>
+> Slds, Eric.
+>
+>
+>
+> On 09/03/2013 06:41 PM, Jose Betancourt B. wrote:
+>>  Quisiera saber en el paquete Epiestim
+>>
+>>  Como lograr concatenar dos vectores, en este caso
+>>> $Incidence
+>>   [1]  1  1  0  2  5  3  3  3  6  2  5  9 13 12 13 11 12  6  6  6  3  1
+>>   0  2  0  0  0
+>>  [28]  0  2  0  2  0
+>>
+>>  $SI.Distr
+>>   [1] 0.000 0.233 0.359 0.198 0.103 0.053 0.027 0.014 0.007 0.003 0.002
+>> 0.001
+>>
+>>  Y hacer posible que lea ambos vectores con el comando
+>>  data("Flu2009")
+>>
+>>  ¿Cómo calculan SI.Distr?
+>>> saludos
+>>>
+>>>
+>>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From daniel319 en gmail.com  Mon Sep  9 16:19:58 2013
+From: daniel319 en gmail.com (daniel)
+Date: Mon, 9 Sep 2013 11:19:58 -0300
+Subject: [R-es] (sin asunto)
+In-Reply-To: <000901cead52$48fc7070$daf55150$@cmw.sld.cu>
+References: <000901cead52$48fc7070$daf55150$@cmw.sld.cu>
+Message-ID: <CAPfrkhkKHQ4eY8e9cmyr1KGoi-Lu71J17M+D54cxucV2yb-HmQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130909/57cbbb7a/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Mon Sep  9 18:29:25 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Mon, 9 Sep 2013 12:29:25 -0400
+Subject: [R-es] (sin asunto)
+In-Reply-To: <CAPfrkhkKHQ4eY8e9cmyr1KGoi-Lu71J17M+D54cxucV2yb-HmQ@mail.gmail.com>
+References: <000901cead52$48fc7070$daf55150$@cmw.sld.cu>
+	<CAPfrkhkKHQ4eY8e9cmyr1KGoi-Lu71J17M+D54cxucV2yb-HmQ@mail.gmail.com>
+Message-ID: <000c01cead79$c239d0a0$46ad71e0$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130909/7a03c458/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Mon Sep  9 18:30:10 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Mon, 9 Sep 2013 12:30:10 -0400
+Subject: [R-es] RV:  (sin asunto)
+Message-ID: <001101cead79$dbe1cee0$93a56ca0$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130909/1c01c006/attachment.pl>
+
+From daniel319 en gmail.com  Mon Sep  9 19:14:03 2013
+From: daniel319 en gmail.com (daniel)
+Date: Mon, 9 Sep 2013 14:14:03 -0300
+Subject: [R-es] RV: (sin asunto)
+In-Reply-To: <001101cead79$dbe1cee0$93a56ca0$@cmw.sld.cu>
+References: <001101cead79$dbe1cee0$93a56ca0$@cmw.sld.cu>
+Message-ID: <CAPfrkhn2J9z8-BaBdvQ6Fv81n=dX95San1u-iSC+1OifCYeV6Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130909/79a72052/attachment.pl>
+
+From onunez en unex.es  Mon Sep  9 22:23:11 2013
+From: onunez en unex.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Mon, 9 Sep 2013 22:23:11 +0200
+Subject: [R-es] usando RasterBricks
+In-Reply-To: <CAGmK6We=tmqA19J63o4XS9DSjiGE_6aEhPFJXFuQAj65pzv3MQ@mail.gmail.com>
+References: <CAGmK6We=tmqA19J63o4XS9DSjiGE_6aEhPFJXFuQAj65pzv3MQ@mail.gmail.com>
+Message-ID: <955E4C95-53AF-4188-AE6F-DD69F33AB53D@unex.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130909/360ad1e6/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Mon Sep  9 22:55:22 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Mon, 9 Sep 2013 17:55:22 -0300
+Subject: [R-es] RV:  (sin asunto)
+In-Reply-To: <001101cead79$dbe1cee0$93a56ca0$@cmw.sld.cu>
+References: <001101cead79$dbe1cee0$93a56ca0$@cmw.sld.cu>
+Message-ID: <C84DF34FECFC466AA6A955E56B462E74@JavierMarcuzzi>
+
+Estimado José Berancourt
+
+Sobre el trabajo con fechas, hay varias formas, en mi caso me paso de tener 
+ejemplos en paquetes estadísticos (epidemiología) que al cambiar los datos 
+no funcionaban, estos usaban as.Date, pero en mi computadora había 
+problemas, los solucioné con strptime.
+
+En la lista le indicaron algunas como vectores, data.frame, y puede ser que 
+tenga problemas, o no, en ese caso puede considerar distintas formas para 
+trabajar con fechas (yo estuve una semana sin dar "en la tecla correcta" 
+para mi computadora).
+
+Javier Marcuzzi
+
+
+-----Original Message----- 
+From: Dr. José A. Betancourt B.
+Sent: Monday, September 09, 2013 1:30 PM
+To: r-help-es en r-project.org
+Subject: [R-es] RV: (sin asunto)
+
+
+
+
+
+En el paquete R0 se despliega
+
+data(Germany.1918) y cuando aplicamos el comando is.vector, nos refleja
+TRUE.
+
+
+
+Mi duda es COMO GENERAR UNA DATA SIMILAR A:  data(Germany.1918) para que
+pueda realizar las operaciones que deseo.
+
+
+
+Al tratar de hacerlo
+
+#combinar fechas y casos
+
+df <- data.frame( Fecha = format(index(zooreg(1:269, start =
+as.Date("2012-03-01"))), '%Y-%m-%d'), Valores = confirmados)
+
+NO ME LEE MIS DATOS! como lo hace con  data(Germany.1918)
+
+
+
+
+
+
+
+#del paquete original
+
+
+
+library(R0)
+
+data(Germany.1918)
+
+mGT<-generation.time("gamma", c(3, 1.5))
+
+estR0<-estimate.R(Germany.1918, mGT, begin=1, end=27, methods=c("EG", "ML",
+"TD", "AR", "SB"),
+
+                  pop.size=100000, nsim=100)
+
+attributes(estR0)
+
+estR0
+
+
+
+
+
+
+
+--
+
+Este mensaje le ha llegado mediante el servicio de correo electronico que 
+ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema 
+Nacional de Salud. La persona que envia este correo asume el compromiso de 
+usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ihidalgo en jccm.es  Tue Sep 10 08:19:32 2013
+From: ihidalgo en jccm.es (Isidro Hidalgo)
+Date: Tue, 10 Sep 2013 08:19:32 +0200
+Subject: [R-es] Problema con filtros de datos en un data.frame
+In-Reply-To: <522A6A03.3040209@gmail.com>
+References: <522A5DEE.7020200@gmail.com>	<CADg83edEK9GbVmuSjQ_8KK_CLz_D5_Vs3kYxdqidh+vTNREYuA@mail.gmail.com>
+	<522A6A03.3040209@gmail.com>
+Message-ID: <00e701ceaded$b6e309f0$24a91dd0$@es>
+
+Cuando utilizas "==" estás comparando el vector "graph$NCar" (longitud 892)
+con otro de longitud 2: c("160s","180s").
+Es decir, comparas el primer valor de "graph$NCar" con el primer valor de
+c("160s","180s"), el segundo valor de "graph$NCar" con el segundo valor de
+c("160s","180s"), el tercer valor de "graph$NCar" con el primer valor de
+c("160s","180s"), etc...
+Es decir, comparas los elementos de dos vectores, uno a uno, y cuando al
+vector de menor longitud se le acaban sus elementos, se recicla...
+En cambio, si utilizas %in% lo que haces es buscar qué elementos del primer
+vector coinciden con los del segundo.
+Un saludo.
+
+Isidro Hidalgo Arellano
+Observatorio Regional de Empleo
+Consejería de Empleo y Economía
+ihidalgo en jccm.es
+http://www.jccm.es
+
+
+
+> -----Mensaje original-----
+> De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-
+> project.org] En nombre de neo
+> Enviado el: sábado, 07 de septiembre de 2013 1:49
+> Para: Carlos J. Gil Bellosta
+> CC: Lista R
+> Asunto: Re: [R-es] Problema con filtros de datos en un data.frame
+>
+> Me funciono perfecto, muchas gracias Carlos ... si no es mucha la
+> molestia, alguien podria explicarme la diferencia tecnica entre ambos
+> signos, y porque == produce el resultado que produce ? en que casos
+> deberia usar == y en que casos %in% ... cual es el significado de cada
+> uno ?
+>
+> Disculpen que no me conforme solo con obtener el resultado adecuado, es
+> solo que no me suena logico que == no produzca el resultado que uno se
+> imagina al ver el signo :)
+>
+> Saludos cordiales y muchas gracias,
+>
+> Eric.
+>
+>
+>
+>
+>
+> On Fri 06 Sep 2013 07:25:43 PM CLT, Carlos J. Gil Bellosta  wrote:
+> > Hola, ¿qué tal?
+> >
+> > No uses == sino %in%.
+> >
+> > Un saludo,
+> >
+> > Carlos J. Gil Bellosta
+> > http://www.datanalytics.com
+> >
+> > El día 7 de septiembre de 2013 00:57, neo <ericconchamunoz en gmail.com>
+> escribió:
+> >> Estimados, tengo el siguiente problema: estoy trabajando con un
+> >> data.frame que tiene 892 filas y 9 columnas, el cual adjunto para
+> que
+> >> puedan probar.
+> >>
+> >> Cuando consulto por las filas que cumplen una cierta condicion, por
+> >> ejemplo, ...
+> >>
+> >> graph[graph$NCar==c("160s"),]
+> >>
+> >> obtengo el siguiente conjunto de datos:
+> >>
+> >>     sol   con dia NCar NIns isom      area rep tipo
+> >> 1   con 0.001   1 160s    0    s 0.6083543   1
+> >> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+> >> 10  con 0.001   3 160s    0    s 0.6873404   1 <NA>
+> >> 13  con 0.001   4 160s    0    s 0.6476428   1 <NA>
+> >> 20  con 0.001   1 160s    0    s 0.6094205   2 <NA>
+> >> 23  con 0.001   3 160s    0    s 0.6624022   2 <NA>
+> >> 25  con 0.001   4 160s    0    s 0.6486783   2 <NA>
+> >> 31  con 0.001   1 160s    0    s 0.6131645   3 <NA>
+> >> 34  con 0.001   4 160s    0    s 0.6788893   3 <NA>
+> >> 36  dec 0.051   2 160s    0    s 0.6822148   1 <NA>
+> >> 39  dec 0.051   3 160s    0    s 0.6661846   1 <NA>
+> >> 41  dec 0.051   4 160s    0    s 0.6575084   1 <NA>
+> >> 43  dec 0.051   5 160s    0    s 0.6233795   1 <NA>
+> >> 45  dec 0.051   2 160s    0    s 0.6158327   2 <NA>
+> >> ...
+> >>
+> >> Cuando amplio el conjunto de datos, haciendo mas flexible el filtro,
+> >> por
+> >> ejemplo:
+> >>
+> >> graph[graph$NCar==c("160s","180s"),]
+> >>
+> >> obtengo este otro conjunto de datos:
+> >>
+> >>
+> >>     sol   con dia NCar NIns isom         area rep tipo
+> >> 1   con 0.001   1 160s    0    s 6.083543e-01   1
+> >> 4   con 0.001   1 180s    0    s 3.791027e-01   1 <NA>
+> >> 13  con 0.001   4 160s    0    s 6.476428e-01   1 <NA>
+> >> 18  con 0.001   4 180s    0    s 3.378795e-01   1 <NA>
+> >> 23  con 0.001   3 160s    0    s 6.624022e-01   2 <NA>
+> >> 24  con 0.001   3 180s    0    s 3.375978e-01   2 <NA>
+> >> 25  con 0.001   4 160s    0    s 6.486783e-01   2 <NA>
+> >> 28  con 0.001   4 180s    0    s 3.457121e-01   2 <NA>
+> >> 31  con 0.001   1 160s    0    s 6.131645e-01   3 <NA>
+> >> 32  con 0.001   1 180s    0    s 3.816533e-01   3 <NA>
+> >> 39  dec 0.051   3 160s    0    s 6.661846e-01   1 <NA>
+> >> 40  dec 0.051   3 180s    0    s 3.338154e-01   1 <NA>
+> >> 41  dec 0.051   4 160s    0    s 6.575084e-01   1 <NA>
+> >> 42  dec 0.051   4 180s    0    s 3.424916e-01   1 <NA>
+> >> 43  dec 0.051   5 160s    0    s 6.233795e-01   1 <NA>
+> >> ...
+> >>
+> >> mi pregunta es porque no aparecen algunos datos como el siguiente:
+> >>
+> >>     sol   con dia NCar NIns isom         area rep tipo
+> >> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+> >>
+> >>
+> >> el que segun yo deberia aparecer, ya que el filtro es menos
+> >> restrictivo y el segundo conjunto de datos deberia contener el
+> primero.
+> >>
+> >> Alguien puede orientarme en que estoy haciendo mal ?
+> >>
+> >> Saludos a todos y gracias de antemano.
+> >>
+> >> Eric.
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cof en qualityexcellence.es  Tue Sep 10 09:33:57 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 10 Sep 2013 09:33:57 +0200
+Subject: [R-es] =?iso-8859-1?q?Pr=F3xima_reuni=F3n_del_=22Grupo_de_Usuario?=
+	=?iso-8859-1?q?s_de_R_de_Madrid_-_26-Septiembre=22=2E=2E=2E=2E?=
+Message-ID: <CAOKbq8jAUop3hFv2jjqCs7_eNmkT6GFK=rkBfKy1hZHmNLOPqQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130910/827bc171/attachment.pl>
+
+From mtnezb en gmail.com  Tue Sep 10 10:06:00 2013
+From: mtnezb en gmail.com (=?ISO-8859-1?Q?Beatriz_Mart=EDnez?=)
+Date: Tue, 10 Sep 2013 10:06:00 +0200
+Subject: [R-es] Problema con filtros de datos en un data.frame
+In-Reply-To: <00e701ceaded$b6e309f0$24a91dd0$@es>
+References: <522A5DEE.7020200@gmail.com>
+	<CADg83edEK9GbVmuSjQ_8KK_CLz_D5_Vs3kYxdqidh+vTNREYuA@mail.gmail.com>
+	<522A6A03.3040209@gmail.com> <00e701ceaded$b6e309f0$24a91dd0$@es>
+Message-ID: <CANYjLLdWd=Z49LyLFqZgc38pobm-T04Fe_84Cxe26aceYuEaWQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130910/3c033a1c/attachment.pl>
+
+From ericconchamunoz en gmail.com  Tue Sep 10 19:12:33 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Tue, 10 Sep 2013 13:12:33 -0400
+Subject: [R-es] Problema con filtros de datos en un data.frame
+In-Reply-To: <CANYjLLdWd=Z49LyLFqZgc38pobm-T04Fe_84Cxe26aceYuEaWQ@mail.gmail.com>
+References: <522A5DEE.7020200@gmail.com>
+	<CADg83edEK9GbVmuSjQ_8KK_CLz_D5_Vs3kYxdqidh+vTNREYuA@mail.gmail.com>
+	<522A6A03.3040209@gmail.com> <00e701ceaded$b6e309f0$24a91dd0$@es>
+	<CANYjLLdWd=Z49LyLFqZgc38pobm-T04Fe_84Cxe26aceYuEaWQ@mail.gmail.com>
+Message-ID: <522F5301.4080203@gmail.com>
+
+Muchas gracias Isidro, es perfecta tu explicacion ... cdo sabes que 
+estas haciendo puedes extrapolar correctamente a otras situaciones, no ?
+
+Un abrazo, muchas gracias,
+
+Eric.
+
+
+
+
+
+On Tue 10 Sep 2013 04:06:00 AM CLT, Beatriz Martínez wrote:
+> Muchas gracias por la explicación Isidro!
+>
+>
+> El 10 de septiembre de 2013 08:19, Isidro Hidalgo <ihidalgo en jccm.es>escribió:
+>
+>> Cuando utilizas "==" estás comparando el vector "graph$NCar" (longitud 892)
+>> con otro de longitud 2: c("160s","180s").
+>> Es decir, comparas el primer valor de "graph$NCar" con el primer valor de
+>> c("160s","180s"), el segundo valor de "graph$NCar" con el segundo valor de
+>> c("160s","180s"), el tercer valor de "graph$NCar" con el primer valor de
+>> c("160s","180s"), etc...
+>> Es decir, comparas los elementos de dos vectores, uno a uno, y cuando al
+>> vector de menor longitud se le acaban sus elementos, se recicla...
+>> En cambio, si utilizas %in% lo que haces es buscar qué elementos del primer
+>> vector coinciden con los del segundo.
+>> Un saludo.
+>>
+>> Isidro Hidalgo Arellano
+>> Observatorio Regional de Empleo
+>> Consejería de Empleo y Economía
+>> ihidalgo en jccm.es
+>> http://www.jccm.es
+>>
+>>
+>>
+>>> -----Mensaje original-----
+>>> De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-
+>>> project.org] En nombre de neo
+>>> Enviado el: sábado, 07 de septiembre de 2013 1:49
+>>> Para: Carlos J. Gil Bellosta
+>>> CC: Lista R
+>>> Asunto: Re: [R-es] Problema con filtros de datos en un data.frame
+>>>
+>>> Me funciono perfecto, muchas gracias Carlos ... si no es mucha la
+>>> molestia, alguien podria explicarme la diferencia tecnica entre ambos
+>>> signos, y porque == produce el resultado que produce ? en que casos
+>>> deberia usar == y en que casos %in% ... cual es el significado de cada
+>>> uno ?
+>>>
+>>> Disculpen que no me conforme solo con obtener el resultado adecuado, es
+>>> solo que no me suena logico que == no produzca el resultado que uno se
+>>> imagina al ver el signo :)
+>>>
+>>> Saludos cordiales y muchas gracias,
+>>>
+>>> Eric.
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> On Fri 06 Sep 2013 07:25:43 PM CLT, Carlos J. Gil Bellosta  wrote:
+>>>> Hola, ¿qué tal?
+>>>>
+>>>> No uses == sino %in%.
+>>>>
+>>>> Un saludo,
+>>>>
+>>>> Carlos J. Gil Bellosta
+>>>> http://www.datanalytics.com
+>>>>
+>>>> El día 7 de septiembre de 2013 00:57, neo <ericconchamunoz en gmail.com>
+>>> escribió:
+>>>>> Estimados, tengo el siguiente problema: estoy trabajando con un
+>>>>> data.frame que tiene 892 filas y 9 columnas, el cual adjunto para
+>>> que
+>>>>> puedan probar.
+>>>>>
+>>>>> Cuando consulto por las filas que cumplen una cierta condicion, por
+>>>>> ejemplo, ...
+>>>>>
+>>>>> graph[graph$NCar==c("160s"),]
+>>>>>
+>>>>> obtengo el siguiente conjunto de datos:
+>>>>>
+>>>>>     sol   con dia NCar NIns isom      area rep tipo
+>>>>> 1   con 0.001   1 160s    0    s 0.6083543   1
+>>>>> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+>>>>> 10  con 0.001   3 160s    0    s 0.6873404   1 <NA>
+>>>>> 13  con 0.001   4 160s    0    s 0.6476428   1 <NA>
+>>>>> 20  con 0.001   1 160s    0    s 0.6094205   2 <NA>
+>>>>> 23  con 0.001   3 160s    0    s 0.6624022   2 <NA>
+>>>>> 25  con 0.001   4 160s    0    s 0.6486783   2 <NA>
+>>>>> 31  con 0.001   1 160s    0    s 0.6131645   3 <NA>
+>>>>> 34  con 0.001   4 160s    0    s 0.6788893   3 <NA>
+>>>>> 36  dec 0.051   2 160s    0    s 0.6822148   1 <NA>
+>>>>> 39  dec 0.051   3 160s    0    s 0.6661846   1 <NA>
+>>>>> 41  dec 0.051   4 160s    0    s 0.6575084   1 <NA>
+>>>>> 43  dec 0.051   5 160s    0    s 0.6233795   1 <NA>
+>>>>> 45  dec 0.051   2 160s    0    s 0.6158327   2 <NA>
+>>>>> ...
+>>>>>
+>>>>> Cuando amplio el conjunto de datos, haciendo mas flexible el filtro,
+>>>>> por
+>>>>> ejemplo:
+>>>>>
+>>>>> graph[graph$NCar==c("160s","180s"),]
+>>>>>
+>>>>> obtengo este otro conjunto de datos:
+>>>>>
+>>>>>
+>>>>>     sol   con dia NCar NIns isom         area rep tipo
+>>>>> 1   con 0.001   1 160s    0    s 6.083543e-01   1
+>>>>> 4   con 0.001   1 180s    0    s 3.791027e-01   1 <NA>
+>>>>> 13  con 0.001   4 160s    0    s 6.476428e-01   1 <NA>
+>>>>> 18  con 0.001   4 180s    0    s 3.378795e-01   1 <NA>
+>>>>> 23  con 0.001   3 160s    0    s 6.624022e-01   2 <NA>
+>>>>> 24  con 0.001   3 180s    0    s 3.375978e-01   2 <NA>
+>>>>> 25  con 0.001   4 160s    0    s 6.486783e-01   2 <NA>
+>>>>> 28  con 0.001   4 180s    0    s 3.457121e-01   2 <NA>
+>>>>> 31  con 0.001   1 160s    0    s 6.131645e-01   3 <NA>
+>>>>> 32  con 0.001   1 180s    0    s 3.816533e-01   3 <NA>
+>>>>> 39  dec 0.051   3 160s    0    s 6.661846e-01   1 <NA>
+>>>>> 40  dec 0.051   3 180s    0    s 3.338154e-01   1 <NA>
+>>>>> 41  dec 0.051   4 160s    0    s 6.575084e-01   1 <NA>
+>>>>> 42  dec 0.051   4 180s    0    s 3.424916e-01   1 <NA>
+>>>>> 43  dec 0.051   5 160s    0    s 6.233795e-01   1 <NA>
+>>>>> ...
+>>>>>
+>>>>> mi pregunta es porque no aparecen algunos datos como el siguiente:
+>>>>>
+>>>>>     sol   con dia NCar NIns isom         area rep tipo
+>>>>> 8   con 0.001   2 160s    0    s 0.6388484   1 <NA>
+>>>>>
+>>>>>
+>>>>> el que segun yo deberia aparecer, ya que el filtro es menos
+>>>>> restrictivo y el segundo conjunto de datos deberia contener el
+>>> primero.
+>>>>>
+>>>>> Alguien puede orientarme en que estoy haciendo mal ?
+>>>>>
+>>>>> Saludos a todos y gracias de antemano.
+>>>>>
+>>>>> Eric.
+>>>>>
+>>>>> _______________________________________________
+>>>>> R-help-es mailing list
+>>>>> R-help-es en r-project.org
+>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>
+>>>>
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From caro.2103 en hotmail.com  Tue Sep 10 22:41:26 2013
+From: caro.2103 en hotmail.com (Caro Recalde Ruiz)
+Date: Tue, 10 Sep 2013 16:41:26 -0400
+Subject: [R-es] Normalidad para datos multivariados
+Message-ID: <BAY179-W650E352791960861B3C91FE380@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130910/2a3a9660/attachment.pl>
+
+From trujillo en unex.es  Wed Sep 11 10:08:29 2013
+From: trujillo en unex.es (=?ISO-8859-1?Q?Jos=E9_Trujillo_Carmona?=)
+Date: Wed, 11 Sep 2013 10:08:29 +0200
+Subject: [R-es] Normalidad para datos multivariados
+In-Reply-To: <BAY179-W650E352791960861B3C91FE380@phx.gbl>
+References: <BAY179-W650E352791960861B3C91FE380@phx.gbl>
+Message-ID: <523024FD.4050208@unex.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130911/fc72421e/attachment.pl>
+
+From freddy.vate01 en gmail.com  Wed Sep 11 15:22:59 2013
+From: freddy.vate01 en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Wed, 11 Sep 2013 09:22:59 -0400
+Subject: [R-es] Normalidad para datos multivariados
+In-Reply-To: <BAY179-W650E352791960861B3C91FE380@phx.gbl>
+References: <BAY179-W650E352791960861B3C91FE380@phx.gbl>
+Message-ID: <CALCOUqu5YBmwQjhS8sbV3MSzfkmmigDdgO1ubXFi7_wPdBQckQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130911/4de42f73/attachment.pl>
+
+From javier.villacampa.gonzalez en gmail.com  Fri Sep 13 17:43:21 2013
+From: javier.villacampa.gonzalez en gmail.com (=?ISO-8859-1?Q?Javier_Villacampa_Gonz=E1lez?=)
+Date: Fri, 13 Sep 2013 17:43:21 +0200
+Subject: [R-es] =?iso-8859-1?q?Problema_con_el_tama=F1o_de_las_letras_en_R?=
+	=?iso-8859-1?q?_en_gr=E1ficos_multiples?=
+Message-ID: <CAOZ+RxH7exp9WTDh6_RncyJ0_45o3JRMuEZq1eJ_69w8=MNbUQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130913/fc4b8e8f/attachment.pl>
+
+From daniel319 en gmail.com  Fri Sep 13 21:54:34 2013
+From: daniel319 en gmail.com (daniel)
+Date: Fri, 13 Sep 2013 16:54:34 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Problema_con_el_tama=F1o_de_las_letras_en_R?=
+	=?iso-8859-1?q?_en_gr=E1ficos_multiples?=
+In-Reply-To: <CAOZ+RxH7exp9WTDh6_RncyJ0_45o3JRMuEZq1eJ_69w8=MNbUQ@mail.gmail.com>
+References: <CAOZ+RxH7exp9WTDh6_RncyJ0_45o3JRMuEZq1eJ_69w8=MNbUQ@mail.gmail.com>
+Message-ID: <CAPfrkh=Ryeyv2ErfKpjD9e3dKrhPM0Wvqg-FXxMQRxfKxr+rMg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130913/394bcd8c/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Fri Sep 13 22:10:22 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Fri, 13 Sep 2013 17:10:22 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Problema_con_el_tama=F1o_de_las_letras_en_R?=
+	=?iso-8859-1?q?_en_gr=E1ficos_multiples?=
+In-Reply-To: <CAOZ+RxH7exp9WTDh6_RncyJ0_45o3JRMuEZq1eJ_69w8=MNbUQ@mail.gmail.com>
+References: <CAOZ+RxH7exp9WTDh6_RncyJ0_45o3JRMuEZq1eJ_69w8=MNbUQ@mail.gmail.com>
+Message-ID: <ACC61EF878FA4996A1E86EF81726097C@JavierMarcuzzi>
+
+Estimando Javier Villacampa González
+
+Yo guardo las gráficas en un archivo, no las copio.
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: Javier Villacampa González
+Sent: Friday, September 13, 2013 12:43 PM
+To: R ayuda
+Subject: [R-es] Problema con el tamaño de las letras en R en gráficos 
+multiples
+
+Hola buenas,
+
+Actualmente me hayo haciendo unas gráficas que han de tener un tamaño de
+letra determinado. Para ello empleo los parametros ps de las funciones
+x11() y en par().
+
+Mientras hago gráficas de uno y gráficas de dos plots todo va bien. Pego
+las gráficas en power point y veo que las gráficas son del tamaño
+recomendado (pego una caja de texto y compruebo que todo es correcto de
+manera visual). Pero cuando la gráfica es de tres o más esto no ocurre.
+
+Me ahorraría mucho trabajo saber que esta pasando, ya que editar las
+gráficas luego con gimp es un rollo. Gracias por adelantado.
+
+Aquí os dejo, como siempre, un script para que entendais mi duda con mayor
+facilidad. Lo cierto es que si lo mirais con atención vereis que ocurren
+"cosas" pero no os sesgo con mi opinión
+
+Gracias por adelantado un saludo
+
+Javier
+
+
+###############################################################################################
+# Scritpt
+###############################################################################################
+
+#########################
+# Una ventana, todo bien
+#########################
+W = 12/cm(1)  # Por defecto está todo en inch, con lo que paso cm a inch
+cada vez
+H= 12/cm(1)
+LAS = 1
+LWD = 2
+MFROW = c(1,1)
+MAR =  c(2.5,4,1,1)
+POINTSIZE = 12
+
+x11(width= W, height=H, pointsize= POINTSIZE)
+
+
+par(las= LAS, lwd = LWD , mfrow= MFROW, mar= MAR, ps= POINTSIZE )
+
+plot(1)
+title(paste("Con una bien, comprobado en power point. Tamaños", POINTSIZE))
+
+######################### Segundo ventana de uno
+W = 12/cm(1)
+H= 12/cm(1)
+LAS = 1
+LWD = 2
+MFROW = c(1,1)
+MAR =  c(2.5,4,1,1)
+POINTSIZE = 20
+
+x11(width= W, height=H, pointsize= POINTSIZE)
+
+
+par(las= LAS, lwd = LWD , mfrow= MFROW, mar= MAR, ps= POINTSIZE )
+
+plot(1)
+title(paste("Con una bien, comprobado en power point. Tamaños", POINTSIZE))
+
+#########################
+# Una ventana, todo bien
+#########################
+W = 12/cm(1) * 2
+H= 12/cm(1)
+LAS = 1
+LWD = 2
+MFROW = c(1,2)
+MAR =  c(2.5,4,1,1)
+POINTSIZE = 20
+
+x11(width= W, height=H, pointsize= POINTSIZE)
+
+
+par(las= LAS, lwd = LWD , mfrow= MFROW, mar= MAR, ps= POINTSIZE, mfrow=
+MFROW )
+
+plot(1)
+
+title( "tamaño bien")
+
+
+par(ps= 12)   # Cambio tamaño de letra
+
+plot(1)
+
+title(paste("Con dos bien, comprobado en power point. Tamaños 20 y 12 "))
+
+#########################
+# Tres ventana, Problema!
+#########################
+W = 12/cm(1) * 3
+H= 12/cm(1)
+LAS = 1
+LWD = 2
+MFROW = c(1,3)
+MAR =  c(2.5,4,1,1)
+POINTSIZE = 20
+
+x11(width= W, height=H, pointsize= POINTSIZE)
+
+
+par(las= LAS, lwd = LWD , mfrow= MFROW, mar= MAR, ps= POINTSIZE, mfrow=
+MFROW )
+
+plot(1)
+
+par(ps= 12)
+
+plot(1)
+title( "tamaño MAL")
+
+plot(1)
+title( "tamaño MAL")
+title(paste("Con tres tamaños malos no entiendo el porqué. comprobado en
+powerpoint y visualmente. Tamaños 20, 12 y 12 "))
+
+--
+
+[[alternative HTML version deleted]]
+
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jbetancourt en iscmc.cmw.sld.cu  Sun Sep 15 16:10:33 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Sun, 15 Sep 2013 10:10:33 -0400
+Subject: [R-es] b
+Message-ID: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130915/e3cf9c49/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sun Sep 15 16:29:41 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Mon, 16 Sep 2013 00:29:41 +1000
+Subject: [R-es] b
+In-Reply-To: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>
+Message-ID: <CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/53df4c39/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Sun Sep 15 21:05:10 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Sun, 15 Sep 2013 15:05:10 -0400
+Subject: [R-es] b
+In-Reply-To: <CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>
+	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+Message-ID: <000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130915/a39433a4/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sun Sep 15 22:36:37 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Mon, 16 Sep 2013 06:36:37 +1000
+Subject: [R-es] b
+In-Reply-To: <000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>
+	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+	<000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+Message-ID: <CAKL8G3FQnH2QOR8QzAw_US42qeyp7mqvk8i6EaG+6SLJcDyEvg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/cb11e234/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Sun Sep 15 23:19:39 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Sun, 15 Sep 2013 17:19:39 -0400
+Subject: [R-es] b
+In-Reply-To: <000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+	<000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+Message-ID: <000b01ceb259$4b1df110$e159d330$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130915/bf5efc9a/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sun Sep 15 23:50:29 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Mon, 16 Sep 2013 07:50:29 +1000
+Subject: [R-es] b
+Message-ID: <CAKL8G3FwQHsD4cNdhvBVfqiDAr1DK9=g6N-3LXfBzD+T1bqcWQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/e083fa54/attachment.pl>
+
+From setecaelacara en yahoo.es  Sun Sep 15 23:51:44 2013
+From: setecaelacara en yahoo.es (=?ISO-8859-1?Q?=C1ngel?=)
+Date: Sun, 15 Sep 2013 23:51:44 +0200
+Subject: [R-es] b
+Message-ID: <3japkmay7byc0e9jnh4vdqwq.1379281578707@email.android.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130915/9e036c3a/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sun Sep 15 23:52:37 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Mon, 16 Sep 2013 07:52:37 +1000
+Subject: [R-es] b
+In-Reply-To: <CAKL8G3FwQHsD4cNdhvBVfqiDAr1DK9=g6N-3LXfBzD+T1bqcWQ@mail.gmail.com>
+References: <CAKL8G3FwQHsD4cNdhvBVfqiDAr1DK9=g6N-3LXfBzD+T1bqcWQ@mail.gmail.com>
+Message-ID: <CAKL8G3FMHdw5pnp912QYebWuccE=8HU7OzUiYR0Rrkqpi3kUSw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/7edf7c76/attachment.pl>
+
+From setecaelacara en yahoo.es  Mon Sep 16 00:03:39 2013
+From: setecaelacara en yahoo.es (=?ISO-8859-1?Q?=C1ngel?=)
+Date: Mon, 16 Sep 2013 00:03:39 +0200
+Subject: [R-es] Solapamiento de funciones de densidad
+Message-ID: <o9i51amecot3xeclxkkbj3jj.1379282001460@email.android.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/502766f0/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Mon Sep 16 00:14:27 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Sun, 15 Sep 2013 18:14:27 -0400
+Subject: [R-es] b
+In-Reply-To: <CAKL8G3FQnH2QOR8QzAw_US42qeyp7mqvk8i6EaG+6SLJcDyEvg@mail.gmail.com>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>
+	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+	<000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+	<CAKL8G3FQnH2QOR8QzAw_US42qeyp7mqvk8i6EaG+6SLJcDyEvg@mail.gmail.com>
+Message-ID: <001001ceb260$f30b4650$d921d2f0$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130915/47284ac1/attachment.pl>
+
+From ericconchamunoz en gmail.com  Mon Sep 16 01:34:31 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Sun, 15 Sep 2013 19:34:31 -0400
+Subject: [R-es] b
+In-Reply-To: <001001ceb260$f30b4650$d921d2f0$@cmw.sld.cu>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>
+	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+	<000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+	<CAKL8G3FQnH2QOR8QzAw_US42qeyp7mqvk8i6EaG+6SLJcDyEvg@mail.gmail.com>
+	<001001ceb260$f30b4650$d921d2f0$@cmw.sld.cu>
+Message-ID: <52364407.6050001@gmail.com>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Estimado Jose, quiza podrias adjuntar un archivo con algunos datos para
+probar nosotros, de modo que tu puedas contrastar tu resultado.
+
+Saludos, Eric.
+
+
+
+On 09/15/2013 06:14 PM, Dr. José A. Betancourt B. wrote:
+> LO HICE DE ESTA MANERA Y FUNCIONÓ
+> 
+>  
+> 
+> a_HTA <- (estudiantes1[,c(1)])
+> 
+> IMC <- (estudiantes1[,c(2)])
+> 
+>  
+> 
+> estudiantes4 <- data.frame(  IMC,  a_HTA = factor(c(rep("si", 29),
+> rep("no",30))))
+> 
+>  
+> 
+> wt <- wilcox_test(IMC ~ a_HTA, data = estudiantes4, 
+> 
+>                   distribution = "exact", conf.int = TRUE)
+> 
+> print(wt)
+> 
+>  
+> 
+> De: Jorge I Velez [mailto:jorgeivanvelez en gmail.com] 
+> Enviado el: Sunday, September 15, 2013 4:37 PM
+> Para: Dr. José A. Betancourt B.
+> CC: R-help-es
+> Asunto: Re: [R-es] b
+> 
+>  
+> 
+> Eso no fue lo que dijiste en tu primer mensaje.  Dale una mirada a
+> ?wilcox.test   --JIV 
+> 
+>  
+> 
+> 2013/9/16 Dr. José A. Betancourt B. <jbetancourt en iscmc.cmw.sld.cu>
+> 
+> Lo que deseamos  realizar es una prueba no paramétrica para demostrar que el
+> IMC encontrado difiere significtivamente entre aquellos que tienen a_HTA
+> (entecedentas HTA)  y los que no lo tienen ( en SPSS de forma  fácil utilizo
+> varios métodos ¿Cuál es la sintaxis para hacerlo posible en R?
+> 
+>  
+> 
+>  
+> 
+> 
+> a_HTA
+> 
+> IMC
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 21
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 28
+> 
+> 
+> si
+> 
+> 24
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 28
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 24
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 21
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 20
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+>  
+> 
+>  
+> 
+> De: Jorge I Velez [mailto:jorgeivanvelez en gmail.com] 
+> Enviado el: Sunday, September 15, 2013 10:30 AM
+> Para: Dr. José A. Betancourt B.
+> CC: R-help-es
+> Asunto: Re: [R-es] b
+> 
+>  
+> 
+> Jose,
+> 
+> Es dificil sin un ejemplo, pero creo que 
+> 
+> as.numeric(as.character(lavariable)))
+> 
+> deberia funcionar.
+> 
+> Saludos,
+> Jorge.-
+> 
+>  
+> 
+> 2013/9/16 Dr. José A. Betancourt B. <jbetancourt en iscmc.cmw.sld.cu>
+> 
+> 
+> 
+> En varias ocasiones hago una tabla y el tipo de análisis me dice que tiene
+> que ser numérica la variable, entonces escribo
+> 
+> As.numeric ( la variable) y no me funciona
+> 
+> ¿Cuál es la sintaxis adecuada? Y dónde está esa ayuda en R?
+> 
+> 
+> 
+> 
+> 
+> --
+> 
+> Este mensaje le ha llegado mediante el servicio de correo electronico que
+> ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema
+> Nacional de Salud. La persona que envia este correo asume el compromiso de
+> usar el servicio a tales fines y cumplir con las regulaciones establecidas
+> 
+> Infomed: http://www.sld.cu/
+> 
+> 
+> 
+> 
+>         [[alternative HTML version deleted]]
+> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> --
+> 
+> Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+> 
+> Infomed: http://www.sld.cu/
+> 
+> 
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJSNkQAAAoJEDoUMoeY1RuMEikH/A+apCWC8XwN3gIAZHuyy43i
+3MDRWBTzo7d23Ti2pAb+sT6wZVNJiUTZ9kYmihvL8e/MhkJslNtCSjIfjagaVfqk
+pUTgY3dqrHyYVSuR6g8rYY7juhM6bSbMEw5LrqcrTFzJwOOtSadffOP74G0ApBLg
+yBKiyMjVBEJVY53aVMPAxaRn4FV+5WbFsSPcWPmyd4YqA891NidaS1KC20Fpn6wq
+nrrxrHwyxrevfAIV5Y7cmWBROcBB2mwUHeEdf4zaFbQtyqZgl237kGesKc1vSYJO
+GDyPfTFHVqWZBqWfHadjDt38zxhEv58JCOrhnBt6sKafOS74KbGT6/ZoUhjsJ5w=
+=uZT3
+-----END PGP SIGNATURE-----
+
+
+From ericconchamunoz en gmail.com  Mon Sep 16 06:14:15 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Mon, 16 Sep 2013 00:14:15 -0400
+Subject: [R-es] b
+In-Reply-To: <000b01ceb259$4b1df110$e159d330$@cmw.sld.cu>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+	<000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+	<000b01ceb259$4b1df110$e159d330$@cmw.sld.cu>
+Message-ID: <52368597.6060500@gmail.com>
+
+Estimado José, por lo que estuve mirando aqui
+https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test, en ?wilcox.test
+y en libros de papel ... los datos deben cumplir ciertas condiciones,
+quiza la mas restrictiva es que sean pareados ... si no lo son, quiza
+esta variante del test es mas apropiada:
+
+https://en.wikipedia.org/wiki/Mann-Whitney-Wilcoxon_test
+
+la que en R se aplica usando el mismo comando wilcox.test(), pero
+activando la opcion paired = FALSE. Asumiendo que sus datos NO son
+pareados y que se cumplen las otras condiciones del test, yo lo aplique
+de la siguiente forma y obtuve el siguiente resultado (usando el archivo
+que nos envio):
+
+tmp <- read.table("ARCHIVO.csv", header=TRUE, sep=",", dec=".",
+na.strings = "NA")
+
+wt <- wilcox.test(IMC ~ a_HTA, data=tmp, paired = FALSE, alternative =
+c("two.sided"), exact=TRUE)
+
+wt
+
+1> wt
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  IMC by a_HTA
+W = 0, p-value = 3.233e-11
+alternative hypothesis: true location shift is not equal to 0
+
+
+de modo que se rechaza ls hipotesis de igualdad de MEDIANAS (NO de medias).
+
+Espero que mis comentarios le sirvan, saludos cordiales,
+
+Eric Concha M.
+
+
+pd1. dayand, creo que este es tu mismo caso, slds, eric.
+pd2. los estadisticos que me corrigan si me equivoco por favor, slds.
+
+
+
+
+
+
+
+On 09/15/2013 05:19 PM, Dr. José A. Betancourt B. wrote:
+>  
+> 
+> deseamos  realizar es una prueba no paramétrica para demostrar que el IMC
+> encontrado difiere significtivamente entre aquellos que tienen a_HTA
+> (entecedentas HTA)  y los que no lo tienen ( en SPSS de forma  fácil utilizo
+> varios métodos ¿Cuál es la sintaxis para hacerlo posible en R?
+> 
+> wilcox.test requiere definir x y y ¿ como es la sintaxis en R?
+> 
+>  
+> 
+> 
+> a_HTA
+> 
+> IMC
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 21
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 28
+> 
+> 
+> si
+> 
+> 24
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 28
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 24
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 21
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 20
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+>  
+> 
+>  
+> 
+>  
+> 
+> 
+> 
+> --
+> 
+> Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+> 
+> Infomed: http://www.sld.cu/
+> 
+> 
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From carlos.perez en uam.es  Mon Sep 16 10:08:04 2013
+From: carlos.perez en uam.es (=?iso-8859-1?Q?Carlos_P=E9rez_Carmona?=)
+Date: Mon, 16 Sep 2013 10:08:04 +0200
+Subject: [R-es] Solapamiento de funciones de densidad
+In-Reply-To: <o9i51amecot3xeclxkkbj3jj.1379282001460@email.android.com>
+References: <o9i51amecot3xeclxkkbj3jj.1379282001460@email.android.com>
+Message-ID: <000f01ceb2b3$de8596b0$9b90c410$@perez@uam.es>
+
+Hola Ángel,
+
+Nosotros creamos recientemente una función para calcular el overlap entre
+distintos caracteres de especies de plantas o animales. La función (trova)
+puedes encontrarla aquí:
+
+http://www.butbn.cas.cz/francesco/Webpage/R_Functions.html
+
+Y la parte de la misma que sirve para calcular el solapamiento de dos
+funciones de densidad (que creo que es lo que quieres hacer), es esta:
+ 
+kernel.dist<-function(sp1,sp2)  {
+  n.obs<-c(length(sp1),length(sp2))
+  sdevs<-c(sd(sp1,na.rm=TRUE),sd(sp2,na.rm=TRUE))
+  means<-c(mean(sp1,na.rm=TRUE),mean(sp2,na.rm=TRUE))
+  h<-1.06*sdevs*(n.obs^-0.2)
+ 
+range_sp<-range(c(means[1]+5*sdevs[1],means[1]-5*sdevs[1],means[2]+5*sdevs[2
+],means[2]-5*sdevs[2]))
+  length.grad<-seq(range_sp[1],range_sp[2],length.out=128)
+  pdf_x<-density(sp1,
+bw=h[1],kernel="gaussian",from=range_sp[1],to=range_sp[2],n=128,na.rm=TRUE)$
+x
+  pdf_sp1<-density(sp1,
+bw=h[1],kernel="gaussian",from=range_sp[1],to=range_sp[2],n=128,na.rm=TRUE)$
+y
+  pdf_sp2<-density(sp2,
+bw=h[2],kernel="gaussian",from=range_sp[1],to=range_sp[2],n=128,na.rm=TRUE)$
+y
+  overlapped<-apply(cbind(pdf_sp1,pdf_sp2), 1, min)
+  overlapped.curve<-splinefun(x=length.grad, y=overlapped)
+ 
+overlap<-integrate(overlapped.curve,range_sp[1],range_sp[2],subdivisions=128
+)$value
+  return(overlap)
+ }
+
+Suerte!
+
+Carlos
+
+
+
+
+-----Mensaje original-----
+De: Ángel [mailto:setecaelacara en yahoo.es] 
+Enviado el: lunes, 16 de septiembre de 2013 0:04
+Para: r-help-es en r-project.org
+Asunto: [R-es] Solapamiento de funciones de densidad
+
+
+Hola a todos.
+Estoy interesado en obtener el grado de solapamiento de dos parametros
+obtenidos a partir de una MCMC.
+La gente que he consultado realiza inspecciones visuales (graficando ambas
+funciones de densidad Â de los valores obtenidos y viendo si hay mucho o
+poco solapamiento), pero me gustarÃ­a incluirlo en una serie de simulaciones
+con lo que no podrÃ­a realizarlas.
+
+Conoceia alguna manera de, con los valores numÃ©ricos obtenidos a partir de
+la MCMC, llegar a un resultado tal que muestre el porcentaje de solapamiento
+entre las diatribuciones de densidad de ambos parÃ¡metros? Â (Algo asÃ­ como
+68%, 75% etc).
+
+Saludos y gracias por adelantado!
+
+
+
+
+Sent from Samsung tablet"Dr. JosÃ© A. Betancourt B."
+<jbetancourt en iscmc.cmw.sld.cu> wrote:
+
+deseamosÂ  realizar es una prueba no paramï¿½trica para demostrar que el IMC
+encontrado difiere significtivamente entre aquellos que tienen a_HTA
+(entecedentas HTA)Â  y los que no lo tienen ( en SPSS de formaÂ  fï¿½cil
+utilizo varios mï¿½todos ï¿½Cuï¿½l es la sintaxis para hacerlo posible en R?
+
+wilcox.test requiere definir x y y ï¿½ como es la sintaxis en R?
+
+
+
+
+a_HTA
+
+IMC
+
+
+si
+
+26
+
+
+si
+
+25
+
+
+si
+
+26
+
+
+si
+
+21
+
+
+si
+
+25
+
+
+si
+
+23
+
+
+si
+
+28
+
+
+si
+
+24
+
+
+si
+
+27
+
+
+si
+
+22
+
+
+si
+
+23
+
+
+si
+
+23
+
+
+si
+
+27
+
+
+si
+
+22
+
+
+si
+
+23
+
+
+si
+
+25
+
+
+si
+
+22
+
+
+si
+
+22
+
+
+si
+
+22
+
+
+si
+
+25
+
+
+si
+
+23
+
+
+si
+
+23
+
+
+si
+
+28
+
+
+si
+
+27
+
+
+si
+
+27
+
+
+si
+
+23
+
+
+si
+
+24
+
+
+si
+
+26
+
+
+si
+
+21
+
+
+no
+
+19
+
+
+no
+
+18
+
+
+no
+
+17
+
+
+no
+
+16
+
+
+no
+
+18
+
+
+no
+
+19
+
+
+no
+
+18
+
+
+no
+
+17
+
+
+no
+
+18
+
+
+no
+
+17
+
+
+no
+
+18
+
+
+no
+
+17
+
+
+no
+
+17
+
+
+no
+
+18
+
+
+no
+
+18
+
+
+no
+
+19
+
+
+no
+
+17
+
+
+no
+
+17
+
+
+no
+
+16
+
+
+no
+
+18
+
+
+no
+
+16
+
+
+no
+
+16
+
+
+no
+
+16
+
+
+no
+
+18
+
+
+no
+
+18
+
+
+no
+
+19
+
+
+no
+
+20
+
+
+no
+
+16
+
+
+no
+
+18
+
+
+no
+
+18
+
+
+
+
+
+
+
+
+
+--
+
+Este mensaje le ha llegado mediante el servicio de correo electronico que
+ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema
+Nacional de Salud. La persona que envia este correo asume el compromiso de
+usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+
+
+[[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From setecaelacara en yahoo.es  Mon Sep 16 10:42:16 2013
+From: setecaelacara en yahoo.es (=?ISO-8859-1?Q?=C1ngel?=)
+Date: Mon, 16 Sep 2013 10:42:16 +0200
+Subject: [R-es] Solapamiento de funciones de densidad
+Message-ID: <0qqnyrt29fcqjpb625ayr6nn.1379320647329@email.android.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/b3e6411b/attachment.pl>
+
+From cof en qualityexcellence.es  Mon Sep 16 10:44:16 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 16 Sep 2013 10:44:16 +0200
+Subject: [R-es] Solapamiento de funciones de densidad
+In-Reply-To: <0qqnyrt29fcqjpb625ayr6nn.1379320647329@email.android.com>
+References: <0qqnyrt29fcqjpb625ayr6nn.1379320647329@email.android.com>
+Message-ID: <CAOKbq8itSD4C6a=SZnRm2RAoPY3zZpN-N0p63kTXbsN2V4R6Ag@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/55b6afa0/attachment.pl>
+
+From javier.villacampa.gonzalez en gmail.com  Mon Sep 16 11:01:52 2013
+From: javier.villacampa.gonzalez en gmail.com (=?ISO-8859-1?Q?Javier_Villacampa_Gonz=E1lez?=)
+Date: Mon, 16 Sep 2013 11:01:52 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Problema_con_el_tama=F1o_de_las_letras_en_R?=
+	=?iso-8859-1?q?_en_gr=E1ficos_multiples?=
+In-Reply-To: <ACC61EF878FA4996A1E86EF81726097C@JavierMarcuzzi>
+References: <CAOZ+RxH7exp9WTDh6_RncyJ0_45o3JRMuEZq1eJ_69w8=MNbUQ@mail.gmail.com>
+	<ACC61EF878FA4996A1E86EF81726097C@JavierMarcuzzi>
+Message-ID: <CAOZ+RxEWOy4M9DVOk0fNReJesnaSJU7s6uJ8gKUPnE6GJ3y1sQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/227bbf72/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Mon Sep 16 12:26:06 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Mon, 16 Sep 2013 06:26:06 -0400
+Subject: [R-es] b
+In-Reply-To: <52368597.6060500@gmail.com>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+	<000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+	<000b01ceb259$4b1df110$e159d330$@cmw.sld.cu>
+	<52368597.6060500@gmail.com>
+Message-ID: <001601ceb2c7$28d84060$7a88c120$@cmw.sld.cu>
+
+Gracias, tiene mucha lógica lo que dices, en efecto no son pareados y es
+adecuado especificarlo, lo voy a probar de inmediato gracias
+
+-----Mensaje original-----
+De: neo [mailto:ericconchamunoz en gmail.com] 
+Enviado el: Monday, September 16, 2013 12:14 AM
+Para: "Dr. José A. Betancourt B."
+CC: 'R-help-es'; Dayand Toledo
+Asunto: Re: [R-es] b
+
+Estimado José, por lo que estuve mirando aqui
+https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test, en ?wilcox.test
+y en libros de papel ... los datos deben cumplir ciertas condiciones,
+quiza la mas restrictiva es que sean pareados ... si no lo son, quiza
+esta variante del test es mas apropiada:
+
+https://en.wikipedia.org/wiki/Mann-Whitney-Wilcoxon_test
+
+la que en R se aplica usando el mismo comando wilcox.test(), pero
+activando la opcion paired = FALSE. Asumiendo que sus datos NO son
+pareados y que se cumplen las otras condiciones del test, yo lo aplique
+de la siguiente forma y obtuve el siguiente resultado (usando el archivo
+que nos envio):
+
+tmp <- read.table("ARCHIVO.csv", header=TRUE, sep=",", dec=".",
+na.strings = "NA")
+
+wt <- wilcox.test(IMC ~ a_HTA, data=tmp, paired = FALSE, alternative =
+c("two.sided"), exact=TRUE)
+
+wt
+
+1> wt
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  IMC by a_HTA
+W = 0, p-value = 3.233e-11
+alternative hypothesis: true location shift is not equal to 0
+
+
+de modo que se rechaza ls hipotesis de igualdad de MEDIANAS (NO de medias).
+
+Espero que mis comentarios le sirvan, saludos cordiales,
+
+Eric Concha M.
+
+
+pd1. dayand, creo que este es tu mismo caso, slds, eric.
+pd2. los estadisticos que me corrigan si me equivoco por favor, slds.
+
+
+
+
+
+
+
+On 09/15/2013 05:19 PM, Dr. José A. Betancourt B. wrote:
+>  
+> 
+> deseamos  realizar es una prueba no paramétrica para demostrar que el IMC
+> encontrado difiere significtivamente entre aquellos que tienen a_HTA
+> (entecedentas HTA)  y los que no lo tienen ( en SPSS de forma  fácil
+utilizo
+> varios métodos ¿Cuál es la sintaxis para hacerlo posible en R?
+> 
+> wilcox.test requiere definir x y y ¿ como es la sintaxis en R?
+> 
+>  
+> 
+> 
+> a_HTA
+> 
+> IMC
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 21
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 28
+> 
+> 
+> si
+> 
+> 24
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 28
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 24
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 21
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 20
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+>  
+> 
+>  
+> 
+>  
+> 
+> 
+> 
+> --
+> 
+> Este mensaje le ha llegado mediante el servicio de correo electronico que
+ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema
+Nacional de Salud. La persona que envia este correo asume el compromiso de
+usar el servicio a tales fines y cumplir con las regulaciones establecidas
+> 
+> Infomed: http://www.sld.cu/
+> 
+> 
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+
+
+--
+
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+From jbetancourt en iscmc.cmw.sld.cu  Mon Sep 16 13:24:30 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Mon, 16 Sep 2013 07:24:30 -0400
+Subject: [R-es] b
+In-Reply-To: <52368597.6060500@gmail.com>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+	<000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+	<000b01ceb259$4b1df110$e159d330$@cmw.sld.cu>
+	<52368597.6060500@gmail.com>
+Message-ID: <000601ceb2cf$5183f560$f48be020$@cmw.sld.cu>
+
+De la manera que me aconsejas no  funciona y da este mansaje
+
+Warning message:
+In wilcox.test.default(x = c(19L, 18L, 17L, 16L, 18L, 19L, 18L,  :
+  cannot compute exact p-value with ties
+
+como aconsejaste
+tmp <- read.table("estudiantes1.csv", header=TRUE, sep=",", dec=".",
+na.strings = "NA")
+
+wt <- wilcox.test(IMC ~ a_HTA, data=tmp, paired = FALSE, alternative =
+c("two.sided"), exact=TRUE)
+
+wt
+
+
+
+
+como me funciona es asi
+estudiantes1<-read.csv("estudiantes1.csv",header=TRUE, sep=",", dec=".")
+a_HTA <- (estudiantes1[,c(1)])
+IMC <- (estudiantes1[,c(2)])
+
+estudiantes4 <- data.frame(   IMC,  a_HTA = factor(c(rep("si", 29),
+rep("no",30))))
+
+wt <- wilcox_test(IMC ~ a_HTA, data = estudiantes4, 
+                  distribution = "exact", conf.int = TRUE)
+print(wt)
+
+en la ayuda dice
+Independent Two- and K-Sample Location Tests
+
+Description
+
+Testing the equality of the distributions of a numeric response in two or
+more independent groups against shift alternatives.
+
+-----Mensaje original-----
+De: neo [mailto:ericconchamunoz en gmail.com] 
+Enviado el: Monday, September 16, 2013 12:14 AM
+Para: "Dr. José A. Betancourt B."
+CC: 'R-help-es'; Dayand Toledo
+Asunto: Re: [R-es] b
+
+Estimado José, por lo que estuve mirando aqui
+https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test, en ?wilcox.test
+y en libros de papel ... los datos deben cumplir ciertas condiciones,
+quiza la mas restrictiva es que sean pareados ... si no lo son, quiza
+esta variante del test es mas apropiada:
+
+https://en.wikipedia.org/wiki/Mann-Whitney-Wilcoxon_test
+
+la que en R se aplica usando el mismo comando wilcox.test(), pero
+activando la opcion paired = FALSE. Asumiendo que sus datos NO son
+pareados y que se cumplen las otras condiciones del test, yo lo aplique
+de la siguiente forma y obtuve el siguiente resultado (usando el archivo
+que nos envio):
+
+tmp <- read.table("ARCHIVO.csv", header=TRUE, sep=",", dec=".",
+na.strings = "NA")
+
+wt <- wilcox.test(IMC ~ a_HTA, data=tmp, paired = FALSE, alternative =
+c("two.sided"), exact=TRUE)
+
+wt
+
+1> wt
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  IMC by a_HTA
+W = 0, p-value = 3.233e-11
+alternative hypothesis: true location shift is not equal to 0
+
+
+de modo que se rechaza ls hipotesis de igualdad de MEDIANAS (NO de medias).
+
+Espero que mis comentarios le sirvan, saludos cordiales,
+
+Eric Concha M.
+
+
+pd1. dayand, creo que este es tu mismo caso, slds, eric.
+pd2. los estadisticos que me corrigan si me equivoco por favor, slds.
+
+
+
+
+
+
+
+On 09/15/2013 05:19 PM, Dr. José A. Betancourt B. wrote:
+>  
+> 
+> deseamos  realizar es una prueba no paramétrica para demostrar que el IMC
+> encontrado difiere significtivamente entre aquellos que tienen a_HTA
+> (entecedentas HTA)  y los que no lo tienen ( en SPSS de forma  fácil
+utilizo
+> varios métodos ¿Cuál es la sintaxis para hacerlo posible en R?
+> 
+> wilcox.test requiere definir x y y ¿ como es la sintaxis en R?
+> 
+>  
+> 
+> 
+> a_HTA
+> 
+> IMC
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 21
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 28
+> 
+> 
+> si
+> 
+> 24
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 22
+> 
+> 
+> si
+> 
+> 25
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 28
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 27
+> 
+> 
+> si
+> 
+> 23
+> 
+> 
+> si
+> 
+> 24
+> 
+> 
+> si
+> 
+> 26
+> 
+> 
+> si
+> 
+> 21
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 17
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 19
+> 
+> 
+> no
+> 
+> 20
+> 
+> 
+> no
+> 
+> 16
+> 
+> 
+> no
+> 
+> 18
+> 
+> 
+> no
+> 
+> 18
+> 
+>  
+> 
+>  
+> 
+>  
+> 
+> 
+> 
+> --
+> 
+> Este mensaje le ha llegado mediante el servicio de correo electronico que
+ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema
+Nacional de Salud. La persona que envia este correo asume el compromiso de
+usar el servicio a tales fines y cumplir con las regulaciones establecidas
+> 
+> Infomed: http://www.sld.cu/
+> 
+> 
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+
+
+--
+
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+From ericconchamunoz en gmail.com  Mon Sep 16 17:46:52 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Mon, 16 Sep 2013 11:46:52 -0400
+Subject: [R-es] b
+In-Reply-To: <000601ceb2cf$5183f560$f48be020$@cmw.sld.cu>
+References: <000001ceb21d$596c0450$0c440cf0$@cmw.sld.cu>	<CAKL8G3GmrzO8K8RDR3rae+aDTSrZYpxHqJKRYvcxnFkhfSZmOw@mail.gmail.com>
+	<000001ceb246$81fd2970$85f77c50$@cmw.sld.cu>
+	<000b01ceb259$4b1df110$e159d330$@cmw.sld.cu>
+	<52368597.6060500@gmail.com>
+	<000601ceb2cf$5183f560$f48be020$@cmw.sld.cu>
+Message-ID: <523727EC.9040204@gmail.com>
+
+Hola Jose, ese mensaje solo dice que no se pudo obtener un valor-p
+"exacto". Compara el valor que obtienes con tu metodo y pide ver WT
+usando los pasos que te propongo, aunque obtengas el error que
+mencionas. Creo que deberian ser el mismo valor-p.
+
+Saludos,
+
+Eric.
+
+
+
+
+
+
+On 09/16/2013 07:24 AM, Dr. José A. Betancourt B. wrote:
+> De la manera que me aconsejas no  funciona y da este mansaje
+> 
+> Warning message:
+> In wilcox.test.default(x = c(19L, 18L, 17L, 16L, 18L, 19L, 18L,  :
+>   cannot compute exact p-value with ties
+> 
+> como aconsejaste
+> tmp <- read.table("estudiantes1.csv", header=TRUE, sep=",", dec=".",
+> na.strings = "NA")
+> 
+> wt <- wilcox.test(IMC ~ a_HTA, data=tmp, paired = FALSE, alternative =
+> c("two.sided"), exact=TRUE)
+> 
+> wt
+> 
+> 
+> 
+> 
+> como me funciona es asi
+> estudiantes1<-read.csv("estudiantes1.csv",header=TRUE, sep=",", dec=".")
+> a_HTA <- (estudiantes1[,c(1)])
+> IMC <- (estudiantes1[,c(2)])
+> 
+> estudiantes4 <- data.frame(   IMC,  a_HTA = factor(c(rep("si", 29),
+> rep("no",30))))
+> 
+> wt <- wilcox_test(IMC ~ a_HTA, data = estudiantes4, 
+>                   distribution = "exact", conf.int = TRUE)
+> print(wt)
+> 
+> en la ayuda dice
+> Independent Two- and K-Sample Location Tests
+> 
+> Description
+> 
+> Testing the equality of the distributions of a numeric response in two or
+> more independent groups against shift alternatives.
+> 
+> -----Mensaje original-----
+> De: neo [mailto:ericconchamunoz en gmail.com] 
+> Enviado el: Monday, September 16, 2013 12:14 AM
+> Para: "Dr. José A. Betancourt B."
+> CC: 'R-help-es'; Dayand Toledo
+> Asunto: Re: [R-es] b
+> 
+> Estimado José, por lo que estuve mirando aqui
+> https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test, en ?wilcox.test
+> y en libros de papel ... los datos deben cumplir ciertas condiciones,
+> quiza la mas restrictiva es que sean pareados ... si no lo son, quiza
+> esta variante del test es mas apropiada:
+> 
+> https://en.wikipedia.org/wiki/Mann-Whitney-Wilcoxon_test
+> 
+> la que en R se aplica usando el mismo comando wilcox.test(), pero
+> activando la opcion paired = FALSE. Asumiendo que sus datos NO son
+> pareados y que se cumplen las otras condiciones del test, yo lo aplique
+> de la siguiente forma y obtuve el siguiente resultado (usando el archivo
+> que nos envio):
+> 
+> tmp <- read.table("ARCHIVO.csv", header=TRUE, sep=",", dec=".",
+> na.strings = "NA")
+> 
+> wt <- wilcox.test(IMC ~ a_HTA, data=tmp, paired = FALSE, alternative =
+> c("two.sided"), exact=TRUE)
+> 
+> wt
+> 
+> 1> wt
+> 
+> 	Wilcoxon rank sum test with continuity correction
+> 
+> data:  IMC by a_HTA
+> W = 0, p-value = 3.233e-11
+> alternative hypothesis: true location shift is not equal to 0
+> 
+> 
+> de modo que se rechaza ls hipotesis de igualdad de MEDIANAS (NO de medias).
+> 
+> Espero que mis comentarios le sirvan, saludos cordiales,
+> 
+> Eric Concha M.
+> 
+> 
+> pd1. dayand, creo que este es tu mismo caso, slds, eric.
+> pd2. los estadisticos que me corrigan si me equivoco por favor, slds.
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> On 09/15/2013 05:19 PM, Dr. José A. Betancourt B. wrote:
+>>  
+>>
+>> deseamos  realizar es una prueba no paramétrica para demostrar que el IMC
+>> encontrado difiere significtivamente entre aquellos que tienen a_HTA
+>> (entecedentas HTA)  y los que no lo tienen ( en SPSS de forma  fácil
+> utilizo
+>> varios métodos ¿Cuál es la sintaxis para hacerlo posible en R?
+>>
+>> wilcox.test requiere definir x y y ¿ como es la sintaxis en R?
+>>
+>>  
+>>
+>>
+>> a_HTA
+>>
+>> IMC
+>>
+>>
+>> si
+>>
+>> 26
+>>
+>>
+>> si
+>>
+>> 25
+>>
+>>
+>> si
+>>
+>> 26
+>>
+>>
+>> si
+>>
+>> 21
+>>
+>>
+>> si
+>>
+>> 25
+>>
+>>
+>> si
+>>
+>> 23
+>>
+>>
+>> si
+>>
+>> 28
+>>
+>>
+>> si
+>>
+>> 24
+>>
+>>
+>> si
+>>
+>> 27
+>>
+>>
+>> si
+>>
+>> 22
+>>
+>>
+>> si
+>>
+>> 23
+>>
+>>
+>> si
+>>
+>> 23
+>>
+>>
+>> si
+>>
+>> 27
+>>
+>>
+>> si
+>>
+>> 22
+>>
+>>
+>> si
+>>
+>> 23
+>>
+>>
+>> si
+>>
+>> 25
+>>
+>>
+>> si
+>>
+>> 22
+>>
+>>
+>> si
+>>
+>> 22
+>>
+>>
+>> si
+>>
+>> 22
+>>
+>>
+>> si
+>>
+>> 25
+>>
+>>
+>> si
+>>
+>> 23
+>>
+>>
+>> si
+>>
+>> 23
+>>
+>>
+>> si
+>>
+>> 28
+>>
+>>
+>> si
+>>
+>> 27
+>>
+>>
+>> si
+>>
+>> 27
+>>
+>>
+>> si
+>>
+>> 23
+>>
+>>
+>> si
+>>
+>> 24
+>>
+>>
+>> si
+>>
+>> 26
+>>
+>>
+>> si
+>>
+>> 21
+>>
+>>
+>> no
+>>
+>> 19
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 17
+>>
+>>
+>> no
+>>
+>> 16
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 19
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 17
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 17
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 17
+>>
+>>
+>> no
+>>
+>> 17
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 19
+>>
+>>
+>> no
+>>
+>> 17
+>>
+>>
+>> no
+>>
+>> 17
+>>
+>>
+>> no
+>>
+>> 16
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 16
+>>
+>>
+>> no
+>>
+>> 16
+>>
+>>
+>> no
+>>
+>> 16
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 19
+>>
+>>
+>> no
+>>
+>> 20
+>>
+>>
+>> no
+>>
+>> 16
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>
+>> no
+>>
+>> 18
+>>
+>>  
+>>
+>>  
+>>
+>>  
+>>
+>>
+>>
+>> --
+>>
+>> Este mensaje le ha llegado mediante el servicio de correo electronico que
+> ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema
+> Nacional de Salud. La persona que envia este correo asume el compromiso de
+> usar el servicio a tales fines y cumplir con las regulaciones establecidas
+>>
+>> Infomed: http://www.sld.cu/
+>>
+>>
+>>
+>>
+>> 	[[alternative HTML version deleted]]
+>>
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+> 
+> 
+> --
+> 
+> Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+> 
+> Infomed: http://www.sld.cu/
+> 
+>
+
+
+From residuo.solow en gmail.com  Mon Sep 16 22:44:07 2013
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Mon, 16 Sep 2013 17:44:07 -0300
+Subject: [R-es] ayuda con aggregate
+Message-ID: <CAMn86NeB79VwJ1y3CeYijHrwLfUBxDZEnPBDRziGZ_dpJY2iZg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/d17d26e6/attachment.pl>
+
+From cof en qualityexcellence.es  Mon Sep 16 23:56:44 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 16 Sep 2013 23:56:44 +0200
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CAMn86NeB79VwJ1y3CeYijHrwLfUBxDZEnPBDRziGZ_dpJY2iZg@mail.gmail.com>
+References: <CAMn86NeB79VwJ1y3CeYijHrwLfUBxDZEnPBDRziGZ_dpJY2iZg@mail.gmail.com>
+Message-ID: <CAOKbq8gk2O_=r+vnGW4Uyfhd3Zrz=-Jb8tuxq++0DnuUXxBfXw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130916/92f35353/attachment.pl>
+
+From jcmld en carmonarocha.com  Tue Sep 17 08:34:45 2013
+From: jcmld en carmonarocha.com (Joan Carmona)
+Date: Tue, 17 Sep 2013 08:34:45 +0200
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CAMn86NeB79VwJ1y3CeYijHrwLfUBxDZEnPBDRziGZ_dpJY2iZg@mail.gmail.com>
+References: <CAMn86NeB79VwJ1y3CeYijHrwLfUBxDZEnPBDRziGZ_dpJY2iZg@mail.gmail.com>
+Message-ID: <002b01ceb370$01594620$040bd260$@com>
+
+Hola Sebastián,
+
+Qué tal así:?
+
+t<-data.frame(A=c(1,2,3,4,5,6,7,8,9,10),B=c(1,1,2,2,3,3,4,4,5,5),C=c(1,1,1,1
+,2,2,2,2,3,3),X1=c(10,20,30,11,21,31,12,22,32,13),X2=c(0.33,1.81,1.42,0.35,1
+.75,1.4,0.375,1.69,3.2,0.65),X3=c(25,36,46,26,37,47,27,38,50,28),X4=c(1,1,1,
+2,2,2,3,3,3,3))
+
+
+aggregate(cbind(X1,X2)~B+C,t,mean)
+
+  B C   X1     X2
+1 1 1 15.0 1.0700
+2 2 1 20.5 0.8850
+3 3 2 26.0 1.5750
+4 4 2 17.0 1.0325
+5 5 3 22.5 1.9250
+
+aggregate(cbind(X3,X4)~B+C,t,median)
+
+  B C   X3  X4
+1 1 1 30.5 1.0
+2 2 1 36.0 1.5
+3 3 2 42.0 2.0
+4 4 2 32.5 3.0
+5 5 3 39.0 3.0
+
+Saludos,
+
+Juan Carmona.
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org]
+En nombre de Sebastian Kruk
+Enviado el: lunes, 16 de septiembre de 2013 22:44
+Para: Lista R
+Asunto: [R-es] ayuda con aggregate
+
+Estimados usuarios de R:
+
+Estoy aprendiendo a usar el comando aggregate.
+
+Por ejemplo tengo la siguiente tabla:
+
+A B C X1 X2 X3 X4
+1 1 1 10 0,333333333 25 1
+2 1 1 20 1,818181818 36 1
+3 2 1 30 1,428571429 46 1
+4 2 1 11 0,35483871 26 2
+5 3 2 21 1,75 37 2
+6 3 2 31 1,409090909 47 2
+7 4 2 12 0,375 27 3
+8 4 2 22 1,692307692 38 3
+9 5 3 32 3,2 50 3
+10 5 3 13 0,65 28 3
+Yo quiero agrupar usando como variables clave A, B y C pero para X1 y X2
+quiero obtener la media y para X3 y X4 la mediana.
+
+¿Como tendría que usar el comando aggregate?
+
+Desde ya muchas gracias,
+
+Sebastián.
+
+	[[alternative HTML version deleted]]
+
+
+From sin_respuesta en r-es.org  Tue Sep 17 12:27:06 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Tue, 17 Sep 2013 12:27:06 +0200 (CEST)
+Subject: [R-es] =?utf-8?q?Nueva_publicaci=C3=B3n_en_blog_en_r-es=2Eorg?=
+Message-ID: <mt9md6.tqn5ex@r-es.org>
+
+Nueva publicación en blog: Cursos, "CONTROL ESTADÍSTICO DE CALIDAD CON R (NO PRESENCIAL)", por vaamonde en 17/09/13 12:27h
+
+Ver el blog en:
+http://r-es.org/tiki-view_blog_post.php?blogId=4&postId=73
+
+Si no desea recibir estas notificaciones siga este enlace:
+http://r-es.org/tiki-user_watches.php?id=49
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From cgb en datanalytics.com  Tue Sep 17 12:27:33 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 17 Sep 2013 12:27:33 +0200
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <002b01ceb370$01594620$040bd260$@com>
+References: <CAMn86NeB79VwJ1y3CeYijHrwLfUBxDZEnPBDRziGZ_dpJY2iZg@mail.gmail.com>
+	<002b01ceb370$01594620$040bd260$@com>
+Message-ID: <CADg83ef-HDHF147Q4Pho_5BUC9VQT8dXL87xEQrq2gPG6wVxmQ@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Creo que la forma más limpia es usar la función ddply de plyr
+aproximadamente así:
+
+ddply(mis.datos, .(B, C), summarise,
+         mean.X2 = mean(X2),
+         medianX4 = median(X4),
+         etc. )
+
+
+La sección "Using ddply" de
+http://www.cookbook-r.com/Manipulating_data/Summarizing_data/ lo
+expica bastante bien.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From cof en qualityexcellence.es  Tue Sep 17 12:43:25 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 17 Sep 2013 12:43:25 +0200
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CADg83ef-HDHF147Q4Pho_5BUC9VQT8dXL87xEQrq2gPG6wVxmQ@mail.gmail.com>
+References: <CAMn86NeB79VwJ1y3CeYijHrwLfUBxDZEnPBDRziGZ_dpJY2iZg@mail.gmail.com>
+	<002b01ceb370$01594620$040bd260$@com>
+	<CADg83ef-HDHF147Q4Pho_5BUC9VQT8dXL87xEQrq2gPG6wVxmQ@mail.gmail.com>
+Message-ID: <CAOKbq8ijS-fh4bKKDzdFBSFyPA8rHAqg=TEYi+c6BLYN53Rw-Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130917/aad667ca/attachment.pl>
+
+From bernalm.alexander en gmail.com  Tue Sep 17 14:17:17 2013
+From: bernalm.alexander en gmail.com (Lex B)
+Date: Tue, 17 Sep 2013 07:17:17 -0500
+Subject: [R-es] eigenvalores y eigenvectores
+Message-ID: <CAJfib6=VGQ4WcWTCNjriFLOZ-xawh9mMO5gnEJabdGijWDT=-A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130917/1296a4e9/attachment.pl>
+
+From cgb en datanalytics.com  Tue Sep 17 14:30:19 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 17 Sep 2013 14:30:19 +0200
+Subject: [R-es] eigenvalores y eigenvectores
+In-Reply-To: <CAJfib6=VGQ4WcWTCNjriFLOZ-xawh9mMO5gnEJabdGijWDT=-A@mail.gmail.com>
+References: <CAJfib6=VGQ4WcWTCNjriFLOZ-xawh9mMO5gnEJabdGijWDT=-A@mail.gmail.com>
+Message-ID: <CADg83edPW6BGiBmn_Yj_71Hauu2FdzKORRicnA62uZR4OXdcaA@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Lo que nos pasas no es una matriz --que es lo que necesitas para
+realizar operaciones de álgebra lineal-- sino un data.frame.
+
+Así que tendrás que:
+
+1) Seleccionar solo las columnas numéricas de tu interés (¿con subset?).
+2) Utilizar as.matrix para convertir el data.frame resultante en una matriz.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 17 de septiembre de 2013 14:17, Lex B
+<bernalm.alexander en gmail.com> escribió:
+> Buenos Días, en esta ocasión les escribo para tratar de solucionar una duda
+> que puede resultar muy sencilla, pero de la que no encuentro solucion.
+>
+> necesito hallar la descomposición en valores singulares; tengo la siguiente
+> matriz de datos:
+>
+>     DPTO PERSONAS HACINA INTERNET COMPU TV_SUCRIPC  Antioquia 4962749,1 1,61
+> 0,39 0,47 0,77  Atlántico 2191360,7 1,97 0,3 0,31 0,42  Bogotá D.C. 7499198
+> 1,67 0,42 0,51 0,76  Bolívar 2051781,2 2,41 0,16 0,2 0,61  Boyacá 561366,42
+> 1,74 0,14 0,26 0,3  Caldas 657222,6 1,52 0,35 0,38 0,82  Caquetá 353930,02
+> 1,72 0,16 0,29 0,71  Cauca 443005,43 1,58 0,15 0,25 0,36  Cesar 354942 1,99
+> 0,26 0,31 0,44  Córdoba 726917,53 1,99 0,19 0,24 0,65  Cundinamarca
+> 1397105,6 1,85 0,21 0,29 0,85  Chocó 273373,22 1,73 0,19 0,27 0,72  Huila
+> 765873,68 1,62 0,27 0,39 0,76  La Guajira 419212,53 2,15 0,17 0,18 0,48
+> Magdalena 886305,01 2,27 0,18 0,24 0,49  Meta 593343,56 1,7 0,21 0,29 0,52
+> Nariño 805504,84 1,74 0,21 0,29 0,6  Norte de Santander 1546668,2 1,76 0,25
+> 0,34 0,7  Quindio 283271 1,55 0,38 0,43 0,75  Risaralda 719637,45 1,54 0,36
+> 0,41 0,82  Santander 1491647,2 1,63 0,3 0,35 0,69  Sucre 624880,98 2,09 0,14
+> 0,18 0,77  Tolima 826198,14 1,66 0,28 0,36 0,73  Valle del Cauca 3921868,5
+> 1,67 0,29 0,37 0,76
+>
+> Debo hacer la descomposición, pero no se como hacerlo, a pesar de no ser
+> una matriz muy grande, en R no me permite hacer el producto (t(A))%*%A ni
+> A*((t(A))
+>
+> tendrá algo que ver el hecho de que llamo la matriz, con la funcion
+> A <- read.table("clipboard", dec=",", header=1)
+> es decir, el hecho de traerla de esta forma, evita que yo pueda hacer este
+> producto de matrices?
+>
+> Ultima pregunta, cuando completo el resultado, como debo usar la funcion,
+> "write.table" o "write.csv" para guardar el resultado en una tabla de excel?
+>
+> muchas gracias!
+>
+>
+>
+>
+> --
+>
+> ALEXANDER
+> U SANTO TOMAS - ESTADÍSTICA
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From cof en qualityexcellence.es  Tue Sep 17 14:53:23 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 17 Sep 2013 14:53:23 +0200
+Subject: [R-es] eigenvalores y eigenvectores
+In-Reply-To: <CAJfib6=VGQ4WcWTCNjriFLOZ-xawh9mMO5gnEJabdGijWDT=-A@mail.gmail.com>
+References: <CAJfib6=VGQ4WcWTCNjriFLOZ-xawh9mMO5gnEJabdGijWDT=-A@mail.gmail.com>
+Message-ID: <CAOKbq8h9XF3BTRKSYWdw5v7fbao=KFumrqu9S+Z04ZaUX+5Uuw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130917/373d91f4/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Sun Sep 22 14:07:29 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Sun, 22 Sep 2013 08:07:29 -0400
+Subject: [R-es] colores
+Message-ID: <000001ceb78c$512e8230$f38b8690$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130922/04b141d2/attachment.pl>
+
+From pepeceb en yahoo.es  Sun Sep 22 14:25:00 2013
+From: pepeceb en yahoo.es (pepeceb)
+Date: Sun, 22 Sep 2013 13:25:00 +0100 (BST)
+Subject: [R-es] colores
+In-Reply-To: <000001ceb78c$512e8230$f38b8690$@cmw.sld.cu>
+Message-ID: <1379852700.48226.YahooMailIosMobile@web172601.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130922/c66f8bd3/attachment.pl>
+
+From daniel319 en gmail.com  Sun Sep 22 17:08:39 2013
+From: daniel319 en gmail.com (daniel)
+Date: Sun, 22 Sep 2013 12:08:39 -0300
+Subject: [R-es] colores
+In-Reply-To: <1379852700.48226.YahooMailIosMobile@web172601.mail.ir2.yahoo.com>
+References: <000001ceb78c$512e8230$f38b8690$@cmw.sld.cu>
+	<1379852700.48226.YahooMailIosMobile@web172601.mail.ir2.yahoo.com>
+Message-ID: <CAPfrkhkMNTDCq4ETsDO8Ts=51PFsfa6zaq7ABLJ4zhaTr7qfXA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130922/77635c95/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Sun Sep 22 19:17:12 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Sun, 22 Sep 2013 13:17:12 -0400
+Subject: [R-es] colores
+In-Reply-To: <CAPfrkhkMNTDCq4ETsDO8Ts=51PFsfa6zaq7ABLJ4zhaTr7qfXA@mail.gmail.com>
+References: <000001ceb78c$512e8230$f38b8690$@cmw.sld.cu>	<1379852700.48226.YahooMailIosMobile@web172601.mail.ir2.yahoo.com>
+	<CAPfrkhkMNTDCq4ETsDO8Ts=51PFsfa6zaq7ABLJ4zhaTr7qfXA@mail.gmail.com>
+Message-ID: <000001ceb7b7$956d0090$c04701b0$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130922/b5e4de1a/attachment.pl>
+
+From daniel319 en gmail.com  Mon Sep 23 15:55:37 2013
+From: daniel319 en gmail.com (daniel)
+Date: Mon, 23 Sep 2013 10:55:37 -0300
+Subject: [R-es] colores
+In-Reply-To: <000001ceb7b7$956d0090$c04701b0$@cmw.sld.cu>
+References: <000001ceb78c$512e8230$f38b8690$@cmw.sld.cu>
+	<1379852700.48226.YahooMailIosMobile@web172601.mail.ir2.yahoo.com>
+	<CAPfrkhkMNTDCq4ETsDO8Ts=51PFsfa6zaq7ABLJ4zhaTr7qfXA@mail.gmail.com>
+	<000001ceb7b7$956d0090$c04701b0$@cmw.sld.cu>
+Message-ID: <CAPfrkhk1+x=nsh_U78i6X2xkrLkyZkUgLq_A-tUaTUPtsr7KfA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130923/6db65a28/attachment.pl>
+
+From sin_respuesta en r-es.org  Tue Sep 24 19:09:52 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Tue, 24 Sep 2013 19:09:52 +0200 (CEST)
+Subject: [R-es] =?utf-8?q?Nueva_publicaci=C3=B3n_en_blog_en_r-es=2Eorg?=
+Message-ID: <mtn3og.l51tbl@r-es.org>
+
+Nueva publicación en blog: Ofertas de trabajo, "Bioestadísticos para el centro nacional de investigaciones oncológicas", por joscani en 24/09/13 19:09h
+
+Ver el blog en:
+http://r-es.org/tiki-view_blog_post.php?blogId=2&postId=74
+
+Si no desea recibir estas notificaciones siga este enlace:
+http://r-es.org/tiki-user_watches.php?id=5
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From sin_respuesta en r-es.org  Wed Sep 25 12:34:25 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Wed, 25 Sep 2013 12:34:25 +0200 (CEST)
+Subject: [R-es] =?utf-8?q?Nuevo_=C3=ADtem_de_la_agenda?=
+Message-ID: <mtog1c.k18ccs@r-es.org>
+
+Reunión de usuarios Barcelona
+---
+
+El próximo 9 de octubre a las 19h retomamos las sesiones del grupo de usuarios de Barcelona, ((http://rugbcn.wordpress.com/|RugBcn)). La reunión será en la empresa aceleradora de startups, ((http://itnig.net/|itnig)) y para la discusión final, Moritz nos invita a unas cervezas. Las charlas serán:
+
+
+
+Juan Galeano: ?Visualizando datos: la geolocalización como herramienta emergente de análisis demográfico?.
+
+
+
+Roger Borràs: ?Predicción con regressión logísica y curvas ROC?
+
+
+
+Os esperamos.
+
+
+
+Aleix Ruiz de Villa, RugBcn. 
+
+
+
+
+
+Desde:	Miércoles 09 de Octubre, 2013 19:00:00 CEST
+a:		Miércoles 09 de Octubre, 2013 21:00:00 CEST
+
+Visualiza el ítem de la agenda en:
+http://r-es.org/tiki-calendar_edit_item.php?viewcalitemId=22&calIds[]=1
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From sin_respuesta en r-es.org  Wed Sep 25 12:38:00 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Wed, 25 Sep 2013 12:38:00 +0200 (CEST)
+Subject: [R-es] =?utf-8?q?Nuevo_=C3=ADtem_de_la_agenda?=
+Message-ID: <mtog7c.bnsu17@r-es.org>
+
+Reunión de usuarios Barcelona
+---
+
+El próximo 9 de octubre a las 19h retomamos las sesiones del grupo de usuarios de Barcelona, [http://rugbcn.wordpress.com/|RugBcn]. La reunión será en la empresa aceleradora de startups, [http://itnig.net/|itnig] (Calle Álaba 61, 5-2, Barcelona) y para la discusión final, Moritz nos invita a unas cervezas. Las charlas serán:
+
+
+
+Juan Galeano: ?Visualizando datos: la geolocalización como herramienta emergente de análisis demográfico?.
+
+
+
+Roger Borràs: ?Predicción con regressión logísica y curvas ROC?
+
+
+
+Os esperamos.
+
+
+
+Aleix Ruiz de Villa, RugBcn. 
+
+
+
+Desde:	Miércoles 09 de Octubre, 2013 19:00:00 CEST
+a:		Miércoles 09 de Octubre, 2013 21:00:00 CEST
+
+Visualiza el ítem de la agenda en:
+http://r-es.org/tiki-calendar_edit_item.php?viewcalitemId=1&calIds[]=1
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From canadasreche en gmail.com  Wed Sep 25 12:47:27 2013
+From: canadasreche en gmail.com (=?UTF-8?B?Sm9zw6kgTHVpcyBDYcOxYWRhcyBSZWNoZQ==?=)
+Date: Wed, 25 Sep 2013 12:47:27 +0200
+Subject: [R-es] =?utf-8?q?Nuevo_=C3=ADtem_de_la_agenda?=
+In-Reply-To: <mtog7c.bnsu17@r-es.org>
+References: <mtog7c.bnsu17@r-es.org>
+Message-ID: <5242BF3F.9060902@gmail.com>
+
+Hola.
+
+Me interesan las dos charlas. Espero que se pueda seguir por streaming o 
+que se cuelguen en algún lado posteriormente.
+
+Saludos
+
+El 25/09/13 12:38, sin_respuesta en r-es.org escribió:
+> Reunión de usuarios Barcelona
+> ---
+>
+> El próximo 9 de octubre a las 19h retomamos las sesiones del grupo de usuarios de Barcelona, [http://rugbcn.wordpress.com/|RugBcn]. La reunión será en la empresa aceleradora de startups, [http://itnig.net/|itnig] (Calle Álaba 61, 5-2, Barcelona) y para la discusión final, Moritz nos invita a unas cervezas. Las charlas serán:
+>
+>
+>
+> Juan Galeano: ?Visualizando datos: la geolocalización como herramienta emergente de análisis demográfico?.
+>
+>
+>
+> Roger Borràs: ?Predicción con regressión logísica y curvas ROC?
+>
+>
+>
+> Os esperamos.
+>
+>
+>
+> Aleix Ruiz de Villa, RugBcn.
+>
+>
+>
+> Desde:	Miércoles 09 de Octubre, 2013 19:00:00 CEST
+> a:		Miércoles 09 de Octubre, 2013 21:00:00 CEST
+>
+> Visualiza el ítem de la agenda en:
+> http://r-es.org/tiki-calendar_edit_item.php?viewcalitemId=1&calIds[]=1
+>
+> ---
+>
+> Comunidad R Hispano
+>
+> http://www.r-es.org
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From kjetil1001 en gmail.com  Wed Sep 25 14:58:55 2013
+From: kjetil1001 en gmail.com (Kjetil brinchmann Halvorsen)
+Date: Wed, 25 Sep 2013 14:58:55 +0200
+Subject: [R-es] OT: Nuevo competidor de R!
+Message-ID: <CAH=m5MiK8KgpPCdz+KYz1dmx+sXOijtFQo4H+1A1ztPemEj-Fw@mail.gmail.com>
+
+Esto es un poco fuera del t'opico, pero debe interesar a usuarios de
+R. Ha aparecido un nuevo lenguaje, julia, mire  http://julialang.org/
+que puede ser usado para an'alisis estad'isticos.
+
+Douglas Bates (famosos por nlme, lme4) ha dicho que eventualmente
+puede reemplazar a R!, mire:
+
+www.stat.wisc.edu/~bates/JuliaForRProgrammers.pdf
+
+Interesados pueden mirar aqui!
+
+http://kjetilbrinchmannhalvorsen.blogspot.no/
+
+saludos,
+
+Kjetil
+
+
+From residuo.solow en gmail.com  Wed Sep 25 15:37:46 2013
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Wed, 25 Sep 2013 10:37:46 -0300
+Subject: [R-es] ayuda con aggregate
+Message-ID: <CAMn86NcMYe32QFObjBGr+pa27Tcg=79qBLx_iAsfEtGQN+-eLQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130925/42232660/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Wed Sep 25 15:41:33 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Wed, 25 Sep 2013 23:41:33 +1000
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CAMn86NcMYe32QFObjBGr+pa27Tcg=79qBLx_iAsfEtGQN+-eLQ@mail.gmail.com>
+References: <CAMn86NcMYe32QFObjBGr+pa27Tcg=79qBLx_iAsfEtGQN+-eLQ@mail.gmail.com>
+Message-ID: <CAKL8G3EJiqb7mxPdTqMyAw0UecYt8NJY-FRR+m890+jo7L2pXQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130925/56675eb0/attachment.pl>
+
+From residuo.solow en gmail.com  Wed Sep 25 15:46:36 2013
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Wed, 25 Sep 2013 10:46:36 -0300
+Subject: [R-es] ayuda con aggregate
+Message-ID: <CAMn86Nd80BPz=6x=o6cjRwSGisc0D6uqPfoU3j_Qb9NNbuh-3g@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130925/c22c98f4/attachment.pl>
+
+From residuo.solow en gmail.com  Wed Sep 25 19:41:38 2013
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Wed, 25 Sep 2013 14:41:38 -0300
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CAKL8G3EJiqb7mxPdTqMyAw0UecYt8NJY-FRR+m890+jo7L2pXQ@mail.gmail.com>
+References: <CAMn86NcMYe32QFObjBGr+pa27Tcg=79qBLx_iAsfEtGQN+-eLQ@mail.gmail.com>
+	<CAKL8G3EJiqb7mxPdTqMyAw0UecYt8NJY-FRR+m890+jo7L2pXQ@mail.gmail.com>
+Message-ID: <CAMn86NdotVQfxMfFW13njrt7KO4wr_MAmGzisKcL+KFA0obR=Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130925/2610494e/attachment.pl>
+
+From jgf en sitrans.transnet.cu  Wed Sep 25 20:56:51 2013
+From: jgf en sitrans.transnet.cu (=?iso-8859-1?Q?Jorge_Garc=EDa?=)
+Date: Wed, 25 Sep 2013 14:56:51 -0400
+Subject: [R-es] CAMBIO DE CUENTA DE E-MAIL
+Message-ID: <!&!AAAAAAAAAAAYAAAAAAAAAAD4EiP/Oc5GkOVnmtJSRqLCgAAAEAAAACeyO0sQoBNIiy9KdyFatwYBAAAAAA==@sitrans.transnet.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130925/90448832/attachment.pl>
+
+From jgf en sitrans.transnet.cu  Wed Sep 25 21:08:21 2013
+From: jgf en sitrans.transnet.cu (=?iso-8859-1?Q?Jorge_Garc=EDa?=)
+Date: Wed, 25 Sep 2013 15:08:21 -0400
+Subject: [R-es] CAMBIO DE CUENTA DE E-MAIL
+Message-ID: <!&!AAAAAAAAAAAYAAAAAAAAAAD4EiP/Oc5GkOVnmtJSRqLCgAAAEAAAAFjSSE2FoS5DqaiSHrJeUvgBAAAAAA==@sitrans.transnet.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130925/aa8bfc5d/attachment.pl>
+
+From cof en qualityexcellence.es  Thu Sep 26 09:17:09 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 26 Sep 2013 09:17:09 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Pr=F3xima_reuni=F3n_del_=22Grupo_de_Usuario?=
+	=?iso-8859-1?q?s_de_R_de_Madrid_-_26-Septiembre=22=2E=2E=2E=2E?=
+In-Reply-To: <CAOKbq8jAUop3hFv2jjqCs7_eNmkT6GFK=rkBfKy1hZHmNLOPqQ@mail.gmail.com>
+References: <CAOKbq8jAUop3hFv2jjqCs7_eNmkT6GFK=rkBfKy1hZHmNLOPqQ@mail.gmail.com>
+Message-ID: <CAOKbq8jD9Ugjf3FGp4bTg7Stb0o-BFtUvPc7=3xNBa=5D+PR+A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130926/aae7479b/attachment.pl>
+
+From residuo.solow en gmail.com  Thu Sep 26 19:43:27 2013
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Thu, 26 Sep 2013 14:43:27 -0300
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CAKL8G3EJiqb7mxPdTqMyAw0UecYt8NJY-FRR+m890+jo7L2pXQ@mail.gmail.com>
+References: <CAMn86NcMYe32QFObjBGr+pa27Tcg=79qBLx_iAsfEtGQN+-eLQ@mail.gmail.com>
+	<CAKL8G3EJiqb7mxPdTqMyAw0UecYt8NJY-FRR+m890+jo7L2pXQ@mail.gmail.com>
+Message-ID: <CAMn86NfKiFFoY6pECe+Je4=fueTYX8gDC39PQvH5Biw2zsVWaA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130926/2f0438e5/attachment.pl>
+
+From residuo.solow en gmail.com  Thu Sep 26 19:59:53 2013
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Thu, 26 Sep 2013 14:59:53 -0300
+Subject: [R-es] Ayuda con lista
+Message-ID: <CAMn86Nfc9pci0-eNqi2-7-kF3UKZGGmaMsoGf0+=1gd0drnOkA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130926/a0771e00/attachment.pl>
+
+From caro.2103 en hotmail.com  Thu Sep 26 20:12:16 2013
+From: caro.2103 en hotmail.com (Caro Recalde Ruiz)
+Date: Thu, 26 Sep 2013 14:12:16 -0400
+Subject: [R-es] =?iso-8859-1?q?overdispersi=F3n_en_glmm?=
+Message-ID: <BAY179-W46D157AD04AF27C72FDC8BFE280@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130926/b5f1acb4/attachment.pl>
+
+From daniel319 en gmail.com  Thu Sep 26 21:50:21 2013
+From: daniel319 en gmail.com (daniel)
+Date: Thu, 26 Sep 2013 16:50:21 -0300
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CAMn86NfKiFFoY6pECe+Je4=fueTYX8gDC39PQvH5Biw2zsVWaA@mail.gmail.com>
+References: <CAMn86NcMYe32QFObjBGr+pa27Tcg=79qBLx_iAsfEtGQN+-eLQ@mail.gmail.com>
+	<CAKL8G3EJiqb7mxPdTqMyAw0UecYt8NJY-FRR+m890+jo7L2pXQ@mail.gmail.com>
+	<CAMn86NfKiFFoY6pECe+Je4=fueTYX8gDC39PQvH5Biw2zsVWaA@mail.gmail.com>
+Message-ID: <CAPfrkhmdpLYx=g53wfYXiZxkem4nibZZwZaajw44gHHmZegrRw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130926/f49c43a2/attachment.pl>
+
+From freddy.vate01 en gmail.com  Thu Sep 26 23:33:37 2013
+From: freddy.vate01 en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Thu, 26 Sep 2013 18:33:37 -0300
+Subject: [R-es] =?utf-8?q?overdispersi=C3=B3n_en_glmm?=
+In-Reply-To: <BAY179-W46D157AD04AF27C72FDC8BFE280@phx.gbl>
+References: <BAY179-W46D157AD04AF27C72FDC8BFE280@phx.gbl>
+Message-ID: <CALCOUqsGxpKATKPOse+7gaYFat374CO_E1hBRb2kzzfwaAA3Kg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130926/edfa4c7e/attachment.pl>
+
+From ericconchamunoz en gmail.com  Thu Sep 26 23:53:44 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Thu, 26 Sep 2013 17:53:44 -0400
+Subject: [R-es] Es posible controlar el tipo de linea que se agrega con
+ abline() en un grafico ?
+Message-ID: <5244ACE8.30407@gmail.com>
+
+Estimados, quiero agregar una linea de referencia (con abline()) en un
+grafico hecho con lattice con el siguiente codigo (de hecho la linea ya
+esta agregada en el codigo):
+
+dec.gr <- xyplot(
+                  V5 ~ dia
+                 ,groups=con
+                 ,data=dec.df
+                 ,type="l", pch=1
+                 ,main=list(label="Dec", cex=0.9, x = .175, y = -4.5)
+                 ,par.settings=simpleTheme(col=colores , col.line=colores)
+                 ,auto.key=list(title= "Concent.
+(mM)",space="right",border=F,
+columns=1,cex=0.8,lines=T,points=F,col=colores)
+                 ,scales=list(x=list(relation='same'),
+y=list(relation='same'), cex=1.2)
+                 ,ylab=""
+                 ,xlab=""
+                 ,ylim=c(-0.2,180)
+                 ,abline=list(a=100,b=0)
+                 )
+
+Mi problema es que una de las lineas de las variables graficadas es del
+mismo tipo que la linea que agrego con abline(). Luego, la pregunta es,
+es posible controlar el tipo de esa linea (segmento, puntos, etc) para
+cambiarlo ?
+
+Si es posible, como se hace ?
+
+Saludos y gracias,
+
+Eric.
+
+
+From daniel319 en gmail.com  Fri Sep 27 00:37:56 2013
+From: daniel319 en gmail.com (daniel)
+Date: Thu, 26 Sep 2013 19:37:56 -0300
+Subject: [R-es] Es posible controlar el tipo de linea que se agrega con
+ abline() en un grafico ?
+In-Reply-To: <5244ACE8.30407@gmail.com>
+References: <5244ACE8.30407@gmail.com>
+Message-ID: <CAPfrkhnYSiyyGa7CspDo4aqwznCPK4Obh5Z66PJck-QUezwUXw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130926/cf70f47d/attachment.pl>
+
+From residuo.solow en gmail.com  Fri Sep 27 00:40:03 2013
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Thu, 26 Sep 2013 19:40:03 -0300
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CAPfrkhmdpLYx=g53wfYXiZxkem4nibZZwZaajw44gHHmZegrRw@mail.gmail.com>
+References: <CAMn86NcMYe32QFObjBGr+pa27Tcg=79qBLx_iAsfEtGQN+-eLQ@mail.gmail.com>
+	<CAKL8G3EJiqb7mxPdTqMyAw0UecYt8NJY-FRR+m890+jo7L2pXQ@mail.gmail.com>
+	<CAMn86NfKiFFoY6pECe+Je4=fueTYX8gDC39PQvH5Biw2zsVWaA@mail.gmail.com>
+	<CAPfrkhmdpLYx=g53wfYXiZxkem4nibZZwZaajw44gHHmZegrRw@mail.gmail.com>
+Message-ID: <CAMn86Nc3Lq2hcBAeoYUmzQBW9_PFK6tGtb1fp3S+CMmX5G-+Dg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130926/296895a6/attachment.pl>
+
+From cof en qualityexcellence.es  Fri Sep 27 09:30:57 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 27 Sep 2013 09:30:57 +0200
+Subject: [R-es] ayuda con aggregate
+In-Reply-To: <CAMn86Nc3Lq2hcBAeoYUmzQBW9_PFK6tGtb1fp3S+CMmX5G-+Dg@mail.gmail.com>
+References: <CAMn86NcMYe32QFObjBGr+pa27Tcg=79qBLx_iAsfEtGQN+-eLQ@mail.gmail.com>
+	<CAKL8G3EJiqb7mxPdTqMyAw0UecYt8NJY-FRR+m890+jo7L2pXQ@mail.gmail.com>
+	<CAMn86NfKiFFoY6pECe+Je4=fueTYX8gDC39PQvH5Biw2zsVWaA@mail.gmail.com>
+	<CAPfrkhmdpLYx=g53wfYXiZxkem4nibZZwZaajw44gHHmZegrRw@mail.gmail.com>
+	<CAMn86Nc3Lq2hcBAeoYUmzQBW9_PFK6tGtb1fp3S+CMmX5G-+Dg@mail.gmail.com>
+Message-ID: <CAOKbq8j2N50guFtw=w57Ltq2MDhHPXAi5f-pN4vkBfhi+cPBFw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/3b9bbc82/attachment.pl>
+
+From rgarcialeiva en gmail.com  Fri Sep 27 10:05:46 2013
+From: rgarcialeiva en gmail.com (Rafael Garcia Leiva)
+Date: Fri, 27 Sep 2013 10:05:46 +0200
+Subject: [R-es] =?iso-8859-1?q?Ayuda_erreficando_un_c=F3digo?=
+Message-ID: <CAKcg+iA8-N4+PpqdRQw507ZGNozqBKFwOiuJLpszWTshSu9kaw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/4f61e31a/attachment.pl>
+
+From cgb en datanalytics.com  Fri Sep 27 10:12:41 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Fri, 27 Sep 2013 10:12:41 +0200
+Subject: [R-es] =?iso-8859-1?q?Ayuda_erreficando_un_c=F3digo?=
+In-Reply-To: <CAKcg+iA8-N4+PpqdRQw507ZGNozqBKFwOiuJLpszWTshSu9kaw@mail.gmail.com>
+References: <CAKcg+iA8-N4+PpqdRQw507ZGNozqBKFwOiuJLpszWTshSu9kaw@mail.gmail.com>
+Message-ID: <CADg83eft4uMiYPNY75uxipXivGs3=yHMNuRgzG-kmCoXfANERQ@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+No sé si responderá exactamente a tu pregunta, pero hace un tiempo
+escribí sobre el problema (de las ¡nueve! reinas) y planteé una
+versión alternativa a tu código:
+
+http://www.datanalytics.com/blog/2012/01/23/nueve-reinas-con-sas-y-r-tambien/
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 27 de septiembre de 2013 10:05, Rafael Garcia Leiva
+<rgarcialeiva en gmail.com> escribió:
+> Hola a todos,
+>
+> Después de presentar ayer en las jornadas de usuarios de R de Madrid el
+> problema de las ocho reinas y su solución con R, unas de las críticas que
+> recibí es que el código de la solución no iba mucho con el estilo de R. En
+> concreto, la función que recibe una lista con la posición de las reinas
+> (ejemplo (1,5,2,3,4,6,8,7)) y calcula si se atacan (comparten la misma
+> diagonal).
+>
+> El código es el siguiente:
+>
+> correcto <- function(p) {
+>     n <- length(p)
+>     for(i in 1:(n-1)) {
+>         for(j in (i+1):n) {
+>             if(abs(p[j] - p[i]) == abs(j ? i))
+>                 return(FALSE)
+>             }
+>         }
+>     return(TRUE)
+> }
+>
+> Si algún alma caritativa de la lista me ayudase a "erreficar" el código le
+> quedaría muy agradecido. De hecho, en la reunión de usuarios se comentó que
+> seguramente sea posible escribir esta función con una única línea de código
+> R.
+>
+> Muchas gracias a todos
+>
+> Rafael García
+> Twitter: @rgarcialeiva
+> Blog: http://mundoalgoritmos.blogspot.com.es/
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From marcelino.delacruz en upm.es  Fri Sep 27 10:29:57 2013
+From: marcelino.delacruz en upm.es (Marcelino de la Cruz)
+Date: Fri, 27 Sep 2013 10:29:57 +0200
+Subject: [R-es] =?windows-1252?q?Ayuda_erreficando_un_c=F3digo?=
+In-Reply-To: <CAKcg+iA8-N4+PpqdRQw507ZGNozqBKFwOiuJLpszWTshSu9kaw@mail.gmail.com>
+References: <CAKcg+iA8-N4+PpqdRQw507ZGNozqBKFwOiuJLpszWTshSu9kaw@mail.gmail.com>
+Message-ID: <52454205.8060706@upm.es>
+
+A ver esto:
+
+
+p<- c(1,5,2,3,4,6,8,7)
+
+!any(match((2:length(p))-(1:(length(p)-1)), p[-length(p)]-p[-1]))
+
+Saludos,
+
+Marcelino
+
+
+El 27/09/2013 10:05, Rafael Garcia Leiva escribió:
+> Hola a todos,
+>
+> Después de presentar ayer en las jornadas de usuarios de R de Madrid el
+> problema de las ocho reinas y su solución con R, unas de las críticas que
+> recibí es que el código de la solución no iba mucho con el estilo de R. En
+> concreto, la función que recibe una lista con la posición de las reinas
+> (ejemplo (1,5,2,3,4,6,8,7)) y calcula si se atacan (comparten la misma
+> diagonal).
+>
+> El código es el siguiente:
+>
+> correcto <- function(p) {
+>      n <- length(p)
+>      for(i in 1:(n-1)) {
+>          for(j in (i+1):n) {
+>              if(abs(p[j] - p[i]) == abs(j ? i))
+>                  return(FALSE)
+>              }
+>          }
+>      return(TRUE)
+> }
+>
+> Si algún alma caritativa de la lista me ayudase a "erreficar" el código le
+> quedaría muy agradecido. De hecho, en la reunión de usuarios se comentó que
+> seguramente sea posible escribir esta función con una única línea de código
+> R.
+>
+> Muchas gracias a todos
+>
+> Rafael García
+> Twitter: @rgarcialeiva
+> Blog: http://mundoalgoritmos.blogspot.com.es/
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From jbetancourt en iscmc.cmw.sld.cu  Fri Sep 27 12:53:04 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Fri, 27 Sep 2013 06:53:04 -0400
+Subject: [R-es] duda
+Message-ID: <002001cebb6f$bfd3b610$3f7b2230$@cmw.sld.cu>
+
+#Imagino que hay un camino más corto para resolver mi duda #Adjunto unos
+datos en csv
+
+ 
+
+library (epicalc) 
+
+ 
+
+#Gráficos exploratorios
+
+ 
+
+#este comando no se ejecuta porque no ve las variables
+
+ 
+
+summ(IMC, by=escolaridad )  ##?porqué no ve las variables?
+
+ 
+
+#tuve que hacer esto que me parece que se podría hacer de manera más
+sencilla
+
+ 
+
+IMC <- (sanda[,c(1)]) 
+
+escolaridad <- (sanda[,c(2)])
+
+ 
+
+#y entonces si lo hace
+
+ 
+
+summ(IMC, by=escolaridad
+
+ 
+
+Dr. José A. Betancourt Bethencourt
+
+Departamento de investigaciones
+
+Universidad de Ciencias Médicas
+
+Apartado postal 320
+
+Camagüey,Cuba
+
+ 
+
+
+
+--
+
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/70d6d9d8/attachment.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: sanda.csv
+Type: application/vnd.ms-excel
+Size: 2377 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/70d6d9d8/attachment.xlb>
+
+From aleixrvr.info en gmail.com  Fri Sep 27 13:14:36 2013
+From: aleixrvr.info en gmail.com (Aleix Ruiz de Villa)
+Date: Fri, 27 Sep 2013 13:14:36 +0200
+Subject: [R-es] =?iso-8859-1?q?Nuevo_=EDtem_de_la_agenda?=
+Message-ID: <CAGnmr55XLhv29m8iRU-0nP4Jur2Kky=3M46wVmESfMSa0Fz1_A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/810bfc26/attachment.pl>
+
+From canadasreche en gmail.com  Fri Sep 27 13:17:27 2013
+From: canadasreche en gmail.com (=?ISO-8859-1?Q?Jos=E9_Luis_Ca=F1adas_Reche?=)
+Date: Fri, 27 Sep 2013 13:17:27 +0200
+Subject: [R-es] duda
+In-Reply-To: <002001cebb6f$bfd3b610$3f7b2230$@cmw.sld.cu>
+References: <002001cebb6f$bfd3b610$3f7b2230$@cmw.sld.cu>
+Message-ID: <52456947.3070803@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/162bbafd/attachment.html>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Fri Sep 27 13:18:50 2013
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Fri, 27 Sep 2013 11:18:50 +0000
+Subject: [R-es] duda
+In-Reply-To: <002001cebb6f$bfd3b610$3f7b2230$@cmw.sld.cu>
+References: <002001cebb6f$bfd3b610$3f7b2230$@cmw.sld.cu>
+Message-ID: <8F7E2560309DD84BBAE98987371F9126361A9F@asscc764s>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/d169c4af/attachment.pl>
+
+From vanesatobar en yahoo.com  Fri Sep 27 13:20:10 2013
+From: vanesatobar en yahoo.com (vanessa tobar)
+Date: Fri, 27 Sep 2013 04:20:10 -0700 (PDT)
+Subject: [R-es] =?iso-8859-1?q?gr=E1ficos_de_cotizaciones?=
+Message-ID: <1380280810.55181.YahooMailNeo@web160806.mail.bf1.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/54687248/attachment.pl>
+
+From cof en qualityexcellence.es  Fri Sep 27 13:45:37 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 27 Sep 2013 13:45:37 +0200
+Subject: [R-es] =?iso-8859-1?q?gr=E1ficos_de_cotizaciones?=
+In-Reply-To: <1380280810.55181.YahooMailNeo@web160806.mail.bf1.yahoo.com>
+References: <1380280810.55181.YahooMailNeo@web160806.mail.bf1.yahoo.com>
+Message-ID: <CAOKbq8h9=f-ywXByB=B_b3LScxNMsBBjzDQnuMzodb_-YtbZXA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/840b3b42/attachment.pl>
+
+From cof en qualityexcellence.es  Fri Sep 27 14:26:58 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 27 Sep 2013 14:26:58 +0200
+Subject: [R-es] =?iso-8859-1?q?=5BOfftopic=5D=3A_Expedici=F3n_de_datos_sob?=
+	=?iso-8859-1?q?re_energ=EDa_Madrid_18_y_19_Octubre_medialab_prado_?=
+	=?iso-8859-1?q?-_Open_Knowledge_Foundation=2E=2E=2E?=
+Message-ID: <CAOKbq8gpER5L1hq=K5KjQS1=GhW5BWq7D4BKW+-LtQ9xDqE3_g@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/cae8bd8f/attachment.pl>
+
+From daniel319 en gmail.com  Fri Sep 27 15:40:25 2013
+From: daniel319 en gmail.com (daniel)
+Date: Fri, 27 Sep 2013 10:40:25 -0300
+Subject: [R-es] =?iso-8859-1?q?gr=E1ficos_de_cotizaciones?=
+In-Reply-To: <CAOKbq8h9=f-ywXByB=B_b3LScxNMsBBjzDQnuMzodb_-YtbZXA@mail.gmail.com>
+References: <1380280810.55181.YahooMailNeo@web160806.mail.bf1.yahoo.com>
+	<CAOKbq8h9=f-ywXByB=B_b3LScxNMsBBjzDQnuMzodb_-YtbZXA@mail.gmail.com>
+Message-ID: <CAPfrkhkhAs=MHyJ4UxK_kzKpwGatXoqjma6UcdQELGVA9hamHg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/23416c25/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Fri Sep 27 18:36:51 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Fri, 27 Sep 2013 12:36:51 -0400
+Subject: [R-es] duda
+In-Reply-To: <8F7E2560309DD84BBAE98987371F9126361A9F@asscc764s>
+References: <002001cebb6f$bfd3b610$3f7b2230$@cmw.sld.cu>
+	<8F7E2560309DD84BBAE98987371F9126361A9F@asscc764s>
+Message-ID: <000001cebb9f$c74d5010$55e7f030$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/26fd88ae/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Fri Sep 27 22:11:50 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_B.?=)
+Date: Fri, 27 Sep 2013 16:11:50 -0400
+Subject: [R-es] RV: cronbach
+Message-ID: <001a01cebbbd$cef8fbc0$6ceaf340$@cmw.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/f1c1284c/attachment.pl>
+
+From ericconchamunoz en gmail.com  Fri Sep 27 22:40:39 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Fri, 27 Sep 2013 16:40:39 -0400
+Subject: [R-es] Es posible controlar el tipo de linea que se agrega con
+ abline() en un grafico ?
+In-Reply-To: <CAPfrkhnYSiyyGa7CspDo4aqwznCPK4Obh5Z66PJck-QUezwUXw@mail.gmail.com>
+References: <5244ACE8.30407@gmail.com>
+	<CAPfrkhnYSiyyGa7CspDo4aqwznCPK4Obh5Z66PJck-QUezwUXw@mail.gmail.com>
+Message-ID: <5245ED47.6000509@gmail.com>
+
+En que seccion habria que agregar esos parametros ? no me manejo mucho 
+con lattice, estoy aprendiendo hace poco ...
+
+Slds, eric.
+
+
+On Thu 26 Sep 2013 06:37:56 PM CLT, daniel wrote:
+> No soy experto en lattice pero prueba agregar los parametros gráficos
+> habituales como col, col.line, lty, lwd. Lo habría probado yo pero tu
+> ejemplo no es reproducible.
+>
+> Espero te sirva,
+>
+> Daniel Merino
+>
+>
+> El 26 de septiembre de 2013 18:53, neo <ericconchamunoz en gmail.com
+> <mailto:ericconchamunoz en gmail.com>> escribió:
+>
+>     Estimados, quiero agregar una linea de referencia (con abline()) en un
+>     grafico hecho con lattice con el siguiente codigo (de hecho la
+>     linea ya
+>     esta agregada en el codigo):
+>
+>     dec.gr <http://dec.gr> <- xyplot(
+>                       V5 ~ dia
+>                      ,groups=con
+>                      ,data=dec.df
+>                      ,type="l", pch=1
+>                      ,main=list(label="Dec", cex=0.9, x = .175, y = -4.5)
+>                      ,par.settings=simpleTheme(col=colores ,
+>     col.line=colores)
+>                      ,auto.key=list(title= "Concent.
+>     (mM)",space="right",border=F,
+>     columns=1,cex=0.8,lines=T,points=F,col=colores)
+>                      ,scales=list(x=list(relation='same'),
+>     y=list(relation='same'), cex=1.2)
+>                      ,ylab=""
+>                      ,xlab=""
+>                      ,ylim=c(-0.2,180)
+>                      ,abline=list(a=100,b=0)
+>                      )
+>
+>     Mi problema es que una de las lineas de las variables graficadas
+>     es del
+>     mismo tipo que la linea que agrego con abline(). Luego, la
+>     pregunta es,
+>     es posible controlar el tipo de esa linea (segmento, puntos, etc) para
+>     cambiarlo ?
+>
+>     Si es posible, como se hace ?
+>
+>     Saludos y gracias,
+>
+>     Eric.
+>
+>     _______________________________________________
+>     R-help-es mailing list
+>     R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>     https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+> --
+> Daniel
+
+
+From ericconchamunoz en gmail.com  Fri Sep 27 22:47:45 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Fri, 27 Sep 2013 16:47:45 -0400
+Subject: [R-es] Es posible controlar el tipo de linea que se agrega con
+ abline() en un grafico ?
+In-Reply-To: <5245ED47.6000509@gmail.com>
+References: <5244ACE8.30407@gmail.com>
+	<CAPfrkhnYSiyyGa7CspDo4aqwznCPK4Obh5Z66PJck-QUezwUXw@mail.gmail.com>
+	<5245ED47.6000509@gmail.com>
+Message-ID: <5245EEF1.50100@gmail.com>
+
+Esos parametros se pueden usar directamente dentro de abline(), de este 
+modo, abline=list(a=100,b=0, lty=3, lwd=5)
+
+Gracias,
+
+Eric.
+
+
+
+
+On Fri 27 Sep 2013 04:40:39 PM CLT, neo wrote:
+> En que seccion habria que agregar esos parametros ? no me manejo mucho
+> con lattice, estoy aprendiendo hace poco ...
+>
+> Slds, eric.
+>
+>
+> On Thu 26 Sep 2013 06:37:56 PM CLT, daniel wrote:
+>> No soy experto en lattice pero prueba agregar los parametros gráficos
+>> habituales como col, col.line, lty, lwd. Lo habría probado yo pero tu
+>> ejemplo no es reproducible.
+>>
+>> Espero te sirva,
+>>
+>> Daniel Merino
+>>
+>>
+>> El 26 de septiembre de 2013 18:53, neo <ericconchamunoz en gmail.com
+>> <mailto:ericconchamunoz en gmail.com>> escribió:
+>>
+>>     Estimados, quiero agregar una linea de referencia (con abline()) en un
+>>     grafico hecho con lattice con el siguiente codigo (de hecho la
+>>     linea ya
+>>     esta agregada en el codigo):
+>>
+>>     dec.gr <http://dec.gr> <- xyplot(
+>>                       V5 ~ dia
+>>                      ,groups=con
+>>                      ,data=dec.df
+>>                      ,type="l", pch=1
+>>                      ,main=list(label="Dec", cex=0.9, x = .175, y = -4.5)
+>>                      ,par.settings=simpleTheme(col=colores ,
+>>     col.line=colores)
+>>                      ,auto.key=list(title= "Concent.
+>>     (mM)",space="right",border=F,
+>>     columns=1,cex=0.8,lines=T,points=F,col=colores)
+>>                      ,scales=list(x=list(relation='same'),
+>>     y=list(relation='same'), cex=1.2)
+>>                      ,ylab=""
+>>                      ,xlab=""
+>>                      ,ylim=c(-0.2,180)
+>>                      ,abline=list(a=100,b=0)
+>>                      )
+>>
+>>     Mi problema es que una de las lineas de las variables graficadas
+>>     es del
+>>     mismo tipo que la linea que agrego con abline(). Luego, la
+>>     pregunta es,
+>>     es posible controlar el tipo de esa linea (segmento, puntos, etc) para
+>>     cambiarlo ?
+>>
+>>     Si es posible, como se hace ?
+>>
+>>     Saludos y gracias,
+>>
+>>     Eric.
+>>
+>>     _______________________________________________
+>>     R-help-es mailing list
+>>     R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>     https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>>
+>>
+>> --
+>> Daniel
+
+
+From freddy.vate01 en gmail.com  Fri Sep 27 23:54:33 2013
+From: freddy.vate01 en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Fri, 27 Sep 2013 17:54:33 -0400
+Subject: [R-es] RV: cronbach
+In-Reply-To: <001a01cebbbd$cef8fbc0$6ceaf340$@cmw.sld.cu>
+References: <001a01cebbbd$cef8fbc0$6ceaf340$@cmw.sld.cu>
+Message-ID: <CALCOUqtREZT_PvovsB+npEXAV9PUZMLMOka4DkyS_ZhCbSyXmw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/55adf9a4/attachment.pl>
+
+From jbetancourt en iscmc.cmw.sld.cu  Sat Sep 28 01:04:14 2013
+From: jbetancourt en iscmc.cmw.sld.cu (=?UTF-8?Q?Dr._Jos=C3=A9_A._Betancourt_B.?=)
+Date: Fri, 27 Sep 2013 19:04:14 -0400
+Subject: [R-es] RV: cronbach
+In-Reply-To: <CALCOUqtREZT_PvovsB+npEXAV9PUZMLMOka4DkyS_ZhCbSyXmw@mail.gmail.com>
+References: <001a01cebbbd$cef8fbc0$6ceaf340$@cmw.sld.cu>
+	<CALCOUqtREZT_PvovsB+npEXAV9PUZMLMOka4DkyS_ZhCbSyXmw@mail.gmail.com>
+Message-ID: <000401cebbd5$e460f270$ad22d750$@cmw.sld.cu>
+
+rm(list = ls())  #borra todo lo anterior en memoria
+
+ 
+
+setwd("G:/Public/Documents/R/EPICALC/")  #como se llama la data desde su path
+
+ 
+
+sanda<-read.csv("sandavid2.csv",header=TRUE, sep=",", dec=".")
+
+use(sanda)
+
+attach (sanda)
+
+library  (MASS)
+
+label.cronbach <- label.var(p01, "¿Consume mucho pan? ")  ####¿Hay alguna manera de nombrarlos más fácil y menos trabajosa
+
+label.cronbach <- label.var(p02, "¿Se enoja usted?")
+
+label.cronbach <- label.var(p03, "¿come mientras ve la TV?")
+
+label.cronbach <- label.var(p04, "¿Le gustan los alimentos fritos? ")
+
+label.cronbach <- label.var(p05, "¿descansa en la cama despues de comer?    ")
+
+ 
+
+ 
+
+alpha(vars=c(p01:p05))
+
+ 
+
+De: Freddy Omar López Quintero [mailto:freddy.vate01 en gmail.com] 
+Enviado el: Friday, September 27, 2013 5:55 PM
+Para: Dr. José A. Betancourt B.
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] RV: cronbach
+
+ 
+
+Hola,
+
+ 
+
+Todos estamos muy bien, gracias.
+
+ 
+
+Con respecto de tu consulta, creo que ofreces poca información para poder reproducir o intentar emular tu inquietud (aunque en este grupo de voluntarios hay gente muy hábil que seguramente podrá ayudarte mejor). Yo me pregunto, por ejemplo: ¿cómo son tus datos originalmente?¿los estás leyendo de otro programa?¿los tienes en un texto plano?¿podrías enviar una pequeña muestra de ellos?¿por qué asignas a todas tus preguntas etiquetadas el nombre 'label.cronbach'?
+
+ 
+
+Hasta luego.
+
+ 
+
+ 
+
+2013/9/27 Dr. José A. Betancourt B. <jbetancourt en iscmc.cmw.sld.cu>
+
+
+
+
+
+
+
+¿existe  algún método en el cual no sea necesario hacer este trabajo y que
+aparezcan los nombres de las preguntas?
+
+
+
+label.cronbach <- label.var(p01, "¿Le agrada el programa que se le ha
+mostrado? ")
+
+label.cronbach <- label.var(p02, "¿Cree que ayuda en el aprendizaje?")
+
+label.cronbach <- label.var(p03, "¿Propicia el trabajo en el equipo?")
+
+label.cronbach <- label.var(p04, "¿Propicia formular debates entre los
+alumnos? ")
+
+label.cronbach <- label.var(p05, "¿Permite vincular lo biológico con lo
+social?    ")
+
+label.cronbach <- label.var(p06, "Mediante esta simulación se demuestra que
+las intervenciones en las comunidades tienen que ir más allá de lo
+biológico")
+
+label.cronbach <- label.var(p07, "Es de fácil manipulación")
+
+label.cronbach <- label.var(p08, "Se entienden bien los commandos ")
+
+label.cronbach <- label.var(p09, "Este y otros modelos  podrian incluirse
+como herramienta de enseñanza")
+
+label.cronbach <- label.var(p10, "Se comprende bien el modelo")
+
+
+
+--
+
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+
+
+        [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+
+
+
+
+-- 
+«But Gwindor answered: 'The doom lies in yourself, not in your name.'»
+
+JRR Tolkien 
+
+
+
+--
+
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/4a841b85/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: sandavid2.csv
+Type: application/vnd.ms-excel
+Size: 8398 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/4a841b85/attachment-0001.xlb>
+
+From lobo en mucharuina.com  Sun Sep 29 12:58:51 2013
+From: lobo en mucharuina.com (=?ISO-8859-1?Q?Rub=E9n_G=F3mez_Antol=ED?=)
+Date: Sun, 29 Sep 2013 12:58:51 +0200
+Subject: [R-es] =?iso-8859-1?q?gr=E1ficos_de_cotizaciones?=
+In-Reply-To: <CAOKbq8h9=f-ywXByB=B_b3LScxNMsBBjzDQnuMzodb_-YtbZXA@mail.gmail.com>
+References: <1380280810.55181.YahooMailNeo@web160806.mail.bf1.yahoo.com>
+	<CAOKbq8h9=f-ywXByB=B_b3LScxNMsBBjzDQnuMzodb_-YtbZXA@mail.gmail.com>
+Message-ID: <524807EB.7070009@mucharuina.com>
+
+Saludos:
+
+El 27/09/13 13:45, Carlos Ortega escribió:
+> Hola,
+>
+> Una opción más adecuada que representar max, min y media podría ser
+> utilizar un boxplot y representar la distribución completa de las
+> temperaturas que tienes en el día...
+
+Yo para eso he utilizado gráficos de isopletas, pero lo hice con 
+Gnuplot, tengo pendiente replicarlo con R.
+
+Aquí un ejemplo:
+
+http://www.certificacionenergeticasalamanca.com/2012/11/28/artículo-técnico-1-análisis-del-clima-en-la-provincia-de-salamanca/
+
+(Esta al final del artículo)
+
+Salud y Revolución.
+
+Lobo.
+-- 
+Libertad es poder elegir en cualquier momento. Ahora yo elijo GNU/Linux,
+para no atar mis manos con las cadenas del soft propietario.
+Porque la libertad no es tu derecho, es tu responsabilidad.
+http://www.mucharuina.com
+---------
+Desde El Ejido, en Almería, usuario registrado Linux #294013
+http://www.counter.li.org
+
+
+From javimunozlara en gmail.com  Mon Sep 30 16:55:00 2013
+From: javimunozlara en gmail.com (=?UTF-8?Q?Javier_Mu=C3=B1oz?=)
+Date: Mon, 30 Sep 2013 16:55:00 +0200
+Subject: [R-es] Ayuda con lista
+In-Reply-To: <CAMn86Nfc9pci0-eNqi2-7-kF3UKZGGmaMsoGf0+=1gd0drnOkA@mail.gmail.com>
+References: <CAMn86Nfc9pci0-eNqi2-7-kF3UKZGGmaMsoGf0+=1gd0drnOkA@mail.gmail.com>
+Message-ID: <CA+A37zWr5rto4ZNe+rHkPUAhd4OMxbk64uXO7sMg3zHagFupKg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130930/18b2ee2a/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Mon Sep 30 17:23:59 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Tue, 1 Oct 2013 01:23:59 +1000
+Subject: [R-es] Ayuda con lista
+In-Reply-To: <CAMn86Nfc9pci0-eNqi2-7-kF3UKZGGmaMsoGf0+=1gd0drnOkA@mail.gmail.com>
+References: <CAMn86Nfc9pci0-eNqi2-7-kF3UKZGGmaMsoGf0+=1gd0drnOkA@mail.gmail.com>
+Message-ID: <CAKL8G3H4ZjN+5gwYLEXb_tycn5SxQkpVhvu2cctdpuaHJ5vg1A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20131001/89c3735d/attachment.pl>
+
+From josebetancourt.cmw en infomed.sld.cu  Fri Sep 27 18:37:02 2013
+From: josebetancourt.cmw en infomed.sld.cu (=?iso-8859-1?Q?_Jos=E9_A._Betancourt_Bethencourt?=)
+Date: Fri, 27 Sep 2013 12:37:02 -0400
+Subject: [R-es] cronbach
+Message-ID: <000501cebb9f$cc59e280$650da780$@cmw@infomed.sld.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130927/5dba9d0c/attachment.pl>
+

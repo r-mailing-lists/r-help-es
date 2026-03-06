@@ -1,0 +1,1538 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2020-04",
+  "messages": [
+    {
+      "id": "msg-b416b1483859",
+      "message_id": "<CAF3uytXpGce38Tbh5ZMTN3akBU4gEPVR6SXqq10M60CxErE23Q@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-01T13:15:17+02:00",
+      "subject": "[R-es] añadir líneas verticales con ggplot",
+      "subject_clean": "[R-es] añadir líneas verticales con ggplot",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, hago un mapa con ggplot:\n\nworld<-map_data('world')\n\nwindows();ggplot(legend=FALSE) +\n...\n  geom_point(data=Data,aes(x=lon,y=lat,color=Clst),size=1.25) +\n\nscale_color_manual(values=c(\"grey45\",\"navy\",\"skyblue\",\"gold\",\"green3\",\"darkgreen\"))\n+\n  geom_path( data=world, aes(x=long, y=lat,group=group)) +\n  labs(title = \"Trophic Patterns - Full Data\")+\n  guides(colour = guide_legend(override.aes = list(size=5)))\n\ndespuÃ©s hago un loop con for:\n\nfor (i in seq(from = -180, to = 170, by = 10)){\n  traindata <- subset(Data, lon < i|lon>= i+10)\n  testdata <- subset(Data,(lon> i & lon<= i+10))\n  fitrp <- rpart(Clst ~ .- lon - lat, data=traindata,method = \"class\",\ncp=cpopt)\n  print(i)\n  prd <- predict(fitrp, testdata, type=\"class\") # se aplica el modelo a las\nmuestras test\n  testdata$prd<-prd\n  Preds<-rbind(Preds,testdata)\n}\n\nen vez de  print(i), que me indica por dÃ³nde va el loop,  me gustarÃ­a que\nme fuera aÃ±adiera una lÃ­nea vertical al mapa en la longitud (lon)  que\ncorresponde a i.\n\nMuchas gracias por vuestra ayuda, como siempre,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as, hago un mapa con ggplot:\n\nworld<-map_data('world')\n\nwindows();ggplot(legend=FALSE) +\n...\n  geom_point(data=Data,aes(x=lon,y=lat,color=Clst),size=1.25) +\n\nscale_color_manual(values=c(\"gre",
+      "thread_id": "thread-b416b1483859",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-61854345c9fa",
+      "message_id": "<CAKXAqm09SXtwdUO0=6aJ_03L5Fky9Maad=Q7eO_VYGqR3T468Q@mail.gmail.com>",
+      "from_name": "Ruben Tobalina Ramirez",
+      "from_email_hash": "bdac2217e0306eaf37a2e66ca9b50da89f838e3caa176858848cc492cc407eda",
+      "date": "2020-04-01T13:21:26+02:00",
+      "subject": "[R-es] R y APIS",
+      "subject_clean": "[R-es] R y APIS",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola, buenas! Espero que estÃ©n todos y todas lo mejor posible en esta\npandemia.\nLlevo unos dÃ­as peleÃ¡ndome con una API y estoy desesperado. Aunque no tengo\nmucha experiencia con APIs si habÃ­a utilizado alguna con R y bueno, habia\nsabido capear la situaciÃ³n, pero ahora mismo estoy intentando usar la api\nde ISAN (https://api.isan.org/) y no soy capaz ni siquiera de validarme.\n\nAlguien del foro la ha utilizado y puede guiarme? y ya de paso\nconocies algun manual o exemplos para usar R con APIS, estoy un poco\nperdido y tal vez se me escapa algo muy obvio.\n\nMuchas gracias y mucho animo!\n\n-- \nRubÃ©n.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, buenas! Espero que estÃ©n todos y todas lo mejor posible en esta\npandemia.\nLlevo unos dÃ­as peleÃ¡ndome con una API y estoy desesperado. Aunque no tengo\nmucha experiencia con APIs si habÃ­a util",
+      "thread_id": "thread-61854345c9fa",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-11452485127f",
+      "message_id": "<CAJhxDDtettzSUypsJEJaPUJSE+YKeNE0B83F91pRK_5_sCgwQA@mail.gmail.com>",
+      "from_name": "Rubén Fernández Casal",
+      "from_email_hash": "d480d20beb30c61b1c34300e83845fb386f6ed4bfc4143193eaf3fc8169411e0",
+      "date": "2020-04-01T13:30:14+02:00",
+      "subject": "[R-es] Predicción cooperativa COVID-19",
+      "subject_clean": "[R-es] Predicción cooperativa COVID-19",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Desde el ComitÃ© EspaÃ±ol de MatemÃ¡ticas (CEMat) se hace un llamamiento a\ntodos aquellos investigadores en el Ã¡mbito de la comunidad MatemÃ¡tica /\nEstadÃ­stica / CientÃ­fica de Datos que hayan desarrollado modelos\npredictivos para variables de interÃ©s en la expansiÃ³n del virus COVID-19,\ncon el objetivo de construir un meta-predictor o ?predictor cooperativo?\npara facilitar a las autoridades informaciÃ³n del comportamiento a corto\nplazo de las variables de mayor interÃ©s.\n\nEn su web podÃ©is ver los detalles del llamamiento:\nhttp://matematicas.uclm.es/cemat/covid19/\n\nUn saludo, RubÃ©n.\n\n-- \n\nRubÃ©n FernÃ¡ndez Casal\nhttps://rubenfcasal.github.io\nDep. MatemÃ¡ticas, Universidade da CoruÃ±a\nCentro de InvestigaciÃ³n en TecnologÃ­as de la InformaciÃ³n y las\nComunicaciones (CITIC)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Desde el ComitÃ© EspaÃ±ol de MatemÃ¡ticas (CEMat) se hace un llamamiento a\ntodos aquellos investigadores en el Ã¡mbito de la comunidad MatemÃ¡tica /\nEstadÃ­stica / CientÃ­fica de Datos que hayan desar",
+      "thread_id": "thread-11452485127f",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-613c2c454622",
+      "message_id": "<CA+5BeCOA4pVQW1Hg9zHcwynGpJaYtes+8s6G-M5ZzPeo22nthA@mail.gmail.com>",
+      "from_name": "Salvador Bergoñón Fuster",
+      "from_email_hash": "bebed891895e47be59d23f3388fc0c4d781b4cd3499eba8a5ef5602c2e7a049b",
+      "date": "2020-04-01T14:20:23+02:00",
+      "subject": "[R-es] Predicción cooperativa COVID-19",
+      "subject_clean": "[R-es] Predicción cooperativa COVID-19",
+      "in_reply_to": "<CAJhxDDtettzSUypsJEJaPUJSE+YKeNE0B83F91pRK_5_sCgwQA@mail.gmail.com>",
+      "references": [
+        "<CAJhxDDtettzSUypsJEJaPUJSE+YKeNE0B83F91pRK_5_sCgwQA@mail.gmail.com>"
+      ],
+      "body_plain": "Yo sÃ³lo puedo aportar lo que comentÃ© el otro dÃ­a y las nuevas evidencias en\nlÃ­nea a lo que planteaba: la hipertensiÃ³n, y la hipertensiÃ³n+diabetes\nsupone riesgo de acabar en UCI o fallecer. Pueden tener algÃºn efecto las\nmedicaciones antihipertensivas en el pronÃ³stico del paciente? pues parece\nque sÃ­:\nNo sÃ³lo hay tres estudios registrados en clinicaltrials.gov que plantean\ndatamining de este tipo de informaciones (medicaciones previas como\nfactores predictivos de uci o letalidad) :\n\nhttps://clinicaltrials.gov/ct2/show/NCT04318418\nhttps://clinicaltrials.gov/ct2/show/NCT04318418\nhttps://clinicaltrials.gov/ct2/show/NCT04318418\n\nSino que ya hay un primer estudio chino (un casos -controles de mÃ¡s de 500\npacientes... https://www.medrxiv.org/content/10.1101/2020.03.20.20039586v1)\nque ya da unos primeros resultados: los ARA II (losartÃ¡n, valsartÃ¡n,\nolmesartÃ¡n, etc...) \"protegerÃ­an\" al paciente respecto a COVID, frente el\nresto de medicaciones antihipertensivas tanto en cuanto a ingreso a UCI\ncomo a mortalidad por pneumonÃ­a en mayores de 65 (OR=0.343, 95% CI\n0.128-0.916, p=0.025).\n\nFalta mÃ¡s evidencia, la de los tres anteriores y lo que alguien con acceso\na datos de prescripciones pueda aportar, pero no sÃ© si veis el alcance de\nesto: si se llega a confirmar con mÃ¡s evidencias esta asociaciÃ³n, tocarÃ­a\nque la AEMPS dictara Ã³rdenes a los mÃ©dicos que tratan hipertensos, para que\nsubstituyan otras medicaciones y se pasan a ARA II durante el perÃ­odo de\npandemia.\nSi tenÃ©is a mano algÃºn epidemiÃ³logo clÃ­nico, que hagan algo ya!\n\nEl miÃ©., 1 abr. 2020 a las 13:36, RubÃ©n FernÃ¡ndez Casal (<\nrubenfcasal en gmail.com>) escribiÃ³:\n\n> Desde el ComitÃ© EspaÃ±ol de MatemÃ¡ticas (CEMat) se hace un llamamiento a\n> todos aquellos investigadores en el Ã¡mbito de la comunidad MatemÃ¡tica /\n> EstadÃ­stica / CientÃ­fica de Datos que hayan desarrollado modelos\n> predictivos para variables de interÃ©s en la expansiÃ³n del virus COVID-19,\n> con el objetivo de construir un meta-predictor o ?predictor cooperativo?\n> para facilitar a las autoridades informaciÃ³n del comportamiento a corto\n> plazo de las variables de mayor interÃ©s.\n>\n> En su web podÃ©is ver los detalles del llamamiento:\n> http://matematicas.uclm.es/cemat/covid19/\n>\n> Un saludo, RubÃ©n.\n>\n> --\n>\n> RubÃ©n FernÃ¡ndez Casal\n> https://rubenfcasal.github.io\n> Dep. MatemÃ¡ticas, Universidade da CoruÃ±a\n> Centro de InvestigaciÃ³n en TecnologÃ­as de la InformaciÃ³n y las\n> Comunicaciones (CITIC)\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \n-----\nFight back spam! Download the Blue Frog.\nhttp://www.bluesecurity.com/register/s?user=c2Jlcmdvbm9u\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yo sÃ³lo puedo aportar lo que comentÃ© el otro dÃ­a y las nuevas evidencias en\nlÃ­nea a lo que planteaba: la hipertensiÃ³n, y la hipertensiÃ³n+diabetes\nsupone riesgo de acabar en UCI o fallecer. Puede",
+      "thread_id": "thread-11452485127f",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-f417ec170f59",
+      "message_id": "<CAHo_aERAfc34Ktf=9ctcEj2DUWsZUneTDw_Q0PqY=Gi+Z+AJnQ@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2020-04-01T10:52:17-03:00",
+      "subject": "[R-es] Predicción cooperativa COVID-19",
+      "subject_clean": "[R-es] Predicción cooperativa COVID-19",
+      "in_reply_to": "<CAJhxDDtettzSUypsJEJaPUJSE+YKeNE0B83F91pRK_5_sCgwQA@mail.gmail.com>",
+      "references": [
+        "<CAJhxDDtettzSUypsJEJaPUJSE+YKeNE0B83F91pRK_5_sCgwQA@mail.gmail.com>"
+      ],
+      "body_plain": "Estimados\n\nDesde mi lugar leÃ­ el correo y algo de la pÃ¡gina web, yo creo que es muy\nbueno buscar alternativas, colaborar, plantear desafÃ­os comunes y compartir\nconocimientos. No hay gran construcciÃ³n sin aporte de muchos granitos de\narena.\n\nMiro la fuente de datos, esos datos no son mÃ©dicos, son un conteo de\npacientes, sanos, enfermos, muertos, dentro de unos meses se podrÃ¡ comparar\na que paÃ­s o regiÃ³n le fue mejor por iniciar antes la cuarentena, sobre el\nrespeto a la misma, pero a nivel muy general. Por ejemplo, que aporta la\nfuente de datos sobre densidad geogrÃ¡fica de la poblaciÃ³n, edad, sexo,\nraza, porque hay diferencias, como ser en el paludismo y los hindÃºes,\nporque hay una relaciÃ³n huÃ©sped y hospedador, hay asintomÃ¡ticos, hay reglas\nbiolÃ³gicas superiores al conocimiento de la ciencia en su conjunto y sobre\nel matemÃ¡tico. Utilizando la matemÃ¡tica, estadÃ­stica, y lo referente a esta\nlista, Â¿QuÃ© paciente necesita antes el respirador a los fines de distribuir\nen forma eficaz los recursos mÃ©dicos escasos? Eso es Ãºtil, aporta, el resto\nsolo crea ruido y grÃ¡ficos para los medios de comunicaciÃ³n, como si se\ntratara un desfile de modelos, la televisiÃ³n en lugar de elegir chicas\nelige grÃ¡ficos.\n\nDistinto, es decir, la fuente de datos tiene 80 variables mÃ©dicas, 8\ndemogrÃ¡ficas, 10 geogrÃ¡ficas, busquemos que podemos aportar. Lo escribo yo,\nque soy veterinario y durante muchos aÃ±os analicÃ© datos en un hospital\nanimal, lo escribo yo que vi donde ingenieros borraron de su anÃ¡lisis\nenfermedades letales y realizan tesis doctorales, enfermedades que son de\ndenuncia obligatoria, pero ellos juegan a ser mÃ©dicos con sus estadÃ­sticas\npredictivas.\n\nSi hay datos mÃ©dicos, yo dono mi tiempo, no prometo resultados, simplemente\nintentarÃ© lo mejor que pueda, pero tambiÃ©n comprendo el desafÃ­o de buscar\nla mejor descripciÃ³n posible con los datos que tienen.\n\n\nSaludos y valoro lo que intentan hacer.\n\n\nJavier RubÃ©n Marcuzzi\n\nEl miÃ©., 1 abr. 2020 a las 8:36, RubÃ©n FernÃ¡ndez Casal (<\nrubenfcasal en gmail.com>) escribiÃ³:\n\n> Desde el ComitÃ© EspaÃ±ol de MatemÃ¡ticas (CEMat) se hace un llamamiento a\n> todos aquellos investigadores en el Ã¡mbito de la comunidad MatemÃ¡tica /\n> EstadÃ­stica / CientÃ­fica de Datos que hayan desarrollado modelos\n> predictivos para variables de interÃ©s en la expansiÃ³n del virus COVID-19,\n> con el objetivo de construir un meta-predictor o ?predictor cooperativo?\n> para facilitar a las autoridades informaciÃ³n del comportamiento a corto\n> plazo de las variables de mayor interÃ©s.\n>\n> En su web podÃ©is ver los detalles del llamamiento:\n> http://matematicas.uclm.es/cemat/covid19/\n>\n> Un saludo, RubÃ©n.\n>\n> --\n>\n> RubÃ©n FernÃ¡ndez Casal\n> https://rubenfcasal.github.io\n> Dep. MatemÃ¡ticas, Universidade da CoruÃ±a\n> Centro de InvestigaciÃ³n en TecnologÃ­as de la InformaciÃ³n y las\n> Comunicaciones (CITIC)\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nDesde mi lugar leÃ­ el correo y algo de la pÃ¡gina web, yo creo que es muy\nbueno buscar alternativas, colaborar, plantear desafÃ­os comunes y compartir\nconocimientos. No hay gran construcci",
+      "thread_id": "thread-11452485127f",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-2df5660912d6",
+      "message_id": "<CAF3uytVSJro1DsZs0k3QRyMPGdmmKcr=VDZ90BH8mdGgFc0usA@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-01T22:00:12+02:00",
+      "subject": "[R-es]  añadir líneas verticales con ggplot",
+      "subject_clean": "[R-es]  añadir líneas verticales con ggplot",
+      "in_reply_to": "<CAF3uytXpGce38Tbh5ZMTN3akBU4gEPVR6SXqq10M60CxErE23Q@mail.gmail.com>",
+      "references": [
+        "<CAF3uytXpGce38Tbh5ZMTN3akBU4gEPVR6SXqq10M60CxErE23Q@mail.gmail.com>"
+      ],
+      "body_plain": ">\n>\n> Buenas, como os decÃ­a, hago un mapa con ggplot (pongamos este mÃ¡s\n> sencillo):\n>\n> pyt<-ggplot(data, aes(x = longitud, y = latitud)) +\ngeom_point(aes(color = factor(ptyrup)))\nwindows(); pyt\n\ndentro del loop incluyo:   pyt + geom_vline(xintercept = i), pero entonces\nme borra la linea anterior, y lo que yo pretendo es que me vaya aÃ±adiendo\nlÃ­neas sin borrar las anteriores. Con plot, en vez de ggplot era fÃ¡cil\n(abline(v=i)), pero por mÃ¡s que busco no encuentro la forma de hacer lo\nmismo con ggplot, que el mapa queda mucho mejor.\nGracias,\nManuel\n\n\n\n\n\n>\n> en vez de  print(i), que me indica por dÃ³nde va el loop,  me gustarÃ­a que\n> me fuera aÃ±adiera una lÃ­nea vertical al mapa en la longitud (lon)  que\n> corresponde a i.\n>\n> Muchas gracias,\n> Manuel\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": ">\n>\n> Buenas, como os decÃ­a, hago un mapa con ggplot (pongamos este mÃ¡s\n> sencillo):\n>\n> pyt<-ggplot(data, aes(x = longitud, y = latitud)) +\ngeom_point(aes(color = factor(ptyrup)))\nwindows(); pyt\n\nd",
+      "thread_id": "thread-b416b1483859",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-cc13b361372f",
+      "message_id": "<CAF3uytWHzzFJdt1q-BmW_yhvgAtNG+8sUcmq6upiWkzkp_fFfA@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-01T22:24:50+02:00",
+      "subject": "[R-es] Fwd: añadir líneas verticales con ggplot",
+      "subject_clean": "[R-es] Fwd: añadir líneas verticales con ggplot",
+      "in_reply_to": "<CAF3uytVSJro1DsZs0k3QRyMPGdmmKcr=VDZ90BH8mdGgFc0usA@mail.gmail.com>",
+      "references": [
+        "<CAF3uytXpGce38Tbh5ZMTN3akBU4gEPVR6SXqq10M60CxErE23Q@mail.gmail.com>",
+        "<CAF3uytVSJro1DsZs0k3QRyMPGdmmKcr=VDZ90BH8mdGgFc0usA@mail.gmail.com>"
+      ],
+      "body_plain": "CreÃ­a haberlo solucionado con:\n\npyt<-ggplot(data, aes(x = longitud, y = latitud)) +\n  geom_point(aes(color = factor(ptyrup)))\nwindows();pyt\n\ne incluyendo en el loop:\n\n  pyt<-pyt+\n  geom_vline(xintercept = i)\n  pyt\n\nPero no. Es extraÃ±o, pues sale bien si hago yo las iteraciones, una a una,\npero cuando hago el loop no dibuja las lÃ­neas ?.\n\n\n> Buenas, como os decÃ­a, hago un mapa con ggplot (pongamos este mÃ¡s\n> sencillo):\n>\n> pyt<-ggplot(data, aes(x = longitud, y = latitud)) +\ngeom_point(aes(color = factor(ptyrup)))\nwindows(); pyt\n\ndentro del loop incluyo:   pyt + geom_vline(xintercept = i), pero entonces\nme borra la linea anterior, y lo que yo pretendo es que me vaya aÃ±adiendo\nlÃ­neas sin borrar las anteriores. Con plot, en vez de ggplot era fÃ¡cil\n(abline(v=i)), pero por mÃ¡s que busco no encuentro la forma de hacer lo\nmismo con ggplot, que el mapa queda mucho mejor.\nGracias,\nManuel\n\n\n\n\n\n>\n> en vez de  print(i), que me indica por dÃ³nde va el loop,  me gustarÃ­a que\n> me fuera aÃ±adiera una lÃ­nea vertical al mapa en la longitud (lon)  que\n> corresponde a i.\n>\n> Muchas gracias,\n> Manuel\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "CreÃ­a haberlo solucionado con:\n\npyt<-ggplot(data, aes(x = longitud, y = latitud)) +\n  geom_point(aes(color = factor(ptyrup)))\nwindows();pyt\n\ne incluyendo en el loop:\n\n  pyt<-pyt+\n  geom_vline(xinterc",
+      "thread_id": "thread-b416b1483859",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-0ae72f04ae7f",
+      "message_id": "<CAHo_aERmbAs0Tt1K7AvHN2HMUWhH6kc0MKAscwpLdjfBJGUscA@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2020-04-09T02:36:31-03:00",
+      "subject": "[R-es] modelos COVID19",
+      "subject_clean": "[R-es] modelos COVID19",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados\n\nPor si les interesa, hoy leo un artÃ­culo, el cuÃ¡l me parece\nbastante interesante, sobre todo por lo que yo aprecio, yo que soy\nveterinario y por ahÃ­ veo escrito que por inteligencia artificial, uff, y\neso que me apasiona analizar datos en forma cientÃ­fica, pero la ciencia\nmÃ©dica es un poco especial, por ejemplo, hay un anestÃ©sico que si el\npaciente estÃ¡ tranquilo, produce la anestesia y se puede realizar la\ncirugÃ­a, pero si hay un golpe, el efecto es el opuesto y se convierte en\nexcitador.\n\nEl artÃ­culo con citas se encuentra en\nhttps://elpais.com/ciencia/2020-04-08/por-que-no-podemos-predecir-como-se-comportara-el-coronavirus.html\n\n\nPosiblemente puedan acceder a modelos o ideas, si les sirve y pueden tomar\nalgo de esas referencias...\n\nSaludos y fuerza en estos momentos dolorosos.\n\nJavier Marcuzzi\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nPor si les interesa, hoy leo un artÃ­culo, el cuÃ¡l me parece\nbastante interesante, sobre todo por lo que yo aprecio, yo que soy\nveterinario y por ahÃ­ veo escrito que por inteligencia arti",
+      "thread_id": "thread-0ae72f04ae7f",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-69e03ed784ac",
+      "message_id": "<fe876dad-66a3-4cf8-517d-309da6bc15e0@gmail.com>",
+      "from_name": "Francisco Rodriguez Sanchez",
+      "from_email_hash": "4a5eb885002ba2873468400dbe25575bdd347c849eedeeb20eb06ac47ed79b49",
+      "date": "2020-04-09T12:26:10+02:00",
+      "subject": "[R-es] R y APIS",
+      "subject_clean": "[R-es] R y APIS",
+      "in_reply_to": "<CAKXAqm09SXtwdUO0=6aJ_03L5Fky9Maad=Q7eO_VYGqR3T468Q@mail.gmail.com>",
+      "references": [
+        "<CAKXAqm09SXtwdUO0=6aJ_03L5Fky9Maad=Q7eO_VYGqR3T468Q@mail.gmail.com>"
+      ],
+      "body_plain": "Hola RubÃ©n,\n\nPor si sirve, no sÃ© si conoces este documento:\n\nBest practices for API packages\n\nhttps://cran.r-project.org/web/packages/httr/vignettes/api-packages.html\n\nSuerte\n\nPaco\n\n\n\nEl 01/04/2020 a las 13:21, Ruben Tobalina Ramirez escribiÃ³:\n> Hola, buenas! Espero que estÃ©n todos y todas lo mejor posible en esta\n> pandemia.\n> Llevo unos dÃ­as peleÃ¡ndome con una API y estoy desesperado. Aunque no tengo\n> mucha experiencia con APIs si habÃ­a utilizado alguna con R y bueno, habia\n> sabido capear la situaciÃ³n, pero ahora mismo estoy intentando usar la api\n> de ISAN (https://api.isan.org/) y no soy capaz ni siquiera de validarme.\n>\n> Alguien del foro la ha utilizado y puede guiarme? y ya de paso\n> conocies algun manual o exemplos para usar R con APIS, estoy un poco\n> perdido y tal vez se me escapa algo muy obvio.\n>\n> Muchas gracias y mucho animo!\n>\n-- \nDr Francisco Rodriguez-Sanchez\nhttps://www.linkedin.com/in/frodriguezsanchez/\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola RubÃ©n,\n\nPor si sirve, no sÃ© si conoces este documento:\n\nBest practices for API packages\n\nhttps://cran.r-project.org/web/packages/httr/vignettes/api-packages.html\n\nSuerte\n\nPaco\n\n\n\nEl 01/04/2020 ",
+      "thread_id": "thread-61854345c9fa",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-2f75e07d4fe5",
+      "message_id": "<CAJhxDDuentJBroVwgrZ8QKfAt4MR07KKAZWuA0imhhNnM_veWg@mail.gmail.com>",
+      "from_name": "Rubén Fernández Casal",
+      "from_email_hash": "d480d20beb30c61b1c34300e83845fb386f6ed4bfc4143193eaf3fc8169411e0",
+      "date": "2020-04-11T11:43:23+02:00",
+      "subject": "[R-es] Datos oficiales de COVID-19 en España",
+      "subject_clean": "[R-es] Datos oficiales de COVID-19 en España",
+      "in_reply_to": "<CAJhxDDtDtSsHfCMSmxH=xBfdkHbxAv6hrtDpmC-D5rjF3owj0g@mail.gmail.com>",
+      "references": [
+        "<CAJhxDDtDtSsHfCMSmxH=xBfdkHbxAv6hrtDpmC-D5rjF3owj0g@mail.gmail.com>"
+      ],
+      "body_plain": "Hola a todos,\nPor fin pudimos publicar en abierto las predicciones cooperativas:\nWeb Investigadores UDC: https://covid19.citic.udc.es , pestaÃ±a Informes.\nEstas son las de ayer, supongo que entre las 8pm y las 10pm publicaremos\nlas de hoy...\n\nUn saludo, RubÃ©n.\n\nEl sÃ¡b., 28 mar. 2020 a las 10:40, RubÃ©n FernÃ¡ndez Casal (<\nrubenfcasal en gmail.com>) escribiÃ³:\n\n> Hola a todos,\n>\n> Por fin pude terminar de preparar la descarga y procesamiento de los datos\n> por edad y sexo. Ya estÃ¡n en el repositorio:\n> https://github.com/rubenfcasal/COVID-19\n>\n> Ya puestos tambiÃ©n incluÃ­ la descarga e importaciÃ³n de los datos\n> acumulados del ISCIII y actualicÃ© las tablas en\n> https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html empleando el\n> paquete DT. Ahora tiene tres secciones...\n>\n> Mis siguientes pasos serÃ¡n tratar de conseguir datos por provincias y\n> empezar a ajustar modelos.\n> AÃ±adÃ­ en https://rubenfcasal.github.io/COVID-19/#enlaces algunas\n> referencias...\n>\n> Cualquier ayuda/sugerencia/comentario/etc serÃ¡ bien recibido...\n>\n> Un saludo y cuidarse,\n> RubÃ©n.\n>\n>\n> --\n>\n> RubÃ©n FernÃ¡ndez Casal\n> https://rubenfcasal.github.io\n> Dep. MatemÃ¡ticas, Universidade da CoruÃ±a\n> Centro de InvestigaciÃ³n en TecnologÃ­as de la InformaciÃ³n y las\n> Comunicaciones (CITIC)\n>\n\n\n-- \n\nRubÃ©n FernÃ¡ndez Casal\nhttps://rubenfcasal.github.io\nDep. MatemÃ¡ticas, Universidade da CoruÃ±a\nCentro de InvestigaciÃ³n en TecnologÃ­as de la InformaciÃ³n y las\nComunicaciones (CITIC)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\nPor fin pudimos publicar en abierto las predicciones cooperativas:\nWeb Investigadores UDC: https://covid19.citic.udc.es , pestaÃ±a Informes.\nEstas son las de ayer, supongo que entre las ",
+      "thread_id": "thread-2f75e07d4fe5",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-58cef8b72734",
+      "message_id": "<CAHo_aETqqBda12jqHYE7JNrSUFrBo2f7Dwc8Ao2LMMswLXY61Q@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2020-04-11T08:47:58-03:00",
+      "subject": "[R-es] Datos oficiales de COVID-19 en España",
+      "subject_clean": "[R-es] Datos oficiales de COVID-19 en España",
+      "in_reply_to": "<CAJhxDDuentJBroVwgrZ8QKfAt4MR07KKAZWuA0imhhNnM_veWg@mail.gmail.com>",
+      "references": [
+        "<CAJhxDDtDtSsHfCMSmxH=xBfdkHbxAv6hrtDpmC-D5rjF3owj0g@mail.gmail.com>",
+        "<CAJhxDDuentJBroVwgrZ8QKfAt4MR07KKAZWuA0imhhNnM_veWg@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias RubÃ©n Casal\n\nLÃ¡stima que no tienen valores mÃ©dicos, pero mirando lo que realizaron y lo\nvaloro mucho, por eso les sugiero si podrÃ­an traducirlo a lenguaje de\nEpidemiologÃ­a, en el grupo deben tener alguno con matrÃ­cula en EspaÃ±a para\nescribir en incidencia y prevalencia. Me refiero a si pueden expresarlo de\nla siguiente manera\nhttps://www.paho.org/hq/index.php?option=com_content&view=article&id=14402&lang=es&Itemid=72362&limitstart=2\n\nSaludos\n\nJavier Marcuzzi\n\n\n\nEl sÃ¡b., 11 abr. 2020 a las 6:44, RubÃ©n FernÃ¡ndez Casal (<\nrubenfcasal en gmail.com>) escribiÃ³:\n\n> Hola a todos,\n> Por fin pudimos publicar en abierto las predicciones cooperativas:\n> Web Investigadores UDC: https://covid19.citic.udc.es , pestaÃ±a Informes.\n> Estas son las de ayer, supongo que entre las 8pm y las 10pm publicaremos\n> las de hoy...\n>\n> Un saludo, RubÃ©n.\n>\n> El sÃ¡b., 28 mar. 2020 a las 10:40, RubÃ©n FernÃ¡ndez Casal (<\n> rubenfcasal en gmail.com>) escribiÃ³:\n>\n> > Hola a todos,\n> >\n> > Por fin pude terminar de preparar la descarga y procesamiento de los\n> datos\n> > por edad y sexo. Ya estÃ¡n en el repositorio:\n> > https://github.com/rubenfcasal/COVID-19\n> >\n> > Ya puestos tambiÃ©n incluÃ­ la descarga e importaciÃ³n de los datos\n> > acumulados del ISCIII y actualicÃ© las tablas en\n> > https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html empleando el\n> > paquete DT. Ahora tiene tres secciones...\n> >\n> > Mis siguientes pasos serÃ¡n tratar de conseguir datos por provincias y\n> > empezar a ajustar modelos.\n> > AÃ±adÃ­ en https://rubenfcasal.github.io/COVID-19/#enlaces algunas\n> > referencias...\n> >\n> > Cualquier ayuda/sugerencia/comentario/etc serÃ¡ bien recibido...\n> >\n> > Un saludo y cuidarse,\n> > RubÃ©n.\n> >\n> >\n> > --\n> >\n> > RubÃ©n FernÃ¡ndez Casal\n> > https://rubenfcasal.github.io\n> > Dep. MatemÃ¡ticas, Universidade da CoruÃ±a\n> > Centro de InvestigaciÃ³n en TecnologÃ­as de la InformaciÃ³n y las\n> > Comunicaciones (CITIC)\n> >\n>\n>\n> --\n>\n> RubÃ©n FernÃ¡ndez Casal\n> https://rubenfcasal.github.io\n> Dep. MatemÃ¡ticas, Universidade da CoruÃ±a\n> Centro de InvestigaciÃ³n en TecnologÃ­as de la InformaciÃ³n y las\n> Comunicaciones (CITIC)\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias RubÃ©n Casal\n\nLÃ¡stima que no tienen valores mÃ©dicos, pero mirando lo que realizaron y lo\nvaloro mucho, por eso les sugiero si podrÃ­an traducirlo a lenguaje de\nEpidemiologÃ­a, en el grupo de",
+      "thread_id": "thread-2f75e07d4fe5",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-265a68991914",
+      "message_id": "<06e18aed-4483-b728-3b88-e0dc9eba4e99@gmail.com>",
+      "from_name": "neo",
+      "from_email_hash": "9592c049134ace3b88d587013cf973f4a2bdf83e2d50d581ff507e78f61f6805",
+      "date": "2020-04-11T15:11:48-04:00",
+      "subject": "[R-es] Datos oficiales de COVID-19 en España",
+      "subject_clean": "[R-es] Datos oficiales de COVID-19 en España",
+      "in_reply_to": "<CAJhxDDuentJBroVwgrZ8QKfAt4MR07KKAZWuA0imhhNnM_veWg@mail.gmail.com>",
+      "references": [
+        "<CAJhxDDtDtSsHfCMSmxH=xBfdkHbxAv6hrtDpmC-D5rjF3owj0g@mail.gmail.com>",
+        "<CAJhxDDuentJBroVwgrZ8QKfAt4MR07KKAZWuA0imhhNnM_veWg@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias a todos los que ponen sus conocimientos y tiempo a disposiciÃ³n \nde la comunidad para que el resto nos podamos hacer una idea de la \nrealidad a travÃ©s de los nÃºmeros, es muy Ãºtil examinar sus cÃ¡lculos y \nresultados para cuantificar el orden de magnitud de nuestra primera \ntragedia mundial compartida ... espero que despuÃ©s de esto, como \nhumanidad haya hecho algÃºn cambio en el interior. A cuidarse chicos !!\n\nSaludos !!\n\nEric.\n\n\n\n\nOn 11-04-20 05:43, RubÃ©n FernÃ¡ndez Casal wrote:\n> Hola a todos,\n> Por fin pudimos publicar en abierto las predicciones cooperativas:\n> Web Investigadores UDC: https://covid19.citic.udc.es , pestaÃ±a Informes.\n> Estas son las de ayer, supongo que entre las 8pm y las 10pm publicaremos\n> las de hoy...\n>\n> Un saludo, RubÃ©n.\n>\n> El sÃ¡b., 28 mar. 2020 a las 10:40, RubÃ©n FernÃ¡ndez Casal (<\n> rubenfcasal en gmail.com>) escribiÃ³:\n>\n>> Hola a todos,\n>>\n>> Por fin pude terminar de preparar la descarga y procesamiento de los datos\n>> por edad y sexo. Ya estÃ¡n en el repositorio:\n>> https://github.com/rubenfcasal/COVID-19\n>>\n>> Ya puestos tambiÃ©n incluÃ­ la descarga e importaciÃ³n de los datos\n>> acumulados del ISCIII y actualicÃ© las tablas en\n>> https://rubenfcasal.github.io/COVID-19/COVID-19-tablas.html empleando el\n>> paquete DT. Ahora tiene tres secciones...\n>>\n>> Mis siguientes pasos serÃ¡n tratar de conseguir datos por provincias y\n>> empezar a ajustar modelos.\n>> AÃ±adÃ­ en https://rubenfcasal.github.io/COVID-19/#enlaces algunas\n>> referencias...\n>>\n>> Cualquier ayuda/sugerencia/comentario/etc serÃ¡ bien recibido...\n>>\n>> Un saludo y cuidarse,\n>> RubÃ©n.\n>>\n>>\n>> --\n>>\n>> RubÃ©n FernÃ¡ndez Casal\n>> https://rubenfcasal.github.io\n>> Dep. MatemÃ¡ticas, Universidade da CoruÃ±a\n>> Centro de InvestigaciÃ³n en TecnologÃ­as de la InformaciÃ³n y las\n>> Comunicaciones (CITIC)\n>>\n>",
+      "body_snippet": "Gracias a todos los que ponen sus conocimientos y tiempo a disposiciÃ³n \nde la comunidad para que el resto nos podamos hacer una idea de la \nrealidad a travÃ©s de los nÃºmeros, es muy Ãºtil examinar s",
+      "thread_id": "thread-2f75e07d4fe5",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-7fa498b54c77",
+      "message_id": "<CAPsam5GkZzA4PnS48zfq5rHDLJdKiD4vSWsDkJ9uUnOZuQBx3g@mail.gmail.com>",
+      "from_name": "Sebastián Rangel",
+      "from_email_hash": "bb227678b10837d1c67277688620db1c5edd6eef0415c5100f61089f9e91adbf",
+      "date": "2020-04-11T23:17:32-05:00",
+      "subject": "[R-es] logit ordenado",
+      "subject_clean": "[R-es] logit ordenado",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas noches,\nTengo una inquietud, estoy revisando los modelos logÃ­sticos ordenados. Mi\nduda estÃ¡ en los interceptos del modelo, se supone que estos son umbrales\nde corte de una variable latente, pensaba que los umbrales debÃ­an ser\nordenados ascendentes, pero vi un tutorial con una variable ordenada de 3\ncategorÃ­as la cual tiene dos puntos de corte, lo extraÃ±o es que el primer\npunto de corte es mayor que el segundo. Â¿CÃ³mo es esto posible? Tiene una\ninterpretaciÃ³n.\nAgradezco sus comentarios,\n\nDejo el vÃ­deo donde encontrÃ© lo comento\nhttps://sites.google.com/site/econometricsacademy/econometrics-models/ordered-probit-and-logit-models\nAtte,\nSebastiÃ¡n Rangel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches,\nTengo una inquietud, estoy revisando los modelos logÃ­sticos ordenados. Mi\nduda estÃ¡ en los interceptos del modelo, se supone que estos son umbrales\nde corte de una variable latente, p",
+      "thread_id": "thread-7fa498b54c77",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-4b7bdf4354e1",
+      "message_id": "<CAJ+AE2p=G7y++fqgha3CsxJveU4_gFrpvKreag_Er1sz-R=0GA@mail.gmail.com>",
+      "from_name": "Kevin Revelo",
+      "from_email_hash": "4327bf99dc5a1aa58e01eb274d3e41521e10d03a9a2ebec16e9a9ae85ddc8cc1",
+      "date": "2020-04-12T23:27:23-05:00",
+      "subject": "[R-es] W52hmz3fuzyQkMw8",
+      "subject_clean": "[R-es] W52hmz3fuzyQkMw8",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "W52hmz3fuzyQkMw8\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "W52hmz3fuzyQkMw8\n\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-4b7bdf4354e1",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-8cedf4e2c414",
+      "message_id": "<CAF3uytUMObfyXcBanLAjE1TaCLuueRa9+i9fL2CiQEgB_Q6FJQ@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-14T16:29:02+02:00",
+      "subject": "[R-es] ¿puede alguien leerme esto?",
+      "subject_clean": "[R-es] ¿puede alguien leerme esto?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas tardes, Â¿puede alguien leerme esto? es de un ejemplo de forestFloor\n\nX = data[-1:-50,!names(data) %in% \"ptyrup\"]\nY = iris[-1:-50,\"Species\"]\n\nGracias\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes, Â¿puede alguien leerme esto? es de un ejemplo de forestFloor\n\nX = data[-1:-50,!names(data) %in% \"ptyrup\"]\nY = iris[-1:-50,\"Species\"]\n\nGracias\n\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-8cedf4e2c414",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-8af5834d1d49",
+      "message_id": "<CAF3uytUuNyJvibLzCHMLqh4fWMgNC0d5h4A_EePmpRHAd38=Fw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-14T16:32:56+02:00",
+      "subject": "[R-es] ¿puede alguien leerme esto?",
+      "subject_clean": "[R-es] ¿puede alguien leerme esto?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Perdonad, os mandÃ© lo que yo estaba haciendo. Es esto:\n\nX = iris[-1:-50,!names(iris) %in% \"Species\"]\n\nY = iris[-1:-50,\"Species\"]\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Perdonad, os mandÃ© lo que yo estaba haciendo. Es esto:\n\nX = iris[-1:-50,!names(iris) %in% \"Species\"]\n\nY = iris[-1:-50,\"Species\"]\n\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-8af5834d1d49",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-c4380c92efff",
+      "message_id": "<cd29925a-e675-4258-76ea-15b9d3470b69@unex.es>",
+      "from_name": "José Trujillo Carmona",
+      "from_email_hash": "af2647cb50819e6240d8732985bccca31163c9659cce67854ca2df3cfc52531c",
+      "date": "2020-04-14T16:56:29+02:00",
+      "subject": "[R-es] ¿puede alguien leerme esto?",
+      "subject_clean": "[R-es] ¿puede alguien leerme esto?",
+      "in_reply_to": "<CAF3uytUuNyJvibLzCHMLqh4fWMgNC0d5h4A_EePmpRHAd38=Fw@mail.gmail.com>",
+      "references": [
+        "<CAF3uytUuNyJvibLzCHMLqh4fWMgNC0d5h4A_EePmpRHAd38=Fw@mail.gmail.com>"
+      ],
+      "body_plain": "Los corchetes seleccionan en un dataframe (conjunto de datos), filas y \ncolumnas.\n\nLos nÃºmeros anteriores a la coma las filas y lo que haya despuÃ©s de la \ncoma las columnas.\n\nAntes de la coma tienes los nÃºmeros 1:50, que serÃ­an desde el primero al \n50 de las 150 filas que hay.\n\nPero si son negativos el primero te dice donde empezar, siendo el -1 la \nÃºltima fila y el segundo nÃºmero hasta donde llegar siendo 149 la \npenÃºltima fila, 148 la antepenÃºltima, ... -1:-1 serÃ­an todas las filas.\n\nRespecto de las columnas en el primer caso tienes puestas las columnas \ncuyos nombres no sean Species y en el segundo caso la columna Species.\n\nSaludos.\n\n\nEl 14/4/20 a las 16:32, Manuel Mendoza escribiÃ³:\n> Perdonad, os mandÃ© lo que yo estaba haciendo. Es esto:\n>\n> X = iris[-1:-50,!names(iris) %in% \"Species\"]\n>\n> Y = iris[-1:-50,\"Species\"]\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Los corchetes seleccionan en un dataframe (conjunto de datos), filas y \ncolumnas.\n\nLos nÃºmeros anteriores a la coma las filas y lo que haya despuÃ©s de la \ncoma las columnas.\n\nAntes de la coma tienes",
+      "thread_id": "thread-8af5834d1d49",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-5d08738aa8aa",
+      "message_id": "<df3a2fbc0600d652929b403f90fab71c@imdea.org>",
+      "from_name": "jorge.senan",
+      "from_email_hash": "5a39d71b46a897cba4ee5f7fc0f6e8de45c6dd82625c1f56f0f4fd5e408c9f80",
+      "date": "2020-04-14T17:48:03+02:00",
+      "subject": "[R-es] ¿puede alguien leerme esto?",
+      "subject_clean": "[R-es] ¿puede alguien leerme esto?",
+      "in_reply_to": "<cd29925a-e675-4258-76ea-15b9d3470b69@unex.es>",
+      "references": [
+        "<CAF3uytUuNyJvibLzCHMLqh4fWMgNC0d5h4A_EePmpRHAd38=Fw@mail.gmail.com>",
+        "<cd29925a-e675-4258-76ea-15b9d3470b69@unex.es>"
+      ],
+      "body_plain": "Hola JosÃ©,\nPerdona pero, al menos en mi consola, si seÃ±alas con el signo menos - en \nlas filas o en las columnas significa exclusiÃ³n.\nademÃ¡s en el caso de df[-1:-1,] me exluye solo la primera fila. Ejemplo \nA. Otra forma de exluir un grupo seria incluyendo : -c(1:3). Con el \nsigno de negaciÃ³n y vector.\n\nEl tema de indicar la Ãºltima posiciÃ³n sÃ© que ocurre en las listas. \nEjemplo B.\n\nYa me direis, por favor. Me habeis dejado con la intriga. Siempre lo he \nhecho asÃ­...\n\nSaludos\n\n\n\nEjemplo A\n> a<-data.frame(a= c(\"1\",\"2s\",\"3s\",4,5))\n> a[1,]\n[1] 1\nLevels: 1 2s 3s 4 5\n> a[-1,]\n[1] 2s 3s 4  5\nLevels: 1 2s 3s 4 5\n> a[-3,]\n[1] 1  2s 4  5\nLevels: 1 2s 3s 4 5\n> a[-1:-3,]\n[1] 4 5\nLevels: 1 2s 3s 4 5\n> a[-1:-1,]\n[1] 2s 3s 4  5\nLevels: 1 2s 3s 4 5\n> a[-1:-3, !names(a) %in% \"a\"]\ndata frame with 0 columns and 2 rows\n\nEjemplo B\n> list_a<-list(a= \"uno\",b= c(1,2,3))\n> list_a[-1]\n$b\n[1] 1 2 3\n> list_a[-2]\n$a\n[1] \"uno\"\n> list_a[-1:-2]\nnamed list()\n\n\nEl 14.04.2020 16:56, JosÃ© Trujillo Carmona escribiÃ³:\n> Los corchetes seleccionan en un dataframe (conjunto de datos), filas y \n> columnas.\n> \n> Los nÃºmeros anteriores a la coma las filas y lo que haya despuÃ©s de la\n> coma las columnas.\n> \n> Antes de la coma tienes los nÃºmeros 1:50, que serÃ­an desde el primero\n> al 50 de las 150 filas que hay.\n> \n> Pero si son negativos el primero te dice donde empezar, siendo el -1\n> la Ãºltima fila y el segundo nÃºmero hasta donde llegar siendo 149 la\n> penÃºltima fila, 148 la antepenÃºltima, ... -1:-1 serÃ­an todas las\n> filas.\n> \n> Respecto de las columnas en el primer caso tienes puestas las columnas\n> cuyos nombres no sean Species y en el segundo caso la columna Species.\n> \n> Saludos.\n> \n> \n> El 14/4/20 a las 16:32, Manuel Mendoza escribiÃ³:\n>> Perdonad, os mandÃ© lo que yo estaba haciendo. Es esto:\n>> \n>> X = iris[-1:-50,!names(iris) %in% \"Species\"]\n>> \n>> Y = iris[-1:-50,\"Species\"]\n>> \n>> \t[[alternative HTML version deleted]]\n>> \n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Hola JosÃ©,\nPerdona pero, al menos en mi consola, si seÃ±alas con el signo menos - en \nlas filas o en las columnas significa exclusiÃ³n.\nademÃ¡s en el caso de df[-1:-1,] me exluye solo la primera fila",
+      "thread_id": "thread-8af5834d1d49",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-412765692327",
+      "message_id": "<88dc18b8-cd60-88c7-ee1b-4ac9b0eb47ea@unex.es>",
+      "from_name": "José Trujillo Carmona",
+      "from_email_hash": "af2647cb50819e6240d8732985bccca31163c9659cce67854ca2df3cfc52531c",
+      "date": "2020-04-14T17:53:00+02:00",
+      "subject": "[R-es] ¿puede alguien leerme esto?",
+      "subject_clean": "[R-es] ¿puede alguien leerme esto?",
+      "in_reply_to": "<df3a2fbc0600d652929b403f90fab71c@imdea.org>",
+      "references": [
+        "<CAF3uytUuNyJvibLzCHMLqh4fWMgNC0d5h4A_EePmpRHAd38=Fw@mail.gmail.com>",
+        "<cd29925a-e675-4258-76ea-15b9d3470b69@unex.es>",
+        "<df3a2fbc0600d652929b403f90fab71c@imdea.org>"
+      ],
+      "body_plain": "Tienes toda la razÃ³n. Lo he interpretado yo mal.\n\nPerdonad el ruido.\n\nSaludos.\n\nEl 14/4/20 a las 17:48, jorge.senan escribiÃ³:\n> Hola JosÃ©,\n> Perdona pero, al menos en mi consola, si seÃ±alas con el signo menos - \n> en las filas o en las columnas significa exclusiÃ³n.\n> ademÃ¡s en el caso de df[-1:-1,] me exluye solo la primera fila. \n> Ejemplo A. Otra forma de exluir un grupo seria incluyendo : -c(1:3). \n> Con el signo de negaciÃ³n y vector.\n>\n> El tema de indicar la Ãºltima posiciÃ³n sÃ© que ocurre en las listas. \n> Ejemplo B.\n>\n> Ya me direis, por favor. Me habeis dejado con la intriga. Siempre lo \n> he hecho asÃ­...\n>\n> Saludos\n>\n>\n>\n> Ejemplo A\n>> a<-data.frame(a= c(\"1\",\"2s\",\"3s\",4,5))\n>> a[1,]\n> [1] 1\n> Levels: 1 2s 3s 4 5\n>> a[-1,]\n> [1] 2s 3s 4Â  5\n> Levels: 1 2s 3s 4 5\n>> a[-3,]\n> [1] 1Â  2s 4Â  5\n> Levels: 1 2s 3s 4 5\n>> a[-1:-3,]\n> [1] 4 5\n> Levels: 1 2s 3s 4 5\n>> a[-1:-1,]\n> [1] 2s 3s 4Â  5\n> Levels: 1 2s 3s 4 5\n>> a[-1:-3, !names(a) %in% \"a\"]\n> data frame with 0 columns and 2 rows\n>\n> Ejemplo B\n>> list_a<-list(a= \"uno\",b= c(1,2,3))\n>> list_a[-1]\n> $b\n> [1] 1 2 3\n>> list_a[-2]\n> $a\n> [1] \"uno\"\n>> list_a[-1:-2]\n> named list()\n>\n>\n> El 14.04.2020 16:56, JosÃ© Trujillo Carmona escribiÃ³:\n>> Los corchetes seleccionan en un dataframe (conjunto de datos), filas \n>> y columnas.\n>>\n>> Los nÃºmeros anteriores a la coma las filas y lo que haya despuÃ©s de la\n>> coma las columnas.\n>>\n>> Antes de la coma tienes los nÃºmeros 1:50, que serÃ­an desde el primero\n>> al 50 de las 150 filas que hay.\n>>\n>> Pero si son negativos el primero te dice donde empezar, siendo el -1\n>> la Ãºltima fila y el segundo nÃºmero hasta donde llegar siendo 149 la\n>> penÃºltima fila, 148 la antepenÃºltima, ... -1:-1 serÃ­an todas las\n>> filas.\n>>\n>> Respecto de las columnas en el primer caso tienes puestas las columnas\n>> cuyos nombres no sean Species y en el segundo caso la columna Species.\n>>\n>> Saludos.\n>>\n>>\n>> El 14/4/20 a las 16:32, Manuel Mendoza escribiÃ³:\n>>> Perdonad, os mandÃ© lo que yo estaba haciendo. Es esto:\n>>>\n>>> X = iris[-1:-50,!names(iris) %in% \"Species\"]\n>>>\n>>> Y = iris[-1:-50,\"Species\"]\n>>>\n>>> Â Â Â Â [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Tienes toda la razÃ³n. Lo he interpretado yo mal.\n\nPerdonad el ruido.\n\nSaludos.\n\nEl 14/4/20 a las 17:48, jorge.senan escribiÃ³:\n> Hola JosÃ©,\n> Perdona pero, al menos en mi consola, si seÃ±alas con el",
+      "thread_id": "thread-8af5834d1d49",
+      "thread_depth": 3,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-fa5176fc6184",
+      "message_id": "<CAF3uytVD+q1C6KxDQn7yEX2bjuRojm+=O7nNe7z2d_6pZWn6Sg@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-14T19:48:20+02:00",
+      "subject": "[R-es] (sin asunto)",
+      "subject_clean": "[R-es] (sin asunto)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola de nuevo, hago un mapa con ggplot:\n\npyt<-ggplot(data, aes(x = longitud, y = latitud)) +\ngeom_point(aes(color = factor(ptyrup)))\nwindows();pyt\n\ny despuÃ©s hago un loop con for. En vez de  print(i), que me indica por\ndÃ³nde va el loop,  me gustarÃ­a que me fuera aÃ±adiendo una lÃ­nea vertical al\nmapa en la longitud que corresponde a i. Con plot () es muy fÃ¡cil:\nabline(v=i), pero con ggplot, no me aÃ±ade la lÃ­nea, y si hago un nuevo mapa\ncon la nueva lÃ­nea, me borra la anterior.\n\nCreÃ­a haberlo solucionado incluyendo en el loop:\n\n  pyt <- pyt+\n  geom_vline(xintercept = i)\n  pyt\n\nPero tampoco funciona. Es extraÃ±o, pues sale bien si hago yo las\niteraciones, una a una, pero cuando hago el loop no dibuja las lÃ­neas.\n\nGracias, una vez mÃ¡s,\nManuel\n\n\n\nMuchas gracias, como siempre.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola de nuevo, hago un mapa con ggplot:\n\npyt<-ggplot(data, aes(x = longitud, y = latitud)) +\ngeom_point(aes(color = factor(ptyrup)))\nwindows();pyt\n\ny despuÃ©s hago un loop con for. En vez de  print(i)",
+      "thread_id": "thread-fa5176fc6184",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-c71f104d3650",
+      "message_id": "<CAOKbq8jm_8XTM7EtnuC26CfqomnoKf3t2aWCQ9BLiUwEbcVxgw@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-04-14T20:21:52+02:00",
+      "subject": "[R-es] (sin asunto)",
+      "subject_clean": "[R-es] (sin asunto)",
+      "in_reply_to": "<CAF3uytVD+q1C6KxDQn7yEX2bjuRojm+=O7nNe7z2d_6pZWn6Sg@mail.gmail.com>",
+      "references": [
+        "<CAF3uytVD+q1C6KxDQn7yEX2bjuRojm+=O7nNe7z2d_6pZWn6Sg@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Manuel,\n\nPrueba a forzar la salida del grÃ¡fico de ggplot con \"print(pyt)\".\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl mar., 14 abr. 2020 a las 19:49, Manuel Mendoza (<\nmmendoza en fulbrightmail.org>) escribiÃ³:\n\n> Hola de nuevo, hago un mapa con ggplot:\n>\n> pyt<-ggplot(data, aes(x = longitud, y = latitud)) +\n> geom_point(aes(color = factor(ptyrup)))\n> windows();pyt\n>\n> y despuÃ©s hago un loop con for. En vez de  print(i), que me indica por\n> dÃ³nde va el loop,  me gustarÃ­a que me fuera aÃ±adiendo una lÃ­nea vertical al\n> mapa en la longitud que corresponde a i. Con plot () es muy fÃ¡cil:\n> abline(v=i), pero con ggplot, no me aÃ±ade la lÃ­nea, y si hago un nuevo mapa\n> con la nueva lÃ­nea, me borra la anterior.\n>\n> CreÃ­a haberlo solucionado incluyendo en el loop:\n>\n>   pyt <- pyt+\n>   geom_vline(xintercept = i)\n>   pyt\n>\n> Pero tampoco funciona. Es extraÃ±o, pues sale bien si hago yo las\n> iteraciones, una a una, pero cuando hago el loop no dibuja las lÃ­neas.\n>\n> Gracias, una vez mÃ¡s,\n> Manuel\n>\n>\n>\n> Muchas gracias, como siempre.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Manuel,\n\nPrueba a forzar la salida del grÃ¡fico de ggplot con \"print(pyt)\".\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl mar., 14 abr. 2020 a las 19:49, Manuel Mendoza (<\nmmendoza en fulb",
+      "thread_id": "thread-fa5176fc6184",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-dfa6f0b24d26",
+      "message_id": "<20200414214042.Horde.9NRCPqF1an9K7xwFQPSNJQ8@mdm.correo.gob.es>",
+      "from_name": "ANA VENTERO MARTIN",
+      "from_email_hash": "0dd366b700e750bf98b430e825b6f877bc26b3a69c2e4bbdb6bdab985da1d228",
+      "date": "2020-04-14T21:40:42+02:00",
+      "subject": "[R-es] desagregar distribución de frecuencias",
+      "subject_clean": "[R-es] desagregar distribución de frecuencias",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola a tod en s,\nTrabajo con datos de abundancia (nÃºmero de individuos) por tallas  \n(medidas al medio centÃ­metro inferior) de diferentes especies de peces  \ny mis datos base son el nÃºmero medido de peces por talla. NecesitarÃ­a  \nvuestra ayuda para transformar las distribuciones de frecuencias de  \ntalla a los datos brutos que las generaÃ­an.\nEs decir, pasar de algo como esto\n8Â  Â  Â  Â  Â  Â 1\n8.5Â  Â  Â  Â  3\n9Â  Â  Â  Â  Â  5\n10Â  Â  Â  Â  7\n10.5Â  Â  Â 4\n11Â  Â  Â  Â  2\n11.5Â  Â  Â 1\nA esto\n8\n8.5\n8.5\n8.5\n9\n9\n9\n9\n9\n10\n10\n10\n10\n10\n10\n10\n10.5\n10.5\n10.5\n10.5\n11\n11\n11.5\nGracias de antemano y mucho Ã¡nimo para estos tiempos inciertos que vivimos.\nAna\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a tod en s,\nTrabajo con datos de abundancia (nÃºmero de individuos) por tallas  \n(medidas al medio centÃ­metro inferior) de diferentes especies de peces  \ny mis datos base son el nÃºmero medido d",
+      "thread_id": "thread-dfa6f0b24d26",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-bd29e2df1989",
+      "message_id": "<CAOKbq8h_PP1Vn9Xkwy_P=RUJWbT1t207=hrkZse_VC=iCNcz_g@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-04-14T21:53:00+02:00",
+      "subject": "[R-es] desagregar distribución de frecuencias",
+      "subject_clean": "[R-es] desagregar distribución de frecuencias",
+      "in_reply_to": "<20200414214042.Horde.9NRCPqF1an9K7xwFQPSNJQ8@mdm.correo.gob.es>",
+      "references": [
+        "<20200414214042.Horde.9NRCPqF1an9K7xwFQPSNJQ8@mdm.correo.gob.es>"
+      ],
+      "body_plain": "Hola,\n\nSÃ­, esta es una forma...\n\n\n> dat_freq <- data.frame(\n+   val = c(8, 8.5, 9, 10, 10.5, 11, 11.5),\n+   freq = c(1, 3, 5, 7, 4, 2, 1)\n+ )\n>\n> rep(dat_freq$val, dat_freq$freq)\n [1]  8.0  8.5  8.5  8.5  9.0  9.0  9.0  9.0  9.0 10.0 10.0 10.0 10.0 10.0\n10.0 10.0 10.5 10.5 10.5 10.5 11.0\n[22] 11.0 11.5\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\n\nEl mar., 14 abr. 2020 a las 21:40, ANA VENTERO MARTIN (<ana.ventero en ieo.es>)\nescribiÃ³:\n\n> Hola a tod en s,\n> Trabajo con datos de abundancia (nÃºmero de individuos) por tallas\n> (medidas al medio centÃ­metro inferior) de diferentes especies de peces\n> y mis datos base son el nÃºmero medido de peces por talla. NecesitarÃ­a\n> vuestra ayuda para transformar las distribuciones de frecuencias de\n> talla a los datos brutos que las generaÃ­an.\n> Es decir, pasar de algo como esto\n> 8           1\n> 8.5        3\n> 9          5\n> 10        7\n> 10.5     4\n> 11        2\n> 11.5     1\n> A esto\n> 8\n> 8.5\n> 8.5\n> 8.5\n> 9\n> 9\n> 9\n> 9\n> 9\n> 10\n> 10\n> 10\n> 10\n> 10\n> 10\n> 10\n> 10.5\n> 10.5\n> 10.5\n> 10.5\n> 11\n> 11\n> 11.5\n> Gracias de antemano y mucho Ã¡nimo para estos tiempos inciertos que vivimos.\n> Ana\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSÃ­, esta es una forma...\n\n\n> dat_freq <- data.frame(\n+   val = c(8, 8.5, 9, 10, 10.5, 11, 11.5),\n+   freq = c(1, 3, 5, 7, 4, 2, 1)\n+ )\n>\n> rep(dat_freq$val, dat_freq$freq)\n [1]  8.0  8.5  8.5 ",
+      "thread_id": "thread-dfa6f0b24d26",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-27b00ef3df64",
+      "message_id": "<CAHUWr6rwGF0K+nsmKoRVKjO9PJz0j18JnWZVxUTGNRkqs3HAGQ@mail.gmail.com>",
+      "from_name": "Juan Carlos Lopez Mesa",
+      "from_email_hash": "6fd88d4c0bf0476d0abbe440e260675a9368da23c352606748f7ae8c97b2b1fe",
+      "date": "2020-04-15T12:04:28-05:00",
+      "subject": "[R-es] desagregar distribución de frecuencias",
+      "subject_clean": "[R-es] desagregar distribución de frecuencias",
+      "in_reply_to": "<20200414214042.Horde.9NRCPqF1an9K7xwFQPSNJQ8@mdm.correo.gob.es>",
+      "references": [
+        "<20200414214042.Horde.9NRCPqF1an9K7xwFQPSNJQ8@mdm.correo.gob.es>"
+      ],
+      "body_plain": "datos <- data.frame(talla = c(8, 8.5, 9, 10, 10.5, 11, 11.5),\n                    n = c(1, 3, 5, 7, 4, 2, 1))\n\n\nmapply(FUN = rep, datos$talla, datos$n)\n\n\nunlist(mapply(FUN = rep, datos$talla, datos$n))\n\nEl mar., 14 abr. 2020 a las 14:40, ANA VENTERO MARTIN (<ana.ventero en ieo.es>)\nescribiÃ³:\n\n> Hola a tod en s,\n> Trabajo con datos de abundancia (nÃºmero de individuos) por tallas\n> (medidas al medio centÃ­metro inferior) de diferentes especies de peces\n> y mis datos base son el nÃºmero medido de peces por talla. NecesitarÃ­a\n> vuestra ayuda para transformar las distribuciones de frecuencias de\n> talla a los datos brutos que las generaÃ­an.\n> Es decir, pasar de algo como esto\n> 8           1\n> 8.5        3\n> 9          5\n> 10        7\n> 10.5     4\n> 11        2\n> 11.5     1\n> A esto\n> 8\n> 8.5\n> 8.5\n> 8.5\n> 9\n> 9\n> 9\n> 9\n> 9\n> 10\n> 10\n> 10\n> 10\n> 10\n> 10\n> 10\n> 10.5\n> 10.5\n> 10.5\n> 10.5\n> 11\n> 11\n> 11.5\n> Gracias de antemano y mucho Ã¡nimo para estos tiempos inciertos que vivimos.\n> Ana\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "datos <- data.frame(talla = c(8, 8.5, 9, 10, 10.5, 11, 11.5),\n                    n = c(1, 3, 5, 7, 4, 2, 1))\n\n\nmapply(FUN = rep, datos$talla, datos$n)\n\n\nunlist(mapply(FUN = rep, datos$talla, datos$n)",
+      "thread_id": "thread-dfa6f0b24d26",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-67a9dbd7366e",
+      "message_id": "<e62ce85ad484f4da2bf55217e8560247@analisisydecision.es>",
+      "from_name": "Raúl Vaquerizo",
+      "from_email_hash": "de44b56d610a5ca241c664105665c1f84712142d91d3f3e18aa5077b9bdfbadb",
+      "date": "2020-04-15T20:07:05+02:00",
+      "subject": "[R-es] desagregar distribución de frecuencias",
+      "subject_clean": "[R-es] desagregar distribución de frecuencias",
+      "in_reply_to": "<CAHUWr6rwGF0K+nsmKoRVKjO9PJz0j18JnWZVxUTGNRkqs3HAGQ@mail.gmail.com>",
+      "references": [
+        "<20200414214042.Horde.9NRCPqF1an9K7xwFQPSNJQ8@mdm.correo.gob.es>",
+        "<CAHUWr6rwGF0K+nsmKoRVKjO9PJz0j18JnWZVxUTGNRkqs3HAGQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola, yo uso la funciÃ³n expand de dplyr. Hace poco puse un ejemplo de \nuso en el blog \nhttps://analisisydecision.es/los-pilares-de-mi-simulacion-de-la-extension-del-covid19/\n\nmuestra <- muestra %>% group_by(seccion,rango_edad) %>% \nsummarise(habitantes=sum(habitantes))\n\ntenÃ­a datos por secciÃ³n censal y rango de edad y querÃ­a un registro en \nfunciÃ³n de un campo conteo. Saludos.",
+      "body_snippet": "Hola, yo uso la funciÃ³n expand de dplyr. Hace poco puse un ejemplo de \nuso en el blog \nhttps://analisisydecision.es/los-pilares-de-mi-simulacion-de-la-extension-del-covid19/\n\nmuestra <- muestra %>% g",
+      "thread_id": "thread-dfa6f0b24d26",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-ca5d9a27b705",
+      "message_id": "<CAMn86Newvofc-VxUaXZj6jmZx77P6yS3wzaxThs4KY1a6ezH3A@mail.gmail.com>",
+      "from_name": "Sebastian Kruk",
+      "from_email_hash": "a65e9b3040f8f1811b3bf74d2c4f13fa3313fea406ff0de967af7111620a34d2",
+      "date": "2020-04-16T18:48:44-03:00",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados:\n\nTengo tres data frame (datos inventados):\n\nA) Lista de precios de diferentes productos por paises.\n\nProducto PaÃ­s Precio Unidad Peso\nA AR 10 kg 12\nB BR 210 lb 0,5\nC UY 3,5 kg 90\nA BR 3 kg 3\nC CO 345 lb 7,6\nA CO 1200 gr 23000\n\nB) Tipo de cambio por paÃ­s\nPaÃ­s TC\nAR 12\nBR 1,8\nCO 45\nUY 0,5\n\nC)Ratio para pasar a gr.\nUnidad Ratio\nkg 1000\nlb 0,89\ngr 1\n\nQuiero obtener un nuevo data frame en que todos los precios estÃ©n\nconvertidos a dÃ³lares y expresados en gramos\n\nObtendrÃ­a los valores de la siguiente manera:\n\nProducto PaÃ­s Precio\nA AR 10x12/(12x1000)\nB BR 210x1,8/(0,5/0,89)\nC UY 3,5x0,5/(90x1000)\nA BR 3x1,8x3/1000\nC CO 345x4,5/(7,6*0,89)\nA CO 1200x4,5/(23000x1)\n\nÂ¿Hay alguna forma sencilla de hacerlo?\n\nSaludos,\n\nSebastiÃ¡n.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados:\n\nTengo tres data frame (datos inventados):\n\nA) Lista de precios de diferentes productos por paises.\n\nProducto PaÃ­s Precio Unidad Peso\nA AR 10 kg 12\nB BR 210 lb 0,5\nC UY 3,5 kg 90\nA BR 3 kg",
+      "thread_id": "thread-ca5d9a27b705",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-54315ea2e155",
+      "message_id": "<CAHo_aESYZY5fYQT-kb4ZtTdRfO7E42wppU6_5=7ff=iU-fvu=A@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2020-04-16T19:16:23-03:00",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": "<CAMn86Newvofc-VxUaXZj6jmZx77P6yS3wzaxThs4KY1a6ezH3A@mail.gmail.com>",
+      "references": [
+        "<CAMn86Newvofc-VxUaXZj6jmZx77P6yS3wzaxThs4KY1a6ezH3A@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Sebastian Kruk\n\nDesde mi punto de vista es muy simple, varios If anidados, o en su defecto\nel condicional que a usted le resulte mÃ¡s cÃ³modo.\n\nJavier RubÃ©n Marcuzzi\n\nEl jue., 16 abr. 2020 a las 18:49, Sebastian Kruk (<residuo.solow en gmail.com>)\nescribiÃ³:\n\n> Estimados:\n>\n> Tengo tres data frame (datos inventados):\n>\n> A) Lista de precios de diferentes productos por paises.\n>\n> Producto PaÃ­s Precio Unidad Peso\n> A AR 10 kg 12\n> B BR 210 lb 0,5\n> C UY 3,5 kg 90\n> A BR 3 kg 3\n> C CO 345 lb 7,6\n> A CO 1200 gr 23000\n>\n> B) Tipo de cambio por paÃ­s\n> PaÃ­s TC\n> AR 12\n> BR 1,8\n> CO 45\n> UY 0,5\n>\n> C)Ratio para pasar a gr.\n> Unidad Ratio\n> kg 1000\n> lb 0,89\n> gr 1\n>\n> Quiero obtener un nuevo data frame en que todos los precios estÃ©n\n> convertidos a dÃ³lares y expresados en gramos\n>\n> ObtendrÃ­a los valores de la siguiente manera:\n>\n> Producto PaÃ­s Precio\n> A AR 10x12/(12x1000)\n> B BR 210x1,8/(0,5/0,89)\n> C UY 3,5x0,5/(90x1000)\n> A BR 3x1,8x3/1000\n> C CO 345x4,5/(7,6*0,89)\n> A CO 1200x4,5/(23000x1)\n>\n> Â¿Hay alguna forma sencilla de hacerlo?\n>\n> Saludos,\n>\n> SebastiÃ¡n.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado Sebastian Kruk\n\nDesde mi punto de vista es muy simple, varios If anidados, o en su defecto\nel condicional que a usted le resulte mÃ¡s cÃ³modo.\n\nJavier RubÃ©n Marcuzzi\n\nEl jue., 16 abr. 2020 a",
+      "thread_id": "thread-ca5d9a27b705",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-a1ab38ce169a",
+      "message_id": "<A8BF983D-619E-46D0-870A-7E64E23A4A8E@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2020-04-17T08:50:19+02:00",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": "<CAMn86Newvofc-VxUaXZj6jmZx77P6yS3wzaxThs4KY1a6ezH3A@mail.gmail.com>",
+      "references": [
+        "<CAMn86Newvofc-VxUaXZj6jmZx77P6yS3wzaxThs4KY1a6ezH3A@mail.gmail.com>"
+      ],
+      "body_plain": "Hola SebastiÃ¡n,\n\nSe puede hacer de muchas formas. Para mÃ­ la mÃ¡s cÃ³moda y rÃ¡pida es con el paquete dplyr, te pego debajo ejemplo reproducible.\n\nUn saludo,\n\nEmilio L. Cano\nhttp://emilio.lcano.com\n\n\n??\nprecios <- read.table(\n  text =\"Producto PaÃ­s Precio Unidad Peso\nA AR 10 kg 12\nB BR 210 lb 0,5\nC UY 3,5 kg 90\nA BR 3 kg 3\nC CO 345 lb 7,6\nA CO 1200 gr 23000\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\ntipos <- read.table(\n  text =\"PaÃ­s TC\nAR 12\nBR 1,8\nCO 45\nUY 0,5\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\nratios <- read.table(\n  text = \"Unidad Ratio\nkg 1000\nlb 0,89\ngr 1\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\nlibrary(dplyr)\nprecios %>% \n  inner_join(tipos) %>% \n  inner_join(ratios) %>% \n  mutate(Precio2 = Precio*TC/(Peso/Ratio))\n\n## SALIDA:\n\n  Producto PaÃ­s Precio Unidad    Peso   TC   Ratio      Precio2\n1        A   AR   10.0     kg    12.0 12.0 1000.00 10000.000000\n2        B   BR  210.0     lb     0.5  1.8    0.89   672.840000\n3        C   UY    3.5     kg    90.0  0.5 1000.00    19.444444\n4        A   BR    3.0     kg     3.0  1.8 1000.00  1800.000000\n5        C   CO  345.0     lb     7.6 45.0    0.89  1818.059211\n6        A   CO 1200.0     gr 23000.0 45.0    1.00     2.347826\n\n\n> El 16 abr 2020, a las 23:48, Sebastian Kruk <residuo.solow en gmail.com> escribiÃ³:\n> \n> Estimados:\n> \n> Tengo tres data frame (datos inventados):\n> \n> A) Lista de precios de diferentes productos por paises.\n> \n> Producto PaÃ­s Precio Unidad Peso\n> A AR 10 kg 12\n> B BR 210 lb 0,5\n> C UY 3,5 kg 90\n> A BR 3 kg 3\n> C CO 345 lb 7,6\n> A CO 1200 gr 23000\n> \n> B) Tipo de cambio por paÃ­s\n> PaÃ­s TC\n> AR 12\n> BR 1,8\n> CO 45\n> UY 0,5\n> \n> C)Ratio para pasar a gr.\n> Unidad Ratio\n> kg 1000\n> lb 0,89\n> gr 1\n> \n> Quiero obtener un nuevo data frame en que todos los precios estÃ©n\n> convertidos a dÃ³lares y expresados en gramos\n> \n> ObtendrÃ­a los valores de la siguiente manera:\n> \n> Producto PaÃ­s Precio\n> A AR 10x12/(12x1000)\n> B BR 210x1,8/(0,5/0,89)\n> C UY 3,5x0,5/(90x1000)\n> A BR 3x1,8x3/1000\n> C CO 345x4,5/(7,6*0,89)\n> A CO 1200x4,5/(23000x1)\n> \n> Â¿Hay alguna forma sencilla de hacerlo?\n> \n> Saludos,\n> \n> SebastiÃ¡n.\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola SebastiÃ¡n,\n\nSe puede hacer de muchas formas. Para mÃ­ la mÃ¡s cÃ³moda y rÃ¡pida es con el paquete dplyr, te pego debajo ejemplo reproducible.\n\nUn saludo,\n\nEmilio L. Cano\nhttp://emilio.lcano.com\n",
+      "thread_id": "thread-ca5d9a27b705",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-7ddfd72377b3",
+      "message_id": "<5e99cdec.1c69fb81.95ae8.3131@mx.google.com>",
+      "from_name": "residuo@soiow m@iii@g oii gm@ii@com",
+      "from_email_hash": "bd7cb316a37a2a11ccbff0e67036757ecbc722c570a5c52927a8f78fd518d350",
+      "date": "2020-04-17T12:40:23-03:00",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200417/11369880/attachment.html>",
+      "body_snippet": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200417/11369880/attachment.html>",
+      "thread_id": "thread-7ddfd72377b3",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-b59b6bc6141d",
+      "message_id": "<9530E7B2-CA99-4DFA-9483-E353B3725B46@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2020-04-17T17:55:34+02:00",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": "<5e99cdec.1c69fb81.95ae8.3131@mx.google.com>",
+      "references": [
+        "<5e99cdec.1c69fb81.95ae8.3131@mx.google.com>"
+      ],
+      "body_plain": "Hola,\n\nHay muchas formas de hacerlo en una sola lÃ­nea. A mÃ­ me gusta con dplyr, te pego debajo un ejemplo reproducible\n\nSalud,\n\nEmilio L. Cano\nhttp://emilio.lcano.com\n\n??\nprecios <- read.table(\n  text =\"Producto PaÃ­s Precio Unidad Peso\nA AR 10 kg 12\nB BR 210 lb 0,5\nC UY 3,5 kg 90\nA BR 3 kg 3\nC CO 345 lb 7,6\nA CO 1200 gr 23000\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\ntipos <- read.table(\n  text =\"PaÃ­s TC\nAR 12\nBR 1,8\nCO 45\nUY 0,5\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\nratios <- read.table(\n  text = \"Unidad Ratio\nkg 1000\nlb 0,89\ngr 1\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\nlibrary(dplyr)\nprecios %>% \n  inner_join(tipos) %>% \n  inner_join(ratios) %>% \n  mutate(Precio2 = Precio*TC/(Peso/Ratio))\n\n??\n\n\n\n> El 17 abr 2020, a las 17:40, residuo.solow en gmail.com escribiÃ³:\n> \n> Javier:\n>  \n> Si lo empecÃ© a hacer con if anidados pero me queda gigantesco. \n>  \n> Saludos,\n>  \n> SebastiÃ¡n.\n>  \n> Enviado desde Correo <https://go.microsoft.com/fwlink/?LinkId=550986> para Windows 10\n>  \n> De: Javier Marcuzzi <mailto:javier.ruben.marcuzzi en gmail.com>\n> Enviado: jueves, 16 de abril de 2020 19:16\n> Para: Sebastian Kruk <mailto:residuo.solow en gmail.com>\n> CC: Lista R <mailto:r-help-es en r-project.org>\n> Asunto: Re: [R-es] Convertir lista de precios a dolares por gramo\n>  \n> Estimado Sebastian Kruk\n>  \n> Desde mi punto de vista es muy simple, varios If anidados, o en su defecto el condicional que a usted le resulte mÃ¡s cÃ³modo.\n>  \n> Javier RubÃ©n Marcuzzi\n>  \n> El jue., 16 abr. 2020 a las 18:49, Sebastian Kruk (<residuo.solow en gmail.com <mailto:residuo.solow en gmail.com>>) escribiÃ³:\n> Estimados:\n> \n> Tengo tres data frame (datos inventados):\n> \n> A) Lista de precios de diferentes productos por paises.\n> \n> Producto PaÃ­s Precio Unidad Peso\n> A AR 10 kg 12\n> B BR 210 lb 0,5\n> C UY 3,5 kg 90\n> A BR 3 kg 3\n> C CO 345 lb 7,6\n> A CO 1200 gr 23000\n> \n> B) Tipo de cambio por paÃ­s\n> PaÃ­s TC\n> AR 12\n> BR 1,8\n> CO 45\n> UY 0,5\n> \n> C)Ratio para pasar a gr.\n> Unidad Ratio\n> kg 1000\n> lb 0,89\n> gr 1\n> \n> Quiero obtener un nuevo data frame en que todos los precios estÃ©n\n> convertidos a dÃ³lares y expresados en gramos\n> \n> ObtendrÃ­a los valores de la siguiente manera:\n> \n> Producto PaÃ­s Precio\n> A AR 10x12/(12x1000)\n> B BR 210x1,8/(0,5/0,89)\n> C UY 3,5x0,5/(90x1000)\n> A BR 3x1,8x3/1000\n> C CO 345x4,5/(7,6*0,89)\n> A CO 1200x4,5/(23000x1)\n> \n> Â¿Hay alguna forma sencilla de hacerlo?\n> \n> Saludos,\n> \n> SebastiÃ¡n.\n> \n>         [[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>  \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nHay muchas formas de hacerlo en una sola lÃ­nea. A mÃ­ me gusta con dplyr, te pego debajo un ejemplo reproducible\n\nSalud,\n\nEmilio L. Cano\nhttp://emilio.lcano.com\n\n??\nprecios <- read.table(\n  te",
+      "thread_id": "thread-7ddfd72377b3",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-15ad0c3f4a39",
+      "message_id": "<AM4PR02MB3059FA156C0F88D60953D0098CD90@AM4PR02MB3059.eurprd02.prod.outlook.com>",
+      "from_name": "Marcelino De La Cruz Rot",
+      "from_email_hash": "65c46abb4ca1a5f27552f6f219887e1db849802ef689daa85efcb102d34b2127",
+      "date": "2020-04-17T16:46:53Z",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": "<9530E7B2-CA99-4DFA-9483-E353B3725B46@gmail.com>",
+      "references": [
+        "<5e99cdec.1c69fb81.95ae8.3131@mx.google.com>",
+        "<9530E7B2-CA99-4DFA-9483-E353B3725B46@gmail.com>"
+      ],
+      "body_plain": "Hola:\n\nTambi?n se podr?a hacer con R base, usando la funci?n match:\n\n\nprecios$Peso.gr  <-  precios$Peso * ratios$Ratio[match(precios$Unidad, ratios$Unidad)]\nprecios$Precio.S  <-  precios$Precio * tipos$TC[match(precios$Pa?s, tipos$Pa?s)]\nprecios$Precio.S.gr  <-  precios$Precio.S/precios$Peso.gr\nprecios[,c(\"Producto\", \"Pa?s\", \"Precio.S.gr\")]\n\n\nSaludos\n\n\n________________________________\nDe: R-help-es <r-help-es-bounces en r-project.org> en nombre de Emilio L. Cano <emilopezcano en gmail.com>\nEnviado: viernes, 17 de abril de 2020 17:55\nPara: residuo.solow en gmail.com <residuo.solow en gmail.com>\nCc: Lista R <r-help-es en r-project.org>\nAsunto: Re: [R-es] Convertir lista de precios a dolares por gramo\n\nHola,\n\nHay muchas formas de hacerlo en una sola l?nea. A m? me gusta con dplyr, te pego debajo un ejemplo reproducible\n\nSalud,\n\nEmilio L. Cano\nhttp://emilio.lcano.com\n\n??\nprecios <- read.table(\n  text =\"Producto Pa?s Precio Unidad Peso\nA AR 10 kg 12\nB BR 210 lb 0,5\nC UY 3,5 kg 90\nA BR 3 kg 3\nC CO 345 lb 7,6\nA CO 1200 gr 23000\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\ntipos <- read.table(\n  text =\"Pa?s TC\nAR 12\nBR 1,8\nCO 45\nUY 0,5\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\nratios <- read.table(\n  text = \"Unidad Ratio\nkg 1000\nlb 0,89\ngr 1\",\n  dec = \",\", header = TRUE,\n  stringsAsFactors = FALSE)\n\nlibrary(dplyr)\nprecios %>%\n  inner_join(tipos) %>%\n  inner_join(ratios) %>%\n  mutate(Precio2 = Precio*TC/(Peso/Ratio))\n\n??\n\n\n\n> El 17 abr 2020, a las 17:40, residuo.solow en gmail.com escribi?:\n>\n> Javier:\n>\n> Si lo empec? a hacer con if anidados pero me queda gigantesco.\n>\n> Saludos,\n>\n> Sebasti?n.\n>\n> Enviado desde Correo <https://go.microsoft.com/fwlink/?LinkId=550986> para Windows 10\n>\n> De: Javier Marcuzzi <mailto:javier.ruben.marcuzzi en gmail.com>\n> Enviado: jueves, 16 de abril de 2020 19:16\n> Para: Sebastian Kruk <mailto:residuo.solow en gmail.com>\n> CC: Lista R <mailto:r-help-es en r-project.org>\n> Asunto: Re: [R-es] Convertir lista de precios a dolares por gramo\n>\n> Estimado Sebastian Kruk\n>\n> Desde mi punto de vista es muy simple, varios If anidados, o en su defecto el condicional que a usted le resulte m?s c?modo.\n>\n> Javier Rub?n Marcuzzi\n>\n> El jue., 16 abr. 2020 a las 18:49, Sebastian Kruk (<residuo.solow en gmail.com <mailto:residuo.solow en gmail.com>>) escribi?:\n> Estimados:\n>\n> Tengo tres data frame (datos inventados):\n>\n> A) Lista de precios de diferentes productos por paises.\n>\n> Producto Pa?s Precio Unidad Peso\n> A AR 10 kg 12\n> B BR 210 lb 0,5\n> C UY 3,5 kg 90\n> A BR 3 kg 3\n> C CO 345 lb 7,6\n> A CO 1200 gr 23000\n>\n> B) Tipo de cambio por pa?s\n> Pa?s TC\n> AR 12\n> BR 1,8\n> CO 45\n> UY 0,5\n>\n> C)Ratio para pasar a gr.\n> Unidad Ratio\n> kg 1000\n> lb 0,89\n> gr 1\n>\n> Quiero obtener un nuevo data frame en que todos los precios est?n\n> convertidos a d?lares y expresados en gramos\n>\n> Obtendr?a los valores de la siguiente manera:\n>\n> Producto Pa?s Precio\n> A AR 10x12/(12x1000)\n> B BR 210x1,8/(0,5/0,89)\n> C UY 3,5x0,5/(90x1000)\n> A BR 3x1,8x3/1000\n> C CO 345x4,5/(7,6*0,89)\n> A CO 1200x4,5/(23000x1)\n>\n> ?Hay alguna forma sencilla de hacerlo?\n>\n> Saludos,\n>\n> Sebasti?n.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola:\n\nTambi?n se podr?a hacer con R base, usando la funci?n match:\n\n\nprecios$Peso.gr  <-  precios$Peso * ratios$Ratio[match(precios$Unidad, ratios$Unidad)]\nprecios$Precio.S  <-  precios$Precio * tipo",
+      "thread_id": "thread-7ddfd72377b3",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-476d43b13982",
+      "message_id": "<5e99df4a.1c69fb81.1aaa9.758a@mx.google.com>",
+      "from_name": "residuo@soiow m@iii@g oii gm@ii@com",
+      "from_email_hash": "bd7cb316a37a2a11ccbff0e67036757ecbc722c570a5c52927a8f78fd518d350",
+      "date": "2020-04-17T13:54:24-03:00",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200417/25a00884/attachment-0001.html>",
+      "body_snippet": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200417/25a00884/attachment-0001.html>",
+      "thread_id": "thread-476d43b13982",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-95c61ce58841",
+      "message_id": "<5e99e047.1c69fb81.b0e03.4537@mx.google.com>",
+      "from_name": "residuo@soiow m@iii@g oii gm@ii@com",
+      "from_email_hash": "bd7cb316a37a2a11ccbff0e67036757ecbc722c570a5c52927a8f78fd518d350",
+      "date": "2020-04-17T13:58:40-03:00",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200417/6b4c6d18/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: 7D6B435CC5B64EDDB20C90835482A137.png\nType: image/png\nSize: 159 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200417/6b4c6d18/attachment-0001.png>",
+      "body_snippet": "Se ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200417/6b4c6d18/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text atta",
+      "thread_id": "thread-95c61ce58841",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-4205a9c02912",
+      "message_id": "<CAHo_aESB+a2eKk13Z7ByAu5bf9YzFKnDS8vePVWzwkS2KGP+YQ@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2020-04-17T23:05:43-03:00",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "subject_clean": "[R-es] Convertir lista de precios a dolares por gramo",
+      "in_reply_to": "<5e99cdec.1c69fb81.95ae8.3131@mx.google.com>",
+      "references": [
+        "<5e99cdec.1c69fb81.95ae8.3131@mx.google.com>"
+      ],
+      "body_plain": "Sebastian\n\nSÃ­, es gigantesco anidar if, pero hay una gran ventaja, cuÃ¡ndo hay un caso\nraro, un impuesto o cotizaciÃ³n muy particular, por ejemplo, ahora en\nArgentina tenemos varios valores para las monedas, cuestiones que en un\npaÃ­s normal no existe, en ese esquema,  if permite continuar trabajando,\nlas herramientas pensadas para lo normal como son las otras que le sugieren\nentiendo que nunca contemplarÃ¡n conversiones econÃ³micas tan particulares.\n\nEl if, en una forma tradicional permite de forma sencilla meterse en esos\nrecovecos donde otras herramientas requieren construir una funciÃ³n, una\nescritura mÃ¡s compleja, aunque la complejidad muchas veces es costumbre,\nforma de trabajo, etc. E mi caso if me permite ir probando por partes,\npodrÃ¡ ser ineficiente, pero ante una complicaciÃ³n puedo buscarle la vuelta.\n\nJavier RubÃ©n Marcuzzi\n\nEl vie., 17 abr. 2020 a las 12:40, <residuo.solow en gmail.com> escribiÃ³:\n\n> Javier:\n>\n>\n>\n> Si lo empecÃ© a hacer con if anidados pero me queda gigantesco.\n>\n>\n>\n> Saludos,\n>\n>\n>\n> SebastiÃ¡n.\n>\n>\n>\n> Enviado desde Correo <https://go.microsoft.com/fwlink/?LinkId=550986>\n> para Windows 10\n>\n>\n>\n> *De: *Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>\n> *Enviado: *jueves, 16 de abril de 2020 19:16\n> *Para: *Sebastian Kruk <residuo.solow en gmail.com>\n> *CC: *Lista R <r-help-es en r-project.org>\n> *Asunto: *Re: [R-es] Convertir lista de precios a dolares por gramo\n>\n>\n>\n> Estimado Sebastian Kruk\n>\n>\n>\n> Desde mi punto de vista es muy simple, varios If anidados, o en su defecto\n> el condicional que a usted le resulte mÃ¡s cÃ³modo.\n>\n>\n>\n> Javier RubÃ©n Marcuzzi\n>\n>\n>\n> El jue., 16 abr. 2020 a las 18:49, Sebastian Kruk (<\n> residuo.solow en gmail.com>) escribiÃ³:\n>\n> Estimados:\n>\n> Tengo tres data frame (datos inventados):\n>\n> A) Lista de precios de diferentes productos por paises.\n>\n> Producto PaÃ­s Precio Unidad Peso\n> A AR 10 kg 12\n> B BR 210 lb 0,5\n> C UY 3,5 kg 90\n> A BR 3 kg 3\n> C CO 345 lb 7,6\n> A CO 1200 gr 23000\n>\n> B) Tipo de cambio por paÃ­s\n> PaÃ­s TC\n> AR 12\n> BR 1,8\n> CO 45\n> UY 0,5\n>\n> C)Ratio para pasar a gr.\n> Unidad Ratio\n> kg 1000\n> lb 0,89\n> gr 1\n>\n> Quiero obtener un nuevo data frame en que todos los precios estÃ©n\n> convertidos a dÃ³lares y expresados en gramos\n>\n> ObtendrÃ­a los valores de la siguiente manera:\n>\n> Producto PaÃ­s Precio\n> A AR 10x12/(12x1000)\n> B BR 210x1,8/(0,5/0,89)\n> C UY 3,5x0,5/(90x1000)\n> A BR 3x1,8x3/1000\n> C CO 345x4,5/(7,6*0,89)\n> A CO 1200x4,5/(23000x1)\n>\n> Â¿Hay alguna forma sencilla de hacerlo?\n>\n> Saludos,\n>\n> SebastiÃ¡n.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sebastian\n\nSÃ­, es gigantesco anidar if, pero hay una gran ventaja, cuÃ¡ndo hay un caso\nraro, un impuesto o cotizaciÃ³n muy particular, por ejemplo, ahora en\nArgentina tenemos varios valores para las ",
+      "thread_id": "thread-7ddfd72377b3",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-80302f5371d3",
+      "message_id": "<CAFEu3EkigKdfQiJNYBF7WFac7=UyY9g6k84Z2r4y222BFwJoGw@mail.gmail.com>",
+      "from_name": "Adrian Gonzalez",
+      "from_email_hash": "34bbdc251117e18e4d10b6b03661f218da62609ec739133a007e6dc64e700746",
+      "date": "2020-04-19T17:45:09-06:00",
+      "subject": "[R-es] plot_heatmap",
+      "subject_clean": "[R-es] plot_heatmap",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados:\n\nTengo un problema al general el plot_heatmap.\n\n> plot_heatmap(carbom, method = \"NMDS\", distance = \"bray\")\nError in if (autotransform && xam > 50) { :\n  missing value where TRUE/FALSE needed\n\nHe buscado y me dice que es porque tengo 0 en mi set de datos, sin embargo,\nelimine los 0 y sigue apareciendo el mismo error.\n\nSaludos\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados:\n\nTengo un problema al general el plot_heatmap.\n\n> plot_heatmap(carbom, method = \"NMDS\", distance = \"bray\")\nError in if (autotransform && xam > 50) { :\n  missing value where TRUE/FALSE neede",
+      "thread_id": "thread-80302f5371d3",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-1313068cfd5f",
+      "message_id": "<CAEehW9X17mmd7-e2X_eqy1+ZwOD7N6otv3UhJ2ome4oBbYh_0g@mail.gmail.com>",
+      "from_name": "Edison Andrés Rincon Cardoso",
+      "from_email_hash": "003450472e6ccc9d347186f36d19cd12e05f42c33782c64a4ef1f778cf6e0492",
+      "date": "2020-04-19T20:52:48-05:00",
+      "subject": "[R-es] Conversión de variable categóricas a Númericas.",
+      "subject_clean": "[R-es] Conversión de variable categóricas a Númericas.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Cordial saludo.\n\nEstoy teniendo un problema al convertir una columna categÃ³rica a numÃ©rica.\nEspero que me puedan colaborar.\nEsta variable estÃ¡ en nÃºmeros escritos, es decir, \"uno\", \"dos\" etc. Ya los\ncambie por nÃºmeros (que siguen siendo factores) mediante fct_recode y quise\nde ahÃ­ convertirla mediante as.numeric pensando que R iba a identificar los\nnÃºmeros y no iba a alterar el orden, pero no fue asÃ­. El siete, que era la\nposiciÃ³n del 1 (en orden), apareciÃ³ emplazÃ¡ndolo en el resultado.\nTambiÃ©n quisiera saber si hay alguna manera de que se empiece desde cero y\nno desde 1.\n\nEspero haber sido claro en la explicaciÃ³n\n\nAgradezco mucho su colaboraciÃ³n.\n\n\n-- \n\n\n               *   Edison RincÃ³n *\n               Tel: 3154574672\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Cordial saludo.\n\nEstoy teniendo un problema al convertir una columna categÃ³rica a numÃ©rica.\nEspero que me puedan colaborar.\nEsta variable estÃ¡ en nÃºmeros escritos, es decir, \"uno\", \"dos\" etc. Ya l",
+      "thread_id": "thread-1313068cfd5f",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-0170687d344d",
+      "message_id": "<CAKL8G3E+y0qTuE7NNPNV=krOwk3G6FiAJVWTAOr=J+14ja_dMA@mail.gmail.com>",
+      "from_name": "Jorge I Velez",
+      "from_email_hash": "874dca51563da807a88f095f0afa53c85d1ee3dc475fa731dd1d5c0887e5ea41",
+      "date": "2020-04-19T21:14:15-05:00",
+      "subject": "[R-es]  Conversión de variable categóricas a Númericas.",
+      "subject_clean": "[R-es]  Conversión de variable categóricas a Númericas.",
+      "in_reply_to": "<CAEehW9X17mmd7-e2X_eqy1+ZwOD7N6otv3UhJ2ome4oBbYh_0g@mail.gmail.com>",
+      "references": [
+        "<CAEehW9X17mmd7-e2X_eqy1+ZwOD7N6otv3UhJ2ome4oBbYh_0g@mail.gmail.com>"
+      ],
+      "body_plain": "Edison,\nNecesitas\nas.numeric(as.character(tusnumeros))\nSaludos,\nJorge.-\n\nEl El dom, 19 de abr. de 2020 a la(s) 8:53 p. m., Edison AndrÃ©s Rincon\nCardoso <rinconedison12 en gmail.com> escribiÃ³:\n\n> Cordial saludo.\n>\n> Estoy teniendo un problema al convertir una columna categÃ³rica a numÃ©rica.\n> Espero que me puedan colaborar.\n> Esta variable estÃ¡ en nÃºmeros escritos, es decir, \"uno\", \"dos\" etc. Ya los\n> cambie por nÃºmeros (que siguen siendo factores) mediante fct_recode y quise\n> de ahÃ­ convertirla mediante as.numeric pensando que R iba a identificar los\n> nÃºmeros y no iba a alterar el orden, pero no fue asÃ­. El siete, que era la\n> posiciÃ³n del 1 (en orden), apareciÃ³ emplazÃ¡ndolo en el resultado.\n> TambiÃ©n quisiera saber si hay alguna manera de que se empiece desde cero y\n> no desde 1.\n>\n> Espero haber sido claro en la explicaciÃ³n\n>\n> Agradezco mucho su colaboraciÃ³n.\n>\n>\n> --\n>\n>\n>                *   Edison RincÃ³n *\n>                Tel: 3154574672\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n-- \nSent from my phone. Please excuse my brevity and misspelling.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Edison,\nNecesitas\nas.numeric(as.character(tusnumeros))\nSaludos,\nJorge.-\n\nEl El dom, 19 de abr. de 2020 a la(s) 8:53 p. m., Edison AndrÃ©s Rincon\nCardoso <rinconedison12 en gmail.com> escribiÃ³:\n\n> Cor",
+      "thread_id": "thread-1313068cfd5f",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-a77a6079e809",
+      "message_id": "<CAHo_aETfUMrWsOQRWQKFKi7UvFpB6HHz3=n0mXdwgPF2QZufgA@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2020-04-19T23:25:38-03:00",
+      "subject": "[R-es]  Conversión de variable categóricas a Númericas.",
+      "subject_clean": "[R-es]  Conversión de variable categóricas a Númericas.",
+      "in_reply_to": "<CAKL8G3E+y0qTuE7NNPNV=krOwk3G6FiAJVWTAOr=J+14ja_dMA@mail.gmail.com>",
+      "references": [
+        "<CAEehW9X17mmd7-e2X_eqy1+ZwOD7N6otv3UhJ2ome4oBbYh_0g@mail.gmail.com>",
+        "<CAKL8G3E+y0qTuE7NNPNV=krOwk3G6FiAJVWTAOr=J+14ja_dMA@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Edison\n\nMira esto, cree un pequeÃ±o ejemplo por si le sirve, si es que comprendÃ­\nbien su pregunta.\n\na1 <-c('casa', 'casa','auto')\na2 <-c('verde', 'celeste', 'celeste')\na3 <-c(3,4,0.12)\n\nx <-data.frame(a1,a2,a3)\nstr(x)\nx\n\nb <-factor(x$a1)\nb\n\nb1 <-table(factor(x$a1))\nb1\nstr(b1)\nas.vector(b1)\n\nJavier RubÃ©n Marcuzzi\n\nEl dom., 19 abr. 2020 a las 23:14, Jorge I Velez (<jorgeivanvelez en gmail.com>)\nescribiÃ³:\n\n> Edison,\n> Necesitas\n> as.numeric(as.character(tusnumeros))\n> Saludos,\n> Jorge.-\n>\n> El El dom, 19 de abr. de 2020 a la(s) 8:53 p. m., Edison AndrÃ©s Rincon\n> Cardoso <rinconedison12 en gmail.com> escribiÃ³:\n>\n> > Cordial saludo.\n> >\n> > Estoy teniendo un problema al convertir una columna categÃ³rica a\n> numÃ©rica.\n> > Espero que me puedan colaborar.\n> > Esta variable estÃ¡ en nÃºmeros escritos, es decir, \"uno\", \"dos\" etc. Ya\n> los\n> > cambie por nÃºmeros (que siguen siendo factores) mediante fct_recode y\n> quise\n> > de ahÃ­ convertirla mediante as.numeric pensando que R iba a identificar\n> los\n> > nÃºmeros y no iba a alterar el orden, pero no fue asÃ­. El siete, que era\n> la\n> > posiciÃ³n del 1 (en orden), apareciÃ³ emplazÃ¡ndolo en el resultado.\n> > TambiÃ©n quisiera saber si hay alguna manera de que se empiece desde cero\n> y\n> > no desde 1.\n> >\n> > Espero haber sido claro en la explicaciÃ³n\n> >\n> > Agradezco mucho su colaboraciÃ³n.\n> >\n> >\n> > --\n> >\n> >\n> >                *   Edison RincÃ³n *\n> >                Tel: 3154574672\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> --\n> Sent from my phone. Please excuse my brevity and misspelling.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado Edison\n\nMira esto, cree un pequeÃ±o ejemplo por si le sirve, si es que comprendÃ­\nbien su pregunta.\n\na1 <-c('casa', 'casa','auto')\na2 <-c('verde', 'celeste', 'celeste')\na3 <-c(3,4,0.12)\n\nx <-",
+      "thread_id": "thread-1313068cfd5f",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-78f93727124a",
+      "message_id": "<CAEehW9X3z0ju1NkDMh5k6F_nisLBgSbDdV0cycjjN2rqBtxZ=A@mail.gmail.com>",
+      "from_name": "Edison Andrés Rincon Cardoso",
+      "from_email_hash": "003450472e6ccc9d347186f36d19cd12e05f42c33782c64a4ef1f778cf6e0492",
+      "date": "2020-04-19T22:06:25-05:00",
+      "subject": "[R-es]  Conversión de variable categóricas a Númericas.",
+      "subject_clean": "[R-es]  Conversión de variable categóricas a Númericas.",
+      "in_reply_to": "<CAHo_aETfUMrWsOQRWQKFKi7UvFpB6HHz3=n0mXdwgPF2QZufgA@mail.gmail.com>",
+      "references": [
+        "<CAEehW9X17mmd7-e2X_eqy1+ZwOD7N6otv3UhJ2ome4oBbYh_0g@mail.gmail.com>",
+        "<CAKL8G3E+y0qTuE7NNPNV=krOwk3G6FiAJVWTAOr=J+14ja_dMA@mail.gmail.com>",
+        "<CAHo_aETfUMrWsOQRWQKFKi7UvFpB6HHz3=n0mXdwgPF2QZufgA@mail.gmail.com>"
+      ],
+      "body_plain": "Mil Gracias, pude solucionarlo con su ayuda.\n\nEl dom., 19 de abr. de 2020 a la(s) 21:25, Javier Marcuzzi (\njavier.ruben.marcuzzi en gmail.com) escribiÃ³:\n\n> Estimado Edison\n>\n> Mira esto, cree un pequeÃ±o ejemplo por si le sirve, si es que comprendÃ­\n> bien su pregunta.\n>\n> a1 <-c('casa', 'casa','auto')\n> a2 <-c('verde', 'celeste', 'celeste')\n> a3 <-c(3,4,0.12)\n>\n> x <-data.frame(a1,a2,a3)\n> str(x)\n> x\n>\n> b <-factor(x$a1)\n> b\n>\n> b1 <-table(factor(x$a1))\n> b1\n> str(b1)\n> as.vector(b1)\n>\n> Javier RubÃ©n Marcuzzi\n>\n> El dom., 19 abr. 2020 a las 23:14, Jorge I Velez (<\n> jorgeivanvelez en gmail.com>) escribiÃ³:\n>\n>> Edison,\n>> Necesitas\n>> as.numeric(as.character(tusnumeros))\n>> Saludos,\n>> Jorge.-\n>>\n>> El El dom, 19 de abr. de 2020 a la(s) 8:53 p. m., Edison AndrÃ©s Rincon\n>> Cardoso <rinconedison12 en gmail.com> escribiÃ³:\n>>\n>> > Cordial saludo.\n>> >\n>> > Estoy teniendo un problema al convertir una columna categÃ³rica a\n>> numÃ©rica.\n>> > Espero que me puedan colaborar.\n>> > Esta variable estÃ¡ en nÃºmeros escritos, es decir, \"uno\", \"dos\" etc. Ya\n>> los\n>> > cambie por nÃºmeros (que siguen siendo factores) mediante fct_recode y\n>> quise\n>> > de ahÃ­ convertirla mediante as.numeric pensando que R iba a identificar\n>> los\n>> > nÃºmeros y no iba a alterar el orden, pero no fue asÃ­. El siete, que era\n>> la\n>> > posiciÃ³n del 1 (en orden), apareciÃ³ emplazÃ¡ndolo en el resultado.\n>> > TambiÃ©n quisiera saber si hay alguna manera de que se empiece desde\n>> cero y\n>> > no desde 1.\n>> >\n>> > Espero haber sido claro en la explicaciÃ³n\n>> >\n>> > Agradezco mucho su colaboraciÃ³n.\n>> >\n>> >\n>> > --\n>> >\n>> >\n>> >                *   Edison RincÃ³n *\n>> >                Tel: 3154574672\n>> >\n>> >         [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-help-es mailing list\n>> > R-help-es en r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >\n>> --\n>> Sent from my phone. Please excuse my brevity and misspelling.\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n\n-- \n\n\n               *   Edison RincÃ³n *\n               Tel: 3154574672\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Mil Gracias, pude solucionarlo con su ayuda.\n\nEl dom., 19 de abr. de 2020 a la(s) 21:25, Javier Marcuzzi (\njavier.ruben.marcuzzi en gmail.com) escribiÃ³:\n\n> Estimado Edison\n>\n> Mira esto, cree un pequ",
+      "thread_id": "thread-1313068cfd5f",
+      "thread_depth": 3,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-8f4c5431748e",
+      "message_id": "<41565063-a954-bd65-7ccd-78220035e098@urjc.es>",
+      "from_name": "Marcelino de la Cruz Rot",
+      "from_email_hash": "65c46abb4ca1a5f27552f6f219887e1db849802ef689daa85efcb102d34b2127",
+      "date": "2020-04-20T09:51:26+02:00",
+      "subject": "[R-es] plot_heatmap",
+      "subject_clean": "[R-es] plot_heatmap",
+      "in_reply_to": "<CAFEu3EkigKdfQiJNYBF7WFac7=UyY9g6k84Z2r4y222BFwJoGw@mail.gmail.com>",
+      "references": [
+        "<CAFEu3EkigKdfQiJNYBF7WFac7=UyY9g6k84Z2r4y222BFwJoGw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola AdriÃ¡n:\n\nPara ser exactos, el problema ocurre porque hay NA's en la matriz de \ndatos que se somete a NMDS (tu matriz de datos original o alguna \ntransformaciÃ³n de la misma) por parte de la funciÃ³n plot_heatmap(). Como \nno nos proporcionas mÃ¡s informaciÃ³n, (yo, por ejemplo, desconozco de quÃ© \npaquete estamos hablando), poco mÃ¡s podemos ayudarte.\n\nSaludos\n\n\nEl 20/04/2020 a las 1:45, Adrian Gonzalez escribiÃ³:\n> Estimados:\n>\n> Tengo un problema al general el plot_heatmap.\n>\n>> plot_heatmap(carbom, method = \"NMDS\", distance = \"bray\")\n> Error in if (autotransform && xam > 50) { :\n>    missing value where TRUE/FALSE needed\n>\n> He buscado y me dice que es porque tengo 0 en mi set de datos, sin embargo,\n> elimine los 0 y sigue apareciendo el mismo error.\n>\n> Saludos\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> .\n\n\n-- \nMarcelino de la Cruz Rot\nDepto. de BiologÃ­a y GeologÃ­a\nFÃ­sica y QuÃ­mica InorgÃ¡nica\nUniversidad Rey Juan Carlos\nMÃ³stoles EspaÃ±a",
+      "body_snippet": "Hola AdriÃ¡n:\n\nPara ser exactos, el problema ocurre porque hay NA's en la matriz de \ndatos que se somete a NMDS (tu matriz de datos original o alguna \ntransformaciÃ³n de la misma) por parte de la func",
+      "thread_id": "thread-80302f5371d3",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-9eacd4589da1",
+      "message_id": "<CAF3uytWKSv8ydEE-YTdA5c2sYPU18rG2ABO0vLBkWkqhU_FE=g@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-25T14:15:48+02:00",
+      "subject": "[R-es] problemas al cambiar el nombre de una variable",
+      "subject_clean": "[R-es] problemas al cambiar el nombre de una variable",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, al final de un loop aÃ±ado 3 variables que acabo de crear, a\nuna df, y les pongo un nombre.\n\nLas variables son Max, Min y Mean.\n\nLas aÃ±ado a BData7085:\n  BData7085$Max<-Max\n  BData7085$Min<-Min\n  BData7085$Meann<-Mean  (hasta aquÃ­ bien)\n\nPara ponerles su nombre final:\n  colnames(BData7085)[ncol-2]<-paste(colnames(Data)[j],\"max\",sep = \"\")\n  colnames(BData7085)[ncol-1]<-paste(colnames(Data)[j],\"min\",sep = \"\")\n  colnames(BData7085)[ncol]<-paste(colnames(Data)[j],\"mean\",sep = \"\")\n\npara las dos primeras me da:\nError in ncol - 2: non-numeric argument to binary operator\n\ny para la Ãºltima:\nError in colnames(BData7085)[ncol] <- paste(colnames(Data)[j], \"mean\",  :\n  invalid subscript type 'closure.\n\nGracias,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as, al final de un loop aÃ±ado 3 variables que acabo de crear, a\nuna df, y les pongo un nombre.\n\nLas variables son Max, Min y Mean.\n\nLas aÃ±ado a BData7085:\n  BData7085$Max<-Max\n  BData7085$",
+      "thread_id": "thread-9eacd4589da1",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-dec8a8a47e2e",
+      "message_id": "<a7397fa6-5982-aaa9-020a-85fc0e1ead01@urjc.es>",
+      "from_name": "Marcelino de la Cruz Rot",
+      "from_email_hash": "65c46abb4ca1a5f27552f6f219887e1db849802ef689daa85efcb102d34b2127",
+      "date": "2020-04-25T14:47:41+02:00",
+      "subject": "[R-es] problemas al cambiar el nombre de una variable",
+      "subject_clean": "[R-es] problemas al cambiar el nombre de una variable",
+      "in_reply_to": "<CAF3uytWKSv8ydEE-YTdA5c2sYPU18rG2ABO0vLBkWkqhU_FE=g@mail.gmail.com>",
+      "references": [
+        "<CAF3uytWKSv8ydEE-YTdA5c2sYPU18rG2ABO0vLBkWkqhU_FE=g@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Manuel:\n\nÂ¿podrÃ­a ser que no estuviese definido ncol?\n\nUn saludo,\n\nMarcelino\n\n\nEl 25/04/2020 a las 14:15, Manuel Mendoza escribiÃ³:\n> Buenos dÃ­as, al final de un loop aÃ±ado 3 variables que acabo de crear, a\n> una df, y les pongo un nombre.\n>\n> Las variables son Max, Min y Mean.\n>\n> Las aÃ±ado a BData7085:\n>    BData7085$Max<-Max\n>    BData7085$Min<-Min\n>    BData7085$Meann<-Mean  (hasta aquÃ­ bien)\n>\n> Para ponerles su nombre final:\n>    colnames(BData7085)[ncol-2]<-paste(colnames(Data)[j],\"max\",sep = \"\")\n>    colnames(BData7085)[ncol-1]<-paste(colnames(Data)[j],\"min\",sep = \"\")\n>    colnames(BData7085)[ncol]<-paste(colnames(Data)[j],\"mean\",sep = \"\")\n>\n> para las dos primeras me da:\n> Error in ncol - 2: non-numeric argument to binary operator\n>\n> y para la Ãºltima:\n> Error in colnames(BData7085)[ncol] <- paste(colnames(Data)[j], \"mean\",  :\n>    invalid subscript type 'closure.\n>\n> Gracias,\n> Manuel\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> .\n\n\n-- \nMarcelino de la Cruz Rot\nDepto. de BiologÃ­a y GeologÃ­a\nFÃ­sica y QuÃ­mica InorgÃ¡nica\nUniversidad Rey Juan Carlos\nMÃ³stoles EspaÃ±a",
+      "body_snippet": "Hola Manuel:\n\nÂ¿podrÃ­a ser que no estuviese definido ncol?\n\nUn saludo,\n\nMarcelino\n\n\nEl 25/04/2020 a las 14:15, Manuel Mendoza escribiÃ³:\n> Buenos dÃ­as, al final de un loop aÃ±ado 3 variables que aca",
+      "thread_id": "thread-9eacd4589da1",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-4575b3106b40",
+      "message_id": "<00ff01d61b25$bf36ae20$3da40a60$@com>",
+      "from_name": "JCMld",
+      "from_email_hash": "cd06a0fbd28c773071deb383b55252916f3720a5bb116c379a82fcf8a5d9fd18",
+      "date": "2020-04-25T19:19:58+02:00",
+      "subject": "[R-es] problemas al cambiar el nombre de una variable",
+      "subject_clean": "[R-es] problemas al cambiar el nombre de una variable",
+      "in_reply_to": "<a7397fa6-5982-aaa9-020a-85fc0e1ead01@urjc.es>",
+      "references": [
+        "<CAF3uytWKSv8ydEE-YTdA5c2sYPU18rG2ABO0vLBkWkqhU_FE=g@mail.gmail.com>",
+        "<a7397fa6-5982-aaa9-020a-85fc0e1ead01@urjc.es>"
+      ],
+      "body_plain": "Supongo querÃ­a decir ncol(BData7085)\n\nSaludos,\nJuan\n\n\n-----Mensaje original-----\nDe: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de\nMarcelino de la Cruz Rot\nEnviado el: sÃ¡bado, 25 de abril de 2020 14:48\nPara: Manuel Mendoza; Lista R\nAsunto: Re: [R-es] problemas al cambiar el nombre de una variable\n\nHola Manuel:\n\nÂ¿podrÃ­a ser que no estuviese definido ncol?\n\nUn saludo,\n\nMarcelino\n\n\nEl 25/04/2020 a las 14:15, Manuel Mendoza escribiÃ³:\n> Buenos dÃ­as, al final de un loop aÃ±ado 3 variables que acabo de crear, a\n> una df, y les pongo un nombre.\n>\n> Las variables son Max, Min y Mean.\n>\n> Las aÃ±ado a BData7085:\n>    BData7085$Max<-Max\n>    BData7085$Min<-Min\n>    BData7085$Meann<-Mean  (hasta aquÃ­ bien)\n>\n> Para ponerles su nombre final:\n>    colnames(BData7085)[ncol-2]<-paste(colnames(Data)[j],\"max\",sep = \"\")\n>    colnames(BData7085)[ncol-1]<-paste(colnames(Data)[j],\"min\",sep = \"\")\n>    colnames(BData7085)[ncol]<-paste(colnames(Data)[j],\"mean\",sep = \"\")\n>\n> para las dos primeras me da:\n> Error in ncol - 2: non-numeric argument to binary operator\n>\n> y para la Ãºltima:\n> Error in colnames(BData7085)[ncol] <- paste(colnames(Data)[j], \"mean\",  :\n>    invalid subscript type 'closure.\n>\n> Gracias,\n> Manuel\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> .\n\n\n-- \nMarcelino de la Cruz Rot\nDepto. de BiologÃ­a y GeologÃ­a\nFÃ­sica y QuÃ­mica InorgÃ¡nica\nUniversidad Rey Juan Carlos\nMÃ³stoles EspaÃ±a\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Supongo querÃ­a decir ncol(BData7085)\n\nSaludos,\nJuan\n\n\n-----Mensaje original-----\nDe: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de\nMarcelino de la Cruz Rot\nEnviado el: sÃ¡bado, 2",
+      "thread_id": "thread-9eacd4589da1",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-ef367fe79b43",
+      "message_id": "<CAF3uytXzpWhXgU95FLs385JLp02gnGNChOZSP-=b5GHGa2WbAw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-25T21:11:15+02:00",
+      "subject": "[R-es] eliminar outliers para un tapply",
+      "subject_clean": "[R-es] eliminar outliers para un tapply",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola de nuevo. Algo para lo que tampoco encuentro la soluciÃ³n en la red:\n\nHago un loop en el que se calcula, para cada una de 9 variables (4 a 12) el\nmÃ¡ximo para cada una de las categorÃ­as de la variable Clst, y funciona\nperfectamente.\n\nfor(j in 4:12){\n max<-as.data.frame(tapply(Data[,j], Data$Clst, max))\n\nAhora me gustarÃ­a que si ese mÃ¡ximo fuera un outlier no me lo considerase.\nNo puedo eliminar previamente esa fila, porque para otra de las 9 variables\nu otra de las categorÃ­as de la variable Clst puede ser importante, por lo\nque serÃ­a ideal que lo identificara y excluyera dentro del loop.\n\nGracias, una vez mÃ¡s,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola de nuevo. Algo para lo que tampoco encuentro la soluciÃ³n en la red:\n\nHago un loop en el que se calcula, para cada una de 9 variables (4 a 12) el\nmÃ¡ximo para cada una de las categorÃ­as de la va",
+      "thread_id": "thread-ef367fe79b43",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-c6bfda6f3b60",
+      "message_id": "<CABOEHcGrDya7PKMW1sx4E6X=3YW1gfd8_FcMX-smmb2MC867BA@mail.gmail.com>",
+      "from_name": "Rafael Santamaria",
+      "from_email_hash": "c167670c9e3bf6fc320f44b56ec32bf06f8d88e03ee5ab56361d2db0301e5860",
+      "date": "2020-04-26T12:10:57+02:00",
+      "subject": "[R-es] Normalidad variable > 5000 observaciones",
+      "subject_clean": "[R-es] Normalidad variable > 5000 observaciones",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola!\n\nNecesito evaluar la normalidad de una variable para la que tengo mÃ¡s de\n5000 observaciones.\n\nShapiro-Wilks no funciona para muestras mayores 5000 observaciones.\n\nAAlshap <- lapply(AAdf, shapiro.test)\nError in FUN(X[[i]], ...) : sample size must be between 3 and 5000\n\nAlguna sugerencia?\n\nGracias.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola!\n\nNecesito evaluar la normalidad de una variable para la que tengo mÃ¡s de\n5000 observaciones.\n\nShapiro-Wilks no funciona para muestras mayores 5000 observaciones.\n\nAAlshap <- lapply(AAdf, shapir",
+      "thread_id": "thread-c6bfda6f3b60",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-343949701809",
+      "message_id": "<CAOKbq8iV-WL=GZJpspaOcNL+W1see=66kvonMMzsz8a9dcV1_g@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-04-26T12:51:01+02:00",
+      "subject": "[R-es] Normalidad variable > 5000 observaciones",
+      "subject_clean": "[R-es] Normalidad variable > 5000 observaciones",
+      "in_reply_to": "<CABOEHcGrDya7PKMW1sx4E6X=3YW1gfd8_FcMX-smmb2MC867BA@mail.gmail.com>",
+      "references": [
+        "<CABOEHcGrDya7PKMW1sx4E6X=3YW1gfd8_FcMX-smmb2MC867BA@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nAquÃ­ tienes una forma alternativa:\n\nhttps://stackoverflow.com/questions/17125458/r-shapiro-test-cannot-deal-with-more-than-5000-data-points\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl dom., 26 abr. 2020 a las 12:11, Rafael Santamaria (<\nrsantamariao en gmail.com>) escribiÃ³:\n\n> Hola!\n>\n> Necesito evaluar la normalidad de una variable para la que tengo mÃ¡s de\n> 5000 observaciones.\n>\n> Shapiro-Wilks no funciona para muestras mayores 5000 observaciones.\n>\n> AAlshap <- lapply(AAdf, shapiro.test)\n> Error in FUN(X[[i]], ...) : sample size must be between 3 and 5000\n>\n> Alguna sugerencia?\n>\n> Gracias.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nAquÃ­ tienes una forma alternativa:\n\nhttps://stackoverflow.com/questions/17125458/r-shapiro-test-cannot-deal-with-more-than-5000-data-points\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl",
+      "thread_id": "thread-c6bfda6f3b60",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-c6bf0f46684f",
+      "message_id": "<CAOfHb=eKsWHgiD7TgRqAoz9yU9j25BJYVmD7pfB3SKWzMA85Dw@mail.gmail.com>",
+      "from_name": "María Ángeles Onieva",
+      "from_email_hash": "832d1c744371bb1757a0e4d8c7734384bfb4876f2643bf594f25753b5d2ec961",
+      "date": "2020-04-26T12:52:48+02:00",
+      "subject": "[R-es] Geolocalización y representación temporal de casos con coordenadas X,Y (UTM) en mapa",
+      "subject_clean": "[R-es] Geolocalización y representación temporal de casos con coordenadas X,Y (UTM) en mapa",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as,\n\nMe gustarÃ­a representar los casos en un mapa que fuera interactivo en el\nsentido de que fueran apareciendo segÃºn fecha de apariciÃ³n.\n\nDispongo de las coordenadas X e Y, en proyecciÃ³n UTM y la fecha de\napariciÃ³n.\n\nLa mayorÃ­a de tutoriales que encuentro por internet de R explican la\nrepresentaciÃ³n con longitud y latitud.\n\nÂ¿ConocÃ©is algÃºn tutorial o guÃ­a donde se explique los paquetes y funciones\npara reprentar en proyecciÃ³n UTM? Â¿y para la representaciÃ³n interactiva por\nfecha de apariciÃ³n?\n\nMuchas gracias de antemano. Un saludo,\n\n-- \n\nMarÃ­a Ãngeles\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as,\n\nMe gustarÃ­a representar los casos en un mapa que fuera interactivo en el\nsentido de que fueran apareciendo segÃºn fecha de apariciÃ³n.\n\nDispongo de las coordenadas X e Y, en proyecciÃ³",
+      "thread_id": "thread-c6bf0f46684f",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-01989876e296",
+      "message_id": "<CAErPEPusgjKE6cdyjPcx_aBTc-Os43AWB3wvfK+Z4fZoQYmoNQ@mail.gmail.com>",
+      "from_name": "Jose",
+      "from_email_hash": "bea16a27783bac93f438540674938b9edd2337e4cb7f3325cb0bcbc04695b366",
+      "date": "2020-04-26T13:49:11+02:00",
+      "subject": "[R-es]  Geolocalización y representación temporal de casos con coordenadas X,Y (UTM) en mapa",
+      "subject_clean": "[R-es]  Geolocalización y representación temporal de casos con coordenadas X,Y (UTM) en mapa",
+      "in_reply_to": "<CAOfHb=eKsWHgiD7TgRqAoz9yU9j25BJYVmD7pfB3SKWzMA85Dw@mail.gmail.com>",
+      "references": [
+        "<CAOfHb=eKsWHgiD7TgRqAoz9yU9j25BJYVmD7pfB3SKWzMA85Dw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola!\nEn una bÃºsqueda rÃ¡pida por google:\nhttps://mappinggis.com/2018/08/analisis-espacial-con-r-usa-r-como-un-sistema-de-informacion-geografica/\nhttp://rstudio-pubs-static.s3.amazonaws.com/19879_7e13ab80d5ed416c8e235bd6bb93cf3e.html\n\nEl primer enlace es general a un libro interesante.\nEl segundo hace lo que buscas.\n\nUn saludo\n\n______________________________________\nJosÃ© Manuel Prieto\nes.linkedin.com/in/josemanuelprietoblazquez/\nhttps://jmprietob.shinyapps.io/theweather/\n\n\n\nEl dom., 26 abr. 2020 a las 13:01, MarÃ­a Ãngeles Onieva (<\nm.onieva.medica3 en gmail.com>) escribiÃ³:\n\n> Buenos dÃ­as,\n>\n> Me gustarÃ­a representar los casos en un mapa que fuera interactivo en el\n> sentido de que fueran apareciendo segÃºn fecha de apariciÃ³n.\n>\n> Dispongo de las coordenadas X e Y, en proyecciÃ³n UTM y la fecha de\n> apariciÃ³n.\n>\n> La mayorÃ­a de tutoriales que encuentro por internet de R explican la\n> representaciÃ³n con longitud y latitud.\n>\n> Â¿ConocÃ©is algÃºn tutorial o guÃ­a donde se explique los paquetes y funciones\n> para reprentar en proyecciÃ³n UTM? Â¿y para la representaciÃ³n interactiva por\n> fecha de apariciÃ³n?\n>\n> Muchas gracias de antemano. Un saludo,\n>\n> --\n>\n> MarÃ­a Ãngeles\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola!\nEn una bÃºsqueda rÃ¡pida por google:\nhttps://mappinggis.com/2018/08/analisis-espacial-con-r-usa-r-como-un-sistema-de-informacion-geografica/\nhttp://rstudio-pubs-static.s3.amazonaws.com/19879_7e1",
+      "thread_id": "thread-c6bf0f46684f",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-23746fce5987",
+      "message_id": "<CABkCotROWKDNJWeLKFOh=AoT++2kA+3eeijdubsEM30hWc9AFQ@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2020-04-26T09:02:12-06:00",
+      "subject": "[R-es]  Geolocalización y representación temporal de casos con coordenadas X,Y (UTM) en mapa",
+      "subject_clean": "[R-es]  Geolocalización y representación temporal de casos con coordenadas X,Y (UTM) en mapa",
+      "in_reply_to": "<CAOfHb=eKsWHgiD7TgRqAoz9yU9j25BJYVmD7pfB3SKWzMA85Dw@mail.gmail.com>",
+      "references": [
+        "<CAOfHb=eKsWHgiD7TgRqAoz9yU9j25BJYVmD7pfB3SKWzMA85Dw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola MarÃ­a,\n\nLa mayorÃ­a de los paquetes de R que trabajan con datos espaciales permiten\nmapear datos proyectados.\n\nPero si no eres mÃ¡s especÃ­fica de al menos decirnos con que paquete estÃ¡s\ntrabajando es muy difÃ­cil poder ayudarte.\n\nManuel\n\nEl dom., 26 abr. 2020 a las 5:01, MarÃ­a Ãngeles Onieva (<\nm.onieva.medica3 en gmail.com>) escribiÃ³:\n\n> Buenos dÃ­as,\n>\n> Me gustarÃ­a representar los casos en un mapa que fuera interactivo en el\n> sentido de que fueran apareciendo segÃºn fecha de apariciÃ³n.\n>\n> Dispongo de las coordenadas X e Y, en proyecciÃ³n UTM y la fecha de\n> apariciÃ³n.\n>\n> La mayorÃ­a de tutoriales que encuentro por internet de R explican la\n> representaciÃ³n con longitud y latitud.\n>\n> Â¿ConocÃ©is algÃºn tutorial o guÃ­a donde se explique los paquetes y funciones\n> para reprentar en proyecciÃ³n UTM? Â¿y para la representaciÃ³n interactiva por\n> fecha de apariciÃ³n?\n>\n> Muchas gracias de antemano. Un saludo,\n>\n> --\n>\n> MarÃ­a Ãngeles\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \n*Manuel SpÃ­nola, Ph.D.*\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola en una.cr <mspinola en una.ac.cr>\nmspinola10 en gmail.com\nTelÃ©fono: (506) 8706 - 4662\nPersonal website: Lobito de rÃ­o <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola MarÃ­a,\n\nLa mayorÃ­a de los paquetes de R que trabajan con datos espaciales permiten\nmapear datos proyectados.\n\nPero si no eres mÃ¡s especÃ­fica de al menos decirnos con que paquete estÃ¡s\ntrabaj",
+      "thread_id": "thread-c6bf0f46684f",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-2be3fbfd905f",
+      "message_id": "<CAOVrgT_eH6wCV7nBPoYquGO-Yd8sWkk+tjJtpRDH5X2s4ZSHLg@mail.gmail.com>",
+      "from_name": "Guido Corradi",
+      "from_email_hash": "397ff02c3c864938ba8c795d74644318a091855cabb9c799436f0a1b400bf0dc",
+      "date": "2020-04-26T17:49:34+02:00",
+      "subject": "[R-es] Normalidad variable > 5000 observaciones",
+      "subject_clean": "[R-es] Normalidad variable > 5000 observaciones",
+      "in_reply_to": "<CAOKbq8iV-WL=GZJpspaOcNL+W1see=66kvonMMzsz8a9dcV1_g@mail.gmail.com>",
+      "references": [
+        "<CABOEHcGrDya7PKMW1sx4E6X=3YW1gfd8_FcMX-smmb2MC867BA@mail.gmail.com>",
+        "<CAOKbq8iV-WL=GZJpspaOcNL+W1see=66kvonMMzsz8a9dcV1_g@mail.gmail.com>"
+      ],
+      "body_plain": "Las pruebas de normalidad en muestras grandes sufren de sobre-sensiblidad.\nSegÃºn lo que he leÃ­do (y cualquier reviewer aceptarÃ¡...) cuando hay una\nmuestra grande la inspecciÃ³n visual del qq-plot serÃ¡ suficiente!\n\n\nEl dom., 26 abr. 2020 a las 12:51, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Hola,\n>\n> AquÃ­ tienes una forma alternativa:\n>\n>\n> https://stackoverflow.com/questions/17125458/r-shapiro-test-cannot-deal-with-more-than-5000-data-points\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El dom., 26 abr. 2020 a las 12:11, Rafael Santamaria (<\n> rsantamariao en gmail.com>) escribiÃ³:\n>\n> > Hola!\n> >\n> > Necesito evaluar la normalidad de una variable para la que tengo mÃ¡s de\n> > 5000 observaciones.\n> >\n> > Shapiro-Wilks no funciona para muestras mayores 5000 observaciones.\n> >\n> > AAlshap <- lapply(AAdf, shapiro.test)\n> > Error in FUN(X[[i]], ...) : sample size must be between 3 and 5000\n> >\n> > Alguna sugerencia?\n> >\n> > Gracias.\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \n?Guido B. Corradi <http://corradi.info/>\nPhD at EvoCog <http://evocog.org/es/>\n?Profesor en la Universidad Camilo JosÃ© Cela? <https://www.ucjc.edu/>\ncoeditor en Rasgo Latente <http://rasgolatente.es/>\n@GuidoBCor\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Las pruebas de normalidad en muestras grandes sufren de sobre-sensiblidad.\nSegÃºn lo que he leÃ­do (y cualquier reviewer aceptarÃ¡...) cuando hay una\nmuestra grande la inspecciÃ³n visual del qq-plot s",
+      "thread_id": "thread-c6bfda6f3b60",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-92e546c8892c",
+      "message_id": "<AM5P192MB01778CB15BD7F34536A02E4BB6AE0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>",
+      "from_name": "Samura .",
+      "from_email_hash": "4b0faa4a5a13c52dffde92197d72769494e1687515ce3a5bb99ed5cc678b3640",
+      "date": "2020-04-26T20:17:00Z",
+      "subject": "[R-es] Mantener nombres de variables",
+      "subject_clean": "[R-es] Mantener nombres de variables",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola\ntengo la siguiente duda,\n?C?mo hago para que R no me cambie el nombre de las variables en este ejemplo?\n\n\nlibrary(ISLR)\ndata(Hitters)\nHitters<-na.omit(Hitters)\n\nmodelo=lm(Salary~.,data=Hitters)\nmodelo\n\nlas variables\nLeague\nDivision\nNewLeague\n\nahora se llaman\nLeagueN\nDivisionW\nNewLeagueN\n\nquiero pasar esas variables  a 0-1,\nhe probado con recode o con fastDummies , pero al final acaba cambi?ndome las variables.\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola\ntengo la siguiente duda,\n?C?mo hago para que R no me cambie el nombre de las variables en este ejemplo?\n\n\nlibrary(ISLR)\ndata(Hitters)\nHitters<-na.omit(Hitters)\n\nmodelo=lm(Salary~.,data=Hitters)\nm",
+      "thread_id": "thread-92e546c8892c",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-2447f029ab9d",
+      "message_id": "<AM0PR01MB5954711A2A2BC2F1A1CA17C0C6AE0@AM0PR01MB5954.eurprd01.prod.exchangelabs.com>",
+      "from_name": "Salvador Castillo Raya",
+      "from_email_hash": "29879a5efc9eebaecb62d8d673fe203e4536c53fafa1c6fa1118dcdd7402a2c2",
+      "date": "2020-04-26T20:40:48Z",
+      "subject": "[R-es] Mantener nombres de variables",
+      "subject_clean": "[R-es] Mantener nombres de variables",
+      "in_reply_to": "<AM5P192MB01778CB15BD7F34536A02E4BB6AE0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>",
+      "references": [
+        "<AM5P192MB01778CB15BD7F34536A02E4BB6AE0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "Buenas noches,\n\nEsta serÃ­a una forma de hacerlo:\n\nlibrary(ISLR)\ndata(Hitters)\ndf <-na.omit(Hitters)\n\ndf$League <- ifelse(df$League == 'N', 0, 1)\ndf$Division <- ifelse(df$Division == 'W', 0, 1)\ndf$NewLeague <- ifelse(df$NewLeague == 'N', 0, 1)\n\nmodelo <- lm(Salary~.,data= df)\n\nSaludos,\nSalva\n\nFrom: Samura .<mailto:tontito82 en hotmail.com>\nSent: domingo, 26 de abril de 2020 22:17\nTo: Lista R<mailto:R-help-es en r-project.org>\nSubject: [R-es] Mantener nombres de variables\n\nHola\ntengo la siguiente duda,\n?C?mo hago para que R no me cambie el nombre de las variables en este ejemplo?\n\n\nlibrary(ISLR)\ndata(Hitters)\nHitters<-na.omit(Hitters)\n\nmodelo=lm(Salary~.,data=Hitters)\nmodelo\n\nlas variables\nLeague\nDivision\nNewLeague\n\nahora se llaman\nLeagueN\nDivisionW\nNewLeagueN\n\nquiero pasar esas variables  a 0-1,\nhe probado con recode o con fastDummies , pero al final acaba cambi?ndome las variables.\n\n\n\n\n        [[alternative HTML version deleted]]\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches,\n\nEsta serÃ­a una forma de hacerlo:\n\nlibrary(ISLR)\ndata(Hitters)\ndf <-na.omit(Hitters)\n\ndf$League <- ifelse(df$League == 'N', 0, 1)\ndf$Division <- ifelse(df$Division == 'W', 0, 1)\ndf$New",
+      "thread_id": "thread-92e546c8892c",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-ceed96882d08",
+      "message_id": "<CAKL8G3H4Mk4FawtyzgsRkKfwcrsepHMKT4Ky0kpokD8q8sbCUA@mail.gmail.com>",
+      "from_name": "Jorge I Velez",
+      "from_email_hash": "874dca51563da807a88f095f0afa53c85d1ee3dc475fa731dd1d5c0887e5ea41",
+      "date": "2020-04-26T15:47:23-05:00",
+      "subject": "[R-es] Mantener nombres de variables",
+      "subject_clean": "[R-es] Mantener nombres de variables",
+      "in_reply_to": "<AM5P192MB01778CB15BD7F34536A02E4BB6AE0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>",
+      "references": [
+        "<AM5P192MB01778CB15BD7F34536A02E4BB6AE0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>"
+      ],
+      "body_plain": "Hola Samura,\nRealmente no. R no estÃ¡ cambiando tus variables.\nEl nombre ?LeagueN? corresponde al nivel N de la variable League.\nSeguramente debes tener otro nivel ? como no aparece, Ã©ste es el nivel de\nreferencia.  Lo mismo aplica para las demÃ¡s variables dentro del modelo de\nRLM. Eso si, tus variables son las mismas, pero para efectos de\ninterpretaciÃ³n, debes tener cuidado con quÃ© nivel tienes como referencia y\npara cuÃ¡l estÃ¡s estimando el efecto.\nPor favor no recodifiques con dummies ? R lo hace por tÃ­ y es mÃ¡s\neficiente.\nSaludos,\nJorge.-\n\nEl El dom, 26 de abr. de 2020 a la(s) 3:17 p. m., Samura . <\ntontito82 en hotmail.com> escribiÃ³:\n\n> Hola\n> tengo la siguiente duda,\n> Â¿CÃ³mo hago para que R no me cambie el nombre de las variables en este\n> ejemplo?\n>\n>\n> library(ISLR)\n> data(Hitters)\n> Hitters<-na.omit(Hitters)\n>\n> modelo=lm(Salary~.,data=Hitters)\n> modelo\n>\n> las variables\n> League\n> Division\n> NewLeague\n>\n> ahora se llaman\n> LeagueN\n> DivisionW\n> NewLeagueN\n>\n> quiero pasar esas variables  a 0-1,\n> he probado con recode o con fastDummies , pero al final acaba cambiÃ¡ndome\n> las variables.\n>\n>\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n-- \nSent from my phone. Please excuse my brevity and misspelling.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Samura,\nRealmente no. R no estÃ¡ cambiando tus variables.\nEl nombre ?LeagueN? corresponde al nivel N de la variable League.\nSeguramente debes tener otro nivel ? como no aparece, Ã©ste es el nivel",
+      "thread_id": "thread-92e546c8892c",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-c691082ab3f3",
+      "message_id": "<AM5P192MB0177BC1DC4CC12B303C989D9B6AE0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>",
+      "from_name": "Samura .",
+      "from_email_hash": "4b0faa4a5a13c52dffde92197d72769494e1687515ce3a5bb99ed5cc678b3640",
+      "date": "2020-04-26T21:12:35Z",
+      "subject": "[R-es] Mantener nombres de variables",
+      "subject_clean": "[R-es] Mantener nombres de variables",
+      "in_reply_to": "<AM0PR01MB5954711A2A2BC2F1A1CA17C0C6AE0@AM0PR01MB5954.eurprd01.prod.exchangelabs.com>",
+      "references": [
+        "<AM5P192MB01778CB15BD7F34536A02E4BB6AE0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>",
+        "<AM0PR01MB5954711A2A2BC2F1A1CA17C0C6AE0@AM0PR01MB5954.eurprd01.prod.exchangelabs.com>"
+      ],
+      "body_plain": "OK, perfecto, justo lo que buscaba.\n\nEs que luego quiero hacer una selecciÃ³n de variables y al \"cambiar el nombre\" me fastidiaba.\n\nGracias\n________________________________\nDe: Salvador Castillo Raya <casraysa en hotmail.com>\nEnviado: domingo, 26 de abril de 2020 20:40\nPara: Samura . <tontito82 en hotmail.com>; Lista R <R-help-es en r-project.org>\nAsunto: RE: Mantener nombres de variables\n\n\nBuenas noches,\n\n\n\nEsta serÃ­a una forma de hacerlo:\n\n\n\nlibrary(ISLR)\n\ndata(Hitters)\n\ndf <-na.omit(Hitters)\n\n\n\ndf$League <- ifelse(df$League == 'N', 0, 1)\n\ndf$Division <- ifelse(df$Division == 'W', 0, 1)\n\ndf$NewLeague <- ifelse(df$NewLeague == 'N', 0, 1)\n\n\n\nmodelo <- lm(Salary~.,data= df)\n\n\n\nSaludos,\n\nSalva\n\n\n\nFrom: Samura .<mailto:tontito82 en hotmail.com>\nSent: domingo, 26 de abril de 2020 22:17\nTo: Lista R<mailto:R-help-es en r-project.org>\nSubject: [R-es] Mantener nombres de variables\n\n\n\nHola\ntengo la siguiente duda,\n?C?mo hago para que R no me cambie el nombre de las variables en este ejemplo?\n\n\nlibrary(ISLR)\ndata(Hitters)\nHitters<-na.omit(Hitters)\n\nmodelo=lm(Salary~.,data=Hitters)\nmodelo\n\nlas variables\nLeague\nDivision\nNewLeague\n\nahora se llaman\nLeagueN\nDivisionW\nNewLeagueN\n\nquiero pasar esas variables  a 0-1,\nhe probado con recode o con fastDummies , pero al final acaba cambi?ndome las variables.\n\n\n\n\n        [[alternative HTML version deleted]]\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "OK, perfecto, justo lo que buscaba.\n\nEs que luego quiero hacer una selecciÃ³n de variables y al \"cambiar el nombre\" me fastidiaba.\n\nGracias\n________________________________\nDe: Salvador Castillo Raya ",
+      "thread_id": "thread-92e546c8892c",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-964e08f9f666",
+      "message_id": "<6312e840-4584-a5b5-6c8c-85f6fe8ff118@unex.es>",
+      "from_name": "José Trujillo Carmona",
+      "from_email_hash": "af2647cb50819e6240d8732985bccca31163c9659cce67854ca2df3cfc52531c",
+      "date": "2020-04-27T09:17:34+02:00",
+      "subject": "[R-es] Normalidad variable > 5000 observaciones",
+      "subject_clean": "[R-es] Normalidad variable > 5000 observaciones",
+      "in_reply_to": "<CAOVrgT_eH6wCV7nBPoYquGO-Yd8sWkk+tjJtpRDH5X2s4ZSHLg@mail.gmail.com>",
+      "references": [
+        "<CABOEHcGrDya7PKMW1sx4E6X=3YW1gfd8_FcMX-smmb2MC867BA@mail.gmail.com>",
+        "<CAOKbq8iV-WL=GZJpspaOcNL+W1see=66kvonMMzsz8a9dcV1_g@mail.gmail.com>",
+        "<CAOVrgT_eH6wCV7nBPoYquGO-Yd8sWkk+tjJtpRDH5X2s4ZSHLg@mail.gmail.com>"
+      ],
+      "body_plain": "Efectivamente Guido tiene razÃ³n. Una prueba de normalidad a una muestra \nque supera las 5000 observaciones no tiene mucho sentido.\n\nIgual que ningÃºn dado es exactamente equiprobable, a algÃºn nivel de \ndetalle habrÃ¡ una irregularidad que lo haga en algÃºn sentido defectuoso, \nninguna variable real es exactamente normal. La distribuciÃ³n normal es \nuna distribuciÃ³n teÃ³rica que es esperable que aparezca mucho como \nconsecuencia del teorema del lÃ­mite central; pero solo igual que el \ndado. Son modelos teÃ³ricos para predecir comportamientos que en la \nnaturaleza solo aparecerÃ¡n de forma aproximada.\n\nSi tienes muchas observaciones, las desviaciones del modelo se harÃ¡n \nrelevantes y algÃºn tests adecuado mostrarÃ¡ que es una variable real y no \nun modelo teÃ³rico.\n\nSi deseas predecir observaciones con mucha precisiÃ³n en la probabilidad \nasociada a las predicciones, en lugar de utilizar una distribuciÃ³n \nteÃ³rica tienes algunas alternativas. Por una parte puedes estimar la \npropia distribuciÃ³n de probabilidad mediante nÃºcleos (consultar \nstats::density y car::densityPlot) o mediante tÃ©cnicas de bootstrap.\n\nPor otra parte, si el objetivo es la aplicaciÃ³n de tÃ©cnicas \nparamÃ©tricas, el propio teorema sirve para resolver el problema. La \nmayorÃ­a de los estadÃ­sticos utilizados en los mÃ©todos paramÃ©tricos \npueden ser escritos como combinaciones lineales de las observaciones, lo \nque permite tratarlos como si tuviesen distribuciÃ³n aproximadamente \nnormal. Por otro lado si, note fÃ­as o te es insuficiente, los mÃ©todos \nbasado en bootstrap vuelven a ser una soluciÃ³n mÃ¡s que adecuada.\n\nEn definitiva, aunque puedo estar equivocado, no se me ocurre la \nnecesidad de aplicar contrastes de normalidad Ãºtiles a enormes muestras.\n\nSaludos.\n\nEl 26/4/20 a las 17:49, Guido Corradi escribiÃ³:\n> Las pruebas de normalidad en muestras grandes sufren de sobre-sensiblidad.\n> SegÃºn lo que he leÃ­do (y cualquier reviewer aceptarÃ¡...) cuando hay una\n> muestra grande la inspecciÃ³n visual del qq-plot serÃ¡ suficiente!\n>\n>\n> El dom., 26 abr. 2020 a las 12:51, Carlos Ortega (<cof en qualityexcellence.es>)\n> escribiÃ³:\n>\n>> Hola,\n>>\n>> AquÃ­ tienes una forma alternativa:\n>>\n>>\n>> https://stackoverflow.com/questions/17125458/r-shapiro-test-cannot-deal-with-more-than-5000-data-points\n>>\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>> El dom., 26 abr. 2020 a las 12:11, Rafael Santamaria (<\n>> rsantamariao en gmail.com>) escribiÃ³:\n>>\n>>> Hola!\n>>>\n>>> Necesito evaluar la normalidad de una variable para la que tengo mÃ¡s de\n>>> 5000 observaciones.\n>>>\n>>> Shapiro-Wilks no funciona para muestras mayores 5000 observaciones.\n>>>\n>>> AAlshap <- lapply(AAdf, shapiro.test)\n>>> Error in FUN(X[[i]], ...) : sample size must be between 3 and 5000\n>>>\n>>> Alguna sugerencia?\n>>>\n>>> Gracias.\n>>>\n>>>          [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>\n>> --\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>>          [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>",
+      "body_snippet": "Efectivamente Guido tiene razÃ³n. Una prueba de normalidad a una muestra \nque supera las 5000 observaciones no tiene mucho sentido.\n\nIgual que ningÃºn dado es exactamente equiprobable, a algÃºn nivel ",
+      "thread_id": "thread-c6bfda6f3b60",
+      "thread_depth": 3,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-c5fd15059b7f",
+      "message_id": "<CAF3uytVsO3uoWtoV4KgJ=uyRB9JE9uOTTA8aTVs9-n=1Gubh0g@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-27T12:59:07+02:00",
+      "subject": "[R-es] Implementación paquete ilm",
+      "subject_clean": "[R-es] Implementación paquete ilm",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, estoy intentando reproducir el script de este github:\n\nhttp://uc-r.github.io/iml-pkg#interactions\n\nTodo iba bien hasta que en el 6Âº panel me encuentro esto:\n\nFor any given loss function do\n1: compute loss function for original model\n2: for variable i in {1,...,p} do\n     | randomize values\n     | apply given ML model\n     | estimate loss function\n     | compute feature importance (permuted loss / original loss)\n   end\n\n3. Sort variables by descending feature importance\n\nEl formato me extraÃ±Ã³, y como era de esperar, da error.\nY tambiÃ©n a partir de ahÃ­. No tengo ni idea de quÃ© es lo que se debe hacer\nen casos asÃ­. A ver si alguno pudiera orientarme.\n\nGracias,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as, estoy intentando reproducir el script de este github:\n\nhttp://uc-r.github.io/iml-pkg#interactions\n\nTodo iba bien hasta que en el 6Âº panel me encuentro esto:\n\nFor any given loss function",
+      "thread_id": "thread-c5fd15059b7f",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-f4b3c4124a0f",
+      "message_id": "<009901d61c8a$58bf1270$0a3d3750$@jccm.es>",
+      "from_name": "Isidro Hidalgo Arellano",
+      "from_email_hash": "0724e196ab2f30e611934ecd7dc684176bcc11dd0a1132c7992011a16f84412a",
+      "date": "2020-04-27T13:52:35+02:00",
+      "subject": "[R-es] Implementación paquete ilm",
+      "subject_clean": "[R-es] Implementación paquete ilm",
+      "in_reply_to": "<CAF3uytVsO3uoWtoV4KgJ=uyRB9JE9uOTTA8aTVs9-n=1Gubh0g@mail.gmail.com>",
+      "references": [
+        "<CAF3uytVsO3uoWtoV4KgJ=uyRB9JE9uOTTA8aTVs9-n=1Gubh0g@mail.gmail.com>"
+      ],
+      "body_plain": "Es pseudocÃ³digo, lo tienes que pasar a un lenguaje de programaciÃ³n para que\nel intÃ©rprete (y compilador, en su caso) de dicho lenguaje lo entienda.\nLo que tienes ahÃ­ no es mÃ¡s que un procedimiento general.\nUn saludo\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nConsejerÃ­a de EconomÃ­a, Empresas y Empleo\nhttp://www.castillalamancha.es/\n\n\n\n-----Mensaje original-----\nDe: R-help-es <r-help-es-bounces en r-project.org> En nombre de Manuel Mendoza\nEnviado el: lunes, 27 de abril de 2020 12:59\nPara: Lista R <r-help-es en r-project.org>\nAsunto: [R-es] ImplementaciÃ³n paquete ilm\n\nBuenos dÃ­as, estoy intentando reproducir el script de este github:\n\nhttp://uc-r.github.io/iml-pkg#interactions\n\nTodo iba bien hasta que en el 6Âº panel me encuentro esto:\n\nFor any given loss function do\n1: compute loss function for original model\n2: for variable i in {1,...,p} do\n     | randomize values\n     | apply given ML model\n     | estimate loss function\n     | compute feature importance (permuted loss / original loss)\n   end\n\n3. Sort variables by descending feature importance\n\nEl formato me extraÃ±Ã³, y como era de esperar, da error.\nY tambiÃ©n a partir de ahÃ­. No tengo ni idea de quÃ© es lo que se debe hacer\nen casos asÃ­. A ver si alguno pudiera orientarme.\n\nGracias,\nManuel\n\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Es pseudocÃ³digo, lo tienes que pasar a un lenguaje de programaciÃ³n para que\nel intÃ©rprete (y compilador, en su caso) de dicho lenguaje lo entienda.\nLo que tienes ahÃ­ no es mÃ¡s que un procedimient",
+      "thread_id": "thread-c5fd15059b7f",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-965573a1f1db",
+      "message_id": "<CAF3uytXZBAONup5W3RAjrdnYvFvSCxXDRE2Le3Ff_uH0LMp2=g@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-27T14:05:52+02:00",
+      "subject": "[R-es] Implementación paquete ilm",
+      "subject_clean": "[R-es] Implementación paquete ilm",
+      "in_reply_to": "<009901d61c8a$58bf1270$0a3d3750$@jccm.es>",
+      "references": [
+        "<CAF3uytVsO3uoWtoV4KgJ=uyRB9JE9uOTTA8aTVs9-n=1Gubh0g@mail.gmail.com>",
+        "<009901d61c8a$58bf1270$0a3d3750$@jccm.es>"
+      ],
+      "body_plain": "Gracias Isidro. AbandonÃ© el intento y encontrÃ© un ejemplo mÃ¡s sencillo de\nimplementar.\nUn saludo,\nManuel\n\nEl lun., 27 abr. 2020 a las 13:53, Isidro Hidalgo Arellano (<\nihidalgo en jccm.es>) escribiÃ³:\n\n> Es pseudocÃ³digo, lo tienes que pasar a un lenguaje de programaciÃ³n para que\n> el intÃ©rprete (y compilador, en su caso) de dicho lenguaje lo entienda.\n> Lo que tienes ahÃ­ no es mÃ¡s que un procedimiento general.\n> Un saludo\n>\n> Isidro Hidalgo Arellano\n> Observatorio del Mercado de Trabajo\n> ConsejerÃ­a de EconomÃ­a, Empresas y Empleo\n> http://www.castillalamancha.es/\n>\n>\n>\n> -----Mensaje original-----\n> De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Manuel\n> Mendoza\n> Enviado el: lunes, 27 de abril de 2020 12:59\n> Para: Lista R <r-help-es en r-project.org>\n> Asunto: [R-es] ImplementaciÃ³n paquete ilm\n>\n> Buenos dÃ­as, estoy intentando reproducir el script de este github:\n>\n> http://uc-r.github.io/iml-pkg#interactions\n>\n> Todo iba bien hasta que en el 6Âº panel me encuentro esto:\n>\n> For any given loss function do\n> 1: compute loss function for original model\n> 2: for variable i in {1,...,p} do\n>      | randomize values\n>      | apply given ML model\n>      | estimate loss function\n>      | compute feature importance (permuted loss / original loss)\n>    end\n>\n> 3. Sort variables by descending feature importance\n>\n> El formato me extraÃ±Ã³, y como era de esperar, da error.\n> Y tambiÃ©n a partir de ahÃ­. No tengo ni idea de quÃ© es lo que se debe hacer\n> en casos asÃ­. A ver si alguno pudiera orientarme.\n>\n> Gracias,\n> Manuel\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Isidro. AbandonÃ© el intento y encontrÃ© un ejemplo mÃ¡s sencillo de\nimplementar.\nUn saludo,\nManuel\n\nEl lun., 27 abr. 2020 a las 13:53, Isidro Hidalgo Arellano (<\nihidalgo en jccm.es>) escribi",
+      "thread_id": "thread-c5fd15059b7f",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-3193eb3fd0f3",
+      "message_id": "<e02b1eb5e0dcaf7ab8d29dca327e2562.squirrel@webmail.unavarra.es>",
+      "from_name": "miri@m@@iz@te m@iii@g oii u@@v@rr@@es",
+      "from_email_hash": "1563c2ca423099b81867add0b9f07889159d9ff800a4039e4e1025143df96230",
+      "date": "2020-04-28T11:43:50+02:00",
+      "subject": "[R-es] Stopwords: Topic modelling con LDA",
+      "subject_clean": "[R-es] Stopwords: Topic modelling con LDA",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as,\n\nEstoy realizando un anÃ¡lisis de topic models con el mÃ©todo LDA. En\nprincipio, he quitado del anÃ¡lisis las palabras \"stopwords\" universales. A\nla hora de ver los topics y sus palabras mÃ¡s frecuentes encuentro que son\nmuy similares y hay palabras que aparecen en todos los topics. Los textos\nque estoy analizando son opiniones de consumidores sobre una categorÃ­a\nconcreta de cosmÃ©ticos, por lo que la temÃ¡tica es muy concreta y puede ser\nque en todas las opiniones se hable de cosas similares.\n\nMi pregunta es, Â¿incluirÃ­ais estas palabras que me aparecen en todos los\ntopics o casi todos como stopwords? Â¿Hay alguna forma de refinar mÃ¡s el\nanÃ¡lisis y que haya mÃ¡s diferencias entre topics?\n\nEste es el cÃ³digo que estoy usando:\n\nReviews_dtm <-text_df12star %>%\n  unnest_tokens(word, text) %>%\n  anti_join(stop_words)%>%\n  count(Brand, word) %>%\n  cast_dtm(Brand, word, n)\n\n\nReviews_lda <- LDA(Reviews12_dtm, k = 15, control = list(seed = 2016))\n\nUn saludo\n\nMiriam",
+      "body_snippet": "Buenos dÃ­as,\n\nEstoy realizando un anÃ¡lisis de topic models con el mÃ©todo LDA. En\nprincipio, he quitado del anÃ¡lisis las palabras \"stopwords\" universales. A\nla hora de ver los topics y sus palabras",
+      "thread_id": "thread-3193eb3fd0f3",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-f91afeaf88aa",
+      "message_id": "<CAOKbq8hiJ7pLcfnfqxgxC0ANqHidRJfB8ye59Vy3_o79BPnOOg@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-04-28T12:53:39+02:00",
+      "subject": "[R-es] Stopwords: Topic modelling con LDA",
+      "subject_clean": "[R-es] Stopwords: Topic modelling con LDA",
+      "in_reply_to": "<e02b1eb5e0dcaf7ab8d29dca327e2562.squirrel@webmail.unavarra.es>",
+      "references": [
+        "<e02b1eb5e0dcaf7ab8d29dca327e2562.squirrel@webmail.unavarra.es>"
+      ],
+      "body_plain": "Hola,\nYo de primeras los quitarÃ­a para quÃ© otros topics aparecen.\n\nY tambiÃ©n aplicarÃ­a tf-idf a tus comentarios. Con tf-idf seguro que\ndesaparecen como relevantes esas palabras comunes, serÃ¡ otra forma de\nconfirmar que es buena la decisiÃ³n de hacer el anÃ¡lisis eliminandolas.\n\nSaludos,\nCarlos Ortega\nwww.qualityecellence.es\n\nEl mar., 28 abr. 2020 a las 11:44, <miriam.alzate en unavarra.es> escribiÃ³:\n\n> Buenos dÃ­as,\n>\n> Estoy realizando un anÃ¡lisis de topic models con el mÃ©todo LDA. En\n> principio, he quitado del anÃ¡lisis las palabras \"stopwords\" universales. A\n> la hora de ver los topics y sus palabras mÃ¡s frecuentes encuentro que son\n> muy similares y hay palabras que aparecen en todos los topics. Los textos\n> que estoy analizando son opiniones de consumidores sobre una categorÃ­a\n> concreta de cosmÃ©ticos, por lo que la temÃ¡tica es muy concreta y puede ser\n> que en todas las opiniones se hable de cosas similares.\n>\n> Mi pregunta es, Â¿incluirÃ­ais estas palabras que me aparecen en todos los\n> topics o casi todos como stopwords? Â¿Hay alguna forma de refinar mÃ¡s el\n> anÃ¡lisis y que haya mÃ¡s diferencias entre topics?\n>\n> Este es el cÃ³digo que estoy usando:\n>\n> Reviews_dtm <-text_df12star %>%\n>   unnest_tokens(word, text) %>%\n>   anti_join(stop_words)%>%\n>   count(Brand, word) %>%\n>   cast_dtm(Brand, word, n)\n>\n>\n> Reviews_lda <- LDA(Reviews12_dtm, k = 15, control = list(seed = 2016))\n>\n> Un saludo\n>\n> Miriam\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\nYo de primeras los quitarÃ­a para quÃ© otros topics aparecen.\n\nY tambiÃ©n aplicarÃ­a tf-idf a tus comentarios. Con tf-idf seguro que\ndesaparecen como relevantes esas palabras comunes, serÃ¡ otra",
+      "thread_id": "thread-3193eb3fd0f3",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-8b220a4e315b",
+      "message_id": "<0e642fa3-467f-7922-2b76-77c9845a41bb@gmail.com>",
+      "from_name": "Pedro Concejero",
+      "from_email_hash": "500b1aaed23f6e7d5bd694e150be41c5221c7c84e187abe82215a575a7fb6b50",
+      "date": "2020-04-28T12:54:21+02:00",
+      "subject": "[R-es] Stopwords: Topic modelling con LDA",
+      "subject_clean": "[R-es] Stopwords: Topic modelling con LDA",
+      "in_reply_to": "<mailman.13843.17.1588068002.53482.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.13843.17.1588068002.53482.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Hola Miriam,\n\nSi tu propÃ³sito es extraer tÃ³picos de tu LDA, no suele ser de interÃ©s \nque salgan muchas palabras comunes entre los tÃ³picos, asÃ­ que a tu pregunta\n\nÂ¿incluirÃ­ais estas palabras como stopwords?\n\nYo te dirÃ­a que sÃ­, o alternativamente que utilices un filtrado por \ntf-idf que te quitarÃ¡ esas palabras demasiado comunes entre documentos.\n\nY ante la pregunta de si quieres que salgan mÃ¡s diferencias entre topics \nhay muchas alternativas. Entre ellas:\n\n- utilizar bigramas (o n-gramas, con un grado creciente de complejidad)\n\n- aumentar el k (aunque tÃº estÃ¡s utilizando ya 15...). Â¿CuÃ¡ntos \ndocumentos / vocabulario estÃ¡s analizando?\n\nTambiÃ©n estÃ¡ la estrategia de \"tunear\" los parÃ¡metros de LDA...\n\nSaludos,\n\nPedro\n\n\nEl 28/4/20 a las 12:00, r-help-es-request en r-project.org escribiÃ³:\n> [R-es] Stopwords: Topic modelling con LDA\n-- \n*Pedro Concejero\nE-mail: pedro.concejerocerezo en gmail.com \n<mailto:pedro.concejerocerezo en gmail.com>\nskype: pedro.concejero\ntwitter @ConcejeroPedro <https://twitter.com/ConcejeroPedro>\nlinkedin pedroconcejero <http://www.linkedin.com/in/pedroconcejero/es>\neRReRo feliz, me puedes encontrar en gRupo R madRid \n<http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13> *\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Miriam,\n\nSi tu propÃ³sito es extraer tÃ³picos de tu LDA, no suele ser de interÃ©s \nque salgan muchas palabras comunes entre los tÃ³picos, asÃ­ que a tu pregunta\n\nÂ¿incluirÃ­ais estas palabras com",
+      "thread_id": "thread-8b220a4e315b",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-1f8df8b1f30c",
+      "message_id": "<987c68e07df2e53ab6c2f125c87c4412.squirrel@webmail.unavarra.es>",
+      "from_name": "miri@m@@iz@te m@iii@g oii u@@v@rr@@es",
+      "from_email_hash": "1563c2ca423099b81867add0b9f07889159d9ff800a4039e4e1025143df96230",
+      "date": "2020-04-28T14:01:24+02:00",
+      "subject": "[R-es] Stopwords: Topic modelling con LDA",
+      "subject_clean": "[R-es] Stopwords: Topic modelling con LDA",
+      "in_reply_to": "<0e642fa3-467f-7922-2b76-77c9845a41bb@gmail.com>",
+      "references": [
+        "<mailman.13843.17.1588068002.53482.r-help-es@r-project.org>",
+        "<0e642fa3-467f-7922-2b76-77c9845a41bb@gmail.com>"
+      ],
+      "body_plain": "Hola Pedro, muchas gracias por tu respuesta.\n\nEstoy analizando 64.000 documentos con una media de 53 palabras cada uno.\nLos 65.000 pertenecen a 41 productos diferentes.\n\nHabÃ­a elegido k=15 porque al ver el indice de perplexity entre 2 y 20 kÂ´s\nparece que era el Ã³ptimo, si bien quizÃ¡ tenga que aumentar el nÃºmero de\nkÂ´s para calcular la perplexity y ver realmente el nÃºmero Ã³ptimo de\ntopics. Por ejemplo ver que pasa entre k=2 y k=200. Â¿CuÃ¡l es tu consejo en\ncuanto a identificar el nÃºmero Ã³ptimo de kÂ´s?\n\nÂ¿A quÃ© te refieres con tunear los parÃ¡metros?\n\nMuchas gracias\n\n\nEl Mar, 28 de Abril de 2020, 12:54, Pedro Concejero escribiÃ³:\n> Hola Miriam,\n>\n> Si tu propÃ³sito es extraer tÃ³picos de tu LDA, no suele ser de interÃ©s\n> que salgan muchas palabras comunes entre los tÃ³picos, asÃ­ que a tu\n> pregunta\n>\n> Â¿incluirÃ­ais estas palabras como stopwords?\n>\n> Yo te dirÃ­a que sÃ­, o alternativamente que utilices un filtrado por\n> tf-idf que te quitarÃ¡ esas palabras demasiado comunes entre documentos.\n>\n> Y ante la pregunta de si quieres que salgan mÃ¡s diferencias entre topics\n> hay muchas alternativas. Entre ellas:\n>\n> - utilizar bigramas (o n-gramas, con un grado creciente de complejidad)\n>\n> - aumentar el k (aunque tÃº estÃ¡s utilizando ya 15...). Â¿CuÃ¡ntos\n> documentos / vocabulario estÃ¡s analizando?\n>\n> TambiÃ©n estÃ¡ la estrategia de \"tunear\" los parÃ¡metros de LDA...\n>\n> Saludos,\n>\n> Pedro\n>\n>\n> El 28/4/20 a las 12:00, r-help-es-request en r-project.org escribiÃ³:\n>> [R-es] Stopwords: Topic modelling con LDA\n> --\n> *Pedro Concejero\n> E-mail: pedro.concejerocerezo en gmail.com\n> <mailto:pedro.concejerocerezo en gmail.com>\n> skype: pedro.concejero\n> twitter @ConcejeroPedro <https://twitter.com/ConcejeroPedro>\n> linkedin pedroconcejero <http://www.linkedin.com/in/pedroconcejero/es>\n> eRReRo feliz, me puedes encontrar en gRupo R madRid\n> <http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>\n> *\n>",
+      "body_snippet": "Hola Pedro, muchas gracias por tu respuesta.\n\nEstoy analizando 64.000 documentos con una media de 53 palabras cada uno.\nLos 65.000 pertenecen a 41 productos diferentes.\n\nHabÃ­a elegido k=15 porque al ",
+      "thread_id": "thread-8b220a4e315b",
+      "thread_depth": 1,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-db7d9c36d03e",
+      "message_id": "<ec846e0d3d627c736b6c5bf270bbe467.squirrel@webmail.unavarra.es>",
+      "from_name": "miri@m@@iz@te m@iii@g oii u@@v@rr@@es",
+      "from_email_hash": "1563c2ca423099b81867add0b9f07889159d9ff800a4039e4e1025143df96230",
+      "date": "2020-04-28T14:02:26+02:00",
+      "subject": "[R-es] [Posible SPAM] Re:  Stopwords: Topic modelling con LDA",
+      "subject_clean": "[R-es] [Posible SPAM] Re:  Stopwords: Topic modelling con LDA",
+      "in_reply_to": "<CAOKbq8hiJ7pLcfnfqxgxC0ANqHidRJfB8ye59Vy3_o79BPnOOg@mail.gmail.com>",
+      "references": [
+        "<e02b1eb5e0dcaf7ab8d29dca327e2562.squirrel@webmail.unavarra.es>",
+        "<CAOKbq8hiJ7pLcfnfqxgxC0ANqHidRJfB8ye59Vy3_o79BPnOOg@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Carlos! Apunto tu sugerencia.\n\nEl Mar, 28 de Abril de 2020, 12:53, Carlos Ortega escribiÃ³:\n> Hola,\n> Yo de primeras los quitarÃ­a para quÃ© otros topics aparecen.\n>\n> Y tambiÃ©n aplicarÃ­a tf-idf a tus comentarios. Con tf-idf seguro que\n> desaparecen como relevantes esas palabras comunes, serÃ¡ otra forma de\n> confirmar que es buena la decisiÃ³n de hacer el anÃ¡lisis eliminandolas.\n>\n> Saludos,\n> Carlos Ortega\n> https://protection.puc.rediris.es/fmlurlsvc/?fewReq=:B:JVI2PTg1Nip6MT0iPCplaDE8PTY8PSp/ZWtibXh5fmkxNW1qPG49bm09PzluaDtpPzk9aG5uPj89bm0/bj06bjpvOWk7PDtuaSp4MT05NDQ8Oz0+Pz4qfWVoMTw/X01+fFVmPD47OTg0ITw/X01+fFVgPD47OTg0Kn5vfHgxYWV+ZW1hIm1gdm14aUx5Ym16bX5+bSJpfypvMTU8&url=http%3a%2f%2fwww.qualityecellence.es\n>\n> El mar., 28 abr. 2020 a las 11:44, <miriam.alzate en unavarra.es> escribiÃ³:\n>\n>> Buenos dÃ­as,\n>>\n>> Estoy realizando un anÃ¡lisis de topic models con el mÃ©todo LDA. En\n>> principio, he quitado del anÃ¡lisis las palabras \"stopwords\" universales.\n>> A\n>> la hora de ver los topics y sus palabras mÃ¡s frecuentes encuentro que\n>> son\n>> muy similares y hay palabras que aparecen en todos los topics. Los\n>> textos\n>> que estoy analizando son opiniones de consumidores sobre una categorÃ­a\n>> concreta de cosmÃ©ticos, por lo que la temÃ¡tica es muy concreta y puede\n>> ser\n>> que en todas las opiniones se hable de cosas similares.\n>>\n>> Mi pregunta es,  incluirÃ­ais estas palabras que me aparecen en todos los\n>> topics o casi todos como stopwords?  Hay alguna forma de refinar mÃ¡s el\n>> anÃ¡lisis y que haya mÃ¡s diferencias entre topics?\n>>\n>> Este es el cÃ³digo que estoy usando:\n>>\n>> Reviews_dtm <-text_df12star %>%\n>>   unnest_tokens(word, text) %>%\n>>   anti_join(stop_words)%>%\n>>   count(Brand, word) %>%\n>>   cast_dtm(Brand, word, n)\n>>\n>>\n>> Reviews_lda <- LDA(Reviews12_dtm, k = 15, control = list(seed = 2016))\n>>\n>> Un saludo\n>>\n>> Miriam\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>",
+      "body_snippet": "Gracias Carlos! Apunto tu sugerencia.\n\nEl Mar, 28 de Abril de 2020, 12:53, Carlos Ortega escribiÃ³:\n> Hola,\n> Yo de primeras los quitarÃ­a para quÃ© otros topics aparecen.\n>\n> Y tambiÃ©n aplicarÃ­a tf",
+      "thread_id": "thread-3193eb3fd0f3",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-4d6e6de82162",
+      "message_id": "<006101d61d70$5b563f90$1202beb0$@yahoo.com.ar>",
+      "from_name": "Dario Manzoli",
+      "from_email_hash": "45983fd78ff87622e71c8b5502176f45e1d6bd29274e3a6afcc3c5d774a01c2b",
+      "date": "2020-04-28T12:19:02-03:00",
+      "subject": "[R-es] problemas para abrir archivo RData- magic number",
+      "subject_clean": "[R-es] problemas para abrir archivo RData- magic number",
+      "in_reply_to": null,
+      "references": [
+        "<006101d61d70$5b563f90$1202beb0$.ref@yahoo.com.ar>"
+      ],
+      "body_plain": "Hola a todos:\n\nLes hago una consulta porque tengo problemas para abrir un archivo .RData\n(se llama ?parasitismo spp secuendarias.RData?), lo intento abrir como lo\nhago habitualmente y me aparece el siguiente mensaje en la consola:\n\nError in load(\"~parasitismo spp secundarias.RData\") :\n\n  bad restore file magic number (file may be corrupted) -- no data loaded\n\nIn addition: Warning message:\n\nfile ?parasitismo spp secundarias.RData? has magic number ''\n\n  Use of save versions prior to 2 is deprecated\n\n\n\nTampoco puedo abrir el script que est? asociado a este RData.\n\nEstos archivos fueron generados el 28 de enero de 2018, la ?ltima vez que lo\nabr? fue el 16 de abril de 2020 y lo guard? sin problemas (o al menos no\nrecuerdo que me haya aparecido un cartel de error o algo as?). He trabajado\nbastante con ellos.\n\nAlgo que s? hice, fue abrir por error el archivo .RData (quer?a abrir solo\nel script) en otro Workspace y en otra carpeta de la computadora.\n\nLa versi?n de R que tengo es 3.5.1 y de RStudio es 1.1.453, bajo Window 10.\n\n?C?mo podr?a hacer para abrir estos archivos?\n\n\n\nDesde ya muchas gracias, saludos\n\nDar?o Manzoli\n\n\n\n--\nEl software de antivirus Avast ha analizado este correo electr?nico en busca de virus.\nhttps://www.avast.com/antivirus\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos:\n\nLes hago una consulta porque tengo problemas para abrir un archivo .RData\n(se llama ?parasitismo spp secuendarias.RData?), lo intento abrir como lo\nhago habitualmente y me aparece el si",
+      "thread_id": "thread-4d6e6de82162",
+      "thread_depth": 0,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-14318db76b19",
+      "message_id": "<72638afd1346e876098e90780b753b4a.squirrel@webmail.unavarra.es>",
+      "from_name": "miri@m@@iz@te m@iii@g oii u@@v@rr@@es",
+      "from_email_hash": "1563c2ca423099b81867add0b9f07889159d9ff800a4039e4e1025143df96230",
+      "date": "2020-04-29T14:00:29+02:00",
+      "subject": "[R-es] [Posible SPAM] Re:  Stopwords: Topic modelling con LDA",
+      "subject_clean": "[R-es] [Posible SPAM] Re:  Stopwords: Topic modelling con LDA",
+      "in_reply_to": "<CAOKbq8hiJ7pLcfnfqxgxC0ANqHidRJfB8ye59Vy3_o79BPnOOg@mail.gmail.com>",
+      "references": [
+        "<e02b1eb5e0dcaf7ab8d29dca327e2562.squirrel@webmail.unavarra.es>",
+        "<CAOKbq8hiJ7pLcfnfqxgxC0ANqHidRJfB8ye59Vy3_o79BPnOOg@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nAcabo de calcular tf-idf y me surge una duda. Â¿HabrÃ­a un valor de idf o\ntf-idf que se considerara como umbral para establecer que una palabra es\nmuy comÃºn o no? Los valores de idf en mis datos van entre 0 y 3.78 y los\nde tf-idf ente 0 y 0.07.\n\nUn saludo\n\nEl Mar, 28 de Abril de 2020, 12:53, Carlos Ortega escribiÃ³:\n> Hola,\n> Yo de primeras los quitarÃ­a para quÃ© otros topics aparecen.\n>\n> Y tambiÃ©n aplicarÃ­a tf-idf a tus comentarios. Con tf-idf seguro que\n> desaparecen como relevantes esas palabras comunes, serÃ¡ otra forma de\n> confirmar que es buena la decisiÃ³n de hacer el anÃ¡lisis eliminandolas.\n>\n> Saludos,\n> Carlos Ortega\n> https://protection.puc.rediris.es/fmlurlsvc/?fewReq=:B:JVI2PTg1Nip6MT0iPCplaDE8PTY8PSp/ZWtibXh5fmkxNW1qPG49bm09PzluaDtpPzk9aG5uPj89bm0/bj06bjpvOWk7PDtuaSp4MT05NDQ8Oz0+Pz4qfWVoMTw/X01+fFVmPD47OTg0ITw/X01+fFVgPD47OTg0Kn5vfHgxYWV+ZW1hIm1gdm14aUx5Ym16bX5+bSJpfypvMTU8&url=http%3a%2f%2fwww.qualityecellence.es\n>\n> El mar., 28 abr. 2020 a las 11:44, <miriam.alzate en unavarra.es> escribiÃ³:\n>\n>> Buenos dÃ­as,\n>>\n>> Estoy realizando un anÃ¡lisis de topic models con el mÃ©todo LDA. En\n>> principio, he quitado del anÃ¡lisis las palabras \"stopwords\" universales.\n>> A\n>> la hora de ver los topics y sus palabras mÃ¡s frecuentes encuentro que\n>> son\n>> muy similares y hay palabras que aparecen en todos los topics. Los\n>> textos\n>> que estoy analizando son opiniones de consumidores sobre una categorÃ­a\n>> concreta de cosmÃ©ticos, por lo que la temÃ¡tica es muy concreta y puede\n>> ser\n>> que en todas las opiniones se hable de cosas similares.\n>>\n>> Mi pregunta es,  incluirÃ­ais estas palabras que me aparecen en todos los\n>> topics o casi todos como stopwords?  Hay alguna forma de refinar mÃ¡s el\n>> anÃ¡lisis y que haya mÃ¡s diferencias entre topics?\n>>\n>> Este es el cÃ³digo que estoy usando:\n>>\n>> Reviews_dtm <-text_df12star %>%\n>>   unnest_tokens(word, text) %>%\n>>   anti_join(stop_words)%>%\n>>   count(Brand, word) %>%\n>>   cast_dtm(Brand, word, n)\n>>\n>>\n>> Reviews_lda <- LDA(Reviews12_dtm, k = 15, control = list(seed = 2016))\n>>\n>> Un saludo\n>>\n>> Miriam\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>",
+      "body_snippet": "Hola,\n\nAcabo de calcular tf-idf y me surge una duda. Â¿HabrÃ­a un valor de idf o\ntf-idf que se considerara como umbral para establecer que una palabra es\nmuy comÃºn o no? Los valores de idf en mis dat",
+      "thread_id": "thread-3193eb3fd0f3",
+      "thread_depth": 2,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-1dde7683e3da",
+      "message_id": "<CAOKbq8g-ixTfM84igFm7diBu3O+9TEUm=S=EsnYXnzFDKJUHfw@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2020-04-30T14:45:04+02:00",
+      "subject": "[R-es] [Posible SPAM] Re:  Stopwords: Topic modelling con LDA",
+      "subject_clean": "[R-es] [Posible SPAM] Re:  Stopwords: Topic modelling con LDA",
+      "in_reply_to": "<72638afd1346e876098e90780b753b4a.squirrel@webmail.unavarra.es>",
+      "references": [
+        "<e02b1eb5e0dcaf7ab8d29dca327e2562.squirrel@webmail.unavarra.es>",
+        "<CAOKbq8hiJ7pLcfnfqxgxC0ANqHidRJfB8ye59Vy3_o79BPnOOg@mail.gmail.com>",
+        "<72638afd1346e876098e90780b753b4a.squirrel@webmail.unavarra.es>"
+      ],
+      "body_plain": "Hola Miriam,\n\nNo he visto que se use un filtro por defecto para el valor de tf-idf.\n\nEn tu caso, tendrÃ¡s que ver cÃºal es ese punto de corte que te revela seÃ±al,\njusto de los tÃ©rminos que te interesan.\nMira la distribuciÃ³n de palabras y su valor de tf-idf y selecciona tu corte.\n\nGracias,\nCarlos.\nwww.qualityexcellence.es\n\n\nEl miÃ©., 29 abr. 2020 a las 14:00, <miriam.alzate en unavarra.es> escribiÃ³:\n\n> Hola,\n>\n> Acabo de calcular tf-idf y me surge una duda. Â¿HabrÃ­a un valor de idf o\n> tf-idf que se considerara como umbral para establecer que una palabra es\n> muy comÃºn o no? Los valores de idf en mis datos van entre 0 y 3.78 y los\n> de tf-idf ente 0 y 0.07.\n>\n> Un saludo\n>\n> El Mar, 28 de Abril de 2020, 12:53, Carlos Ortega escribiÃ³:\n> > Hola,\n> > Yo de primeras los quitarÃ­a para quÃ© otros topics aparecen.\n> >\n> > Y tambiÃ©n aplicarÃ­a tf-idf a tus comentarios. Con tf-idf seguro que\n> > desaparecen como relevantes esas palabras comunes, serÃ¡ otra forma de\n> > confirmar que es buena la decisiÃ³n de hacer el anÃ¡lisis eliminandolas.\n> >\n> > Saludos,\n> > Carlos Ortega\n> >\n> https://protection.puc.rediris.es/fmlurlsvc/?fewReq=:B:JVI2PTg1Nip6MT0iPCplaDE8PTY8PSp/ZWtibXh5fmkxNW1qPG49bm09PzluaDtpPzk9aG5uPj89bm0/bj06bjpvOWk7PDtuaSp4MT05NDQ8Oz0+Pz4qfWVoMTw/X01+fFVmPD47OTg0ITw/X01+fFVgPD47OTg0Kn5vfHgxYWV+ZW1hIm1gdm14aUx5Ym16bX5+bSJpfypvMTU8&url=http%3a%2f%2fwww.qualityecellence.es\n> >\n> > El mar., 28 abr. 2020 a las 11:44, <miriam.alzate en unavarra.es> escribiÃ³:\n> >\n> >> Buenos dÃ­as,\n> >>\n> >> Estoy realizando un anÃ¡lisis de topic models con el mÃ©todo LDA. En\n> >> principio, he quitado del anÃ¡lisis las palabras \"stopwords\" universales.\n> >> A\n> >> la hora de ver los topics y sus palabras mÃ¡s frecuentes encuentro que\n> >> son\n> >> muy similares y hay palabras que aparecen en todos los topics. Los\n> >> textos\n> >> que estoy analizando son opiniones de consumidores sobre una categorÃ­a\n> >> concreta de cosmÃ©ticos, por lo que la temÃ¡tica es muy concreta y puede\n> >> ser\n> >> que en todas las opiniones se hable de cosas similares.\n> >>\n> >> Mi pregunta es,  incluirÃ­ais estas palabras que me aparecen en todos los\n> >> topics o casi todos como stopwords?  Hay alguna forma de refinar mÃ¡s el\n> >> anÃ¡lisis y que haya mÃ¡s diferencias entre topics?\n> >>\n> >> Este es el cÃ³digo que estoy usando:\n> >>\n> >> Reviews_dtm <-text_df12star %>%\n> >>   unnest_tokens(word, text) %>%\n> >>   anti_join(stop_words)%>%\n> >>   count(Brand, word) %>%\n> >>   cast_dtm(Brand, word, n)\n> >>\n> >>\n> >> Reviews_lda <- LDA(Reviews12_dtm, k = 15, control = list(seed = 2016))\n> >>\n> >> Un saludo\n> >>\n> >> Miriam\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es en r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >\n> >\n> > --\n> > Saludos,\n> > Carlos Ortega\n> > www.qualityexcellence.es\n> >\n> >\n>\n>\n>\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Miriam,\n\nNo he visto que se use un filtro por defecto para el valor de tf-idf.\n\nEn tu caso, tendrÃ¡s que ver cÃºal es ese punto de corte que te revela seÃ±al,\njusto de los tÃ©rminos que te intere",
+      "thread_id": "thread-3193eb3fd0f3",
+      "thread_depth": 3,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-2b2e3a363789",
+      "message_id": "<ef798825fbf7012559c881d40d941f70.squirrel@webmail.unavarra.es>",
+      "from_name": "miri@m@@iz@te m@iii@g oii u@@v@rr@@es",
+      "from_email_hash": "1563c2ca423099b81867add0b9f07889159d9ff800a4039e4e1025143df96230",
+      "date": "2020-04-30T16:40:14+02:00",
+      "subject": "[R-es] [Posible SPAM] Re:  Stopwords: Topic modelling con LDA",
+      "subject_clean": "[R-es] [Posible SPAM] Re:  Stopwords: Topic modelling con LDA",
+      "in_reply_to": "<CAOKbq8g-ixTfM84igFm7diBu3O+9TEUm=S=EsnYXnzFDKJUHfw@mail.gmail.com>",
+      "references": [
+        "<e02b1eb5e0dcaf7ab8d29dca327e2562.squirrel@webmail.unavarra.es>",
+        "<CAOKbq8hiJ7pLcfnfqxgxC0ANqHidRJfB8ye59Vy3_o79BPnOOg@mail.gmail.com>",
+        "<72638afd1346e876098e90780b753b4a.squirrel@webmail.unavarra.es>",
+        "<CAOKbq8g-ixTfM84igFm7diBu3O+9TEUm=S=EsnYXnzFDKJUHfw@mail.gmail.com>"
+      ],
+      "body_plain": "De acuerdo, muchas gracias!\nEl Jue, 30 de Abril de 2020, 14:45, Carlos Ortega escribiÃ³:\n> Hola Miriam,\n>\n> No he visto que se use un filtro por defecto para el valor de tf-idf.\n>\n> En tu caso, tendrÃ¡s que ver cÃºal es ese punto de corte que te revela\n> seÃ±al,\n> justo de los tÃ©rminos que te interesan.\n> Mira la distribuciÃ³n de palabras y su valor de tf-idf y selecciona tu\n> corte.\n>\n> Gracias,\n> Carlos.\n> www.qualityexcellence.es\n>\n>\n> El miÃ©., 29 abr. 2020 a las 14:00, <miriam.alzate en unavarra.es> escribiÃ³:\n>\n>> Hola,\n>>\n>> Acabo de calcular tf-idf y me surge una duda. Â¿HabrÃ­a un valor de idf o\n>> tf-idf que se considerara como umbral para establecer que una palabra es\n>> muy comÃºn o no? Los valores de idf en mis datos van entre 0 y 3.78 y los\n>> de tf-idf ente 0 y 0.07.\n>>\n>> Un saludo\n>>\n>> El Mar, 28 de Abril de 2020, 12:53, Carlos Ortega escribiÃ³:\n>> > Hola,\n>> > Yo de primeras los quitarÃ­a para quÃ© otros topics aparecen.\n>> >\n>> > Y tambiÃ©n aplicarÃ­a tf-idf a tus comentarios. Con tf-idf seguro que\n>> > desaparecen como relevantes esas palabras comunes, serÃ¡ otra forma de\n>> > confirmar que es buena la decisiÃ³n de hacer el anÃ¡lisis eliminandolas.\n>> >\n>> > Saludos,\n>> > Carlos Ortega\n>> >\n>> https://protection.puc.rediris.es/fmlurlsvc/?fewReq=:B:JVI2PTg1Nip6MT0iPCplaDE8PTY8PSp/ZWtibXh5fmkxNW1qPG49bm09PzluaDtpPzk9aG5uPj89bm0/bj06bjpvOWk7PDtuaSp4MT05NDQ8Oz0+Pz4qfWVoMTw/X01+fFVmPD47OTg0ITw/X01+fFVgPD47OTg0Kn5vfHgxYWV+ZW1hIm1gdm14aUx5Ym16bX5+bSJpfypvMTU8&url=http%3a%2f%2fwww.qualityecellence.es\n>> >\n>> > El mar., 28 abr. 2020 a las 11:44, <miriam.alzate en unavarra.es>\n>> escribiÃ³:\n>> >\n>> >> Buenos dÃ­as,\n>> >>\n>> >> Estoy realizando un anÃ¡lisis de topic models con el mÃ©todo LDA. En\n>> >> principio, he quitado del anÃ¡lisis las palabras \"stopwords\"\n>> universales.\n>> >> A\n>> >> la hora de ver los topics y sus palabras mÃ¡s frecuentes encuentro que\n>> >> son\n>> >> muy similares y hay palabras que aparecen en todos los topics. Los\n>> >> textos\n>> >> que estoy analizando son opiniones de consumidores sobre una\n>> categorÃ­a\n>> >> concreta de cosmÃ©ticos, por lo que la temÃ¡tica es muy concreta y\n>> puede\n>> >> ser\n>> >> que en todas las opiniones se hable de cosas similares.\n>> >>\n>> >> Mi pregunta es,  incluirÃ­ais estas palabras que me aparecen en todos\n>> los\n>> >> topics o casi todos como stopwords?  Hay alguna forma de refinar mÃ¡s\n>> el\n>> >> anÃ¡lisis y que haya mÃ¡s diferencias entre topics?\n>> >>\n>> >> Este es el cÃ³digo que estoy usando:\n>> >>\n>> >> Reviews_dtm <-text_df12star %>%\n>> >>   unnest_tokens(word, text) %>%\n>> >>   anti_join(stop_words)%>%\n>> >>   count(Brand, word) %>%\n>> >>   cast_dtm(Brand, word, n)\n>> >>\n>> >>\n>> >> Reviews_lda <- LDA(Reviews12_dtm, k = 15, control = list(seed =\n>> 2016))\n>> >>\n>> >> Un saludo\n>> >>\n>> >> Miriam\n>> >>\n>> >> _______________________________________________\n>> >> R-help-es mailing list\n>> >> R-help-es en r-project.org\n>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >>\n>> >\n>> >\n>> > --\n>> > Saludos,\n>> > Carlos Ortega\n>> > www.qualityexcellence.es\n>> >\n>> >\n>>\n>>\n>>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>",
+      "body_snippet": "De acuerdo, muchas gracias!\nEl Jue, 30 de Abril de 2020, 14:45, Carlos Ortega escribiÃ³:\n> Hola Miriam,\n>\n> No he visto que se use un filtro por defecto para el valor de tf-idf.\n>\n> En tu caso, tendrÃ",
+      "thread_id": "thread-3193eb3fd0f3",
+      "thread_depth": 4,
+      "month": "2020-04"
+    },
+    {
+      "id": "msg-2a3eeafa30c1",
+      "message_id": "<CAF3uytXkyOY-kLSoj1g1TXPiii5xis1c_MZ80Ppvv-_Vra2WQg@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2020-04-30T18:15:39+02:00",
+      "subject": "[R-es] Instalar paquetes no disponibles para la versión actual",
+      "subject_clean": "[R-es] Instalar paquetes no disponibles para la versión actual",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas tardes. TenÃ­a la versiÃ³n 3.6.0 de R. QuerÃ­a instalar el paquete\nedarf, pero decÃ­a que no estaba disponible para esa versiÃ³n. ActualicÃ© R a\nla versiÃ³n 4.0.0, que creo que es la Ãºltima, pero al tratar de reinstalar\nforestFloor, me dice que no estÃ¡ disponible para la versiÃ³n 4.0.0. He\nabierto R 3.6.0 directamente, cliqueo install.packages(\"forestfloor\") y\nahora me dice que no estÃ¡ disponible para esa versiÃ³n.\nA ver si me podÃ©is echar una mano,\nGracias,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes. TenÃ­a la versiÃ³n 3.6.0 de R. QuerÃ­a instalar el paquete\nedarf, pero decÃ­a que no estaba disponible para esa versiÃ³n. ActualicÃ© R a\nla versiÃ³n 4.0.0, que creo que es la Ãºltima, p",
+      "thread_id": "thread-2a3eeafa30c1",
+      "thread_depth": 0,
+      "month": "2020-04"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-b416b1483859",
+      "subject": "[R-es] añadir líneas verticales con ggplot",
+      "message_count": 3,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2020-04-01T13:15:17+02:00",
+      "last_reply": "2020-04-01T22:24:50+02:00",
+      "root_message_id": "msg-b416b1483859"
+    },
+    {
+      "id": "thread-61854345c9fa",
+      "subject": "[R-es] R y APIS",
+      "message_count": 2,
+      "participants": [
+        "Francisco Rodriguez Sanchez",
+        "Ruben Tobalina Ramirez"
+      ],
+      "started": "2020-04-01T13:21:26+02:00",
+      "last_reply": "2020-04-09T12:26:10+02:00",
+      "root_message_id": "msg-61854345c9fa"
+    },
+    {
+      "id": "thread-11452485127f",
+      "subject": "[R-es] Predicción cooperativa COVID-19",
+      "message_count": 3,
+      "participants": [
+        "Javier Marcuzzi",
+        "Rubén Fernández Casal",
+        "Salvador Bergoñón Fuster"
+      ],
+      "started": "2020-04-01T13:30:14+02:00",
+      "last_reply": "2020-04-01T10:52:17-03:00",
+      "root_message_id": "msg-11452485127f"
+    },
+    {
+      "id": "thread-0ae72f04ae7f",
+      "subject": "[R-es] modelos COVID19",
+      "message_count": 1,
+      "participants": [
+        "Javier Marcuzzi"
+      ],
+      "started": "2020-04-09T02:36:31-03:00",
+      "last_reply": "2020-04-09T02:36:31-03:00",
+      "root_message_id": "msg-0ae72f04ae7f"
+    },
+    {
+      "id": "thread-2f75e07d4fe5",
+      "subject": "[R-es] Datos oficiales de COVID-19 en España",
+      "message_count": 3,
+      "participants": [
+        "Javier Marcuzzi",
+        "Rubén Fernández Casal",
+        "neo"
+      ],
+      "started": "2020-04-11T11:43:23+02:00",
+      "last_reply": "2020-04-11T15:11:48-04:00",
+      "root_message_id": "msg-2f75e07d4fe5"
+    },
+    {
+      "id": "thread-7fa498b54c77",
+      "subject": "[R-es] logit ordenado",
+      "message_count": 1,
+      "participants": [
+        "Sebastián Rangel"
+      ],
+      "started": "2020-04-11T23:17:32-05:00",
+      "last_reply": "2020-04-11T23:17:32-05:00",
+      "root_message_id": "msg-7fa498b54c77"
+    },
+    {
+      "id": "thread-4b7bdf4354e1",
+      "subject": "[R-es] W52hmz3fuzyQkMw8",
+      "message_count": 1,
+      "participants": [
+        "Kevin Revelo"
+      ],
+      "started": "2020-04-12T23:27:23-05:00",
+      "last_reply": "2020-04-12T23:27:23-05:00",
+      "root_message_id": "msg-4b7bdf4354e1"
+    },
+    {
+      "id": "thread-8cedf4e2c414",
+      "subject": "[R-es] ¿puede alguien leerme esto?",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2020-04-14T16:29:02+02:00",
+      "last_reply": "2020-04-14T16:29:02+02:00",
+      "root_message_id": "msg-8cedf4e2c414"
+    },
+    {
+      "id": "thread-8af5834d1d49",
+      "subject": "[R-es] ¿puede alguien leerme esto?",
+      "message_count": 4,
+      "participants": [
+        "José Trujillo Carmona",
+        "Manuel Mendoza",
+        "jorge.senan"
+      ],
+      "started": "2020-04-14T16:32:56+02:00",
+      "last_reply": "2020-04-14T17:53:00+02:00",
+      "root_message_id": "msg-8af5834d1d49"
+    },
+    {
+      "id": "thread-fa5176fc6184",
+      "subject": "[R-es] (sin asunto)",
+      "message_count": 2,
+      "participants": [
+        "Carlos Ortega",
+        "Manuel Mendoza"
+      ],
+      "started": "2020-04-14T19:48:20+02:00",
+      "last_reply": "2020-04-14T20:21:52+02:00",
+      "root_message_id": "msg-fa5176fc6184"
+    },
+    {
+      "id": "thread-dfa6f0b24d26",
+      "subject": "[R-es] desagregar distribución de frecuencias",
+      "message_count": 4,
+      "participants": [
+        "ANA VENTERO MARTIN",
+        "Carlos Ortega",
+        "Juan Carlos Lopez Mesa",
+        "Raúl Vaquerizo"
+      ],
+      "started": "2020-04-14T21:40:42+02:00",
+      "last_reply": "2020-04-15T20:07:05+02:00",
+      "root_message_id": "msg-dfa6f0b24d26"
+    },
+    {
+      "id": "thread-ca5d9a27b705",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "message_count": 3,
+      "participants": [
+        "Emilio L. Cano",
+        "Javier Marcuzzi",
+        "Sebastian Kruk"
+      ],
+      "started": "2020-04-16T18:48:44-03:00",
+      "last_reply": "2020-04-17T08:50:19+02:00",
+      "root_message_id": "msg-ca5d9a27b705"
+    },
+    {
+      "id": "thread-7ddfd72377b3",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "message_count": 4,
+      "participants": [
+        "Emilio L. Cano",
+        "Javier Marcuzzi",
+        "Marcelino De La Cruz Rot",
+        "residuo@soiow m@iii@g oii gm@ii@com"
+      ],
+      "started": "2020-04-17T12:40:23-03:00",
+      "last_reply": "2020-04-17T23:05:43-03:00",
+      "root_message_id": "msg-7ddfd72377b3"
+    },
+    {
+      "id": "thread-476d43b13982",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "message_count": 1,
+      "participants": [
+        "residuo@soiow m@iii@g oii gm@ii@com"
+      ],
+      "started": "2020-04-17T13:54:24-03:00",
+      "last_reply": "2020-04-17T13:54:24-03:00",
+      "root_message_id": "msg-476d43b13982"
+    },
+    {
+      "id": "thread-95c61ce58841",
+      "subject": "[R-es] Convertir lista de precios a dolares por gramo",
+      "message_count": 1,
+      "participants": [
+        "residuo@soiow m@iii@g oii gm@ii@com"
+      ],
+      "started": "2020-04-17T13:58:40-03:00",
+      "last_reply": "2020-04-17T13:58:40-03:00",
+      "root_message_id": "msg-95c61ce58841"
+    },
+    {
+      "id": "thread-80302f5371d3",
+      "subject": "[R-es] plot_heatmap",
+      "message_count": 2,
+      "participants": [
+        "Adrian Gonzalez",
+        "Marcelino de la Cruz Rot"
+      ],
+      "started": "2020-04-19T17:45:09-06:00",
+      "last_reply": "2020-04-20T09:51:26+02:00",
+      "root_message_id": "msg-80302f5371d3"
+    },
+    {
+      "id": "thread-1313068cfd5f",
+      "subject": "[R-es] Conversión de variable categóricas a Númericas.",
+      "message_count": 4,
+      "participants": [
+        "Edison Andrés Rincon Cardoso",
+        "Javier Marcuzzi",
+        "Jorge I Velez"
+      ],
+      "started": "2020-04-19T20:52:48-05:00",
+      "last_reply": "2020-04-19T22:06:25-05:00",
+      "root_message_id": "msg-1313068cfd5f"
+    },
+    {
+      "id": "thread-9eacd4589da1",
+      "subject": "[R-es] problemas al cambiar el nombre de una variable",
+      "message_count": 3,
+      "participants": [
+        "JCMld",
+        "Manuel Mendoza",
+        "Marcelino de la Cruz Rot"
+      ],
+      "started": "2020-04-25T14:15:48+02:00",
+      "last_reply": "2020-04-25T19:19:58+02:00",
+      "root_message_id": "msg-9eacd4589da1"
+    },
+    {
+      "id": "thread-ef367fe79b43",
+      "subject": "[R-es] eliminar outliers para un tapply",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2020-04-25T21:11:15+02:00",
+      "last_reply": "2020-04-25T21:11:15+02:00",
+      "root_message_id": "msg-ef367fe79b43"
+    },
+    {
+      "id": "thread-c6bfda6f3b60",
+      "subject": "[R-es] Normalidad variable > 5000 observaciones",
+      "message_count": 4,
+      "participants": [
+        "Carlos Ortega",
+        "Guido Corradi",
+        "José Trujillo Carmona",
+        "Rafael Santamaria"
+      ],
+      "started": "2020-04-26T12:10:57+02:00",
+      "last_reply": "2020-04-27T09:17:34+02:00",
+      "root_message_id": "msg-c6bfda6f3b60"
+    },
+    {
+      "id": "thread-c6bf0f46684f",
+      "subject": "[R-es] Geolocalización y representación temporal de casos con coordenadas X,Y (UTM) en mapa",
+      "message_count": 3,
+      "participants": [
+        "Jose",
+        "Manuel Spínola",
+        "María Ángeles Onieva"
+      ],
+      "started": "2020-04-26T12:52:48+02:00",
+      "last_reply": "2020-04-26T09:02:12-06:00",
+      "root_message_id": "msg-c6bf0f46684f"
+    },
+    {
+      "id": "thread-92e546c8892c",
+      "subject": "[R-es] Mantener nombres de variables",
+      "message_count": 4,
+      "participants": [
+        "Jorge I Velez",
+        "Salvador Castillo Raya",
+        "Samura ."
+      ],
+      "started": "2020-04-26T20:17:00+00:00",
+      "last_reply": "2020-04-26T21:12:35+00:00",
+      "root_message_id": "msg-92e546c8892c"
+    },
+    {
+      "id": "thread-c5fd15059b7f",
+      "subject": "[R-es] Implementación paquete ilm",
+      "message_count": 3,
+      "participants": [
+        "Isidro Hidalgo Arellano",
+        "Manuel Mendoza"
+      ],
+      "started": "2020-04-27T12:59:07+02:00",
+      "last_reply": "2020-04-27T14:05:52+02:00",
+      "root_message_id": "msg-c5fd15059b7f"
+    },
+    {
+      "id": "thread-3193eb3fd0f3",
+      "subject": "[R-es] Stopwords: Topic modelling con LDA",
+      "message_count": 6,
+      "participants": [
+        "Carlos Ortega",
+        "miri@m@@iz@te m@iii@g oii u@@v@rr@@es"
+      ],
+      "started": "2020-04-28T11:43:50+02:00",
+      "last_reply": "2020-04-30T16:40:14+02:00",
+      "root_message_id": "msg-3193eb3fd0f3"
+    },
+    {
+      "id": "thread-4d6e6de82162",
+      "subject": "[R-es] problemas para abrir archivo RData- magic number",
+      "message_count": 1,
+      "participants": [
+        "Dario Manzoli"
+      ],
+      "started": "2020-04-28T12:19:02-03:00",
+      "last_reply": "2020-04-28T12:19:02-03:00",
+      "root_message_id": "msg-4d6e6de82162"
+    },
+    {
+      "id": "thread-8b220a4e315b",
+      "subject": "[R-es] Stopwords: Topic modelling con LDA",
+      "message_count": 2,
+      "participants": [
+        "Pedro Concejero",
+        "miri@m@@iz@te m@iii@g oii u@@v@rr@@es"
+      ],
+      "started": "2020-04-28T12:54:21+02:00",
+      "last_reply": "2020-04-28T14:01:24+02:00",
+      "root_message_id": "msg-8b220a4e315b"
+    },
+    {
+      "id": "thread-2a3eeafa30c1",
+      "subject": "[R-es] Instalar paquetes no disponibles para la versión actual",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2020-04-30T18:15:39+02:00",
+      "last_reply": "2020-04-30T18:15:39+02:00",
+      "root_message_id": "msg-2a3eeafa30c1"
+    }
+  ]
+}

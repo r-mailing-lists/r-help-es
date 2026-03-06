@@ -1,0 +1,235 @@
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed Apr  2 23:06:37 2025
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 2 Apr 2025 18:06:37 -0300
+Subject: [R-es] R y c++ en Mac
+Message-ID: <49E1DE8B-8013-49A9-B4F6-F5E84FCDB121@gmail.com>
+
+Estimados
+
+Se me puso en la cabeza, hacer algo en C++ que ejecute un código R, nada complicado, experimentación.
+
+Al respecto hay por ejemplo:
+
+#include <RInside.h>
+
+int main(int argc, char *argv[]) {
+    RInside R(argc, argv);  // Inicializa R
+    
+    // Ejecutar una expresión R
+    R.parseEvalQ("resultado <- sqrt(16)");
+    
+    // Obtener resultados desde R
+    double resultado = R["resultado"];
+    std::cout << "Resultado desde R: " << resultado << std::endl;
+
+    return 0;
+}
+
+El problema es que no logro configurar Xcode en c++ consola, para probar el código, en otras palabras, puedo ejecutar algunos programas simples que yo mismo me creo, pero no logro hacer que lea el encabezado, lógicamente, sin este no funciona.
+
+¿Alguno pudo, puedo, o sabe como hacer en Xcode Mac ARM?
+
+Las referencias a RInside son estas:
+https://cran.r-project.org/web/packages/RInside/index.html?
+RInside: C++ Classes to Embed R in C++ (and C) Applications
+cran.r-project.org
+https://github.com/eddelbuettel/rinside/tree/master?
+eddelbuettel/rinside: Seamless embedding of R in C++ programs
+github.com
+
+Gracias
+
+Javier Rubén Marcuzzi
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20250402/522770f7/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: CRANlogo.png
+Type: image/png
+Size: 86351 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20250402/522770f7/attachment-0002.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: rinside.png
+Type: image/png
+Size: 112677 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20250402/522770f7/attachment-0003.png>
+
+From r-uc@ @end|ng |rom uc@@e@  Thu Apr  3 11:25:57 2025
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Thu, 03 Apr 2025 11:25:57 +0200
+Subject: [R-es] R y c++ en Mac
+In-Reply-To: <49E1DE8B-8013-49A9-B4F6-F5E84FCDB121@gmail.com>
+References: <49E1DE8B-8013-49A9-B4F6-F5E84FCDB121@gmail.com>
+Message-ID: <599492011c199a9567af01628582a133062725fc.camel@uca.es>
+
+Buenas,
+
+No utilizo xcode, pero todos los compiladores tienen opciones para modificar la ruta de los encabezado y las librerías.
+
+Si no necesita librerías para compilar puede copiar el fichero de cabecera en la carpeta del programa o poner la ruta completa al fichero y
+cambiar los ángulos por comillas.
+
+Un saludo.
+
+El mié, 02-04-2025 a las 18:06 -0300, Javier Marcuzzi escribió:
+> Estimados
+> 
+> Se me puso en la cabeza, hacer algo en C++ que ejecute un código R, nada complicado, experimentación.
+> 
+> Al respecto hay por ejemplo:
+> 
+> #include <RInside.h>
+> 
+> int main(int argc, char *argv[]) {
+>     RInside R(argc, argv);  // Inicializa R
+>     
+>     // Ejecutar una expresión R
+>     R.parseEvalQ("resultado <- sqrt(16)");
+>     
+>     // Obtener resultados desde R
+>     double resultado = R["resultado"];
+>     std::cout << "Resultado desde R: " << resultado << std::endl;
+> 
+>     return 0;
+> }
+> 
+> El problema es que no logro configurar Xcode en c++ consola, para probar el código, en otras palabras, puedo ejecutar algunos programas
+> simples que yo mismo me creo, pero no logro hacer que lea el encabezado, lógicamente, sin este no funciona.
+> 
+> ¿Alguno pudo, puedo, o sabe como hacer en Xcode Mac ARM?
+> 
+> Las referencias a RInside son estas:
+> 
+> RInside: C++ Classes to Embed R in C++ (and C) Applications
+> cran.r-project.org
+> [1]
+> 
+> eddelbuettel/rinside: Seamless embedding of R in C++ programs
+> github.com
+> [2]
+> 
+> Gracias
+> 
+> Javier Rubén Marcuzzi
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!WZ68ov-9iJPdj5gILbdhez-xXAD-SUQh5Lr3g-9Tp0M0Z3O0cPR_5W__cs32o9JhbEECbzi_GVB9wg3lOxbHFH8$
+>  
+
+[1]  RInside: C++ Classes to Embed R in C++ (and C) Applications cran.r-project.org 
+    https://urldefense.com/v3/__https://cran.r-project.org/web/packages/RInside/index.html__;!!D9dNQwwGXtA!WZ68ov-9iJPdj5gILbdhez-xXAD-SUQh5Lr3g-9Tp0M0Z3O0cPR_5W__cs32o9JhbEECbzi_GVB9wg3lTOYE8Eo$
+[2]  eddelbuettel/rinside: Seamless embedding of R in C++ programs github.com 
+    https://urldefense.com/v3/__https://github.com/eddelbuettel/rinside/tree/master__;!!D9dNQwwGXtA!WZ68ov-9iJPdj5gILbdhez-xXAD-SUQh5Lr3g-9Tp0M0Z3O0cPR_5W__cs32o9JhbEECbzi_GVB9wg3ll92CibM$
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20250403/aca9f99f/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: CRANlogo.png
+Type: image/png
+Size: 86351 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20250403/aca9f99f/attachment-0002.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: rinside.png
+Type: image/png
+Size: 112677 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20250403/aca9f99f/attachment-0003.png>
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu Apr  3 16:42:42 2025
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 3 Apr 2025 11:42:42 -0300
+Subject: [R-es] R y c++ en Mac
+In-Reply-To: <599492011c199a9567af01628582a133062725fc.camel@uca.es>
+References: <49E1DE8B-8013-49A9-B4F6-F5E84FCDB121@gmail.com>
+ <599492011c199a9567af01628582a133062725fc.camel@uca.es>
+Message-ID: <5ECB5C37-B47C-4AF0-B55B-440C2EB27696@gmail.com>
+
+Estimados
+
+Encontré la configuración correcta, o por lo menos, modificando muy poco anda en mi computadora.
+
+La solucion está en este sitio web. 
+https://www.gormanalysis.com/blog/using-rcpp-in-xcode/?
+Using Rcpp in Xcode
+gormanalysis.com
+
+Gracias por la sugerencias.
+
+> El 3 abr 2025, a las 6:25?a. m., Proyecto R-UCA <r-uca en uca.es> escribió:
+> 
+> Buenas,
+> 
+> No utilizo xcode, pero todos los compiladores tienen opciones para modificar la ruta de los encabezado y las librerías.
+> 
+> Si no necesita librerías para compilar puede copiar el fichero de cabecera en la carpeta del programa o poner la ruta completa al fichero y cambiar los ángulos por comillas.
+> 
+> Un saludo.
+> 
+> El mié, 02-04-2025 a las 18:06 -0300, Javier Marcuzzi escribió:
+>> Estimados
+>> 
+>> Se me puso en la cabeza, hacer algo en C++ que ejecute un código R, nada complicado, experimentación.
+>> 
+>> Al respecto hay por ejemplo:
+>> 
+>> #include <RInside.h>
+>> 
+>> int main(int argc, char *argv[]) {
+>>     RInside R(argc, argv);  // Inicializa R
+>>     
+>>     // Ejecutar una expresión R
+>>     R.parseEvalQ("resultado <- sqrt(16)");
+>>     
+>>     // Obtener resultados desde R
+>>     double resultado = R["resultado"];
+>>     std::cout << "Resultado desde R: " << resultado << std::endl;
+>> 
+>>     return 0;
+>> }
+>> 
+>> El problema es que no logro configurar Xcode en c++ consola, para probar el código, en otras palabras, puedo ejecutar algunos programas simples que yo mismo me creo, pero no logro hacer que lea el encabezado, lógicamente, sin este no funciona.
+>> 
+>> ¿Alguno pudo, puedo, o sabe como hacer en Xcode Mac ARM?
+>> 
+>> Las referencias a RInside son estas:
+>> https://cran.r-project.org/web/packages/RInside/index.html
+>> https://github.com/eddelbuettel/rinside/tree/master
+>> 
+>> Gracias
+>> 
+>> Javier Rubén Marcuzzi
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!WZ68ov-9iJPdj5gILbdhez-xXAD-SUQh5Lr3g-9Tp0M0Z3O0cPR_5W__cs32o9JhbEECbzi_GVB9wg3lOxbHFH8$ 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20250403/5f86390d/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: logo.png
+Type: image/png
+Size: 95544 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20250403/5f86390d/attachment-0001.png>
+

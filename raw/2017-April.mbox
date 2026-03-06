@@ -1,0 +1,6025 @@
+From freddy.lopez.quintero en gmail.com  Sat Apr  1 04:21:13 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Fri, 31 Mar 2017 23:21:13 -0300
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos en un
+ modelo no lineal.-
+Message-ID: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+
+Hola amigos,
+
+Supongamos que se quiere ejecutar un modelo no lineal con nls. Pensemos en
+el ejemplo de la ayuda:
+
+DNase1 <- subset(DNase, Run == 1)
+fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+summary(fm1DNase1)
+
+Aquí se está modelando la densidad óptica de un ensayo relacionada de forma
+no lineal (logística) con (el logaritmo) de la concentración de una
+proteína.
+
+¿Sabe alguien si existe una función que sirva para calcular un intervalo de
+confianza para la varianza de los errores?
+
+¡Muchas gracias!
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From rubenfcasal en gmail.com  Sat Apr  1 12:05:48 2017
+From: rubenfcasal en gmail.com (=?UTF-8?B?UnViw6luIEZlcm7DoW5kZXotQ2FzYWw=?=)
+Date: Sat, 1 Apr 2017 12:05:48 +0200
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ en un modelo no lineal.-
+In-Reply-To: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+Message-ID: <CAJhxDDuFnM3jVZYB4jvkKar+fa6aBqhJALDx6VzdpFwNTVtr2g@mail.gmail.com>
+
+Hola Freddy,
+
+A mí lo único que se me ocurre es que hagas bootstrap. Te recomendaría el
+paquete boot...
+
+Un saludo, Rubén.
+
+
+El 1 abr. 2017 4:22, "Freddy Omar López Quintero" <
+freddy.lopez.quintero en gmail.com> escribió:
+
+> Hola amigos,
+>
+> Supongamos que se quiere ejecutar un modelo no lineal con nls. Pensemos en
+> el ejemplo de la ayuda:
+>
+> DNase1 <- subset(DNase, Run == 1)
+> fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+> summary(fm1DNase1)
+>
+> Aquí se está modelando la densidad óptica de un ensayo relacionada de forma
+> no lineal (logística) con (el logaritmo) de la concentración de una
+> proteína.
+>
+> ¿Sabe alguien si existe una función que sirva para calcular un intervalo de
+> confianza para la varianza de los errores?
+>
+> ¡Muchas gracias!
+>
+>
+> --
+> «Pídeles sus títulos a los que te persiguen, pregúntales
+> cuándo nacieron, diles que te demuestren su existencia.»
+>
+> Rafael Cadenas
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sat Apr  1 13:48:53 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 1 Apr 2017 13:48:53 +0200
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ en un modelo no lineal.-
+In-Reply-To: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+Message-ID: <CAOKbq8jgiC9PTMqPN-gJ+ob6SaJVsBrczRSQ4y0Aq9hqjtH87g@mail.gmail.com>
+
+Hola,
+
+Esto te puede ayudar:
+
+http://stackoverflow.com/questions/32459480/r-confidence-bands-for-exponential-model-nls-in-basic-graphics
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 1 de abril de 2017, 4:21, Freddy Omar López Quintero <
+freddy.lopez.quintero en gmail.com> escribió:
+
+> Hola amigos,
+>
+> Supongamos que se quiere ejecutar un modelo no lineal con nls. Pensemos en
+> el ejemplo de la ayuda:
+>
+> DNase1 <- subset(DNase, Run == 1)
+> fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+> summary(fm1DNase1)
+>
+> Aquí se está modelando la densidad óptica de un ensayo relacionada de forma
+> no lineal (logística) con (el logaritmo) de la concentración de una
+> proteína.
+>
+> ¿Sabe alguien si existe una función que sirva para calcular un intervalo de
+> confianza para la varianza de los errores?
+>
+> ¡Muchas gracias!
+>
+>
+> --
+> «Pídeles sus títulos a los que te persiguen, pregúntales
+> cuándo nacieron, diles que te demuestren su existencia.»
+>
+> Rafael Cadenas
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From carlos.taimal en correounivalle.edu.co  Sat Apr  1 16:10:20 2017
+From: carlos.taimal en correounivalle.edu.co (CARLOS ALBERTO TAIMAL YEPES)
+Date: Sat, 1 Apr 2017 09:10:20 -0500
+Subject: [R-es] Series de tiempo diarias
+Message-ID: <CAH+_AOmo+0v06CE_gt9+QtE7VMoqiPXx4MOocK+xkAT4TnmkCg@mail.gmail.com>
+
+Cordial saludo, tengo 244 mediciones diarias de una variable meteorológica
+con la cual necesito realizar una serie de tiempo. Por favor, quería que me
+recomendaran alguna librería o función con la cual trabajar este tipo de
+datos. De antemano, gracias por su atención.
+
+	[[alternative HTML version deleted]]
+
+
+From freddy.lopez.quintero en gmail.com  Sat Apr  1 16:27:38 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Sat, 1 Apr 2017 11:27:38 -0300
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ en un modelo no lineal.-
+In-Reply-To: <CAOKbq8jgiC9PTMqPN-gJ+ob6SaJVsBrczRSQ4y0Aq9hqjtH87g@mail.gmail.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+	<CAOKbq8jgiC9PTMqPN-gJ+ob6SaJVsBrczRSQ4y0Aq9hqjtH87g@mail.gmail.com>
+Message-ID: <CALCOUqtLXzaSp8eS4OWRhR3XYbs=QqMvq2gs6OEw4GRdSSperQ@mail.gmail.com>
+
+Hola Rubén y Carlos,
+
+¡Muchas gracias por sus respuestas!
+
+Me parece sin embargo que ellas van encaminadas a obtener intervalos de
+confianza para la predicción.
+
+En la salida del ejemplo de la ayuda, se obtiene:
+
+Residual standard error: 0.01919 on 13 degrees of freedom
+>
+
+Ese sería (si no he entendido mal ??) el estimado de la desviación de los
+errores del modelo y es para este (o su cuadrado) que quisiera un intervalo
+de confianza.
+
+¡Muchas gracias!
+
+
+2017-04-01 8:48 GMT-03:00 Carlos Ortega <cof en qualityexcellence.es>:
+
+> Hola,
+>
+> Esto te puede ayudar:
+>
+> http://stackoverflow.com/questions/32459480/r-confidence-bands-for-
+> exponential-model-nls-in-basic-graphics
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El 1 de abril de 2017, 4:21, Freddy Omar López Quintero <
+> freddy.lopez.quintero en gmail.com> escribió:
+>
+>> Hola amigos,
+>>
+>> Supongamos que se quiere ejecutar un modelo no lineal con nls. Pensemos en
+>> el ejemplo de la ayuda:
+>>
+>> DNase1 <- subset(DNase, Run == 1)
+>> fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+>> summary(fm1DNase1)
+>>
+>> Aquí se está modelando la densidad óptica de un ensayo relacionada de
+>> forma
+>> no lineal (logística) con (el logaritmo) de la concentración de una
+>> proteína.
+>>
+>> ¿Sabe alguien si existe una función que sirva para calcular un intervalo
+>> de
+>> confianza para la varianza de los errores?
+>>
+>> ¡Muchas gracias!
+>>
+>>
+>> --
+>> «Pídeles sus títulos a los que te persiguen, pregúntales
+>> cuándo nacieron, diles que te demuestren su existencia.»
+>>
+>> Rafael Cadenas
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Sat Apr  1 16:41:24 2017
+From: javier.ruben.marcuzzi en gmail.com (javier.ruben.marcuzzi en gmail.com)
+Date: Sat, 1 Apr 2017 11:41:24 -0300
+Subject: [R-es] Series de tiempo diarias
+In-Reply-To: <CAH+_AOmo+0v06CE_gt9+QtE7VMoqiPXx4MOocK+xkAT4TnmkCg@mail.gmail.com>
+References: <CAH+_AOmo+0v06CE_gt9+QtE7VMoqiPXx4MOocK+xkAT4TnmkCg@mail.gmail.com>
+Message-ID: <58dfbc16.0689370a.ba827.2f53@mx.google.com>
+
+Estimado Carlos Alberto Taimal Yepes
+
+R tiene muchas formas de trabajar con series temporales, en distintas áreas de las ciencias, incluso en meteorología, el problema en este momento está en que usted debe saber que modelo estadístico necesita para analizar sus datos, con esa palabra clave realice una búsqueda en cualquier buscador, alguna respuesta encontrará, luego con un problema más concreto puede consultar a esta lista, muchos podrían ayudarlo sin inconveniente alguno, pero acote su pregunta a un tema específico y técnico. Por otro lado, si usted tiene una medición diaria al término de un año, quiere decir que tiene medido menos de una año, esa cantidad de datos son muy pequeños, aquí encontrará profesionales que manejan miles de datos, no tienen problema en colaborar con usted, pero los ejemplos que hay por ahí son con una cantidad de datos mucho más alta.
+
+Javier Rubén Marcuzzi
+
+De: CARLOS ALBERTO TAIMAL YEPES
+Enviado: sábado, 1 de abril de 2017 11:12
+Para: r-help-es en r-project.org
+Asunto: [R-es] Series de tiempo diarias
+
+Cordial saludo, tengo 244 mediciones diarias de una variable meteorológica
+con la cual necesito realizar una serie de tiempo. Por favor, quería que me
+recomendaran alguna librería o función con la cual trabajar este tipo de
+datos. De antemano, gracias por su atención.
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Sat Apr  1 17:07:38 2017
+From: javier.ruben.marcuzzi en gmail.com (javier.ruben.marcuzzi en gmail.com)
+Date: Sat, 1 Apr 2017 12:07:38 -0300
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ en unmodelo no lineal.-
+In-Reply-To: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+Message-ID: <58dfc23d.4188370a.16bb6.3789@mx.google.com>
+
+Estimado Freddy Omar López Quintero
+
+A ver si comprendo, usted tiene algo como mediciónes con un espectrofotómetro donde tiene absorbancias y transmitancias, con varias mediciónes alguna de las cuáles pueden ser a 280 nanometros de longitud de onda, otras a otra longitud, por ejemplo.
+
+Ahora bien, escribe el modelo estadístico con nls porque el modelo no es lineal. El modelo da un error, como todo modelo estadístico, y usted desea calcular la variancia de este error, o en otras palabras, la variancia residual. Sobre esta un intervalo de confianza. 
+
+Mi duda es la siguiente, la varianza residual en su modelo, es homogénea o heterogénea, porque yo vi algunos trabajos donde dicen la variancia residual es por decir algo 0,09 como si este fuese un valor constante, y otros trabajos donde dicen por ejemplo, se realizan mediciónes desde 200 a 300 nanometros de longitud de onda (o días desde el inicio de algo hasta la finalización), y para 200 la variancia residual es 0,09, para 201 es 0,08, para 202 es 0,1.
+
+¿Usted se encuentra en esta situación donde obtiene una varianza residual heterogénea, para cada punto de una curva o un valor constante y luego los valores medidos, los estimados por el modelo y el error entre ambos?
+
+¿Se comprende mi pregunta o duda? Porque en genética el modelo con variancia residual heterogénea es mucho mejor que usar una variable residual homogénea, pero son muy pocos los que se meten a ese nivel, porque hay una medición entre variancias, la variancia ?medida? y ?residual?, donde el cociente es un numerito, pero es uno para toda la curva o uno para cada punto de la curva, lógicamente si conozco el valor para cada punto de la curva la aplicación es ?nada que ver?, en otros términos, la expresión del ADN en distinto tiempo y espacio tiene diferencias, si hay una variancia residual homogénea, hay una parte que con los mismos datos no se detecta, la diferencia es solo al escribir el modelo.
+
+Quizás expongo algo que no le es útil, pero vi muy poco de variancias residuales heterogéneas.
+
+Javier Rubén Marcuzzi
+
+De: Freddy Omar López Quintero
+Enviado: viernes, 31 de marzo de 2017 23:22
+Para: r-help-es en r-project.org
+Asunto: [R-es] Intervalos de confianza de la varianza de los residuos en unmodelo no lineal.-
+
+Hola amigos,
+
+Supongamos que se quiere ejecutar un modelo no lineal con nls. Pensemos en
+el ejemplo de la ayuda:
+
+DNase1 <- subset(DNase, Run == 1)
+fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+summary(fm1DNase1)
+
+Aquí se está modelando la densidad óptica de un ensayo relacionada de forma
+no lineal (logística) con (el logaritmo) de la concentración de una
+proteína.
+
+¿Sabe alguien si existe una función que sirva para calcular un intervalo de
+confianza para la varianza de los errores?
+
+¡Muchas gracias!
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From freddy.lopez.quintero en gmail.com  Sat Apr  1 17:26:38 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Sat, 1 Apr 2017 12:26:38 -0300
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ en unmodelo no lineal.-
+In-Reply-To: <58dfc23d.4188370a.16bb6.3789@mx.google.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+	<58dfc23d.4188370a.16bb6.3789@mx.google.com>
+Message-ID: <CALCOUqtK3==oGC4bsdfKEPt1LPxHKqgUPSwmGrTo0d22JGHtoQ@mail.gmail.com>
+
+??Gracias Javier,?
+
+2017-04-01 12:07 GMT-03:00 <javier.ruben.marcuzzi en gmail.com>:
+
+> Mi duda es la siguiente, la varianza residual en su modelo, es homogénea o
+> heterogénea,
+
+
+?La varianza es homogénea, común a todas las observaciones.
+
+Digamos que el modelo es el siguiente,
+
+y=f(x, betas)+e
+
+con f alguna función no lineal cuyos parámetros son betas y con e~N(0,
+sigma2). Uno suele estar centrado en obtener información sobre los betas y
+marginar un poco la inferencia sobre el parámetro sigma2 (incluso en la
+regresión lineal). Es sobre este que me pregunto si existirá alguna función
+que devuelva su intervalo de confianza.
+
+Ojalá haya respondido la inquietud.
+
+¡Gracias!
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From rubenfcasal en gmail.com  Sat Apr  1 18:39:18 2017
+From: rubenfcasal en gmail.com (=?UTF-8?B?UnViw6luIEZlcm7DoW5kZXotQ2FzYWw=?=)
+Date: Sat, 1 Apr 2017 18:39:18 +0200
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ en unmodelo no lineal.-
+In-Reply-To: <CALCOUqtK3==oGC4bsdfKEPt1LPxHKqgUPSwmGrTo0d22JGHtoQ@mail.gmail.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+	<58dfc23d.4188370a.16bb6.3789@mx.google.com>
+	<CALCOUqtK3==oGC4bsdfKEPt1LPxHKqgUPSwmGrTo0d22JGHtoQ@mail.gmail.com>
+Message-ID: <CAJhxDDtiRTJE8sTvgbhb+UcCV6FsMER+dYCCu0gDwVO9kHdQ1g@mail.gmail.com>
+
+Con el bootstrap podrías obtener ICs de cualquier estadístico de la
+muestra, entre ellos de la varianza de un ajuste...
+
+El 1 abr. 2017 18:11, "Freddy Omar López Quintero" <
+freddy.lopez.quintero en gmail.com> escribió:
+
+> ??Gracias Javier,?
+>
+> 2017-04-01 12:07 GMT-03:00 <javier.ruben.marcuzzi en gmail.com>:
+>
+> > Mi duda es la siguiente, la varianza residual en su modelo, es homogénea
+> o
+> > heterogénea,
+>
+>
+> ?La varianza es homogénea, común a todas las observaciones.
+>
+> Digamos que el modelo es el siguiente,
+>
+> y=f(x, betas)+e
+>
+> con f alguna función no lineal cuyos parámetros son betas y con e~N(0,
+> sigma2). Uno suele estar centrado en obtener información sobre los betas y
+> marginar un poco la inferencia sobre el parámetro sigma2 (incluso en la
+> regresión lineal). Es sobre este que me pregunto si existirá alguna función
+> que devuelva su intervalo de confianza.
+>
+> Ojalá haya respondido la inquietud.
+>
+> ¡Gracias!
+>
+>
+> --
+> «Pídeles sus títulos a los que te persiguen, pregúntales
+> cuándo nacieron, diles que te demuestren su existencia.»
+>
+> Rafael Cadenas
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Sat Apr  1 21:06:47 2017
+From: javier.ruben.marcuzzi en gmail.com (javier.ruben.marcuzzi en gmail.com)
+Date: Sat, 1 Apr 2017 16:06:47 -0300
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ enunmodelo no lineal.-
+In-Reply-To: <CAJhxDDtiRTJE8sTvgbhb+UcCV6FsMER+dYCCu0gDwVO9kHdQ1g@mail.gmail.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+	<58dfc23d.4188370a.16bb6.3789@mx.google.com>
+	<CALCOUqtK3==oGC4bsdfKEPt1LPxHKqgUPSwmGrTo0d22JGHtoQ@mail.gmail.com>
+	<CAJhxDDtiRTJE8sTvgbhb+UcCV6FsMER+dYCCu0gDwVO9kHdQ1g@mail.gmail.com>
+Message-ID: <58dffa49.8233370a.37e75.5254@mx.google.com>
+
+Estimado Freddy
+
+No pretendo cambiar su análisis ni nada por el estilo, busque un documento donde hay algo de variancias y una librería de R, puede exceder la discusión, pero lo comparto porque es un tema que en lo personal me dio trabajo con R siendo más sencillo con algunos otros programas.
+
+http://gsejournal.biomedcentral.com/articles/10.1186/1297-9686-42-8
+
+
+Javier Rubén Marcuzzi
+
+De: Rubén Fernández-Casal
+Enviado: sábado, 1 de abril de 2017 13:39
+Para: Freddy Omar López Quintero
+CC: r-help-es en r-project.org; Marcuzzi, Javier Rubén
+Asunto: Re: [R-es] Intervalos de confianza de la varianza de los residuos enunmodelo no lineal.-
+
+Con el bootstrap podrías obtener ICs de cualquier estadístico de la muestra, entre ellos de la varianza de un ajuste...
+
+El 1 abr. 2017 18:11, "Freddy Omar López Quintero" <freddy.lopez.quintero en gmail.com> escribió:
+??Gracias Javier,?
+
+2017-04-01 12:07 GMT-03:00 <javier.ruben.marcuzzi en gmail.com>:
+
+> Mi duda es la siguiente, la varianza residual en su modelo, es homogénea o
+> heterogénea,
+
+
+?La varianza es homogénea, común a todas las observaciones.
+
+Digamos que el modelo es el siguiente,
+
+y=f(x, betas)+e
+
+con f alguna función no lineal cuyos parámetros son betas y con e~N(0,
+sigma2). Uno suele estar centrado en obtener información sobre los betas y
+marginar un poco la inferencia sobre el parámetro sigma2 (incluso en la
+regresión lineal). Es sobre este que me pregunto si existirá alguna función
+que devuelva su intervalo de confianza.
+
+Ojalá haya respondido la inquietud.
+
+¡Gracias!
+
+
+--
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From freddy.lopez.quintero en gmail.com  Sun Apr  2 04:11:48 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Sat, 1 Apr 2017 23:11:48 -0300
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ enunmodelo no lineal.-
+In-Reply-To: <58dffa49.8233370a.37e75.5254@mx.google.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+	<58dfc23d.4188370a.16bb6.3789@mx.google.com>
+	<CALCOUqtK3==oGC4bsdfKEPt1LPxHKqgUPSwmGrTo0d22JGHtoQ@mail.gmail.com>
+	<CAJhxDDtiRTJE8sTvgbhb+UcCV6FsMER+dYCCu0gDwVO9kHdQ1g@mail.gmail.com>
+	<58dffa49.8233370a.37e75.5254@mx.google.com>
+Message-ID: <CALCOUqvjcsEyQEmrvRc6W54Gs5xKxO=3w--TrbTn11-bfdn3nw@mail.gmail.com>
+
+2017-04-01 16:06 GMT-03:00 <javier.ruben.marcuzzi en gmail.com>:
+
+> busque un documento donde hay algo de variancias y una librería de R,
+
+
+¡?Gracias Javier!?¡Muy buen documento! Lo tendré bajo la manga para cuando
+deba enfrentarme a un modelo jerárquico con varianza heterogénea.
+
+También agradezco a Rubén por el tip sobre el uso de bootstrap para
+recuperar el parámetro.
+
+Por ahora me contentaré entonces con usar teoría asintótica clásica
+(Galland, 1987; Seber & Wild, 2003) y aproximaré el intervalo con:
+
+resumen<-summary(fm1DNase1)
+> c(resumen$df[2]*resumen$sigma^2/qchisq(.975,resumen$df[2],lower.tail=T),
+> resumen$df[2]*resumen$sigma^2/qchisq(.975,resumen$df[2],lower.tail=F))
+>
+
+puesto que sigma2 sigue una chi cuadrado con n-p grados de libertad.
+
+¡?Gracias!?
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From marcov1022 en gmail.com  Sun Apr  2 18:02:46 2017
+From: marcov1022 en gmail.com (Marco Velazquez)
+Date: Sun, 2 Apr 2017 11:02:46 -0500
+Subject: [R-es] Intervalos de confianza de la varianza de los residuos
+ en unmodelo no lineal.-
+In-Reply-To: <58dfc23d.4188370a.16bb6.3789@mx.google.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+	<58dfc23d.4188370a.16bb6.3789@mx.google.com>
+Message-ID: <CAPVDU-iTzqPd2jENMSAed-e510yvz=P70GVyQp+pS68=SHYPYg@mail.gmail.com>
+
+Homocedasticidad o heterocedasticidad
+
+El 1 de abril de 2017, 10:07, <javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimado Freddy Omar López Quintero
+>
+> A ver si comprendo, usted tiene algo como mediciónes con un
+> espectrofotómetro donde tiene absorbancias y transmitancias, con varias
+> mediciónes alguna de las cuáles pueden ser a 280 nanometros de longitud de
+> onda, otras a otra longitud, por ejemplo.
+>
+> Ahora bien, escribe el modelo estadístico con nls porque el modelo no es
+> lineal. El modelo da un error, como todo modelo estadístico, y usted desea
+> calcular la variancia de este error, o en otras palabras, la variancia
+> residual. Sobre esta un intervalo de confianza.
+>
+> Mi duda es la siguiente, la varianza residual en su modelo, es homogénea o
+> heterogénea, porque yo vi algunos trabajos donde dicen la variancia
+> residual es por decir algo 0,09 como si este fuese un valor constante, y
+> otros trabajos donde dicen por ejemplo, se realizan mediciónes desde 200 a
+> 300 nanometros de longitud de onda (o días desde el inicio de algo hasta la
+> finalización), y para 200 la variancia residual es 0,09, para 201 es 0,08,
+> para 202 es 0,1.
+>
+> ¿Usted se encuentra en esta situación donde obtiene una varianza residual
+> heterogénea, para cada punto de una curva o un valor constante y luego los
+> valores medidos, los estimados por el modelo y el error entre ambos?
+>
+> ¿Se comprende mi pregunta o duda? Porque en genética el modelo con
+> variancia residual heterogénea es mucho mejor que usar una variable
+> residual homogénea, pero son muy pocos los que se meten a ese nivel, porque
+> hay una medición entre variancias, la variancia ?medida? y ?residual?,
+> donde el cociente es un numerito, pero es uno para toda la curva o uno para
+> cada punto de la curva, lógicamente si conozco el valor para cada punto de
+> la curva la aplicación es ?nada que ver?, en otros términos, la expresión
+> del ADN en distinto tiempo y espacio tiene diferencias, si hay una
+> variancia residual homogénea, hay una parte que con los mismos datos no se
+> detecta, la diferencia es solo al escribir el modelo.
+>
+> Quizás expongo algo que no le es útil, pero vi muy poco de variancias
+> residuales heterogéneas.
+>
+> Javier Rubén Marcuzzi
+>
+> De: Freddy Omar López Quintero
+> Enviado: viernes, 31 de marzo de 2017 23:22
+> Para: r-help-es en r-project.org
+> Asunto: [R-es] Intervalos de confianza de la varianza de los residuos en
+> unmodelo no lineal.-
+>
+> Hola amigos,
+>
+> Supongamos que se quiere ejecutar un modelo no lineal con nls. Pensemos en
+> el ejemplo de la ayuda:
+>
+> DNase1 <- subset(DNase, Run == 1)
+> fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+> summary(fm1DNase1)
+>
+> Aquí se está modelando la densidad óptica de un ensayo relacionada de forma
+> no lineal (logística) con (el logaritmo) de la concentración de una
+> proteína.
+>
+> ¿Sabe alguien si existe una función que sirva para calcular un intervalo de
+> confianza para la varianza de los errores?
+>
+> ¡Muchas gracias!
+>
+>
+> --
+> «Pídeles sus títulos a los que te persiguen, pregúntales
+> cuándo nacieron, diles que te demuestren su existencia.»
+>
+> Rafael Cadenas
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From ihidalgo en jccm.es  Mon Apr  3 09:19:41 2017
+From: ihidalgo en jccm.es (Isidro Hidalgo Arellano)
+Date: Mon, 3 Apr 2017 09:19:41 +0200
+Subject: [R-es] Series de tiempo diarias
+In-Reply-To: <CAH+_AOmo+0v06CE_gt9+QtE7VMoqiPXx4MOocK+xkAT4TnmkCg@mail.gmail.com>
+References: <CAH+_AOmo+0v06CE_gt9+QtE7VMoqiPXx4MOocK+xkAT4TnmkCg@mail.gmail.com>
+Message-ID: <001201d2ac4a$a974d7d0$fc5e8770$@jccm.es>
+
+El más típico es "zoo". Yo utilizo "forecast". Con ellos puedes descomponer
+las series, hacer predicciones, etc.
+Pero en una instalación típica, sin instalar paquetes adicionales, tienes
+funciones de series temporales en el paquete "stats", como por ejemplo
+"ts()".
+
+Un saludo
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de CARLOS
+ALBERTO TAIMAL YEPES
+Enviado el: sábado, 01 de abril de 2017 16:10
+Para: r-help-es en r-project.org
+Asunto: [R-es] Series de tiempo diarias
+
+Cordial saludo, tengo 244 mediciones diarias de una variable meteorológica
+con la cual necesito realizar una serie de tiempo. Por favor, quería que me
+recomendaran alguna librería o función con la cual trabajar este tipo de
+datos. De antemano, gracias por su atención.
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From javier.ruben.marcuzzi en gmail.com  Mon Apr  3 15:51:04 2017
+From: javier.ruben.marcuzzi en gmail.com (javier.ruben.marcuzzi en gmail.com)
+Date: Mon, 3 Apr 2017 10:51:04 -0300
+Subject: [R-es] Homocedasticidad o heterocedasticidad
+In-Reply-To: <CAPVDU-iTzqPd2jENMSAed-e510yvz=P70GVyQp+pS68=SHYPYg@mail.gmail.com>
+References: <CALCOUquVSxMS6+ot_WqJJG0anPFAT=G=g1eg4=2KVU0Rm=aJ+A@mail.gmail.com>
+	<58dfc23d.4188370a.16bb6.3789@mx.google.com>
+	<CAPVDU-iTzqPd2jENMSAed-e510yvz=P70GVyQp+pS68=SHYPYg@mail.gmail.com>
+Message-ID: <58e2534b.422e370a.e69ed.6803@mx.google.com>
+
+Estimados
+
+A raíz de un hilo anterior creo este otro, a mi entender (que puedo estar equivocado), la varianza residual homogénea o heterogénea es sinónimo de homocedasticidad o heterocedasticidad.
+
+En lo más clásico de modelos mixtos, utilizando nlme y lme4, hay algunos documentos confusos, por un lado lme4 no podría calcular heterocedasticidad, pero siempre aparece un ejemplo por ahí que me confunde un poco.
+
+Copio y pego unos ejemplos, donde en los dos primeros calculo la heterocedasticidad, en los otros no, pero ¿se podría?, ¿ustedes que opinan? No hay un análisis específico como para compartir datos, es un ejercicio.
+
+# Heteroscedasticity              ------------ heterocedasticidad
+lme(y ~ time * tx, 
+    random = ~ time | subjects, 
+    weights = varIdent(form= ~ 1 | tx), data=data)
+# agrego el grupo tiempo          ------------ heterocedasticidad
+lme(y ~ time * tx, 
+    random = ~ time | subjects, 
+    weights = varIdent(form= ~ 1 | tx * time), 
+    data=data)
+# correlación autorececiva ??????
+lme(y ~ time * tx, 
+    random = ~ time | subjects, 
+    correlation = corAR1(),
+    data=data)
+# heterogeneo autorececivo ?????..
+lme(y ~ time * tx, 
+    random = ~ time | subjects, 
+    weights = varIdent(form= ~ 1 | time), 
+    correlation = corAR1(),
+    data=data)
+# variancias y covariancias ??????..
+# lme4
+lmer(y ~ (time + I(time^2)) * tx + 
+       (time + I(time^2) | subjects),
+     data=data)  
+# nlme  ????????..
+lme(y ~ (time + I(time^2)) * tx,
+    random = ~time + I(time^2) | subjects,
+    data=data)
+
+Javier Rubén Marcuzzi
+
+
+	[[alternative HTML version deleted]]
+
+
+From fermace en gmail.com  Wed Apr  5 20:52:52 2017
+From: fermace en gmail.com (Fernando Macedo)
+Date: Wed, 5 Apr 2017 15:52:52 -0300
+Subject: [R-es] Servicios en la nube
+Message-ID: <d6cf4178-6d4d-3249-52ee-0c3f960bdf17@gmail.com>
+
+Buenas, me gustaría saber su experiencia sobre servicios en la nube.
+Se que hay varios que usan los servicios de MS Azure. Tengo una duda 
+respecto a eso, funciona como una maquina virtual, no? Lo que significa 
+que para correr procesos debo estar conectado a la maquina, o puedo 
+dejar corriendo procesos en segundo plano y volver luego para ver el 
+resultado.
+
+Saludos y muchas gracias!
+
+-- 
+Fernando Macedo
+
+
+From cof en qualityexcellence.es  Wed Apr  5 22:01:58 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 5 Apr 2017 22:01:58 +0200
+Subject: [R-es] Servicios en la nube
+In-Reply-To: <d6cf4178-6d4d-3249-52ee-0c3f960bdf17@gmail.com>
+References: <d6cf4178-6d4d-3249-52ee-0c3f960bdf17@gmail.com>
+Message-ID: <CAOKbq8gi=ozD3_5bEt5bqNtKVO0jONnrjWHJV6oebK9qQP1wkg@mail.gmail.com>
+
+Hola,
+
+Azure es una posibilidad:
+
+   - integran la versión de "R" de Revolution Analytics y no tienen RStudio
+   - La versión de "R" de Revolution Analytcis no es la estándar. Utilizan
+   un concepto diferente de data.frame, al que hay que acostumbrarse.
+
+Otra posibilidad es utilizar la nube de Amazon:
+
+   - Aquí, contratas una máquina (virtual) o varias.
+   - Y sobre la máquina (que es un Linux aunque puedes también contratar de
+   Windows) pones lo que quieras:
+      - R
+      - RStudio
+   - Para Amazon, teniendo RStudio, lo ves en tu navegador como si
+   estuvieras arrancando el desktop.
+
+En los dos casos, lanzas un script de "R" y se ejecuta. Realmente no es un
+segundo plano, porque es otro plano diferente al de tu máquina. El proceso
+realmente lo ves/consumes desde un navegador.
+
+Gracias,
+Carlos.
+
+El 5 de abril de 2017, 20:52, Fernando Macedo <fermace en gmail.com> escribió:
+
+> Buenas, me gustaría saber su experiencia sobre servicios en la nube.
+> Se que hay varios que usan los servicios de MS Azure. Tengo una duda
+> respecto a eso, funciona como una maquina virtual, no? Lo que significa que
+> para correr procesos debo estar conectado a la maquina, o puedo dejar
+> corriendo procesos en segundo plano y volver luego para ver el resultado.
+>
+> Saludos y muchas gracias!
+>
+> --
+> Fernando Macedo
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From rvaquerizo en analisisydecision.es  Thu Apr  6 12:59:52 2017
+From: rvaquerizo en analisisydecision.es (=?utf-8?B?IlJh+mwgVmFxdWVyaXpvIg==?=)
+Date: Thu, 6 Apr 2017 12:59:52 +0200
+Subject: [R-es] Suavizado espacial por adyacencia
+Message-ID: <f9b07bdb92c477c96bb9e190576e7fb2.squirrel@server301.hostgo.com>
+
+Hola,
+
+¿Conocéis algún paquete de R (que no sea raster) que permita hacer
+suavizados espaciales por adyacencia?
+
+Dispongo de un modelo que distribuye de forma irregular los residuos en
+base a una distribución geográficas y me gustaría que aquellas zonas donde
+no dispongo información "se contagien" de las zonas adyacentes. Es
+habitual emplear suavizados "bayesianos" por adyacencia.
+
+Siempre he utilizado software comercial para la realización de esta tarea
+y ahora quiero empezar a usar R y tengo problemas para realizar el
+suavizado, no sé si hay algún paquete o directamente ponerme a programar
+este suavizado.
+
+A ver si me podéis dar luz. Gracias.
+
+
+Raúl Vaquerizo Romero
+www.analisisydecision.es
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Apr  6 14:11:15 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 6 Apr 2017 09:11:15 -0300
+Subject: [R-es] Servicios en la nube
+In-Reply-To: <CAOKbq8gi=ozD3_5bEt5bqNtKVO0jONnrjWHJV6oebK9qQP1wkg@mail.gmail.com>
+References: <d6cf4178-6d4d-3249-52ee-0c3f960bdf17@gmail.com>
+ <CAOKbq8gi=ozD3_5bEt5bqNtKVO0jONnrjWHJV6oebK9qQP1wkg@mail.gmail.com>
+Message-ID: <58e6306c.100a370a.54916.4522@mx.google.com>
+
+Estimados
+
+Hay otro servicio ofrecido por IBM, no tengo experiencia en utilizarlo, si desea ver algo al respecto encontré un video de su utilización con RStudio en https://www.youtube.com/watch?v=leKCMu9TrEI
+
+Javier Rubén Marcuzzi
+
+De: Carlos Ortega
+Enviado: miércoles, 5 de abril de 2017 17:02
+Para: Fernando Macedo
+CC: R-help-es
+Asunto: Re: [R-es] Servicios en la nube
+
+Hola,
+
+Azure es una posibilidad:
+
+   - integran la versión de "R" de Revolution Analytics y no tienen RStudio
+   - La versión de "R" de Revolution Analytcis no es la estándar. Utilizan
+   un concepto diferente de data.frame, al que hay que acostumbrarse.
+
+Otra posibilidad es utilizar la nube de Amazon:
+
+   - Aquí, contratas una máquina (virtual) o varias.
+   - Y sobre la máquina (que es un Linux aunque puedes también contratar de
+   Windows) pones lo que quieras:
+      - R
+      - RStudio
+   - Para Amazon, teniendo RStudio, lo ves en tu navegador como si
+   estuvieras arrancando el desktop.
+
+En los dos casos, lanzas un script de "R" y se ejecuta. Realmente no es un
+segundo plano, porque es otro plano diferente al de tu máquina. El proceso
+realmente lo ves/consumes desde un navegador.
+
+Gracias,
+Carlos.
+
+El 5 de abril de 2017, 20:52, Fernando Macedo <fermace en gmail.com> escribió:
+
+> Buenas, me gustaría saber su experiencia sobre servicios en la nube.
+> Se que hay varios que usan los servicios de MS Azure. Tengo una duda
+> respecto a eso, funciona como una maquina virtual, no? Lo que significa que
+> para correr procesos debo estar conectado a la maquina, o puedo dejar
+> corriendo procesos en segundo plano y volver luego para ver el resultado.
+>
+> Saludos y muchas gracias!
+>
+> --
+> Fernando Macedo
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Thu Apr  6 17:45:27 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 6 Apr 2017 17:45:27 +0200
+Subject: [R-es] Suavizado espacial por adyacencia
+In-Reply-To: <f9b07bdb92c477c96bb9e190576e7fb2.squirrel@server301.hostgo.com>
+References: <f9b07bdb92c477c96bb9e190576e7fb2.squirrel@server301.hostgo.com>
+Message-ID: <CAOKbq8g4aT0op3EUt8L7fD05qtsHunr=yfsK9gpCp+voX9KstA@mail.gmail.com>
+
+Hola,
+
+Mira esto:
+
+https://github.com/dkahle/ggmap
+
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 6 de abril de 2017, 12:59, "Raúl Vaquerizo" <
+rvaquerizo en analisisydecision.es> escribió:
+
+> Hola,
+>
+> ¿Conocéis algún paquete de R (que no sea raster) que permita hacer
+> suavizados espaciales por adyacencia?
+>
+> Dispongo de un modelo que distribuye de forma irregular los residuos en
+> base a una distribución geográficas y me gustaría que aquellas zonas donde
+> no dispongo información "se contagien" de las zonas adyacentes. Es
+> habitual emplear suavizados "bayesianos" por adyacencia.
+>
+> Siempre he utilizado software comercial para la realización de esta tarea
+> y ahora quiero empezar a usar R y tengo problemas para realizar el
+> suavizado, no sé si hay algún paquete o directamente ponerme a programar
+> este suavizado.
+>
+> A ver si me podéis dar luz. Gracias.
+>
+>
+> Raúl Vaquerizo Romero
+> www.analisisydecision.es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Thu Apr  6 17:50:33 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 6 Apr 2017 17:50:33 +0200
+Subject: [R-es] Servicios en la nube
+In-Reply-To: <58e6306c.100a370a.54916.4522@mx.google.com>
+References: <d6cf4178-6d4d-3249-52ee-0c3f960bdf17@gmail.com>
+ <CAOKbq8gi=ozD3_5bEt5bqNtKVO0jONnrjWHJV6oebK9qQP1wkg@mail.gmail.com>
+ <58e6306c.100a370a.54916.4522@mx.google.com>
+Message-ID: <CAOKbq8i8cQChyHARDmKu27PddrOms9HcDgPRkJbbQDM5v4T0+Q@mail.gmail.com>
+
+Hola,
+
+Sí, es el "IBM DataScience Experience", nos lo enseñaron en una reunión
+conjunta de R e IBM.
+
+http://datascience.ibm.com/
+
+En modo trial y creo que es perpetua el uso (al menos por ahora) tienes
+RStudio, Spark y recientemente han incorporado H2O. Este modo trial tiene
+2Gb de capacidad.
+
+Cuando quieres salir del trial, es cuando aparecen los problema$$$$,
+comparándolo con lo que ofrece Amazon en particular.
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 6 de abril de 2017, 14:11, Javier Marcuzzi <
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimados
+>
+>
+>
+> Hay otro servicio ofrecido por IBM, no tengo experiencia en utilizarlo, si
+> desea ver algo al respecto encontré un video de su utilización con RStudio
+> en https://www.youtube.com/watch?v=leKCMu9TrEI
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Carlos Ortega <cof en qualityexcellence.es>
+> *Enviado: *miércoles, 5 de abril de 2017 17:02
+> *Para: *Fernando Macedo <fermace en gmail.com>
+> *CC: *R-help-es <r-help-es en r-project.org>
+> *Asunto: *Re: [R-es] Servicios en la nube
+>
+>
+>
+> Hola,
+>
+>
+>
+> Azure es una posibilidad:
+>
+>
+>
+>    - integran la versión de "R" de Revolution Analytics y no tienen RStudio
+>
+>    - La versión de "R" de Revolution Analytcis no es la estándar. Utilizan
+>
+>    un concepto diferente de data.frame, al que hay que acostumbrarse.
+>
+>
+>
+> Otra posibilidad es utilizar la nube de Amazon:
+>
+>
+>
+>    - Aquí, contratas una máquina (virtual) o varias.
+>
+>    - Y sobre la máquina (que es un Linux aunque puedes también contratar de
+>
+>    Windows) pones lo que quieras:
+>
+>       - R
+>
+>       - RStudio
+>
+>    - Para Amazon, teniendo RStudio, lo ves en tu navegador como si
+>
+>    estuvieras arrancando el desktop.
+>
+>
+>
+> En los dos casos, lanzas un script de "R" y se ejecuta. Realmente no es un
+>
+> segundo plano, porque es otro plano diferente al de tu máquina. El proceso
+>
+> realmente lo ves/consumes desde un navegador.
+>
+>
+>
+> Gracias,
+>
+> Carlos.
+>
+>
+>
+> El 5 de abril de 2017, 20:52, Fernando Macedo <fermace en gmail.com>
+> escribió:
+>
+>
+>
+> > Buenas, me gustaría saber su experiencia sobre servicios en la nube.
+>
+> > Se que hay varios que usan los servicios de MS Azure. Tengo una duda
+>
+> > respecto a eso, funciona como una maquina virtual, no? Lo que significa
+> que
+>
+> > para correr procesos debo estar conectado a la maquina, o puedo dejar
+>
+> > corriendo procesos en segundo plano y volver luego para ver el resultado.
+>
+> >
+>
+> > Saludos y muchas gracias!
+>
+> >
+>
+> > --
+>
+> > Fernando Macedo
+>
+> >
+>
+> > _______________________________________________
+>
+> > R-help-es mailing list
+>
+> > R-help-es en r-project.org
+>
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> >
+>
+>
+>
+>
+>
+>
+>
+> --
+>
+> Saludos,
+>
+> Carlos Ortega
+>
+> www.qualityexcellence.es
+>
+>
+>
+>                 [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From rubenfcasal en gmail.com  Thu Apr  6 18:13:06 2017
+From: rubenfcasal en gmail.com (=?UTF-8?B?UnViw6luIEZlcm7DoW5kZXotQ2FzYWw=?=)
+Date: Thu, 6 Apr 2017 18:13:06 +0200
+Subject: [R-es] Suavizado espacial por adyacencia
+In-Reply-To: <f9b07bdb92c477c96bb9e190576e7fb2.squirrel@server301.hostgo.com>
+References: <f9b07bdb92c477c96bb9e190576e7fb2.squirrel@server301.hostgo.com>
+Message-ID: <CAJhxDDuEBGZrf4nFgVZqfcqGhYRJh0nEMS1Z-TUeqeXKco9gQw@mail.gmail.com>
+
+Hola Raúl,
+
+El paquete npsp que estoy desarrollando permite hacer estimación polinomica
+local de la tendencia (un tipo de suavizado no paramétrico) y también
+estimación no paramétrica del variograma para realizar kriging (combinando
+las estimaciones de la tendencia y del variograma). Si estas interesado te
+puedo enviar una versión preliminar de la vignette...
+
+También hay otros paquetes que te pueden servir. Entre ellos te
+recomendaría el sm para el caso bidimensional.
+
+Espero que te sirva...
+
+Un saludo, Rubén.
+
+El 6 abr. 2017 13:00, Raúl Vaquerizo <rvaquerizo en analisisydecision.es>
+escribió:
+
+> Hola,
+>
+> ¿Conocéis algún paquete de R (que no sea raster) que permita hacer
+> suavizados espaciales por adyacencia?
+>
+> Dispongo de un modelo que distribuye de forma irregular los residuos en
+> base a una distribución geográficas y me gustaría que aquellas zonas donde
+> no dispongo información "se contagien" de las zonas adyacentes. Es
+> habitual emplear suavizados "bayesianos" por adyacencia.
+>
+> Siempre he utilizado software comercial para la realización de esta tarea
+> y ahora quiero empezar a usar R y tengo problemas para realizar el
+> suavizado, no sé si hay algún paquete o directamente ponerme a programar
+> este suavizado.
+>
+> A ver si me podéis dar luz. Gracias.
+>
+>
+> Raúl Vaquerizo Romero
+> www.analisisydecision.es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From onunez en unex.es  Fri Apr  7 10:44:57 2017
+From: onunez en unex.es (Olivier =?utf-8?Q?Nu=C3=B1ez?=)
+Date: Fri, 7 Apr 2017 10:44:57 +0200 (CEST)
+Subject: [R-es] Suavizado espacial por adyacencia
+In-Reply-To: <f9b07bdb92c477c96bb9e190576e7fb2.squirrel@server301.hostgo.com>
+References: <f9b07bdb92c477c96bb9e190576e7fb2.squirrel@server301.hostgo.com>
+Message-ID: <1233579357.1194254.1491554697697.JavaMail.zimbra@unex.es>
+
+El paquete R-INLA es un muy buena opción para este tipo de suavizado.
+
+http://www.r-inla.org/download
+
+Implementa entre otros modelos, el de Besag-York-Mollie.
+Un saludo. Olivier
+
+
+
+----- Mensaje original -----
+De: "Ra?l Vaquerizo" <rvaquerizo en analisisydecision.es>
+Para: R-help-es en r-project.org
+Enviados: Jueves, 6 de Abril 2017 12:59:52
+Asunto: [R-es] Suavizado espacial por adyacencia
+
+Hola,
+
+¿Conocéis algún paquete de R (que no sea raster) que permita hacer
+suavizados espaciales por adyacencia?
+
+Dispongo de un modelo que distribuye de forma irregular los residuos en
+base a una distribución geográficas y me gustaría que aquellas zonas donde
+no dispongo información "se contagien" de las zonas adyacentes. Es
+habitual emplear suavizados "bayesianos" por adyacencia.
+
+Siempre he utilizado software comercial para la realización de esta tarea
+y ahora quiero empezar a usar R y tengo problemas para realizar el
+suavizado, no sé si hay algún paquete o directamente ponerme a programar
+este suavizado.
+
+A ver si me podéis dar luz. Gracias.
+
+
+Raúl Vaquerizo Romero
+www.analisisydecision.es
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ruben.coca en gmail.com  Fri Apr  7 12:02:08 2017
+From: ruben.coca en gmail.com (=?UTF-8?Q?Rub=C3=A9n_Coca?=)
+Date: Fri, 7 Apr 2017 12:02:08 +0200
+Subject: [R-es] =?utf-8?q?Distribuir_intervalo_de_d=C3=ADas_entre_meses?=
+Message-ID: <CAFxGGR6JquY-YCGytuWgT70RPvixKhf6dfgLjR49xaNTwew2Dw@mail.gmail.com>
+
+Hola,
+Partiendo de un data frame con 2 variables de fecha (inicio y fin):
+
+df <- data.frame(inicio = c(as.Date("2016-01-01"),
+                                      as.Date("2016-02-14")),
+                        fin = c(as.Date("2016-02-01"),
+                                  as.Date("2016-02-29")))
+
+Necesitaría crear 12 nuevas columnas adicionales, una para cada mes, que
+compute el número de días del intervalo que caen en cada mes. El resultado
+deseado sería algo así:
+
+inicio             fin              ene    feb    mar    abr    may    jun
+   jul    ago    sep    oct    nov    dic
+2016-01-01    2016-02-01  31     1       0        0       0        0      0
+     0        0       0       0       0
+2016-02-14    2016-02-29  0       15     0        0       0        0      0
+     0        0       0       0       0
+
+Buscando he encontrado una aproximación al problema del reparto, pero no es
+válida para data frames. La detallo por si sirve de inspiración:
+table(format(seq(df$inicio, df$fin, by=1), "%m"))
+
+Muchas gracias.
+Rubén
+
+	[[alternative HTML version deleted]]
+
+
+From fernand_arce en yahoo.es  Fri Apr  7 12:58:48 2017
+From: fernand_arce en yahoo.es (Fernando Arce)
+Date: Fri, 7 Apr 2017 10:58:48 +0000 (UTC)
+Subject: [R-es] Alternativa a RStudio
+In-Reply-To: <58dc05d8.0537ed0a.96636.1275@mx.google.com>
+References: <58d1ada3.902ec80a.68fb.ac02@mx.google.com>
+ <CALCOUqt_s_RnK7NS=ZF_zB=XNLMQ6x=18ip_5a0v-fbf2OukCA@mail.gmail.com>
+ <58d27727.6625ed0a.17393.4182@mx.google.com>
+ <BY2PR1201MB09524B00EDC5320348BFB468EB3C0@BY2PR1201MB0952.namprd12.prod.outlook.com>
+ <BY2PR1201MB0952A37A25222F080C978287EB3C0@BY2PR1201MB0952.namprd12.prod.outlook.com>
+ <CAOKbq8gnx4D3=zqC4JnrPbazzjYrB6QBdb-9bX=1dQ0D5g1ALQ@mail.gmail.com>
+ <9f3c7751-1b9d-f261-6dbb-fcfb3a61a57f@gmail.com>
+ <58dc05d8.0537ed0a.96636.1275@mx.google.com>
+Message-ID: <890710792.2105528.1491562728190@mail.yahoo.com>
+
+ blockquote, div.yahoo_quoted { margin-left: 0 !important; border-left:1px #715FFA solid !important; padding-left:1ex !important; background-color:white !important; } Hola,  instalas desde Windows? No lo he utilizado desde hace años pero con el ejecutable de Vincent Goulet iba muy bien. Mañana probaré a instalar un Windows en vietualbox y ver clase de error da. Quizás es porque usas microsoft R?Saludos y Perdon de nuevo, paso mucho tiempo en el campo en estas fechas....Fer
+
+
+Sent from my Delorian in 1937
+
+
+On Thursday, March 30, 2017, 6:08 am, javier.ruben.marcuzzi en gmail.com wrote:
+
+Estimados
+
+Leí todas las sugerencias y estoy probando, un criterio que tomé es tener algo minimalista, emacs puede estar con pocos iconos, comienzo por este porque está en https://www.r-project.org/other-projects.html .
+
+Realicé dos intentos, uno es utilizando Windows 10 con bash, instalando desde los repositorios de Ubuntu, el segundo intento es instalando la versión para Windows, la primera de las opciones instala desde Ubuntu como dependencia a R y lo necesario para este, la segunda no instala R, pero me pide que configure donde está Rterm.
+
+En realidad el mensaje es que no está el archivo o directorio con Rterm. ¿Cómo lo configuro en emcas para que encuentre a R? (debería encontrar una forma para usar R o R server - microsoft).
+
+Tinn-r estuvo en mi computadora hace algunos años, no recuerdo porqué lo deje, me parece que por aquellos años estaba sciview o algo por el estilo. 
+
+
+Javier Rubén Marcuzzi
+
+De: rubenfcasal
+Enviado: martes, 28 de marzo de 2017 14:24
+Para: r-help-es en r-project.org
+Asunto: Re: [R-es] Alternativa a RStudio
+
+Hola a todos,
+
+    La lista de mensajes es muy grande pero creo que no se comentaron 
+algunos que uso/usé:
+
+TinnR: (para Windows) Un editor de código que interacciona con la 
+consola de R [https://sourceforge.net/projects/tinn-r]
+
+Notepad++ con NppToR: (para Windows) similar al anterior 
+[https://sourceforge.net/projects/npptor]
+
+Eclipse con StatET: Entorno de programación para distintos lenguajes 
+entre ellos R (ofrece también un depurador de código integrado del 
+estilo del de RStudio; muy útil si se mezcla R con otros lenguajes...) 
+[e.g. 
+http://lukemiller.org/index.php/2010/04/eclipse-and-statet-a-nice-working-environment-for-r]
+
+    Un saludo, Rubén.
+
+-- 
+Ruben Fernandez Casal
+Department of Mathematics
+Faculty of Computer Science
+Universidade da Coruña
+Corporate email: ruben.fcasal <at> udc <dot> es
+--
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+    [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From ihidalgo en jccm.es  Fri Apr  7 13:02:46 2017
+From: ihidalgo en jccm.es (Isidro Hidalgo Arellano)
+Date: Fri, 7 Apr 2017 13:02:46 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Distribuir_intervalo_de_d=EDas_entre_meses?=
+In-Reply-To: <CAFxGGR6JquY-YCGytuWgT70RPvixKhf6dfgLjR49xaNTwew2Dw@mail.gmail.com>
+References: <CAFxGGR6JquY-YCGytuWgT70RPvixKhf6dfgLjR49xaNTwew2Dw@mail.gmail.com>
+Message-ID: <001301d2af8e$7d3e2fd0$77ba8f70$@jccm.es>
+
+Podrías probar con algo así:
+
+require(lubridate)
+
+diasMes = function(limites){
+  inicio = as.Date(limites[1], format = "%Y-%m-%d")
+  fin = as.Date(limites[2], format = "%Y-%m-%d")
+  secuencia = seq(inicio, fin, "days")
+  meses = month(secuencia)
+  return(table(meses))
+}
+
+apply(df, 1, diasMes)
+
+Un saludo,
+
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de Rubén
+Coca
+Enviado el: viernes, 07 de abril de 2017 12:02
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] Distribuir intervalo de días entre meses
+
+Hola,
+Partiendo de un data frame con 2 variables de fecha (inicio y fin):
+
+df <- data.frame(inicio = c(as.Date("2016-01-01"),
+                                      as.Date("2016-02-14")),
+                        fin = c(as.Date("2016-02-01"),
+                                  as.Date("2016-02-29")))
+
+Necesitaría crear 12 nuevas columnas adicionales, una para cada mes, que
+compute el número de días del intervalo que caen en cada mes. El resultado
+deseado sería algo así:
+
+inicio             fin              ene    feb    mar    abr    may    jun
+   jul    ago    sep    oct    nov    dic
+2016-01-01    2016-02-01  31     1       0        0       0        0      0
+     0        0       0       0       0
+2016-02-14    2016-02-29  0       15     0        0       0        0      0
+     0        0       0       0       0
+
+Buscando he encontrado una aproximación al problema del reparto, pero no es
+válida para data frames. La detallo por si sirve de inspiración:
+table(format(seq(df$inicio, df$fin, by=1), "%m"))
+
+Muchas gracias.
+Rubén
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ihidalgo en jccm.es  Fri Apr  7 13:08:51 2017
+From: ihidalgo en jccm.es (Isidro Hidalgo Arellano)
+Date: Fri, 7 Apr 2017 13:08:51 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Distribuir_intervalo_de_d=EDas_entre_meses?=
+References: <CAFxGGR6JquY-YCGytuWgT70RPvixKhf6dfgLjR49xaNTwew2Dw@mail.gmail.com> 
+Message-ID: <001401d2af8f$56763fe0$0362bfa0$@jccm.es>
+
+Acabo de darme cuenta que tenías casi la solución, no lo había leído,
+disculpa.
+Lo puedes encapsular así:
+
+diasMes2 = function(limites){
+  inicio = as.Date(limites[1], format = "%Y-%m-%d")
+  fin = as.Date(limites[2], format = "%Y-%m-%d")
+ return(table(format(seq(inicio, fin, by=1), "%m"))) 
+}
+
+apply(df, 1, diasMes2)
+
+Un saludo,
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: Isidro Hidalgo Arellano [mailto:ihidalgo en jccm.es] 
+Enviado el: viernes, 07 de abril de 2017 13:03
+Para: 'Rubén Coca' <ruben.coca en gmail.com>; 'Lista R'
+<r-help-es en r-project.org>
+Asunto: RE: [R-es] Distribuir intervalo de días entre meses
+
+Podrías probar con algo así:
+
+require(lubridate)
+
+diasMes = function(limites){
+  inicio = as.Date(limites[1], format = "%Y-%m-%d")
+  fin = as.Date(limites[2], format = "%Y-%m-%d")
+  secuencia = seq(inicio, fin, "days")
+  meses = month(secuencia)
+  return(table(meses))
+}
+
+apply(df, 1, diasMes)
+
+Un saludo,
+
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo http://www.castillalamancha.es/
+	
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de Rubén
+Coca Enviado el: viernes, 07 de abril de 2017 12:02
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] Distribuir intervalo de días entre meses
+
+Hola,
+Partiendo de un data frame con 2 variables de fecha (inicio y fin):
+
+df <- data.frame(inicio = c(as.Date("2016-01-01"),
+                                      as.Date("2016-02-14")),
+                        fin = c(as.Date("2016-02-01"),
+                                  as.Date("2016-02-29")))
+
+Necesitaría crear 12 nuevas columnas adicionales, una para cada mes, que
+compute el número de días del intervalo que caen en cada mes. El resultado
+deseado sería algo así:
+
+inicio             fin              ene    feb    mar    abr    may    jun
+   jul    ago    sep    oct    nov    dic
+2016-01-01    2016-02-01  31     1       0        0       0        0      0
+     0        0       0       0       0
+2016-02-14    2016-02-29  0       15     0        0       0        0      0
+     0        0       0       0       0
+
+Buscando he encontrado una aproximación al problema del reparto, pero no es
+válida para data frames. La detallo por si sirve de inspiración:
+table(format(seq(df$inicio, df$fin, by=1), "%m"))
+
+Muchas gracias.
+Rubén
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From javier.ruben.marcuzzi en gmail.com  Fri Apr  7 16:07:01 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Fri, 7 Apr 2017 11:07:01 -0300
+Subject: [R-es] Alternativa a RStudio
+In-Reply-To: <890710792.2105528.1491562728190@mail.yahoo.com>
+References: <58d1ada3.902ec80a.68fb.ac02@mx.google.com>
+ <CALCOUqt_s_RnK7NS=ZF_zB=XNLMQ6x=18ip_5a0v-fbf2OukCA@mail.gmail.com>
+ <58d27727.6625ed0a.17393.4182@mx.google.com>
+ <BY2PR1201MB09524B00EDC5320348BFB468EB3C0@BY2PR1201MB0952.namprd12.prod.outlook.com>
+ <BY2PR1201MB0952A37A25222F080C978287EB3C0@BY2PR1201MB0952.namprd12.prod.outlook.com>
+ <CAOKbq8gnx4D3=zqC4JnrPbazzjYrB6QBdb-9bX=1dQ0D5g1ALQ@mail.gmail.com>
+ <9f3c7751-1b9d-f261-6dbb-fcfb3a61a57f@gmail.com>
+ <58dc05d8.0537ed0a.96636.1275@mx.google.com>
+ <890710792.2105528.1491562728190@mail.yahoo.com>
+Message-ID: <58e79d07.6f25c80a.16038.324f@mx.google.com>
+
+Estimado Marcelo Arce
+
+Como usted nombra puede ser por la versión de Microsoft R, ayer actualicé el sistema operativo a Windows creator, es la versión estable (final) que puede ser instalada antes del 11 (día de lanzamiento), por otro trabajo tengo que ver por donde va la cosa, la parte de bash con Ubuntu en Windows continúa en beta (puede ser que cambie el día 11), emacs en esta instala R convencional (pero tendría dos R, el de Microsoft y el de Ubuntu), gráficamente en la versión anterior emacs se veía feo pero funcional, por otro lado supuestamente este mes estaría disponible r para visual studio 2017, con calma y tiempo probaré el reemplazo de RStudio, por último este tiene mucho desarrollo pero en JavaScript y pensado para ofrecer el servicio desde un servidor, lógicamente es una empresa que busca su producto, yo prefiero una comunicación algo más directa entre el programa que me asista y R.
+
+Javier Rubén Marcuzzi
+
+De: Fernando Arce
+Enviado: viernes, 7 de abril de 2017 7:58
+Para: javier.ruben.marcuzzi en gmail.com; rubenfcasal; r-help-es en r-project.org
+Asunto: Re: [R-es] Alternativa a RStudio
+
+Hola,  instalas desde Windows? No lo he utilizado desde hace años pero con el ejecutable de Vincent Goulet iba muy bien. Mañana probaré a instalar un Windows en vietualbox y ver clase de error da. Quizás es porque usas microsoft R?
+Saludos y Perdon de nuevo, paso mucho tiempo en el campo en estas fechas....
+Fer
+
+
+Sent from my Delorian in 1937
+On Thursday, March 30, 2017, 6:08 am, javier.ruben.marcuzzi en gmail.com wrote:
+Estimados
+
+Leí todas las sugerencias y estoy probando, un criterio que tomé es tener algo minimalista, emacs puede estar con pocos iconos, comienzo por este porque está en https://www.r-project.org/other-projects.html .
+
+Realicé dos intentos, uno es utilizando Windows 10 con bash, instalando desde los repositorios de Ubuntu, el segundo intento es instalando la versión para Windows, la primera de las opciones instala desde Ubuntu como dependencia a R y lo necesario para este, la segunda no instala R, pero me pide que configure donde está Rterm.
+
+En realidad el mensaje es que no está el archivo o directorio con Rterm. ¿Cómo lo configuro en emcas para que encuentre a R? (debería encontrar una forma para usar R o R server - microsoft).
+
+Tinn-r estuvo en mi computadora hace algunos años, no recuerdo porqué lo deje, me parece que por aquellos años estaba sciview o algo por el estilo. 
+
+
+Javier Rubén Marcuzzi
+
+De: rubenfcasal
+Enviado: martes, 28 de marzo de 2017 14:24
+Para: r-help-es en r-project.org
+Asunto: Re: [R-es] Alternativa a RStudio
+
+Hola a todos,
+
+    La lista de mensajes es muy grande pero creo que no se comentaron 
+algunos que uso/usé:
+
+TinnR: (para Windows) Un editor de código que interacciona con la 
+consola de R [https://sourceforge.net/projects/tinn-r]
+
+Notepad++ con NppToR: (para Windows) similar al anterior 
+[https://sourceforge.net/projects/npptor]
+
+Eclipse con StatET: Entorno de programación para distintos lenguajes 
+entre ellos R (ofrece también un depurador de código integrado del 
+estilo del de RStudio; muy útil si se mezcla R con otros lenguajes...) 
+[e.g. 
+http://lukemiller.org/index.php/2010/04/eclipse-and-statet-a-nice-working-environment-for-r]
+
+    Un saludo, Rubén.
+
+-- 
+Ruben Fernandez Casal
+Department of Mathematics
+Faculty of Computer Science
+Universidade da Coruña
+Corporate email: ruben.fcasal <at> udc <dot> es
+--
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+    [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From residuo.solow en gmail.com  Fri Apr  7 16:56:00 2017
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Fri, 7 Apr 2017 11:56:00 -0300
+Subject: [R-es] problema con wb del paquete wbstats
+Message-ID: <CAMn86Nd7QrHqsPu7x1CgO5Ehpr+uvjse8ggY4pzYMsMN4zQPyw@mail.gmail.com>
+
+Estimados Usuarios-R:
+
+Muy buenos días.
+
+Tengo un problema con la librería wbstats.
+
+Corro el siguiente programa:
+
+>wb_cache_7_4_17 <- wbcache(lang="es")
+>ed_search <- wbsearch("educacion", cache = wb_cache_7_4_17)
+>ed_search <- ed_search[grepl("secundario", ed_search$indicator)==T,]
+>country_list <-
+wb_cache_7_4_17$countries$iso3c[which(wb_cache_7_4_17$countries$region !=
+"Aggregates")]
+>indicator_long_list <- ed_search$indicatorID
+>wb_data <- wb(indicator = indicator_long_list[1:4], country =
+country_list, startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+removeNA = F, lang="es")
+Warning message:
+In wb(indicator = indicator_long_list[1:4], country = country_list,  :
+  No data was returned for any requested country and indicator. Returning
+empty data frame
+
+Si yo disminuyo la cantidad de países, por ejemplo que solo sean 50,  me
+descarga los datos.
+
+¿Hay un límite a la descarga de datos?
+
+¿Me podrían orientar?
+
+
+Saludos,
+
+Sebastián.
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Fri Apr  7 17:07:16 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Fri, 7 Apr 2017 12:07:16 -0300
+Subject: [R-es] problema con wb del paquete wbstats
+In-Reply-To: <CAMn86Nd7QrHqsPu7x1CgO5Ehpr+uvjse8ggY4pzYMsMN4zQPyw@mail.gmail.com>
+References: <CAMn86Nd7QrHqsPu7x1CgO5Ehpr+uvjse8ggY4pzYMsMN4zQPyw@mail.gmail.com>
+Message-ID: <58e7ab25.846a370a.ba30a.3be3@mx.google.com>
+
+Estimado Sebastian Kruk
+
+Yo no uso esa librería, pero ¿Qué pasa si en la lista de países que envía en la consulta, hay uno que no da resultados? Por decir algo Yugoslavia, hace un tiempo tendría datos, hoy no y daría vacío.
+
+Javier Rubén Marcuzzi
+
+De: Sebastian Kruk
+Enviado: viernes, 7 de abril de 2017 11:56
+Para: Lista R
+Asunto: [R-es] problema con wb del paquete wbstats
+
+Estimados Usuarios-R:
+
+Muy buenos días.
+
+Tengo un problema con la librería wbstats.
+
+Corro el siguiente programa:
+
+>wb_cache_7_4_17 <- wbcache(lang="es")
+>ed_search <- wbsearch("educacion", cache = wb_cache_7_4_17)
+>ed_search <- ed_search[grepl("secundario", ed_search$indicator)==T,]
+>country_list <-
+wb_cache_7_4_17$countries$iso3c[which(wb_cache_7_4_17$countries$region !=
+"Aggregates")]
+>indicator_long_list <- ed_search$indicatorID
+>wb_data <- wb(indicator = indicator_long_list[1:4], country =
+country_list, startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+removeNA = F, lang="es")
+Warning message:
+In wb(indicator = indicator_long_list[1:4], country = country_list,  :
+  No data was returned for any requested country and indicator. Returning
+empty data frame
+
+Si yo disminuyo la cantidad de países, por ejemplo que solo sean 50,  me
+descarga los datos.
+
+¿Hay un límite a la descarga de datos?
+
+¿Me podrían orientar?
+
+
+Saludos,
+
+Sebastián.
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From residuo.solow en gmail.com  Fri Apr  7 17:14:06 2017
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Fri, 7 Apr 2017 12:14:06 -0300
+Subject: [R-es] problema con wb del paquete wbstats
+In-Reply-To: <58e7ab25.846a370a.ba30a.3be3@mx.google.com>
+References: <CAMn86Nd7QrHqsPu7x1CgO5Ehpr+uvjse8ggY4pzYMsMN4zQPyw@mail.gmail.com>
+ <58e7ab25.846a370a.ba30a.3be3@mx.google.com>
+Message-ID: <CAMn86NcupJQUDEQ-z14pOFASQG7L=NgO0i=B=DvVzcmFUg+wXw@mail.gmail.com>
+
+Estimado Javier:
+
+No se que pasaría.
+
+¿Cual librería usa para descargar los datos del BM?
+
+Saludos,
+
+Sebastián.
+
+El 7 de abril de 2017, 12:07, Javier Marcuzzi<
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimado Sebastian Kruk
+>
+>
+>
+> Yo no uso esa librería, pero ¿Qué pasa si en la lista de países que envía
+> en la consulta, hay uno que no da resultados? Por decir algo Yugoslavia,
+> hace un tiempo tendría datos, hoy no y daría vacío.
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Sebastian Kruk <residuo.solow en gmail.com>
+> *Enviado: *viernes, 7 de abril de 2017 11:56
+> *Para: *Lista R <r-help-es en r-project.org>
+> *Asunto: *[R-es] problema con wb del paquete wbstats
+>
+>
+>
+> Estimados Usuarios-R:
+>
+>
+>
+> Muy buenos días.
+>
+>
+>
+> Tengo un problema con la librería wbstats.
+>
+>
+>
+> Corro el siguiente programa:
+>
+>
+>
+> >wb_cache_7_4_17 <- wbcache(lang="es")
+>
+> >ed_search <- wbsearch("educacion", cache = wb_cache_7_4_17)
+>
+> >ed_search <- ed_search[grepl("secundario", ed_search$indicator)==T,]
+>
+> >country_list <-
+>
+> wb_cache_7_4_17$countries$iso3c[which(wb_cache_7_4_17$countries$region !=
+>
+> "Aggregates")]
+>
+> >indicator_long_list <- ed_search$indicatorID
+>
+> >wb_data <- wb(indicator = indicator_long_list[1:4], country =
+>
+> country_list, startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+>
+> removeNA = F, lang="es")
+>
+> Warning message:
+>
+> In wb(indicator = indicator_long_list[1:4], country = country_list,  :
+>
+>   No data was returned for any requested country and indicator. Returning
+>
+> empty data frame
+>
+>
+>
+> Si yo disminuyo la cantidad de países, por ejemplo que solo sean 50,  me
+>
+> descarga los datos.
+>
+>
+>
+> ¿Hay un límite a la descarga de datos?
+>
+>
+>
+> ¿Me podrían orientar?
+>
+>
+>
+>
+>
+> Saludos,
+>
+>
+>
+> Sebastián.
+>
+>
+>
+>                 [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Fri Apr  7 17:15:58 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Fri, 7 Apr 2017 12:15:58 -0300
+Subject: [R-es] problema con wb del paquete wbstats
+In-Reply-To: <CAMn86NcupJQUDEQ-z14pOFASQG7L=NgO0i=B=DvVzcmFUg+wXw@mail.gmail.com>
+References: <CAMn86Nd7QrHqsPu7x1CgO5Ehpr+uvjse8ggY4pzYMsMN4zQPyw@mail.gmail.com>
+ <58e7ab25.846a370a.ba30a.3be3@mx.google.com>
+ <CAMn86NcupJQUDEQ-z14pOFASQG7L=NgO0i=B=DvVzcmFUg+wXw@mail.gmail.com>
+Message-ID: <58e7ad2e.458e370a.4877f.3dd2@mx.google.com>
+
+Estimado Sebastian
+
+¿Qué es BM?, ¿Banco Mundial?, si pasa la dirección de internet es más fácil, aparecen varias alternativas.
+
+Javier Rubén Marcuzzi
+
+De: Sebastian Kruk
+Enviado: viernes, 7 de abril de 2017 12:14
+Para: Javier Marcuzzi
+CC: Lista R
+Asunto: Re: [R-es] problema con wb del paquete wbstats
+
+Estimado Javier:
+No se que pasaría.
+¿Cual librería usa para descargar los datos del BM?
+Saludos,
+Sebastián.
+
+El 7 de abril de 2017, 12:07, Javier Marcuzzi<javier.ruben.marcuzzi en gmail.com> escribió:
+Estimado Sebastian Kruk
+ 
+Yo no uso esa librería, pero ¿Qué pasa si en la lista de países que envía en la consulta, hay uno que no da resultados? Por decir algo Yugoslavia, hace un tiempo tendría datos, hoy no y daría vacío.
+ 
+Javier Rubén Marcuzzi
+ 
+De: Sebastian Kruk
+Enviado: viernes, 7 de abril de 2017 11:56
+Para: Lista R
+Asunto: [R-es] problema con wb del paquete wbstats
+ 
+Estimados Usuarios-R:
+ 
+Muy buenos días.
+ 
+Tengo un problema con la librería wbstats.
+ 
+Corro el siguiente programa:
+ 
+>wb_cache_7_4_17 <- wbcache(lang="es")
+>ed_search <- wbsearch("educacion", cache = wb_cache_7_4_17)
+>ed_search <- ed_search[grepl("secundario", ed_search$indicator)==T,]
+>country_list <-
+wb_cache_7_4_17$countries$iso3c[which(wb_cache_7_4_17$countries$region !=
+"Aggregates")]
+>indicator_long_list <- ed_search$indicatorID
+>wb_data <- wb(indicator = indicator_long_list[1:4], country =
+country_list, startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+removeNA = F, lang="es")
+Warning message:
+In wb(indicator = indicator_long_list[1:4], country = country_list,  :
+  No data was returned for any requested country and indicator. Returning
+empty data frame
+ 
+Si yo disminuyo la cantidad de países, por ejemplo que solo sean 50,  me
+descarga los datos.
+ 
+¿Hay un límite a la descarga de datos?
+ 
+¿Me podrían orientar?
+ 
+ 
+Saludos,
+ 
+Sebastián.
+ 
+                [[alternative HTML version deleted]]
+ 
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+ 
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Fri Apr  7 17:24:18 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Fri, 7 Apr 2017 12:24:18 -0300
+Subject: [R-es] problema con wb del paquete wbstats
+In-Reply-To: <58e7ad2e.458e370a.4877f.3dd2@mx.google.com>
+References: <CAMn86Nd7QrHqsPu7x1CgO5Ehpr+uvjse8ggY4pzYMsMN4zQPyw@mail.gmail.com>
+ <58e7ab25.846a370a.ba30a.3be3@mx.google.com>
+ <CAMn86NcupJQUDEQ-z14pOFASQG7L=NgO0i=B=DvVzcmFUg+wXw@mail.gmail.com>
+ <58e7ad2e.458e370a.4877f.3dd2@mx.google.com>
+Message-ID: <58e7af23.8683370a.44cdf.3e7a@mx.google.com>
+
+Estimado Sebastian
+
+Mire lo siguiente https://datahelpdesk.worldbank.org/knowledgebase/articles/902049, si es por donde anda usted puede utilizar Rcurl, rvest, ambas son fáciles (hay se conocer como y donde enviar la consulta, pero no es nada del otro mundo). Yo utilicé ambas librerías, si yo puede usted también podrá, de wbstats no puedo opinar.
+
+Javier Rubén Marcuzzi
+
+De: Javier Marcuzzi
+Enviado: viernes, 7 de abril de 2017 12:15
+Para: Sebastian Kruk
+CC: Lista R
+Asunto: RE: [R-es] problema con wb del paquete wbstats
+
+Estimado Sebastian
+
+¿Qué es BM?, ¿Banco Mundial?, si pasa la dirección de internet es más fácil, aparecen varias alternativas.
+
+Javier Rubén Marcuzzi
+
+De: Sebastian Kruk
+Enviado: viernes, 7 de abril de 2017 12:14
+Para: Javier Marcuzzi
+CC: Lista R
+Asunto: Re: [R-es] problema con wb del paquete wbstats
+
+Estimado Javier:
+No se que pasaría.
+¿Cual librería usa para descargar los datos del BM?
+Saludos,
+Sebastián.
+
+El 7 de abril de 2017, 12:07, Javier Marcuzzi<javier.ruben.marcuzzi en gmail.com> escribió:
+Estimado Sebastian Kruk
+ 
+Yo no uso esa librería, pero ¿Qué pasa si en la lista de países que envía en la consulta, hay uno que no da resultados? Por decir algo Yugoslavia, hace un tiempo tendría datos, hoy no y daría vacío.
+ 
+Javier Rubén Marcuzzi
+ 
+De: Sebastian Kruk
+Enviado: viernes, 7 de abril de 2017 11:56
+Para: Lista R
+Asunto: [R-es] problema con wb del paquete wbstats
+ 
+Estimados Usuarios-R:
+ 
+Muy buenos días.
+ 
+Tengo un problema con la librería wbstats.
+ 
+Corro el siguiente programa:
+ 
+>wb_cache_7_4_17 <- wbcache(lang="es")
+>ed_search <- wbsearch("educacion", cache = wb_cache_7_4_17)
+>ed_search <- ed_search[grepl("secundario", ed_search$indicator)==T,]
+>country_list <-
+wb_cache_7_4_17$countries$iso3c[which(wb_cache_7_4_17$countries$region !=
+"Aggregates")]
+>indicator_long_list <- ed_search$indicatorID
+>wb_data <- wb(indicator = indicator_long_list[1:4], country =
+country_list, startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+removeNA = F, lang="es")
+Warning message:
+In wb(indicator = indicator_long_list[1:4], country = country_list,  :
+  No data was returned for any requested country and indicator. Returning
+empty data frame
+ 
+Si yo disminuyo la cantidad de países, por ejemplo que solo sean 50,  me
+descarga los datos.
+ 
+¿Hay un límite a la descarga de datos?
+ 
+¿Me podrían orientar?
+ 
+ 
+Saludos,
+ 
+Sebastián.
+ 
+                [[alternative HTML version deleted]]
+ 
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+ 
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From miriam.alzate en unavarra.es  Fri Apr  7 18:49:02 2017
+From: miriam.alzate en unavarra.es (miriam.alzate en unavarra.es)
+Date: Fri, 7 Apr 2017 18:49:02 +0200
+Subject: [R-es] =?utf-8?q?=5BFwd=3A_Re=3A__Asignar_a_observaciones_de_una_?=
+ =?utf-8?q?misma_fecha_el_mismo_n=C3=BAmero_de_orden_en_una_secuencia=5D?=
+Message-ID: <043cd1d6949c7315878416fb13f8c12a.squirrel@webmail.unavarra.es>
+
+Finalmente está cerrado el tema, con el último correo se creó la variable
+tal y como quería.
+
+Muchas gracias.
+
+---------------------------- Mensaje original ----------------------------
+Asunto: Re: [R-es] Asignar a observaciones de una misma fecha el mismo
+número de orden en una secuencia
+De:     "Carlos Ortega" <cof en qualityexcellence.es>
+Fecha:  Mar, 4 de Abril de 2017, 23:44
+Para:   miriam.alzate en unavarra.es
+--------------------------------------------------------------------------
+
+Hola,
+
+Acabo de correr el mismo código que te pasé con la modificación de nombres
+de columnas...y me funciona...
+Vaya no me genera errores...(lo he ejecutado sobre los datos "Sample").
+
+#-----------
+names(Sample) <- c('id', 'pubdate', 'txt', 'votes')
+datIn <- Sample
+
+library(data.table)
+library(lubridate)
+dt <- as.data.table(datIn)
+dt[ , miju := julian.Date(ymd(pubdate))]
+
+# Doy un primer orden sin tener en cuenta las fechas iguales
+setorder(dt, id, -votes, miju)
+dt[, mior := seq_len(.N), by=id]
+
+# Para las fechas iguales
+df <- as.data.frame(dt)
+for(i in 1:(nrow(df)-1)) {
+  if(df$miju[i] == df$miju[i+1])  {
+    df$mior[i+1] <- df$mior[i]
+  } else next
+}
+
+head(df[, c(1,2,4,5,6)])
+#-----------
+
+Please ejecútalo y comprueba que la lógica se cumple...
+La columna a mirar es "mior".
+
+Gracias,
+Carlos.
+
+El 4 de abril de 2017, 17:12, <miriam.alzate en unavarra.es> escribió:
+
+> Buenas Carlos,
+>
+> No me funciona...me sigue dando error. Te paso mejor una pequeña muestra
+> del archivo de R para que veas si hay algún error.
+>
+>
+> Muchas gracias,
+>
+> Miriam
+>
+> El Lun, 3 de Abril de 2017, 22:08, Carlos Ortega escribió:
+> > Hola Miriam,
+> >
+> > Utiliza el paquete, "lubridate".
+> >
+> > y haz algo como esto, suponiendo que tu data.frame se llama "mydf"..
+> >
+> > #----------
+> > library(lubridate)
+> > mydf$fecha <- ymd(mydf$fecha_sin_formato)
+> > #----------
+> >
+> > Ya me cuentas si funciona,
+> > Carlos.
+> >
+> >
+> >
+> >
+> >
+> > El 3 de abril de 2017, 20:08, <miriam.alzate en unavarra.es> escribió:
+> >
+> >> Muchas gracias por la respuesta Carlos. Estoy haciéndolo y me da el
+> >> siguiente error al crear la variable miju:
+> >>
+> >> "Warning message: All formats failed to parse. No formats found"
+> >>
+> >> Estoy mirando el formato de la variable fecha y, aunque al importar la
+> >> base de datos a R, seleccioné el formato fecha, veo que al poner el
+> >> cursor
+> >> sobre la variable me pone "Unknown", por lo que quizá no esté el formato
+> >> fecha.
+> >>
+> >> Las fechas me aparecen de la siguiente forma: 2013-07-13 (año-mes-día).
+> >> ¿Cómo debería darle el formato correcto para que me deje hacer el
+> >> comando
+> >> miju?
+> >>
+> >> Muchas gracias y un saludo.
+> >>
+> >>
+> >> El Sab, 1 de Abril de 2017, 17:21, Carlos Ortega escribió:
+> >> > Hola Miriam,
+> >> >
+> >> > Esta es una forma de hacerlo:
+> >> >
+> >> > #---------------
+> >> >
+> >> > datIn <- read.table("Orden_variable.csv", sep=";", header = TRUE)
+> >> > names(datIn) <- c('v1','v2','v3','v4','v5')
+> >> >
+> >> > library(data.table)
+> >> > library(lubridate)
+> >> > dt <- as.data.table(datIn)
+> >> > dt[ , miju := julian.Date(dmy(v4))]
+> >> >
+> >> > # Doy un primer orden sin tener en cuenta las fechas iguales
+> >> > setorder(dt, v2, -v3, miju)
+> >> > dt[, mior := seq_len(.N), by=v2]
+> >> >
+> >> > # Para las fechas iguales
+> >> > df <- as.data.frame(dt)
+> >> > for(i in 1:(nrow(df)-1)) {
+> >> >  if(df$miju[i] == df$miju[i+1])  {
+> >> >    df$mior[i+1] <- df$mior[i]
+> >> >  } else next
+> >> > }
+> >> >
+> >> > #---------------
+> >> >
+> >> > Saludos,
+> >> > Carlos.
+> >> >
+> >> > El 30 de marzo de 2017, 18:37, <miriam.alzate en unavarra.es> escribió:
+> >> >
+> >> >> Hola Carlos,
+> >> >>
+> >> >> Sería porque es la 4ª review en esa fecha (hay 3 observaciones
+> >> >> anteriores).
+> >> >> En el caso del "P402", las dos observaciones del mismo día con el
+> >> mismo
+> >> >> número de votos(ordenado de mayor a menor), reciben el orden 1, pero
+> >> la
+> >> >> siguiente más nueva recibe el 3 porque hay dos observaciones
+> >> anteriores.
+> >> >> En realidad yo no tengo la variable Numero.Review en la base de datos
+> >> >> sino
+> >> >> Review.Content.
+> >> >>
+> >> >> Envio el archivo excel con el ejemplo. He llamado "Orden.deseado" a
+> >> la
+> >> >> variable que quiero construir de forma automática. La tabla que
+> >> adjunto
+> >> >> estaría ya ordenada 1 por Id.Producto, 2º por Numero.Votos y 3º por
+> >> >> Fecha.Publicación.
+> >> >>
+> >> >> Muchas gracias y un saludo
+> >> >>
+> >> >> Miriam
+> >> >>
+> >> >>
+> >> >>
+> >> >>
+> >> >> El Jue, 23 de Marzo de 2017, 23:36, Carlos Ortega escribió:
+> >> >> > Hola Miriam,
+> >> >> >
+> >> >> > ¿Por qué la última de "P401"  tiene Orden = 4?..¿Por que su úiltimo
+> >> >> > "Numero.Review" es 4?.
+> >> >> > Si esa es la lógica, que es la que has descrito, porqué en la P402
+> >> la
+> >> >> > última es de "Orden" = 3 y no = 7? Que es su último
+> >> Numero.Review?...
+> >> >> >
+> >> >> > Tampoco pienses que con un "comando" se hace esto... sí con una
+> >> >> lógica,
+> >> >> > varias instrucciones seguidas. Si hay suerte se podrá arreglar con
+> >> una
+> >> >> > función sencilla...
+> >> >> >
+> >> >> > Es una extensión de lo último que te envié. En ese otro caso, se
+> >> >> ordenaba
+> >> >> > por una sola columna, ahora hay que ordenar por varias columnas,
+> >> esto
+> >> >> es
+> >> >> > fácil y luego para encontrar el número de orden haría la misma
+> >> lógica
+> >> >> que
+> >> >> > la otra vez... Bueno, confirma lo que preguntas y veremos si esas
+> >> >> ideas
+> >> >> > funcionan. También si los datos los adjuntas en un fichero .txt o
+> >> >> .csv...
+> >> >> > mejor.
+> >> >> >
+> >> >> > Gracias,
+> >> >> > Carlos.
+> >> >> >
+> >> >> > El 23 de marzo de 2017, 3:23, <miriam.alzate en unavarra.es>
+> escribió:
+> >> >> >
+> >> >> >>
+> >> >> >> Quiero crear una nueva variable "Orden" que me ordene el
+> >> >> >> "Numbero.Review",
+> >> >> >> 1º por "Id.Producto", 2º por "Número.Votos" de más a menos y 3º
+> >> por
+> >> >> >> Fecha.publicación.Review" de la más nueva a la más antigua. Como
+> >> hay
+> >> >> >> observaciones con el mismo número de votos y en la misma fecha,
+> >> >> quiero
+> >> >> >> que
+> >> >> >> tengan el mismo número de orden. Pero la siguiente observación de
+> >> la
+> >> >> >> siguiente fecha tiene que tener un orden=1+numero de reviews de
+> >> los
+> >> >> días
+> >> >> >> previos.
+> >> >> >> En mi base de datos tengo 66.000 observaciones(reviews) que
+> >> >> pertenecen a
+> >> >> >> 137 productos diferentes. Cada día tengo diferentes observaciones
+> >> de
+> >> >> los
+> >> >> >> mismos productos, por lo que el producto aparece tantas veces como
+> >> >> >> reviews
+> >> >> >> haya prublicadas. Los datos son como el ejemplo que he mandado
+> >> >> >> anteriormente. La variable que quiero crear es a la que llamo
+> >> >> "Orden",
+> >> >> >> el
+> >> >> >> resto las tengo. Esta variable orden va en cada producto del 1 al
+> >> >> número
+> >> >> >> de reviews que haya ( por ejemplo en el P401 4). Para el P402,
+> >> vuelve
+> >> >> a
+> >> >> >> empezar del 1 al número de reviews de ese producto.
+> >> >> >>
+> >> >> >> Lo que necesito es sacar esta variable "Orden de forma
+> >> automatica".
+> >> >> No
+> >> >> >> sé
+> >> >> >> que comando utilizar.
+> >> >> >>
+> >> >> >> Numero.Review   Id.Producto   Número.Votos
+> >> Fecha.publicación.Review
+> >> >> >>  Orden
+> >> >> >>
+> >> >> >> 1                P401            42                 2017-02-25
+> >> >> >> 1
+> >> >> >>
+> >> >> >> 2                P401            5                  2017-01-06
+> >> >> >> 2
+> >> >> >>
+> >> >> >> 3                P401            5                  2017-01-06
+> >> >> >> 2
+> >> >> >>
+> >> >> >> 4                P401            0                  2016-12-30
+> >> >> >> 4
+> >> >> >>
+> >> >> >> 5                P402            3                  2017-03-15
+> >> >> >> 1
+> >> >> >>
+> >> >> >> 6                P402            3                  2017-03-15
+> >> >> >> 1
+> >> >> >>
+> >> >> >> 7                P402            0                  2016-12-31
+> >> >> >> 3
+> >> >> >>
+> >> >> >> 8                P403            12                 2016-11-15
+> >> >> >> 1
+> >> >> >>
+> >> >> >> 9                P403            12                 2016-11-10
+> >> >> >> 2
+> >> >> >>
+> >> >> >> 10               P403            15                 2016-10-25
+> >> >> >> 3
+> >> >> >>
+> >> >> >> 11               P403            15                 2016-10-25
+> >> >> >> 3
+> >> >> >>
+> >> >> >> 12               P403            2                  2016-09-30
+> >> >> >> 5
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >>
+> >> >> >
+> >> >> >
+> >> >> > --
+> >> >> > Saludos,
+> >> >> > Carlos Ortega
+> >> >> > www.qualityexcellence.es
+> >> >> >
+> >> >>
+> >> >
+> >> >
+> >> >
+> >> > --
+> >> > Saludos,
+> >> > Carlos Ortega
+> >> > www.qualityexcellence.es
+> >> >
+> >>
+> >>
+> >>
+> >
+> >
+> > --
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170407/9f41bd7e/attachment-0001.html>
+
+From juan.abasolo en ehu.eus  Fri Apr  7 19:21:00 2017
+From: juan.abasolo en ehu.eus (Juan Abasolo)
+Date: Fri, 7 Apr 2017 19:21:00 +0200
+Subject: [R-es] Perdido en un bucle
+Message-ID: <CA+8ueyZWUXZYT8ZE_s0g0yA8=yu0OOPVzC+9FBWk=B5oeR5S+w@mail.gmail.com>
+
+Buenas, compañeros.
+Se que debería tener que entenderlo, pero no lo hago y me aprieta la fecha
+de entrega:
+Tengo un bucle para asignar una columna de significacion a unos resultados,
+el bucle lo intento guardar en un vector para agregar el vector luego a una
+matriz, en pantalla me imprime el resultado, pero en el vector solo me
+queda el último valor.
+
+x.b = c(0.000, 0.000, 0.001, 0.374, 0.026, 1.000)
+
+x.c <-x.b            #Para que quede equivalente
+
+for (cu in x.b){
+    valor <- ifelse(cu<=0.001,paste("***"),
+                 ifelse(cu<=0.01, paste("**"),
+                        ifelse(cu<0.05, paste("*"),
+                               paste(""))))
+    print(valor)
+    x.c[cu] <- valor
+}
+
+En pantalla:
+
+[1] "***"
+[1] "***"
+[1] "***"
+[1] ""
+[1] "*"
+[1] ""
+
+
+pero
+
+> x.c[1] ""      "0"     "0.001" "0.374" "0.026" "1"
+
+
+Gracias por la dedicación y disculpar la molestia
+
+	[[alternative HTML version deleted]]
+
+
+From jcmld en carmonarocha.com  Fri Apr  7 19:56:53 2017
+From: jcmld en carmonarocha.com (JCMld)
+Date: Fri, 7 Apr 2017 19:56:53 +0200
+Subject: [R-es] Perdido en un bucle
+In-Reply-To: <CA+8ueyZWUXZYT8ZE_s0g0yA8=yu0OOPVzC+9FBWk=B5oeR5S+w@mail.gmail.com>
+References: <CA+8ueyZWUXZYT8ZE_s0g0yA8=yu0OOPVzC+9FBWk=B5oeR5S+w@mail.gmail.com>
+Message-ID: <005701d2afc8$588d4920$09a7db60$@com>
+
+Hola Juan,
+
+Seguramente tienes problemas al usar cu como si fuera un índice. De todas
+formas, si lo entiendo bien, no necesitas un bucle para hacer esto. R
+funciona vectorialmente, así que puedes hacer directamente el cálculo sobre
+todo el vector:
+
+x.c<- ifelse(x.b<=0.001,paste("***"),
+              ifelse(x.b<=0.01, paste("**"),
+                     ifelse(x.b<0.05, paste("*"),
+                            paste(""))))
+
+
+> x.c
+[1] "***" "***" "***" ""    "*"   ""
+
+
+Saludos,
+Joan
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de Juan
+Abasolo
+Enviado el: viernes, 7 de abril de 2017 19:21
+Para: r-help-es
+Asunto: [R-es] Perdido en un bucle
+
+Buenas, compañeros.
+Se que debería tener que entenderlo, pero no lo hago y me aprieta la fecha
+de entrega:
+Tengo un bucle para asignar una columna de significacion a unos resultados,
+el bucle lo intento guardar en un vector para agregar el vector luego a una
+matriz, en pantalla me imprime el resultado, pero en el vector solo me queda
+el último valor.
+
+x.b = c(0.000, 0.000, 0.001, 0.374, 0.026, 1.000)
+
+x.c <-x.b            #Para que quede equivalente
+
+for (cu in x.b){
+    valor <- ifelse(cu<=0.001,paste("***"),
+                 ifelse(cu<=0.01, paste("**"),
+                        ifelse(cu<0.05, paste("*"),
+                               paste(""))))
+    print(valor)
+    x.c[cu] <- valor
+}
+
+En pantalla:
+
+[1] "***"
+[1] "***"
+[1] "***"
+[1] ""
+[1] "*"
+[1] ""
+
+
+pero
+
+> x.c[1] ""      "0"     "0.001" "0.374" "0.026" "1"
+
+
+Gracias por la dedicación y disculpar la molestia
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From residuo.solow en gmail.com  Fri Apr  7 20:22:58 2017
+From: residuo.solow en gmail.com (Sebastian Kruk)
+Date: Fri, 7 Apr 2017 15:22:58 -0300
+Subject: [R-es] problema con wb del paquete wbstats
+In-Reply-To: <58e7ad2e.458e370a.4877f.3dd2@mx.google.com>
+References: <CAMn86Nd7QrHqsPu7x1CgO5Ehpr+uvjse8ggY4pzYMsMN4zQPyw@mail.gmail.com>
+ <58e7ab25.846a370a.ba30a.3be3@mx.google.com>
+ <CAMn86NcupJQUDEQ-z14pOFASQG7L=NgO0i=B=DvVzcmFUg+wXw@mail.gmail.com>
+ <58e7ad2e.458e370a.4877f.3dd2@mx.google.com>
+Message-ID: <58e7d5f6.8f941f0a.69242.bd51@mx.google.com>
+
+Estimado Javier:
+
+Ciertamente, BM es por BM.
+
+Saludos,
+
+Sebastián.
+
+
+
+De: Javier Marcuzzi
+Enviado: viernes, 7 de abril de 2017 12:15
+Para: Sebastian Kruk
+CC: Lista R
+Asunto: RE: [R-es] problema con wb del paquete wbstats
+
+
+Estimado Sebastian
+
+¿Qué es BM?, ¿Banco Mundial?, si pasa la dirección de internet es más fácil, aparecen varias alternativas.
+
+Javier Rubén Marcuzzi
+
+De: Sebastian Kruk
+Enviado: viernes, 7 de abril de 2017 12:14
+Para: Javier Marcuzzi
+CC: Lista R
+Asunto: Re: [R-es] problema con wb del paquete wbstats
+
+Estimado Javier:
+No se que pasaría.
+¿Cual librería usa para descargar los datos del BM?
+Saludos,
+Sebastián.
+
+El 7 de abril de 2017, 12:07, Javier Marcuzzi<javier.ruben.marcuzzi en gmail.com> escribió:
+Estimado Sebastian Kruk
+ 
+Yo no uso esa librería, pero ¿Qué pasa si en la lista de países que envía en la consulta, hay uno que no da resultados? Por decir algo Yugoslavia, hace un tiempo tendría datos, hoy no y daría vacío.
+ 
+Javier Rubén Marcuzzi
+ 
+De: Sebastian Kruk
+Enviado: viernes, 7 de abril de 2017 11:56
+Para: Lista R
+Asunto: [R-es] problema con wb del paquete wbstats
+ 
+Estimados Usuarios-R:
+ 
+Muy buenos días.
+ 
+Tengo un problema con la librería wbstats.
+ 
+Corro el siguiente programa:
+ 
+>wb_cache_7_4_17 <- wbcache(lang="es")
+>ed_search <- wbsearch("educacion", cache = wb_cache_7_4_17)
+>ed_search <- ed_search[grepl("secundario", ed_search$indicator)==T,]
+>country_list <-
+wb_cache_7_4_17$countries$iso3c[which(wb_cache_7_4_17$countries$region !=
+"Aggregates")]
+>indicator_long_list <- ed_search$indicatorID
+>wb_data <- wb(indicator = indicator_long_list[1:4], country =
+country_list, startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+removeNA = F, lang="es")
+Warning message:
+In wb(indicator = indicator_long_list[1:4], country = country_list,  :
+  No data was returned for any requested country and indicator. Returning
+empty data frame
+ 
+Si yo disminuyo la cantidad de países, por ejemplo que solo sean 50,  me
+descarga los datos.
+ 
+¿Hay un límite a la descarga de datos?
+ 
+¿Me podrían orientar?
+ 
+ 
+Saludos,
+ 
+Sebastián.
+ 
+                [[alternative HTML version deleted]]
+ 
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+ 
+
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Fri Apr  7 20:20:30 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 7 Apr 2017 20:20:30 +0200
+Subject: [R-es] problema con wb del paquete wbstats
+In-Reply-To: <58e7d5f6.8f941f0a.69242.bd51@mx.google.com>
+References: <CAMn86Nd7QrHqsPu7x1CgO5Ehpr+uvjse8ggY4pzYMsMN4zQPyw@mail.gmail.com>
+ <58e7ab25.846a370a.ba30a.3be3@mx.google.com>
+ <CAMn86NcupJQUDEQ-z14pOFASQG7L=NgO0i=B=DvVzcmFUg+wXw@mail.gmail.com>
+ <58e7ad2e.458e370a.4877f.3dd2@mx.google.com>
+ <58e7d5f6.8f941f0a.69242.bd51@mx.google.com>
+Message-ID: <CAOKbq8j+hrYTjVSdJX7unah9WPac_1zi_bBepYMk0kHarrdqBQ@mail.gmail.com>
+
+Hola,
+
+Creo que el problema es en el número de peticiones que puede aguantar.
+Si pruebas, verás que el límite está en 250 peticiones.
+
+Si el "country_list" lo divides en dos partes, te debiera de funcionar...
+
+#------------------------------
+wb_data_A <- wb(
+               indicator = indicator_long_list[1:4],
+               country = country_list[1:250],
+               startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+               removeNA = F, lang="es"
+              )
+
+
+wb_data_B <- wb(
+               indicator = indicator_long_list[1:4],
+               country = country_list[251:304],
+               startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+               removeNA = F, lang="es"
+              )
+
+wb_data <- rbind(wb_data_A, wb_data_B)
+#-----------------------------
+
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 7 de abril de 2017, 20:22, Sebastian Kruk <residuo.solow en gmail.com>
+escribió:
+
+> Estimado Javier:
+>
+> Ciertamente, BM es por BM.
+>
+> Saludos,
+>
+> Sebastián.
+>
+>
+>
+> De: Javier Marcuzzi
+> Enviado: viernes, 7 de abril de 2017 12:15
+> Para: Sebastian Kruk
+> CC: Lista R
+> Asunto: RE: [R-es] problema con wb del paquete wbstats
+>
+>
+> Estimado Sebastian
+>
+> ¿Qué es BM?, ¿Banco Mundial?, si pasa la dirección de internet es más
+> fácil, aparecen varias alternativas.
+>
+> Javier Rubén Marcuzzi
+>
+> De: Sebastian Kruk
+> Enviado: viernes, 7 de abril de 2017 12:14
+> Para: Javier Marcuzzi
+> CC: Lista R
+> Asunto: Re: [R-es] problema con wb del paquete wbstats
+>
+> Estimado Javier:
+> No se que pasaría.
+> ¿Cual librería usa para descargar los datos del BM?
+> Saludos,
+> Sebastián.
+>
+> El 7 de abril de 2017, 12:07, Javier Marcuzzi<javier.ruben.
+> marcuzzi en gmail.com> escribió:
+> Estimado Sebastian Kruk
+>
+> Yo no uso esa librería, pero ¿Qué pasa si en la lista de países que envía
+> en la consulta, hay uno que no da resultados? Por decir algo Yugoslavia,
+> hace un tiempo tendría datos, hoy no y daría vacío.
+>
+> Javier Rubén Marcuzzi
+>
+> De: Sebastian Kruk
+> Enviado: viernes, 7 de abril de 2017 11:56
+> Para: Lista R
+> Asunto: [R-es] problema con wb del paquete wbstats
+>
+> Estimados Usuarios-R:
+>
+> Muy buenos días.
+>
+> Tengo un problema con la librería wbstats.
+>
+> Corro el siguiente programa:
+>
+> >wb_cache_7_4_17 <- wbcache(lang="es")
+> >ed_search <- wbsearch("educacion", cache = wb_cache_7_4_17)
+> >ed_search <- ed_search[grepl("secundario", ed_search$indicator)==T,]
+> >country_list <-
+> wb_cache_7_4_17$countries$iso3c[which(wb_cache_7_4_17$countries$region !=
+> "Aggregates")]
+> >indicator_long_list <- ed_search$indicatorID
+> >wb_data <- wb(indicator = indicator_long_list[1:4], country =
+> country_list, startdate = 2005, enddate = 2015, cache = wb_cache_7_4_17,
+> removeNA = F, lang="es")
+> Warning message:
+> In wb(indicator = indicator_long_list[1:4], country = country_list,  :
+>   No data was returned for any requested country and indicator. Returning
+> empty data frame
+>
+> Si yo disminuyo la cantidad de países, por ejemplo que solo sean 50,  me
+> descarga los datos.
+>
+> ¿Hay un límite a la descarga de datos?
+>
+> ¿Me podrían orientar?
+>
+>
+> Saludos,
+>
+> Sebastián.
+>
+>                 [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From patricio.fuenmayor en gmail.com  Sun Apr  9 18:53:26 2017
+From: patricio.fuenmayor en gmail.com (patricio fuenmayor)
+Date: Sun, 9 Apr 2017 11:53:26 -0500
+Subject: [R-es]  Perdido en un bucle
+Message-ID: <CACEaGhMaY9e=UhidVbx=CfmK8vbe80gnDSwCd3PXpwuORP4Q8A@mail.gmail.com>
+
+Hola.
+Yo lo hiciera con la función cut {base} de la siguiente forma:
+
+
+x <- data.frame(b=c(0, 0, 0.001, 0.374, 0.026, 1.000))
+x$c <- cut(x$b,c(-1,0.001,0.01,0.05,1),c("***","**","*",""))
+x
+
+Saludos.
+
+	[[alternative HTML version deleted]]
+
+
+From ihidalgo en jccm.es  Mon Apr 10 08:12:58 2017
+From: ihidalgo en jccm.es (Isidro Hidalgo Arellano)
+Date: Mon, 10 Apr 2017 08:12:58 +0200
+Subject: [R-es] =?utf-8?q?Distribuir_intervalo_de_d=C3=ADas_entre_meses?=
+In-Reply-To: <CAFxGGR7X8Sx+rW=VtVM_cXdc5g3DFJCdZsXLSNG07dDiHAasQQ@mail.gmail.com>
+References: <CAFxGGR6JquY-YCGytuWgT70RPvixKhf6dfgLjR49xaNTwew2Dw@mail.gmail.com>
+ <001401d2af8f$56763fe0$0362bfa0$@jccm.es>
+ <CAFxGGR7X8Sx+rW=VtVM_cXdc5g3DFJCdZsXLSNG07dDiHAasQQ@mail.gmail.com>
+Message-ID: <000e01d2b1c1$80bc8a50$82359ef0$@jccm.es>
+
+He cambiado las fechas de los intervalos para asegurarme de que funcionaba. Simplemente haciendo que la función te devuelva los 12 meses, "sapply()" te las coloca bien. Luego sólo hay que sumar por filas:
+
+ 
+
+df <- data.frame(inicio = c(as.Date("2016-03-01"),
+
+                            as.Date("2016-02-14")),
+
+                 fin = c(as.Date("2016-05-01"),
+
+                         as.Date("2016-02-29")))
+
+ 
+
+diasMes3 = function(posicion){
+
+  inicio = as.Date(df[posicion, 1], format = "%Y-%m-%d")
+
+  fin = as.Date(df[posicion, 2], format = "%Y-%m-%d")
+
+  extraccion = c(table(format(seq(inicio, fin, by=1), "%m")))
+
+  recuento = rep(0, 12)
+
+  names(recuento) = formatC(1:12, width = 2, format = "d", flag = "0")
+
+  recuento[names(extraccion)] = extraccion
+
+  return(recuento)
+
+}
+
+ 
+
+resultado = sapply(1:nrow(df), diasMes3)
+
+ 
+
+rowSums(resultado)
+
+ 
+
+Un saludo.
+
+ 
+
+ 
+
+Isidro Hidalgo Arellano
+
+Observatorio del Mercado de Trabajo
+
+Consejería de Economía, Empresas y Empleo
+
+http://www.castillalamancha.es/
+
+ 
+
+ 
+
+ 
+
+De: Rubén Coca [mailto:ruben.coca en gmail.com] 
+Enviado el: viernes, 07 de abril de 2017 23:46
+Para: Isidro Hidalgo Arellano <ihidalgo en jccm.es>
+Asunto: Re: [R-es] Distribuir intervalo de días entre meses
+
+ 
+
+Gracias por tu respuesta Isidro, me faltaría resolver la creación de columnas en el data frame con el resultado. ¿Alguna idea?
+
+ 
+
+Un saludo,
+
+Rubén
+
+ 
+
+2017-04-07 13:08 GMT+02:00 Isidro Hidalgo Arellano <ihidalgo en jccm.es <mailto:ihidalgo en jccm.es> >:
+
+Acabo de darme cuenta que tenías casi la solución, no lo había leído,
+disculpa.
+Lo puedes encapsular así:
+
+diasMes2 = function(limites){
+  inicio = as.Date(limites[1], format = "%Y-%m-%d")
+  fin = as.Date(limites[2], format = "%Y-%m-%d")
+ return(table(format(seq(inicio, fin, by=1), "%m")))
+}
+
+apply(df, 1, diasMes2)
+
+Un saludo,
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: Isidro Hidalgo Arellano [mailto:ihidalgo en jccm.es <mailto:ihidalgo en jccm.es> ]
+Enviado el: viernes, 07 de abril de 2017 13:03
+Para: 'Rubén Coca' <ruben.coca en gmail.com <mailto:ruben.coca en gmail.com> >; 'Lista R'
+<r-help-es en r-project.org <mailto:r-help-es en r-project.org> >
+Asunto: RE: [R-es] Distribuir intervalo de días entre meses
+
+Podrías probar con algo así:
+
+require(lubridate)
+
+diasMes = function(limites){
+  inicio = as.Date(limites[1], format = "%Y-%m-%d")
+  fin = as.Date(limites[2], format = "%Y-%m-%d")
+  secuencia = seq(inicio, fin, "days")
+  meses = month(secuencia)
+  return(table(meses))
+}
+
+apply(df, 1, diasMes)
+
+Un saludo,
+
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo http://www.castillalamancha.es/
+
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org <mailto:r-help-es-bounces en r-project.org> ] En nombre de Rubén
+Coca Enviado el: viernes, 07 de abril de 2017 12:02
+Para: Lista R <r-help-es en r-project.org <mailto:r-help-es en r-project.org> >
+Asunto: [R-es] Distribuir intervalo de días entre meses
+
+Hola,
+Partiendo de un data frame con 2 variables de fecha (inicio y fin):
+
+df <- data.frame(inicio = c(as.Date("2016-01-01"),
+                                      as.Date("2016-02-14")),
+                        fin = c(as.Date("2016-02-01"),
+                                  as.Date("2016-02-29")))
+
+Necesitaría crear 12 nuevas columnas adicionales, una para cada mes, que
+compute el número de días del intervalo que caen en cada mes. El resultado
+deseado sería algo así:
+
+inicio             fin              ene    feb    mar    abr    may    jun
+   jul    ago    sep    oct    nov    dic
+2016-01-01    2016-02-01  31     1       0        0       0        0      0
+     0        0       0       0       0
+2016-02-14    2016-02-29  0       15     0        0       0        0      0
+     0        0       0       0       0
+
+Buscando he encontrado una aproximación al problema del reparto, pero no es
+válida para data frames. La detallo por si sirve de inspiración:
+table(format(seq(df$inicio, df$fin, by=1), "%m"))
+
+Muchas gracias.
+Rubén
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org <mailto:R-help-es en r-project.org> 
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From iterador10 en hotmail.com  Tue Apr 11 22:13:14 2017
+From: iterador10 en hotmail.com (Francisco Javier)
+Date: Tue, 11 Apr 2017 20:13:14 +0000
+Subject: [R-es] Uso reiterado de la funcion seq
+Message-ID: <DB3PR07MB219D382D80C471FC8284808DC000@DB3PR07MB219.eurprd07.prod.outlook.com>
+
+Hola a todos,
+
+Escribo debido a una duda en la aplicacion de la funcion seq en cada uno de los "n" componentes de un vector "x". Hasta donde yo se, dicha funcion no permite el uso de vectores. 
+En consecuencia, y como primera aproximacion a lo que deseo hacer, he construido un bucle  que retorne una lista de "n" vectores (de distinta longitud), donde cada uno de estos 
+vectores resulta de aplicar la funtion seq a los respectivos elementos del vector "x" de la siguiente manera:
+
+# Por ejemplo, sea n = 3 con los siguientes valores iniciales:
+x <- c(20, 25, 35)
+p <- c(2, 3, 5)
+
+v <- vector('list', n)              # Lista vacia en donde ubicar los "n" vectores
+for (i in 1:n) {
+   v[[i]] <- seq(x[i], len = p[i])
+}
+
+# Posteriormente, ubico todos los vectores en un unico vector, por ejemplo con unlist: res <- unlist(v)
+20 21 25 26 27 35 36 37 38 39
+
+Sin embargo, el anterior bucle no es eficiente si "n" es muy grande , por lo que me pregunto si existe una forma mejor de hacerlo (quizas con lapply).
+Muchas gracias.
+
+F. Javier
+
+
+From javier.ruben.marcuzzi en gmail.com  Tue Apr 11 22:27:31 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Tue, 11 Apr 2017 17:27:31 -0300
+Subject: [R-es] Uso reiterado de la funcion seq
+In-Reply-To: <DB3PR07MB219D382D80C471FC8284808DC000@DB3PR07MB219.eurprd07.prod.outlook.com>
+References: <DB3PR07MB219D382D80C471FC8284808DC000@DB3PR07MB219.eurprd07.prod.outlook.com>
+Message-ID: <58ed3c35.a425ed0a.33f17.eb01@mx.google.com>
+
+Estimado Francisco Javier
+
+No estoy seguro de como puede aumentar el rendimiento, había hace un tiempo una forma entre trabajar con ?código normal? o ?código vectorizado?, sin embargo entiendo que en las últimas versiones de R dicha diferencia comenzaba a desaparecer.
+
+Sin embargo habría dos alternativas que puede probar, una es utilizar compile (o compiler) no lo recuerdo exacto, básicamente R compila la función antes de ejecutarla, y la segunda alternativa puede ser escribir algo distinto utilizando como ejemplo de lo que está en la siguiente dirección http://stackoverflow.com/questions/10801750/whats-the-difference-between-lapply-and-do-call-in-r, por si aparecen diferencias al realizar lo mismo de distinta forma.
+
+Javier Rubén Marcuzzi
+
+De: Francisco Javier
+Enviado: martes, 11 de abril de 2017 17:13
+Para: r-help-es en r-project.org
+Asunto: [R-es] Uso reiterado de la funcion seq
+
+Hola a todos,
+
+Escribo debido a una duda en la aplicacion de la funcion seq en cada uno de los "n" componentes de un vector "x". Hasta donde yo se, dicha funcion no permite el uso de vectores. 
+En consecuencia, y como primera aproximacion a lo que deseo hacer, he construido un bucle  que retorne una lista de "n" vectores (de distinta longitud), donde cada uno de estos 
+vectores resulta de aplicar la funtion seq a los respectivos elementos del vector "x" de la siguiente manera:
+
+# Por ejemplo, sea n = 3 con los siguientes valores iniciales:
+x <- c(20, 25, 35)
+p <- c(2, 3, 5)
+
+v <- vector('list', n)              # Lista vacia en donde ubicar los "n" vectores
+for (i in 1:n) {
+   v[[i]] <- seq(x[i], len = p[i])
+}
+
+# Posteriormente, ubico todos los vectores en un unico vector, por ejemplo con unlist: res <- unlist(v)
+20 21 25 26 27 35 36 37 38 39
+
+Sin embargo, el anterior bucle no es eficiente si "n" es muy grande , por lo que me pregunto si existe una forma mejor de hacerlo (quizas con lapply).
+Muchas gracias.
+
+F. Javier
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Wed Apr 12 01:11:08 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 12 Apr 2017 01:11:08 +0200
+Subject: [R-es] Uso reiterado de la funcion seq
+In-Reply-To: <DB3PR07MB219D382D80C471FC8284808DC000@DB3PR07MB219.eurprd07.prod.outlook.com>
+References: <DB3PR07MB219D382D80C471FC8284808DC000@DB3PR07MB219.eurprd07.prod.outlook.com>
+Message-ID: <CAOKbq8j1aMk1=AwQ3Fu10Uv4OWffQs_hE=74+BXcPuVwKNxBrQ@mail.gmail.com>
+
+Hola,
+
+Esta es una forma de hacerlo con la librería "purrr":
+
+#-----------------------
+> library(purrr)
+> x <- list(20, 25, 35)
+> p <- list(2, 3, 5)
+> res_out <- unlist(seq_along(x) %>%
++      map( ~seq(x[[.]], length.out = p[[.]], by=1) ))
+> res_out
+ [1] 20 21 25 26 27 35 36 37 38 39
+#-----------------------
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 11 de abril de 2017, 22:13, Francisco Javier <iterador10 en hotmail.com>
+escribió:
+
+> Hola a todos,
+>
+> Escribo debido a una duda en la aplicacion de la funcion seq en cada uno
+> de los "n" componentes de un vector "x". Hasta donde yo se, dicha funcion
+> no permite el uso de vectores.
+> En consecuencia, y como primera aproximacion a lo que deseo
+> hacer, he construido un bucle  que retorne una lista de "n" vectores (de
+> distinta longitud), donde cada uno de estos
+> vectores resulta de aplicar la funtion seq a los respectivos elementos del
+> vector "x" de la siguiente manera:
+>
+> # Por ejemplo, sea n = 3 con los siguientes valores iniciales:
+> x <- c(20, 25, 35)
+> p <- c(2, 3, 5)
+>
+> v <- vector('list', n)              # Lista vacia en donde ubicar los "n"
+> vectores
+> for (i in 1:n) {
+>    v[[i]] <- seq(x[i], len = p[i])
+> }
+>
+> # Posteriormente, ubico todos los vectores en un unico vector, por ejemplo
+> con unlist: res <- unlist(v)
+> 20 21 25 26 27 35 36 37 38 39
+>
+> Sin embargo, el anterior bucle no es eficiente si "n" es muy grande , por
+> lo que me pregunto si existe una forma mejor de hacerlo (quizas con lapply).
+> Muchas gracias.
+>
+> F. Javier
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From carlos.taimal en correounivalle.edu.co  Thu Apr 13 18:36:52 2017
+From: carlos.taimal en correounivalle.edu.co (CARLOS ALBERTO TAIMAL YEPES)
+Date: Thu, 13 Apr 2017 11:36:52 -0500
+Subject: [R-es] Variograma - Bins
+Message-ID: <CAH+_AOktJuHph1wMeL_X1qnWnmNRSyFiW8Lpd3K-czWYAOSSyw@mail.gmail.com>
+
+Hola, cordial saludo, estoy trabajando con geoestadística y  tengo la
+siguiente inquietud ¿Existe algún criterio óptimo para determinar el número
+de bins en un semivariograma? sé que el paquete geoR tiende a tomar por
+defecto 13 bins y gstat 15 ¿pero existe algún criterio detrás de dicha
+elección? Gracias de antemano a quien pueda resolver mi duda.
+
+-- 
+*Carlos A. Taimal Yepes*
+*Estudiante de Estadística*
+
+	[[alternative HTML version deleted]]
+
+
+From rubenfcasal en gmail.com  Fri Apr 14 20:32:26 2017
+From: rubenfcasal en gmail.com (=?UTF-8?B?UnViw6luIEZlcm7DoW5kZXotQ2FzYWw=?=)
+Date: Fri, 14 Apr 2017 20:32:26 +0200
+Subject: [R-es] Variograma - Bins
+In-Reply-To: <CAH+_AOktJuHph1wMeL_X1qnWnmNRSyFiW8Lpd3K-czWYAOSSyw@mail.gmail.com>
+References: <CAH+_AOktJuHph1wMeL_X1qnWnmNRSyFiW8Lpd3K-czWYAOSSyw@mail.gmail.com>
+Message-ID: <CAJhxDDt+kVjbiBoNGKV4Yi1r=Up5P7UKyMQ_oKZb=vS6qQ6vmg@mail.gmail.com>
+
+Hola Carlos,
+
+Los paquetes gstat y geor fijan el número de saltos sin ningún criterio. La
+recomendación sería determinar un número de saltos de forma que el número
+de aportaciones al primer salto sea en torno a 30 (20 podría valer...) y
+considerando hasta la mitad del máximo salto posible.
+
+Un saludo, Rubén.
+
+El 13/4/2017 18:37, "CARLOS ALBERTO TAIMAL YEPES" <
+carlos.taimal en correounivalle.edu.co> escribió:
+
+> Hola, cordial saludo, estoy trabajando con geoestadística y  tengo la
+> siguiente inquietud ¿Existe algún criterio óptimo para determinar el número
+> de bins en un semivariograma? sé que el paquete geoR tiende a tomar por
+> defecto 13 bins y gstat 15 ¿pero existe algún criterio detrás de dicha
+> elección? Gracias de antemano a quien pueda resolver mi duda.
+>
+> --
+> *Carlos A. Taimal Yepes*
+> *Estudiante de Estadística*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From carlos.taimal en correounivalle.edu.co  Sat Apr 15 02:45:41 2017
+From: carlos.taimal en correounivalle.edu.co (CARLOS ALBERTO TAIMAL YEPES)
+Date: Fri, 14 Apr 2017 19:45:41 -0500
+Subject: [R-es] Variograma - Bins
+In-Reply-To: <CAJhxDDt+kVjbiBoNGKV4Yi1r=Up5P7UKyMQ_oKZb=vS6qQ6vmg@mail.gmail.com>
+References: <CAH+_AOktJuHph1wMeL_X1qnWnmNRSyFiW8Lpd3K-czWYAOSSyw@mail.gmail.com>
+ <CAJhxDDt+kVjbiBoNGKV4Yi1r=Up5P7UKyMQ_oKZb=vS6qQ6vmg@mail.gmail.com>
+Message-ID: <CAH+_AO=X2=o4cnRQDK+CHRUgHgd-_kDaJ21pMECqAMvzifvTGw@mail.gmail.com>
+
+Muchas gracias Rubén, me ha sido muy útil la información.
+
+El 14 de abril de 2017, 13:32, Rubén Fernández-Casal <rubenfcasal en gmail.com>
+escribió:
+
+> Hola Carlos,
+>
+> Los paquetes gstat y geor fijan el número de saltos sin ningún criterio.
+> La recomendación sería determinar un número de saltos de forma que el
+> número de aportaciones al primer salto sea en torno a 30 (20 podría
+> valer...) y considerando hasta la mitad del máximo salto posible.
+>
+> Un saludo, Rubén.
+>
+> El 13/4/2017 18:37, "CARLOS ALBERTO TAIMAL YEPES" <
+> carlos.taimal en correounivalle.edu.co> escribió:
+>
+>> Hola, cordial saludo, estoy trabajando con geoestadística y  tengo la
+>> siguiente inquietud ¿Existe algún criterio óptimo para determinar el
+>> número
+>> de bins en un semivariograma? sé que el paquete geoR tiende a tomar por
+>> defecto 13 bins y gstat 15 ¿pero existe algún criterio detrás de dicha
+>> elección? Gracias de antemano a quien pueda resolver mi duda.
+>>
+>> --
+>> *Carlos A. Taimal Yepes*
+>> *Estudiante de Estadística*
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+
+-- 
+*Carlos A. Taimal Yepes*
+*Estudiante de Estadística*
+
+	[[alternative HTML version deleted]]
+
+
+From andreshirigoyen en gmail.com  Mon Apr 17 16:28:54 2017
+From: andreshirigoyen en gmail.com (Andres Hirigoyen)
+Date: Mon, 17 Apr 2017 11:28:54 -0300
+Subject: [R-es] Error en sql UpDate
+Message-ID: <CAOaTypVdSA67pFUi9=Kp-EWJBsZxUtLT3FQVWJg6UemmnCrTxQ@mail.gmail.com>
+
+Buenos días,  al querer actualizar los datos de una tabla en SQL SERVER
+sale el siguiente error:
+
+Error in sqlUpdate(canal_conexion, Datos, tablename =
+"Tabla_SQL_SERVER_Actualizar",  :
+  [RODBC] Failed exec in Update22018 0 [Microsoft][ODBC SQL Server
+Driver]Invalid character value for cast specification
+
+Gracias desde ya por la ayuda.
+
+--
+
+	[[alternative HTML version deleted]]
+
+
+From horacio9573 en gmail.com  Mon Apr 17 17:26:44 2017
+From: horacio9573 en gmail.com (Horacio)
+Date: Mon, 17 Apr 2017 12:26:44 -0300
+Subject: [R-es] Matriz como producto de vectores.
+Message-ID: <CALV7ndgcLatWOfzQ-aFFxxv1q1VxD4dV-tC1gEzgTPVXhOxQAw@mail.gmail.com>
+
+Buenas tengo una matriz de contingencia de 5x4 donde en la última fila
+y última columna tengo las frecuencias marginales, en función de estas
+quiero sacar las esperadas, pero cuando hago por ejemplo el producto,,
+
+Esperadas<-Estrategia["Suma",]*Estrategia[,"Suma_e"]
+   E1    E2    E3    E4  Suma
+ 5550 14160 52650 89600 20720
+Warning message:
+In Estrategia["Suma", ] * Estrategia[, "Suma_e"] :
+  longitud de objeto mayor no es múltiplo de la longitud de uno menor
+
+me da un vector y no una matriz,,, como puedo hacer esto? no sé si se
+entiende lo que busco
+
+Gracias,,,
+
+
+From cgb en datanalytics.com  Mon Apr 17 17:40:42 2017
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 17 Apr 2017 17:40:42 +0200
+Subject: [R-es] Matriz como producto de vectores.
+In-Reply-To: <CALV7ndgcLatWOfzQ-aFFxxv1q1VxD4dV-tC1gEzgTPVXhOxQAw@mail.gmail.com>
+References: <CALV7ndgcLatWOfzQ-aFFxxv1q1VxD4dV-tC1gEzgTPVXhOxQAw@mail.gmail.com>
+Message-ID: <CADg83edWWma+R05sJTxo803PEBO0ZPqyzP-tM-0AQezfaf1OhA@mail.gmail.com>
+
+a <- 1:4
+b <- 3:6
+a %*% t(b)
+
+
+El 17 de abril de 2017, 17:26, Horacio <horacio9573 en gmail.com> escribió:
+
+> Buenas tengo una matriz de contingencia de 5x4 donde en la última fila
+> y última columna tengo las frecuencias marginales, en función de estas
+> quiero sacar las esperadas, pero cuando hago por ejemplo el producto,,
+>
+> Esperadas<-Estrategia["Suma",]*Estrategia[,"Suma_e"]
+>    E1    E2    E3    E4  Suma
+>  5550 14160 52650 89600 20720
+> Warning message:
+> In Estrategia["Suma", ] * Estrategia[, "Suma_e"] :
+>   longitud de objeto mayor no es múltiplo de la longitud de uno menor
+>
+> me da un vector y no una matriz,,, como puedo hacer esto? no sé si se
+> entiende lo que busco
+>
+> Gracias,,,
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From m.monsalvo en gmail.com  Tue Apr 18 11:39:09 2017
+From: m.monsalvo en gmail.com (Mauricio Monsalvo)
+Date: Tue, 18 Apr 2017 06:39:09 -0300
+Subject: [R-es] Error en sql UpDate
+In-Reply-To: <CAOaTypVdSA67pFUi9=Kp-EWJBsZxUtLT3FQVWJg6UemmnCrTxQ@mail.gmail.com>
+References: <CAOaTypVdSA67pFUi9=Kp-EWJBsZxUtLT3FQVWJg6UemmnCrTxQ@mail.gmail.com>
+Message-ID: <CAKXoZH8wqjzN+3SnKv0Z4oHgrMi=ZqDDJLUVpUEcu1xP-1x+xw@mail.gmail.com>
+
+Hola.
+Hay unos pocos casos en los que se mencionan errores parecidos:
+http://stackoverflow.com/search?q=Invalid+character+value+for+cast+specification+RODBC
+y en todos van en la dirección de tener que asegurar que ambos sistemas
+estén utilizando el mismo tipo de datos. En particular, las fechas pueden
+tener problemas. Recomiendan pasarlas a character.
+Saludos.
+
+El 17 de abril de 2017, 11:28, Andres Hirigoyen <andreshirigoyen en gmail.com>
+escribió:
+
+> Buenos días,  al querer actualizar los datos de una tabla en SQL SERVER
+> sale el siguiente error:
+>
+> Error in sqlUpdate(canal_conexion, Datos, tablename =
+> "Tabla_SQL_SERVER_Actualizar",  :
+>   [RODBC] Failed exec in Update22018 0 [Microsoft][ODBC SQL Server
+> Driver]Invalid character value for cast specification
+>
+> Gracias desde ya por la ayuda.
+>
+> --
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Mauricio
+
+	[[alternative HTML version deleted]]
+
+
+From rubenfcasal en gmail.com  Tue Apr 18 12:40:55 2017
+From: rubenfcasal en gmail.com (rubenfcasal)
+Date: Tue, 18 Apr 2017 12:40:55 +0200
+Subject: [R-es] Matriz como producto de vectores.
+In-Reply-To: <CADg83edWWma+R05sJTxo803PEBO0ZPqyzP-tM-0AQezfaf1OhA@mail.gmail.com>
+References: <CALV7ndgcLatWOfzQ-aFFxxv1q1VxD4dV-tC1gEzgTPVXhOxQAw@mail.gmail.com>
+ <CADg83edWWma+R05sJTxo803PEBO0ZPqyzP-tM-0AQezfaf1OhA@mail.gmail.com>
+Message-ID: <fe288c22-0f44-bb2f-8cf7-4331f6040a76@gmail.com>
+
+Hola a todos,
+
+     Pego un trozo de una práctica de R sobre el tema (como veis está en 
+formato spin: https://yihui.name/knitr/demo/stitch) por si resulta de 
+interés:
+
+#' Consideramos datos recogidos en un estudio de mejora de calidad en 
+una fábrica de semiconductores.
+#' Se obtuvo una muestra de obleas que se clasificaron dependiendo de si 
+se encontraron partículas
+#' en la matriz que producía la oblea y de si la calidad de oblea era buena
+#' (Para más detalles Hall, 1994. Analysis of defectivity of 
+semiconductor wafers by contigency table.
+#' Proceedings of the Institute of Environmental Sciences 1, 177-183).
+
+n <- c(320, 14, 80, 36)
+particulas <- gl(2, 1, 4, labels = c("no","si"))
+calidad <- gl(2, 2, labels = c("buena", "mala"))
+df <- data.frame(n, particulas, calidad)
+df
+
+#' En lugar de estar en el formato de un conjunto de datos (`data.frame`)
+#' puede que los datos estén en formato de tabla (`table`, `matrix`):
+
+tabla <- xtabs(n ~ calidad + particulas)
+tabla
+
+#' Por ejemplo, si se quiere simular bajo independencia,
+#' estimando las probabilidades a partir de la tabla,
+#' consideraríamos:
+
+pind <- (rowSums(tabla) %o% colSums(tabla))/(sum(tabla)^2)
+matrix(pind, nrow = nrow(tabla))
+
+rtablas <- rmultinom(ntsim, sum(n), pind) # Se fija el total de la tabla...
+rtablas[ , 1:5] # Las cinco primeras simulaciones
+
+#' Para realizar el contraste de independencia:
+
+res <- chisq.test(tabla)
+res
+
+El 17/04/2017 a las 17:40, Carlos J. Gil Bellosta escribió:
+> a <- 1:4
+> b <- 3:6
+> a %*% t(b)
+>
+>
+> El 17 de abril de 2017, 17:26, Horacio <horacio9573 en gmail.com> escribió:
+>
+>> Buenas tengo una matriz de contingencia de 5x4 donde en la última fila
+>> y última columna tengo las frecuencias marginales, en función de estas
+>> quiero sacar las esperadas, pero cuando hago por ejemplo el producto,,
+>>
+>> Esperadas<-Estrategia["Suma",]*Estrategia[,"Suma_e"]
+>>     E1    E2    E3    E4  Suma
+>>   5550 14160 52650 89600 20720
+>> Warning message:
+>> In Estrategia["Suma", ] * Estrategia[, "Suma_e"] :
+>>    longitud de objeto mayor no es múltiplo de la longitud de uno menor
+>>
+>> me da un vector y no una matriz,,, como puedo hacer esto? no sé si se
+>> entiende lo que busco
+>>
+>> Gracias,,,
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Ruben Fernandez Casal
+Department of Mathematics
+Faculty of Computer Science
+Universidade da Coruña
+Corporate email: ruben.fcasal <at> udc <dot> es
+--
+
+
+From javier.ruben.marcuzzi en gmail.com  Tue Apr 18 13:04:10 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Tue, 18 Apr 2017 08:04:10 -0300
+Subject: [R-es] Error en sql UpDate
+In-Reply-To: <CAKXoZH8wqjzN+3SnKv0Z4oHgrMi=ZqDDJLUVpUEcu1xP-1x+xw@mail.gmail.com>
+References: <CAOaTypVdSA67pFUi9=Kp-EWJBsZxUtLT3FQVWJg6UemmnCrTxQ@mail.gmail.com>
+ <CAKXoZH8wqjzN+3SnKv0Z4oHgrMi=ZqDDJLUVpUEcu1xP-1x+xw@mail.gmail.com>
+Message-ID: <58f5f2ab.8119370a.b9240.ee6e@mx.google.com>
+
+Estimado Andres Hirigoyen
+
+Intenta guardar los datos en una nueva tabla en sql server, yo no recuerdo bien con que sql tuve ese problema, lo solucione guardando en una tabla temporal, luego un procedimiento almacenado realiza el resto y elimina la tabla temporal.
+
+Javier Rubén Marcuzzi
+
+De: Mauricio Monsalvo
+Enviado: martes, 18 de abril de 2017 6:39
+Para: Andres Hirigoyen
+CC: Lista R
+Asunto: Re: [R-es] Error en sql UpDate
+
+Hola.
+Hay unos pocos casos en los que se mencionan errores parecidos:
+http://stackoverflow.com/search?q=Invalid+character+value+for+cast+specification+RODBC
+y en todos van en la dirección de tener que asegurar que ambos sistemas
+estén utilizando el mismo tipo de datos. En particular, las fechas pueden
+tener problemas. Recomiendan pasarlas a character.
+Saludos.
+
+El 17 de abril de 2017, 11:28, Andres Hirigoyen <andreshirigoyen en gmail.com>
+escribió:
+
+> Buenos días,  al querer actualizar los datos de una tabla en SQL SERVER
+> sale el siguiente error:
+>
+> Error in sqlUpdate(canal_conexion, Datos, tablename =
+> "Tabla_SQL_SERVER_Actualizar",  :
+>   [RODBC] Failed exec in Update22018 0 [Microsoft][ODBC SQL Server
+> Driver]Invalid character value for cast specification
+>
+> Gracias desde ya por la ayuda.
+>
+> --
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Mauricio
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Tue Apr 18 13:15:13 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Tue, 18 Apr 2017 08:15:13 -0300
+Subject: [R-es] Error en sql UpDate
+In-Reply-To: <CAKXoZH8wqjzN+3SnKv0Z4oHgrMi=ZqDDJLUVpUEcu1xP-1x+xw@mail.gmail.com>
+References: <CAOaTypVdSA67pFUi9=Kp-EWJBsZxUtLT3FQVWJg6UemmnCrTxQ@mail.gmail.com>
+ <CAKXoZH8wqjzN+3SnKv0Z4oHgrMi=ZqDDJLUVpUEcu1xP-1x+xw@mail.gmail.com>
+Message-ID: <58f5f541.3038c80a.1bdab.7e8c@mx.google.com>
+
+Por las dudas
+
+https://msdn.microsoft.com/en-us/microsoft-r/
+
+Javier Rubén Marcuzzi
+
+De: Mauricio Monsalvo
+Enviado: martes, 18 de abril de 2017 6:39
+Para: Andres Hirigoyen
+CC: Lista R
+Asunto: Re: [R-es] Error en sql UpDate
+
+Hola.
+Hay unos pocos casos en los que se mencionan errores parecidos:
+http://stackoverflow.com/search?q=Invalid+character+value+for+cast+specification+RODBC
+y en todos van en la dirección de tener que asegurar que ambos sistemas
+estén utilizando el mismo tipo de datos. En particular, las fechas pueden
+tener problemas. Recomiendan pasarlas a character.
+Saludos.
+
+El 17 de abril de 2017, 11:28, Andres Hirigoyen <andreshirigoyen en gmail.com>
+escribió:
+
+> Buenos días,  al querer actualizar los datos de una tabla en SQL SERVER
+> sale el siguiente error:
+>
+> Error in sqlUpdate(canal_conexion, Datos, tablename =
+> "Tabla_SQL_SERVER_Actualizar",  :
+>   [RODBC] Failed exec in Update22018 0 [Microsoft][ODBC SQL Server
+> Driver]Invalid character value for cast specification
+>
+> Gracias desde ya por la ayuda.
+>
+> --
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Mauricio
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From andreshirigoyen en gmail.com  Tue Apr 18 13:43:06 2017
+From: andreshirigoyen en gmail.com (Andres Hirigoyen)
+Date: Tue, 18 Apr 2017 08:43:06 -0300
+Subject: [R-es] Error en sql UpDate
+In-Reply-To: <CAOaTypWBd62CAFQQuvAe5-JLRv0t8Mvdff5aaOyMB5rnSirEUA@mail.gmail.com>
+References: <CAOaTypVdSA67pFUi9=Kp-EWJBsZxUtLT3FQVWJg6UemmnCrTxQ@mail.gmail.com>
+ <CAKXoZH8wqjzN+3SnKv0Z4oHgrMi=ZqDDJLUVpUEcu1xP-1x+xw@mail.gmail.com>
+ <58f5f541.3038c80a.1bdab.7e8c@mx.google.com>
+ <CAOaTypWBd62CAFQQuvAe5-JLRv0t8Mvdff5aaOyMB5rnSirEUA@mail.gmail.com>
+Message-ID: <CAOaTypVfgjDBvh-FMtRzXKrxbB6o-cs=M_Trv-=wtyrXVJFoxg@mail.gmail.com>
+
+Gracias ya me pongo en acción
+
+El 18 abr. 2017 8:15 AM, "Javier Marcuzzi" <javier.ruben.marcuzzi en gmail.com>
+escribió:
+
+Por las dudas
+
+
+
+https://msdn.microsoft.com/en-us/microsoft-r/
+
+
+
+Javier Rubén Marcuzzi
+
+
+
+*De: *Mauricio Monsalvo <m.monsalvo en gmail.com>
+*Enviado: *martes, 18 de abril de 2017 6:39
+*Para: *Andres Hirigoyen <andreshirigoyen en gmail.com>
+*CC: *Lista R <r-help-es en r-project.org>
+*Asunto: *Re: [R-es] Error en sql UpDate
+
+
+
+Hola.
+
+Hay unos pocos casos en los que se mencionan errores parecidos:
+
+http://stackoverflow.com/search?q=Invalid+character+
+value+for+cast+specification+RODBC
+
+y en todos van en la dirección de tener que asegurar que ambos sistemas
+
+estén utilizando el mismo tipo de datos. En particular, las fechas pueden
+
+tener problemas. Recomiendan pasarlas a character.
+
+Saludos.
+
+
+
+El 17 de abril de 2017, 11:28, Andres Hirigoyen <andreshirigoyen en gmail.com>
+
+escribió:
+
+
+
+> Buenos días,  al querer actualizar los datos de una tabla en SQL SERVER
+
+> sale el siguiente error:
+
+>
+
+> Error in sqlUpdate(canal_conexion, Datos, tablename =
+
+> "Tabla_SQL_SERVER_Actualizar",  :
+
+>   [RODBC] Failed exec in Update22018 0 [Microsoft][ODBC SQL Server
+
+> Driver]Invalid character value for cast specification
+
+>
+
+> Gracias desde ya por la ayuda.
+
+>
+
+> --
+
+>
+
+>         [[alternative HTML version deleted]]
+
+>
+
+> _______________________________________________
+
+> R-help-es mailing list
+
+> R-help-es en r-project.org
+
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+>
+
+
+
+
+
+
+
+-- 
+
+Mauricio
+
+
+
+                [[alternative HTML version deleted]]
+
+
+
+_______________________________________________
+
+R-help-es mailing list
+
+R-help-es en r-project.org
+
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From iterador10 en hotmail.com  Tue Apr 18 21:13:39 2017
+From: iterador10 en hotmail.com (Francisco Javier)
+Date: Tue, 18 Apr 2017 19:13:39 +0000
+Subject: [R-es] Uso reiterado de la funcion seq
+In-Reply-To: <CAOKbq8j1aMk1=AwQ3Fu10Uv4OWffQs_hE=74+BXcPuVwKNxBrQ@mail.gmail.com>
+References: <DB3PR07MB219D382D80C471FC8284808DC000@DB3PR07MB219.eurprd07.prod.outlook.com>,
+ <CAOKbq8j1aMk1=AwQ3Fu10Uv4OWffQs_hE=74+BXcPuVwKNxBrQ@mail.gmail.com>
+Message-ID: <AMXPR07MB213D9768F0B0F8DB81206BADC190@AMXPR07MB213.eurprd07.prod.outlook.com>
+
+Muchas gracias Javier y Carlos por las respuestas!
+
+
+Saludos,
+
+
+F. Javier
+
+
+________________________________
+De: Carlos Ortega <cof en qualityexcellence.es>
+Enviado: miércoles, 12 de abril de 2017 1:11
+Para: Francisco Javier
+Cc: r-help-es en r-project.org
+Asunto: Re: [R-es] Uso reiterado de la funcion seq
+
+Hola,
+
+Esta es una forma de hacerlo con la librería "purrr":
+
+#-----------------------
+> library(purrr)
+> x <- list(20, 25, 35)
+> p <- list(2, 3, 5)
+> res_out <- unlist(seq_along(x) %>%
++      map( ~seq(x[[.]], length.out = p[[.]], by=1) ))
+> res_out
+ [1] 20 21 25 26 27 35 36 37 38 39
+#-----------------------
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+QualityExcellence<http://www.qualityexcellence.es/>
+www.qualityexcellence.es
+QUALITY EXCELLENCE, consultores en calidad, procesos y mejora continua
+
+
+
+
+El 11 de abril de 2017, 22:13, Francisco Javier <iterador10 en hotmail.com<mailto:iterador10 en hotmail.com>> escribió:
+Hola a todos,
+
+Escribo debido a una duda en la aplicacion de la funcion seq en cada uno de los "n" componentes de un vector "x". Hasta donde yo se, dicha funcion no permite el uso de vectores.
+En consecuencia, y como primera aproximacion a lo que deseo hacer, he construido un bucle  que retorne una lista de "n" vectores (de distinta longitud), donde cada uno de estos
+vectores resulta de aplicar la funtion seq a los respectivos elementos del vector "x" de la siguiente manera:
+
+# Por ejemplo, sea n = 3 con los siguientes valores iniciales:
+x <- c(20, 25, 35)
+p <- c(2, 3, 5)
+
+v <- vector('list', n)              # Lista vacia en donde ubicar los "n" vectores
+for (i in 1:n) {
+   v[[i]] <- seq(x[i], len = p[i])
+}
+
+# Posteriormente, ubico todos los vectores en un unico vector, por ejemplo con unlist: res <- unlist(v)
+20 21 25 26 27 35 36 37 38 39
+
+Sin embargo, el anterior bucle no es eficiente si "n" es muy grande , por lo que me pregunto si existe una forma mejor de hacerlo (quizas con lapply).
+Muchas gracias.
+
+F. Javier
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+--
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+	[[alternative HTML version deleted]]
+
+
+From javier.valdes en mop.gov.cl  Thu Apr 20 22:48:24 2017
+From: javier.valdes en mop.gov.cl (Javier Valdes Cantallopts (DGA))
+Date: Thu, 20 Apr 2017 20:48:24 +0000
+Subject: [R-es] FUNCION "SI" en R
+Message-ID: <023AE46828930542B1F3839F47A15400220942C3@EXMBX02.moptt.gov.cl>
+
+Hola  a todos
+Primero que todo, gracias por todos los consejos, me han servido ene.
+
+Mi pregunta es la siguiente:
+Como armar una función lógica "SI" PARA CAMBIAR LOS NOMBRES A LOS HEADER
+Por ejemplo, si tengo una tabla así;
+a
+
+b
+
+c
+
+d
+
+1
+
+3
+
+4
+
+6
+
+2
+
+4
+
+6
+
+7
+
+
+a= "pluvio mensual"
+b= "carga de batería"
+c= "temperatura"
+d= "radiación".
+La idea es reemplazar, en el caso que el HEADER sea (a), QUE EL NOMBRE DEL HEADER CAMBIE A "PLUVIO MENSUAL"
+
+Se me ocurre DAR UNA INSTRUCCIÓN TIPO COLNAMES<-¿
+Espero sus respuestas, saludos.
+
+
+
+
+[Descripción: FIRMA3]
+
+
+________________________________
+
+CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los archivos adjuntos es de carácter confidencial o privilegiada y está destinada al uso exclusivo del emisor y/o de la persona o entidad a quien va dirigida. Si usted no es el destinatario, cualquier almacenamiento, divulgación, distribución o copia de esta información está estrictamente prohibido y sancionado por la ley. Si recibió este mensaje por error, por favor infórmenos inmediatamente respondiendo este mismo mensaje y borre todos los archivos adjuntos. Gracias.
+
+CONFIDENTIAL NOTE: The information transmitted in this message and/or attachments is confidential and/or privileged and is intented only for use of the person or entity to whom it is addressed. If you are not the intended recipient, any retention, dissemination, distribution or copy of this information is strictly prohibited and sanctioned by law. If you received this message in error, please reply us this same message and delete this message and all attachments. Thank you.
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/45399262/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: image001.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/45399262/attachment-0001.png>
+
+From cof en qualityexcellence.es  Thu Apr 20 23:02:33 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 20 Apr 2017 23:02:33 +0200
+Subject: [R-es] FUNCION "SI" en R
+In-Reply-To: <023AE46828930542B1F3839F47A15400220942C3@EXMBX02.moptt.gov.cl>
+References: <023AE46828930542B1F3839F47A15400220942C3@EXMBX02.moptt.gov.cl>
+Message-ID: <CAOKbq8hLKZsSiuOrwJXt4aTDGJZEdHmrAUMJK+8VqP7LHm_TiQ@mail.gmail.com>
+
+Hola,
+
+Esta es una forma:
+
+#---------------
+
+df <- data.frame(
+                   a = rnorm(10),
+                   b = rnorm(10),
+                   c = rnorm(10)
+                )
+
+my_nam <- names(df)
+my_new_nam <- ifelse(my_nam == "a", "nuevo_a", ifelse(my_nam == "b",
+"nuevo_b", ifelse( my_nam == "c", "nuevo_c", my_nam )) )
+my_new_nam
+names(df) <- my_new_nam
+
+#---------------
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 20 de abril de 2017, 22:48, Javier Valdes Cantallopts (DGA) <
+javier.valdes en mop.gov.cl> escribió:
+
+> Hola  a todos
+>
+> Primero que todo, gracias por todos los consejos, me han servido ene.
+>
+>
+>
+> Mi pregunta es la siguiente:
+>
+> Como armar una función lógica ?SI? PARA CAMBIAR LOS NOMBRES A LOS HEADER
+>
+> Por ejemplo, si tengo una tabla así;
+>
+> a
+>
+> b
+>
+> c
+>
+> d
+>
+> 1
+>
+> 3
+>
+> 4
+>
+> 6
+>
+> 2
+>
+> 4
+>
+> 6
+>
+> 7
+>
+>
+>
+> a= ?pluvio mensual?
+>
+> b= ?carga de batería?
+>
+> c= ?temperatura?
+>
+> d= ?radiación?.
+>
+> *La idea es reemplazar, en el caso que el HEADER sea (a), QUE EL NOMBRE
+> DEL HEADER CAMBIE A ?PLUVIO MENSUAL?*
+>
+>
+>
+> *Se me ocurre DAR UNA INSTRUCCIÓN TIPO COLNAMES<-¿*
+>
+> *Espero sus respuestas, saludos.*
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> [image: Descripción: FIRMA3]
+>
+>
+>
+> ------------------------------
+>
+> CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los
+> archivos adjuntos es de carácter confidencial o privilegiada y está
+> destinada al uso exclusivo del emisor y/o de la persona o entidad a quien
+> va dirigida. Si usted no es el destinatario, cualquier almacenamiento,
+> divulgación, distribución o copia de esta información está estrictamente
+> prohibido y sancionado por la ley. Si recibió este mensaje por error, por
+> favor infórmenos inmediatamente respondiendo este mismo mensaje y borre
+> todos los archivos adjuntos. Gracias.
+>
+> CONFIDENTIAL NOTE: The information transmitted in this message and/or
+> attachments is confidential and/or privileged and is intented only for use
+> of the person or entity to whom it is addressed. If you are not the
+> intended recipient, any retention, dissemination, distribution or copy of
+> this information is strictly prohibited and sanctioned by law. If you
+> received this message in error, please reply us this same message and
+> delete this message and all attachments. Thank you.
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/c9b556c6/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/c9b556c6/attachment-0001.png>
+
+From javier.ruben.marcuzzi en gmail.com  Fri Apr 21 00:05:07 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 20 Apr 2017 19:05:07 -0300
+Subject: [R-es] FUNCION "SI" en R
+In-Reply-To: <CAOKbq8hLKZsSiuOrwJXt4aTDGJZEdHmrAUMJK+8VqP7LHm_TiQ@mail.gmail.com>
+References: <023AE46828930542B1F3839F47A15400220942C3@EXMBX02.moptt.gov.cl>
+ <CAOKbq8hLKZsSiuOrwJXt4aTDGJZEdHmrAUMJK+8VqP7LHm_TiQ@mail.gmail.com>
+Message-ID: <58f93097.3c36c80a.fee65.deab@mx.google.com>
+
+Estimado Javier Cantallopts
+
+Lo que escribe Carlos es correcto, pero le envío lo siguiente https://www.tutorialspoint.com/r/r_decision_making.htm porque hay diagramas con if, if anidados y case, tres formas que permiten solucionar ese tipo de problemas (entre otras alternativas).
+
+Javier Ruben Marcuzzi
+
+De: Carlos Ortega
+Enviado: jueves, 20 de abril de 2017 18:09
+Para: Javier Valdes Cantallopts (DGA)
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] FUNCION "SI" en R
+
+Hola,
+
+Esta es una forma:
+
+#---------------
+
+df <- data.frame(
+                   a = rnorm(10),
+                   b = rnorm(10),
+                   c = rnorm(10)
+                )
+
+my_nam <- names(df)
+my_new_nam <- ifelse(my_nam == "a", "nuevo_a", ifelse(my_nam == "b", "nuevo_b", ifelse( my_nam == "c", "nuevo_c", my_nam )) )
+my_new_nam
+names(df) <- my_new_nam
+
+#---------------
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 20 de abril de 2017, 22:48, Javier Valdes Cantallopts (DGA) <javier.valdes en mop.gov.cl> escribió:
+Hola  a todos
+Primero que todo, gracias por todos los consejos, me han servido ene.
+ 
+Mi pregunta es la siguiente:
+Como armar una función lógica ?SI? PARA CAMBIAR LOS NOMBRES A LOS HEADER 
+Por ejemplo, si tengo una tabla así;
+a
+b
+c
+d
+1
+3
+4
+6
+2
+4
+6
+7
+ 
+a= ?pluvio mensual?
+b= ?carga de batería?
+c= ?temperatura?
+d= ?radiación?. 
+La idea es reemplazar, en el caso que el HEADER sea (a), QUE EL NOMBRE DEL HEADER CAMBIE A ?PLUVIO MENSUAL?
+ 
+Se me ocurre DAR UNA INSTRUCCIÓN TIPO COLNAMES<-¿
+Espero sus respuestas, saludos.
+ 
+ 
+ 
+ 
+
+ 
+
+
+
+CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los archivos adjuntos es de carácter confidencial o privilegiada y está destinada al uso exclusivo del emisor y/o de la persona o entidad a quien va dirigida. Si usted no es el destinatario, cualquier almacenamiento, divulgación, distribución o copia de esta información está estrictamente prohibido y sancionado por la ley. Si recibió este mensaje por error, por favor infórmenos inmediatamente respondiendo este mismo mensaje y borre todos los archivos adjuntos. Gracias.
+
+CONFIDENTIAL NOTE: The information transmitted in this message and/or attachments is confidential and/or privileged and is intented only for use of the person or entity to whom it is addressed. If you are not the intended recipient, any retention, dissemination, distribution or copy of this information is strictly prohibited and sanctioned by law. If you received this message in error, please reply us this same message and delete this message and all attachments. Thank you.
+
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/e6a190f3/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: E56D40881AFE44238A953C043C1C2D22.png
+Type: image/png
+Size: 148 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/e6a190f3/attachment-0002.png>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/e6a190f3/attachment-0003.png>
+
+From ericconchamunoz en gmail.com  Fri Apr 21 05:07:34 2017
+From: ericconchamunoz en gmail.com (eric)
+Date: Fri, 21 Apr 2017 00:07:34 -0300
+Subject: [R-es] FUNCION "SI" en R
+In-Reply-To: <023AE46828930542B1F3839F47A15400220942C3@EXMBX02.moptt.gov.cl>
+References: <023AE46828930542B1F3839F47A15400220942C3@EXMBX02.moptt.gov.cl>
+Message-ID: <008ea20b-b7b8-c118-acce-dc93a2d02ca1@gmail.com>
+
+otra forma usando el paquete data.table ... los puse en desorden solo 
+para mostrar que sustituye buscando el header correcto y no por la 
+posicion (que tambien se puede):
+
+setwd("/home/neo/Desktop/")
+library(data.table)
+dat <- fread("headers")
+setnames(dat,c("b","d","c","a"),c("carga de 
+batería","radiación","temperatura","pluvio mensual"))
+dat
+ > dat
+    pluvio mensual carga de batería temperatura radiación
+1:              1                2           3         4
+2:              5                6           7         8
+3:              9               10          11        12
+
+
+Saludos y suerte !!!!
+
+eric.
+
+
+
+
+
+
+
+
+On 04/20/2017 05:48 PM, Javier Valdes Cantallopts (DGA) wrote:
+> Hola  a todos
+>
+> Primero que todo, gracias por todos los consejos, me han servido ene.
+>
+>
+>
+> Mi pregunta es la siguiente:
+>
+> Como armar una función lógica ?SI? PARA CAMBIAR LOS NOMBRES A LOS HEADER
+>
+> Por ejemplo, si tengo una tabla así;
+>
+> a
+>
+> 	
+>
+> b
+>
+> 	
+>
+> c
+>
+> 	
+>
+> d
+>
+> 1
+>
+> 	
+>
+> 3
+>
+> 	
+>
+> 4
+>
+> 	
+>
+> 6
+>
+> 2
+>
+> 	
+>
+> 4
+>
+> 	
+>
+> 6
+>
+> 	
+>
+> 7
+>
+>
+>
+> a= ?pluvio mensual?
+>
+> b= ?carga de batería?
+>
+> c= ?temperatura?
+>
+> d= ?radiación?.
+>
+> /La idea es reemplazar, en el caso que el HEADER sea (a), QUE EL NOMBRE
+> DEL HEADER CAMBIE A ?PLUVIO MENSUAL?/
+>
+> / /
+>
+> *Se me ocurre DAR UNA INSTRUCCIÓN TIPO COLNAMES<-¿*
+>
+> *Espero sus respuestas, saludos.*
+>
+> / /
+>
+>
+>
+>
+>
+>
+>
+> Descripción: FIRMA3
+>
+>
+>
+>
+> ------------------------------------------------------------------------
+>
+> CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los
+> archivos adjuntos es de carácter confidencial o privilegiada y está
+> destinada al uso exclusivo del emisor y/o de la persona o entidad a
+> quien va dirigida. Si usted no es el destinatario, cualquier
+> almacenamiento, divulgación, distribución o copia de esta información
+> está estrictamente prohibido y sancionado por la ley. Si recibió este
+> mensaje por error, por favor infórmenos inmediatamente respondiendo este
+> mismo mensaje y borre todos los archivos adjuntos. Gracias.
+>
+> CONFIDENTIAL NOTE: The information transmitted in this message and/or
+> attachments is confidential and/or privileged and is intented only for
+> use of the person or entity to whom it is addressed. If you are not the
+> intended recipient, any retention, dissemination, distribution or copy
+> of this information is strictly prohibited and sanctioned by law. If you
+> received this message in error, please reply us this same message and
+> delete this message and all attachments. Thank you.
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+-- 
+Forest Engineer
+Master in Environmental and Natural Resource Economics
+Master in Sciences of Natural Resources
+Dr.(c) Sciences of Natural Resources at La Frontera University
+Member in AguaDeTemu2030, citizen movement for Temuco with green city 
+standards for living
+
+Nota: Las tildes se han omitido para asegurar compatibilidad con algunos 
+lectores de correo.
+
+
+From jorgeivanvelez en gmail.com  Fri Apr 21 05:12:31 2017
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Thu, 20 Apr 2017 22:12:31 -0500
+Subject: [R-es] FUNCION "SI" en R
+In-Reply-To: <023AE46828930542B1F3839F47A15400220942C3@EXMBX02.moptt.gov.cl>
+References: <023AE46828930542B1F3839F47A15400220942C3@EXMBX02.moptt.gov.cl>
+Message-ID: <CAKL8G3FgWKcaTyKDQAFa11C3kDzs_kb_tVuhnL9Of9mOnqYMxw@mail.gmail.com>
+
+Javier,
+
+Otra opción sería
+
+require(car)
+?recode
+
+Hay varios ejemplos.
+
+Saludos cordiales,
+Jorge.-
+
+
+2017-04-20 15:48 GMT-05:00 Javier Valdes Cantallopts (DGA) <
+javier.valdes en mop.gov.cl>:
+
+> Hola  a todos
+>
+> Primero que todo, gracias por todos los consejos, me han servido ene.
+>
+>
+>
+> Mi pregunta es la siguiente:
+>
+> Como armar una función lógica ?SI? PARA CAMBIAR LOS NOMBRES A LOS HEADER
+>
+> Por ejemplo, si tengo una tabla así;
+>
+> a
+>
+> b
+>
+> c
+>
+> d
+>
+> 1
+>
+> 3
+>
+> 4
+>
+> 6
+>
+> 2
+>
+> 4
+>
+> 6
+>
+> 7
+>
+>
+>
+> a= ?pluvio mensual?
+>
+> b= ?carga de batería?
+>
+> c= ?temperatura?
+>
+> d= ?radiación?.
+>
+> *La idea es reemplazar, en el caso que el HEADER sea (a), QUE EL NOMBRE
+> DEL HEADER CAMBIE A ?PLUVIO MENSUAL?*
+>
+>
+>
+> *Se me ocurre DAR UNA INSTRUCCIÓN TIPO COLNAMES<-¿*
+>
+> *Espero sus respuestas, saludos.*
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> [image: Descripción: FIRMA3]
+>
+>
+>
+> ------------------------------
+>
+> CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los
+> archivos adjuntos es de carácter confidencial o privilegiada y está
+> destinada al uso exclusivo del emisor y/o de la persona o entidad a quien
+> va dirigida. Si usted no es el destinatario, cualquier almacenamiento,
+> divulgación, distribución o copia de esta información está estrictamente
+> prohibido y sancionado por la ley. Si recibió este mensaje por error, por
+> favor infórmenos inmediatamente respondiendo este mismo mensaje y borre
+> todos los archivos adjuntos. Gracias.
+>
+> CONFIDENTIAL NOTE: The information transmitted in this message and/or
+> attachments is confidential and/or privileged and is intented only for use
+> of the person or entity to whom it is addressed. If you are not the
+> intended recipient, any retention, dissemination, distribution or copy of
+> this information is strictly prohibited and sanctioned by law. If you
+> received this message in error, please reply us this same message and
+> delete this message and all attachments. Thank you.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/db720cad/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170420/db720cad/attachment-0001.png>
+
+From canadasreche en gmail.com  Fri Apr 21 13:01:59 2017
+From: canadasreche en gmail.com (=?UTF-8?Q?Jos=C3=A9_Luis_Ca=C3=B1adas?=)
+Date: Fri, 21 Apr 2017 13:01:59 +0200
+Subject: [R-es] Shiny problemas con updateSelectInput
+Message-ID: <CADdZEnM8SDs8SsS_C9OBEZfmH3kGN2rc_U6t9hTvEcL44-r8Ng@mail.gmail.com>
+
+Buenas a todos.
+
+Os cuento mi problema.
+Tengo un documento rmd interactivo, con shiny y quiero que un selectinput
+se actualice según lo seleccionado en otro selectInput.
+En realidad lo que quiero con el primer selectInput es seleccionar un
+data.frame de una lista de data.frame, y que se actulaice el segundo
+selectInput con los valores únicos de una variable del data.frame elegido.
+
+El caso es que no consigo hacerlo funcionar. Sin embargo, si en vez de una
+lista de data.frame tengo un solo data.frame y con el primer selectInput
+hago un subset si funciona. Os pongo dos ejemplso reproducibles para que se
+vea mejor.
+
+
+Ejemplo 1. Subset de un data.frame. Si funciona. Al seleccionar un valor de
+cyl en  el documento resultante se actualiza la lista de disp disponibles
+sólo a los que están en ese data.frame
+
+
+---
+title: "Test observe"
+output: html_document
+runtime: shiny
+---
+
+
+
+```{r echo=FALSE}
+
+datos <- mtcars
+# datos <- split(datos, datos$cyl )
+un_cyl <- unique(mtcars$cyl)
+gears <- c(3,4,5)
+disp_list <- unique(mtcars$disp)
+
+
+inputPanel(
+ selectInput("cyl", label = "cyl",
+              choices = un_cyl),
+  selectInput("disp", label = "disp",
+              choices = disp_list,  selected = disp_list[1])
+)
+
+
+eventos_sel <- reactive({
+  eventos <- datos[datos$cyl == input$cyl,]
+  eventos
+})
+
+
+elegibles <- reactive({
+  tmp <- eventos_sel()
+  tmp <- unique(tmp$disp)
+  return(tmp)
+})
+
+# hacer un updateSelectInput
+
+observe({
+  updateSelectInput(session, inputId = "disp", choices = elegibles())
+  })
+
+
+renderPrint(elegibles())
+
+
+```
+
+
+Ejemplo 2. Elegir un data.frame de una lista. No funciona.  Da error  Error
+in [[: attempt to select less than one element in get1index. Aunque si
+comento el observe, se ve qeu en renderPrint(elegibles()) si que está
+bien.  Pongo en negrita los cambios con respecto al ejemplo 1
+
+---
+title: "Test observe"
+output: html_document
+runtime: shiny
+---
+
+
+
+```{r echo=FALSE}
+
+datos <- mtcars
+
+# creo lista de data.frame, cada elemento tiene nombre del
+# cyl
+
+*datos <- split(datos, datos$cyl )*
+un_cyl <- unique(mtcars$cyl)
+gears <- c(3,4,5)
+disp_list <- unique(mtcars$disp)
+
+
+inputPanel(
+ selectInput("cyl", label = "cyl",
+              choices = un_cyl),
+  selectInput("disp", label = "disp",
+              choices = disp_list,  selected = disp_list[1])
+)
+
+
+eventos_sel <- reactive({
+*  eventos <- datos[[input$cyl]]*
+  eventos
+})
+
+
+elegibles <- reactive({
+  tmp <- eventos_sel()
+  tmp <- unique(tmp$disp)
+  return(tmp)
+})
+
+# hacer un updateSelectInput
+
+observe({
+  updateSelectInput(session, inputId = "disp", choices = elegibles())
+  })
+
+
+renderPrint(elegibles())
+
+
+```
+
+Gracias
+
+	[[alternative HTML version deleted]]
+
+
+From canadasreche en gmail.com  Mon Apr 24 12:44:59 2017
+From: canadasreche en gmail.com (=?UTF-8?Q?Jos=C3=A9_Luis_Ca=C3=B1adas?=)
+Date: Mon, 24 Apr 2017 10:44:59 +0000
+Subject: [R-es] Shiny problemas con updateSelectInput
+In-Reply-To: <CADdZEnM8SDs8SsS_C9OBEZfmH3kGN2rc_U6t9hTvEcL44-r8Ng@mail.gmail.com>
+References: <CADdZEnM8SDs8SsS_C9OBEZfmH3kGN2rc_U6t9hTvEcL44-r8Ng@mail.gmail.com>
+Message-ID: <CADdZEnNcUZZVPfexU=fcBiy3hjzW6QovW+T27_2tDdbDBL9Y6Q@mail.gmail.com>
+
+Buenas,
+La solución que he encontrado (más bien la que un amigo me ha sugerido) es
+usar uiOuput y renderUI para crear un ui dinámico que cambie según uno de
+los input.
+
+En el ejemplo sería algo así.
+
+---
+title: "Test observe"
+output: html_document
+runtime: shiny
+---
+
+
+
+```{r echo=FALSE}
+
+datos <- mtcars
+datos <- split(datos, datos$cyl )
+un_cyl <- unique(mtcars$cyl)
+gears <- c(3,4,5)
+disp_list <- unique(mtcars$disp)
+
+
+inputPanel(
+ selectInput("cyl", label = "cyl",
+              choices = un_cyl),
+ uiOutput("ui")
+)
+
+
+output$ui <- renderUI({
+  eventos <- datos[[as.character(input$cyl)]]
+  tmp <- unique(eventos$disp)
+  selectInput("disp", label="Disp", choices = tmp, selected = tmp[1])
+})
+
+
+
+
+
+
+
+El vie., 21 abr. 2017 a las 13:01, José Luis Cañadas (<
+canadasreche en gmail.com>) escribió:
+
+> Buenas a todos.
+>
+> Os cuento mi problema.
+> Tengo un documento rmd interactivo, con shiny y quiero que un selectinput
+> se actualice según lo seleccionado en otro selectInput.
+> En realidad lo que quiero con el primer selectInput es seleccionar un
+> data.frame de una lista de data.frame, y que se actulaice el segundo
+> selectInput con los valores únicos de una variable del data.frame elegido.
+>
+> El caso es que no consigo hacerlo funcionar. Sin embargo, si en vez de una
+> lista de data.frame tengo un solo data.frame y con el primer selectInput
+> hago un subset si funciona. Os pongo dos ejemplso reproducibles para que se
+> vea mejor.
+>
+>
+> Ejemplo 1. Subset de un data.frame. Si funciona. Al seleccionar un valor
+> de cyl en  el documento resultante se actualiza la lista de disp
+> disponibles sólo a los que están en ese data.frame
+>
+>
+> ---
+> title: "Test observe"
+> output: html_document
+> runtime: shiny
+> ---
+>
+>
+>
+> ```{r echo=FALSE}
+>
+> datos <- mtcars
+> # datos <- split(datos, datos$cyl )
+> un_cyl <- unique(mtcars$cyl)
+> gears <- c(3,4,5)
+> disp_list <- unique(mtcars$disp)
+>
+>
+> inputPanel(
+>  selectInput("cyl", label = "cyl",
+>               choices = un_cyl),
+>   selectInput("disp", label = "disp",
+>               choices = disp_list,  selected = disp_list[1])
+> )
+>
+>
+> eventos_sel <- reactive({
+>   eventos <- datos[datos$cyl == input$cyl,]
+>   eventos
+> })
+>
+>
+> elegibles <- reactive({
+>   tmp <- eventos_sel()
+>   tmp <- unique(tmp$disp)
+>   return(tmp)
+> })
+>
+> # hacer un updateSelectInput
+>
+> observe({
+>   updateSelectInput(session, inputId = "disp", choices = elegibles())
+>   })
+>
+>
+> renderPrint(elegibles())
+>
+>
+> ```
+>
+>
+> Ejemplo 2. Elegir un data.frame de una lista. No funciona.  Da
+> error  Error in [[: attempt to select less than one element in get1index.
+> Aunque si comento el observe, se ve qeu en renderPrint(elegibles()) si que
+> está bien.  Pongo en negrita los cambios con respecto al ejemplo 1
+>
+> ---
+> title: "Test observe"
+> output: html_document
+> runtime: shiny
+> ---
+>
+>
+>
+> ```{r echo=FALSE}
+>
+> datos <- mtcars
+>
+> # creo lista de data.frame, cada elemento tiene nombre del
+> # cyl
+>
+> *datos <- split(datos, datos$cyl )*
+> un_cyl <- unique(mtcars$cyl)
+> gears <- c(3,4,5)
+> disp_list <- unique(mtcars$disp)
+>
+>
+> inputPanel(
+>  selectInput("cyl", label = "cyl",
+>               choices = un_cyl),
+>   selectInput("disp", label = "disp",
+>               choices = disp_list,  selected = disp_list[1])
+> )
+>
+>
+> eventos_sel <- reactive({
+> *  eventos <- datos[[input$cyl]]*
+>   eventos
+> })
+>
+>
+> elegibles <- reactive({
+>   tmp <- eventos_sel()
+>   tmp <- unique(tmp$disp)
+>   return(tmp)
+> })
+>
+> # hacer un updateSelectInput
+>
+> observe({
+>   updateSelectInput(session, inputId = "disp", choices = elegibles())
+>   })
+>
+>
+> renderPrint(elegibles())
+>
+>
+> ```
+>
+> Gracias
+>
+>
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Thu Apr 27 00:28:46 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 27 Apr 2017 00:28:46 +0200
+Subject: [R-es] =?utf-8?q?=5BGrupo_de_R_de_Madrid=5D_-_Reuni=C3=B3n_25-abr?=
+	=?utf-8?q?il_-_Material_Disponibles=2E?=
+Message-ID: <CAOKbq8g4bQK3XhsgiaX0ytSfYX-JNC0rz9ff4nXSmkXgtTNwVw@mail.gmail.com>
+
+Buenas a todos,
+
+Por si es de vuestro interés, el material (videos) de la reunión de ayer
+del Grupo de Madrid ya está disponible. Esta reunión fue conjunta con el
+grupo de Python.
+
+El material lo podéis encontrar aquí:
+
+http://madrid.r-es.org/43-martes-25-de-abril-2017/
+
+En la reunión se habló de estos dos temas:
+
+? Grupo de R:  Jorge Ayuso <https://www.linkedin.com/in/jorgeayusorejas/>. ?
+htmlwidgets <http://www.htmlwidgets.org/> ¿el principio del fin de
+ggplot??: Jorge hará un rápido repaso a las distintas alternativas que
+tenemos desde R para generar gráficos interactivos y cómo estas son cada
+vez más fáciles y sencillas gracias al paquete htmlwidgets
+<http://www.htmlwidgets.org/>. Para terminar veremos un rápido ejemplo de
+cómo podemos crear nuevos paquetes de manera muy sencilla con nuestros
+gráficos favoritos.
+
+? Grupo de Python: Juan Luis Cano
+<https://www.linkedin.com/in/juanluiscanor/?ppe=1>. "Dask: computación
+distribuida en Python a la Spark <http://dask.pydata.org/en/latest/>": Juan
+Luis nos contará cosas sobre Dask,  una nueva biblioteca pensada para
+ejecutar cálculos distribuidos con Python de manera sencilla, replicando la
+interfaz de bibliotecas ya conocidas como NumPy, pandas o scikit-learn.
+Esto tiene la ventaja de que es mucho más fácil de aprender que otros
+sistemas y se puede pasar de local a distribuido de manera rápida. El
+ecosistema alrededor de Dask está creciendo rápidamente y en esta charla
+haremos un repaso sobre el presente y posible futuro del proyecto.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Thu Apr 27 21:46:42 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Thu, 27 Apr 2017 14:46:42 -0500
+Subject: [R-es] RStudio en Ubuntu 17.10
+Message-ID: <CAG9EJTLGpJ--s8m2jL5sDiU8VLoCtFjm8xP+0za+BoAM7fW-Zw@mail.gmail.com>
+
+Estimados Colegas:
+
+Como antecedentes les informo:
+a).-Traté de actualizar mi sistema de Ubuntu 16.10 a 17.04; sin embargo una
+falla de electricidad me cortó la instalación.
+b).- Me vi en la necesidad de reinstalar, pero formateando lo que tenía
+instalado, entre otros RStudio.
+
+Ahora que he estado tratar de recuperar la versión 1.0.143-i386, de
+RStudio, que tenía me encuentro que se debe instalar libgstreamer0.10-0 y
+aunque la bajé, no logro instalarla, a pesar de estar en la carpeta donde
+reside y donde he ejecutado sudo dpkg -i.
+
+Pero aun más traté de instalar la versión 0.99.896-i386 de Rstudio y
+también me solicitó la misma librería.
+
+Alguno de ustedes me podría hacer el favor de orientarme para lograr volver
+a tener RStudio.
+
+Anticipo las más cumplidas gracias.
+
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From cgb en datanalytics.com  Thu Apr 27 21:50:25 2017
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 27 Apr 2017 21:50:25 +0200
+Subject: [R-es] RStudio en Ubuntu 17.10
+In-Reply-To: <CAG9EJTLGpJ--s8m2jL5sDiU8VLoCtFjm8xP+0za+BoAM7fW-Zw@mail.gmail.com>
+References: <CAG9EJTLGpJ--s8m2jL5sDiU8VLoCtFjm8xP+0za+BoAM7fW-Zw@mail.gmail.com>
+Message-ID: <CADg83efeDCwg5=bpeAuu0dUCAPd4mdbWn+5MVsOtvivBenLDNA@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Si libgstreamer0.10-0 es una dependencia de RStudio, instálala primero con
+
+sudo apt-get install libgstreamer0.10-0
+
+Una vez instalada, podrás correr
+
+sudo dpkg -i rstudio_blablabla.deb
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El 27 de abril de 2017, 21:46, Manuel Máquez <manuelmx11 en gmail.com>
+escribió:
+
+> Estimados Colegas:
+>
+> Como antecedentes les informo:
+> a).-Traté de actualizar mi sistema de Ubuntu 16.10 a 17.04; sin embargo una
+> falla de electricidad me cortó la instalación.
+> b).- Me vi en la necesidad de reinstalar, pero formateando lo que tenía
+> instalado, entre otros RStudio.
+>
+> Ahora que he estado tratar de recuperar la versión 1.0.143-i386, de
+> RStudio, que tenía me encuentro que se debe instalar libgstreamer0.10-0 y
+> aunque la bajé, no logro instalarla, a pesar de estar en la carpeta donde
+> reside y donde he ejecutado sudo dpkg -i.
+>
+> Pero aun más traté de instalar la versión 0.99.896-i386 de Rstudio y
+> también me solicitó la misma librería.
+>
+> Alguno de ustedes me podría hacer el favor de orientarme para lograr volver
+> a tener RStudio.
+>
+> Anticipo las más cumplidas gracias.
+>
+> *MANOLO MÁRQUEZ P.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From misellylopezp en gmail.com  Thu Apr 27 21:55:45 2017
+From: misellylopezp en gmail.com (MISELLY LOPEZ)
+Date: Thu, 27 Apr 2017 16:55:45 -0300
+Subject: [R-es] =?utf-8?q?Que_modelo_Utilizar_para_una_proyecci=C3=B3n=2C_?=
+	=?utf-8?q?soy_nueva_en_R?=
+Message-ID: <CAJ6BMmVk643MktLQ2D7wm+fur9hYCDug67cUcOpLwUsUi8smCQ@mail.gmail.com>
+
+buenas tardes, soy estudiante de zoootecnia y necesito realizar una
+comparacion de precios de huevo en dos paises, colombia y brasil. ademas de
+hacer como una estimacion de precios a futuro. LA pregunta es que modelo
+estadisitco puedo utilizar para relaizar esta actividad
+
+Muchas gracias
+
+	[[alternative HTML version deleted]]
+
+
+From canihuante.jose en gmail.com  Thu Apr 27 22:00:59 2017
+From: canihuante.jose en gmail.com (Jose Canihuante)
+Date: Thu, 27 Apr 2017 16:00:59 -0400
+Subject: [R-es] unsuscribe
+Message-ID: <CAPs2eKSMW+xJnipbkCtKJ+Gdu_DaEp4k+f5rqqqkU_J111+gEA@mail.gmail.com>
+
+Dear R-proyect people:
+
+Hello, my name i José Miguel and for this way i want to unsuscribe of
+R-proyect and letf to recibe mails of this community.
+
+Thanks you.
+
+José Miguel Canihuante Banda.
+
+	[[alternative HTML version deleted]]
+
+
+From elkintabares9 en gmail.com  Thu Apr 27 22:01:41 2017
+From: elkintabares9 en gmail.com (Elkin Tabares)
+Date: Thu, 27 Apr 2017 15:01:41 -0500
+Subject: [R-es]
+	=?utf-8?q?Que_modelo_Utilizar_para_una_proyecci=C3=B3n=2C_?=
+	=?utf-8?q?soy_nueva_en_R?=
+In-Reply-To: <CAJ6BMmVk643MktLQ2D7wm+fur9hYCDug67cUcOpLwUsUi8smCQ@mail.gmail.com>
+References: <CAJ6BMmVk643MktLQ2D7wm+fur9hYCDug67cUcOpLwUsUi8smCQ@mail.gmail.com>
+Message-ID: <CAHEL1Kyhy2bfYtcSFDN-jBmK+UmPRMKxtd8ZtDH6B4ks9hxo_A@mail.gmail.com>
+
+Si deseas realizar pronóstico de series de tiempo un modelo arima podrías
+ajustar, para ello te recomiendo el paquete forecast.
+
+El 27 de abril de 2017, 14:55, MISELLY LOPEZ <misellylopezp en gmail.com>
+escribió:
+
+> buenas tardes, soy estudiante de zoootecnia y necesito realizar una
+> comparacion de precios de huevo en dos paises, colombia y brasil. ademas de
+> hacer como una estimacion de precios a futuro. LA pregunta es que modelo
+> estadisitco puedo utilizar para relaizar esta actividad
+>
+> Muchas gracias
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Elkin Tabares Orozco
+Economista
+Universidad de Antioquia
+Cel:3017226361
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Apr 27 22:44:17 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 27 Apr 2017 17:44:17 -0300
+Subject: [R-es] RStudio en Ubuntu 17.10
+In-Reply-To: <CADg83efeDCwg5=bpeAuu0dUCAPd4mdbWn+5MVsOtvivBenLDNA@mail.gmail.com>
+References: <CAG9EJTLGpJ--s8m2jL5sDiU8VLoCtFjm8xP+0za+BoAM7fW-Zw@mail.gmail.com>
+ <CADg83efeDCwg5=bpeAuu0dUCAPd4mdbWn+5MVsOtvivBenLDNA@mail.gmail.com>
+Message-ID: <59025821.0438ed0a.20b96.ec3e@mx.google.com>
+
+Estimado Manuel Máquez
+
+Puede ser que falte alguna otra cosa, pienso que podría intentar verificar el sistema completo desde cero con lo siguiente (no olvide -f luego del install).
+
+sudo apt-get clean
+sudo apt-get update
+sudo apt-get install -f
+
+Javier Rubén Marcuzzi
+
+De: Carlos J. Gil Bellosta 
+Enviado: jueves, 27 de abril de 2017 16:50
+Para: Manuel Máquez
+CC: r-help-es
+Asunto: Re: [R-es] RStudio en Ubuntu 17.10
+
+Hola, ¿qué tal?
+
+Si libgstreamer0.10-0 es una dependencia de RStudio, instálala primero con
+
+sudo apt-get install libgstreamer0.10-0
+
+Una vez instalada, podrás correr
+
+sudo dpkg -i rstudio_blablabla.deb
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El 27 de abril de 2017, 21:46, Manuel Máquez <manuelmx11 en gmail.com>
+escribió:
+
+> Estimados Colegas:
+>
+> Como antecedentes les informo:
+> a).-Traté de actualizar mi sistema de Ubuntu 16.10 a 17.04; sin embargo una
+> falla de electricidad me cortó la instalación.
+> b).- Me vi en la necesidad de reinstalar, pero formateando lo que tenía
+> instalado, entre otros RStudio.
+>
+> Ahora que he estado tratar de recuperar la versión 1.0.143-i386, de
+> RStudio, que tenía me encuentro que se debe instalar libgstreamer0.10-0 y
+> aunque la bajé, no logro instalarla, a pesar de estar en la carpeta donde
+> reside y donde he ejecutado sudo dpkg -i.
+>
+> Pero aun más traté de instalar la versión 0.99.896-i386 de Rstudio y
+> también me solicitó la misma librería.
+>
+> Alguno de ustedes me podría hacer el favor de orientarme para lograr volver
+> a tener RStudio.
+>
+> Anticipo las más cumplidas gracias.
+>
+> *MANOLO MÁRQUEZ P.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Thu Apr 27 22:46:48 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Thu, 27 Apr 2017 15:46:48 -0500
+Subject: [R-es] RStudio en Ubuntu 17.10
+Message-ID: <CAG9EJTL6aiRtCZEXohQiVYGXQV2KH1Fw7W_Pbs6_EY89yYtGAA@mail.gmail.com>
+
+Carlos:
+Muchas gracias por tu inmediata respuesta, sólo que el sistema me responde:
+El paquete libgstreamer0.10-0 no está disponible, pero algún otro paquete
+hace referencia a él. Esto puede significar que el paquete falta, está
+obsoleto o sólo se encuentra disponible desde alguna otra fuente
+
+E: El paquete «libgstreamer0.10-0» no tiene un candidato para la
+instalación.
+¿Entonces qué puede hacerse?
+
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From wilmercs en ufps.edu.co  Thu Apr 27 23:34:25 2017
+From: wilmercs en ufps.edu.co (WILMER CONTRERAS SEPULVEDA)
+Date: Thu, 27 Apr 2017 16:34:25 -0500
+Subject: [R-es] =?utf-8?q?Analisis_de_una_muestra_via_distribuci=C3=B3n_no?=
+	=?utf-8?q?_normal?=
+Message-ID: <CAOYqKJ6m6-7TWCazBXe4Gy9DW=8HO0gcrNO=6zBVq37cQW=Evw@mail.gmail.com>
+
+Buenas tardes, queria saber si existe alguna forma de realizar una prueba
+de hipotesis con una distribución tipo weibull. Esque estaba analizando una
+muestra que no era normal y encontre una aproximación a su distribución con
+una Weibull, pero ahora no tengo idea de como realizar un intervalo de
+confianza o un test de hipotesis.
+
+Gracias.
+Wilmer Contreras S.
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Apr 27 23:43:58 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 27 Apr 2017 18:43:58 -0300
+Subject: [R-es]
+ =?utf-8?q?Analisis_de_una_muestra_via_distribuci=C3=B3n_no?=
+ =?utf-8?q?_normal?=
+In-Reply-To: <CAOYqKJ6m6-7TWCazBXe4Gy9DW=8HO0gcrNO=6zBVq37cQW=Evw@mail.gmail.com>
+References: <CAOYqKJ6m6-7TWCazBXe4Gy9DW=8HO0gcrNO=6zBVq37cQW=Evw@mail.gmail.com>
+Message-ID: <5902661e.01b9370a.fb589.07c9@mx.google.com>
+
+Estimado Wilmer
+
+De una búsqueda con las palabras claves ?r prueba de hipotesis weibull? aparecen varios apuntes universitarios sobre el tema estadístico (no los leí pero esta la información). Sería más simple para esta lista preguntar en R tal función está con este problema, o una pregunta semejante antes que una estadística pura.
+
+Javier Rubén Marcuzzi
+
+De: WILMER CONTRERAS SEPULVEDA
+Enviado: jueves, 27 de abril de 2017 18:34
+Para: r-help-es en r-project.org
+Asunto: [R-es] Analisis de una muestra via distribución no normal
+
+Buenas tardes, queria saber si existe alguna forma de realizar una prueba
+de hipotesis con una distribución tipo weibull. Esque estaba analizando una
+muestra que no era normal y encontre una aproximación a su distribución con
+una Weibull, pero ahora no tengo idea de como realizar un intervalo de
+confianza o un test de hipotesis.
+
+Gracias.
+Wilmer Contreras S.
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From palazon en um.es  Fri Apr 28 11:40:02 2017
+From: palazon en um.es (=?UTF-8?Q?Jos=c3=a9_Antonio_Palaz=c3=b3n_Ferrando?=)
+Date: Fri, 28 Apr 2017 11:40:02 +0200
+Subject: [R-es] RStudio en Ubuntu 17.10
+In-Reply-To: <CAG9EJTL6aiRtCZEXohQiVYGXQV2KH1Fw7W_Pbs6_EY89yYtGAA@mail.gmail.com>
+References: <CAG9EJTL6aiRtCZEXohQiVYGXQV2KH1Fw7W_Pbs6_EY89yYtGAA@mail.gmail.com>
+Message-ID: <b8da2601-434b-dc4c-ec49-4fca0614635d@um.es>
+
+Hola:
+
+Yo uso este procedimiento para instalar rstudio:
+
+wget https://download1.rstudio.org/rstudio-1.0.136-amd64.deb
+wget 
+http://ftp.ca.debian.org/debian/pool/main/g/gstreamer0.10/libgstreamer0.10-0_0.10.36-1.5_amd64.deb
+wget 
+http://ftp.ca.debian.org/debian/pool/main/g/gst-plugins-base0.10/libgstreamer-plugins-base0.10-0_0.10.36-2_amd64.deb
+
+dpkg -i libgstreamer0.10-0_0.10.36-1.5_amd64.deb
+dpkg -i libgstreamer-plugins-base0.10-0_0.10.36-2_amd64.deb
+
+dpkg -i rstudio-1.0.136-amd64.deb
+apt install -f
+
+
+Espero que te sea de utilidad
+
+El 27/04/17 a las 22:46, Manuel Máquez escribió:
+> Carlos:
+> Muchas gracias por tu inmediata respuesta, sólo que el sistema me responde:
+> El paquete libgstreamer0.10-0 no está disponible, pero algún otro paquete
+> hace referencia a él. Esto puede significar que el paquete falta, está
+> obsoleto o sólo se encuentra disponible desde alguna otra fuente
+>
+> E: El paquete «libgstreamer0.10-0» no tiene un candidato para la
+> instalación.
+> ¿Entonces qué puede hacerse?
+>
+> *MANOLO MÁRQUEZ P.*
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+-- 
+
+____________________________________________________________
+José Antonio Palazón Ferrando
+Profesor Titular. Departamento de Ecología e Hidrología.
+Facultad de Biología. Universidad de Murcia.
+Campus Universitario de Espinardo
+30100 MURCIA-SPAIN
+Telf: +34 868 88 49 80
+Fax : +34 868 88 39 63
+Email: palazon en um.es
+
+
+From wilmercs en ufps.edu.co  Fri Apr 28 15:35:03 2017
+From: wilmercs en ufps.edu.co (WILMER CONTRERAS SEPULVEDA)
+Date: Fri, 28 Apr 2017 08:35:03 -0500
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+Message-ID: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+
+Hola, buenos días.
+
+Quisiera saber si existe alguna función o libreria en R que simule la
+ventana de Excel para ingresar datos. No estoy hablando de importar datos
+de excel a R, No.
+Quisiera que dentro de R existiera el entorno para ingresar los datos
+rapidamente y no pasar por la molestia de ingresar los datos a Excel y
+luego tener que importarlos a R.
+
+Muchas gracias.
+
+Wilmer Contreras Sepulveda.
+
+	[[alternative HTML version deleted]]
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Fri Apr 28 15:43:39 2017
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Fri, 28 Apr 2017 13:43:39 +0000
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+In-Reply-To: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+References: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+Message-ID: <f2a2f503-1e0d-c3e5-b85b-ae3c977cb115@sergas.es>
+
+Hola Wilmer.
+
+Has probado con el editor de datos del RCommander?
+
+Un saludo.
+
+
+El 28/04/2017 a las 15:35, WILMER CONTRERAS SEPULVEDA escribió:
+> Hola, buenos días.
+>
+> Quisiera saber si existe alguna función o libreria en R que simule la
+> ventana de Excel para ingresar datos. No estoy hablando de importar datos
+> de excel a R, No.
+> Quisiera que dentro de R existiera el entorno para ingresar los datos
+> rapidamente y no pasar por la molestia de ingresar los datos a Excel y
+> luego tener que importarlos a R.
+>
+> Muchas gracias.
+>
+> Wilmer Contreras Sepulveda.
+
+________________________________
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+
+From yesqfb en yahoo.com.mx  Fri Apr 28 16:22:34 2017
+From: yesqfb en yahoo.com.mx (Susana Rivera)
+Date: Fri, 28 Apr 2017 14:22:34 +0000 (UTC)
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+In-Reply-To: <f2a2f503-1e0d-c3e5-b85b-ae3c977cb115@sergas.es>
+References: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+ <f2a2f503-1e0d-c3e5-b85b-ae3c977cb115@sergas.es>
+Message-ID: <2017245993.475678.1493389354654@mail.yahoo.com>
+
+Deducer: A GUI for R - Deducer Manual
+
+  
+|  
+|   |  
+Deducer: A GUI for R - Deducer Manual
+   |  |
+
+  |
+
+ 
+
+Saludos,
+Susana
+
+      De: "miguel.angel.rodriguez.muinos en sergas.es" <miguel.angel.rodriguez.muinos en sergas.es>
+ Para: r-help-es en r-project.org 
+ Enviado: Viernes, 28 de abril, 2017 8:43:52
+ Asunto: Re: [R-es] Ingresar datos dentro de R sin Excel
+   
+Hola Wilmer.
+
+Has probado con el editor de datos del RCommander?
+
+Un saludo.
+
+
+El 28/04/2017 a las 15:35, WILMER CONTRERAS SEPULVEDA escribió:
+> Hola, buenos días.
+>
+> Quisiera saber si existe alguna función o libreria en R que simule la
+> ventana de Excel para ingresar datos. No estoy hablando de importar datos
+> de excel a R, No.
+> Quisiera que dentro de R existiera el entorno para ingresar los datos
+> rapidamente y no pasar por la molestia de ingresar los datos a Excel y
+> luego tener que importarlos a R.
+>
+> Muchas gracias.
+>
+> Wilmer Contreras Sepulveda.
+
+________________________________
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+   
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Fri Apr 28 17:24:46 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Fri, 28 Apr 2017 12:24:46 -0300
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+In-Reply-To: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+References: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+Message-ID: <59035ebd.de27ed0a.91474.8620@mx.google.com>
+
+Estimado Wilmer
+
+Es posible, le indicaron algunas opciones, pero no es recomendable, si no le molesta use el programa que más de gusta, guarde en csv, luego los importa con solo una línea de código, salvo para algunas pruebas específicas yo opto por tener los datos separados de R, aunque si sin pocos es posible escribirlos en R, pero casi como excepción.
+
+Javier Rubén Marcuzzi
+
+De: WILMER CONTRERAS SEPULVEDA
+Enviado: viernes, 28 de abril de 2017 10:35
+Para: r-help-es en r-project.org
+Asunto: [R-es] Ingresar datos dentro de R sin Excel
+
+Hola, buenos días.
+
+Quisiera saber si existe alguna función o libreria en R que simule la
+ventana de Excel para ingresar datos. No estoy hablando de importar datos
+de excel a R, No.
+Quisiera que dentro de R existiera el entorno para ingresar los datos
+rapidamente y no pasar por la molestia de ingresar los datos a Excel y
+luego tener que importarlos a R.
+
+Muchas gracias.
+
+Wilmer Contreras Sepulveda.
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From freddy.lopez.quintero en gmail.com  Fri Apr 28 20:10:25 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Fri, 28 Apr 2017 15:10:25 -0300
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+In-Reply-To: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+References: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+Message-ID: <CALCOUquai3-jJqrJdPLyorXdpk3GbxxuJ=WPow1SXs-gFM=bkw@mail.gmail.com>
+
+2017-04-28 10:35 GMT-03:00 WILMER CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+:
+
+> Quisiera saber si existe alguna función o libreria en R que simule la
+> ventana de Excel para ingresar datos. No estoy hablando de importar datos
+> de excel a R, No.
+> Quisiera que dentro de R existiera el entorno para ingresar los datos
+> rapidamente y no pasar por la molestia de ingresar los datos a Excel y
+> luego tener que importarlos a R.
+>
+
+?Hola Wilmer.?
+
+?Creo que en general no se opera de la manera que describes. No debemos
+pasar por excel para trabajar con los datos. ?Javier te sugiere utilizar
+archivos csv que creo es bastante expedito.
+
+Sin embargo, una manera nativa, aunque rudimentaria, de emular una especie
+de hoja de cálculo es la función data.entry. Algo como:
+
+> a_rellenar<-data.frame(matrix(ncol=2,nrow=10))
+> > data.entry(a_rellenar)
+>
+
+Ojalá te sirva.
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From ruben.coca en gmail.com  Fri Apr 28 23:39:33 2017
+From: ruben.coca en gmail.com (=?UTF-8?Q?Rub=C3=A9n_Coca?=)
+Date: Fri, 28 Apr 2017 23:39:33 +0200
+Subject: [R-es] =?utf-8?q?ggplot_dentro_de_una_funci=C3=B3n?=
+Message-ID: <CAFxGGR49hf-4DTOKFuC6NRkrzYefuXwFVh97vLB5aXyg+tk0mg@mail.gmail.com>
+
+Hola a todos,
+Partiendo de:
+
+library(ggplot2); library(data.table)
+
+datos <- data.table(Date = seq.Date(as.Date("2017-01-01"),
+                                 as.Date("2017-01-10"),
+                                 by = "day"),
+                 V1 = rnorm(10),
+                 V2 = rnorm(10))
+
+Quiero crear una función para pintar un gráfico cuyos argumentos sean el
+data table y la variable a pintar en el eje de las x. Se me ocurre ésta:
+
+grafico <- function(dt, varx) {
+  ggplot(dt, aes(x = Date, y = varx)) +
+    geom_point()
+  ## un montón de código de configuración del gráfico, etc
+}
+
+grafico(datos, V1)
+
+Pero ggplot dice que no encuentra V1...
+Error in eval(expr, envir, enclos) : object 'V1' not found
+In addition: Warning message:
+In eval(expr, envir, enclos) : restarting interrupted promise evaluation
+
+Alguna sugerencia o nuevo enfoque?
+Muchas gracias
+
+Rubén
+
+	[[alternative HTML version deleted]]
+
+
+From cgb en datanalytics.com  Fri Apr 28 23:51:03 2017
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Fri, 28 Apr 2017 23:51:03 +0200
+Subject: [R-es] =?utf-8?q?ggplot_dentro_de_una_funci=C3=B3n?=
+In-Reply-To: <CAFxGGR49hf-4DTOKFuC6NRkrzYefuXwFVh97vLB5aXyg+tk0mg@mail.gmail.com>
+References: <CAFxGGR49hf-4DTOKFuC6NRkrzYefuXwFVh97vLB5aXyg+tk0mg@mail.gmail.com>
+Message-ID: <CADg83ecf6c86C4sByFUfUY2FGYce2RODosdHSze5vBuVk9sCDg@mail.gmail.com>
+
+Usa aes_string en lugar de aes. Mira la documentación.
+
+2017-04-28 23:39 GMT+02:00 Rubén Coca <ruben.coca en gmail.com>:
+
+> Hola a todos,
+> Partiendo de:
+>
+> library(ggplot2); library(data.table)
+>
+> datos <- data.table(Date = seq.Date(as.Date("2017-01-01"),
+>                                  as.Date("2017-01-10"),
+>                                  by = "day"),
+>                  V1 = rnorm(10),
+>                  V2 = rnorm(10))
+>
+> Quiero crear una función para pintar un gráfico cuyos argumentos sean el
+> data table y la variable a pintar en el eje de las x. Se me ocurre ésta:
+>
+> grafico <- function(dt, varx) {
+>   ggplot(dt, aes(x = Date, y = varx)) +
+>     geom_point()
+>   ## un montón de código de configuración del gráfico, etc
+> }
+>
+> grafico(datos, V1)
+>
+> Pero ggplot dice que no encuentra V1...
+> Error in eval(expr, envir, enclos) : object 'V1' not found
+> In addition: Warning message:
+> In eval(expr, envir, enclos) : restarting interrupted promise evaluation
+>
+> Alguna sugerencia o nuevo enfoque?
+> Muchas gracias
+>
+> Rubén
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sat Apr 29 00:06:45 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 29 Apr 2017 00:06:45 +0200
+Subject: [R-es] =?utf-8?q?ggplot_dentro_de_una_funci=C3=B3n?=
+In-Reply-To: <CADg83ecf6c86C4sByFUfUY2FGYce2RODosdHSze5vBuVk9sCDg@mail.gmail.com>
+References: <CAFxGGR49hf-4DTOKFuC6NRkrzYefuXwFVh97vLB5aXyg+tk0mg@mail.gmail.com>
+ <CADg83ecf6c86C4sByFUfUY2FGYce2RODosdHSze5vBuVk9sCDg@mail.gmail.com>
+Message-ID: <CAOKbq8gc2PFDg9QJC3E26SRf7AFCgO+Uk59URvjGLqQN2kVByg@mail.gmail.com>
+
+Hola,
+
+Otra alternativa que puedes utilizar es esta:
+
+#------------------------------
+
+  grafico <- function(dt, varx) {
+    dt <- as.data.frame(dt)
+    p <- ggplot(dt, aes( x= Date, y= dt[,varx] )  )
+      p + geom_point()
+    ## un montón de código de configuración del gráfico, etc
+  }
+
+grafico(datos, 2 )
+#------------------------------
+
+Y mira los problemas que presenta ggplot al incluirlo dentro de otra
+función...:
+
+http://stackoverflow.com/questions/5106782/use-of-ggplot-within-another-function-in-r
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 28 de abril de 2017, 23:51, Carlos J. Gil Bellosta <cgb en datanalytics.com>
+escribió:
+
+> Usa aes_string en lugar de aes. Mira la documentación.
+>
+> 2017-04-28 23:39 GMT+02:00 Rubén Coca <ruben.coca en gmail.com>:
+>
+> > Hola a todos,
+> > Partiendo de:
+> >
+> > library(ggplot2); library(data.table)
+> >
+> > datos <- data.table(Date = seq.Date(as.Date("2017-01-01"),
+> >                                  as.Date("2017-01-10"),
+> >                                  by = "day"),
+> >                  V1 = rnorm(10),
+> >                  V2 = rnorm(10))
+> >
+> > Quiero crear una función para pintar un gráfico cuyos argumentos sean el
+> > data table y la variable a pintar en el eje de las x. Se me ocurre ésta:
+> >
+> > grafico <- function(dt, varx) {
+> >   ggplot(dt, aes(x = Date, y = varx)) +
+> >     geom_point()
+> >   ## un montón de código de configuración del gráfico, etc
+> > }
+> >
+> > grafico(datos, V1)
+> >
+> > Pero ggplot dice que no encuentra V1...
+> > Error in eval(expr, envir, enclos) : object 'V1' not found
+> > In addition: Warning message:
+> > In eval(expr, envir, enclos) : restarting interrupted promise evaluation
+> >
+> > Alguna sugerencia o nuevo enfoque?
+> > Muchas gracias
+> >
+> > Rubén
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From hdezmorale en gmail.com  Sat Apr 29 01:03:01 2017
+From: hdezmorale en gmail.com (=?UTF-8?Q?alejandro_hern=C3=A1ndez_morales?=)
+Date: Fri, 28 Apr 2017 18:03:01 -0500
+Subject: [R-es] =?utf-8?q?Hacer_una_gr=C3=A1fico_de_dispersi=C3=B3n_y_l?=
+	=?utf-8?q?=C3=ADnea_de_tendencia=2E?=
+Message-ID: <CAD2OTN47NZn85FKx9N+jPQ6xEfbkNBQOi=bVCKiG+myG3hFg0A@mail.gmail.com>
+
+Buenas. Espero me pueda ayudar. Tengo dos variables cuantitativas, quiero
+aplicar un gráfico de dispersión y aplicarle una línea de tendencia, Pero
+no veo la manera de hacerlo. Agradecería su ayuda. Muchas gracias.
+
+-- 
+*Alejandro Hernández Morales*
+*Departamento de Biología Marina*
+Centro Interdisciplinario de Ciencias Marinas (CICIMAR)
+Instituto Politécnico Nacional (IPN)
+La Paz, B. C. S.
+
+	[[alternative HTML version deleted]]
+
+
+From cgb en datanalytics.com  Sat Apr 29 01:23:27 2017
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Sat, 29 Apr 2017 01:23:27 +0200
+Subject: [R-es] =?utf-8?q?Hacer_una_gr=C3=A1fico_de_dispersi=C3=B3n_y_l?=
+	=?utf-8?q?=C3=ADnea_de_tendencia=2E?=
+In-Reply-To: <CAD2OTN47NZn85FKx9N+jPQ6xEfbkNBQOi=bVCKiG+myG3hFg0A@mail.gmail.com>
+References: <CAD2OTN47NZn85FKx9N+jPQ6xEfbkNBQOi=bVCKiG+myG3hFg0A@mail.gmail.com>
+Message-ID: <CADg83ef4rd-NQ2m_zg+jgePzUtus9uiZ5MdPv1TMGQwEMGZMQw@mail.gmail.com>
+
+Mira los ejemplos de ?abline.
+
+El 29 de abril de 2017, 1:03, alejandro hernández morales <
+hdezmorale en gmail.com> escribió:
+
+> Buenas. Espero me pueda ayudar. Tengo dos variables cuantitativas, quiero
+> aplicar un gráfico de dispersión y aplicarle una línea de tendencia, Pero
+> no veo la manera de hacerlo. Agradecería su ayuda. Muchas gracias.
+>
+> --
+> *Alejandro Hernández Morales*
+> *Departamento de Biología Marina*
+> Centro Interdisciplinario de Ciencias Marinas (CICIMAR)
+> Instituto Politécnico Nacional (IPN)
+> La Paz, B. C. S.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From fernand_arce en yahoo.es  Sat Apr 29 10:20:23 2017
+From: fernand_arce en yahoo.es (Fernando Arce)
+Date: Sat, 29 Apr 2017 08:20:23 +0000 (UTC)
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+In-Reply-To: <CALCOUquai3-jJqrJdPLyorXdpk3GbxxuJ=WPow1SXs-gFM=bkw@mail.gmail.com>
+References: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+ <CALCOUquai3-jJqrJdPLyorXdpk3GbxxuJ=WPow1SXs-gFM=bkw@mail.gmail.com>
+Message-ID: <1879476451.167663.1493454023044@mail.yahoo.com>
+
+ blockquote, div.yahoo_quoted { margin-left: 0 !important; border-left:1px #715FFA solid !important; padding-left:1ex !important; background-color:white !important; } Mmm, Si te refieres a pasar datos de papel directamente a R en el ordenador... yo los pasaria directamente a un archivo de texto plano, que vendría a llevar el mismo tiempo, y los cargaría en R. No es Bueno tener los datos solo en R ya que sobreescribir algo es bastante común, y podría tocarte empezar de nuevo. El archivo de texto plano lo puedes hacer con formato de r (.rda) para cargarlos con load() o simplemente un txt...SaludosFer
+
+Sent from my Delorean in 1789 using my iPhone
+
+
+On Saturday, April 29, 2017, 4:11 am, Freddy Omar López Quintero <freddy.lopez.quintero en gmail.com> wrote:
+
+2017-04-28 10:35 GMT-03:00 WILMER CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+:
+
+> Quisiera saber si existe alguna función o libreria en R que simule la
+> ventana de Excel para ingresar datos. No estoy hablando de importar datos
+> de excel a R, No.
+> Quisiera que dentro de R existiera el entorno para ingresar los datos
+> rapidamente y no pasar por la molestia de ingresar los datos a Excel y
+> luego tener que importarlos a R.
+>
+
+?Hola Wilmer.?
+
+?Creo que en general no se opera de la manera que describes. No debemos
+pasar por excel para trabajar con los datos. ?Javier te sugiere utilizar
+archivos csv que creo es bastante expedito.
+
+Sin embargo, una manera nativa, aunque rudimentaria, de emular una especie
+de hoja de cálculo es la función data.entry. Algo como:
+
+> a_rellenar<-data.frame(matrix(ncol=2,nrow=10))
+> > data.entry(a_rellenar)
+>
+
+Ojalá te sirva.
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+    [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From trujillo en unex.es  Sat Apr 29 11:32:30 2017
+From: trujillo en unex.es (=?UTF-8?Q?Jos=c3=a9_Trujillo_Carmona?=)
+Date: Sat, 29 Apr 2017 11:32:30 +0200
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+In-Reply-To: <1879476451.167663.1493454023044@mail.yahoo.com>
+References: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+ <CALCOUquai3-jJqrJdPLyorXdpk3GbxxuJ=WPow1SXs-gFM=bkw@mail.gmail.com>
+ <1879476451.167663.1493454023044@mail.yahoo.com>
+Message-ID: <d0a8b188-6d4a-42ea-f92b-20ca8a5ee3fd@unex.es>
+
+
+
+El 29/04/17 a las 10:20, Fernando Arce via R-help-es escribió:
+> Si te refieres a pasar datos de papel directamente a R en el ordenador... yo los pasaria directamente a un archivo de texto plano, que vendría a llevar el mismo tiempo, y los cargaría en R. No es Bueno tener los datos solo en R ya que sobreescribir algo es bastante común, y podría tocarte empezar de nuevo.
+
+> El archivo de texto plano lo puedes hacer con formato de r (.rda) para cargarlos con load() o simplemente un txt...S
+
+Me has intrigado y he andado buscando como llevarlo a la práctica, pero 
+o no he sabido buscar o no es correcta tu afirmación.
+
+No. Hasta donde he podido ver los archivos rda o RData no son texto 
+plano, son binarios. Y por tanto no puedes crearlos con un editor de textos.
+
+Puedes crear el archivo con excel (o con LibreOffice u OpenOffice los 
+hago yo) o con algo similar a un notepad, guardarlos en formato csv 
+(commas separed values), tsv (tab separed values) o txt, importarlos a R 
+y guardarlos en rda. Pero no he visto forma de crear un rda con un notepad.
+
+¿Estoy equivocado?
+
+
+From cof en qualityexcellence.es  Sat Apr 29 13:34:43 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 29 Apr 2017 13:34:43 +0200
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+In-Reply-To: <d0a8b188-6d4a-42ea-f92b-20ca8a5ee3fd@unex.es>
+References: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+ <CALCOUquai3-jJqrJdPLyorXdpk3GbxxuJ=WPow1SXs-gFM=bkw@mail.gmail.com>
+ <1879476451.167663.1493454023044@mail.yahoo.com>
+ <d0a8b188-6d4a-42ea-f92b-20ca8a5ee3fd@unex.es>
+Message-ID: <CAOKbq8hcizbWt4zfggVxkVU4CzOgVyirvaqDs5P5ANfR_mk4zw@mail.gmail.com>
+
+Hola,
+
+Hay una forma muy cómoda y sencilla de copiar datos con cierto formato (que
+en origen estén en columnas) to R utilizando un "add-in" que se llama
+"datapasta"  y que se puede incorporar a RStudio:
+
+https://raw.githubusercontent.com/milesmcbain/datapasta/master/inst/media/tribble_paste.gif
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 29 de abril de 2017, 11:32, José Trujillo Carmona <trujillo en unex.es>
+escribió:
+
+>
+>
+> El 29/04/17 a las 10:20, Fernando Arce via R-help-es escribió:
+>
+>> Si te refieres a pasar datos de papel directamente a R en el ordenador...
+>> yo los pasaria directamente a un archivo de texto plano, que vendría a
+>> llevar el mismo tiempo, y los cargaría en R. No es Bueno tener los datos
+>> solo en R ya que sobreescribir algo es bastante común, y podría tocarte
+>> empezar de nuevo.
+>>
+>
+> El archivo de texto plano lo puedes hacer con formato de r (.rda) para
+>> cargarlos con load() o simplemente un txt...S
+>>
+>
+> Me has intrigado y he andado buscando como llevarlo a la práctica, pero o
+> no he sabido buscar o no es correcta tu afirmación.
+>
+> No. Hasta donde he podido ver los archivos rda o RData no son texto plano,
+> son binarios. Y por tanto no puedes crearlos con un editor de textos.
+>
+> Puedes crear el archivo con excel (o con LibreOffice u OpenOffice los hago
+> yo) o con algo similar a un notepad, guardarlos en formato csv (commas
+> separed values), tsv (tab separed values) o txt, importarlos a R y
+> guardarlos en rda. Pero no he visto forma de crear un rda con un notepad.
+>
+> ¿Estoy equivocado?
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From ericconchamunoz en gmail.com  Sat Apr 29 16:23:39 2017
+From: ericconchamunoz en gmail.com (eric)
+Date: Sat, 29 Apr 2017 11:23:39 -0300
+Subject: [R-es] =?utf-8?q?Hacer_una_gr=C3=A1fico_de_dispersi=C3=B3n_y_l?=
+ =?utf-8?q?=C3=ADnea_de_tendencia=2E?=
+In-Reply-To: <CAD2OTN47NZn85FKx9N+jPQ6xEfbkNBQOi=bVCKiG+myG3hFg0A@mail.gmail.com>
+References: <CAD2OTN47NZn85FKx9N+jPQ6xEfbkNBQOi=bVCKiG+myG3hFg0A@mail.gmail.com>
+Message-ID: <5db6f9c9-8df6-e504-87c1-ce47ece2f701@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170429/3ab4f7aa/attachment.html>
+
+From manuelmx11 en gmail.com  Sun Apr 30 05:09:48 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Sat, 29 Apr 2017 22:09:48 -0500
+Subject: [R-es] RStudio en Ubuntu 17.10
+Message-ID: <CAG9EJTJRqds4jNdxWV64zSuVUJ1bF_kBrk5DZVE49F8pLBn0ng@mail.gmail.com>
+
+Estimado José Antonio:
+Muchas gracias por tu sugerencia, tengo i386 pero voy a probar sustituyendo
+el tipo amd64 por i386 a ver si existe y de esta manera poder volver a usar
+RStudio.
+Mañana domingo, lo probaré y te lo comunicaré.
+Nuevamente muchas gracias por tu ayuda.
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Sun Apr 30 09:38:34 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Sun, 30 Apr 2017 02:38:34 -0500
+Subject: [R-es] RStudio en Ubuntu 17.04 SOLUCIONADO
+Message-ID: <CAG9EJTKEtb-iUVUpKG+7LUvP9r7_UkZJHe4Pmp0TChd4uGHRjQ@mail.gmail.com>
+
+Otra vez José Antonio, muchas gracias. Pues resulta que si existen las
+versiones para i386, que a decir verdad, era lógico que existiera pues si
+no ¿qué pasaría verdad?
+Gracias a todos por su sugestiones.
+Atentamente;
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From trujillo en unex.es  Sun Apr 30 10:57:09 2017
+From: trujillo en unex.es (=?UTF-8?Q?Jos=c3=a9_Trujillo_Carmona?=)
+Date: Sun, 30 Apr 2017 10:57:09 +0200
+Subject: [R-es] Ingresar datos dentro de R sin Excel
+In-Reply-To: <1127861241.826187.1493519100725@mail.yahoo.com>
+References: <CAOYqKJ5YkzLvdTp5QzsojW+xS9_gk6ZfR0t0v1rHETMnRNabTw@mail.gmail.com>
+ <CALCOUquai3-jJqrJdPLyorXdpk3GbxxuJ=WPow1SXs-gFM=bkw@mail.gmail.com>
+ <1879476451.167663.1493454023044@mail.yahoo.com>
+ <d0a8b188-6d4a-42ea-f92b-20ca8a5ee3fd@unex.es>
+ <1127861241.826187.1493519100725@mail.yahoo.com>
+Message-ID: <7aa45bcb-6313-fbd1-d7e3-c1bc571cbde5@unex.es>
+
+El 30/04/17 a las 04:25, Fernando Arce escribió:
+> Hola José. Tienes las opciones de compress=FALSE y ascii=TRUE, y 
+> puedes abrirlos en un editor después de crearlos , aunque he ido a 
+> intentar cargar unos viejos que tenía y me salta error, diciendo "use 
+> of save version prior to 2 is deprecated".
+> Los archivos tienen la pinta de:
+>
+> structure(list(N=c(8L,158L), K=c(1,1,1,1,4,4,2,6,6,6,6....
+>
+> Menuda solución pleistocenica traje ..
+>
+> Saludos y gracias por la corrección...
+> Fer
+
+Pero es verdad que si guardas datos actuales (comando save) con la 
+opción "ascci=T" que se me había pasado y está desrecomendada en el 
+propio manual, obtienes ficheros que no están obsoletos y pueden ser 
+cargados con normalidad.
+
+La verdad es que sigue sin ser una buena opción para hacerlo a mano, por 
+lo menos no mejor que csv o tsv. La estructura me parece bastante 
+esotérica, con los nombres de variables y niveles al final de archivo, 
+pero sí, realmente existe una estructura RData en formato ASCII.
+
+Gracias por la información.
+
+Saludos
+
+
+	[[alternative HTML version deleted]]
+
+

@@ -1,0 +1,687 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2022-04",
+  "messages": [
+    {
+      "id": "msg-b150d814f5da",
+      "message_id": "<CAF3uytWtS-qFuQsSsFOSMnaRZhzMrsUitsyiSrMfd-+9tvyO1w@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-04-01T04:59:13+02:00",
+      "subject": "[R-es] Error: protect(): protection stack overflow",
+      "subject_clean": "[R-es] Error: protect(): protection stack overflow",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, por primera vez he necesitado trabajar con una df que incluye\nnada menos que 58036 variables, que son grados de expresiÃ³n gÃ©nica (el nÂº\nde muestras es 933) y al hacer un random forest (paquete randomForest) me\nha dado un error hasta ahora para mi desconocido: Error: protect():\nprotection stack overflow\n\nParece ser debido a la falta de memoria del ordenador, que es un laptop,\naunque bastante potente. Con 9197 variables no tuve problemas y tardÃ³ mucho\nmenos de lo que yo esperaba.\nÂ¿Es posible hacer algo?\nGracias,\nManuel\n\n\nMemnory Usage Report\n\n[image: image.png]\n\n\n Con gc() me saliÃ³ esto:\n\n                  used      (Mb)         gc trigger        (Mb)\n max used        (Mb)\nNcells  1120419      59.9           2413118      128.9            1717277\n       91.8\nVcells 56595010   431.8     1723373484   13148.3     1793563775    13683.9\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220401/31b66397/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 53597 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220401/31b66397/attachment-0001.png>",
+      "body_snippet": "Buenos dÃ­as, por primera vez he necesitado trabajar con una df que incluye\nnada menos que 58036 variables, que son grados de expresiÃ³n gÃ©nica (el nÂº\nde muestras es 933) y al hacer un random forest",
+      "thread_id": "thread-b150d814f5da",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-6c877cee4656",
+      "message_id": "<A1A3CB26-C986-43E5-97E8-EAE8682E08E3@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-04-01T02:15:15-03:00",
+      "subject": "[R-es] Error: protect(): protection stack overflow",
+      "subject_clean": "[R-es] Error: protect(): protection stack overflow",
+      "in_reply_to": "<CAF3uytWtS-qFuQsSsFOSMnaRZhzMrsUitsyiSrMfd-+9tvyO1w@mail.gmail.com>",
+      "references": [
+        "<CAF3uytWtS-qFuQsSsFOSMnaRZhzMrsUitsyiSrMfd-+9tvyO1w@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Manuel Mendoza\n\nDesconozco como funciona en su caso, yo tuve algo de genÃ©tica y R, no tenÃ­a esa cantidad de variables, pero sÃ­ muchos mÃ¡s individuos y utilizaba la relaciÃ³n entre parientes para los cÃ¡lculos genÃ©ticos.\n\nPor casa variable entraba la relaciÃ³n entre parientes, pero aquÃ­ estÃ¡ el problema, son todas las variables por todas las relaciones entre parientes necesarias para la genÃ©tica aditiva del gen, supongamos 1000 relaciones por 3 variables, es 1000 por cada un a de las tres mÃ¡s el resto, esto es un calculo computacional impresionante. \n\nComo este problema es conocido, en genÃ©tica se utiliza ?esparce matrix? el corrector me modifica, para poder trabajarlo, por lo que es posible que el algoritmo no sea el adecuado, aunque si es genÃ©tica de procariotas no habÃ­a ciertos problemas, por lo que es la reproducciÃ³n celular.\n\nConsulte internamente en los algoritmos para seleccionar o buscar otra opciÃ³n adecuada que tenga en cuenta el trabajo con la memoria ram, hay alternativas muy especÃ­ficas que no se dan o requieren fuera de genÃ©tica, por lo menos dentro de lo que yo conozco.\n\nJavier RubÃ©n Marcuzzi\n\n> El 31 mar. 2022, a las 23:59, Manuel Mendoza <mmendoza en fulbrightmail.org> escribiÃ³:\n> \n> Buenos dÃ­as, por primera vez he necesitado trabajar con una df que incluye nada menos que 58036 variables, que son grados de expresiÃ³n gÃ©nica (el nÂº de muestras es 933) y al hacer un random forest (paquete randomForest) me ha dado un error hasta ahora para mi desconocido: Error: protect(): protection stack overflow\n> \n> Parece ser debido a la falta de memoria del ordenador, que es un laptop, aunque bastante potente. Con 9197 variables no tuve problemas y tardÃ³ mucho menos de lo que yo esperaba. \n> Â¿Es posible hacer algo?\n> Gracias,\n> Manuel\n> \n> \n> Memnory Usage Report\n> \n> <image.png>\n> \n> \n>  Con gc() me saliÃ³ esto:\n> \n>                   used      (Mb)         gc trigger        (Mb)           max used        (Mb)\n> Ncells  1120419      59.9           2413118      128.9            1717277         91.8\n> Vcells 56595010   431.8     1723373484   13148.3     1793563775    13683.9\n> \n> \n> \n> \n> \n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Estimado Manuel Mendoza\n\nDesconozco como funciona en su caso, yo tuve algo de genÃ©tica y R, no tenÃ­a esa cantidad de variables, pero sÃ­ muchos mÃ¡s individuos y utilizaba la relaciÃ³n entre parient",
+      "thread_id": "thread-b150d814f5da",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-12ec359ae7c8",
+      "message_id": "<CAF3uytVg=hgOoQ56DKq6jsL2opqCbAMN3U_291PxZ2h+K=UCSw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-04-01T12:47:04+02:00",
+      "subject": "[R-es] Error: protect(): protection stack overflow",
+      "subject_clean": "[R-es] Error: protect(): protection stack overflow",
+      "in_reply_to": "<CAOKbq8imW-u7KTakPAjpPSjL0H6m8F5ANK08fb1sQSppyLkMvA@mail.gmail.com>",
+      "references": [
+        "<CAF3uytWtS-qFuQsSsFOSMnaRZhzMrsUitsyiSrMfd-+9tvyO1w@mail.gmail.com>",
+        "<CAOKbq8imW-u7KTakPAjpPSjL0H6m8F5ANK08fb1sQSppyLkMvA@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Carlos, te hice caso pero me da este otro error, que creo que estÃ¡\nrelacionado tambiÃ©n con la memoria:\nError: cannot allocate vector of size 12.5 Gb.\nHe resuelto el problema aplicando XgBoost, que utiliza todos los nodos del\nordenador. Aunque no hace lo mismo (es un boosting y no un bootstrap), mi\nintenciÃ³n era seleccionar las variables mÃ¡s importantes para no tener que\ntrabajar con todas. XgBoost tambiÃ©n da la importancia, y Gain,\nconcretamente, lo hace de forma parecida a IncNodePurity. Me salen, ademÃ¡s,\nlas mismas que con random forest, cuando funcionÃ³ con 9107 genes de los\n58036, por lo que me quedarÃ© con esas variables.\n\nGracias, una vez mÃ¡s,\nManuel\n\n\n\n\nEl vie, 1 abr 2022 a las 9:32, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Hola Manuel,\n>\n> Yo probarÃ­a con \"ranger\", la implementaciÃ³n de \"randomForest\" pero en C++,\n> tiene una mucha mejor gestiÃ³n de la memoria.\n> Y sin duda, para un problema de este tipo, notarÃ¡s una gran diferencia en\n> velocidad de ejecuciÃ³n.\n>\n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n> El vie, 1 abr 2022 a las 5:03, Manuel Mendoza (<mmendoza en fulbrightmail.org>)\n> escribiÃ³:\n>\n>> Buenos dÃ­as, por primera vez he necesitado trabajar con una df que\n>> incluye nada menos que 58036 variables, que son grados de expresiÃ³n gÃ©nica\n>> (el nÂº de muestras es 933) y al hacer un random forest (paquete\n>> randomForest) me ha dado un error hasta ahora para mi desconocido: Error:\n>> protect(): protection stack overflow\n>>\n>> Parece ser debido a la falta de memoria del ordenador, que es un laptop,\n>> aunque bastante potente. Con 9197 variables no tuve problemas y tardÃ³ mucho\n>> menos de lo que yo esperaba.\n>> Â¿Es posible hacer algo?\n>> Gracias,\n>> Manuel\n>>\n>>\n>> Memnory Usage Report\n>>\n>> [image: image.png]\n>>\n>>\n>>  Con gc() me saliÃ³ esto:\n>>\n>>                   used      (Mb)         gc trigger        (Mb)\n>>  max used        (Mb)\n>> Ncells  1120419      59.9           2413118      128.9\n>> 1717277         91.8\n>> Vcells 56595010   431.8     1723373484   13148.3     1793563775    13683.9\n>>\n>>\n>>\n>>\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220401/f1aa4f06/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 53597 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220401/f1aa4f06/attachment-0001.png>",
+      "body_snippet": "Gracias Carlos, te hice caso pero me da este otro error, que creo que estÃ¡\nrelacionado tambiÃ©n con la memoria:\nError: cannot allocate vector of size 12.5 Gb.\nHe resuelto el problema aplicando XgBoos",
+      "thread_id": "thread-12ec359ae7c8",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-8e5b77a2622a",
+      "message_id": "<CAF3uytVDMjTkZV5y4_3j=quh7swkhjtXT_uNyTHg=igO67K8ZQ@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-04-01T12:55:21+02:00",
+      "subject": "[R-es] Error: protect(): protection stack overflow",
+      "subject_clean": "[R-es] Error: protect(): protection stack overflow",
+      "in_reply_to": "<A1A3CB26-C986-43E5-97E8-EAE8682E08E3@gmail.com>",
+      "references": [
+        "<CAF3uytWtS-qFuQsSsFOSMnaRZhzMrsUitsyiSrMfd-+9tvyO1w@mail.gmail.com>",
+        "<A1A3CB26-C986-43E5-97E8-EAE8682E08E3@gmail.com>"
+      ],
+      "body_plain": "Gracias Javier, en mi caso el problema es mÃ¡s sencillo. Se trata de\nencontrar patrones en la expresiÃ³n gÃ©nica en las cÃ©lulas de 3 formas\nbÃ¡sicas de cÃ¡ncer (que incluyen muchos tipos distintos). Estas se\ndistribuyen en 933 lÃ­neas celulares, en las que se analizÃ³ el grado de\nexpresiÃ³n de 58036 genes. Por eso son tantas variables.\nUn saludo,\nManuel\n\nEl vie, 1 abr 2022 a las 7:15, Javier Marcuzzi (<\njavier.ruben.marcuzzi en gmail.com>) escribiÃ³:\n\n> Estimado Manuel Mendoza\n>\n> Desconozco como funciona en su caso, yo tuve algo de genÃ©tica y R, no\n> tenÃ­a esa cantidad de variables, pero sÃ­ muchos mÃ¡s individuos y utilizaba\n> la relaciÃ³n entre parientes para los cÃ¡lculos genÃ©ticos.\n>\n> Por casa variable entraba la relaciÃ³n entre parientes, pero aquÃ­ estÃ¡ el\n> problema, son todas las variables por todas las relaciones entre parientes\n> necesarias para la genÃ©tica aditiva del gen, supongamos 1000 relaciones por\n> 3 variables, es 1000 por cada un a de las tres mÃ¡s el resto, esto es un\n> calculo computacional impresionante.\n>\n> Como este problema es conocido, en genÃ©tica se utiliza ?esparce matrix? el\n> corrector me modifica, para poder trabajarlo, por lo que es posible que el\n> algoritmo no sea el adecuado, aunque si es genÃ©tica de procariotas no habÃ­a\n> ciertos problemas, por lo que es la reproducciÃ³n celular.\n>\n> Consulte internamente en los algoritmos para seleccionar o buscar otra\n> opciÃ³n adecuada que tenga en cuenta el trabajo con la memoria ram, hay\n> alternativas muy especÃ­ficas que no se dan o requieren fuera de genÃ©tica,\n> por lo menos dentro de lo que yo conozco.\n>\n> Javier RubÃ©n Marcuzzi\n>\n> > El 31 mar. 2022, a las 23:59, Manuel Mendoza <mmendoza en fulbrightmail.org>\n> escribiÃ³:\n> >\n> > Buenos dÃ­as, por primera vez he necesitado trabajar con una df que\n> incluye nada menos que 58036 variables, que son grados de expresiÃ³n gÃ©nica\n> (el nÂº de muestras es 933) y al hacer un random forest (paquete\n> randomForest) me ha dado un error hasta ahora para mi desconocido: Error:\n> protect(): protection stack overflow\n> >\n> > Parece ser debido a la falta de memoria del ordenador, que es un laptop,\n> aunque bastante potente. Con 9197 variables no tuve problemas y tardÃ³ mucho\n> menos de lo que yo esperaba.\n> > Â¿Es posible hacer algo?\n> > Gracias,\n> > Manuel\n> >\n> >\n> > Memnory Usage Report\n> >\n> > <image.png>\n> >\n> >\n> >  Con gc() me saliÃ³ esto:\n> >\n> >                   used      (Mb)         gc trigger        (Mb)\n>  max used        (Mb)\n> > Ncells  1120419      59.9           2413118      128.9\n> 1717277         91.8\n> > Vcells 56595010   431.8     1723373484   13148.3     1793563775\n> 13683.9\n> >\n> >\n> >\n> >\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Javier, en mi caso el problema es mÃ¡s sencillo. Se trata de\nencontrar patrones en la expresiÃ³n gÃ©nica en las cÃ©lulas de 3 formas\nbÃ¡sicas de cÃ¡ncer (que incluyen muchos tipos distintos). ",
+      "thread_id": "thread-b150d814f5da",
+      "thread_depth": 2,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-1837e1fea1b9",
+      "message_id": "<CAKL8G3Ej8_fNTL5vFVhgQZ38JCz_f90QfVMD26TSYLEyMJQbUQ@mail.gmail.com>",
+      "from_name": "Jorge I Velez",
+      "from_email_hash": "874dca51563da807a88f095f0afa53c85d1ee3dc475fa731dd1d5c0887e5ea41",
+      "date": "2022-04-01T07:34:32-05:00",
+      "subject": "[R-es] Error: protect(): protection stack overflow",
+      "subject_clean": "[R-es] Error: protect(): protection stack overflow",
+      "in_reply_to": "<CAF3uytVg=hgOoQ56DKq6jsL2opqCbAMN3U_291PxZ2h+K=UCSw@mail.gmail.com>",
+      "references": [
+        "<CAF3uytWtS-qFuQsSsFOSMnaRZhzMrsUitsyiSrMfd-+9tvyO1w@mail.gmail.com>",
+        "<CAOKbq8imW-u7KTakPAjpPSjL0H6m8F5ANK08fb1sQSppyLkMvA@mail.gmail.com>",
+        "<CAF3uytVg=hgOoQ56DKq6jsL2opqCbAMN3U_291PxZ2h+K=UCSw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Manuel,\nHas pensado en OneR?\nPuede ser Ãºtil para seleccionar las variables mÃ¡s importantes.\nSaludos,\nJorge.-\n\nEl El vie, 1 de abr. de 2022 a la(s) 5:48 a. m., Manuel Mendoza <\nmmendoza en fulbrightmail.org> escribiÃ³:\n\n> Gracias Carlos, te hice caso pero me da este otro error, que creo que estÃ¡\n> relacionado tambiÃ©n con la memoria:\n> Error: cannot allocate vector of size 12.5 Gb.\n> He resuelto el problema aplicando XgBoost, que utiliza todos los nodos del\n> ordenador. Aunque no hace lo mismo (es un boosting y no un bootstrap), mi\n> intenciÃ³n era seleccionar las variables mÃ¡s importantes para no tener que\n> trabajar con todas. XgBoost tambiÃ©n da la importancia, y Gain,\n> concretamente, lo hace de forma parecida a IncNodePurity. Me salen, ademÃ¡s,\n> las mismas que con random forest, cuando funcionÃ³ con 9107 genes de los\n> 58036, por lo que me quedarÃ© con esas variables.\n>\n> Gracias, una vez mÃ¡s,\n> Manuel\n>\n>\n>\n>\n> El vie, 1 abr 2022 a las 9:32, Carlos Ortega (<cof en qualityexcellence.es>)\n> escribiÃ³:\n>\n>> Hola Manuel,\n>>\n>> Yo probarÃ­a con \"ranger\", la implementaciÃ³n de \"randomForest\" pero en\n>> C++, tiene una mucha mejor gestiÃ³n de la memoria.\n>> Y sin duda, para un problema de este tipo, notarÃ¡s una gran diferencia en\n>> velocidad de ejecuciÃ³n.\n>>\n>> Gracias,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>>\n>> El vie, 1 abr 2022 a las 5:03, Manuel Mendoza (<\n>> mmendoza en fulbrightmail.org>) escribiÃ³:\n>>\n>>> Buenos dÃ­as, por primera vez he necesitado trabajar con una df que\n>>> incluye nada menos que 58036 variables, que son grados de expresiÃ³n gÃ©nica\n>>> (el nÂº de muestras es 933) y al hacer un random forest (paquete\n>>> randomForest) me ha dado un error hasta ahora para mi desconocido: Error:\n>>> protect(): protection stack overflow\n>>>\n>>> Parece ser debido a la falta de memoria del ordenador, que es un laptop,\n>>> aunque bastante potente. Con 9197 variables no tuve problemas y tardÃ³ mucho\n>>> menos de lo que yo esperaba.\n>>> Â¿Es posible hacer algo?\n>>> Gracias,\n>>> Manuel\n>>>\n>>>\n>>> Memnory Usage Report\n>>>\n>>> [image: image.png]\n>>>\n>>>\n>>>  Con gc() me saliÃ³ esto:\n>>>\n>>>                   used      (Mb)         gc trigger        (Mb)\n>>>  max used        (Mb)\n>>> Ncells  1120419      59.9           2413118      128.9\n>>> 1717277         91.8\n>>> Vcells 56595010   431.8     1723373484   13148.3     1793563775\n>>> 13683.9\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>\n>>\n>> --\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n-- \nSent from my phone. Please excuse my brevity and misspelling.\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220401/360747bb/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 53597 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220401/360747bb/attachment-0001.png>",
+      "body_snippet": "Hola Manuel,\nHas pensado en OneR?\nPuede ser Ãºtil para seleccionar las variables mÃ¡s importantes.\nSaludos,\nJorge.-\n\nEl El vie, 1 de abr. de 2022 a la(s) 5:48 a. m., Manuel Mendoza <\nmmendoza en fulbr",
+      "thread_id": "thread-12ec359ae7c8",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-5871387cffd6",
+      "message_id": "<C020EF42-D34C-476E-AA78-BDD8A11C209F@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-04-01T10:36:14-03:00",
+      "subject": "[R-es] Error: protect(): protection stack overflow",
+      "subject_clean": "[R-es] Error: protect(): protection stack overflow",
+      "in_reply_to": "<CAF3uytVDMjTkZV5y4_3j=quh7swkhjtXT_uNyTHg=igO67K8ZQ@mail.gmail.com>",
+      "references": [
+        "<CAF3uytWtS-qFuQsSsFOSMnaRZhzMrsUitsyiSrMfd-+9tvyO1w@mail.gmail.com>",
+        "<A1A3CB26-C986-43E5-97E8-EAE8682E08E3@gmail.com>",
+        "<CAF3uytVDMjTkZV5y4_3j=quh7swkhjtXT_uNyTHg=igO67K8ZQ@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Manuel Mendoza\n\nSe me ocurre una prueba, aunque pueda carecer de sentido, es solo para medir la computadora. Son 933 por 58036. Â¿Y si es 58? x 993? Â¿Si lo modifica si cambia uno por otros? Â¿Que pasa?\n\nReciÃ©n realicÃ© una bÃºsqueda en internet con las siguientes palabras: Using sparse matrix in random forest. Y hay respuestas, pero no leÃ­ ninguna, lo desconozco, sin embargo, es una forma de disminuir la utilizaciÃ³n de memoria ram.\n\nJavier RubÃ©n Marcuzzi\n\n> El 1 abr. 2022, a las 07:55, Manuel Mendoza <mmendoza en fulbrightmail.org> escribiÃ³:\n> \n> Gracias Javier, en mi caso el problema es mÃ¡s sencillo. Se trata de encontrar patrones en la expresiÃ³n gÃ©nica en las cÃ©lulas de 3 formas bÃ¡sicas de cÃ¡ncer (que incluyen muchos tipos distintos). Estas se distribuyen en 933 lÃ­neas celulares, en las que se analizÃ³ el grado de expresiÃ³n de 58036 genes. Por eso son tantas variables.\n> Un saludo,\n> Manuel\n> \n> El vie, 1 abr 2022 a las 7:15, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribiÃ³:\n> Estimado Manuel Mendoza\n> \n> Desconozco como funciona en su caso, yo tuve algo de genÃ©tica y R, no tenÃ­a esa cantidad de variables, pero sÃ­ muchos mÃ¡s individuos y utilizaba la relaciÃ³n entre parientes para los cÃ¡lculos genÃ©ticos.\n> \n> Por casa variable entraba la relaciÃ³n entre parientes, pero aquÃ­ estÃ¡ el problema, son todas las variables por todas las relaciones entre parientes necesarias para la genÃ©tica aditiva del gen, supongamos 1000 relaciones por 3 variables, es 1000 por cada un a de las tres mÃ¡s el resto, esto es un calculo computacional impresionante. \n> \n> Como este problema es conocido, en genÃ©tica se utiliza ?esparce matrix? el corrector me modifica, para poder trabajarlo, por lo que es posible que el algoritmo no sea el adecuado, aunque si es genÃ©tica de procariotas no habÃ­a ciertos problemas, por lo que es la reproducciÃ³n celular.\n> \n> Consulte internamente en los algoritmos para seleccionar o buscar otra opciÃ³n adecuada que tenga en cuenta el trabajo con la memoria ram, hay alternativas muy especÃ­ficas que no se dan o requieren fuera de genÃ©tica, por lo menos dentro de lo que yo conozco.\n> \n> Javier RubÃ©n Marcuzzi\n> \n> > El 31 mar. 2022, a las 23:59, Manuel Mendoza <mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org>> escribiÃ³:\n> > \n> > Buenos dÃ­as, por primera vez he necesitado trabajar con una df que incluye nada menos que 58036 variables, que son grados de expresiÃ³n gÃ©nica (el nÂº de muestras es 933) y al hacer un random forest (paquete randomForest) me ha dado un error hasta ahora para mi desconocido: Error: protect(): protection stack overflow\n> > \n> > Parece ser debido a la falta de memoria del ordenador, que es un laptop, aunque bastante potente. Con 9197 variables no tuve problemas y tardÃ³ mucho menos de lo que yo esperaba. \n> > Â¿Es posible hacer algo?\n> > Gracias,\n> > Manuel\n> > \n> > \n> > Memnory Usage Report\n> > \n> > <image.png>\n> > \n> > \n> >  Con gc() me saliÃ³ esto:\n> > \n> >                   used      (Mb)         gc trigger        (Mb)           max used        (Mb)\n> > Ncells  1120419      59.9           2413118      128.9            1717277         91.8\n> > Vcells 56595010   431.8     1723373484   13148.3     1793563775    13683.9\n> > \n> > \n> > \n> > \n> > \n> > \n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n> \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado Manuel Mendoza\n\nSe me ocurre una prueba, aunque pueda carecer de sentido, es solo para medir la computadora. Son 933 por 58036. Â¿Y si es 58? x 993? Â¿Si lo modifica si cambia uno por otros? ",
+      "thread_id": "thread-b150d814f5da",
+      "thread_depth": 3,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-75a61644f47f",
+      "message_id": "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+      "from_name": "Blas",
+      "from_email_hash": "4d9277e77fde71bb1521e1aa83be7ec9ac514d5739b1933525aeb60b221a1562",
+      "date": "2022-04-07T11:49:46+02:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as,\n\nme encuentro con un problema que imagino\n es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha \nidea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos \npÃºblicos desde la siguiente direcciÃ³n: http://serviciosede.mineco.gob.es/Indeco/.\n En concreto necesito descargar el fichero completo con todas las series\n que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger \ndel navegador me dice que estÃ¡ bajo la URL \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n\n\n\nHe probado a ejecutar el siguiente cÃ³digo:\n\n\n\n\n\nlibrary(\"httr\")\n\nUrlBase <-Â  \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n\ndownload.file(UrlBase, \"./BaseDatos.zip\")\n\n\n\n\n\n\n\n\n\nY tambiÃ©n el cÃ³digo:\n\n\n\n\n\nlibrary(\"httr\")\n\nUrlBase <-Â  \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n\nget(UrlBase)\n\n\n\n\n\n\n\nNinguno de los mÃ©todos me ha funcionado. \n\nAlguien que me oriente.\n\n\n\n\n\nSaludos.\n\nBlas.\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as,\n\nme encuentro con un problema que imagino\n es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha \nidea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-c0c43144683c",
+      "message_id": "<DU0PR01MB9358EA1703B8365FFBF674258BE69@DU0PR01MB9358.eurprd01.prod.exchangelabs.com>",
+      "from_name": "Juan Carlos Arronte",
+      "from_email_hash": "c9e856315fc774c1726387c02438f7929bcfb6f854726a713cfea7c36722151a",
+      "date": "2022-04-07T10:10:12Z",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 158, Envío 6",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 158, Envío 6",
+      "in_reply_to": "<mailman.14704.13.1649325610.58803.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.14704.13.1649325610.58803.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Hola Blas,\n\nNo comprendo muy bien lo que quieres hacer, porque si pinchas en el enlace, se descarga un archivo zip de 29,4 Mb. ?Es ese archivo el que necesitas?\n\nUn saludo\n\nJC\n\n________________________________\nDe: R-help-es <r-help-es-bounces en r-project.org> en nombre de r-help-es-request en r-project.org <r-help-es-request en r-project.org>\nEnviado: jueves, 7 de abril de 2022 12:00\nPara: r-help-es en r-project.org <r-help-es en r-project.org>\nAsunto: Resumen de R-help-es, Vol 158, Env?o 6\n\nEnv?e los mensajes para la lista R-help-es a\n        r-help-es en r-project.org\n\nPara subscribirse o anular su subscripci?n a trav?s de la WEB\n        https://stat.ethz.ch/mailman/listinfo/r-help-es\n\nO por correo electr?nico, enviando un mensaje con el texto \"help\" en\nel asunto (subject) o en el cuerpo a:\n        r-help-es-request en r-project.org\n\nPuede contactar con el responsable de la lista escribiendo a:\n        r-help-es-owner en r-project.org\n\nSi responde a alg?n contenido de este mensaje, por favor, edite la\nlinea del asunto (subject) para que el texto sea mas especifico que:\n\"Re: Contents of R-help-es digest...\". Adem?s, por favor, incluya en\nla respuesta s?lo aquellas partes del mensaje a las que est?\nrespondiendo.\n\n\nAsuntos del d?a:\n\n   1. Descarga ficheros web desde R (Blas)\n\n----------------------------------------------------------------------\n\nMessage: 1\nDate: Thu, 07 Apr 2022 11:49:46 +0200\nFrom: Blas <b1 en famovil.es>\nTo: \"r-help-es\" <r-help-es en r-project.org>\nSubject: [R-es] Descarga ficheros web desde R\nMessage-ID: <180036e0ea8.e422ee53399743.666794865219410070 en famovil.es>\nContent-Type: text/plain; charset=\"utf-8\"\n\nBuenos d?as,\n\nme encuentro con un problema que imagino\n es muy com?n pero no veo soluci?n aparente en internet. No tengo mucha\nidea de p?ginas \"aspx\" ni \"javascript\" pero necesito descargar datos\np?blicos desde la siguiente direcci?n: http://serviciosede.mineco.gob.es/Indeco/.\n En concreto necesito descargar el fichero completo con todas las series\n que est? en el enlace \"Descarga completa de BDSICE\". Con el debugger\ndel navegador me dice que est? bajo la URL \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n\n\n\nHe probado a ejecutar el siguiente c?digo:\n\n\n\n\n\nlibrary(\"httr\")\n\nUrlBase <-  \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n\ndownload.file(UrlBase, \"./BaseDatos.zip\")\n\n\n\n\n\n\n\n\n\nY tambi?n el c?digo:\n\n\n\n\n\nlibrary(\"httr\")\n\nUrlBase <-  \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n\nget(UrlBase)\n\n\n\n\n\n\n\nNinguno de los m?todos me ha funcionado.\n\nAlguien que me oriente.\n\n\n\n\n\nSaludos.\n\nBlas.\n        [[alternative HTML version deleted]]\n\n\n\n\n------------------------------\n\nSubject: Pi? de p?gina del digest\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n------------------------------\n\nFin de Resumen de R-help-es, Vol 158, Env?o 6\n*********************************************\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Blas,\n\nNo comprendo muy bien lo que quieres hacer, porque si pinchas en el enlace, se descarga un archivo zip de 29,4 Mb. ?Es ese archivo el que necesitas?\n\nUn saludo\n\nJC\n\n_______________________",
+      "thread_id": "thread-c0c43144683c",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-40b029bfca15",
+      "message_id": "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+      "from_name": "Jorge Pradas",
+      "from_email_hash": "c980cde1801ecfbf83548e09fd5cb52bdf47a868c4feadedeb21e90f6eb0016f",
+      "date": "2022-04-07T13:26:27+02:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>"
+      ],
+      "body_plain": "Hola!\n\nCreo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a\nmi me ha ido.\n\nlibrary(\"httr\")\nUrlBase <-  \"\nhttp://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n\"\nfile=POST(UrlBase)[[\"content\"]]\nwriteBin(as.raw(file),\n         con = \"./filename.zip\")\n\nun saludo!\nJorge\n\nEl jue, 7 abr 2022 a las 11:50, Blas (<b1 en famovil.es>) escribiÃ³:\n\n> Buenos dÃ­as,\n>\n> me encuentro con un problema que imagino\n>  es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha\n> idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos\n> pÃºblicos desde la siguiente direcciÃ³n:\n> http://serviciosede.mineco.gob.es/Indeco/.\n>  En concreto necesito descargar el fichero completo con todas las series\n>  que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger\n> del navegador me dice que estÃ¡ bajo la URL \"\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> \"\n>\n>\n>\n> He probado a ejecutar el siguiente cÃ³digo:\n>\n>\n>\n>\n>\n> library(\"httr\")\n>\n> UrlBase <-  \"\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> \"\n>\n> download.file(UrlBase, \"./BaseDatos.zip\")\n>\n>\n>\n>\n>\n>\n>\n>\n>\n> Y tambiÃ©n el cÃ³digo:\n>\n>\n>\n>\n>\n> library(\"httr\")\n>\n> UrlBase <-  \"\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> \"\n>\n> get(UrlBase)\n>\n>\n>\n>\n>\n>\n>\n> Ninguno de los mÃ©todos me ha funcionado.\n>\n> Alguien que me oriente.\n>\n>\n>\n>\n>\n> Saludos.\n>\n> Blas.\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola!\n\nCreo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a\nmi me ha ido.\n\nlibrary(\"httr\")\nUrlBase <-  \"\nhttp://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadistic",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-e8559facab39",
+      "message_id": "<18003cea227.d5398e9a411445.4970826292260485560@famovil.es>",
+      "from_name": "Blas",
+      "from_email_hash": "4d9277e77fde71bb1521e1aa83be7ec9ac514d5739b1933525aeb60b221a1562",
+      "date": "2022-04-07T13:35:15+02:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>"
+      ],
+      "body_plain": "Muchas gracias Jorge,\n\npero no funciona. \n\n\n\nDescarga un fichero de 51KB corrupto y sin datos. El original pesa cerca de 30MB.\n\nCon los mÃ©todos que yo he usado el resultado es similar, me descarga un fichero corrupto y sin posibilidad de abrir. \n\n\n\n\n\n\n\n\n\n\n\n---- Activado jue, 07 abr 2022 13:26:27 +0200 Jorge Pradas <jorpramo en gmail.com> escribiÃ³ ----\n\n\n\nÂ  Hola!\n\n\n\nCreo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a mi me ha ido.\n\n\n\nlibrary(\"httr\")\nUrlBase <- Â \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\nfile=POST(UrlBase)[[\"content\"]]\nwriteBin(as.raw(file), \nÂ  Â  Â  Â  Â con = \"./filename.zip\")\n\n\nun saludo!\n\nJorge\n\n\n\n\nEl jue, 7 abr 2022 a las 11:50, Blas (<mailto:b1 en famovil.es>) escribiÃ³:\n\nBuenos dÃ­as,\n \n me encuentro con un problema que imagino\n Â es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha \n idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos \n pÃºblicos desde la siguiente direcciÃ³n: http://serviciosede.mineco.gob.es/Indeco/.\n Â En concreto necesito descargar el fichero completo con todas las series\n Â que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger \n del navegador me dice que estÃ¡ bajo la URL \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n \n \n \n He probado a ejecutar el siguiente cÃ³digo:\n \n \n \n \n \n library(\"httr\")\n \n UrlBase <-Â  \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n \n download.file(UrlBase, \"./BaseDatos.zip\")\n \n \n \n \n \n \n \n \n \n Y tambiÃ©n el cÃ³digo:\n \n \n \n \n \n library(\"httr\")\n \n UrlBase <-Â  \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\"\n \n get(UrlBase)\n \n \n \n \n \n \n \n Ninguno de los mÃ©todos me ha funcionado. \n \n Alguien que me oriente.\n \n \n \n \n \n Saludos.\n \n Blas.\n Â  Â  Â  Â  [[alternative HTML version deleted]]\n \n _______________________________________________\n R-help-es mailing list\n mailto:R-help-es en r-project.org\n https://stat.ethz.ch/mailman/listinfo/r-help-es\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Jorge,\n\npero no funciona. \n\n\n\nDescarga un fichero de 51KB corrupto y sin datos. El original pesa cerca de 30MB.\n\nCon los mÃ©todos que yo he usado el resultado es similar, me descarga un",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 2,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-245014c7e564",
+      "message_id": "<CADf19gL1ju0AN_kkGeTfA_xQ+7drMU258hDuy+fcgvN0w7AZKg@mail.gmail.com>",
+      "from_name": "Jorge Pradas",
+      "from_email_hash": "c980cde1801ecfbf83548e09fd5cb52bdf47a868c4feadedeb21e90f6eb0016f",
+      "date": "2022-04-07T14:07:16+02:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<18003cea227.d5398e9a411445.4970826292260485560@famovil.es>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+        "<18003cea227.d5398e9a411445.4970826292260485560@famovil.es>"
+      ],
+      "body_plain": "Pues es raro, a mi me descarga un fichero de 30MB con 22.000 ficheros\ndentro.\nPrueba a descargar de nuevo la version de httr, por si fuera eso. Estoy\nusando R.4.1.1.\n\nJorge\n\nEl jue, 7 abr 2022 a las 13:35, Blas (<b1 en famovil.es>) escribiÃ³:\n\n> Muchas gracias Jorge,\n> pero no funciona.\n>\n> Descarga un fichero de 51KB corrupto y sin datos. El original pesa cerca\n> de 30MB.\n> Con los mÃ©todos que yo he usado el resultado es similar, me descarga un\n> fichero corrupto y sin posibilidad de abrir.\n>\n>\n>\n>\n>\n> ---- Activado jue, 07 abr 2022 13:26:27 +0200 *Jorge Pradas\n> <jorpramo en gmail.com <jorpramo en gmail.com>>* escribiÃ³ ----\n>\n>   Hola!\n>\n> Creo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a\n> mi me ha ido.\n>\n> library(\"httr\")\n> UrlBase <-  \"\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> \"\n> file=POST(UrlBase)[[\"content\"]]\n> writeBin(as.raw(file),\n>          con = \"./filename.zip\")\n>\n> un saludo!\n> Jorge\n>\n> El jue, 7 abr 2022 a las 11:50, Blas (<b1 en famovil.es>) escribiÃ³:\n>\n> Buenos dÃ­as,\n>\n> me encuentro con un problema que imagino\n>  es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha\n> idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos\n> pÃºblicos desde la siguiente direcciÃ³n:\n> http://serviciosede.mineco.gob.es/Indeco/.\n>  En concreto necesito descargar el fichero completo con todas las series\n>  que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger\n> del navegador me dice que estÃ¡ bajo la URL \"\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> \"\n>\n>\n>\n> He probado a ejecutar el siguiente cÃ³digo:\n>\n>\n>\n>\n>\n> library(\"httr\")\n>\n> UrlBase <-  \"\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> \"\n>\n> download.file(UrlBase, \"./BaseDatos.zip\")\n>\n>\n>\n>\n>\n>\n>\n>\n>\n> Y tambiÃ©n el cÃ³digo:\n>\n>\n>\n>\n>\n> library(\"httr\")\n>\n> UrlBase <-  \"\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> \"\n>\n> get(UrlBase)\n>\n>\n>\n>\n>\n>\n>\n> Ninguno de los mÃ©todos me ha funcionado.\n>\n> Alguien que me oriente.\n>\n>\n>\n>\n>\n> Saludos.\n>\n> Blas.\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Pues es raro, a mi me descarga un fichero de 30MB con 22.000 ficheros\ndentro.\nPrueba a descargar de nuevo la version de httr, por si fuera eso. Estoy\nusando R.4.1.1.\n\nJorge\n\nEl jue, 7 abr 2022 a las 1",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 3,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-80c7741c5fc3",
+      "message_id": "<002701d84a79$5cbe8e40$163baac0$@jccm.es>",
+      "from_name": "Isidro Hidalgo Arellano",
+      "from_email_hash": "0724e196ab2f30e611934ecd7dc684176bcc11dd0a1132c7992011a16f84412a",
+      "date": "2022-04-07T14:16:51+02:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<18003cea227.d5398e9a411445.4970826292260485560@famovil.es>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+        "<18003cea227.d5398e9a411445.4970826292260485560@famovil.es>"
+      ],
+      "body_plain": "Prueba a forzar el raw con \"encode\". A mÃ­ me ha funcionado:\n\nlibrary(\"httr\")\nUrlBase <-\n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=\nTrue&tipo=1\"\nfile=POST(UrlBase, encode = \"raw\")[[\"content\"]]\nwriteBin(as.raw(file), con = \"./filename.zip\")\n\nUn saludo,\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nConsejerÃ­a de EconomÃ­a, Empresas y Empleo\nhttp://www.castillalamancha.es/\n\n-----Mensaje original-----\nDe: R-help-es <r-help-es-bounces en r-project.org> En nombre de Blas\nEnviado el: jueves, 7 de abril de 2022 13:35\nPara: Jorge Pradas <jorpramo en gmail.com>\nCC: r-help-es <r-help-es en r-project.org>\nAsunto: Re: [R-es] Descarga ficheros web desde R\n\nMuchas gracias Jorge,\n\npero no funciona. \n\n\n\nDescarga un fichero de 51KB corrupto y sin datos. El original pesa cerca de\n30MB.\n\nCon los mÃ©todos que yo he usado el resultado es similar, me descarga un\nfichero corrupto y sin posibilidad de abrir. \n\n\n\n\n\n\n\n\n\n\n\n---- Activado jue, 07 abr 2022 13:26:27 +0200 Jorge Pradas\n<jorpramo en gmail.com> escribiÃ³ ----\n\n\n\nÂ  Hola!\n\n\n\nCreo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a\nmi me ha ido.\n\n\n\nlibrary(\"httr\")\nUrlBase <-\nÂ \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas\n=True&tipo=1\"\nfile=POST(UrlBase)[[\"content\"]]\nwriteBin(as.raw(file), \nÂ  Â  Â  Â  Â con = \"./filename.zip\")\n\n\nun saludo!\n\nJorge\n\n\n\n\nEl jue, 7 abr 2022 a las 11:50, Blas (<mailto:b1 en famovil.es>) escribiÃ³:\n\nBuenos dÃ­as,\n \n me encuentro con un problema que imagino\n Â es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha \n idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos \n pÃºblicos desde la siguiente direcciÃ³n:\nhttp://serviciosede.mineco.gob.es/Indeco/.\n Â En concreto necesito descargar el fichero completo con todas las series\n Â que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger \n del navegador me dice que estÃ¡ bajo la URL\n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=\nTrue&tipo=1\"\n \n \n \n He probado a ejecutar el siguiente cÃ³digo:\n \n \n \n \n \n library(\"httr\")\n \n UrlBase <-Â \n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=\nTrue&tipo=1\"\n \n download.file(UrlBase, \"./BaseDatos.zip\")\n \n \n \n \n \n \n \n \n \n Y tambiÃ©n el cÃ³digo:\n \n \n \n \n \n library(\"httr\")\n \n UrlBase <-Â \n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=\nTrue&tipo=1\"\n \n get(UrlBase)\n \n \n \n \n \n \n \n Ninguno de los mÃ©todos me ha funcionado. \n \n Alguien que me oriente.\n \n \n \n \n \n Saludos.\n \n Blas.\n Â  Â  Â  Â  [[alternative HTML version deleted]]\n \n _______________________________________________\n R-help-es mailing list\n mailto:R-help-es en r-project.org\n https://stat.ethz.ch/mailman/listinfo/r-help-es\n\t[[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Prueba a forzar el raw con \"encode\". A mÃ­ me ha funcionado:\n\nlibrary(\"httr\")\nUrlBase <-\n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=\nTrue&tipo=1\"\nfile=POST(UrlBase, en",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 3,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-9c296ed8f032",
+      "message_id": "<180040017a6.1129e3ac8416924.8075808489145314376@famovil.es>",
+      "from_name": "Blas",
+      "from_email_hash": "4d9277e77fde71bb1521e1aa83be7ec9ac514d5739b1933525aeb60b221a1562",
+      "date": "2022-04-07T14:29:16+02:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<002701d84a79$5cbe8e40$163baac0$@jccm.es>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+        "<18003cea227.d5398e9a411445.4970826292260485560@famovil.es>",
+        "<002701d84a79$5cbe8e40$163baac0$@jccm.es>"
+      ],
+      "body_plain": "PERFECTO Isidro!!!!\n\nAhora ha funcionado, habÃ­a que forzar \"encode\" como decÃ­as.\n\n\n\nMuchisimas gracias a los dos.\n\n\n\n\n\n\n\n\n\n\n\n---- Activado jue, 07 abr 2022 14:16:51 +0200 Isidro Hidalgo Arellano <ihidalgo en jccm.es> escribiÃ³ ----\n\n\n\nPrueba a forzar el raw con \"encode\". A mÃ­ me ha funcionado: \n \nlibrary(\"httr\") \nUrlBase <- \n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas= \nTrue&tipo=1\" \nfile=POST(UrlBase, encode = \"raw\")[[\"content\"]] \nwriteBin(as.raw(file), con = \"./filename.zip\") \n \nUn saludo, \n \nIsidro Hidalgo Arellano \nObservatorio del Mercado de Trabajo \nConsejerÃ­a de EconomÃ­a, Empresas y Empleo \nhttp://www.castillalamancha.es/ \n \n-----Mensaje original----- \nDe: R-help-es <mailto:r-help-es-bounces en r-project.org> En nombre de Blas \nEnviado el: jueves, 7 de abril de 2022 13:35 \nPara: Jorge Pradas <mailto:jorpramo en gmail.com> \nCC: r-help-es <mailto:r-help-es en r-project.org> \nAsunto: Re: [R-es] Descarga ficheros web desde R \n \nMuchas gracias Jorge, \n \npero no funciona. \n \n \n \nDescarga un fichero de 51KB corrupto y sin datos. El original pesa cerca de \n30MB. \n \nCon los mÃ©todos que yo he usado el resultado es similar, me descarga un \nfichero corrupto y sin posibilidad de abrir. \n \n \n \n \n \n \n \n \n \n \n \n---- Activado jue, 07 abr 2022 13:26:27 +0200 Jorge Pradas \n<mailto:jorpramo en gmail.com> escribiÃ³ ---- \n \n \n \nÂ  Hola! \n \n \n \nCreo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a \nmi me ha ido. \n \n \n \nlibrary(\"httr\") \nUrlBase <- \nÂ \"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas \n=True&tipo=1\" \nfile=POST(UrlBase)[[\"content\"]] \nwriteBin(as.raw(file), \nÂ  Â  Â  Â  Â con = \"./filename.zip\") \n \n \nun saludo! \n \nJorge \n \n \n \n \nEl jue, 7 abr 2022 a las 11:50, Blas (<mailto:mailto:b1 en famovil.es>) escribiÃ³: \n \nBuenos dÃ­as, \n \n me encuentro con un problema que imagino \n Â es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha \n idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos \n pÃºblicos desde la siguiente direcciÃ³n: \nhttp://serviciosede.mineco.gob.es/Indeco/. \n Â En concreto necesito descargar el fichero completo con todas las series \n Â que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger \n del navegador me dice que estÃ¡ bajo la URL \n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas= \nTrue&tipo=1\" \n \n \n \n He probado a ejecutar el siguiente cÃ³digo: \n \n \n \n \n \n library(\"httr\") \n \n UrlBase <-Â  \n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas= \nTrue&tipo=1\" \n \n download.file(UrlBase, \"./BaseDatos.zip\") \n \n \n \n \n \n \n \n \n \n Y tambiÃ©n el cÃ³digo: \n \n \n \n \n \n library(\"httr\") \n \n UrlBase <-Â  \n\"http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas= \nTrue&tipo=1\" \n \n get(UrlBase) \n \n \n \n \n \n \n \n Ninguno de los mÃ©todos me ha funcionado. \n \n Alguien que me oriente. \n \n \n \n \n \n Saludos. \n \n Blas. \n Â  Â  Â  Â  [[alternative HTML version deleted]] \n \n _______________________________________________ \n R-help-es mailing list \n mailto:mailto:R-help-es en r-project.org \n https://stat.ethz.ch/mailman/listinfo/r-help-es \nÂ Â Â Â [[alternative HTML version deleted]] \n\n_______________________________________________ \nR-help-es mailing list \nmailto:R-help-es en r-project.org \nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "PERFECTO Isidro!!!!\n\nAhora ha funcionado, habÃ­a que forzar \"encode\" como decÃ­as.\n\n\n\nMuchisimas gracias a los dos.\n\n\n\n\n\n\n\n\n\n\n\n---- Activado jue, 07 abr 2022 14:16:51 +0200 Isidro Hidalgo Arellano <ih",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 4,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-425d79d49699",
+      "message_id": "<CA2295D2-66DC-4D72-8D34-17408F3B2626@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-04-07T10:28:58-03:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>"
+      ],
+      "body_plain": "Estimados\n\nLa direcciÃ³n es GET, no POST, tendrÃ­a que andar en principio, si me ocurre que podrÃ­a intentar con https://cran.r-project.org/web/packages/rvest/index.html , posiblemente hay algo interno que se soluciona.\n\nJavier RubÃ©n Marcuzzi\n\n> El 7 abr. 2022, a las 08:26, Jorge Pradas <jorpramo en gmail.com> escribiÃ³:\n> \n>  Hola!\n> \n> Creo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a\n> mi me ha ido.\n> \n> library(\"httr\")\n> UrlBase <-  \"\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> \"\n> file=POST(UrlBase)[[\"content\"]]\n> writeBin(as.raw(file),\n>         con = \"./filename.zip\")\n> \n> un saludo!\n> Jorge\n> \n> El jue, 7 abr 2022 a las 11:50, Blas (<b1 en famovil.es>) escribiÃ³:\n> \n>> Buenos dÃ­as,\n>> \n>> me encuentro con un problema que imagino\n>> es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha\n>> idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos\n>> pÃºblicos desde la siguiente direcciÃ³n:\n>> http://serviciosede.mineco.gob.es/Indeco/.\n>> En concreto necesito descargar el fichero completo con todas las series\n>> que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger\n>> del navegador me dice que estÃ¡ bajo la URL \"\n>> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n>> \"\n>> \n>> \n>> \n>> He probado a ejecutar el siguiente cÃ³digo:\n>> \n>> \n>> \n>> \n>> \n>> library(\"httr\")\n>> \n>> UrlBase <-  \"\n>> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n>> \"\n>> \n>> download.file(UrlBase, \"./BaseDatos.zip\")\n>> \n>> \n>> \n>> \n>> \n>> \n>> \n>> \n>> \n>> Y tambiÃ©n el cÃ³digo:\n>> \n>> \n>> \n>> \n>> \n>> library(\"httr\")\n>> \n>> UrlBase <-  \"\n>> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n>> \"\n>> \n>> get(UrlBase)\n>> \n>> \n>> \n>> \n>> \n>> \n>> \n>> Ninguno de los mÃ©todos me ha funcionado.\n>> \n>> Alguien que me oriente.\n>> \n>> \n>> \n>> \n>> \n>> Saludos.\n>> \n>> Blas.\n>>        [[alternative HTML version deleted]]\n>> \n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Estimados\n\nLa direcciÃ³n es GET, no POST, tendrÃ­a que andar en principio, si me ocurre que podrÃ­a intentar con https://cran.r-project.org/web/packages/rvest/index.html , posiblemente hay algo intern",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 2,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-5dbe75149018",
+      "message_id": "<CADf19gKLPRabZgqaEHF1xaFsWQuzHkiBK2OX_en0DOu3rmiPuQ@mail.gmail.com>",
+      "from_name": "Jorge Pradas",
+      "from_email_hash": "c980cde1801ecfbf83548e09fd5cb52bdf47a868c4feadedeb21e90f6eb0016f",
+      "date": "2022-04-07T17:14:52+02:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<CA2295D2-66DC-4D72-8D34-17408F3B2626@gmail.com>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+        "<CA2295D2-66DC-4D72-8D34-17408F3B2626@gmail.com>"
+      ],
+      "body_plain": "No soy muy experto en paginas asp.net pero no funciona como una pagina\nnormal, es por eso que tienes que hacer un post, en este caso ha sido fÃ¡cil\nporque en el envÃ­o de este formulario no hacÃ­a falta pasar\nningÃºn parÃ¡metro, porque imagino que el Ãºnico fichero de descarga que\nofrece ese link es el que queria descargar el compaÃ±ero, sino en la llamada\npost se deberÃ­a haber completado con parÃ¡metros.\n\nAquÃ­ tienen algo mÃ¡s de informaciÃ³n que he podido encontrar:\nhttps://medium.com/@simranpandey97/web-scraper-for-aspx-form-based-webpages-b8828085e4a2\n\nJorge\n\n\nEl jue, 7 abr 2022 a las 15:29, Javier Marcuzzi (<\njavier.ruben.marcuzzi en gmail.com>) escribiÃ³:\n\n> Estimados\n>\n> La direcciÃ³n es GET, no POST, tendrÃ­a que andar en principio, si me ocurre\n> que podrÃ­a intentar con\n> https://cran.r-project.org/web/packages/rvest/index.html , posiblemente\n> hay algo interno que se soluciona.\n>\n> Javier RubÃ©n Marcuzzi\n>\n> > El 7 abr. 2022, a las 08:26, Jorge Pradas <jorpramo en gmail.com> escribiÃ³:\n> >\n> >  Hola!\n> >\n> > Creo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­,\n> a\n> > mi me ha ido.\n> >\n> > library(\"httr\")\n> > UrlBase <-  \"\n> >\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> > \"\n> > file=POST(UrlBase)[[\"content\"]]\n> > writeBin(as.raw(file),\n> >         con = \"./filename.zip\")\n> >\n> > un saludo!\n> > Jorge\n> >\n> > El jue, 7 abr 2022 a las 11:50, Blas (<b1 en famovil.es>) escribiÃ³:\n> >\n> >> Buenos dÃ­as,\n> >>\n> >> me encuentro con un problema que imagino\n> >> es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha\n> >> idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos\n> >> pÃºblicos desde la siguiente direcciÃ³n:\n> >> http://serviciosede.mineco.gob.es/Indeco/.\n> >> En concreto necesito descargar el fichero completo con todas las series\n> >> que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger\n> >> del navegador me dice que estÃ¡ bajo la URL \"\n> >>\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> >> \"\n> >>\n> >>\n> >>\n> >> He probado a ejecutar el siguiente cÃ³digo:\n> >>\n> >>\n> >>\n> >>\n> >>\n> >> library(\"httr\")\n> >>\n> >> UrlBase <-  \"\n> >>\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> >> \"\n> >>\n> >> download.file(UrlBase, \"./BaseDatos.zip\")\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >> Y tambiÃ©n el cÃ³digo:\n> >>\n> >>\n> >>\n> >>\n> >>\n> >> library(\"httr\")\n> >>\n> >> UrlBase <-  \"\n> >>\n> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n> >> \"\n> >>\n> >> get(UrlBase)\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >> Ninguno de los mÃ©todos me ha funcionado.\n> >>\n> >> Alguien que me oriente.\n> >>\n> >>\n> >>\n> >>\n> >>\n> >> Saludos.\n> >>\n> >> Blas.\n> >>        [[alternative HTML version deleted]]\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es en r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "No soy muy experto en paginas asp.net pero no funciona como una pagina\nnormal, es por eso que tienes que hacer un post, en este caso ha sido fÃ¡cil\nporque en el envÃ­o de este formulario no hacÃ­a fal",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 3,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-6e05e97a536d",
+      "message_id": "<B2F26F80-53DD-444D-AC05-FA32B6BE14D7@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-04-07T17:53:57-03:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<CADf19gKLPRabZgqaEHF1xaFsWQuzHkiBK2OX_en0DOu3rmiPuQ@mail.gmail.com>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+        "<CA2295D2-66DC-4D72-8D34-17408F3B2626@gmail.com>",
+        "<CADf19gKLPRabZgqaEHF1xaFsWQuzHkiBK2OX_en0DOu3rmiPuQ@mail.gmail.com>"
+      ],
+      "body_plain": "Estimados\n\nEl lugar de referencia es una direcciÃ³n, esta es GET, no tiene campo POST, aunque, yo no mire como estÃ¡ realizado, desconocÃ­a el problema de asp, aunque esto son estados para identificar el usuario y trabajar entre las solicitudes y respuestas, al respecto, cada vez que yo tuve problemas utilicÃ© selenium desde R, se instala como cualquier paquete en R y mi opciÃ³n preferida es Firefox, es lento, pero para el servidor lo realiza una persona desde Firefox, ejecuta javascript y demÃ¡s cosas evitando inconvenientes.\n\nJavier RubÃ©n Marcuzzi\n\n\n> El 7 abr. 2022, a las 12:14, Jorge Pradas <jorpramo en gmail.com> escribiÃ³:\n> \n> No soy muy experto en paginas asp.net <http://asp.net/> pero no funciona como una pagina normal, es por eso que tienes que hacer un post, en este caso ha sido fÃ¡cil porque en el envÃ­o de este formulario no hacÃ­a falta pasar ningÃºn parÃ¡metro, porque imagino que el Ãºnico fichero de descarga que ofrece ese link es el que queria descargar el compaÃ±ero, sino en la llamada post se deberÃ­a haber completado con parÃ¡metros.\n> \n> AquÃ­ tienen algo mÃ¡s de informaciÃ³n que he podido encontrar:\n> https://medium.com/@simranpandey97/web-scraper-for-aspx-form-based-webpages-b8828085e4a2 <https://medium.com/@simranpandey97/web-scraper-for-aspx-form-based-webpages-b8828085e4a2>\n> \n> Jorge\n> \n> \n> El jue, 7 abr 2022 a las 15:29, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribiÃ³:\n> Estimados\n> \n> La direcciÃ³n es GET, no POST, tendrÃ­a que andar en principio, si me ocurre que podrÃ­a intentar con https://cran.r-project.org/web/packages/rvest/index.html <https://cran.r-project.org/web/packages/rvest/index.html> , posiblemente hay algo interno que se soluciona.\n> \n> Javier RubÃ©n Marcuzzi\n> \n> > El 7 abr. 2022, a las 08:26, Jorge Pradas <jorpramo en gmail.com <mailto:jorpramo en gmail.com>> escribiÃ³:\n> > \n> >  Hola!\n> > \n> > Creo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a\n> > mi me ha ido.\n> > \n> > library(\"httr\")\n> > UrlBase <-  \"\n> > http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n> > \"\n> > file=POST(UrlBase)[[\"content\"]]\n> > writeBin(as.raw(file),\n> >         con = \"./filename.zip\")\n> > \n> > un saludo!\n> > Jorge\n> > \n> > El jue, 7 abr 2022 a las 11:50, Blas (<b1 en famovil.es <mailto:b1 en famovil.es>>) escribiÃ³:\n> > \n> >> Buenos dÃ­as,\n> >> \n> >> me encuentro con un problema que imagino\n> >> es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha\n> >> idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos\n> >> pÃºblicos desde la siguiente direcciÃ³n:\n> >> http://serviciosede.mineco.gob.es/Indeco/ <http://serviciosede.mineco.gob.es/Indeco/>.\n> >> En concreto necesito descargar el fichero completo con todas las series\n> >> que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger\n> >> del navegador me dice que estÃ¡ bajo la URL \"\n> >> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n> >> \"\n> >> \n> >> \n> >> \n> >> He probado a ejecutar el siguiente cÃ³digo:\n> >> \n> >> \n> >> \n> >> \n> >> \n> >> library(\"httr\")\n> >> \n> >> UrlBase <-  \"\n> >> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n> >> \"\n> >> \n> >> download.file(UrlBase, \"./BaseDatos.zip\")\n> >> \n> >> \n> >> \n> >> \n> >> \n> >> \n> >> \n> >> \n> >> \n> >> Y tambiÃ©n el cÃ³digo:\n> >> \n> >> \n> >> \n> >> \n> >> \n> >> library(\"httr\")\n> >> \n> >> UrlBase <-  \"\n> >> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n> >> \"\n> >> \n> >> get(UrlBase)\n> >> \n> >> \n> >> \n> >> \n> >> \n> >> \n> >> \n> >> Ninguno de los mÃ©todos me ha funcionado.\n> >> \n> >> Alguien que me oriente.\n> >> \n> >> \n> >> \n> >> \n> >> \n> >> Saludos.\n> >> \n> >> Blas.\n> >>        [[alternative HTML version deleted]]\n> >> \n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n> >> \n> > \n> >       [[alternative HTML version deleted]]\n> > \n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n> \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nEl lugar de referencia es una direcciÃ³n, esta es GET, no tiene campo POST, aunque, yo no mire como estÃ¡ realizado, desconocÃ­a el problema de asp, aunque esto son estados para identificar",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 4,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-376489d1ff52",
+      "message_id": "<CADf19gLJVOEaMr0PF4xGw3=vxGwMxN64BeLp8Ftca=+Q6rMEmw@mail.gmail.com>",
+      "from_name": "Jorge Pradas",
+      "from_email_hash": "c980cde1801ecfbf83548e09fd5cb52bdf47a868c4feadedeb21e90f6eb0016f",
+      "date": "2022-04-07T23:01:36+02:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<B2F26F80-53DD-444D-AC05-FA32B6BE14D7@gmail.com>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+        "<CA2295D2-66DC-4D72-8D34-17408F3B2626@gmail.com>",
+        "<CADf19gKLPRabZgqaEHF1xaFsWQuzHkiBK2OX_en0DOu3rmiPuQ@mail.gmail.com>",
+        "<B2F26F80-53DD-444D-AC05-FA32B6BE14D7@gmail.com>"
+      ],
+      "body_plain": "Lo siento pero discrepo, una direcciÃ³n puedes usarla para hacer un get o\nbien un post si lleva parÃ¡metros adicionales. En este caso no pasamos\nporque los parÃ¡metros por defecto serÃ¡n los del propio documento.\nDe hecho si haces un view(post(url)) verÃ¡s todo lo que devuelve y entre\nello los parÃ¡metros ocultos.\nEl caso es que con post funciona y con get no. ;)\n\nJorge\n\nEl jue., 7 abr. 2022 22:54, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>\nescribiÃ³:\n\n> Estimados\n>\n> El lugar de referencia es una direcciÃ³n, esta es GET, no tiene campo POST,\n> aunque, yo no mire como estÃ¡ realizado, desconocÃ­a el problema de asp,\n> aunque esto son estados para identificar el usuario y trabajar entre las\n> solicitudes y respuestas, al respecto, cada vez que yo tuve problemas\n> utilicÃ© selenium desde R, se instala como cualquier paquete en R y mi\n> opciÃ³n preferida es Firefox, es lento, pero para el servidor lo realiza una\n> persona desde Firefox, ejecuta javascript y demÃ¡s cosas evitando\n> inconvenientes.\n>\n> Javier RubÃ©n Marcuzzi\n>\n>\n> El 7 abr. 2022, a las 12:14, Jorge Pradas <jorpramo en gmail.com> escribiÃ³:\n>\n> No soy muy experto en paginas asp.net pero no funciona como una pagina\n> normal, es por eso que tienes que hacer un post, en este caso ha sido fÃ¡cil\n> porque en el envÃ­o de este formulario no hacÃ­a falta pasar\n> ningÃºn parÃ¡metro, porque imagino que el Ãºnico fichero de descarga que\n> ofrece ese link es el que queria descargar el compaÃ±ero, sino en la llamada\n> post se deberÃ­a haber completado con parÃ¡metros.\n>\n> AquÃ­ tienen algo mÃ¡s de informaciÃ³n que he podido encontrar:\n>\n> https://medium.com/@simranpandey97/web-scraper-for-aspx-form-based-webpages-b8828085e4a2\n>\n> Jorge\n>\n>\n> El jue, 7 abr 2022 a las 15:29, Javier Marcuzzi (<\n> javier.ruben.marcuzzi en gmail.com>) escribiÃ³:\n>\n>> Estimados\n>>\n>> La direcciÃ³n es GET, no POST, tendrÃ­a que andar en principio, si me\n>> ocurre que podrÃ­a intentar con\n>> https://cran.r-project.org/web/packages/rvest/index.html , posiblemente\n>> hay algo interno que se soluciona.\n>>\n>> Javier RubÃ©n Marcuzzi\n>>\n>> > El 7 abr. 2022, a las 08:26, Jorge Pradas <jorpramo en gmail.com>\n>> escribiÃ³:\n>> >\n>> >  Hola!\n>> >\n>> > Creo que con GET no va, con POST mejor y sacando el content. Prueba\n>> asÃ­, a\n>> > mi me ha ido.\n>> >\n>> > library(\"httr\")\n>> > UrlBase <-  \"\n>> >\n>> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n>> > \"\n>> > file=POST(UrlBase)[[\"content\"]]\n>> > writeBin(as.raw(file),\n>> >         con = \"./filename.zip\")\n>> >\n>> > un saludo!\n>> > Jorge\n>> >\n>> > El jue, 7 abr 2022 a las 11:50, Blas (<b1 en famovil.es>) escribiÃ³:\n>> >\n>> >> Buenos dÃ­as,\n>> >>\n>> >> me encuentro con un problema que imagino\n>> >> es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha\n>> >> idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos\n>> >> pÃºblicos desde la siguiente direcciÃ³n:\n>> >> http://serviciosede.mineco.gob.es/Indeco/.\n>> >> En concreto necesito descargar el fichero completo con todas las series\n>> >> que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger\n>> >> del navegador me dice que estÃ¡ bajo la URL \"\n>> >>\n>> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n>> >> \"\n>> >>\n>> >>\n>> >>\n>> >> He probado a ejecutar el siguiente cÃ³digo:\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >> library(\"httr\")\n>> >>\n>> >> UrlBase <-  \"\n>> >>\n>> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n>> >> \"\n>> >>\n>> >> download.file(UrlBase, \"./BaseDatos.zip\")\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >> Y tambiÃ©n el cÃ³digo:\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >> library(\"httr\")\n>> >>\n>> >> UrlBase <-  \"\n>> >>\n>> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1\n>> >> \"\n>> >>\n>> >> get(UrlBase)\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >> Ninguno de los mÃ©todos me ha funcionado.\n>> >>\n>> >> Alguien que me oriente.\n>> >>\n>> >>\n>> >>\n>> >>\n>> >>\n>> >> Saludos.\n>> >>\n>> >> Blas.\n>> >>        [[alternative HTML version deleted]]\n>> >>\n>> >> _______________________________________________\n>> >> R-help-es mailing list\n>> >> R-help-es en r-project.org\n>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >>\n>> >\n>> >       [[alternative HTML version deleted]]\n>> >\n>> > _______________________________________________\n>> > R-help-es mailing list\n>> > R-help-es en r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Lo siento pero discrepo, una direcciÃ³n puedes usarla para hacer un get o\nbien un post si lleva parÃ¡metros adicionales. En este caso no pasamos\nporque los parÃ¡metros por defecto serÃ¡n los del propi",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 5,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-81c175bdd030",
+      "message_id": "<2C3BFE94-04DC-40EC-B58F-AE684F01D83B@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2022-04-07T19:40:50-03:00",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "subject_clean": "[R-es] Descarga ficheros web desde R",
+      "in_reply_to": "<CADf19gLJVOEaMr0PF4xGw3=vxGwMxN64BeLp8Ftca=+Q6rMEmw@mail.gmail.com>",
+      "references": [
+        "<180036e0ea8.e422ee53399743.666794865219410070@famovil.es>",
+        "<CADf19gKFhZmOdz0GcaQ0US5yNg3qp0mXi-AJ6iopwQM7iegQwQ@mail.gmail.com>",
+        "<CA2295D2-66DC-4D72-8D34-17408F3B2626@gmail.com>",
+        "<CADf19gKLPRabZgqaEHF1xaFsWQuzHkiBK2OX_en0DOu3rmiPuQ@mail.gmail.com>",
+        "<B2F26F80-53DD-444D-AC05-FA32B6BE14D7@gmail.com>",
+        "<CADf19gLJVOEaMr0PF4xGw3=vxGwMxN64BeLp8Ftca=+Q6rMEmw@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Jorge\n\nEstamos diciendo lo mismo pero de forma diferente, el correo tiene una direcciÃ³n, uno la visita por GET o por url.\n\nUsted dice que View(post(url)), y yo a eso podrÃ­a sumar lo que tomo de una captura cualquiera de internet y que no es lenguaje R.\n\n\nEn ambos casos, se le envÃ­an parÃ¡metros al servidor y hay respuesta de la forma  https://www.example.com/index.html?name1=value1&name2=value2 <https://www.example.com/index.html?name1=value1&name2=value2>\n\nCuÃ¡ndo yo leo la siguiente direcciÃ³n no veo parÃ¡metros enviados por Post, lÃ³gicamente que el servidor puede crear un parÃ¡metro como ser JWT para cada usuario y diferentes posibilidades.\n>> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n\n\n\n\n> El 7 abr. 2022, a las 18:01, Jorge Pradas <jorpramo en gmail.com> escribiÃ³:\n> \n> Lo siento pero discrepo, una direcciÃ³n puedes usarla para hacer un get o bien un post si lleva parÃ¡metros adicionales. En este caso no pasamos porque los parÃ¡metros por defecto serÃ¡n los del propio documento.\n> De hecho si haces un view(post(url)) verÃ¡s todo lo que devuelve y entre ello los parÃ¡metros ocultos.\n> El caso es que con post funciona y con get no. ;)\n> \n> Jorge\n> \n> El jue., 7 abr. 2022 22:54, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribiÃ³:\n> Estimados\n> \n> El lugar de referencia es una direcciÃ³n, esta es GET, no tiene campo POST, aunque, yo no mire como estÃ¡ realizado, desconocÃ­a el problema de asp, aunque esto son estados para identificar el usuario y trabajar entre las solicitudes y respuestas, al respecto, cada vez que yo tuve problemas utilicÃ© selenium desde R, se instala como cualquier paquete en R y mi opciÃ³n preferida es Firefox, es lento, pero para el servidor lo realiza una persona desde Firefox, ejecuta javascript y demÃ¡s cosas evitando inconvenientes.\n> \n> Javier RubÃ©n Marcuzzi\n> \n> \n>> El 7 abr. 2022, a las 12:14, Jorge Pradas <jorpramo en gmail.com <mailto:jorpramo en gmail.com>> escribiÃ³:\n>> \n>> No soy muy experto en paginas asp.net <http://asp.net/> pero no funciona como una pagina normal, es por eso que tienes que hacer un post, en este caso ha sido fÃ¡cil porque en el envÃ­o de este formulario no hacÃ­a falta pasar ningÃºn parÃ¡metro, porque imagino que el Ãºnico fichero de descarga que ofrece ese link es el que queria descargar el compaÃ±ero, sino en la llamada post se deberÃ­a haber completado con parÃ¡metros.\n>> \n>> AquÃ­ tienen algo mÃ¡s de informaciÃ³n que he podido encontrar:\n>> https://medium.com/@simranpandey97/web-scraper-for-aspx-form-based-webpages-b8828085e4a2 <https://medium.com/@simranpandey97/web-scraper-for-aspx-form-based-webpages-b8828085e4a2>\n>> \n>> Jorge\n>> \n>> \n>> El jue, 7 abr 2022 a las 15:29, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribiÃ³:\n>> Estimados\n>> \n>> La direcciÃ³n es GET, no POST, tendrÃ­a que andar en principio, si me ocurre que podrÃ­a intentar con https://cran.r-project.org/web/packages/rvest/index.html <https://cran.r-project.org/web/packages/rvest/index.html> , posiblemente hay algo interno que se soluciona.\n>> \n>> Javier RubÃ©n Marcuzzi\n>> \n>> > El 7 abr. 2022, a las 08:26, Jorge Pradas <jorpramo en gmail.com <mailto:jorpramo en gmail.com>> escribiÃ³:\n>> > \n>> >  Hola!\n>> > \n>> > Creo que con GET no va, con POST mejor y sacando el content. Prueba asÃ­, a\n>> > mi me ha ido.\n>> > \n>> > library(\"httr\")\n>> > UrlBase <-  \"\n>> > http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n>> > \"\n>> > file=POST(UrlBase)[[\"content\"]]\n>> > writeBin(as.raw(file),\n>> >         con = \"./filename.zip\")\n>> > \n>> > un saludo!\n>> > Jorge\n>> > \n>> > El jue, 7 abr 2022 a las 11:50, Blas (<b1 en famovil.es <mailto:b1 en famovil.es>>) escribiÃ³:\n>> > \n>> >> Buenos dÃ­as,\n>> >> \n>> >> me encuentro con un problema que imagino\n>> >> es muy comÃºn pero no veo soluciÃ³n aparente en internet. No tengo mucha\n>> >> idea de pÃ¡ginas \"aspx\" ni \"javascript\" pero necesito descargar datos\n>> >> pÃºblicos desde la siguiente direcciÃ³n:\n>> >> http://serviciosede.mineco.gob.es/Indeco/ <http://serviciosede.mineco.gob.es/Indeco/>.\n>> >> En concreto necesito descargar el fichero completo con todas las series\n>> >> que estÃ¡ en el enlace \"Descarga completa de BDSICE\". Con el debugger\n>> >> del navegador me dice que estÃ¡ bajo la URL \"\n>> >> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n>> >> \"\n>> >> \n>> >> \n>> >> \n>> >> He probado a ejecutar el siguiente cÃ³digo:\n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> library(\"httr\")\n>> >> \n>> >> UrlBase <-  \"\n>> >> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n>> >> \"\n>> >> \n>> >> download.file(UrlBase, \"./BaseDatos.zip\")\n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> Y tambiÃ©n el cÃ³digo:\n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> library(\"httr\")\n>> >> \n>> >> UrlBase <-  \"\n>> >> http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1 <http://serviciosede.mineco.gob.es/Indeco/DescargaArchivo.aspx?estadisticas=True&tipo=1>\n>> >> \"\n>> >> \n>> >> get(UrlBase)\n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> Ninguno de los mÃ©todos me ha funcionado.\n>> >> \n>> >> Alguien que me oriente.\n>> >> \n>> >> \n>> >> \n>> >> \n>> >> \n>> >> Saludos.\n>> >> \n>> >> Blas.\n>> >>        [[alternative HTML version deleted]]\n>> >> \n>> >> _______________________________________________\n>> >> R-help-es mailing list\n>> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>> >> \n>> > \n>> >       [[alternative HTML version deleted]]\n>> > \n>> > _______________________________________________\n>> > R-help-es mailing list\n>> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n>> > https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>> \n> \n\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220407/7b647c01/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: fs3EG.png\nType: image/png\nSize: 30694 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220407/7b647c01/attachment-0001.png>",
+      "body_snippet": "Estimado Jorge\n\nEstamos diciendo lo mismo pero de forma diferente, el correo tiene una direcciÃ³n, uno la visita por GET o por url.\n\nUsted dice que View(post(url)), y yo a eso podrÃ­a sumar lo que tom",
+      "thread_id": "thread-75a61644f47f",
+      "thread_depth": 6,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-d6bb558a978e",
+      "message_id": "<CAKLpnkKw8_q22e0J5oGYiMTFjh6SKC1Knv8wszXgvkDLhmZ_gA@mail.gmail.com>",
+      "from_name": "Stalin Granda",
+      "from_email_hash": "d4fcc7322b86fbfc9fe990b6f870fe6c35d3c9c3afae1faa98003e5c3c111913",
+      "date": "2022-04-14T10:01:22-04:00",
+      "subject": "[R-es] Regresión no linear en WRC con Machine Learning",
+      "subject_clean": "[R-es] Regresión no linear en WRC con Machine Learning",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola a todos,\n\nEstoy trabajando con un modelo de predicciÃ³n de para ajustar la curva de\nretenciÃ³n de agua (theta ~ WRC) de acuerdo con la Ec. de van Genutchen\n\nfitted <- nls(theta ~ qr + (qs-qr)/(1+(alpha*h)^n)^(1-1/n),\nstart=list(qs=0.64, qr=0.30, alpha =.37, n=2.83))\n\nDespuÃ©s de correr el cÃ³digo, los datos ajustados (theta) se ven bastante\nbien para un cierta secciÃ³n de la curva (entre 0,178 y 2,87 pF),  pero con\nestos mismos ahora necesito generar una ecuaciÃ³n polinÃ³mica que me permita\ncalcular (theta) para otros valores de la curva, entre 0 y 4,27 pF (h ~\npF).\n\nEstoy aplicando machine learning, realizando la particiÃ³n correspondiente\npara datos  evaluados y testados.\n\ntraining.muestra <-  datos1$predichos  %>%\n  createDataPartition(p=0.8, list = FALSE)\ntrain.data <- datos1 [training.muestra, ]\ntest.data <- datos1 [-training.muestra, ]\n\nHe generado el modelo 3 (datos1.csv) para una ecuaciÃ³n polinÃ³mica de grado\n3:\n\nmodelo3 <- lm(predichos  ~ poly(h,3),data = train.data)\nsummary(modelo3)$coef\npredicciones3 <- modelo3 %>% predict(test.data)\npredicciones3\n\nLos resultados se muestran:\n\n               Estimate   Std. Error    t value      Pr(>|t|)\n(Intercept)  0.53733575 0.0004243755 1266.17982 2.609800e-156\npoly(h, 3)1 -0.58854606 0.0036752001 -160.13987  1.358153e-92\npoly(h, 3)2 -0.13918929 0.0036752001  -37.87258  7.919609e-49\npoly(h, 3)3  0.06016205 0.0036752001   16.36973  8.380817e-26\n\nCon estos datos. gÃ©nero la ecuaciÃ³n correspondiente, pero al hacer el\ncÃ¡lculo para otros valores de la curva en excel, el grÃ¡fico no se muestra\nigual como en r.\n\nSerÃ¡ que estoy haciendo algo mal, alguien me puede dar luces al respecto.\nEn el adjunto les dejo los valores con los que estoy trabajando.\n\nSaludos cordiales,\n\nStalin\n\n\n-- \n\n\n\n*Stalin Granda A.MagÃ­ster en IngenierÃ­a Mc. Recursos HÃ­dricosUACh*\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220414/81e5a078/attachment.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: datos1.csv\nType: text/csv\nSize: 1718 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220414/81e5a078/attachment.csv>",
+      "body_snippet": "Hola a todos,\n\nEstoy trabajando con un modelo de predicciÃ³n de para ajustar la curva de\nretenciÃ³n de agua (theta ~ WRC) de acuerdo con la Ec. de van Genutchen\n\nfitted <- nls(theta ~ qr + (qs-qr)/(1+",
+      "thread_id": "thread-d6bb558a978e",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-926c259ee959",
+      "message_id": "<A894799A-8621-4E4D-AE57-6601076E821D@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2022-04-15T07:23:14+02:00",
+      "subject": "[R-es]  Regresión no linear en WRC con Machine Learning",
+      "subject_clean": "[R-es]  Regresión no linear en WRC con Machine Learning",
+      "in_reply_to": "<CAKLpnkKw8_q22e0J5oGYiMTFjh6SKC1Knv8wszXgvkDLhmZ_gA@mail.gmail.com>",
+      "references": [
+        "<CAKLpnkKw8_q22e0J5oGYiMTFjh6SKC1Knv8wszXgvkDLhmZ_gA@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Stalin,\n\nPor defecto, la funciÃ³n poly() de R ajusta polinomios ortogonales. Posiblemente Excel ajuste polinomios de otra forma, prueba a usar el argumento raw = TRUE a ver si asÃ­ tienes el mismo resultado.\n\nUn saludo,\n\nEmilio L. Cano\nhttp://emilio.lcano.com \n\n\n\n\n> El 14 abr 2022, a las 16:01, Stalin Granda <svgranda en gmail.com> escribiÃ³:\n> \n> Hola a todos,\n> \n> Estoy trabajando con un modelo de predicciÃ³n de para ajustar la curva de retenciÃ³n de agua (theta ~ WRC) de acuerdo con la Ec. de van Genutchen \n> \n> fitted <- nls(theta ~ qr + (qs-qr)/(1+(alpha*h)^n)^(1-1/n), start=list(qs=0.64, qr=0.30, alpha =.37, n=2.83))\n> \n> DespuÃ©s de correr el cÃ³digo, los datos ajustados (theta) se ven bastante bien para un cierta secciÃ³n de la curva (entre 0,178 y 2,87 pF),  pero con estos mismos ahora necesito generar una ecuaciÃ³n polinÃ³mica que me permita calcular (theta) para otros valores de la curva, entre 0 y 4,27 pF (h ~ pF). \n> \n> Estoy aplicando machine learning, realizando la particiÃ³n correspondiente para datos  evaluados y testados. \n> \n> training.muestra <-  datos1$predichos  %>%\n>   createDataPartition(p=0.8, list = FALSE)\n> train.data <- datos1 [training.muestra, ]\n> test.data <- datos1 [-training.muestra, ]\n> \n> He generado el modelo 3 (datos1.csv) para una ecuaciÃ³n polinÃ³mica de grado 3:\n> \n> modelo3 <- lm(predichos  ~ poly(h,3),data = train.data)\n> summary(modelo3)$coef\n> predicciones3 <- modelo3 %>% predict(test.data)\n> predicciones3\n> \n> Los resultados se muestran:\n> \n>                Estimate   Std. Error    t value      Pr(>|t|)\n> (Intercept)  0.53733575 0.0004243755 1266.17982 2.609800e-156\n> poly(h, 3)1 -0.58854606 0.0036752001 -160.13987  1.358153e-92\n> poly(h, 3)2 -0.13918929 0.0036752001  -37.87258  7.919609e-49\n> poly(h, 3)3  0.06016205 0.0036752001   16.36973  8.380817e-26\n> \n> Con estos datos. gÃ©nero la ecuaciÃ³n correspondiente, pero al hacer el cÃ¡lculo para otros valores de la curva en excel, el grÃ¡fico no se muestra igual como en r. \n> \n> SerÃ¡ que estoy haciendo algo mal, alguien me puede dar luces al respecto.  En el adjunto les dejo los valores con los que estoy trabajando.\n> \n> Saludos cordiales,\n> \n> Stalin \n> \n> \n> -- \n> Stalin Granda A.\n> MagÃ­ster en IngenierÃ­a Mc. Recursos HÃ­dricos\n> UACh\n> \n> <datos1.csv>_______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Stalin,\n\nPor defecto, la funciÃ³n poly() de R ajusta polinomios ortogonales. Posiblemente Excel ajuste polinomios de otra forma, prueba a usar el argumento raw = TRUE a ver si asÃ­ tienes el mism",
+      "thread_id": "thread-d6bb558a978e",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-d65a692bb32c",
+      "message_id": "<CAKLpnkJhYJhenYeLjjko-kFUHSUqOZob_JfGUzdqoOvws5wf4Q@mail.gmail.com>",
+      "from_name": "Stalin Granda",
+      "from_email_hash": "d4fcc7322b86fbfc9fe990b6f870fe6c35d3c9c3afae1faa98003e5c3c111913",
+      "date": "2022-04-18T12:22:39-04:00",
+      "subject": "[R-es]  Regresión no linear en WRC con Machine Learning",
+      "subject_clean": "[R-es]  Regresión no linear en WRC con Machine Learning",
+      "in_reply_to": "<A894799A-8621-4E4D-AE57-6601076E821D@gmail.com>",
+      "references": [
+        "<CAKLpnkKw8_q22e0J5oGYiMTFjh6SKC1Knv8wszXgvkDLhmZ_gA@mail.gmail.com>",
+        "<A894799A-8621-4E4D-AE57-6601076E821D@gmail.com>"
+      ],
+      "body_plain": "Gracias Emilio,\n\nFinalmente para obviar el tema de ortogonalidad, decidÃ­ construir el\npolinomio como una ecuaciÃ³n independiente,  elevando la variable de interÃ©s\na las potencias correspondientes.\n\ndat_WRC19 <- data.frame(h=h, predichos=predichos)\nh2 =h*h\nh3=h2*h\nmod19 <- lm(predichos ~ h + h2 + h3, data=datos1)\nsummary(mod19)\n\nLos resultados fueron los esperados, y ahora se pueden dibujar e\ninterpretar en excel sin dificultad.\n\nCoefficients:\n             Estimate Std. Error t value Pr(>|t|)\n(Intercept)  0.591612   0.003169  186.68   <2e-16 ***\nh            0.129202   0.007422   17.41   <2e-16 ***\nh2          -0.128228   0.005153  -24.89   <2e-16 ***\nh3           0.020383   0.001080   18.87   <2e-16 ***\n\nSaludos cordiales,\n\nStalin\n\nEl vie, 15 abr 2022 a las 1:23, Emilio L. Cano (<emilopezcano en gmail.com>)\nescribiÃ³:\n\n> Hola Stalin,\n>\n> Por defecto, la funciÃ³n poly() de R ajusta polinomios ortogonales.\n> Posiblemente Excel ajuste polinomios de otra forma, prueba a usar el\n> argumento raw = TRUE a ver si asÃ­ tienes el mismo resultado.\n>\n> Un saludo,\n>\n> Emilio L. Cano\n> http://emilio.lcano.com\n>\n>\n>\n>\n> El 14 abr 2022, a las 16:01, Stalin Granda <svgranda en gmail.com> escribiÃ³:\n>\n> Hola a todos,\n>\n> Estoy trabajando con un modelo de predicciÃ³n de para ajustar la curva de\n> retenciÃ³n de agua (theta ~ WRC) de acuerdo con la Ec. de van Genutchen\n>\n> fitted <- nls(theta ~ qr + (qs-qr)/(1+(alpha*h)^n)^(1-1/n),\n> start=list(qs=0.64, qr=0.30, alpha =.37, n=2.83))\n>\n> DespuÃ©s de correr el cÃ³digo, los datos ajustados (theta) se ven bastante\n> bien para un cierta secciÃ³n de la curva (entre 0,178 y 2,87 pF),  pero con\n> estos mismos ahora necesito generar una ecuaciÃ³n polinÃ³mica que me permita\n> calcular (theta) para otros valores de la curva, entre 0 y 4,27 pF (h ~\n> pF).\n>\n> Estoy aplicando machine learning, realizando la particiÃ³n correspondiente\n> para datos  evaluados y testados.\n>\n> training.muestra <-  datos1$predichos  %>%\n>   createDataPartition(p=0.8, list = FALSE)\n> train.data <- datos1 [training.muestra, ]\n> test.data <- datos1 [-training.muestra, ]\n>\n> He generado el modelo 3 (datos1.csv) para una ecuaciÃ³n polinÃ³mica de grado\n> 3:\n>\n> modelo3 <- lm(predichos  ~ poly(h,3),data = train.data)\n> summary(modelo3)$coef\n> predicciones3 <- modelo3 %>% predict(test.data)\n> predicciones3\n>\n> Los resultados se muestran:\n>\n>                Estimate   Std. Error    t value      Pr(>|t|)\n> (Intercept)  0.53733575 0.0004243755 1266.17982 2.609800e-156\n> poly(h, 3)1 -0.58854606 0.0036752001 -160.13987  1.358153e-92\n> poly(h, 3)2 -0.13918929 0.0036752001  -37.87258  7.919609e-49\n> poly(h, 3)3  0.06016205 0.0036752001   16.36973  8.380817e-26\n>\n> Con estos datos. gÃ©nero la ecuaciÃ³n correspondiente, pero al hacer el\n> cÃ¡lculo para otros valores de la curva en excel, el grÃ¡fico no se muestra\n> igual como en r.\n>\n> SerÃ¡ que estoy haciendo algo mal, alguien me puede dar luces al respecto.\n> En el adjunto les dejo los valores con los que estoy trabajando.\n>\n> Saludos cordiales,\n>\n> Stalin\n>\n>\n> --\n>\n>\n>\n> *Stalin Granda A.MagÃ­ster en IngenierÃ­a Mc. Recursos HÃ­dricosUACh*\n> <datos1.csv>_______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n>\n\n-- \n\n\n\n*Stalin Granda A.MagÃ­ster en IngenierÃ­a Mc. Recursos HÃ­dricosUACh*\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Emilio,\n\nFinalmente para obviar el tema de ortogonalidad, decidÃ­ construir el\npolinomio como una ecuaciÃ³n independiente,  elevando la variable de interÃ©s\na las potencias correspondientes.\n\n",
+      "thread_id": "thread-d6bb558a978e",
+      "thread_depth": 2,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-5b3080d9ba26",
+      "message_id": "<CAEgqsh_z+NTCGJ-mLMJ_CAtwGtPDnLr8kZsgiJ9fXQDLOHHU4A@mail.gmail.com>",
+      "from_name": "JALS",
+      "from_email_hash": "a69be1588cd43599d710f2ae4384ae7e44b59c2595aa34907f3397574e56f4bd",
+      "date": "2022-04-19T10:10:37-04:00",
+      "subject": "[R-es] help cannot read property 'substr' of null",
+      "subject_clean": "[R-es] help cannot read property 'substr' of null",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as,\nal modificar los nombres de las columnas despuÃ©s no puedo filtrar los datos\n\n*codigo:*\n\n\n file_data <- read_xls(file_dir, sheet = \"Consultas. por profesional (2)\",\nskip = 14)\n    file_data <-unname(file_data)\n    colnames(file_data)<-c(\"agenda\",\"profesional\",\"controles_enero\",\n\"ingresos_enero\",\"nsp_nuevos_enero\",\"nsp_consultas_enero\",\n                           \"controles_febrero\",\n\"ingresos_febrero\",\"nsp_nuevos_febrero\",\"nsp_consultas_febrero\",\n                           \"controles_marzo\",\n\"ingresos_marzo\",\"nsp_nuevos_marzo\",\"nsp_consultas_marzo\",\n                           \"controles_abril\",\n\"ingresos_abril\",\"nsp_nuevos_abril\",\"nsp_consultas_abril\",\n                           \"controles_mayo\",\n\"ingresos_mayo\",\"nsp_nuevos_mayo\",\"nsp_consultas_mayo\",\n                           \"controles_junio\",\n\"ingresos_junio\",\"nsp_nuevos_junio\",\"nsp_consultas_junio\",\n                           \"controles_julio\",\n\"ingresos_julio\",\"nsp_nuevos_julio\",\"nsp_consultas_julio\",\n                           \"controles_agosto\",\n\"ingresos_agosto\",\"nsp_nuevos_agosto\",\"nsp_consultas_agosto\",\n                           \"controles_septiembre\",\n\"ingresos_septiembre\",\"nsp_nuevos_septiembre\",\"nsp_consultas_septiembre\",\n                           \"controles_octubre\",\n\"ingresos_octubre\",\"nsp_nuevos_octubre\",\"nsp_consultas_octubre\",\n                           \"controles_noviembre\",\n\"ingresos_noviembre\",\"nsp_nuevos_noviembre\",\"nsp_consultas_noviembre\",\n                           \"controles_diciembre\",\n\"ingresos_diciembre\",\"nsp_nuevos_diciembre\",\"nsp_consultas_diciembre\"\n\n\n*al acceder a los nombres de las columnas, me aparece el error*\n\nfile_data$\ncannot read property 'substr' of null\n\n\nagradezco la ayuda!\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as,\nal modificar los nombres de las columnas despuÃ©s no puedo filtrar los datos\n\n*codigo:*\n\n\n file_data <- read_xls(file_dir, sheet = \"Consultas. por profesional (2)\",\nskip = 14)\n    file_d",
+      "thread_id": "thread-5b3080d9ba26",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-433b21ec33f5",
+      "message_id": "<06BDE2A8-0419-41F7-ABC1-0C5C79A0E000@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2022-04-20T08:41:39+02:00",
+      "subject": "[R-es] help cannot read property 'substr' of null",
+      "subject_clean": "[R-es] help cannot read property 'substr' of null",
+      "in_reply_to": "<CAEgqsh_z+NTCGJ-mLMJ_CAtwGtPDnLr8kZsgiJ9fXQDLOHHU4A@mail.gmail.com>",
+      "references": [
+        "<CAEgqsh_z+NTCGJ-mLMJ_CAtwGtPDnLr8kZsgiJ9fXQDLOHHU4A@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nEl ejemplo no es reproducible y no sÃ© muy bien quÃ© puede ser. Pero, Â¿para que necesitas file_data <-unname(file_data)?\n\nYo lo primero probarÃ­a quitando esa lÃ­nea.\n\nEmilio\n\n\n> El 19 abr 2022, a las 16:10, JALS <jaqueline.lillo en gmail.com> escribiÃ³:\n> \n> Buenos dÃ­as,\n> al modificar los nombres de las columnas despuÃ©s no puedo filtrar los datos\n> \n> *codigo:*\n> \n> \n> file_data <- read_xls(file_dir, sheet = \"Consultas. por profesional (2)\",\n> skip = 14)\n>    file_data <-unname(file_data)\n>    colnames(file_data)<-c(\"agenda\",\"profesional\",\"controles_enero\",\n> \"ingresos_enero\",\"nsp_nuevos_enero\",\"nsp_consultas_enero\",\n>                           \"controles_febrero\",\n> \"ingresos_febrero\",\"nsp_nuevos_febrero\",\"nsp_consultas_febrero\",\n>                           \"controles_marzo\",\n> \"ingresos_marzo\",\"nsp_nuevos_marzo\",\"nsp_consultas_marzo\",\n>                           \"controles_abril\",\n> \"ingresos_abril\",\"nsp_nuevos_abril\",\"nsp_consultas_abril\",\n>                           \"controles_mayo\",\n> \"ingresos_mayo\",\"nsp_nuevos_mayo\",\"nsp_consultas_mayo\",\n>                           \"controles_junio\",\n> \"ingresos_junio\",\"nsp_nuevos_junio\",\"nsp_consultas_junio\",\n>                           \"controles_julio\",\n> \"ingresos_julio\",\"nsp_nuevos_julio\",\"nsp_consultas_julio\",\n>                           \"controles_agosto\",\n> \"ingresos_agosto\",\"nsp_nuevos_agosto\",\"nsp_consultas_agosto\",\n>                           \"controles_septiembre\",\n> \"ingresos_septiembre\",\"nsp_nuevos_septiembre\",\"nsp_consultas_septiembre\",\n>                           \"controles_octubre\",\n> \"ingresos_octubre\",\"nsp_nuevos_octubre\",\"nsp_consultas_octubre\",\n>                           \"controles_noviembre\",\n> \"ingresos_noviembre\",\"nsp_nuevos_noviembre\",\"nsp_consultas_noviembre\",\n>                           \"controles_diciembre\",\n> \"ingresos_diciembre\",\"nsp_nuevos_diciembre\",\"nsp_consultas_diciembre\"\n> \n> \n> *al acceder a los nombres de las columnas, me aparece el error*\n> \n> file_data$\n> cannot read property 'substr' of null\n> \n> \n> agradezco la ayuda!\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Hola,\n\nEl ejemplo no es reproducible y no sÃ© muy bien quÃ© puede ser. Pero, Â¿para que necesitas file_data <-unname(file_data)?\n\nYo lo primero probarÃ­a quitando esa lÃ­nea.\n\nEmilio\n\n\n> El 19 abr 202",
+      "thread_id": "thread-5b3080d9ba26",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-93b24998052b",
+      "message_id": "<CAF3uytVy__UE8ZQovnwrHy-wzQJ+rB9iRPqdzGZcFV08RPdWww@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-04-24T06:13:23+02:00",
+      "subject": "[R-es] Incremento del error relativo de predicción con XgBoost",
+      "subject_clean": "[R-es] Incremento del error relativo de predicción con XgBoost",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, Â¿sabe alguien de algÃºn paquete que  permita, con XgBoost, calcular\nel incremento del error relativo de predicciÃ³n, al invalidar una variable?.\nEs lo que el paquete randomForest da como valores de importancia %IncMSE  para\nregresiÃ³n y MeanDecreaseAccuracy para clasificaciÃ³n. El paquete XgBoost da\n3 medidas de importancia (gain, cover y frequency) pero ninguna se basa en\nalgo parecido.\nGracias,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as, Â¿sabe alguien de algÃºn paquete que  permita, con XgBoost, calcular\nel incremento del error relativo de predicciÃ³n, al invalidar una variable?.\nEs lo que el paquete randomForest da com",
+      "thread_id": "thread-93b24998052b",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-18c437c16a53",
+      "message_id": "<CAF3uytXhg6TDQmPGjoWahvq0hb4q8MFg+tb_NsNxotwjijooVQ@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-04-26T11:47:34+02:00",
+      "subject": "[R-es]  Incremento del error relativo de predicción con XgBoost",
+      "subject_clean": "[R-es]  Incremento del error relativo de predicción con XgBoost",
+      "in_reply_to": "<CAOKbq8hYk_XUtEX2OcX1+YWK5+P_2R7A_HJF5GMxBTyFTzLv-g@mail.gmail.com>",
+      "references": [
+        "<CAF3uytVy__UE8ZQovnwrHy-wzQJ+rB9iRPqdzGZcFV08RPdWww@mail.gmail.com>",
+        "<CAOKbq8hYk_XUtEX2OcX1+YWK5+P_2R7A_HJF5GMxBTyFTzLv-g@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Carlos, he descubierto que el paquete DALEX, que me recomendaste\npara obtener los PDPs con XgBoost, te da tambiÃ©n la importancia basada en\nla permutaciÃ³n. Por cierto, que  DALEX te represente los PDPs para\ndistintas categorÃ­as, tanto de la variable objetivo como de alguno de los\npredictores, en un mismo plot (con distintos colores) me ha resultado de\ngran utilidad. Gracias, pues, de nuevo,\nUn saludo,\nManuel\n\nEl dom, 24 abr 2022 a las 11:57, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Hola Manuel,\n>\n> Creo que ya tendrÃ­as que entrar a mirar estas cosas:\n>\n>    - https://cloud.r-project.org/web/packages/SHAPforxgboost/index.html\n>\n>\n>    - https://cloud.r-project.org/web/packages/EIX/index.html\n>\n>\n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El dom, 24 abr 2022 a las 6:14, Manuel Mendoza (<\n> mmendoza en fulbrightmail.org>) escribiÃ³:\n>\n>> Buenos dÃ­as, Â¿sabe alguien de algÃºn paquete que  permita, con XgBoost,\n>> calcular\n>> el incremento del error relativo de predicciÃ³n, al invalidar una\n>> variable?.\n>> Es lo que el paquete randomForest da como valores de importancia %IncMSE\n>> para\n>> regresiÃ³n y MeanDecreaseAccuracy para clasificaciÃ³n. El paquete XgBoost da\n>> 3 medidas de importancia (gain, cover y frequency) pero ninguna se basa en\n>> algo parecido.\n>> Gracias,\n>> Manuel\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Carlos, he descubierto que el paquete DALEX, que me recomendaste\npara obtener los PDPs con XgBoost, te da tambiÃ©n la importancia basada en\nla permutaciÃ³n. Por cierto, que  DALEX te represent",
+      "thread_id": "thread-18c437c16a53",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-10cb3d7ea576",
+      "message_id": "<CAF3uytW0rQhnEHTs0G91_bpBxAP3uN4FDEM8UaemosN1wFhpXw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-04-26T12:03:25+02:00",
+      "subject": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "subject_clean": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as, obtengo 19 PDPs con un loop. Para poder representarlos juntos\ncon un grid.arrange hago una lista con ellos, aprovechando el propio loop:\n\nlist <- vector(\"list\",length(predictores))\n\n   for(i in 1:length(predictores)){\n       pdp<-partial(fitxgb,\npred.var=predictores[i],which.class=categories[j], plot = T, prob = F,\n            chull=F,type=\"classification\",plot.engine = \"ggplot2\", rug=T,\ntrain = datax)+\n            ylab(\"\") +ylim(min,max)\n       list[[i]] <- pdp\n  }\n\nY en lo que creo que es mÃ¡s fÃ¡cil tengo el problema: no encuentro la forma\nde indicarle al arrange que me represente cada uno de los elementos de la\nlista. Poniendo lo de abajo me funciona, pero preferirÃ­a no tener que\nindicar cada elemento. He buscado en la red, pero no encontrÃ© nada que\nfuncionase.\n\n\nwindows();grid.arrange(list[[1]],list[[2]],list[[3]],list[[4]],list[[5]],list[[6]],list[[7]],list[[8]],list[[9]],list[[10]],list[[11]],list[[12]],list[[13]],\n\n list[[14]],list[[15]],list[[16]],list[[17]],list[[18]],list[[19]],ncol=5,\nnrow =4,top = textGrob(paste(\"TS\",categories[j]),\n                         gp=gpar(fontsize=15,font=3)))\n\nMuchas gracias, como siempre,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as, obtengo 19 PDPs con un loop. Para poder representarlos juntos\ncon un grid.arrange hago una lista con ellos, aprovechando el propio loop:\n\nlist <- vector(\"list\",length(predictores))\n\n   f",
+      "thread_id": "thread-10cb3d7ea576",
+      "thread_depth": 0,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-1607df9d37c5",
+      "message_id": "<CAHUWr6q6dt029KBzbL6MoPPK=0-XD76LG0B4m3CNkGkZQpP0kg@mail.gmail.com>",
+      "from_name": "Juan Carlos Lopez Mesa",
+      "from_email_hash": "6fd88d4c0bf0476d0abbe440e260675a9368da23c352606748f7ae8c97b2b1fe",
+      "date": "2022-04-26T08:42:24-05:00",
+      "subject": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "subject_clean": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "in_reply_to": "<CAF3uytW0rQhnEHTs0G91_bpBxAP3uN4FDEM8UaemosN1wFhpXw@mail.gmail.com>",
+      "references": [
+        "<CAF3uytW0rQhnEHTs0G91_bpBxAP3uN4FDEM8UaemosN1wFhpXw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\ncreo que algo asÃ­ podrÃ­a funcionar\n\npurrr::map(.x = list, .f = ~grid.arrange(.x, ncol = 5,...))\n\nEl mar, 26 abr 2022 a las 5:04, Manuel Mendoza (<mmendoza en fulbrightmail.org>)\nescribiÃ³:\n\n> Buenos dÃ­as, obtengo 19 PDPs con un loop. Para poder representarlos juntos\n> con un grid.arrange hago una lista con ellos, aprovechando el propio loop:\n>\n> list <- vector(\"list\",length(predictores))\n>\n>    for(i in 1:length(predictores)){\n>        pdp<-partial(fitxgb,\n> pred.var=predictores[i],which.class=categories[j], plot = T, prob = F,\n>             chull=F,type=\"classification\",plot.engine = \"ggplot2\", rug=T,\n> train = datax)+\n>             ylab(\"\") +ylim(min,max)\n>        list[[i]] <- pdp\n>   }\n>\n> Y en lo que creo que es mÃ¡s fÃ¡cil tengo el problema: no encuentro la forma\n> de indicarle al arrange que me represente cada uno de los elementos de la\n> lista. Poniendo lo de abajo me funciona, pero preferirÃ­a no tener que\n> indicar cada elemento. He buscado en la red, pero no encontrÃ© nada que\n> funcionase.\n>\n>\n>\n> windows();grid.arrange(list[[1]],list[[2]],list[[3]],list[[4]],list[[5]],list[[6]],list[[7]],list[[8]],list[[9]],list[[10]],list[[11]],list[[12]],list[[13]],\n>\n>  list[[14]],list[[15]],list[[16]],list[[17]],list[[18]],list[[19]],ncol=5,\n> nrow =4,top = textGrob(paste(\"TS\",categories[j]),\n>                          gp=gpar(fontsize=15,font=3)))\n>\n> Muchas gracias, como siempre,\n> Manuel\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n-- \n*Aviso legal:*Â El contenido de este mensaje y los archivos adjuntos son \nconfidenciales y de uso exclusivo de la Universidad Nacional de Colombia. \nSe encuentran dirigidos sÃ³lo para el uso del destinatario al cual van \nenviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a \ncualquier persona diferente a este y puede ser ilegal. Si usted lo ha \nrecibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos \nPersonales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra \nPolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina webÂ \nwww.unal.edu.co <http://www.unal.edu.co/>.*Â *Las opiniones, informaciones, \nconclusiones y cualquier otro tipo de dato contenido en este correo \nelectrÃ³nico, no relacionados con la actividad de la Universidad Nacional de \nColombia, se entenderÃ¡ como personales y de ninguna manera son avaladas por \nla Universidad.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\ncreo que algo asÃ­ podrÃ­a funcionar\n\npurrr::map(.x = list, .f = ~grid.arrange(.x, ncol = 5,...))\n\nEl mar, 26 abr 2022 a las 5:04, Manuel Mendoza (<mmendoza en fulbrightmail.org>)\nescribiÃ³:\n\n>",
+      "thread_id": "thread-10cb3d7ea576",
+      "thread_depth": 1,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-c48d84edf07c",
+      "message_id": "<CAF3uytUgD08FY-ZVVHt009tJSKq1UeVkPKORreCe=akdWCxXUQ@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-04-26T17:40:19+02:00",
+      "subject": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "subject_clean": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "in_reply_to": "<CAHUWr6q6dt029KBzbL6MoPPK=0-XD76LG0B4m3CNkGkZQpP0kg@mail.gmail.com>",
+      "references": [
+        "<CAF3uytW0rQhnEHTs0G91_bpBxAP3uN4FDEM8UaemosN1wFhpXw@mail.gmail.com>",
+        "<CAHUWr6q6dt029KBzbL6MoPPK=0-XD76LG0B4m3CNkGkZQpP0kg@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Juan Carlos, de momento, cada vez que representa un plot lo hace\nencima del anterior, todos en la posiciÃ³n 1,1 del array, pero intentarÃ©\nentender lo que hace para ver si puedo corregirlo.\nUn saludo,\nManuel\n\nEl mar, 26 abr 2022 a las 15:42, Juan Carlos Lopez Mesa (<\njclopez5 en unal.edu.co>) escribiÃ³:\n\n> Hola,\n>\n> creo que algo asÃ­ podrÃ­a funcionar\n>\n> purrr::map(.x = list, .f = ~grid.arrange(.x, ncol = 5,...))\n>\n> El mar, 26 abr 2022 a las 5:04, Manuel Mendoza (<\n> mmendoza en fulbrightmail.org>) escribiÃ³:\n>\n>> Buenos dÃ­as, obtengo 19 PDPs con un loop. Para poder representarlos juntos\n>> con un grid.arrange hago una lista con ellos, aprovechando el propio loop:\n>>\n>> list <- vector(\"list\",length(predictores))\n>>\n>>    for(i in 1:length(predictores)){\n>>        pdp<-partial(fitxgb,\n>> pred.var=predictores[i],which.class=categories[j], plot = T, prob = F,\n>>             chull=F,type=\"classification\",plot.engine = \"ggplot2\", rug=T,\n>> train = datax)+\n>>             ylab(\"\") +ylim(min,max)\n>>        list[[i]] <- pdp\n>>   }\n>>\n>> Y en lo que creo que es mÃ¡s fÃ¡cil tengo el problema: no encuentro la forma\n>> de indicarle al arrange que me represente cada uno de los elementos de la\n>> lista. Poniendo lo de abajo me funciona, pero preferirÃ­a no tener que\n>> indicar cada elemento. He buscado en la red, pero no encontrÃ© nada que\n>> funcionase.\n>>\n>>\n>>\n>> windows();grid.arrange(list[[1]],list[[2]],list[[3]],list[[4]],list[[5]],list[[6]],list[[7]],list[[8]],list[[9]],list[[10]],list[[11]],list[[12]],list[[13]],\n>>\n>>  list[[14]],list[[15]],list[[16]],list[[17]],list[[18]],list[[19]],ncol=5,\n>> nrow =4,top = textGrob(paste(\"TS\",categories[j]),\n>>                          gp=gpar(fontsize=15,font=3)))\n>>\n>> Muchas gracias, como siempre,\n>> Manuel\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son\n> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.\n> Se encuentran dirigidos sÃ³lo para el uso del destinatario al cual van\n> enviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a\n> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha\n> recibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos\n> Personales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra\n> PolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina web\n> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier\n> otro tipo de dato contenido en este correo electrÃ³nico, no relacionados con\n> la actividad de la Universidad Nacional de Colombia, se entenderÃ¡ como\n> personales y de ninguna manera son avaladas por la Universidad.\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Juan Carlos, de momento, cada vez que representa un plot lo hace\nencima del anterior, todos en la posiciÃ³n 1,1 del array, pero intentarÃ©\nentender lo que hace para ver si puedo corregirlo.\nUn",
+      "thread_id": "thread-10cb3d7ea576",
+      "thread_depth": 2,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-aa54c71526b6",
+      "message_id": "<CAHUWr6qKZYUrgu4kQeYY27sC9qbsOVAW4_YRc6qCdkdMpfDRBA@mail.gmail.com>",
+      "from_name": "Juan Carlos Lopez Mesa",
+      "from_email_hash": "6fd88d4c0bf0476d0abbe440e260675a9368da23c352606748f7ae8c97b2b1fe",
+      "date": "2022-04-27T09:09:44-05:00",
+      "subject": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "subject_clean": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "in_reply_to": "<CAF3uytUgD08FY-ZVVHt009tJSKq1UeVkPKORreCe=akdWCxXUQ@mail.gmail.com>",
+      "references": [
+        "<CAF3uytW0rQhnEHTs0G91_bpBxAP3uN4FDEM8UaemosN1wFhpXw@mail.gmail.com>",
+        "<CAHUWr6q6dt029KBzbL6MoPPK=0-XD76LG0B4m3CNkGkZQpP0kg@mail.gmail.com>",
+        "<CAF3uytUgD08FY-ZVVHt009tJSKq1UeVkPKORreCe=akdWCxXUQ@mail.gmail.com>"
+      ],
+      "body_plain": "Entiendo, en ese caso creo que puedes usar la funciÃ³n\n\ngrid.arrange del paquete gridExtra.\n\ngrid.arrange toma el argumento grobs que es una lista donde estÃ¡n\nalmacenados grÃ¡ficos.\n\nLe dejo este vÃ­nculo:\nhttps://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html\n\nSaludos\n\nEl mar, 26 abr 2022 a las 10:40, Manuel Mendoza (<mmendoza en fulbrightmail.org>)\nescribiÃ³:\n\n> Gracias Juan Carlos, de momento, cada vez que representa un plot lo hace\n> encima del anterior, todos en la posiciÃ³n 1,1 del array, pero intentarÃ©\n> entender lo que hace para ver si puedo corregirlo.\n> Un saludo,\n> Manuel\n>\n> El mar, 26 abr 2022 a las 15:42, Juan Carlos Lopez Mesa (<\n> jclopez5 en unal.edu.co>) escribiÃ³:\n>\n>> Hola,\n>>\n>> creo que algo asÃ­ podrÃ­a funcionar\n>>\n>> purrr::map(.x = list, .f = ~grid.arrange(.x, ncol = 5,...))\n>>\n>> El mar, 26 abr 2022 a las 5:04, Manuel Mendoza (<\n>> mmendoza en fulbrightmail.org>) escribiÃ³:\n>>\n>>> Buenos dÃ­as, obtengo 19 PDPs con un loop. Para poder representarlos\n>>> juntos\n>>> con un grid.arrange hago una lista con ellos, aprovechando el propio\n>>> loop:\n>>>\n>>> list <- vector(\"list\",length(predictores))\n>>>\n>>>    for(i in 1:length(predictores)){\n>>>        pdp<-partial(fitxgb,\n>>> pred.var=predictores[i],which.class=categories[j], plot = T, prob = F,\n>>>             chull=F,type=\"classification\",plot.engine = \"ggplot2\", rug=T,\n>>> train = datax)+\n>>>             ylab(\"\") +ylim(min,max)\n>>>        list[[i]] <- pdp\n>>>   }\n>>>\n>>> Y en lo que creo que es mÃ¡s fÃ¡cil tengo el problema: no encuentro la\n>>> forma\n>>> de indicarle al arrange que me represente cada uno de los elementos de la\n>>> lista. Poniendo lo de abajo me funciona, pero preferirÃ­a no tener que\n>>> indicar cada elemento. He buscado en la red, pero no encontrÃ© nada que\n>>> funcionase.\n>>>\n>>>\n>>>\n>>> windows();grid.arrange(list[[1]],list[[2]],list[[3]],list[[4]],list[[5]],list[[6]],list[[7]],list[[8]],list[[9]],list[[10]],list[[11]],list[[12]],list[[13]],\n>>>\n>>>\n>>>  list[[14]],list[[15]],list[[16]],list[[17]],list[[18]],list[[19]],ncol=5,\n>>> nrow =4,top = textGrob(paste(\"TS\",categories[j]),\n>>>                          gp=gpar(fontsize=15,font=3)))\n>>>\n>>> Muchas gracias, como siempre,\n>>> Manuel\n>>>\n>>>         [[alternative HTML version deleted]]\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>\n>> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son\n>> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.\n>> Se encuentran dirigidos sÃ³lo para el uso del destinatario al cual van\n>> enviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a\n>> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha\n>> recibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos\n>> Personales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra\n>> PolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina web\n>> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier\n>> otro tipo de dato contenido en este correo electrÃ³nico, no relacionados con\n>> la actividad de la Universidad Nacional de Colombia, se entenderÃ¡ como\n>> personales y de ninguna manera son avaladas por la Universidad.\n>>\n>\n\n-- \n*Aviso legal:*Â El contenido de este mensaje y los archivos adjuntos son \nconfidenciales y de uso exclusivo de la Universidad Nacional de Colombia. \nSe encuentran dirigidos sÃ³lo para el uso del destinatario al cual van \nenviados. La reproducciÃ³n, lectura y/o copia se encuentran prohibidas a \ncualquier persona diferente a este y puede ser ilegal. Si usted lo ha \nrecibido por error, infÃ³rmenos y elimÃ­nelo de su correo. Los Datos \nPersonales serÃ¡n tratados conforme a la Ley 1581 de 2012 y a nuestra \nPolÃ­tica de Datos Personales que podrÃ¡ consultar en la pÃ¡gina webÂ \nwww.unal.edu.co <http://www.unal.edu.co/>.*Â *Las opiniones, informaciones, \nconclusiones y cualquier otro tipo de dato contenido en este correo \nelectrÃ³nico, no relacionados con la actividad de la Universidad Nacional de \nColombia, se entenderÃ¡ como personales y de ninguna manera son avaladas por \nla Universidad.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Entiendo, en ese caso creo que puedes usar la funciÃ³n\n\ngrid.arrange del paquete gridExtra.\n\ngrid.arrange toma el argumento grobs que es una lista donde estÃ¡n\nalmacenados grÃ¡ficos.\n\nLe dejo este vÃ­",
+      "thread_id": "thread-10cb3d7ea576",
+      "thread_depth": 3,
+      "month": "2022-04"
+    },
+    {
+      "id": "msg-259d6754bd90",
+      "message_id": "<CAF3uytVXTrHRrSm7ZKPA_WW-gT2bEb3xGbhzsmJaGid4goQk1g@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2022-04-28T20:51:44+02:00",
+      "subject": "[R-es] CDP",
+      "subject_clean": "[R-es] CDP",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Analizando lo que hace el paquete DALEX , junto a los PDP y ALE  encontrÃ©\nlos CDP, que no conocÃ­a. He buscado quÃ© son en la red pero no encuentro\nnada claro. Â¿Alguien sabe lo que son o alguna pÃ¡gina dÃ³nde lo explique?\nGracias,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Analizando lo que hace el paquete DALEX , junto a los PDP y ALE  encontrÃ©\nlos CDP, que no conocÃ­a. He buscado quÃ© son en la red pero no encuentro\nnada claro. Â¿Alguien sabe lo que son o alguna pÃ¡g",
+      "thread_id": "thread-259d6754bd90",
+      "thread_depth": 0,
+      "month": "2022-04"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-b150d814f5da",
+      "subject": "[R-es] Error: protect(): protection stack overflow",
+      "message_count": 4,
+      "participants": [
+        "Javier Marcuzzi",
+        "Manuel Mendoza"
+      ],
+      "started": "2022-04-01T04:59:13+02:00",
+      "last_reply": "2022-04-01T10:36:14-03:00",
+      "root_message_id": "msg-b150d814f5da"
+    },
+    {
+      "id": "thread-12ec359ae7c8",
+      "subject": "[R-es] Error: protect(): protection stack overflow",
+      "message_count": 2,
+      "participants": [
+        "Jorge I Velez",
+        "Manuel Mendoza"
+      ],
+      "started": "2022-04-01T12:47:04+02:00",
+      "last_reply": "2022-04-01T07:34:32-05:00",
+      "root_message_id": "msg-12ec359ae7c8"
+    },
+    {
+      "id": "thread-c0c43144683c",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 158, Envío 6",
+      "message_count": 1,
+      "participants": [
+        "Juan Carlos Arronte"
+      ],
+      "started": "2022-04-07T10:10:12+00:00",
+      "last_reply": "2022-04-07T10:10:12+00:00",
+      "root_message_id": "msg-c0c43144683c"
+    },
+    {
+      "id": "thread-75a61644f47f",
+      "subject": "[R-es] Descarga ficheros web desde R",
+      "message_count": 11,
+      "participants": [
+        "Blas",
+        "Isidro Hidalgo Arellano",
+        "Javier Marcuzzi",
+        "Jorge Pradas"
+      ],
+      "started": "2022-04-07T11:49:46+02:00",
+      "last_reply": "2022-04-07T19:40:50-03:00",
+      "root_message_id": "msg-75a61644f47f"
+    },
+    {
+      "id": "thread-d6bb558a978e",
+      "subject": "[R-es] Regresión no linear en WRC con Machine Learning",
+      "message_count": 3,
+      "participants": [
+        "Emilio L. Cano",
+        "Stalin Granda"
+      ],
+      "started": "2022-04-14T10:01:22-04:00",
+      "last_reply": "2022-04-18T12:22:39-04:00",
+      "root_message_id": "msg-d6bb558a978e"
+    },
+    {
+      "id": "thread-5b3080d9ba26",
+      "subject": "[R-es] help cannot read property 'substr' of null",
+      "message_count": 2,
+      "participants": [
+        "Emilio L. Cano",
+        "JALS"
+      ],
+      "started": "2022-04-19T10:10:37-04:00",
+      "last_reply": "2022-04-20T08:41:39+02:00",
+      "root_message_id": "msg-5b3080d9ba26"
+    },
+    {
+      "id": "thread-93b24998052b",
+      "subject": "[R-es] Incremento del error relativo de predicción con XgBoost",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2022-04-24T06:13:23+02:00",
+      "last_reply": "2022-04-24T06:13:23+02:00",
+      "root_message_id": "msg-93b24998052b"
+    },
+    {
+      "id": "thread-18c437c16a53",
+      "subject": "[R-es]  Incremento del error relativo de predicción con XgBoost",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2022-04-26T11:47:34+02:00",
+      "last_reply": "2022-04-26T11:47:34+02:00",
+      "root_message_id": "msg-18c437c16a53"
+    },
+    {
+      "id": "thread-10cb3d7ea576",
+      "subject": "[R-es] Representar numerosos elementos de una lista en un grid.arrange",
+      "message_count": 4,
+      "participants": [
+        "Juan Carlos Lopez Mesa",
+        "Manuel Mendoza"
+      ],
+      "started": "2022-04-26T12:03:25+02:00",
+      "last_reply": "2022-04-27T09:09:44-05:00",
+      "root_message_id": "msg-10cb3d7ea576"
+    },
+    {
+      "id": "thread-259d6754bd90",
+      "subject": "[R-es] CDP",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2022-04-28T20:51:44+02:00",
+      "last_reply": "2022-04-28T20:51:44+02:00",
+      "root_message_id": "msg-259d6754bd90"
+    }
+  ]
+}

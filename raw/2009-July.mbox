@@ -1,0 +1,4676 @@
+From mariana.martinezs en hotmail.com  Sat Jul  4 05:46:47 2009
+From: mariana.martinezs en hotmail.com (mariana martinez)
+Date: Fri, 3 Jul 2009 22:46:47 -0500
+Subject: [R-es] De que otra forma se puede hacer
+Message-ID: <BAY105-W4455196087A1981DF98D9DF92D0@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090703/2f5362f4/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sat Jul  4 06:38:08 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Sat, 4 Jul 2009 00:38:08 -0400
+Subject: [R-es] De que otra forma se puede hacer
+In-Reply-To: <BAY105-W4455196087A1981DF98D9DF92D0@phx.gbl>
+References: <BAY105-W4455196087A1981DF98D9DF92D0@phx.gbl>
+Message-ID: <317737de0907032138v3a2dc5c4u945d5838b2a2c60f@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090704/dd3559af/attachment.pl>
+
+From nahuelfarias en gmail.com  Sun Jul  5 23:57:59 2009
+From: nahuelfarias en gmail.com (Nahuel farias)
+Date: Sun, 5 Jul 2009 18:57:59 -0300
+Subject: [R-es] integrar resultado de splines cubicos
+Message-ID: <1c46997c0907051457j4231dd08na3b6ea93d5f69b24@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090705/66ed12b4/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Mon Jul  6 00:47:00 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Sun, 5 Jul 2009 18:47:00 -0400
+Subject: [R-es] integrar resultado de splines cubicos
+In-Reply-To: <1c46997c0907051457j4231dd08na3b6ea93d5f69b24@mail.gmail.com>
+References: <1c46997c0907051457j4231dd08na3b6ea93d5f69b24@mail.gmail.com>
+Message-ID: <317737de0907051547i76f6e934tc57837a7dd8cf587@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090705/8359b9f6/attachment.pl>
+
+From nahuelfarias en gmail.com  Mon Jul  6 01:43:58 2009
+From: nahuelfarias en gmail.com (Nahuel farias)
+Date: Sun, 5 Jul 2009 20:43:58 -0300
+Subject: [R-es] integrar resultado de splines cubicos
+In-Reply-To: <317737de0907051547i76f6e934tc57837a7dd8cf587@mail.gmail.com>
+References: <1c46997c0907051457j4231dd08na3b6ea93d5f69b24@mail.gmail.com>
+	<317737de0907051547i76f6e934tc57837a7dd8cf587@mail.gmail.com>
+Message-ID: <1c46997c0907051643q2960e7c0k5d904866b9a0d07a@mail.gmail.com>
+
+Hola Jorge. Perfecto ya resolvi la primera cuestion con tu indicacion Gracias!
+
+en cuanto a lo segundo estoy calculando una "suma de cuadrados de
+residuales penalizada (PRSS)",para elegir uno de los splines de entre
+los muchos posibles, segun varian los grados de libertad o (df).
+
+El asunto es que esto requiere la "integral de la derivada 2da del
+spline al cuadrado" como parte del calculo...
+
+Usando predict(smooth.spline("mis datos"),deriv=2) consigo los valores
+de la derivada 2 pero no consigo ver la formula resultante y menos
+calcular su integral....
+
+cualquier consejo o pista que me ponga en camino es bienvenido.
+
+
+
+
+
+
+
+
+El 5 de julio de 2009 19:47, Jorge Ivan Velez
+<jorgeivanvelez en gmail.com> escribió:
+>
+> Buenas noches Nahuel,
+> Bienvenido a R-help-es!
+> La extracción de lambda del objeto que contiene el smooth.spline() ajustado puede obtenerse fácilmente al analizar la estructura de dicho objeto utilizando la función str() del R. Consideremos el ejemplo que aparece en ?smooth.spline():
+> attach(cars)
+> plot(speed, dist, main = "data(cars)  &  smoothing splines")
+> cars.spl <- smooth.spline(speed, dist)
+> cars.spl
+> str(cars.spl)
+> El resultado de str(cars.spl) es una lista de 15 elementos y el valor de lambda puede obtenerse como:
+> cars.spl$lambda
+> # [1] 0.1112206
+> En cuanto a tu segunda pregunta, podrías darnos un poco más de información al respecto?
+> Espero sea de utilidad,
+> Jorge Ivan Velez
+>
+> 2009/7/5 Nahuel farias <nahuelfarias en gmail.com>
+>>
+>> hola soy nuevo usuario de R y necesito crear un objeto p tal que,
+>>
+>> p=lambda*integral[f´´(x)^2 dx ]
+>>  donde "lambda" es uno de los parametros que resultan de la funcion
+>> "smooth.spline()" y la integral es sobre la derivada 2 de esa misma
+>> funcion...
+>> dos cuestiones:
+>> 1) como extraigo lambda de los resultados de smooth.spline() para usarlo
+>> como objeto cuando lo requiera y
+>> 2) como puedo obtener con R la integral del segundo termino?
+>>
+>> gracias
+>>
+>> --
+>> Lic. Nahuel E. Farias
+>> Laboratorio de Invertebrados
+>> Departamento de Biología
+>> Facultad de Ciencias Exactas y Naturales,
+>> Universidad Nacional de Mar Del Plata, CC 1245, CP 7600 Mar del Plata,
+>> Argentina
+>> Tel. + 54 - 0223 - 4752426 (Int. 466)
+>>
+>>        [[alternative HTML version deleted]]
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+
+
+--
+Lic. Nahuel E. Farias
+Laboratorio de Invertebrados
+Departamento de Biología
+Facultad de Ciencias Exactas y Naturales,
+Universidad Nacional de Mar Del Plata, CC 1245, CP 7600 Mar del Plata, Argentina
+Tel. + 54 - 0223 - 4752426 (Int. 466)
+
+
+From r-uca en uca.es  Mon Jul  6 10:23:55 2009
+From: r-uca en uca.es (r-uca)
+Date: Mon, 06 Jul 2009 10:23:55 +0200
+Subject: [R-es] Filtro de correo
+Message-ID: <1246868635.4962.7.camel@pcmat36>
+
+Buenas:
+
+Últimamente el correo SPAM en la lista va en aumento y este tema me
+preocupa.
+
+Conozco otra listas es las cuales el sistema rechaza el correo que
+proviene de direcciones que no están suscritas a la lista. ¿Qué os
+parecería intentar algo así?
+
+Saludos.
+
+-- 
+===
+Proyecto R-UCA
+http://knuth.uca.es/R
+r-uca en uca.es
+Manuel Muñoz Márquez
+===
+
+
+From r.user.spain en gmail.com  Mon Jul  6 10:51:39 2009
+From: r.user.spain en gmail.com (Usuario R)
+Date: Mon, 6 Jul 2009 10:51:39 +0200
+Subject: [R-es] Filtro de correo
+In-Reply-To: <1246868635.4962.7.camel@pcmat36>
+References: <1246868635.4962.7.camel@pcmat36>
+Message-ID: <e013b3630907060151g69f30a5y9e4cc179c0c52777@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090706/3e54cc1d/attachment.pl>
+
+From cgb en datanalytics.com  Mon Jul  6 11:47:20 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 6 Jul 2009 11:47:20 +0200
+Subject: [R-es] Filtro de correo
+In-Reply-To: <e013b3630907060151g69f30a5y9e4cc179c0c52777@mail.gmail.com>
+References: <1246868635.4962.7.camel@pcmat36>
+	<e013b3630907060151g69f30a5y9e4cc179c0c52777@mail.gmail.com>
+Message-ID: <b028350f0907060247u791eaee8y59005e967ca3e9c4@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Yo no he recibido spam, aunque igual se debe a que tengo un filtro
+local. Aún no he visto pasar ni uno.
+
+Entiendo (aunque debieran confirmarlo los administradores de la lista)
+que existe un filtro de spam en servidor compartido con el de la lista
+"general" R-help. Este filtro ha funcionado siempre bastante bien
+aunque es cierto que han exisitido algunas ventanas temporales en las
+que, por algún motivo (mantenimiento, actualizaciones de software,
+etc), se han colado bastantes mensajes "no deseados".
+
+Yo creo que, como primera medida, habría que revisar la configuración
+de la lista de correo por ver si está activado el filtro anti-spam.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From kjetil1001 en gmail.com  Mon Jul  6 19:28:01 2009
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Mon, 6 Jul 2009 13:28:01 -0400
+Subject: [R-es] Filtro de correo
+In-Reply-To: <b028350f0907060247u791eaee8y59005e967ca3e9c4@mail.gmail.com>
+References: <1246868635.4962.7.camel@pcmat36>
+	<e013b3630907060151g69f30a5y9e4cc179c0c52777@mail.gmail.com>
+	<b028350f0907060247u791eaee8y59005e967ca3e9c4@mail.gmail.com>
+Message-ID: <1f6d6c820907061028g7779799fwc60f6e179718f699@mail.gmail.com>
+
+El filtro anti-spam esta activada! Yo no he visto nada de spam en la lista.
+
+Kjetil
+
+2009/7/6 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+> Hola, ¿qué tal?
+>
+> Yo no he recibido spam, aunque igual se debe a que tengo un filtro
+> local. Aún no he visto pasar ni uno.
+>
+> Entiendo (aunque debieran confirmarlo los administradores de la lista)
+> que existe un filtro de spam en servidor compartido con el de la lista
+> "general" R-help. Este filtro ha funcionado siempre bastante bien
+> aunque es cierto que han exisitido algunas ventanas temporales en las
+> que, por algún motivo (mantenimiento, actualizaciones de software,
+> etc), se han colado bastantes mensajes "no deseados".
+>
+> Yo creo que, como primera medida, habría que revisar la configuración
+> de la lista de correo por ver si está activado el filtro anti-spam.
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+"... an entire human genome would fit on a music CD."
+
+--- www.thinkgene.com
+
+
+From jorgeivanvelez en gmail.com  Wed Jul  8 17:46:36 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 8 Jul 2009 11:46:36 -0400
+Subject: [R-es] =?iso-8859-1?q?An=E1lisis_de_im=E1genes_en_R?=
+Message-ID: <317737de0907080846w302ed298mb6e3c1710c880784@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090708/f0479fd6/attachment.pl>
+
+From cgb en datanalytics.com  Wed Jul  8 19:16:16 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 8 Jul 2009 19:16:16 +0200
+Subject: [R-es] =?iso-8859-1?q?An=E1lisis_de_im=E1genes_en_R?=
+In-Reply-To: <317737de0907080846w302ed298mb6e3c1710c880784@mail.gmail.com>
+References: <317737de0907080846w302ed298mb6e3c1710c880784@mail.gmail.com>
+Message-ID: <b028350f0907081016i3995e4e7w88c0800092d5cb5@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Mira a ver si te vale esto:
+
+http://romainfrancois.blog.free.fr/index.php?post/2009/06/22/using-ImageJ-from-R%3A-the-RImageJ-package
+
+En puridad, no es R, pero...
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El 8 de julio de 2009 17:46, Jorge Ivan
+Velez<jorgeivanvelez en gmail.com> escribió:
+> Buenas dias a tod en s,
+> Quisiera saber si alguien tiene experiencia con el procesamiento de imágenes
+> (en formatos JPEG o PNG) en R y la búsqueda de similitudes / diferencias
+> entre ellas.
+>
+> La idea de lo que me gustaría hacer es:  tomar una imagen, cargarla en R y
+> luego analizar su estructura. Para las dos primeras tareas, la
+> libreria ReadImages en CRAN me ha sido útil, pero para la segunda, hasta
+> ahora no he encontrado ninguna aplicación.  Este es un ejemplo tomado de la
+> libreria que menciono:
+>
+> # install.packages("ReadImages")
+> require(ReadImages)
+> data(logo)
+> par(mfrow = c(1,2) )
+> plot(logo, main = 'R-logo, formato original')
+> plot(logo^2, main = 'R-logo modificado')
+>
+> El gráfico resultante corresponde a dos logos de R, uno en el formato
+> original y otro, una "leve" modificación. Para este caso particular, me
+> gustaria poder determinar cuáles son las similitudes / diferencias de ambas
+> imágenes. Existe alguna manera de hacerlo?  Si no es via R, podria alguien
+> sugerirme alguna fuente de información?
+>
+> Muchas gracias,
+>
+> Jorge Ivan Velez
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From onunez en iberstat.es  Wed Jul  8 19:25:54 2009
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Wed, 8 Jul 2009 19:25:54 +0200
+Subject: [R-es] =?iso-8859-1?q?An=E1lisis_de_im=E1genes_en_R?=
+In-Reply-To: <317737de0907080846w302ed298mb6e3c1710c880784@mail.gmail.com>
+References: <317737de0907080846w302ed298mb6e3c1710c880784@mail.gmail.com>
+Message-ID: <CD51994E-794F-4484-A64D-2DF67EE01C08@iberstat.es>
+
+Hola Jorge,
+
+te aconsejo el uso del package biOps y concretamente de la función  
+imgDifferenceEdgeDetection().
+Esta función permite detectar los contornos en una imagen,
+lo cual debería serte útil a la hora de comparar dos imagenes en color.
+El código correspondiente a tu ejemplo sería:
+
+
+require(biOps)
+data(logo)
+logo2=logo^2/255
+
+y <- imgDifferenceEdgeDetection(logo, bias=1)
+y2<-imgDifferenceEdgeDetection(logo2, bias=1)
+
+z=imgDiffer(y,y2) #imagen correspondiente a la diferencia de las dos  
+imagenes y e y2
+
+plot(z)
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 08/07/2009, a las 17:46, Jorge Ivan Velez escribió:
+
+> par(mfrow = c(1,2) )
+> plot(logo, main = 'R-logo, formato original')
+> plot(logo^2, main = 'R-logo modificado')
+
+
+From ceramos0 en yahoo.com.mx  Wed Jul  8 19:49:41 2009
+From: ceramos0 en yahoo.com.mx (Enrique RAMOS)
+Date: Wed, 8 Jul 2009 10:49:41 -0700 (PDT)
+Subject: [R-es] variable global
+Message-ID: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090708/3c09f786/attachment.pl>
+
+From onunez en iberstat.es  Wed Jul  8 20:02:43 2009
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Wed, 8 Jul 2009 20:02:43 +0200
+Subject: [R-es] variable global
+In-Reply-To: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+References: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+Message-ID: <E75EF959-8CFC-4285-99FE-0693910A8F25@iberstat.es>
+
+Un simple ejemplo :
+
+f1 <- function(x) {y=x^2; return(y)} # calcula el cuadrado de x
+
+f2 <- function(x){y=sqrt(x); return(y)} #calcula la raiz de x
+
+z = f2(f1(x)) # calcula el valor absoluto de x : sqrt(x^2)
+
+Alternativamente, si necesitas que el valor calculado en la función  
+este en el entorno global, puedes utilizar la función assign
+
+f1 <- function(x) {
+				y=x^2;
+				assign(x2,y,envir=.GlobalEnv) # el valor del cuadrado de x está  
+en la variable global x2
+			}
+
+Un saludo. Olivier
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 08/07/2009, a las 19:49, Enrique RAMOS escribió:
+
+> buen dia a toda la comunidad
+> estoy empezando a usar r y en una implementacion que estoy haciendo  
+> requiero que 2 valores que se calculan en una funcion puedan ser  
+> vistos en otra pero no he podido hallar la forma he buscado la  
+> forma de hacer las variables globales pero no he podido alguien  
+> sabe como hacerlo
+> mil gracias, saludos
+> Enrique RAMOS
+>
+>
+>       ¡Obtén la mejor experiencia en la web! Descarga gratis el  
+> nuevo Internet Explorer 8. http://downloads.yahoo.com/ieak8/?l=mx
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From onunez en iberstat.es  Wed Jul  8 20:05:53 2009
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Wed, 8 Jul 2009 20:05:53 +0200
+Subject: [R-es] variable global (2)
+In-Reply-To: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+References: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+Message-ID: <8105BC2B-23E7-4203-8CD6-DC3E907E5C12@iberstat.es>
+
+Perdón, poner x2 entre comillas (pues se trata del nombre de la  
+variable en la cual se asigna el valor):
+
+f1 <- function(x) {
+				y=x^2;
+				assign("x2",y,envir=.GlobalEnv) # el valor del cuadrado de x está  
+en la variable global x2
+			}
+
+
+
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 08/07/2009, a las 19:49, Enrique RAMOS escribió:
+
+> buen dia a toda la comunidad
+> estoy empezando a usar r y en una implementacion que estoy haciendo  
+> requiero que 2 valores que se calculan en una funcion puedan ser  
+> vistos en otra pero no he podido hallar la forma he buscado la  
+> forma de hacer las variables globales pero no he podido alguien  
+> sabe como hacerlo
+> mil gracias, saludos
+> Enrique RAMOS
+>
+>
+>       ¡Obtén la mejor experiencia en la web! Descarga gratis el  
+> nuevo Internet Explorer 8. http://downloads.yahoo.com/ieak8/?l=mx
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jorgeivanvelez en gmail.com  Wed Jul  8 20:13:55 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 8 Jul 2009 14:13:55 -0400
+Subject: [R-es] variable global
+In-Reply-To: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+References: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+Message-ID: <317737de0907081113g1c576ccid6bf0b4c122d96c6@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090708/0a6a6ca9/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Wed Jul  8 20:59:31 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 8 Jul 2009 14:59:31 -0400
+Subject: [R-es] =?iso-8859-1?q?An=E1lisis_de_im=E1genes_en_R?=
+In-Reply-To: <317737de0907081137h8f5571cp3232f61ab9c3dbac@mail.gmail.com>
+References: <317737de0907080846w302ed298mb6e3c1710c880784@mail.gmail.com> 
+	<CD51994E-794F-4484-A64D-2DF67EE01C08@iberstat.es>
+	<317737de0907081137h8f5571cp3232f61ab9c3dbac@mail.gmail.com>
+Message-ID: <317737de0907081159i742cfcacwc42fd0cb54a10aef@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090708/8f5f3f81/attachment.pl>
+
+From cgb en datanalytics.com  Wed Jul  8 21:56:08 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 8 Jul 2009 21:56:08 +0200
+Subject: [R-es] variable global
+In-Reply-To: <317737de0907081113g1c576ccid6bf0b4c122d96c6@mail.gmail.com>
+References: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+	<317737de0907081113g1c576ccid6bf0b4c122d96c6@mail.gmail.com>
+Message-ID: <b028350f0907081256p6b5e81b9h4fad6c91e26df9af@mail.gmail.com>
+
+También dispones del operador "<<-". De todos modos, el mejor consejo
+al respecto es *NO*.
+
+No es bueno que una función, internamente, modifique el entorno
+global. Habría que justificarlo muy sesudamente. Es mejor devolver
+todos los valores que haga falta (por ejemplo, dentro de una lista) y
+dejar que sea el código que llama a la función el que decida qué hacer
+con ellos.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From cgb en datanalytics.com  Wed Jul  8 21:59:45 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 8 Jul 2009 21:59:45 +0200
+Subject: [R-es] =?iso-8859-1?q?An=E1lisis_de_im=E1genes_en_R?=
+In-Reply-To: <317737de0907081159i742cfcacwc42fd0cb54a10aef@mail.gmail.com>
+References: <317737de0907080846w302ed298mb6e3c1710c880784@mail.gmail.com>
+	<CD51994E-794F-4484-A64D-2DF67EE01C08@iberstat.es>
+	<317737de0907081137h8f5571cp3232f61ab9c3dbac@mail.gmail.com>
+	<317737de0907081159i742cfcacwc42fd0cb54a10aef@mail.gmail.com>
+Message-ID: <b028350f0907081259j2ae36d88j91b2d209129472c0@mail.gmail.com>
+
+¿Te ayuda esto?
+
+http://tolstoy.newcastle.edu.au/R/e6/help/09/06/18013.html
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From jorgeivanvelez en gmail.com  Wed Jul  8 22:09:59 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 8 Jul 2009 16:09:59 -0400
+Subject: [R-es] variable global
+In-Reply-To: <b028350f0907081256p6b5e81b9h4fad6c91e26df9af@mail.gmail.com>
+References: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+	<317737de0907081113g1c576ccid6bf0b4c122d96c6@mail.gmail.com> 
+	<b028350f0907081256p6b5e81b9h4fad6c91e26df9af@mail.gmail.com>
+Message-ID: <317737de0907081309y1973df9ci8d98bfc6499d0fe7@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090708/286992e1/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Wed Jul  8 22:36:26 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 8 Jul 2009 16:36:26 -0400
+Subject: [R-es] =?iso-8859-1?q?An=E1lisis_de_im=E1genes_en_R?=
+In-Reply-To: <b028350f0907081259j2ae36d88j91b2d209129472c0@mail.gmail.com>
+References: <317737de0907080846w302ed298mb6e3c1710c880784@mail.gmail.com> 
+	<CD51994E-794F-4484-A64D-2DF67EE01C08@iberstat.es>
+	<317737de0907081137h8f5571cp3232f61ab9c3dbac@mail.gmail.com> 
+	<317737de0907081159i742cfcacwc42fd0cb54a10aef@mail.gmail.com> 
+	<b028350f0907081259j2ae36d88j91b2d209129472c0@mail.gmail.com>
+Message-ID: <317737de0907081336g44e79f74n71a0d734c2486b49@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090708/02dc53d5/attachment.pl>
+
+From kjetil1001 en gmail.com  Wed Jul  8 22:44:55 2009
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Wed, 8 Jul 2009 16:44:55 -0400
+Subject: [R-es] variable global
+In-Reply-To: <317737de0907081309y1973df9ci8d98bfc6499d0fe7@mail.gmail.com>
+References: <52181.85256.qm@web51510.mail.re2.yahoo.com>
+	<317737de0907081113g1c576ccid6bf0b4c122d96c6@mail.gmail.com>
+	<b028350f0907081256p6b5e81b9h4fad6c91e26df9af@mail.gmail.com>
+	<317737de0907081309y1973df9ci8d98bfc6499d0fe7@mail.gmail.com>
+Message-ID: <1f6d6c820907081344h68b375dcjfae0008158b7f6e7@mail.gmail.com>
+
+Como dicen, es mejor No NO. Si la respuesta es usar una variable
+global, probablemente la pregunta esta mal formulado. !!!
+¿Puedes describir el problema que quiere solver usando un variable
+global?, segurAMENTE
+podemos encontara una solución mejor!
+
+Kjetil
+
+2009/7/8 Jorge Ivan Velez <jorgeivanvelez en gmail.com>:
+> Enrique,
+> De acuerdo con *NO* modificar el entorno global tal y como dice Carlos. Las
+> funciones locales pueden ser manipuladas de manera más sencilla, además de
+> que son más fáciles de entender  ;)    Lo único que necesitarías es
+> almacenar los resultados de tu (primera) función en un objeto y luego tomar
+> ese objeto (o elementos del mismo) como argumentos para tu segunda función o
+> procedimiento.
+> Si el resultado de tu primera función tienen más de un elemento y cada uno
+> de ellos es de diferente tipo, te sugeriría trabajar, tal y como Carlos Gil
+> menciona, con listas. El paso siguiente es extraer los elementos de esta
+> lista y utilizarlos como argumentos para tu segunda función.  En mi mensaje
+> previo hay un ejemplo de esto.
+>
+> Espero sea de utilidad,
+>
+> Jorge
+>
+>
+> 2009/7/8 Carlos J. Gil Bellosta <>
+>
+>> También dispones del operador "<<-". De todos modos, el mejor consejo
+>> al respecto es *NO*.
+>>
+>> No es bueno que una función, internamente, modifique el entorno
+>> global. Habría que justificarlo muy sesudamente. Es mejor devolver
+>> todos los valores que haga falta (por ejemplo, dentro de una lista) y
+>> dejar que sea el código que llama a la función el que decida qué hacer
+>> con ellos.
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+
+-- 
+"... an entire human genome would fit on a music CD."
+
+--- www.thinkgene.com
+
+
+From r.user.spain en gmail.com  Thu Jul  9 15:54:24 2009
+From: r.user.spain en gmail.com (Usuario R)
+Date: Thu, 9 Jul 2009 15:54:24 +0200
+Subject: [R-es] =?iso-8859-1?q?=A1=A1_Primeras_jornadas_espa=F1olas_de_R_!?=
+	=?iso-8859-1?q?!?=
+Message-ID: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090709/06642b3b/attachment.pl>
+
+From j.o.villar en bio.uio.no  Fri Jul 10 17:28:32 2009
+From: j.o.villar en bio.uio.no (Jaime Otero Villar)
+Date: Fri, 10 Jul 2009 17:28:32 +0200
+Subject: [R-es] tiempo en cargar
+Message-ID: <6495F03A-B772-4EF3-91EA-A194A12B5E58@ulrik.uio.no>
+
+Hola a todos,
+
+Quería preguntar si alguno le ocurre lo mismo que a mi usando R en  
+Mac. Resulta que cuando trato de abrir un archivo desde R si contiene  
+muchas líneas escritas (digamos unas 1000) tarda mucho tiempo en  
+abrirse (más de un minuto). Es esto normal?
+
+Gracias por la ayuda.
+
+Jaime.
+
+  
+  
+
+From onunez en iberstat.es  Fri Jul 10 18:55:37 2009
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Fri, 10 Jul 2009 18:55:37 +0200
+Subject: [R-es] tiempo en cargar
+In-Reply-To: <6495F03A-B772-4EF3-91EA-A194A12B5E58@ulrik.uio.no>
+References: <6495F03A-B772-4EF3-91EA-A194A12B5E58@ulrik.uio.no>
+Message-ID: <DAFCD7F5-89B9-417B-9A06-FFAC20449E66@iberstat.es>
+
+Jaime,
+
+a mi tambien me pasa.
+Supongo que si desactivas en Preferencias del editor las funciones de  
+formateo del código (colores para palabras claves,  verificación de  
+parentesis, etc...),
+el procesamiento debería ser más rapido. Tambien existe la  
+posibilidad de utilizar otro editor como Smultron.
+Un saludo. Olivier
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 10/07/2009, a las 17:28, Jaime Otero Villar escribió:
+
+> Hola a todos,
+>
+> Quería preguntar si alguno le ocurre lo mismo que a mi usando R en  
+> Mac. Resulta que cuando trato de abrir un archivo desde R si  
+> contiene muchas líneas escritas (digamos unas 1000) tarda mucho  
+> tiempo en abrirse (más de un minuto). Es esto normal?
+>
+> Gracias por la ayuda.
+>
+> Jaime.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From nahuelfarias en gmail.com  Fri Jul 10 20:08:49 2009
+From: nahuelfarias en gmail.com (Nahuel farias)
+Date: Fri, 10 Jul 2009 15:08:49 -0300
+Subject: [R-es] maximo global e intervalo de confianza
+Message-ID: <1c46997c0907101108je09f9afx81f1044dd037e1d9@mail.gmail.com>
+
+Hola a todos
+
+Alguien sabe cómo puedo determinar maximos globalespara la derivada
+2da de un "sm.spline" y un intervalo de confianza para ese maximo?
+
+Muchas gracias
+
+-- 
+Lic. Nahuel E. Farias
+Laboratorio de Invertebrados
+Departamento de Biología
+Facultad de Ciencias Exactas y Naturales,
+Universidad Nacional de Mar Del Plata, CC 1245, CP 7600 Mar del Plata, Argentina
+Tel. + 54 - 0223 - 4752426 (Int. 466)
+
+
+From jorgeivanvelez en gmail.com  Fri Jul 10 20:44:41 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 10 Jul 2009 14:44:41 -0400
+Subject: [R-es] maximo global e intervalo de confianza
+In-Reply-To: <1c46997c0907101108je09f9afx81f1044dd037e1d9@mail.gmail.com>
+References: <1c46997c0907101108je09f9afx81f1044dd037e1d9@mail.gmail.com>
+Message-ID: <317737de0907101144u1280c41exb2a42ead51c2c21b@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090710/b07f3bed/attachment.pl>
+
+From gunegim en gmail.com  Mon Jul 13 04:00:30 2009
+From: gunegim en gmail.com (=?ISO-8859-1?Q?Ing=2E_Agr=2E_Gustavo_Gim=E9nez?=)
+Date: Mon, 13 Jul 2009 04:00:30 +0200
+Subject: [R-es] modelos no lineales mixtos
+Message-ID: <81f628f70907121900g69f84a61q1d370a2874b12fe6@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090713/4a5d8798/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Mon Jul 13 06:32:25 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Mon, 13 Jul 2009 00:32:25 -0400
+Subject: [R-es] modelos no lineales mixtos
+In-Reply-To: <81f628f70907121900g69f84a61q1d370a2874b12fe6@mail.gmail.com>
+References: <81f628f70907121900g69f84a61q1d370a2874b12fe6@mail.gmail.com>
+Message-ID: <317737de0907122132o61168338i722876f615d7759b@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090713/a4785f83/attachment.pl>
+
+From cgb en datanalytics.com  Tue Jul 14 01:00:45 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Tue, 14 Jul 2009 01:00:45 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?=A1=A1_Primeras_jornadas_espa=F1olas_de_R_!?=
+ =?iso-8859-1?q?!?=
+In-Reply-To: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+References: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+Message-ID: <1247526045.12530.13.camel@kropotkin>
+
+Hola, ¿qué tal?
+
+La comunidad española de usuarios de R debería congratularse de que las
+primeras jornadas de R estén en marcha. 
+
+Como integrante del comité organizador me gustaría invitar a todo el
+mundo, de la universidad, de la empresa, de centros de investigación,
+etc., a tomar parte en ellas.
+
+El objtivo fundamental de las jornadas es el poner en contacto a grupos
+de usuarios y que de su interacción puedan emerger ideas, soluciones e
+iniciativas transversales, multidisciplinarias y enriquecedoras.
+
+Queremos plantear unas jornadas útiles para todos: para docentes de la
+universidad, para investigadores en disciplinas no necesariamente
+estadísticas, para usuarios de metodos analíticos en banca y en la
+industria, para grupos de investigación en genética o medicina. 
+
+Que todos podamos contarnos y discutir cómo utilizamos R para resolver
+nuestros problemas diarios, podamos indagar qué soluciones han
+encontrado otros usuarios, cómo integramos R con otros sistemas, etc.
+
+Me gustaría que estas jornadas fuesen lo más interactivas, lo más
+conectoras, lo más transversales, lo más incluyentes posible. Y ese
+objetivo no podrá alcanzarse sin la colaboración desde la más sesuda a
+la ma? humilde, de todos los que tecleamos a las 9:01 de la mañana un
+"source(...)".
+
+Un cordial saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+
+On Thu, 2009-07-09 at 15:54 +0200, Usuario R wrote:
+> Hola a todos,
+> 
+> Os escribo para anunciaros que estamos montando las primeras jornadas de la
+> Comunidad de usuarios de R en Espaol. Sern en Noviembre los das 26 y 27.
+> 
+> Con las jornadas se pretende que los usuarios de R nos conozcamos,
+> presentemos artculos, demos charlas, y nos organicemos formando una
+> "comunidad de usuarios de R" que permita aunar esfuerzos en la difusin del
+> uso de R dentro de la comunidad hispana.
+> 
+> Para cualquier pregunta, podis escribir aqu, en la lista y os vamos
+> contando todo lo que haremos y recogiendo vuestras  opiniones.
+> 
+> Un saludo!!!
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cgb en datanalytics.com  Wed Jul 15 01:55:41 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Wed, 15 Jul 2009 01:55:41 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?=A1=A1_Primeras_jornadas_espa=F1olas_de_R_!?=
+ =?iso-8859-1?q?!?=
+In-Reply-To: <d7d0a6370907132334y6b8d26f0nd9999f0daa08a164@mail.gmail.com>
+References: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+	<1247526045.12530.13.camel@kropotkin>
+	<d7d0a6370907132334y6b8d26f0nd9999f0daa08a164@mail.gmail.com>
+Message-ID: <1247615741.5460.10.camel@kropotkin>
+
+On Tue, 2009-07-14 at 08:34 +0200, Martí Casals wrote:
+> Hola,
+>  
+> cuando seran y donde?
+>  
+> Gracias,
+>  
+> Martí.
+
+Pues, en principio, serían en la Facultad de Informática de la
+Universidad de Murcia el 26 y 27 de Noviembre.
+
+Es decir, al ritmo de maduración de este tipo de cosas, están a la
+vuelta de la esquina. El anuncio en esta lista fue, desde cierto punto
+de vista, algo prematuro (algunos detalles todavía tienen que cerrarse
+desde el punto de vista organizativo). Pero fue pertinente en tanto que
+permite ir preparando material a aquellos que quieran participar en
+ellas.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Wed Jul 15 12:37:04 2009
+From: PabloEmilio.Verde en uni-duesseldorf.de (Pablo Emilio Verde)
+Date: Wed, 15 Jul 2009 12:37:04 +0200
+Subject: [R-es] =?iso-8859-1?q?_Re=3A__=A1=A1_Primeras_jornadas_espa=F1ola?=
+ =?iso-8859-1?q?s_de_R_!!?=
+References: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+	<1247526045.12530.13.camel@kropotkin>
+	<d7d0a6370907132334y6b8d26f0nd9999f0daa08a164@mail.gmail.com>
+	<1247615741.5460.10.camel@kropotkin>
+Message-ID: <020a01ca0538$31a47790$7d8f6386@VMED.UKD>
+
+Hola a todos,
+
+Que buena noticia!!
+
+Yo calculaba una primera reunion para el 2010. Pero si hay posibilidades de
+dar un primer paso este año esta muy bien!!
+
+Pensando en lo que seria "r-help-es" en algunos años y haciendo algunas
+expeculaciones futuristicas, creo que el termino
+"Primeras jornadas Iberoamericanas de R" seria mas integrador. Despues de
+todo, somos una de las regiones culturalmente
+mas integradas del mundo. *Pero, desde luego esto es una sugerencia y los
+organizadores son los que marcan las reglas*.
+
+Saludos,
+
+Pablo
+
+
+
+
+
+
+
+
+
+
+----- Original Message -----
+From: "Carlos J. Gil Bellosta" <cgb en datanalytics.com>
+To: "Martí Casals" <mcasals en aspb.cat>
+Cc: "r-help-es" <r-help-es en r-project.org>
+Sent: Wednesday, July 15, 2009 1:55 AM
+Subject: Re: [R-es] ¡¡ Primeras jornadas españolas de R !!
+
+
+On Tue, 2009-07-14 at 08:34 +0200, Martí Casals wrote:
+> Hola,
+>
+> cuando seran y donde?
+>
+> Gracias,
+>
+> Martí.
+
+Pues, en principio, serían en la Facultad de Informática de la
+Universidad de Murcia el 26 y 27 de Noviembre.
+
+Es decir, al ritmo de maduración de este tipo de cosas, están a la
+vuelta de la esquina. El anuncio en esta lista fue, desde cierto punto
+de vista, algo prematuro (algunos detalles todavía tienen que cerrarse
+desde el punto de vista organizativo). Pero fue pertinente en tanto que
+permite ir preparando material a aquellos que quieran participar en
+ellas.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From r.user.spain en gmail.com  Wed Jul 15 13:48:40 2009
+From: r.user.spain en gmail.com (Usuario R)
+Date: Wed, 15 Jul 2009 13:48:40 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=A1=A1_Primeras_jornadas_espa=F1olas_de_R_!?=
+	=?iso-8859-1?q?!?=
+In-Reply-To: <020a01ca0538$31a47790$7d8f6386@VMED.UKD>
+References: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+	<1247526045.12530.13.camel@kropotkin>
+	<d7d0a6370907132334y6b8d26f0nd9999f0daa08a164@mail.gmail.com>
+	<1247615741.5460.10.camel@kropotkin>
+	<020a01ca0538$31a47790$7d8f6386@VMED.UKD>
+Message-ID: <e013b3630907150448i28b5ee7ev87394c3e5b90b69c@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090715/82596287/attachment.pl>
+
+From marco.giannitrapani en gmail.com  Thu Jul 16 10:39:21 2009
+From: marco.giannitrapani en gmail.com (Marco Giannitrapani)
+Date: Thu, 16 Jul 2009 10:39:21 +0200
+Subject: [R-es] JOBS: Statistics Data Manager & Statistics Assistant in
+	Novartis Spain - Barcelona
+Message-ID: <560639d20907160139x3e288f93j4e3a081b71119b62@mail.gmail.com>
+
+Estimad en s,
+
+Abajo están dos ofertas de trabajos para Novartis España en Barcelona.
+
+Los candidatos deben enviar su candidatura a jimena.aldasoro-ext en novartis.com.
+
+Saludos,
+
+Marco
+
+
+
+#########################################################################
+- Puesto: Data Manager Estadístico Marketing
+
+- Número de plazas: 1
+
+- Tipo de contrato: Temporal
+
+- Inicio: Agosto 2008
+
+- Duración mínima esperada de: 6 meses
+
+- Jornada: 8 horas
+
+- Perfil solicitado: Estadística deseable posgrado o cursando master.
+Capacidad de presentaciones, comunicación, empatía y interrelación con
+red de venta y management.
+
+- Programas informáticos: R, Excel avanzado, VBA conocimientos, SAS o
+Splus o Minitab o SPSS.
+
+- Idioma: Inglés: Alto.
+
+- Descripción de la oferta: Apoyo directo al manager del área. La
+posición será responsable de realizar análisis de bases de datos. Se
+hará responsable de:
+  - Simulaciones con diferentes escenarios.
+  - Reporting a RRHH, Finanzas, Sales&Marketing de los análisis.
+  - Atención y solución de dudas.
+
+- Contacto:
+  Jimena Aldasoro
+  Recursos Humanos
+  Novartis Farmaceutica S.A.
+  e-mail: jimena.aldasoro-ext en novartis.com
+#########################################################################
+
+
+#########################################################################
+- Puesto: Becario Data Manager Estadístico
+
+- Número de plazas: 1
+
+- Tipo de contrato: Convenio de prácticas a través de la universidad
+
+- Inicio: 6-Ago
+
+- Duración: 6 meses
+
+- Jornada: 5 u 8 horas
+
+- Beca: entre 450 y 751 ?
+
+- Perfil solicitado: Estadística deseable posgrado o cursando master.
+Capacidad de presentaciones, comunicación, empatía y interrelación con
+red de venta y management.
+
+- Programas informáticos: R, Excel avanzado, VBA conocimientos, SAS o
+Splus o Minitab o SPSS
+
+- Idioma: Inglés: Alto
+
+- Descripción de la oferta: Apoyo directo al manager del área. La
+posición será responsable de los análisis de bases de datos. Se hará
+responsable de:
+   - Simulaciones con diferentes escenarios.
+   - Reporting a RRHH, Finanzas, Sales&Marketing de los análisis.
+   - Atención y solución de dudas.
+
+- Contacto
+   Jimena Aldasoro-EXT
+   Recursos Humanos
+   Novartis Farmaceutica S.A.
+   e-mail: jimena.aldasoro-ext en novartis.com
+#########################################################################
+
+
+From cgb en datanalytics.com  Thu Jul 16 12:27:27 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 16 Jul 2009 12:27:27 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=A1=A1_Primeras_jornadas_espa=F1olas_de_R_!?=
+	=?iso-8859-1?q?!?=
+In-Reply-To: <e013b3630907150448i28b5ee7ev87394c3e5b90b69c@mail.gmail.com>
+References: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+	<1247526045.12530.13.camel@kropotkin>
+	<d7d0a6370907132334y6b8d26f0nd9999f0daa08a164@mail.gmail.com>
+	<1247615741.5460.10.camel@kropotkin>
+	<020a01ca0538$31a47790$7d8f6386@VMED.UKD>
+	<e013b3630907150448i28b5ee7ev87394c3e5b90b69c@mail.gmail.com>
+Message-ID: <b028350f0907160327i6703369fx24bdd443d7b16318@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+En cuanto al nombre de las jornadas tengo que decir que no se ha
+elegido sin cierto debate. En particular, se ha ponderado que:
+
+1) Las reuniones de usuarios de R (excepto las globales y las de los
+grupos de intereses especiales) suelen ser de tipo local: "Bay Area",
+"London", etc.
+
+2) Que un comité de españoles (y un francés) acordase plantear unas
+jornadas a tener lugar en Murcia, España y las llamase "Jornadas
+Iberoamericanas" parecería bastante arrogante. Además, correríamos el
+peligro de que las del 2010 fuesen en Valparaíso, Ushuaia, Cúcuta,
+Malabo o Tijuana y ya no pudiésemos acudir.
+
+3) Que las jornadas están abiertas a todo el mundo sin restricciones.
+
+4) Que las jornadas se celebran sin perjuicio de que los usuarios de R
+de Méjico, Perú, Colombia o Argentina (o del Cono Sur; o
+Centroamérica) decidan organizar y celebrar las suyas propias.
+
+5) Que las jornadas también se celebran sin perjuicio de que un día sí
+que se celebren unas jornadas de ámbito hispanoamericano.
+
+En definitiva, el nombre de las jornadas ha sido elegido con un
+criterio descriptivo y no restrictivo. Y, por supuesto, estás invitado
+a ellas.
+
+Un cordial saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+El 15 de julio de 2009 13:48, Usuario R<r.user.spain en gmail.com> escribió:
+> Hola Pablo,
+> Tenemos pensado que estas jornadas sean poco para conocernos, empezar a
+> definir el grupo de usuarios y dar algunas charlas interesantes pero con
+> vistas a montar algo mas gordo en 2010.
+> De momento estamos trabajando en varias cosas: pagina web, definición de
+> contenidos, carteles publicitarios, recursos técnicos, etc.
+> Queremos además que las conferencias y mesas redondas se retransmitan e
+> incluso que puede haber una participación online.
+> Ya os iré contando mas avances, y por supuesto cualquier sugerencia, ayuda,
+> etc será bien recibida!
+> Un saludo!
+>
+>
+>
+> El 15 de julio de 2009 12:37, Pablo Emilio Verde
+> <PabloEmilio.Verde en uni-duesseldorf.de> escribió:
+>>
+>> Hola a todos,
+>>
+>> Que buena noticia!!
+>>
+>> Yo calculaba una primera reunion para el 2010. Pero si hay posibilidades
+>> de
+>> dar un primer paso este año esta muy bien!!
+>>
+>> Pensando en lo que seria "r-help-es" en algunos años y haciendo algunas
+>> expeculaciones futuristicas, creo que el termino
+>> "Primeras jornadas Iberoamericanas de R" seria mas integrador. Despues de
+>> todo, somos una de las regiones culturalmente
+>> mas integradas del mundo. *Pero, desde luego esto es una sugerencia y los
+>> organizadores son los que marcan las reglas*.
+>>
+>> Saludos,
+>>
+>> Pablo
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> ----- Original Message -----
+>> From: "Carlos J. Gil Bellosta" <cgb en datanalytics.com>
+>> To: "Martí Casals" <mcasals en aspb.cat>
+>> Cc: "r-help-es" <r-help-es en r-project.org>
+>> Sent: Wednesday, July 15, 2009 1:55 AM
+>> Subject: Re: [R-es] ¡¡ Primeras jornadas españolas de R !!
+>>
+>>
+>> On Tue, 2009-07-14 at 08:34 +0200, Martí Casals wrote:
+>> > Hola,
+>> >
+>> > cuando seran y donde?
+>> >
+>> > Gracias,
+>> >
+>> > Martí.
+>>
+>> Pues, en principio, serían en la Facultad de Informática de la
+>> Universidad de Murcia el 26 y 27 de Noviembre.
+>>
+>> Es decir, al ritmo de maduración de este tipo de cosas, están a la
+>> vuelta de la esquina. El anuncio en esta lista fue, desde cierto punto
+>> de vista, algo prematuro (algunos detalles todavía tienen que cerrarse
+>> desde el punto de vista organizativo). Pero fue pertinente en tanto que
+>> permite ir preparando material a aquellos que quieran participar en
+>> ellas.
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From r.user.spain en gmail.com  Thu Jul 16 12:45:04 2009
+From: r.user.spain en gmail.com (Usuario R)
+Date: Thu, 16 Jul 2009 12:45:04 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=A1=A1_Primeras_jornadas_espa=F1olas_de_R_!?=
+	=?iso-8859-1?q?!?=
+In-Reply-To: <b028350f0907160327i6703369fx24bdd443d7b16318@mail.gmail.com>
+References: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+	<1247526045.12530.13.camel@kropotkin>
+	<d7d0a6370907132334y6b8d26f0nd9999f0daa08a164@mail.gmail.com>
+	<1247615741.5460.10.camel@kropotkin>
+	<020a01ca0538$31a47790$7d8f6386@VMED.UKD>
+	<e013b3630907150448i28b5ee7ev87394c3e5b90b69c@mail.gmail.com>
+	<b028350f0907160327i6703369fx24bdd443d7b16318@mail.gmail.com>
+Message-ID: <e013b3630907160345g222d00b8nabe95aaaf76015fd@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090716/342ea45f/attachment.pl>
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Thu Jul 16 14:36:11 2009
+From: PabloEmilio.Verde en uni-duesseldorf.de (Pablo Emilio Verde)
+Date: Thu, 16 Jul 2009 14:36:11 +0200
+Subject: [R-es] =?iso-8859-1?q?_Re=3A__Re=3A_=A1=A1_Primeras_jornadas_espa?=
+ =?iso-8859-1?q?=F1olas_de_R_!!?=
+References: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+	<1247526045.12530.13.camel@kropotkin>
+	<d7d0a6370907132334y6b8d26f0nd9999f0daa08a164@mail.gmail.com>
+	<1247615741.5460.10.camel@kropotkin>
+	<020a01ca0538$31a47790$7d8f6386@VMED.UKD>
+	<e013b3630907150448i28b5ee7ev87394c3e5b90b69c@mail.gmail.com>
+	<b028350f0907160327i6703369fx24bdd443d7b16318@mail.gmail.com>
+Message-ID: <03af01ca0612$0028c3d0$7d8f6386@VMED.UKD>
+
+Hola Carlos,
+
+Te agradezco y me parece muy bien la discución y las aclaraciones,
+aunque creo no eran necesarias ;).
+
+Mi sugerencia estaba  motivada por el tipo de integrantes que tarde
+o temprano tendra "r-help-es" (hispanoparlantes de todo el mundo).
+
+En general el nombre de las reuniones tiene que ver con la direccion
+que los organizadores tomen (provincial, nacional, internacional, tematica,
+etc)
+y menos con la dimension u otras cuestiones.
+
+Otra sugerencia seria anunciar esta reunion en la lista r-help en Ingles.
+
+Cuando tengan el programa de la reunion, me encargo de hacerlo
+anunciar en el Instituto Interamericano de Estadistica.
+
+Saludos,
+
+Pablo
+
+
+----- Original Message -----
+From: "Carlos J. Gil Bellosta " <cgb en datanalytics.com>
+To: "Usuario R" <r.user.spain en gmail.com>
+Cc: "Pablo Emilio Verde" <PabloEmilio.Verde en uni-duesseldorf.de>; "Martí
+Casals" <mcasals en aspb.cat>; "r-help-es" <r-help-es en r-project.org>
+Sent: Thursday, July 16, 2009 12:27 PM
+Subject: Re: [R-es] Re: ¡¡ Primeras jornadas españolas de R !!
+
+
+Hola, ¿qué tal?
+
+En cuanto al nombre de las jornadas tengo que decir que no se ha
+elegido sin cierto debate. En particular, se ha ponderado que:
+
+1) Las reuniones de usuarios de R (excepto las globales y las de los
+grupos de intereses especiales) suelen ser de tipo local: "Bay Area",
+"London", etc.
+
+2) Que un comité de españoles (y un francés) acordase plantear unas
+jornadas a tener lugar en Murcia, España y las llamase "Jornadas
+Iberoamericanas" parecería bastante arrogante. Además, correríamos el
+peligro de que las del 2010 fuesen en Valparaíso, Ushuaia, Cúcuta,
+Malabo o Tijuana y ya no pudiésemos acudir.
+
+3) Que las jornadas están abiertas a todo el mundo sin restricciones.
+
+4) Que las jornadas se celebran sin perjuicio de que los usuarios de R
+de Méjico, Perú, Colombia o Argentina (o del Cono Sur; o
+Centroamérica) decidan organizar y celebrar las suyas propias.
+
+5) Que las jornadas también se celebran sin perjuicio de que un día sí
+que se celebren unas jornadas de ámbito hispanoamericano.
+
+En definitiva, el nombre de las jornadas ha sido elegido con un
+criterio descriptivo y no restrictivo. Y, por supuesto, estás invitado
+a ellas.
+
+Un cordial saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+El 15 de julio de 2009 13:48, Usuario R<r.user.spain en gmail.com> escribió:
+> Hola Pablo,
+> Tenemos pensado que estas jornadas sean poco para conocernos, empezar a
+> definir el grupo de usuarios y dar algunas charlas interesantes pero con
+> vistas a montar algo mas gordo en 2010.
+> De momento estamos trabajando en varias cosas: pagina web, definición de
+> contenidos, carteles publicitarios, recursos técnicos, etc.
+> Queremos además que las conferencias y mesas redondas se retransmitan e
+> incluso que puede haber una participación online.
+> Ya os iré contando mas avances, y por supuesto cualquier sugerencia,
+ayuda,
+> etc será bien recibida!
+> Un saludo!
+>
+>
+>
+> El 15 de julio de 2009 12:37, Pablo Emilio Verde
+> <PabloEmilio.Verde en uni-duesseldorf.de> escribió:
+>>
+>> Hola a todos,
+>>
+>> Que buena noticia!!
+>>
+>> Yo calculaba una primera reunion para el 2010. Pero si hay posibilidades
+>> de
+>> dar un primer paso este año esta muy bien!!
+>>
+>> Pensando en lo que seria "r-help-es" en algunos años y haciendo algunas
+>> expeculaciones futuristicas, creo que el termino
+>> "Primeras jornadas Iberoamericanas de R" seria mas integrador. Despues de
+>> todo, somos una de las regiones culturalmente
+>> mas integradas del mundo. *Pero, desde luego esto es una sugerencia y los
+>> organizadores son los que marcan las reglas*.
+>>
+>> Saludos,
+>>
+>> Pablo
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> ----- Original Message -----
+>> From: "Carlos J. Gil Bellosta" <cgb en datanalytics.com>
+>> To: "Martí Casals" <mcasals en aspb.cat>
+>> Cc: "r-help-es" <r-help-es en r-project.org>
+>> Sent: Wednesday, July 15, 2009 1:55 AM
+>> Subject: Re: [R-es] ¡¡ Primeras jornadas españolas de R !!
+>>
+>>
+>> On Tue, 2009-07-14 at 08:34 +0200, Martí Casals wrote:
+>> > Hola,
+>> >
+>> > cuando seran y donde?
+>> >
+>> > Gracias,
+>> >
+>> > Martí.
+>>
+>> Pues, en principio, serían en la Facultad de Informática de la
+>> Universidad de Murcia el 26 y 27 de Noviembre.
+>>
+>> Es decir, al ritmo de maduración de este tipo de cosas, están a la
+>> vuelta de la esquina. El anuncio en esta lista fue, desde cierto punto
+>> de vista, algo prematuro (algunos detalles todavía tienen que cerrarse
+>> desde el punto de vista organizativo). Pero fue pertinente en tanto que
+>> permite ir preparando material a aquellos que quieran participar en
+>> ellas.
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From tboca en cnia.inta.gov.ar  Thu Jul 16 15:28:00 2009
+From: tboca en cnia.inta.gov.ar (Teresa Boca)
+Date: Thu, 16 Jul 2009 10:28:00 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?=A1=A1_Primeras_jornadas_espa=F1olas_de_R_!?=
+	=?iso-8859-1?q?!?=
+In-Reply-To: <b028350f0907160327i6703369fx24bdd443d7b16318@mail.gmail.com>
+References: <e013b3630907090654o8c9bdc8xab47c82a78798c59@mail.gmail.com>
+	<1247526045.12530.13.camel@kropotkin>
+	<d7d0a6370907132334y6b8d26f0nd9999f0daa08a164@mail.gmail.com>
+	<1247615741.5460.10.camel@kropotkin>
+	<020a01ca0538$31a47790$7d8f6386@VMED.UKD>
+	<e013b3630907150448i28b5ee7ev87394c3e5b90b69c@mail.gmail.com>
+	<b028350f0907160327i6703369fx24bdd443d7b16318@mail.gmail.com>
+Message-ID: <caed23000907160628g4164c50dob851f7e81fc09dca@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090716/828b2f33/attachment.pl>
+
+From marcarmu en gmail.com  Fri Jul 17 18:56:01 2009
+From: marcarmu en gmail.com (=?UTF-8?Q?Marcia_Mu=C3=B1oz?=)
+Date: Fri, 17 Jul 2009 12:56:01 -0400
+Subject: [R-es] ayuda con dos topicos
+Message-ID: <4d0b5e4f0907170956h4a595983qfa0311598d5bafd5@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090717/206abf80/attachment.pl>
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Fri Jul 17 23:18:11 2009
+From: PabloEmilio.Verde en uni-duesseldorf.de (PabloEmilio.Verde en uni-duesseldorf.de)
+Date: Fri, 17 Jul 2009 23:18:11 +0200
+Subject: [R-es] ayuda con dos topicos
+In-Reply-To: <4d0b5e4f0907170956h4a595983qfa0311598d5bafd5@mail.gmail.com>
+References: <4d0b5e4f0907170956h4a595983qfa0311598d5bafd5@mail.gmail.com>
+Message-ID: <1247865491.4a60ea93afd6a@wwwmail.uni-duesseldorf.de>
+
+Hola,
+
+El paquete "nlme" tiene implementado algunas estructuras de
+covariancia espaciales.
+
+Por ejemplo si utilizas modelos lineales con effectos aleatorios y
+estructura de correlacion espacial podes usar "lme". Si usas modelos
+lineales sin effectos aleatorios podes usar "glm".
+
+Esto es un ejemplo editado desde el help:
+
+# comienzo del ejemplo ...
+fm1 <- lme(weight ~ Time * Diet, BodyWeight,
+                   random = ~ Time)
+
+plot(Variogram(fm1, form = ~ Time))
+
+fm2 <- update(fm1, weights = varPower())
+
+fm3 <- update(fm2,
+           correlation = corExp(form = ~ Time))
+
+fm4 <- update(fm3,
+          correlation = corSpher(form = ~ Time))
+
+anova(fm1, fm2, fm3, fm4)
+
+# fin ...
+
+Si miras los "Task views" de R vas a encontrar mucho mas
+informacion sobre estadistica espacial.
+
+Los "bins" son el numero de clases en un histograma. No
+tengo "The R Book" asi que no se en que contexto usan la
+palabra "bins".
+
+Saludos,
+
+Pablo
+
+
+> Saludos a todos!
+>
+> Estoy haciendo un semivariograma y me gustaria hacer un ajuste al
+> semivariograma, yo quisiera probar varios, uno gausiano, el lineal y uno
+> exponencial para ver cual es mejor para mis datos. No se cuales son los
+> comandos en R para hacer eso, alguien tiene un scrip que me pueda servir de
+> referencia?
+>
+> La otra pregunta es sobre lo que significa bins?. Estoy siguiendo el libro
+> de R (The R Book) para hacer los semivariogramas, pero en la pagina 776,
+> aparece esto: the trend surface ..., followed by the numbers of bins....y en
+> el libro aparece un 300 que no se de donde sale. Quizas alguno de ustedes
+> tenga el libro y pueda darme una ayuda con esto, para entender mejor lo que
+> se hizo en el ejemplo y ver como lo hago con mis datos
+>
+> muchas gracias!!
+>
+> saludos
+>
+> MCM
+>
+>
+> --
+> Marcia C. MuÃ±oz
+> Universidad de Puerto Rico
+> Departamento de Biologia - FB246
+> POBOX 23360
+> San Juan, PR 00931-3360
+> tel: 787-7640000, 2900
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Fri Jul 17 23:46:48 2009
+From: PabloEmilio.Verde en uni-duesseldorf.de (PabloEmilio.Verde en uni-duesseldorf.de)
+Date: Fri, 17 Jul 2009 23:46:48 +0200
+Subject: [R-es] maximo global e intervalo de confianza
+In-Reply-To: <317737de0907101144u1280c41exb2a42ead51c2c21b@mail.gmail.com>
+References: <1c46997c0907101108je09f9afx81f1044dd037e1d9@mail.gmail.com>
+	<317737de0907101144u1280c41exb2a42ead51c2c21b@mail.gmail.com>
+Message-ID: <1247867208.4a60f1480ed3a@wwwmail.uni-duesseldorf.de>
+
+Hola Nahuel,
+
+Como esta mi querida Mar del Plata?
+
+Bueno, la pregunta que hiciste es muy complicada y Jorge te ha
+dado una buena respuesta.
+
+Sin embargo, el uso de metodos bootstrap con problemas de maximos
+u otros estadisticos que estan en el borde del espacio parametrico
+es problematica. Uno de los contra-ejemplos clasicos del uso del
+bootstrap es justamente construir intervalos de confianza del maximo.
+
+No te mando la respuesta a tu pregunta, pero te mando un par de
+ejemplos simples para ilustrarte el problema que podes tener:
+
+# comienzo ...
+set.seed(12345)
+
+x1 <- runif(100)*5 # uniform con maximo = 5
+x2 <- rnorm(100)   # normal con maximo = Inf
+
+theta.star <- function(dat, Ind)
+{
+ max(dat[Ind])
+}
+
+max(x1)
+boot1 <- boot(x1, theta.star, R = 1999)
+plot(boot1, jack = T)
+boot.ci(boot1)
+
+max(x2)
+boot2 <- boot(x2, theta.star, R = 1999)
+plot(boot2, jack = T)
+boot.ci(boot2)
+# fin ...
+
+Saludos,
+
+Pablo
+
+
+> Buenas tardes Nahuel,
+> Una manera de calcularlo es via bootstrap. Solo necesitas una función que
+> estime el máximo global de la 2a derivada y luego, utilizando la libreria
+> boot, reproducir los resultados usando muestras aleatorias de tus datos
+> originales.
+>
+> Este es un ejemplo:
+>
+> # Librerias
+> require(pspline)
+> require(boot)
+>
+> # Datos
+> data(cars)
+> attach(cars)
+>
+> # Función para calcular el máximo de la 2a derivada
+> # Los argumentos son d (los datos)
+> #                               index (para el boostrap SOLAMENTE)
+> #                               k (el orden de la derivada) -- por defecto k
+> = 2
+>
+> foo <- function(d, index, k = 2){
+>           ds <- d[index,]
+>           fit <- sm.spline(ds$speed, ds$dist)  # debes cambiar esta linea
+> con tus datos
+>           deriva <- predict(fit, deriv = k)
+>           max(deriva$y)
+>           }
+>
+> # Bootstrap
+> res <- boot(cars, foo, R = 1000)  # esto toma un poco de tiempo
+> plot(res)
+> quantile(res$t, probs = c(0.025, 0.975))
+> #  2.5%     97.5%
+> #  64.71799 103.82926
+>
+> Para mayor información puedes leer la ayuda en ?boot una vez cargas la
+> libreria boot.
+>
+> Espero sea de utilidad,
+>
+> Jorge Ivan Velez
+>
+>
+> 2009/7/10 Nahuel farias <>
+>
+> > Hola a todos
+> >
+> > Alguien sabe cómo puedo determinar maximos globalespara la derivada
+> > 2da de un "sm.spline" y un intervalo de confianza para ese maximo?
+> >
+> > Muchas gracias
+> >
+> > --
+> > Lic. Nahuel E. Farias
+> > Laboratorio de Invertebrados
+> > Departamento de Biología
+> > Facultad de Ciencias Exactas y Naturales,
+> > Universidad Nacional de Mar Del Plata, CC 1245, CP 7600 Mar del Plata,
+> > Argentina
+> > Tel. + 54 - 0223 - 4752426 (Int. 466)
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+
+
+From kjetil1001 en gmail.com  Sat Jul 18 00:11:39 2009
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Fri, 17 Jul 2009 18:11:39 -0400
+Subject: [R-es] ayuda con dos topicos
+In-Reply-To: <1247865491.4a60ea93afd6a@wwwmail.uni-duesseldorf.de>
+References: <4d0b5e4f0907170956h4a595983qfa0311598d5bafd5@mail.gmail.com>
+	<1247865491.4a60ea93afd6a@wwwmail.uni-duesseldorf.de>
+Message-ID: <1f6d6c820907171511s2816c88co2e505b76fb3744cd@mail.gmail.com>
+
+Hola!
+
+Para dar buen ayuda necesitas en realidad explicar algo más lo que
+quieres hacer.
+la cosa es que , en R, o mejor, en CRAN, hay muchas maneras alternativas para
+estimar (semi)variogramas.
+
+Un paqute útil es gstat
+install.packages("gstat", dep=TRUE)
+library(gstat)
+library(help=gstat)
+vignette("gstat")
+?fit.variogram
+
+
+
+Una alternativa interesante, especialmente si vas a trabajar con GLM's
+en el contexto
+espacial, es geoR:
+install.packages(c("geoR","geoRglm"), dep=TRUE)
+
+
+
+Si vas a trabajar con conjuntos de datso muy grandes (más que un poco
+de centenares
+de puntos), puede ser de auyda fields:
+install.packages("fields", dep=TRUE)
+
+En adición hay otras alternativas!!
+
+Kjetil
+
+2009/7/17  <PabloEmilio.Verde en uni-duesseldorf.de>:
+> Hola,
+>
+> El paquete "nlme" tiene implementado algunas estructuras de
+> covariancia espaciales.
+>
+> Por ejemplo si utilizas modelos lineales con effectos aleatorios y
+> estructura de correlacion espacial podes usar "lme". Si usas modelos
+> lineales sin effectos aleatorios podes usar "glm".
+>
+> Esto es un ejemplo editado desde el help:
+>
+> # comienzo del ejemplo ...
+> fm1 <- lme(weight ~ Time * Diet, BodyWeight,
+>                   random = ~ Time)
+>
+> plot(Variogram(fm1, form = ~ Time))
+>
+> fm2 <- update(fm1, weights = varPower())
+>
+> fm3 <- update(fm2,
+>           correlation = corExp(form = ~ Time))
+>
+> fm4 <- update(fm3,
+>          correlation = corSpher(form = ~ Time))
+>
+> anova(fm1, fm2, fm3, fm4)
+>
+> # fin ...
+>
+> Si miras los "Task views" de R vas a encontrar mucho mas
+> informacion sobre estadistica espacial.
+>
+> Los "bins" son el numero de clases en un histograma. No
+> tengo "The R Book" asi que no se en que contexto usan la
+> palabra "bins".
+>
+> Saludos,
+>
+> Pablo
+>
+>
+>> Saludos a todos!
+>>
+>> Estoy haciendo un semivariograma y me gustaria hacer un ajuste al
+>> semivariograma, yo quisiera probar varios, uno gausiano, el lineal y uno
+>> exponencial para ver cual es mejor para mis datos. No se cuales son los
+>> comandos en R para hacer eso, alguien tiene un scrip que me pueda servir de
+>> referencia?
+>>
+>> La otra pregunta es sobre lo que significa bins?. Estoy siguiendo el libro
+>> de R (The R Book) para hacer los semivariogramas, pero en la pagina 776,
+>> aparece esto: the trend surface ..., followed by the numbers of bins....y en
+>> el libro aparece un 300 que no se de donde sale. Quizas alguno de ustedes
+>> tenga el libro y pueda darme una ayuda con esto, para entender mejor lo que
+>> se hizo en el ejemplo y ver como lo hago con mis datos
+>>
+>> muchas gracias!!
+>>
+>> saludos
+>>
+>> MCM
+>>
+>>
+>> --
+>> Marcia C. MuÃ±oz
+>> Universidad de Puerto Rico
+>> Departamento de Biologia - FB246
+>> POBOX 23360
+>> San Juan, PR 00931-3360
+>> tel: 787-7640000, 2900
+>>
+>>       [[alternative HTML version deleted]]
+>>
+>>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+"... an entire human genome would fit on a music CD."
+
+--- www.thinkgene.com
+
+
+From marcarmu en gmail.com  Sat Jul 18 01:32:34 2009
+From: marcarmu en gmail.com (=?UTF-8?Q?Marcia_Mu=C3=B1oz?=)
+Date: Fri, 17 Jul 2009 19:32:34 -0400
+Subject: [R-es] ayuda con dos topicos
+In-Reply-To: <1f6d6c820907171511s2816c88co2e505b76fb3744cd@mail.gmail.com>
+References: <4d0b5e4f0907170956h4a595983qfa0311598d5bafd5@mail.gmail.com>
+	<1247865491.4a60ea93afd6a@wwwmail.uni-duesseldorf.de>
+	<1f6d6c820907171511s2816c88co2e505b76fb3744cd@mail.gmail.com>
+Message-ID: <4d0b5e4f0907171632o40cb4640p7ef07f963242abbc@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090717/0264db48/attachment.pl>
+
+From mauroalexis en gmail.com  Sat Jul 18 01:33:55 2009
+From: mauroalexis en gmail.com (Mauro Alexis)
+Date: Fri, 17 Jul 2009 20:33:55 -0300
+Subject: [R-es] Ayuda con el paquete de text mining (TM)
+Message-ID: <b180af170907171633u51512673nb8fc66f6b2fedd3b@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090717/fc09e1d7/attachment.pl>
+
+From kjetil1001 en gmail.com  Sat Jul 18 06:13:39 2009
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Sat, 18 Jul 2009 00:13:39 -0400
+Subject: [R-es] ayuda con dos topicos
+In-Reply-To: <4d0b5e4f0907171632o40cb4640p7ef07f963242abbc@mail.gmail.com>
+References: <4d0b5e4f0907170956h4a595983qfa0311598d5bafd5@mail.gmail.com>
+	<1247865491.4a60ea93afd6a@wwwmail.uni-duesseldorf.de>
+	<1f6d6c820907171511s2816c88co2e505b76fb3744cd@mail.gmail.com>
+	<4d0b5e4f0907171632o40cb4640p7ef07f963242abbc@mail.gmail.com>
+Message-ID: <1f6d6c820907172113k3034be28ged17f2dde7bf61d7@mail.gmail.com>
+
+Mire abajo.
+
+2009/7/17 Marcia Muñoz <marcarmu en gmail.com>:
+> Gracias por la respuestas!
+>
+> Yo estoy usando library(geoR) y tengo el semivariograma ya, el problema es
+> que no me lo da ajustado
+>
+> Los comandos para hacer el ajuste los reconozco (e.g. corSpher o corRatio),
+> no se como escribir la formula...ahi es donde me siento perdida.
+
+¿Puedes dar más detalles de lo que has hecho? específicamente, yo no encuentro
+corSpher o corRatio en la ayuda de geoR.  En geoR hay varios métodos
+para hacer variografía, mire
+library(geoR)
+?variog
+?variog4
+?variofIt
+?eyefit
+
+los últimos ajusta variograms teóricos a un variograma empírico, en
+comparación,
+?likfit
+ajusta parametros en el variograma como parte de una estimación de un
+modelo (gaussiano)
+para el superficie, junto con trend parametros o otros. Esto puede
+usar mucho más tiempo,
+pero es teóricamente preferible. Haz ambos, y comparar resultados!
+
+Unos ejemplos:
+library(geoR)
+library(help=geoR)
+data(parana)
+?parana
+
+ plot(parana,  bor=borders)
+> ?variog
+> vario.b <- variog(parana)
+variog: computing omnidirectional variogram
+> plot(vario.b)
+> vario.c <- variog(parana,  op="cloud")
+variog: computing omnidirectional variogram
+> plot(vario.c)
+> vario.s <- variog(parana,  op="sm")
+variog: computing omnidirectional variogram
+
+> plot(vario.s,  ylim=c(0, 2.5))
+> ?variofit
+> fit.1 <- variofit(vario.b,  cov.model="matern",  k=0.5)
+variofit: weights used: npairs
+variofit: minimisation function used: optim
+variofit: searching for best initial value ... selected values:
+              sigmasq   phi      tausq kappa
+initial.value "6258.48" "285.92" "0"   "0.5"
+status        "est"     "est"    "est" "fix"
+loss value: 7287615843.70907
+Warning message:
+In variofit(vario.b, cov.model = "matern", k = 0.5) :
+  initial values not provided - running the default search
+> fit.2 <- variofit(vario.b,  cov.model="matern",  k=1.5)
+variofit: weights used: npairs
+variofit: minimisation function used: optim
+variofit: searching for best initial value ... selected values:
+              sigmasq   phi     tausq    kappa
+initial.value "4693.86" "95.31" "625.85" "1.5"
+status        "est"     "est"   "est"    "fix"
+loss value: 7660811461.0475
+Warning message:
+In variofit(vario.b, cov.model = "matern", k = 1.5) :
+  initial values not provided - running the default search
+> ?cov.spatial
+> fit.3 <- variofit(vario.b,  cov.model="gaussian")
+variofit: weights used: npairs
+variofit: minimisation function used: optim
+variofit: searching for best initial value ... selected values:
+              sigmasq   phi      tausq kappa
+initial.value "6258.48" "285.92" "0"   "0.5"
+status        "est"     "est"    "est" "fix"
+loss value: 4933397738.6335
+Warning message:
+In variofit(vario.b, cov.model = "gaussian") :
+  initial values not provided - running the default search
+> ?likfit
+> likfit(parana,  ini.cov.pars=fit.1, cov.model="matern")
+---------------------------------------------------------------
+likfit: likelihood maximisation using the function optim.
+likfit: Use control() to pass additional
+         arguments for the maximisation function.
+        For further details see documentation for optim.
+likfit: It is highly advisable to run this function several
+        times with different initial values for the parameters.
+likfit: WARNING: This step can be time demanding!
+---------------------------------------------------------------
+likfit: end of numerical maximisation.
+likfit: estimated model parameters:
+    beta    tausq  sigmasq      phi
+" 247.3" " 348.2" "3643.2" " 560.0"
+Practical Range with cor=0.05 for asymptotic range: 1677.720
+
+likfit: maximised log-likelihood = -672.2
+>
+
+
+
+Kjetil
+
+
+>
+> Gracias por su ayuda
+>
+> saludos
+>
+> MCM
+>
+> El 17 de julio de 2009 18:11, Kjetil Halvorsen <kjetil1001 en gmail.com>
+> escribió:
+>>
+>> Hola!
+>>
+>> Para dar buen ayuda necesitas en realidad explicar algo más lo que
+>> quieres hacer.
+>> la cosa es que , en R, o mejor, en CRAN, hay muchas maneras alternativas
+>> para
+>> estimar (semi)variogramas.
+>>
+>> Un paqute útil es gstat
+>> install.packages("gstat", dep=TRUE)
+>> library(gstat)
+>> library(help=gstat)
+>> vignette("gstat")
+>> ?fit.variogram
+>>
+>>
+>>
+>> Una alternativa interesante, especialmente si vas a trabajar con GLM's
+>> en el contexto
+>> espacial, es geoR:
+>> install.packages(c("geoR","geoRglm"), dep=TRUE)
+>>
+>>
+>>
+>> Si vas a trabajar con conjuntos de datso muy grandes (más que un poco
+>> de centenares
+>> de puntos), puede ser de auyda fields:
+>> install.packages("fields", dep=TRUE)
+>>
+>> En adición hay otras alternativas!!
+>>
+>> Kjetil
+>>
+>> 2009/7/17  <PabloEmilio.Verde en uni-duesseldorf.de>:
+>> > Hola,
+>> >
+>> > El paquete "nlme" tiene implementado algunas estructuras de
+>> > covariancia espaciales.
+>> >
+>> > Por ejemplo si utilizas modelos lineales con effectos aleatorios y
+>> > estructura de correlacion espacial podes usar "lme". Si usas modelos
+>> > lineales sin effectos aleatorios podes usar "glm".
+>> >
+>> > Esto es un ejemplo editado desde el help:
+>> >
+>> > # comienzo del ejemplo ...
+>> > fm1 <- lme(weight ~ Time * Diet, BodyWeight,
+>> >                   random = ~ Time)
+>> >
+>> > plot(Variogram(fm1, form = ~ Time))
+>> >
+>> > fm2 <- update(fm1, weights = varPower())
+>> >
+>> > fm3 <- update(fm2,
+>> >           correlation = corExp(form = ~ Time))
+>> >
+>> > fm4 <- update(fm3,
+>> >          correlation = corSpher(form = ~ Time))
+>> >
+>> > anova(fm1, fm2, fm3, fm4)
+>> >
+>> > # fin ...
+>> >
+>> > Si miras los "Task views" de R vas a encontrar mucho mas
+>> > informacion sobre estadistica espacial.
+>> >
+>> > Los "bins" son el numero de clases en un histograma. No
+>> > tengo "The R Book" asi que no se en que contexto usan la
+>> > palabra "bins".
+>> >
+>> > Saludos,
+>> >
+>> > Pablo
+>> >
+>> >
+>> >> Saludos a todos!
+>> >>
+>> >> Estoy haciendo un semivariograma y me gustaria hacer un ajuste al
+>> >> semivariograma, yo quisiera probar varios, uno gausiano, el lineal y
+>> >> uno
+>> >> exponencial para ver cual es mejor para mis datos. No se cuales son los
+>> >> comandos en R para hacer eso, alguien tiene un scrip que me pueda
+>> >> servir de
+>> >> referencia?
+>> >>
+>> >> La otra pregunta es sobre lo que significa bins?. Estoy siguiendo el
+>> >> libro
+>> >> de R (The R Book) para hacer los semivariogramas, pero en la pagina
+>> >> 776,
+>> >> aparece esto: the trend surface ..., followed by the numbers of
+>> >> bins....y en
+>> >> el libro aparece un 300 que no se de donde sale. Quizas alguno de
+>> >> ustedes
+>> >> tenga el libro y pueda darme una ayuda con esto, para entender mejor lo
+>> >> que
+>> >> se hizo en el ejemplo y ver como lo hago con mis datos
+>> >>
+>> >> muchas gracias!!
+>> >>
+>> >> saludos
+>> >>
+>> >> MCM
+>> >>
+>> >>
+>> >> --
+>> >> Marcia C. MuÃ±oz
+>> >> Universidad de Puerto Rico
+>> >> Departamento de Biologia - FB246
+>> >> POBOX 23360
+>> >> San Juan, PR 00931-3360
+>> >> tel: 787-7640000, 2900
+>> >>
+>> >>       [[alternative HTML version deleted]]
+>> >>
+>> >>
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>>
+>>
+>>
+>> --
+>> "... an entire human genome would fit on a music CD."
+>>
+>> --- www.thinkgene.com
+>
+>
+>
+> --
+> Marcia C. Muñoz
+> Universidad de Puerto Rico
+> Departamento de Biologia - FB246
+> POBOX 23360
+> San Juan, PR 00931-3360
+> tel: 787-7640000, 2900
+>
+
+
+
+-- 
+"... an entire human genome would fit on a music CD."
+
+--- www.thinkgene.com
+
+
+From marcarmu en gmail.com  Sat Jul 18 06:54:34 2009
+From: marcarmu en gmail.com (=?UTF-8?Q?Marcia_Mu=C3=B1oz?=)
+Date: Sat, 18 Jul 2009 00:54:34 -0400
+Subject: [R-es] ayuda con dos topicos
+In-Reply-To: <1f6d6c820907172113k3034be28ged17f2dde7bf61d7@mail.gmail.com>
+References: <4d0b5e4f0907170956h4a595983qfa0311598d5bafd5@mail.gmail.com>
+	<1247865491.4a60ea93afd6a@wwwmail.uni-duesseldorf.de>
+	<1f6d6c820907171511s2816c88co2e505b76fb3744cd@mail.gmail.com>
+	<4d0b5e4f0907171632o40cb4640p7ef07f963242abbc@mail.gmail.com>
+	<1f6d6c820907172113k3034be28ged17f2dde7bf61d7@mail.gmail.com>
+Message-ID: <4d0b5e4f0907172154n1ce29701p1f9c8849e8bc1299@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090718/d223fad8/attachment.pl>
+
+From kjetil1001 en gmail.com  Sat Jul 18 18:08:14 2009
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Sat, 18 Jul 2009 12:08:14 -0400
+Subject: [R-es] ayuda con dos topicos
+In-Reply-To: <4d0b5e4f0907172154n1ce29701p1f9c8849e8bc1299@mail.gmail.com>
+References: <4d0b5e4f0907170956h4a595983qfa0311598d5bafd5@mail.gmail.com>
+	<1247865491.4a60ea93afd6a@wwwmail.uni-duesseldorf.de>
+	<1f6d6c820907171511s2816c88co2e505b76fb3744cd@mail.gmail.com>
+	<4d0b5e4f0907171632o40cb4640p7ef07f963242abbc@mail.gmail.com>
+	<1f6d6c820907172113k3034be28ged17f2dde7bf61d7@mail.gmail.com>
+	<4d0b5e4f0907172154n1ce29701p1f9c8849e8bc1299@mail.gmail.com>
+Message-ID: <1f6d6c820907180908m750574b9of29cf8422a27cbdf@mail.gmail.com>
+
+bién, si debes incluir los ceros o no probablemente depende de lo que
+quieres hacer. Un
+variable de contar (número de individuos) frecuentemente tiene una
+distribución Poisson,
+entonces puede ser útil la transformada raíz cuadrada. ¿Puedes describir con
+más detalle la meta de la investigación, o talvez puedes mandar los
+datos como attachment?
+
+Kjetil
+
+On 2009-07-18, Marcia Muñoz <marcarmu en gmail.com> wrote:
+> Hola!
+>
+> yo segui el ejemplo de esta pagina:
+> http://www.ats.ucla.edu/stat/R/faq/variogram.htm
+>
+> Pero mi resultado final no es una linea como el ejemplo, sino una marahna
+> de
+> puntos acumulados
+>
+> Los comandos que menciono estan en library(nlme). Yo quiero hacer una linea
+> de ajuste a mis datos en la grafica final. Revisare con calma lo que me
+> enviaste.
+>
+> Mira, aprovecho a consultarte esto, quizas me puedas orientar. Yo tengo 520
+> puntos donde hice mi muestreo y estoy haciendo mi variograma ocn todos
+> ellos, aunque todos ellos no tienen la variable de respuesta, es decir, en
+> buena parte de ellos hay zero como dato. Sigo haciendo mi varigrama con
+> todos los zeros incluidos o solo con las coordenadas que tienen valores
+> mayores a zero. A mi me aprece importante dejar el zero, pues es ausencia
+> de
+> la especie que buscaba.
+>
+> Ok, nuevamente gracias
+>
+> MCM
+>
+> El 18 de julio de 2009 00:13, Kjetil Halvorsen
+> <kjetil1001 en gmail.com>escribió:
+>
+>> Mire abajo.
+>>
+>> 2009/7/17 Marcia Muñoz <marcarmu en gmail.com>:
+>> > Gracias por la respuestas!
+>> >
+>> > Yo estoy usando library(geoR) y tengo el semivariograma ya, el problema
+>> es
+>> > que no me lo da ajustado
+>> >
+>> > Los comandos para hacer el ajuste los reconozco (e.g. corSpher o
+>> corRatio),
+>> > no se como escribir la formula...ahi es donde me siento perdida.
+>>
+>> ¿Puedes dar más detalles de lo que has hecho? específicamente, yo no
+>> encuentro
+>> corSpher o corRatio en la ayuda de geoR.  En geoR hay varios métodos
+>> para hacer variografía, mire
+>> library(geoR)
+>> ?variog
+>> ?variog4
+>> ?variofIt
+>> ?eyefit
+>>
+>> los últimos ajusta variograms teóricos a un variograma empírico, en
+>> comparación,
+>> ?likfit
+>> ajusta parametros en el variograma como parte de una estimación de un
+>> modelo (gaussiano)
+>> para el superficie, junto con trend parametros o otros. Esto puede
+>> usar mucho más tiempo,
+>> pero es teóricamente preferible. Haz ambos, y comparar resultados!
+>>
+>> Unos ejemplos:
+>> library(geoR)
+>> library(help=geoR)
+>> data(parana)
+>> ?parana
+>>
+>>  plot(parana,  bor=borders)
+>> > ?variog
+>> > vario.b <- variog(parana)
+>> variog: computing omnidirectional variogram
+>> > plot(vario.b)
+>> > vario.c <- variog(parana,  op="cloud")
+>> variog: computing omnidirectional variogram
+>> > plot(vario.c)
+>> > vario.s <- variog(parana,  op="sm")
+>> variog: computing omnidirectional variogram
+>>
+>> > plot(vario.s,  ylim=c(0, 2.5))
+>> > ?variofit
+>> > fit.1 <- variofit(vario.b,  cov.model="matern",  k=0.5)
+>> variofit: weights used: npairs
+>> variofit: minimisation function used: optim
+>> variofit: searching for best initial value ... selected values:
+>>              sigmasq   phi      tausq kappa
+>> initial.value "6258.48" "285.92" "0"   "0.5"
+>> status        "est"     "est"    "est" "fix"
+>> loss value: 7287615843.70907
+>> Warning message:
+>> In variofit(vario.b, cov.model = "matern", k = 0.5) :
+>>  initial values not provided - running the default search
+>> > fit.2 <- variofit(vario.b,  cov.model="matern",  k=1.5)
+>> variofit: weights used: npairs
+>> variofit: minimisation function used: optim
+>> variofit: searching for best initial value ... selected values:
+>>              sigmasq   phi     tausq    kappa
+>> initial.value "4693.86" "95.31" "625.85" "1.5"
+>> status        "est"     "est"   "est"    "fix"
+>> loss value: 7660811461.0475
+>> Warning message:
+>> In variofit(vario.b, cov.model = "matern", k = 1.5) :
+>>  initial values not provided - running the default search
+>> > ?cov.spatial
+>> > fit.3 <- variofit(vario.b,  cov.model="gaussian")
+>> variofit: weights used: npairs
+>> variofit: minimisation function used: optim
+>> variofit: searching for best initial value ... selected values:
+>>              sigmasq   phi      tausq kappa
+>> initial.value "6258.48" "285.92" "0"   "0.5"
+>> status        "est"     "est"    "est" "fix"
+>> loss value: 4933397738.6335
+>> Warning message:
+>> In variofit(vario.b, cov.model = "gaussian") :
+>>  initial values not provided - running the default search
+>> > ?likfit
+>> > likfit(parana,  ini.cov.pars=fit.1, cov.model="matern")
+>> ---------------------------------------------------------------
+>> likfit: likelihood maximisation using the function optim.
+>> likfit: Use control() to pass additional
+>>         arguments for the maximisation function.
+>>        For further details see documentation for optim.
+>> likfit: It is highly advisable to run this function several
+>>        times with different initial values for the parameters.
+>> likfit: WARNING: This step can be time demanding!
+>> ---------------------------------------------------------------
+>> likfit: end of numerical maximisation.
+>> likfit: estimated model parameters:
+>>    beta    tausq  sigmasq      phi
+>> " 247.3" " 348.2" "3643.2" " 560.0"
+>> Practical Range with cor=0.05 for asymptotic range: 1677.720
+>>
+>> likfit: maximised log-likelihood = -672.2
+>> >
+>>
+>>
+>>
+>> Kjetil
+>>
+>>
+>> >
+>> > Gracias por su ayuda
+>> >
+>> > saludos
+>> >
+>> > MCM
+>> >
+>> > El 17 de julio de 2009 18:11, Kjetil Halvorsen <kjetil1001 en gmail.com>
+>> > escribió:
+>> >>
+>> >> Hola!
+>> >>
+>> >> Para dar buen ayuda necesitas en realidad explicar algo más lo que
+>> >> quieres hacer.
+>> >> la cosa es que , en R, o mejor, en CRAN, hay muchas maneras
+>> >> alternativas
+>> >> para
+>> >> estimar (semi)variogramas.
+>> >>
+>> >> Un paqute útil es gstat
+>> >> install.packages("gstat", dep=TRUE)
+>> >> library(gstat)
+>> >> library(help=gstat)
+>> >> vignette("gstat")
+>> >> ?fit.variogram
+>> >>
+>> >>
+>> >>
+>> >> Una alternativa interesante, especialmente si vas a trabajar con GLM's
+>> >> en el contexto
+>> >> espacial, es geoR:
+>> >> install.packages(c("geoR","geoRglm"), dep=TRUE)
+>> >>
+>> >>
+>> >>
+>> >> Si vas a trabajar con conjuntos de datso muy grandes (más que un poco
+>> >> de centenares
+>> >> de puntos), puede ser de auyda fields:
+>> >> install.packages("fields", dep=TRUE)
+>> >>
+>> >> En adición hay otras alternativas!!
+>> >>
+>> >> Kjetil
+>> >>
+>> >> 2009/7/17  <PabloEmilio.Verde en uni-duesseldorf.de>:
+>> >> > Hola,
+>> >> >
+>> >> > El paquete "nlme" tiene implementado algunas estructuras de
+>> >> > covariancia espaciales.
+>> >> >
+>> >> > Por ejemplo si utilizas modelos lineales con effectos aleatorios y
+>> >> > estructura de correlacion espacial podes usar "lme". Si usas modelos
+>> >> > lineales sin effectos aleatorios podes usar "glm".
+>> >> >
+>> >> > Esto es un ejemplo editado desde el help:
+>> >> >
+>> >> > # comienzo del ejemplo ...
+>> >> > fm1 <- lme(weight ~ Time * Diet, BodyWeight,
+>> >> >                   random = ~ Time)
+>> >> >
+>> >> > plot(Variogram(fm1, form = ~ Time))
+>> >> >
+>> >> > fm2 <- update(fm1, weights = varPower())
+>> >> >
+>> >> > fm3 <- update(fm2,
+>> >> >           correlation = corExp(form = ~ Time))
+>> >> >
+>> >> > fm4 <- update(fm3,
+>> >> >          correlation = corSpher(form = ~ Time))
+>> >> >
+>> >> > anova(fm1, fm2, fm3, fm4)
+>> >> >
+>> >> > # fin ...
+>> >> >
+>> >> > Si miras los "Task views" de R vas a encontrar mucho mas
+>> >> > informacion sobre estadistica espacial.
+>> >> >
+>> >> > Los "bins" son el numero de clases en un histograma. No
+>> >> > tengo "The R Book" asi que no se en que contexto usan la
+>> >> > palabra "bins".
+>> >> >
+>> >> > Saludos,
+>> >> >
+>> >> > Pablo
+>> >> >
+>> >> >
+>> >> >> Saludos a todos!
+>> >> >>
+>> >> >> Estoy haciendo un semivariograma y me gustaria hacer un ajuste al
+>> >> >> semivariograma, yo quisiera probar varios, uno gausiano, el lineal
+>> >> >> y
+>> >> >> uno
+>> >> >> exponencial para ver cual es mejor para mis datos. No se cuales son
+>> los
+>> >> >> comandos en R para hacer eso, alguien tiene un scrip que me pueda
+>> >> >> servir de
+>> >> >> referencia?
+>> >> >>
+>> >> >> La otra pregunta es sobre lo que significa bins?. Estoy siguiendo
+>> >> >> el
+>> >> >> libro
+>> >> >> de R (The R Book) para hacer los semivariogramas, pero en la pagina
+>> >> >> 776,
+>> >> >> aparece esto: the trend surface ..., followed by the numbers of
+>> >> >> bins....y en
+>> >> >> el libro aparece un 300 que no se de donde sale. Quizas alguno de
+>> >> >> ustedes
+>> >> >> tenga el libro y pueda darme una ayuda con esto, para entender
+>> >> >> mejor
+>> lo
+>> >> >> que
+>> >> >> se hizo en el ejemplo y ver como lo hago con mis datos
+>> >> >>
+>> >> >> muchas gracias!!
+>> >> >>
+>> >> >> saludos
+>> >> >>
+>> >> >> MCM
+>> >> >>
+>> >> >>
+>> >> >> --
+>> >> >> Marcia C. MuÃ±oz
+>> >> >> Universidad de Puerto Rico
+>> >> >> Departamento de Biologia - FB246
+>> >> >> POBOX 23360
+>> >> >> San Juan, PR 00931-3360
+>> >> >> tel: 787-7640000, 2900
+>> >> >>
+>> >> >>       [[alternative HTML version deleted]]
+>> >> >>
+>> >> >>
+>> >> >
+>> >> > _______________________________________________
+>> >> > R-help-es mailing list
+>> >> > R-help-es en r-project.org
+>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >> >
+>> >>
+>> >>
+>> >>
+>> >> --
+>> >> "... an entire human genome would fit on a music CD."
+>> >>
+>> >> --- www.thinkgene.com
+>> >
+>> >
+>> >
+>> > --
+>> > Marcia C. Muñoz
+>> > Universidad de Puerto Rico
+>> > Departamento de Biologia - FB246
+>> > POBOX 23360
+>> > San Juan, PR 00931-3360
+>> > tel: 787-7640000, 2900
+>> >
+>>
+>>
+>>
+>> --
+>> "... an entire human genome would fit on a music CD."
+>>
+>> --- www.thinkgene.com
+>>
+>
+>
+>
+> --
+> Marcia C. Muñoz
+> Universidad de Puerto Rico
+> Departamento de Biologia - FB246
+> POBOX 23360
+> San Juan, PR 00931-3360
+> tel: 787-7640000, 2900
+>
+
+
+-- 
+"... an entire human genome would fit on a music CD."
+
+--- www.thinkgene.com
+
+
+From cgb en datanalytics.com  Mon Jul 20 02:35:20 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Mon, 20 Jul 2009 02:35:20 +0200
+Subject: [R-es] Ayuda con el paquete de text mining (TM)
+In-Reply-To: <b180af170907171633u51512673nb8fc66f6b2fedd3b@mail.gmail.com>
+References: <b180af170907171633u51512673nb8fc66f6b2fedd3b@mail.gmail.com>
+Message-ID: <1248050120.11422.1.camel@kropotkin>
+
+Hola, ¿qué tal?
+
+¿Puedes proporcionarnos más detalles? Por ejemplo, en qué formatos
+tienes los textos, cómo estás intentando leerlos, qué error obtienes,
+etc.
+
+Ten cuidado con el algoritmo de stemming de R: es algo burdo y está
+pensado sólo para el inglés...
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+On Fri, 2009-07-17 at 20:33 -0300, Mauro Alexis wrote:
+> Estimados, les escribo para consultar, lo siguiente:
+> Estoy haciendo un trabajo de text mining y necesito importar una serie de
+> textos para preprocesarlos, es decir eliminar los Stopwords, hacer stemming,
+> eliminar signos de puntuacin etc. Esto ltimo lo puedo realizar con los
+> datasets que trae la librera TM. Lo que no puedo lograr es importar texto
+> desde algn medio a pesar que existe funciones para importar desde PDF, doc,
+> texto plano.
+> Si alguno me puede ayudar desde ya les estoy muy agradecido.
+> Saludos
+> Mauro
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From mauroalexis en gmail.com  Mon Jul 20 03:41:24 2009
+From: mauroalexis en gmail.com (Mauro Alexis)
+Date: Sun, 19 Jul 2009 22:41:24 -0300
+Subject: [R-es] Ayuda con el paquete de text mining (TM)
+In-Reply-To: <1248050120.11422.1.camel@kropotkin>
+References: <b180af170907171633u51512673nb8fc66f6b2fedd3b@mail.gmail.com>
+	<1248050120.11422.1.camel@kropotkin>
+Message-ID: <b180af170907191841x6c58b1a4jcbfc3f28778d72bb@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090719/984e1d59/attachment.pl>
+
+From cgb en datanalytics.com  Mon Jul 20 13:21:19 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 20 Jul 2009 13:21:19 +0200
+Subject: [R-es] Ayuda con el paquete de text mining (TM)
+In-Reply-To: <b180af170907191841x6c58b1a4jcbfc3f28778d72bb@mail.gmail.com>
+References: <b180af170907171633u51512673nb8fc66f6b2fedd3b@mail.gmail.com>
+	<1248050120.11422.1.camel@kropotkin>
+	<b180af170907191841x6c58b1a4jcbfc3f28778d72bb@mail.gmail.com>
+Message-ID: <b028350f0907200421h11918118le99c160c554a4d79@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Pues una vez tuve que buscar recursos para hacer minería de texto en
+español y no encontré demasiados. Pero igual se debe más a mi falta de
+pericia que a su escasez y disponibilidad. Tómese, por tanto, cuanto
+digo con cierta dosis de precaución.
+
+En inglés existen dos tipos de algoritmos para hacer radicalización
+(stemming): los programáticos y los basados en diccionarios. El método
+implementado en R es programático: es un conjunto de reglas que dicen
+que, por ejemplo, si una palabra acaba en "ing", la raíz se obtiene
+eliminando esas letras (y tal vez algo más). Funciona en algunos casos
+pero no universalmente y no, obviamente, en español.
+
+Los métodos de diccionario son, esencialmente, eso: diccionarios. Es
+decir, ficheros que contienen dos palabras por fila: la versión con
+desinencias y la raíz. Una entrada típica sería "trabajé -> trabajar".
+ Aplicar un diccionario es trivial. Lo que no es tanto es obtenerlo.
+
+Conseguí, y no me preguntes dónde, uno de tales diccionarios con unas
+30.000 entradas en español.
+
+El problema del español para aplicaciones de minería de texto radica
+en que es mucho más flexible y variante que el inglés. La dependencia
+de los resultados en un buen "procesamiento del lenguaje natural" es
+crítico.
+
+Existen además aspectos del tipo "reconocimiento de las partes del
+discurso" (distinguir un "caza" verbo de un "caza" sustantivo) que se
+escapan de este planteamiento simplista.
+
+Para hacer las cosas bien en español sería recomendable colaborar con
+gente que se dedique al procesamiento del lenguaje natural. Aunque si
+tu corpus es lo suficientemente formal (no se esperan cosas como
+faltas de ortografía, se utiliza un léxico del que aparece en los
+diccionarios típicos, etc.) puede que te valga con un diccionario
+estándar como el que menciono más arriba.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From cgb en datanalytics.com  Mon Jul 20 16:17:38 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 20 Jul 2009 15:17:38 +0100
+Subject: [R-es] =?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+Message-ID: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Las propiedades asintóticas del test de la chi-cuadrado me están
+llevando a rechazar sistemáticamente hipótesis de homogeneidad. El
+problema es el siguiente.
+
+Parto de una población de n individuos (n del orden de 100.000). En
+t0, están agrupados en 10 bloques, A1-A10.
+
+En t1, algunos inviduos han entrado, otros han salido, otros han
+cambiado de bloque. Y me interesa estimar la medida en la que ha
+cambiado la distribución de la población sobre los bloques.
+
+Pero encuentro la hipótesis que conduce al test de la chi-cuadrado
+demasiado restrictivo. De hecho, haciendo las cuentas, observo que las
+desviaciones de frecuencias respecto a la población original que
+conducen a un rechazo de la hipótesis de homogeneidad son del orden de
+la raíz cuadrada de n. Es decir, conforme n aumenta, una desviación de
+un 1% puede pasar de no provocar un rechazo de H0 a provocarlo.
+
+¿Existe algún test o conjunto de hipótesis distinto al que subyace al
+test de la chi-cuadrado que útil para el estudio de este tipo de
+problemas que se usen en campos como demografía, ecología, etc., donde
+n sea, típicamente grande?
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From kjetil1001 en gmail.com  Mon Jul 20 17:10:21 2009
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Mon, 20 Jul 2009 11:10:21 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+Message-ID: <1f6d6c820907200810y4899389cgb8c2779cb8535f66@mail.gmail.com>
+
+No estoy seguro si entiendo correctamewnte el problema. peri si si,
+Brad Efron ha desarrollado ideas interesantes para atacar este tripo
+de problemas,
+el esta hablando de "estimar la hipótesis nula"! Estrictamente la
+_distribución_ nula. Así el criterio de rechazo se puede adaptar al
+los datos. Yo he encontrado estas idéas útiles. Estan coneccionados
+con la idea de controlar FDR "la taza de descubrimientos falsos".
+
+http://www-stat.stanford.edu/~ckirby/brad/
+Especialmente, mire:
+
+Mire la lista de sus papeles desde 2000, comenzando con 2003:
+"Large-scale simultaneous hypothesis testing: The choice of a null hypothesis"
+
+Yo encuentro estas idéas superinteresantes (y superútiles!)
+
+Kjetil
+
+2009/7/20 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+> Hola, ¿qué tal?
+>
+> Las propiedades asintóticas del test de la chi-cuadrado me están
+> llevando a rechazar sistemáticamente hipótesis de homogeneidad. El
+> problema es el siguiente.
+>
+> Parto de una población de n individuos (n del orden de 100.000). En
+> t0, están agrupados en 10 bloques, A1-A10.
+>
+> En t1, algunos inviduos han entrado, otros han salido, otros han
+> cambiado de bloque. Y me interesa estimar la medida en la que ha
+> cambiado la distribución de la población sobre los bloques.
+>
+> Pero encuentro la hipótesis que conduce al test de la chi-cuadrado
+> demasiado restrictivo. De hecho, haciendo las cuentas, observo que las
+> desviaciones de frecuencias respecto a la población original que
+> conducen a un rechazo de la hipótesis de homogeneidad son del orden de
+> la raíz cuadrada de n. Es decir, conforme n aumenta, una desviación de
+> un 1% puede pasar de no provocar un rechazo de H0 a provocarlo.
+>
+> ¿Existe algún test o conjunto de hipótesis distinto al que subyace al
+> test de la chi-cuadrado que útil para el estudio de este tipo de
+> problemas que se usen en campos como demografía, ecología, etc., donde
+> n sea, típicamente grande?
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+"... an entire human genome would fit on a music CD."
+
+--- www.thinkgene.com
+
+
+From onunez en iberstat.es  Mon Jul 20 17:31:49 2009
+From: onunez en iberstat.es (=?iso-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Mon, 20 Jul 2009 17:31:49 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+Message-ID: <DF991E89539F4683ACF52FB3A97E1D64@Usuario1>
+
+Carlos,
+
+fija un alpha más conservador: alpha =  1%?
+Pues al fin y al cabo, estás diciendo que las variaciones pequeñas no te 
+interessan.
+De hecho, sería interesante saber lo que quieres detectar.
+Un abrazo. Olivier
+
+
+----- Original Message ----- 
+From: "Carlos J. Gil Bellosta " <cgb en datanalytics.com>
+To: "r-help-es" <r-help-es en r-project.org>
+Sent: Monday, July 20, 2009 4:17 PM
+Subject: [R-es] El test de la chi-cuadrado, ¿demasiado restrictivo 
+asintóticamente?
+
+
+Hola, ¿qué tal?
+
+Las propiedades asintóticas del test de la chi-cuadrado me están
+llevando a rechazar sistemáticamente hipótesis de homogeneidad. El
+problema es el siguiente.
+
+Parto de una población de n individuos (n del orden de 100.000). En
+t0, están agrupados en 10 bloques, A1-A10.
+
+En t1, algunos inviduos han entrado, otros han salido, otros han
+cambiado de bloque. Y me interesa estimar la medida en la que ha
+cambiado la distribución de la población sobre los bloques.
+
+Pero encuentro la hipótesis que conduce al test de la chi-cuadrado
+demasiado restrictivo. De hecho, haciendo las cuentas, observo que las
+desviaciones de frecuencias respecto a la población original que
+conducen a un rechazo de la hipótesis de homogeneidad son del orden de
+la raíz cuadrada de n. Es decir, conforme n aumenta, una desviación de
+un 1% puede pasar de no provocar un rechazo de H0 a provocarlo.
+
+¿Existe algún test o conjunto de hipótesis distinto al que subyace al
+test de la chi-cuadrado que útil para el estudio de este tipo de
+problemas que se usen en campos como demografía, ecología, etc., donde
+n sea, típicamente grande?
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cgb en datanalytics.com  Mon Jul 20 17:41:35 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 20 Jul 2009 16:41:35 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <1f6d6c820907200810y4899389cgb8c2779cb8535f66@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+	<1f6d6c820907200810y4899389cgb8c2779cb8535f66@mail.gmail.com>
+Message-ID: <b028350f0907200841u30235da6wcad0602e90ac3b6a@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Voy a reescribir la pregunta con números:
+
+He aquí mi población original, dividida en 10 grupos.
+
+> pop.1 <- 20 + floor( 20 * runif( 10 ) )
+> pop.1
+ [1] 38 29 33 36 34 29 35 36 32 30
+>
+
+Pasa un tiempo y la estructura de la población cambia:
+
+> delta <- 10 * runif( 10 ) - 5
+> delta
+ [1]  4.7020517  4.3205607  2.0654851 -3.7318978 -3.2750279  3.3187095
+-2.3651520 -3.2477705 -4.7871293
+[10] -0.4588495
+> pop.2 <- floor( pop.1 * ( 1 + delta / 100 ) )
+> pop.2
+ [1] 39 30 33 34 32 29 34 34 30 29
+
+Pero el test de homogeneidad nos indica que no ha variado sustancialmente.
+
+>  summary( as.table( cbind( pop.1, pop.2 ) ) )
+Number of cases in table: 656
+Number of factors: 2
+Test for independence of all factors:
+        Chisq = 0.20326, df = 9, p-value = 1
+
+Pero no tengo sum( pop.1 ) individuos sino 100 veces más, y:
+
+>  summary( as.table( 100 * cbind( pop.1, pop.2 ) ) )
+Number of cases in table: 65600
+Number of factors: 2
+Test for independence of all factors:
+        Chisq = 20.326, df = 9, p-value = 0.01601
+
+No es que no sepa por qué sucede esto. Muy al contrario. Lo que quiere
+decir eso es que dicho test es prácticamente inútil para determinar
+cambios en la estructura poblacional de poblaciones muy amplias.
+
+Es decir, que, por ejemplo, el test que sugiere la página 52 de
+http://www.bis.org/publ/bcbs_wp14.htm no es práctico dado que se
+aplica a poblaciones típicamente del orden de cientos de miles de
+individuos.
+
+De ahí mi pregunta: ¿existe algún tipo de medida que utilicen
+biólogos, demógrafos, etc.que les permita decir si la estructura de
+dos poblaciones (o la misma en dos tiempos distintos) es diferente de
+una manera menos rígida para N grande que con el test anterior?
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+
+
+
+
+
+> delta <- 10 * runif( 10 )
+> delta
+ [1] 6.740857 2.525657 2.873351 4.993330 7.544971 2.166013 8.508014 8.216934
+ [9] 4.014574 5.096739
+> pop.2 <- floor( pop.1 * ( 1 * delta / 100 ) )
+> pop.2
+ [1] 2 0 0 1 2 0 2 2 1 1
+> pop.2 <- floor( pop.1 * ( 1 + delta / 100 ) )
+> pop.2
+ [1] 40 29 33 37 36 29 37 38 33 31
+> summary( table( pop.1, pop2 ) )
+Error en table(pop.1, pop2) : objeto 'pop2' no encontrado
+> summary( table( pop.1, pop.2 ) )
+Number of cases in table: 10
+Number of factors: 2
+Test for independence of all factors:
+        Chisq = 52.5, df = 42, p-value = 0.1285
+        Chi-squared approximation may be incorrect
+
+
+El 20 de julio de 2009 16:10, Kjetil Halvorsen<kjetil1001 en gmail.com> escribió:
+> No estoy seguro si entiendo correctamewnte el problema. peri si si,
+> Brad Efron ha desarrollado ideas interesantes para atacar este tripo
+> de problemas,
+> el esta hablando de "estimar la hipótesis nula"! Estrictamente la
+> _distribución_ nula. Así el criterio de rechazo se puede adaptar al
+> los datos. Yo he encontrado estas idéas útiles. Estan coneccionados
+> con la idea de controlar FDR "la taza de descubrimientos falsos".
+>
+> http://www-stat.stanford.edu/~ckirby/brad/
+> Especialmente, mire:
+>
+> Mire la lista de sus papeles desde 2000, comenzando con 2003:
+> "Large-scale simultaneous hypothesis testing: The choice of a null hypothesis"
+>
+> Yo encuentro estas idéas superinteresantes (y superútiles!)
+>
+> Kjetil
+>
+> 2009/7/20 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+>> Hola, ¿qué tal?
+>>
+>> Las propiedades asintóticas del test de la chi-cuadrado me están
+>> llevando a rechazar sistemáticamente hipótesis de homogeneidad. El
+>> problema es el siguiente.
+>>
+>> Parto de una población de n individuos (n del orden de 100.000). En
+>> t0, están agrupados en 10 bloques, A1-A10.
+>>
+>> En t1, algunos inviduos han entrado, otros han salido, otros han
+>> cambiado de bloque. Y me interesa estimar la medida en la que ha
+>> cambiado la distribución de la población sobre los bloques.
+>>
+>> Pero encuentro la hipótesis que conduce al test de la chi-cuadrado
+>> demasiado restrictivo. De hecho, haciendo las cuentas, observo que las
+>> desviaciones de frecuencias respecto a la población original que
+>> conducen a un rechazo de la hipótesis de homogeneidad son del orden de
+>> la raíz cuadrada de n. Es decir, conforme n aumenta, una desviación de
+>> un 1% puede pasar de no provocar un rechazo de H0 a provocarlo.
+>>
+>> ¿Existe algún test o conjunto de hipótesis distinto al que subyace al
+>> test de la chi-cuadrado que útil para el estudio de este tipo de
+>> problemas que se usen en campos como demografía, ecología, etc., donde
+>> n sea, típicamente grande?
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+> --
+> "... an entire human genome would fit on a music CD."
+>
+> --- www.thinkgene.com
+>
+
+
+From trujillo en unex.es  Mon Jul 20 17:48:54 2009
+From: trujillo en unex.es (=?ISO-8859-1?Q?Jos=E9_Trujillo_Carmona?=)
+Date: Mon, 20 Jul 2009 17:48:54 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+ =?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+Message-ID: <4A6491E6.4060508@unex.es>
+
+Si lo he entendido me parece que se trata de un problema de concepto.
+
+El problema del contraste de hipótesis consiste en demostrar que la
+hipótesis nula es falsa y además mientras menos datos para comprobarlo
+mejor. No ponemos la hipótesis que queremos demostrar en la hipótesis
+nula, sino que si hace falta llevamos la igualdad a la hipótesis
+alternativa como hacen los bioensayos.
+
+La hipótesis nula es falsa por principio pero la damos como buena si no
+hay evidencias en contra en base al principio de parsimonia o su forma
+más antigua "la navaja de Occam": si los datos no lo piden no
+compliquemos el modelo.
+
+Pero es que de tu planteamiento se deduce que efectivamente la hipótesis
+nula ha de ser falsa siempre; dices:
+
+En t1, algunos inviduos han entrado, otros han salido, otros han
+cambiado de bloque. ...
+
+
+Es decir, t0 no es igual que t1; hay evolución. Luego siempre debería
+dar falsa H0. A veces el movimiento es tan leve que ni con 100.000
+datos; pero ya sabes que H0 es falsa. El planteamiento del modelo de
+test de hipótesis es: "O son exactamente iguales, como dos números
+reales con infinitos decimales, o H0 es falsa".
+
+El problema por tanto ha de ser replanteado y definir cuando podemos dar
+por "similar" la situación t0 y t1, porque ya sabes que no son iguales y
+el test Ji-Cuadrado dirá que no son iguales si no son "EXACTAMENTE"
+iguales y tienes suficientes datos para acreditarlo, como es tu caso.
+
+Saludos.
+
+
+
+Carlos J. Gil Bellosta escribió:
+> Hola, ¿qué tal?
+>
+> Las propiedades asintóticas del test de la chi-cuadrado me están
+> llevando a rechazar sistemáticamente hipótesis de homogeneidad. El
+> problema es el siguiente.
+>
+> Parto de una población de n individuos (n del orden de 100.000). En
+> t0, están agrupados en 10 bloques, A1-A10.
+>
+> En t1, algunos inviduos han entrado, otros han salido, otros han
+> cambiado de bloque. Y me interesa estimar la medida en la que ha
+> cambiado la distribución de la población sobre los bloques.
+>
+> Pero encuentro la hipótesis que conduce al test de la chi-cuadrado
+> demasiado restrictivo. De hecho, haciendo las cuentas, observo que las
+> desviaciones de frecuencias respecto a la población original que
+> conducen a un rechazo de la hipótesis de homogeneidad son del orden de
+> la raíz cuadrada de n. Es decir, conforme n aumenta, una desviación de
+> un 1% puede pasar de no provocar un rechazo de H0 a provocarlo.
+>
+> ¿Existe algún test o conjunto de hipótesis distinto al que subyace al
+> test de la chi-cuadrado que útil para el estudio de este tipo de
+> problemas que se usen en campos como demografía, ecología, etc., donde
+> n sea, típicamente grande?
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From trujillo en unex.es  Mon Jul 20 18:01:09 2009
+From: trujillo en unex.es (=?ISO-8859-1?Q?Jos=E9_Trujillo_Carmona?=)
+Date: Mon, 20 Jul 2009 18:01:09 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+ =?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <b028350f0907200841u30235da6wcad0602e90ac3b6a@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>	<1f6d6c820907200810y4899389cgb8c2779cb8535f66@mail.gmail.com>
+	<b028350f0907200841u30235da6wcad0602e90ac3b6a@mail.gmail.com>
+Message-ID: <4A6494C5.1060001@unex.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090720/44d56699/attachment.pl>
+
+From kjetil1001 en gmail.com  Mon Jul 20 18:08:36 2009
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Mon, 20 Jul 2009 12:08:36 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <4A6491E6.4060508@unex.es>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+	<4A6491E6.4060508@unex.es>
+Message-ID: <1f6d6c820907200908m66bd17f2haa404a05bf0abb5@mail.gmail.com>
+
+Mire abajo:
+
+2009/7/20 José Trujillo Carmona <trujillo en unex.es>:
+> Si lo he entendido me parece que se trata de un problema de concepto.
+>
+> El problema del contraste de hipótesis consiste en demostrar que la
+> hipótesis nula es falsa y además mientras menos datos para comprobarlo
+> mejor. No ponemos la hipótesis que queremos demostrar en la hipótesis
+> nula, sino que si hace falta llevamos la igualdad a la hipótesis
+> alternativa como hacen los bioensayos.
+>
+> La hipótesis nula es falsa por principio pero la damos como buena si no
+> hay evidencias en contra en base al principio de parsimonia o su forma
+> más antigua "la navaja de Occam": si los datos no lo piden no
+> compliquemos el modelo.
+>
+> Pero es que de tu planteamiento se deduce que efectivamente la hipótesis
+> nula ha de ser falsa siempre; dices:
+>
+> En t1, algunos inviduos han entrado, otros han salido, otros han
+> cambiado de bloque. ...
+>
+>
+> Es decir, t0 no es igual que t1; hay evolución. Luego siempre debería
+> dar falsa H0. A veces el movimiento es tan leve que ni con 100.000
+> datos; pero ya sabes que H0 es falsa. El planteamiento del modelo de
+> test de hipótesis es: "O son exactamente iguales, como dos números
+> reales con infinitos decimales, o H0 es falsa".
+
+Este es justo el problema que Brad Efron (inventor del bootstrap)
+trata de resolver. Efectivamente, el esta redefiniendo el concepto
+de hipótesis nula de "igualdad exacta" a "diferencias pequeñas sim importar"
+y el clave de sus ideas es hacer este operacional mediante suponer a)
+muchos datos
+(por lo menos 100 H_0, mejor 1000) b) suponer que la gram mayoria de estos
+H_0 son verdaderos, y c) bajo el supuesto b) ESTIMAR  la distribución
+del criterio test bajo H_0. Yo he visto que esto funciona muy bién.
+
+Si Carlos tiene más que 100 H_0, debe tratar esta idea.
+
+Kjetil
+
+>
+> El problema por tanto ha de ser replanteado y definir cuando podemos dar
+> por "similar" la situación t0 y t1, porque ya sabes que no son iguales y
+> el test Ji-Cuadrado dirá que no son iguales si no son "EXACTAMENTE"
+> iguales y tienes suficientes datos para acreditarlo, como es tu caso.
+>
+> Saludos.
+>
+>
+>
+> Carlos J. Gil Bellosta escribió:
+>>
+>> Hola, ¿qué tal?
+>>
+>> Las propiedades asintóticas del test de la chi-cuadrado me están
+>> llevando a rechazar sistemáticamente hipótesis de homogeneidad. El
+>> problema es el siguiente.
+>>
+>> Parto de una población de n individuos (n del orden de 100.000). En
+>> t0, están agrupados en 10 bloques, A1-A10.
+>>
+>> En t1, algunos inviduos han entrado, otros han salido, otros han
+>> cambiado de bloque. Y me interesa estimar la medida en la que ha
+>> cambiado la distribución de la población sobre los bloques.
+>>
+>> Pero encuentro la hipótesis que conduce al test de la chi-cuadrado
+>> demasiado restrictivo. De hecho, haciendo las cuentas, observo que las
+>> desviaciones de frecuencias respecto a la población original que
+>> conducen a un rechazo de la hipótesis de homogeneidad son del orden de
+>> la raíz cuadrada de n. Es decir, conforme n aumenta, una desviación de
+>> un 1% puede pasar de no provocar un rechazo de H0 a provocarlo.
+>>
+>> ¿Existe algún test o conjunto de hipótesis distinto al que subyace al
+>> test de la chi-cuadrado que útil para el estudio de este tipo de
+>> problemas que se usen en campos como demografía, ecología, etc., donde
+>> n sea, típicamente grande?
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+"... an entire human genome would fit on a music CD."
+
+--- www.thinkgene.com
+
+
+From kjetil1001 en gmail.com  Mon Jul 20 18:21:14 2009
+From: kjetil1001 en gmail.com (Kjetil Halvorsen)
+Date: Mon, 20 Jul 2009 12:21:14 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <1f6d6c820907200908m66bd17f2haa404a05bf0abb5@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+	<4A6491E6.4060508@unex.es>
+	<1f6d6c820907200908m66bd17f2haa404a05bf0abb5@mail.gmail.com>
+Message-ID: <1f6d6c820907200921i7b636517n207a642f36d1847c@mail.gmail.com>
+
+"Followup" (¿en español')
+
+Un paquete en CRAN que implementa estas ideas (para pruebas T) es
+locfdr
+
+es muy interesante!
+
+Kjetil
+
+2009/7/20 Kjetil Halvorsen <kjetil1001 en gmail.com>:
+> Mire abajo:
+>
+> 2009/7/20 José Trujillo Carmona <trujillo en unex.es>:
+>> Si lo he entendido me parece que se trata de un problema de concepto.
+>>
+>> El problema del contraste de hipótesis consiste en demostrar que la
+>> hipótesis nula es falsa y además mientras menos datos para comprobarlo
+>> mejor. No ponemos la hipótesis que queremos demostrar en la hipótesis
+>> nula, sino que si hace falta llevamos la igualdad a la hipótesis
+>> alternativa como hacen los bioensayos.
+>>
+>> La hipótesis nula es falsa por principio pero la damos como buena si no
+>> hay evidencias en contra en base al principio de parsimonia o su forma
+>> más antigua "la navaja de Occam": si los datos no lo piden no
+>> compliquemos el modelo.
+>>
+>> Pero es que de tu planteamiento se deduce que efectivamente la hipótesis
+>> nula ha de ser falsa siempre; dices:
+>>
+>> En t1, algunos inviduos han entrado, otros han salido, otros han
+>> cambiado de bloque. ...
+>>
+>>
+>> Es decir, t0 no es igual que t1; hay evolución. Luego siempre debería
+>> dar falsa H0. A veces el movimiento es tan leve que ni con 100.000
+>> datos; pero ya sabes que H0 es falsa. El planteamiento del modelo de
+>> test de hipótesis es: "O son exactamente iguales, como dos números
+>> reales con infinitos decimales, o H0 es falsa".
+>
+> Este es justo el problema que Brad Efron (inventor del bootstrap)
+> trata de resolver. Efectivamente, el esta redefiniendo el concepto
+> de hipótesis nula de "igualdad exacta" a "diferencias pequeñas sim importar"
+> y el clave de sus ideas es hacer este operacional mediante suponer a)
+> muchos datos
+> (por lo menos 100 H_0, mejor 1000) b) suponer que la gram mayoria de estos
+> H_0 son verdaderos, y c) bajo el supuesto b) ESTIMAR  la distribución
+> del criterio test bajo H_0. Yo he visto que esto funciona muy bién.
+>
+> Si Carlos tiene más que 100 H_0, debe tratar esta idea.
+>
+> Kjetil
+>
+>>
+>> El problema por tanto ha de ser replanteado y definir cuando podemos dar
+>> por "similar" la situación t0 y t1, porque ya sabes que no son iguales y
+>> el test Ji-Cuadrado dirá que no son iguales si no son "EXACTAMENTE"
+>> iguales y tienes suficientes datos para acreditarlo, como es tu caso.
+>>
+>> Saludos.
+>>
+>>
+>>
+>> Carlos J. Gil Bellosta escribió:
+>>>
+>>> Hola, ¿qué tal?
+>>>
+>>> Las propiedades asintóticas del test de la chi-cuadrado me están
+>>> llevando a rechazar sistemáticamente hipótesis de homogeneidad. El
+>>> problema es el siguiente.
+>>>
+>>> Parto de una población de n individuos (n del orden de 100.000). En
+>>> t0, están agrupados en 10 bloques, A1-A10.
+>>>
+>>> En t1, algunos inviduos han entrado, otros han salido, otros han
+>>> cambiado de bloque. Y me interesa estimar la medida en la que ha
+>>> cambiado la distribución de la población sobre los bloques.
+>>>
+>>> Pero encuentro la hipótesis que conduce al test de la chi-cuadrado
+>>> demasiado restrictivo. De hecho, haciendo las cuentas, observo que las
+>>> desviaciones de frecuencias respecto a la población original que
+>>> conducen a un rechazo de la hipótesis de homogeneidad son del orden de
+>>> la raíz cuadrada de n. Es decir, conforme n aumenta, una desviación de
+>>> un 1% puede pasar de no provocar un rechazo de H0 a provocarlo.
+>>>
+>>> ¿Existe algún test o conjunto de hipótesis distinto al que subyace al
+>>> test de la chi-cuadrado que útil para el estudio de este tipo de
+>>> problemas que se usen en campos como demografía, ecología, etc., donde
+>>> n sea, típicamente grande?
+>>>
+>>> Un saludo,
+>>>
+>>> Carlos J. Gil Bellosta
+>>> http://www.datanalytics.com
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+> --
+> "... an entire human genome would fit on a music CD."
+>
+> --- www.thinkgene.com
+>
+
+
+
+-- 
+"... an entire human genome would fit on a music CD."
+
+--- www.thinkgene.com
+
+
+From trujillo en unex.es  Mon Jul 20 18:22:36 2009
+From: trujillo en unex.es (=?ISO-8859-1?Q?Jos=E9_Trujillo_Carmona?=)
+Date: Mon, 20 Jul 2009 18:22:36 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+ =?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <1f6d6c820907200908m66bd17f2haa404a05bf0abb5@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>	
+	<4A6491E6.4060508@unex.es>
+	<1f6d6c820907200908m66bd17f2haa404a05bf0abb5@mail.gmail.com>
+Message-ID: <4A6499CC.1090401@unex.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090720/cd835ba0/attachment.pl>
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Mon Jul 20 18:32:57 2009
+From: PabloEmilio.Verde en uni-duesseldorf.de (Pablo Emilio Verde)
+Date: Mon, 20 Jul 2009 18:32:57 +0200
+Subject: [R-es] =?iso-8859-1?q?_Re=3A__El_test_de_la_chi-cuadrado=2C_=BFde?=
+ =?iso-8859-1?q?masiado_restrictivo_asint=F3ticamente=3F?=
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+Message-ID: <012401ca0957$bd4a0530$7d8f6386@VMED.UKD>
+
+Hola Carlos,
+
+Esto es solo una idea que he utilizado
+en casos similares.
+
+Lo que se hace es clasificar cada observacion
+segun el cambio que hay desde t0 a t1.
+Esto lo podes hacer armando una tabla
+de contingencia de 10x10 en tu caso o quizas
+de mayor tamaño.
+
+Esta tabla la podes analizar utilizando regresion
+Poisson por medio de glm( ... , family=poisson).
+Esto te permite estudiar como se realizaron los
+cambios en tu poblacion y cambios son interesantes.
+
+Una referencia buena es el libro de Jim Lindsey "
+Modelling Frequency and count data". El libro
+tiene las scripts en R para estos modelos.
+
+Saludos,
+
+Pablo
+
+
+
+
+----- Original Message -----
+From: "Carlos J. Gil Bellosta " <cgb en datanalytics.com>
+To: "r-help-es" <r-help-es en r-project.org>
+Sent: Monday, July 20, 2009 4:17 PM
+Subject: [R-es] El test de la chi-cuadrado, ¿demasiado restrictivo
+asintóticamente?
+
+
+Hola, ¿qué tal?
+
+Las propiedades asintóticas del test de la chi-cuadrado me están
+llevando a rechazar sistemáticamente hipótesis de homogeneidad. El
+problema es el siguiente.
+
+Parto de una población de n individuos (n del orden de 100.000). En
+t0, están agrupados en 10 bloques, A1-A10.
+
+En t1, algunos inviduos han entrado, otros han salido, otros han
+cambiado de bloque. Y me interesa estimar la medida en la que ha
+cambiado la distribución de la población sobre los bloques.
+
+Pero encuentro la hipótesis que conduce al test de la chi-cuadrado
+demasiado restrictivo. De hecho, haciendo las cuentas, observo que las
+desviaciones de frecuencias respecto a la población original que
+conducen a un rechazo de la hipótesis de homogeneidad son del orden de
+la raíz cuadrada de n. Es decir, conforme n aumenta, una desviación de
+un 1% puede pasar de no provocar un rechazo de H0 a provocarlo.
+
+¿Existe algún test o conjunto de hipótesis distinto al que subyace al
+test de la chi-cuadrado que útil para el estudio de este tipo de
+problemas que se usen en campos como demografía, ecología, etc., donde
+n sea, típicamente grande?
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jorgeivanvelez en gmail.com  Mon Jul 20 19:20:44 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Mon, 20 Jul 2009 13:20:44 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <012401ca0957$bd4a0530$7d8f6386@VMED.UKD>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com> 
+	<012401ca0957$bd4a0530$7d8f6386@VMED.UKD>
+Message-ID: <317737de0907201020w25daba78x684e9c96c673aff4@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090720/fc9e995f/attachment.pl>
+
+From cgb en datanalytics.com  Mon Jul 20 19:56:46 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 20 Jul 2009 18:56:46 +0100
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <012401ca0957$bd4a0530$7d8f6386@VMED.UKD>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+	<012401ca0957$bd4a0530$7d8f6386@VMED.UKD>
+Message-ID: <b028350f0907201056o6539e57g666c1194bee46eaf@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+El problema que motiva mi mensaje es el siguiente. Imaginad un banco
+que ha concedido un millón de hipotecas. Cada hipoteca está asignada a
+uno de 10 niveles de riesgo distinto (A1 el menos arriesgado, A10
+"subprime").
+
+Pasa un mes y se recalculan los niveles de cada una de las hipotecas.
+Algunas ya se han cancelado, hay hipotecas nuevas, etc.
+
+Tanto el banco en cuestión como el regulador (Banco de España, en mi
+caso particular) están interesados en detectar si hay "desviaciones
+poblacionales significativas". Si se detecta una "desviación
+poblacional significativa" se generan una serie de alarmas, hay que
+replantear  modelos, hay que notificar al regulador, etc.
+
+Para detectar estas "desviaciones poblacionales significativas" se
+plantean distintos tests. Uno de ellos (utilizado por algunos bancos,
+sugerido también en el documento regulatorio que he apuntado antes) es
+el de la chi-cuadrado.
+
+Problema: que la población subyacente es tan grande que los p-valores
+obtenidos con fluctuaciones "mínimas" son alarmantes, del tipo
+0.000000000000000000000021233. Y eso aun cuando los histogramas, a
+simple vista, son casi idénticos.
+
+Claro, es difícil justificar que con histogramas casi idénticos, con
+conteos de frecuencias muy similares, haya que decir: "según el
+p-valor obtenido por el test de la chi-cuadrado, Vd. tiene que
+replantearse la homogeneidad de su población".
+
+Simplemente creo que en este contexto, a pesar de que se utilice el
+test de la chi-cuadrado y que incluso se recomiende desde "altas
+esferas", es necesario plantearse una alternativa. De ahí que haya
+escrito a la lista: no sé si en estudios demográficos, de poblaciones
+de especies en ecosistemas, en disciplinas donde se manejen
+frecuencias elevadas, se utilizan medidas de "homogeneidad
+poblacional" distintas de la de la chi-cuadrado.
+
+Entiendo que, en última instancia, debería ser el banco (o el
+regulador) el que determinase cómo de grande debería ser la desviación
+que tuviese que generar una alarma (y eso no lo decido yo). Pero me
+gustaría ser capaz de proponer una medida alternativa al estadístico
+que da lugar al test de la chi-cuadrado que, como propiedad deseable,
+no dependiese de n (el tamaño muestral)...
+
+No sé si esto aclara las cosas o consigue el efecto contrario...
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+
+
+From rdiaz02 en gmail.com  Tue Jul 21 10:02:35 2009
+From: rdiaz02 en gmail.com (Ramon Diaz-Uriarte)
+Date: Tue, 21 Jul 2009 10:02:35 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <b028350f0907201056o6539e57g666c1194bee46eaf@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+	<012401ca0957$bd4a0530$7d8f6386@VMED.UKD>
+	<b028350f0907201056o6539e57g666c1194bee46eaf@mail.gmail.com>
+Message-ID: <624934630907210102g10ed38f7qc99324b56d42a6f6@mail.gmail.com>
+
+Carlos, creo que la respuesta la ha dado ya José Trujillo Carmona. Si
+el Banco de España quiere detectar desviaciones poblacionales
+significativas, el Banco de España es el que debe decidir qué es lo
+que considera "significativo", no en el sentido de p-valor, sino en el
+sentido de "desviación que me importa". (Y lo qué es o no importante
+imagino que depende de las consecuencias de esas desviaciones, etc,
+etc. Supongo que para eso tienen economistas en el BE :-).
+
+O sea, es el "subject matter knowledge" lo que debe dictaminar cual es
+la diferencia mínima que queremos detectar, NO el p-valor per se. A
+partir de ahí, uno construye un test apropiado para detectar esas
+diferencias que nos importan.
+
+Como ya ha indicado Jo?e, la idea de bioequivalence et al. es
+apropiada aquí. Por ejemplo, copio de un artículo en The American
+Statistician de Barker et al. ("Equivalence Testing for Binomial
+Random Variables: Which Test to Use?", The American Statistician,
+55(4), pp. 279-287, 2001). "In studies intended to show that two
+populations are practically equivalent, the null hypothesis that a
+substantial difference between the populations exists is more
+appropriate". Y "In equivalence testing, a difference is specified
+between parameters such that the experimenter does not care about a
+smaller difference, but does care about a larger difference". Etc.
+
+> Pero me
+> gustaría ser capaz de proponer una medida alternativa al estadístico
+> que da lugar al test de la chi-cuadrado que, como propiedad deseable,
+> no dependiese de n (el tamaño muestral)...
+>
+
+
+Me temo que ese deseo sencillamente no puede ser satisfecho
+
+
+
+Un saludo,
+
+R.
+
+
+P.D. No estoy seguro de que lo que menciona Kjetil sea aplicable
+inmediatamente a este caso. El problema que examina Efron es el
+contraste de muchas (miles a centenares de miles) de hipótesis nulas,
+como se da frecuentemente en genómica. Pero si entiendo bien tu estás
+satisfecho con UNA sola hipótesis nula (lo que falta es decidir
+exactamente CUAL es esa unica hipótesis nula que tienes).
+
+
+
+2009/7/20 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+> Hola, ¿qué tal?
+>
+> El problema que motiva mi mensaje es el siguiente. Imaginad un banco
+> que ha concedido un millón de hipotecas. Cada hipoteca está asignada a
+> uno de 10 niveles de riesgo distinto (A1 el menos arriesgado, A10
+> "subprime").
+>
+> Pasa un mes y se recalculan los niveles de cada una de las hipotecas.
+> Algunas ya se han cancelado, hay hipotecas nuevas, etc.
+>
+> Tanto el banco en cuestión como el regulador (Banco de España, en mi
+> caso particular) están interesados en detectar si hay "desviaciones
+> poblacionales significativas". Si se detecta una "desviación
+> poblacional significativa" se generan una serie de alarmas, hay que
+> replantear  modelos, hay que notificar al regulador, etc.
+>
+> Para detectar estas "desviaciones poblacionales significativas" se
+> plantean distintos tests. Uno de ellos (utilizado por algunos bancos,
+> sugerido también en el documento regulatorio que he apuntado antes) es
+> el de la chi-cuadrado.
+>
+> Problema: que la población subyacente es tan grande que los p-valores
+> obtenidos con fluctuaciones "mínimas" son alarmantes, del tipo
+> 0.000000000000000000000021233. Y eso aun cuando los histogramas, a
+> simple vista, son casi idénticos.
+>
+> Claro, es difícil justificar que con histogramas casi idénticos, con
+> conteos de frecuencias muy similares, haya que decir: "según el
+> p-valor obtenido por el test de la chi-cuadrado, Vd. tiene que
+> replantearse la homogeneidad de su población".
+>
+> Simplemente creo que en este contexto, a pesar de que se utilice el
+> test de la chi-cuadrado y que incluso se recomiende desde "altas
+> esferas", es necesario plantearse una alternativa. De ahí que haya
+> escrito a la lista: no sé si en estudios demográficos, de poblaciones
+> de especies en ecosistemas, en disciplinas donde se manejen
+> frecuencias elevadas, se utilizan medidas de "homogeneidad
+> poblacional" distintas de la de la chi-cuadrado.
+>
+> Entiendo que, en última instancia, debería ser el banco (o el
+> regulador) el que determinase cómo de grande debería ser la desviación
+> que tuviese que generar una alarma (y eso no lo decido yo). Pero me
+> gustaría ser capaz de proponer una medida alternativa al estadístico
+> que da lugar al test de la chi-cuadrado que, como propiedad deseable,
+> no dependiese de n (el tamaño muestral)...
+>
+> No sé si esto aclara las cosas o consigue el efecto contrario...
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Ramon Diaz-Uriarte
+Structural Biology and Biocomputing Programme
+Spanish National Cancer Centre (CNIO)
+http://ligarto.org/rdiaz
+Phone: +34-91-732-8000 ext. 3019
+
+
+From r.user.spain en gmail.com  Tue Jul 21 10:13:00 2009
+From: r.user.spain en gmail.com (Usuario R)
+Date: Tue, 21 Jul 2009 10:13:00 +0200
+Subject: [R-es] Problema con argumento en funcion nls
+Message-ID: <e013b3630907210113p365e0c27sc4d2057fe12e4aba@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090721/32de8c72/attachment.pl>
+
+From cgb en datanalytics.com  Tue Jul 21 11:54:23 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 21 Jul 2009 11:54:23 +0200
+Subject: [R-es] Problema con argumento en funcion nls
+In-Reply-To: <e013b3630907210113p365e0c27sc4d2057fe12e4aba@mail.gmail.com>
+References: <e013b3630907210113p365e0c27sc4d2057fe12e4aba@mail.gmail.com>
+Message-ID: <b028350f0907210254m7e2ced8aic7e4bf0af322998b@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Lee la ayuda de ?nls y verás que trae algunos comentarios sobre dónde
+busca la función nls (algunos de) sus argumentos:
+
+Variables in formula (and weights if not missing) are looked for first
+in data, then the environment of formula and finally along the search
+path. Functions in formula are searched for first in the environment
+of formula and then along the search path.
+
+En tu ejemplo, nls no busca su argumento weightsArgument "dentro" de
+la función wrappernls sino fuera de ella, que es donde has definido la
+fórmula.
+
+Se me ocurren varias opciones:
+
+1) Meter el peso dentro de los datos como columna adicional.
+
+2) Recrear la fórmula dentro de la función para asignarle un
+"environment" local.
+
+3) Preguntarle a la fórmula cuál es su "environment" y acudir a él a
+buscar los pesos.
+
+Personalmente, trataría de implementar (2). Podrías hacerlo (y seguro
+que hay formas mejores) definiendo, dentro de tu función
+
+nueva.formula <- formula( deparse( formula.argumento ) )
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+
+
+From cgb en datanalytics.com  Tue Jul 21 19:42:22 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 21 Jul 2009 19:42:22 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?El_test_de_la_chi-cuadrado=2C_=BFdemasiado_?=
+	=?iso-8859-1?q?restrictivo_asint=F3ticamente=3F?=
+In-Reply-To: <624934630907210102g10ed38f7qc99324b56d42a6f6@mail.gmail.com>
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+	<012401ca0957$bd4a0530$7d8f6386@VMED.UKD>
+	<b028350f0907201056o6539e57g666c1194bee46eaf@mail.gmail.com>
+	<624934630907210102g10ed38f7qc99324b56d42a6f6@mail.gmail.com>
+Message-ID: <b028350f0907211042w644eb475teaf68dd7abc504f8@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Ramón, estoy de acuerdo contigo. Es ciertamente efecto de la pereza
+intelectual que cuando en el campo X surja el problema de comparar la
+estructura (respecto a cierta variable cualitativa) de dos poblaciones
+se recurra automáticamente al test de la chi-cuadrado. Y todavía de
+mayor pereza intelectual que dicho consejo se reproduzca
+incontestadamente en artículos y manuales.
+
+En el problema que estoy estudiando, el uso de la chi-cuadrado no se
+justifica porque:
+1) No se cumplen las hipótesis básicas para ser aplicado.
+2) Da lugar a resultados no razonables.
+
+En particular, los individuos que forman parte de la población en
+estudio no son, ni mucho menos, iid según una multinomial con
+parámetros fijos. Es una hipótesis de rigidez distribucional muy
+restrictiva.
+
+Quiero pensar que bajo hipótesis que tuviesen en cuenta la
+incertidumbre sobre los parámetros observados y las correlaciones
+entre los individuos (tal vez introduciendo variables latentes
+(¿normales?) asociadas a cada individuo con un grado de correlación
+dado) se obtendrían intervalos de confianza más generosos. O
+plausibles. Aunque me da que abundar en esto es matar moscas a
+cañonazos: hay que saber mucho para expresar analíticamente que se
+sabe poco.
+
+La alternativa, muy en el espíritu de lo que apunta Ramón, sería,
+efectivamente, dentro del "conocimiento de la materia", determinar qué
+se puede entender por "significativo". Yo no sé a partir de qué umbral
+un cambio en la estructura poblacional es relevante pero sí que intuyo
+que la relevancia (medida en este ámbito en términos del coste
+económico del error) está relacionada linealmente con la tasa de
+error.
+
+En fin, creo que me reintegraré dócilmente al redil de los que no
+cuestionan en este contexto el uso de la chi-cuadrado consolándome
+pensando que nunca despidieron a nadie por seguir diligentemente las
+normas que emanan de los despachos del Banco de España.
+
+Un saludo y muchas gracias a todos,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El 21 de julio de 2009 10:02, Ramon Diaz-Uriarte<rdiaz02 en gmail.com> escribió:
+> Carlos, creo que la respuesta la ha dado ya José Trujillo Carmona. Si
+> el Banco de España quiere detectar desviaciones poblacionales
+> significativas, el Banco de España es el que debe decidir qué es lo
+> que considera "significativo", no en el sentido de p-valor, sino en el
+> sentido de "desviación que me importa". (Y lo qué es o no importante
+> imagino que depende de las consecuencias de esas desviaciones, etc,
+> etc. Supongo que para eso tienen economistas en el BE :-).
+>
+> O sea, es el "subject matter knowledge" lo que debe dictaminar cual es
+> la diferencia mínima que queremos detectar, NO el p-valor per se. A
+> partir de ahí, uno construye un test apropiado para detectar esas
+> diferencias que nos importan.
+>
+> Como ya ha indicado Jo?e, la idea de bioequivalence et al. es
+> apropiada aquí. Por ejemplo, copio de un artículo en The American
+> Statistician de Barker et al. ("Equivalence Testing for Binomial
+> Random Variables: Which Test to Use?", The American Statistician,
+> 55(4), pp. 279-287, 2001). "In studies intended to show that two
+> populations are practically equivalent, the null hypothesis that a
+> substantial difference between the populations exists is more
+> appropriate". Y "In equivalence testing, a difference is specified
+> between parameters such that the experimenter does not care about a
+> smaller difference, but does care about a larger difference". Etc.
+>
+>> Pero me
+>> gustaría ser capaz de proponer una medida alternativa al estadístico
+>> que da lugar al test de la chi-cuadrado que, como propiedad deseable,
+>> no dependiese de n (el tamaño muestral)...
+>>
+>
+>
+> Me temo que ese deseo sencillamente no puede ser satisfecho
+>
+>
+>
+> Un saludo,
+>
+> R.
+>
+>
+> P.D. No estoy seguro de que lo que menciona Kjetil sea aplicable
+> inmediatamente a este caso. El problema que examina Efron es el
+> contraste de muchas (miles a centenares de miles) de hipótesis nulas,
+> como se da frecuentemente en genómica. Pero si entiendo bien tu estás
+> satisfecho con UNA sola hipótesis nula (lo que falta es decidir
+> exactamente CUAL es esa unica hipótesis nula que tienes).
+>
+>
+>
+> 2009/7/20 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+>> Hola, ¿qué tal?
+>>
+>> El problema que motiva mi mensaje es el siguiente. Imaginad un banco
+>> que ha concedido un millón de hipotecas. Cada hipoteca está asignada a
+>> uno de 10 niveles de riesgo distinto (A1 el menos arriesgado, A10
+>> "subprime").
+>>
+>> Pasa un mes y se recalculan los niveles de cada una de las hipotecas.
+>> Algunas ya se han cancelado, hay hipotecas nuevas, etc.
+>>
+>> Tanto el banco en cuestión como el regulador (Banco de España, en mi
+>> caso particular) están interesados en detectar si hay "desviaciones
+>> poblacionales significativas". Si se detecta una "desviación
+>> poblacional significativa" se generan una serie de alarmas, hay que
+>> replantear  modelos, hay que notificar al regulador, etc.
+>>
+>> Para detectar estas "desviaciones poblacionales significativas" se
+>> plantean distintos tests. Uno de ellos (utilizado por algunos bancos,
+>> sugerido también en el documento regulatorio que he apuntado antes) es
+>> el de la chi-cuadrado.
+>>
+>> Problema: que la población subyacente es tan grande que los p-valores
+>> obtenidos con fluctuaciones "mínimas" son alarmantes, del tipo
+>> 0.000000000000000000000021233. Y eso aun cuando los histogramas, a
+>> simple vista, son casi idénticos.
+>>
+>> Claro, es difícil justificar que con histogramas casi idénticos, con
+>> conteos de frecuencias muy similares, haya que decir: "según el
+>> p-valor obtenido por el test de la chi-cuadrado, Vd. tiene que
+>> replantearse la homogeneidad de su población".
+>>
+>> Simplemente creo que en este contexto, a pesar de que se utilice el
+>> test de la chi-cuadrado y que incluso se recomiende desde "altas
+>> esferas", es necesario plantearse una alternativa. De ahí que haya
+>> escrito a la lista: no sé si en estudios demográficos, de poblaciones
+>> de especies en ecosistemas, en disciplinas donde se manejen
+>> frecuencias elevadas, se utilizan medidas de "homogeneidad
+>> poblacional" distintas de la de la chi-cuadrado.
+>>
+>> Entiendo que, en última instancia, debería ser el banco (o el
+>> regulador) el que determinase cómo de grande debería ser la desviación
+>> que tuviese que generar una alarma (y eso no lo decido yo). Pero me
+>> gustaría ser capaz de proponer una medida alternativa al estadístico
+>> que da lugar al test de la chi-cuadrado que, como propiedad deseable,
+>> no dependiese de n (el tamaño muestral)...
+>>
+>> No sé si esto aclara las cosas o consigue el efecto contrario...
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+> --
+> Ramon Diaz-Uriarte
+> Structural Biology and Biocomputing Programme
+> Spanish National Cancer Centre (CNIO)
+> http://ligarto.org/rdiaz
+> Phone: +34-91-732-8000 ext. 3019
+>
+
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Wed Jul 22 10:38:57 2009
+From: PabloEmilio.Verde en uni-duesseldorf.de (Pablo Emilio Verde)
+Date: Wed, 22 Jul 2009 10:38:57 +0200
+Subject: [R-es]
+	=?utf-8?q?El_test_de_la_chi-cuadrado=2C_=C2=BFdemasiado_re?=
+	=?utf-8?q?strictivo_asint=C3=B3ticamente=3F?=
+References: <b028350f0907200717h641c428eke07df3b155756e33@mail.gmail.com>
+	<012401ca0957$bd4a0530$7d8f6386@VMED.UKD>
+	<b028350f0907201056o6539e57g666c1194bee46eaf@mail.gmail.com>
+	<624934630907210102g10ed38f7qc99324b56d42a6f6@mail.gmail.com>
+	<b028350f0907211042w644eb475teaf68dd7abc504f8@mail.gmail.com>
+Message-ID: <023801ca0aa7$da528de0$7d8f6386@VMED.UKD>
+
+Hola Carlos,
+
+Muy estimulante la discusion!
+
+En mi experiencia, los documentos regulatorios son superficiales y
+conservadores.
+Una de las razones por la que los bancos (industria farmaceutica, etc.)
+contratan
+consultores es porque si siguen al pie de la letra estos documentos no
+pueden
+hacer negocios.
+
+Seguramente, el problema estadistico que planteaste se deberia resolver muy
+puntualmente como se ha mensionado en la mails anteriores.
+
+De todos modos y fuera del contexto particular de tu aplicacion, aca hay
+algo
+muy profundo en el uso de metodos estadisticos que hay que cambiar. Tambien
+algo muy profundo en la enseñanza de la estadistica que tambien hay que
+cambiar,
+sino profesionales de otras areas, con uno o dos cursos de estadistica en su
+carrera, nos seguiran indicando que hay que mirar los valores p!
+
+"R-utopia" (el mundo fantastico de R) nos seguira brindando esta posibilidad
+de
+cambios.
+
+Saludos,
+
+Pablo
+
+
+
+
+
+
+----- Original Message -----
+From: "Carlos J. Gil Bellosta " <cgb en datanalytics.com>
+To: "Ramon Diaz-Uriarte" <rdiaz02 en gmail.com>
+Cc: "r-help-es" <r-help-es en r-project.org>
+Sent: Tuesday, July 21, 2009 7:42 PM
+Subject: Re: [R-es]El test de la chi-cuadrado, ¿demasiado restrictivo
+asintóticamente?
+
+
+> Hola, ¿qué tal?
+>
+> Ramón, estoy de acuerdo contigo. Es ciertamente efecto de la pereza
+> intelectual que cuando en el campo X surja el problema de comparar la
+> estructura (respecto a cierta variable cualitativa) de dos poblaciones
+> se recurra automáticamente al test de la chi-cuadrado. Y todavía de
+> mayor pereza intelectual que dicho consejo se reproduzca
+> incontestadamente en artículos y manuales.
+>
+> En el problema que estoy estudiando, el uso de la chi-cuadrado no se
+> justifica porque:
+> 1) No se cumplen las hipótesis básicas para ser aplicado.
+> 2) Da lugar a resultados no razonables.
+>
+> En particular, los individuos que forman parte de la población en
+> estudio no son, ni mucho menos, iid según una multinomial con
+> parámetros fijos. Es una hipótesis de rigidez distribucional muy
+> restrictiva.
+>
+> Quiero pensar que bajo hipótesis que tuviesen en cuenta la
+> incertidumbre sobre los parámetros observados y las correlaciones
+> entre los individuos (tal vez introduciendo variables latentes
+> (¿normales?) asociadas a cada individuo con un grado de correlación
+> dado) se obtendrían intervalos de confianza más generosos. O
+> plausibles. Aunque me da que abundar en esto es matar moscas a
+> cañonazos: hay que saber mucho para expresar analíticamente que se
+> sabe poco.
+>
+> La alternativa, muy en el espíritu de lo que apunta Ramón, sería,
+> efectivamente, dentro del "conocimiento de la materia", determinar qué
+> se puede entender por "significativo". Yo no sé a partir de qué umbral
+> un cambio en la estructura poblacional es relevante pero sí que intuyo
+> que la relevancia (medida en este ámbito en términos del coste
+> económico del error) está relacionada linealmente con la tasa de
+> error.
+>
+> En fin, creo que me reintegraré dócilmente al redil de los que no
+> cuestionan en este contexto el uso de la chi-cuadrado consolándome
+> pensando que nunca despidieron a nadie por seguir diligentemente las
+> normas que emanan de los despachos del Banco de España.
+>
+> Un saludo y muchas gracias a todos,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+>
+> El 21 de julio de 2009 10:02, Ramon Diaz-Uriarte<rdiaz02 en gmail.com>
+escribió:
+> > Carlos, creo que la respuesta la ha dado ya José Trujillo Carmona. Si
+> > el Banco de España quiere detectar desviaciones poblacionales
+> > significativas, el Banco de España es el que debe decidir qué es lo
+> > que considera "significativo", no en el sentido de p-valor, sino en el
+> > sentido de "desviación que me importa". (Y lo qué es o no importante
+> > imagino que depende de las consecuencias de esas desviaciones, etc,
+> > etc. Supongo que para eso tienen economistas en el BE :-).
+> >
+> > O sea, es el "subject matter knowledge" lo que debe dictaminar cual es
+> > la diferencia mínima que queremos detectar, NO el p-valor per se. A
+> > partir de ahí, uno construye un test apropiado para detectar esas
+> > diferencias que nos importan.
+> >
+> > Como ya ha indicado Jo?e, la idea de bioequivalence et al. es
+> > apropiada aquí. Por ejemplo, copio de un artículo en The American
+> > Statistician de Barker et al. ("Equivalence Testing for Binomial
+> > Random Variables: Which Test to Use?", The American Statistician,
+> > 55(4), pp. 279-287, 2001). "In studies intended to show that two
+> > populations are practically equivalent, the null hypothesis that a
+> > substantial difference between the populations exists is more
+> > appropriate". Y "In equivalence testing, a difference is specified
+> > between parameters such that the experimenter does not care about a
+> > smaller difference, but does care about a larger difference". Etc.
+> >
+> >> Pero me
+> >> gustaría ser capaz de proponer una medida alternativa al estadístico
+> >> que da lugar al test de la chi-cuadrado que, como propiedad deseable,
+> >> no dependiese de n (el tamaño muestral)...
+> >>
+> >
+> >
+> > Me temo que ese deseo sencillamente no puede ser satisfecho
+> >
+> >
+> >
+> > Un saludo,
+> >
+> > R.
+> >
+> >
+> > P.D. No estoy seguro de que lo que menciona Kjetil sea aplicable
+> > inmediatamente a este caso. El problema que examina Efron es el
+> > contraste de muchas (miles a centenares de miles) de hipótesis nulas,
+> > como se da frecuentemente en genómica. Pero si entiendo bien tu estás
+> > satisfecho con UNA sola hipótesis nula (lo que falta es decidir
+> > exactamente CUAL es esa unica hipótesis nula que tienes).
+> >
+> >
+> >
+> > 2009/7/20 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+> >> Hola, ¿qué tal?
+> >>
+> >> El problema que motiva mi mensaje es el siguiente. Imaginad un banco
+> >> que ha concedido un millón de hipotecas. Cada hipoteca está asignada a
+> >> uno de 10 niveles de riesgo distinto (A1 el menos arriesgado, A10
+> >> "subprime").
+> >>
+> >> Pasa un mes y se recalculan los niveles de cada una de las hipotecas.
+> >> Algunas ya se han cancelado, hay hipotecas nuevas, etc.
+> >>
+> >> Tanto el banco en cuestión como el regulador (Banco de España, en mi
+> >> caso particular) están interesados en detectar si hay "desviaciones
+> >> poblacionales significativas". Si se detecta una "desviación
+> >> poblacional significativa" se generan una serie de alarmas, hay que
+> >> replantear modelos, hay que notificar al regulador, etc.
+> >>
+> >> Para detectar estas "desviaciones poblacionales significativas" se
+> >> plantean distintos tests. Uno de ellos (utilizado por algunos bancos,
+> >> sugerido también en el documento regulatorio que he apuntado antes) es
+> >> el de la chi-cuadrado.
+> >>
+> >> Problema: que la población subyacente es tan grande que los p-valores
+> >> obtenidos con fluctuaciones "mínimas" son alarmantes, del tipo
+> >> 0.000000000000000000000021233. Y eso aun cuando los histogramas, a
+> >> simple vista, son casi idénticos.
+> >>
+> >> Claro, es difícil justificar que con histogramas casi idénticos, con
+> >> conteos de frecuencias muy similares, haya que decir: "según el
+> >> p-valor obtenido por el test de la chi-cuadrado, Vd. tiene que
+> >> replantearse la homogeneidad de su población".
+> >>
+> >> Simplemente creo que en este contexto, a pesar de que se utilice el
+> >> test de la chi-cuadrado y que incluso se recomiende desde "altas
+> >> esferas", es necesario plantearse una alternativa. De ahí que haya
+> >> escrito a la lista: no sé si en estudios demográficos, de poblaciones
+> >> de especies en ecosistemas, en disciplinas donde se manejen
+> >> frecuencias elevadas, se utilizan medidas de "homogeneidad
+> >> poblacional" distintas de la de la chi-cuadrado.
+> >>
+> >> Entiendo que, en última instancia, debería ser el banco (o el
+> >> regulador) el que determinase cómo de grande debería ser la desviación
+> >> que tuviese que generar una alarma (y eso no lo decido yo). Pero me
+> >> gustaría ser capaz de proponer una medida alternativa al estadístico
+> >> que da lugar al test de la chi-cuadrado que, como propiedad deseable,
+> >> no dependiese de n (el tamaño muestral)...
+> >>
+> >> No sé si esto aclara las cosas o consigue el efecto contrario...
+> >>
+> >> Un saludo,
+> >>
+> >> Carlos J. Gil Bellosta
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+> >
+> >
+> > --
+> > Ramon Diaz-Uriarte
+> > Structural Biology and Biocomputing Programme
+> > Spanish National Cancer Centre (CNIO)
+> > http://ligarto.org/rdiaz
+> > Phone: +34-91-732-8000 ext. 3019
+> >
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From jorgeivanvelez en gmail.com  Wed Jul 22 18:01:49 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 22 Jul 2009 12:01:49 -0400
+Subject: [R-es] =?iso-8859-1?q?C=F3mo_enviar_e-mails_desde_R=3F?=
+Message-ID: <317737de0907220901j55722f3fwc394fce2fae1e91b@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090722/dc87cecc/attachment.pl>
+
+From cgb en datanalytics.com  Thu Jul 23 01:35:10 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Thu, 23 Jul 2009 01:35:10 +0200
+Subject: [R-es] =?iso-8859-1?q?C=F3mo_enviar_e-mails_desde_R=3F?=
+In-Reply-To: <317737de0907220901j55722f3fwc394fce2fae1e91b@mail.gmail.com>
+References: <317737de0907220901j55722f3fwc394fce2fae1e91b@mail.gmail.com>
+Message-ID: <1248305710.4617.15.camel@kropotkin>
+
+Hola, ¿qué tal?
+
+El problema no es que no todos los ordenadores no tengan Windows (o
+Windows y Outlook) sino lo contrario: que algunos no tengan Linux o
+algún tipo de Unix. En estos sistemas, siempre que tengas configurado
+sendmail o similar, basta con hacer una llamada al sistema operativo
+para mandar correos tal y como se detalla en 
+
+https://www.stat.math.ethz.ch/pipermail/r-help/2005-May/071212.html
+
+El mundo Windows me es bastante ajeno. 
+
+De todos modos, se puede implementar sin mucho esfuerzo una función
+multiplataforma basado en:
+
+1) rJava
+2) JavaMail (http://java.sun.com/products/javamail/index.jsp)
+3) Una versión simplificada del código que aparece en
+
+http://www.javacommerce.com/displaypage.jsp?name=javamail.sql&id=18274
+
+El único problema para que una idea basada en estos tres puntos pueda
+resultar realmente útil es el de que casi todos los servidores de SMTP
+exigen contraseñas, que éstas deberían guardarse en algún lugar (¿en
+texto claro? ¿se pide cada vez?) y que casi nadie (yo el primero) se
+acuerda de la suya (me la gestiona evolution, gracias).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+On Wed, 2009-07-22 at 12:01 -0400, Jorge Ivan Velez wrote:
+> Hola a todos,
+> Slo por curiosidad, sabe alguien cmo enviar correos electrnicos desde R?
+>   Estoy haciendo algunas simulaciones en diferentes computadores y me
+> gustara tener la posibilidad de enviar un mensaje a mi correo electrnico
+> cuando cada una termine.
+> 
+> En R-help hubo una pregunta similar pero requiere el uso de Outlook y operar
+> "manualmente" algunas cosas, lo cual no es conveniente <
+> https://stat.ethz.ch/pipermail/r-help/2003-July/037021.html>. Otro punto en
+> contra de esta posibilidad es que los computadores no siempre tengan Windows
+> como OS (podra ser Mac OS X o Linux RedHat).
+> 
+> Esta es mi sessionInfo():
+> 
+> R version 2.9.1 Patched (2009-06-28 r48859)
+> i386-pc-mingw32
+> 
+> locale:
+> LC_COLLATE=English_United States.1252;LC_CTYPE=English_United
+> States.1252;LC_MONETARY=English_United
+> States.1252;LC_NUMERIC=C;LC_TIME=English_United States.1252
+> 
+> attached base packages:
+> [1] stats     graphics  grDevices utils     datasets  methods   base
+> 
+> loaded via a namespace (and not attached):
+> [1] tools_2.9.1
+> 
+> 
+> Muchas gracias,
+> 
+> Jorge Ivan Velez
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From acalderero en labein.es  Thu Jul 23 12:14:43 2009
+From: acalderero en labein.es (acalderero en labein.es)
+Date: Thu, 23 Jul 2009 12:14:43 +0200
+Subject: [R-es] =?iso-8859-1?q?C=F3mo_enviar_e-mails_desde_R=3F?=
+In-Reply-To: <317737de0907220901j55722f3fwc394fce2fae1e91b@mail.gmail.com>
+Message-ID: <OF6C4FA2BE.372AAAEF-ONC12575FC.00380B82-C12575FC.00385AFB@labein.es>
+
+
+Hola,
+
+Yo aún no lo he probado (aunque también me interesa algo similar). Igual te
+sirve el siguiente paquete:
+
+sendmailR: send email from inside R
+Package contains a simple smtp client which provides a porable solution for
+sending emails from within R.
+http://cran.r-project.org/web/packages/sendmailR/index.html
+
+Saludos,
+Alberto.
+
+
+Alberto Calderero Gutiérrez
+LABEIN - Tecnalia
+Parque Tecnológico de Bizkaia, Edif. 700
+48160 - Derio (Bizkaia) - www.labein.es
+Tel: 94 607 33 75  -  Fax: 94 607 33 49
+
+(Embedded image moved to file: pic26500.gif)
+
+
+                                                                       
+             Jorge Ivan Velez                                          
+             <jorgeivanvelez en g                                         
+             mail.com>                                                Para
+             Enviado por:              R-help-es <r-help-es en r-project.org>
+             r-help-es-bounces                                          cc
+             @r-project.org                                            
+                                                                    Asunto
+                                       [R-es] Cómo enviar e-mails desde R?
+             22/07/2009 18:04                                          
+                                                                       
+                                                                       
+                                                                       
+                                                                       
+                                                                       
+
+
+
+
+Hola a todos,
+Sólo por curiosidad, sabe alguien cómo enviar correos electrónicos desde R?
+  Estoy haciendo algunas simulaciones en diferentes computadores y me
+gustaría tener la posibilidad de enviar un mensaje a mi correo electrónico
+cuando cada una termine.
+
+En R-help hubo una pregunta similar pero requiere el uso de Outlook y
+operar
+"manualmente" algunas cosas, lo cual no es conveniente <
+https://stat.ethz.ch/pipermail/r-help/2003-July/037021.html>. Otro punto en
+contra de esta posibilidad es que los computadores no siempre tengan
+Windows
+como OS (podría ser Mac OS X o Linux RedHat).
+
+Esta es mi sessionInfo():
+
+R version 2.9.1 Patched (2009-06-28 r48859)
+i386-pc-mingw32
+
+locale:
+LC_COLLATE=English_United States.1252;LC_CTYPE=English_United
+States.1252;LC_MONETARY=English_United
+States.1252;LC_NUMERIC=C;LC_TIME=English_United States.1252
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base
+
+loaded via a namespace (and not attached):
+[1] tools_2.9.1
+
+
+Muchas gracias,
+
+Jorge Ivan Velez
+
+             [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Imprime sólo lo imprescindible, recuerda tu compromiso con el MEDIO AMBIENTE // Behar beharrezkoa baino ez imprimatu, gogoratu zure INGURUGIROArekiko konpromezua // Before printing think about the ENVIRONMENT
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Este mensaje se dirige exclusivamente a su destinatario y puede contener información privilegiada o confidencial. Si no es vd. el destinatario indicado, queda notificado de que la utilización, divulgación y/o copia sin autorización está prohibida en virtud de la legislación vigente. Si ha recibido este mensaje por error, le rogamos que nos lo comunique inmediatamente por esta misma vía y proceda a su destrucción.
+
+Mezu honek eta erantsita dituen agiriek (baldin baditu) isilpeko informazioa izan dezakete. Hori dela eta, hutsegite baten ondorioz jasotzen duenak jakin beza bertan dagoen informazioa ezkutukoa dela eta legeak galarazi egiten duela berori baimenik gabe erabiltzea.
+
+This message is intended exclusively for its addressee and may contain information that is CONFIDENTIAL and protected by professional privilege. If you are not the intended recipient you are hereby notified that any dissemination, copy or disclosure of this communication is strictly prohibited by law. If this message has been received in error, please immediately notify us via e-mail and delete it.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: pic26500.gif
+Type: image/gif
+Size: 2362 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090723/ddbcce7a/attachment.gif>
+
+From eduardosanmi en gmail.com  Thu Jul 23 12:26:01 2009
+From: eduardosanmi en gmail.com (eduardo san miguel)
+Date: Thu, 23 Jul 2009 12:26:01 +0200
+Subject: [R-es] =?iso-8859-1?q?_C=F3mo_enviar_e-mails_desde_R=3F?=
+Message-ID: <23277cfb0907230326x1c218e05gf4722c33ff09c480@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090723/a132c503/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Tue Jul 28 19:55:38 2009
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Tue, 28 Jul 2009 13:55:38 -0400
+Subject: [R-es] =?iso-8859-1?q?C=F3mo_enviar_e-mails_desde_R=3F?=
+In-Reply-To: <OF6C4FA2BE.372AAAEF-ONC12575FC.00380B82-C12575FC.00385AFB@labein.es>
+References: <317737de0907220901j55722f3fwc394fce2fae1e91b@mail.gmail.com> 
+	<OF6C4FA2BE.372AAAEF-ONC12575FC.00380B82-C12575FC.00385AFB@labein.es>
+Message-ID: <317737de0907281055q38f62642teb355e637c5104@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090728/db20db95/attachment.pl>
+
+From mmartinez en aptuschile.cl  Tue Jul 28 20:41:32 2009
+From: mmartinez en aptuschile.cl (Mario Martinez)
+Date: Tue, 28 Jul 2009 14:41:32 -0400
+Subject: [R-es] latex columna extra paquete Hmisc
+Message-ID: <64e3683a0907281141l68371c50j7977baaf5cc5e899@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090728/09e0786e/attachment.pl>
+
+From cgb en datanalytics.com  Wed Jul 29 22:54:10 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Wed, 29 Jul 2009 22:54:10 +0200
+Subject: [R-es] latex columna extra paquete Hmisc
+In-Reply-To: <64e3683a0907281141l68371c50j7977baaf5cc5e899@mail.gmail.com>
+References: <64e3683a0907281141l68371c50j7977baaf5cc5e899@mail.gmail.com>
+Message-ID: <1248900850.4533.1.camel@kropotkin>
+
+Hola, ¿qué tal?
+
+Estoy especulando porque tengo poca información sobre lo que tratas de
+hacer. Pero el problema me suena.
+
+¿Será que tienes factores con algunos niveles que no tienen
+representantes? Si mi.factor es un factor de alguna de las tablas que
+quieres representar y
+
+min( table( mi.factor ) ) == 0
+
+entonces es probable que te aparezcan columnas vacías en las tablas.
+
+Reemplaza mi.factor por factor( mi.factor ) para eliminar los niveles
+vacíos.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+On Tue, 2009-07-28 at 14:41 -0400, Mario Martinez wrote:
+> Hola a todos,
+> estoy utilizando la funcin latex del paquete Hmisc para realizar tablas con
+> columnas agrupadas. El problema es que en el .tex se generan entre cada
+> grupo una columna adicional (en blanco). Quera saber si alguien sabe si
+> existe una opcin o forma para quitar esas columnas extras antes de que
+> genere el cdigo latex.
+> 
+> Saludos,
+> 
+> Atte,
+> 
+> Mario Martnez A.
+> Analista de Resultados
+> Direccin de Evaluaciones
+> Aptus-Chile
+> Potenciadora Educacional
+> 56-02-7704772
+> mmartinez en aptuschile.cl
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Thu Jul 30 14:53:33 2009
+From: PabloEmilio.Verde en uni-duesseldorf.de (Pablo Emilio Verde)
+Date: Thu, 30 Jul 2009 14:53:33 +0200
+Subject: [R-es] contorno noparametrico
+Message-ID: <021d01ca1114$befefb00$7d8f6386@VMED.UKD>
+
+
+Hola a todos,
+
+En el ejemplo que sigue construyo una elipse de confianza del 95% basada en
+una distribucion normal bivariada.
+
+# comienzo del ejemplo
+# parametros de la normal
+muD <- 1
+muS <- 2
+
+sdD <- 2
+sdS <- 4
+rho <- 0.7
+
+# contorno del 95%
+cc95 <- sqrt(qchisq(0.95,2))
+muSp <-  muS + sdS * cc95 * cos(seq(0, 2*pi, 0.01))
+muDp <-  muD + sdD * cc95 * cos(seq(0, 2*pi, 0.01) + acos(rho))
+
+plot(muDp, muSp, type="l")
+
+# simulo 200 casos
+library(MASS)
+Sigma <- matrix(c(sdD^2, rho*sdD*sdS,
+              rho*sdD*sdS, sdS^2),2,2)
+
+mu <- c(muD, muS)
+
+y <- mvrnorm(n=200, mu, Sigma)
+
+points(y)
+
+#  fin del ejemplo
+
+
+Conoce alguien como construir la misma elipse pero con alguna de las
+funciones de densidad no parametrica?
+
+Pablo
+
+
+From cgb en datanalytics.com  Thu Jul 30 20:41:54 2009
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 30 Jul 2009 20:41:54 +0200
+Subject: [R-es] contorno noparametrico
+In-Reply-To: <021d01ca1114$befefb00$7d8f6386@VMED.UKD>
+References: <021d01ca1114$befefb00$7d8f6386@VMED.UKD>
+Message-ID: <b028350f0907301141v1cbd92f4sa5003b7e0615c57e@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+El problema, es, entiendo, asociar a "niveles" o "curvas de nivel" de
+una distribución bidimensional no necesariamente normal la
+probabilidad asociada a la región donde la función de densidad está
+por debajo (del nivel).
+
+Matemáticamente, dada una función de densidad f sobre RxR, saber
+asociar a cada valor x en [0, Inf) la probabilidad
+
+integral_A f(y) dy   donde A es la región del plano donde f es menor que x.
+
+Podrías muestrear X ~ f y anotar tanto los valores x como f(x).
+Ordenas los f(x) y te quedas con el valor que deje a la derecha sólo
+un porcentaje dado de las x obtenidas. Vamos, que te quedas con el
+cuantil deseado de f(x).
+
+Después, con contour o similares puedes recrear aproximadamente el
+contorno de f al nivel que quieres.
+
+Creo que eso valdría (dejando aparte cuestiones sobre velocidad de
+convergencia y demás).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+2009/7/30 Pablo Emilio Verde <PabloEmilio.Verde en uni-duesseldorf.de>:
+>
+> Hola a todos,
+>
+> En el ejemplo que sigue construyo una elipse de confianza del 95% basada en
+> una distribucion normal bivariada.
+>
+> # comienzo del ejemplo
+> # parametros de la normal
+> muD <- 1
+> muS <- 2
+>
+> sdD <- 2
+> sdS <- 4
+> rho <- 0.7
+>
+> # contorno del 95%
+> cc95 <- sqrt(qchisq(0.95,2))
+> muSp <-  muS + sdS * cc95 * cos(seq(0, 2*pi, 0.01))
+> muDp <-  muD + sdD * cc95 * cos(seq(0, 2*pi, 0.01) + acos(rho))
+>
+> plot(muDp, muSp, type="l")
+>
+> # simulo 200 casos
+> library(MASS)
+> Sigma <- matrix(c(sdD^2, rho*sdD*sdS,
+>              rho*sdD*sdS, sdS^2),2,2)
+>
+> mu <- c(muD, muS)
+>
+> y <- mvrnorm(n=200, mu, Sigma)
+>
+> points(y)
+>
+> #  fin del ejemplo
+>
+>
+> Conoce alguien como construir la misma elipse pero con alguna de las
+> funciones de densidad no parametrica?
+>
+> Pablo
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From PabloEmilio.Verde en uni-duesseldorf.de  Fri Jul 31 15:31:19 2009
+From: PabloEmilio.Verde en uni-duesseldorf.de (Pablo Emilio Verde)
+Date: Fri, 31 Jul 2009 15:31:19 +0200
+Subject: [R-es] contorno noparametrico
+References: <021d01ca1114$befefb00$7d8f6386@VMED.UKD>
+	<b028350f0907301035l22b1b684ja53a47f36aa77004@mail.gmail.com>
+Message-ID: <002d01ca11e3$3092b5d0$7d8f6386@VMED.UKD>
+
+Hola Carlos,
+
+Muchas gracias por tu email y sugerencias. Encontre algunas soluciones mas o
+menos
+automaticas que resultan bastante buenas.
+
+El paquete "hdrcde" implementa el metodo descripto en el paper que adjunto,
+internamente llama al paquete "ash" y construye una "HDR" bivariada.
+
+(El paper tiene tambien un script en S-Plus que utiliza la funcion
+"density2d()"
+la version en R usa "ash".)
+
+En mi ejemplo las cosas resultan de la siguiente forma:
+
+# comienzo del ejemplo ...
+# parametros de la normal
+muD <- 1
+muS <- 2
+
+sdD <- 2
+sdS <- 4
+rho <- 0.7
+
+# contorno del 95%
+cc95 <- sqrt(qchisq(0.95,2))
+muSp <-  muS + sdS * cc95 * cos(seq(0, 2*pi, 0.01))
+muDp <-  muD + sdD * cc95 * cos(seq(0, 2*pi, 0.01) + acos(rho))
+
+par(mfrow=c(1,3))
+
+plot(muDp, muSp, type="l", xlim=c(-10, 10), ylim=c(-10,10))
+
+# simulo 200 casos
+library(MASS)
+Sigma <- matrix(c(sdD^2, rho*sdD*sdS,
+              rho*sdD*sdS, sdS^2),2,2)
+
+mu <- c(muD, muS)
+
+y <- mvrnorm(n=200, mu, Sigma)
+
+points(y)
+
+# HDR
+library(hdrcde)
+hdr.boxplot.2d(y[,1], y[,2], prob=0.05, xlim=c(-10, 10), ylim=c(-10,10))
+points(y)
+
+par(c(1,1))
+
+# fin del ejemplo
+
+Para la gente que necesite buscar graficos interesantes en R, la pagina:
+
+http://addictedtor.free.fr/graphiques/
+
+contiene mucha informacion. Aqui encontre el HDR que me soluciona el
+problema.
+
+Saludos y buen fin de semana,
+
+Pablo
+
+
+
+
+
+
+----- Original Message -----
+From: "Carlos J. Gil Bellosta " <gilbellosta en gmail.com>
+To: "Pablo Emilio Verde" <PabloEmilio.Verde en uni-duesseldorf.de>
+Sent: Thursday, July 30, 2009 7:35 PM
+Subject: Re: [R-es] contorno noparametrico
+
+
+Hola, ¿qué tal?
+
+El problema, es, entiendo, asociar a "niveles" o "curvas de nivel" de
+una distribución bidimensional no necesariamente normal la
+probabilidad asociada a la región donde la función de densidad está
+por debajo (del nivel).
+
+Matemáticamente, dada una función de densidad f sobre RxR, saber
+asociar a cada valor x en [0, Inf) la probabilidad
+
+integral_A f(y) dy   donde A es la región del plano donde f es menor que x.
+
+Podrías muestrear X ~ f y anotar tanto los valores x como f(x).
+Ordenas los f(x) y te quedas con el valor que deje a la derecha sólo
+un porcentaje dado de las x obtenidas. Vamos, que te quedas con el
+cuantil deseado de f(x).
+
+Después, con contour o similares puedes recrear aproximadamente el
+contorno de f al nivel que quieres.
+
+Creo que eso valdría (dejando aparte cuestiones sobre velocidad de
+convergencia y demás).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+2009/7/30 Pablo Emilio Verde <PabloEmilio.Verde en uni-duesseldorf.de>:
+>
+> Hola a todos,
+>
+> En el ejemplo que sigue construyo una elipse de confianza del 95% basada
+en
+> una distribucion normal bivariada.
+>
+> # comienzo del ejemplo
+> # parametros de la normal
+> muD <- 1
+> muS <- 2
+>
+> sdD <- 2
+> sdS <- 4
+> rho <- 0.7
+>
+> # contorno del 95%
+> cc95 <- sqrt(qchisq(0.95,2))
+> muSp <- muS + sdS * cc95 * cos(seq(0, 2*pi, 0.01))
+> muDp <- muD + sdD * cc95 * cos(seq(0, 2*pi, 0.01) + acos(rho))
+>
+> plot(muDp, muSp, type="l")
+>
+> # simulo 200 casos
+> library(MASS)
+> Sigma <- matrix(c(sdD^2, rho*sdD*sdS,
+> rho*sdD*sdS, sdS^2),2,2)
+>
+> mu <- c(muD, muS)
+>
+> y <- mvrnorm(n=200, mu, Sigma)
+>
+> points(y)
+>
+> # fin del ejemplo
+>
+>
+> Conoce alguien como construir la misma elipse pero con alguna de las
+> funciones de densidad no parametrica?
+>
+> Pablo
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: hdr01.pdf
+Type: application/pdf
+Size: 313626 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090731/d60e56a5/attachment-0001.pdf>
+
+From D.Barona en cgiar.org  Fri Jul 31 18:57:19 2009
+From: D.Barona en cgiar.org (Barona, Dario (CIP-Quito))
+Date: Fri, 31 Jul 2009 11:57:19 -0500
+Subject: [R-es] Ayuda con instalacion de R-SciViews en Windows vista
+In-Reply-To: <64e3683a0907281141l68371c50j7977baaf5cc5e899@mail.gmail.com>
+References: <64e3683a0907281141l68371c50j7977baaf5cc5e899@mail.gmail.com>
+Message-ID: <93BC97B91CD79049B4B63FEF7B1C7951CD79C4@webmail.cip.cgiar.org>
+
+Hola a todos:
+
+Tengo un gran problema, mi computadora tiene Windows Vista SP2 de 64bits y no puedo instalar el SciView. Tengo instalado la última versión de R y actualice los paquetes.
+En R me sale lo siguiente:
+
+R version 2.9.1 (2009-06-26)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R es un software libre y viene sin GARANTIA ALGUNA.
+Usted puede redistribuirlo bajo ciertas circunstancias.
+Escriba 'license()' o 'licence()' para detalles de distribucion.
+
+R es un proyecto colaborativo con muchos contribuyentes.
+Escriba 'contributors()' para obtener más información y
+'citation()' para saber cómo citar R o paquetes de R en publicaciones.
+
+Escriba 'demo()' para demostraciones, 'help()' para el sistema on-line de ayuda,
+o 'help.start()' para abrir el sistema de ayuda HTML con su navegador.
+Escriba 'q()' para salir de R.
+
+> library(svGUI)
+Loading required package: svMisc
+Loading required package: svSocket
+Loading required package: tcltk
+Loading Tcl/Tk interface ... done
+>
+
+Y se queda ahí, porfavor si alguien sabe que es lo que puedo hacer???
+
+
+Saludos,
+
+
+Ing. Darío Barona
+Administrador CIP-Q
+
+

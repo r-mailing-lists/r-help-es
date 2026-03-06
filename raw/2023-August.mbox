@@ -1,0 +1,1968 @@
+From gr|er@ @end|ng |rom y@ndex@com  Thu Aug 10 19:35:45 2023
+From: gr|er@ @end|ng |rom y@ndex@com (Griera)
+Date: Thu, 10 Aug 2023 19:35:45 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+Message-ID: <20230810193545.1e5f1a74@debian-dde-tosh>
+
+Hola a todos:
+
+Se me ha planteado un problema que no está ligado a ningún problema
+concreto. Es más teórico. 
+
+Supongamos que tenemos tres variables:
+
+V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+
+Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+
+(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+
+Supongamos que tengo que utilizar esta expresión dos o más veces y no
+puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+
+V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+V4 <-	ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na
+(V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+
+Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto
+en las ordenes (por ejemplo, con una hipotética función xfunc ()). Por
+ejemplo:
+
+ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+V3 <- ((xfunc (ORD) - V1)/V1)*100
+V4 <-	ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+(((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+
+
+El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+
+Muchas gracias por la ayuda.
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Fri Aug 11 11:16:34 2023
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Fri, 11 Aug 2023 09:16:34 +0000
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <20230810193545.1e5f1a74@debian-dde-tosh>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+Message-ID: <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+
+A ver... con que xfunc() esté preparada para tomar un parámetro de tipo "carácter" y evaluarlo, claro que se puede hacer...
+Si el problema lo tienes en evaluar la expresión, la función "eval()" te lo hace.
+Si no te he entendido bien, explícate más ?
+Saludos
+Isidro
+
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Griera
+Enviado el: jueves, 10 de agosto de 2023 19:36
+Para: r-help-es en r-project.org
+Asunto: [R-es] Expresión en un objeto
+
+Hola a todos:
+
+Se me ha planteado un problema que no está ligado a ningún problema concreto. Es más teórico. 
+
+Supongamos que tenemos tres variables:
+
+V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+
+Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+
+(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+
+Supongamos que tengo que utilizar esta expresión dos o más veces y no puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+
+V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+V4 <-	ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+
+Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto en las ordenes (por ejemplo, con una hipotética función xfunc ()). Por
+ejemplo:
+
+ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+V3 <- ((xfunc (ORD) - V1)/V1)*100
+V4 <-	ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+(((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+
+
+El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+
+Muchas gracias por la ayuda.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+From gr|er@ @end|ng |rom y@ndex@com  Fri Aug 11 12:30:24 2023
+From: gr|er@ @end|ng |rom y@ndex@com (Griera-yandex)
+Date: Fri, 11 Aug 2023 12:30:24 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+Message-ID: <20230811123024.1701d9d6@debian-dde-tosh>
+
+Gracias, Isidro, por la ayuda:
+
+On Fri, 11 Aug 2023 09:16:34 +0000
+Isidro Hidalgo Arellano <ihidalgo en jccm.es> wrote:
+
+> A ver... con que xfunc() esté preparada para tomar un parámetro de tipo "carácter" y evaluarlo, claro que se puede hacer...
+> Si el problema lo tienes en evaluar la expresión, la función "eval()" te lo hace.
+> Si no te he entendido bien, explícate más ?
+
+Simplemente quería que en la orden:
+
+V3 <- ((ORD - V1)/V1)*100
+
+ORD lo reconocieses (y lo substituyese), por ejemplo, como "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,
+V2a))".
+
+Con eval() no parece que funcione:
+
+> ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> V3 <- ((eval (ORD) - V1)/V1)*100
+Error in eval(ORD) - V1 : non-numeric argument to binary operator
+
+Alguna sugerencia?
+
+Gracias y saludos.
+
+
+> Saludos
+> Isidro
+> 
+> 
+> -----Mensaje original-----
+> De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Griera
+> Enviado el: jueves, 10 de agosto de 2023 19:36
+> Para: r-help-es en r-project.org
+> Asunto: [R-es] Expresión en un objeto
+> 
+> Hola a todos:
+> 
+> Se me ha planteado un problema que no está ligado a ningún problema concreto. Es más teórico. 
+> 
+> Supongamos que tenemos tres variables:
+> 
+> V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> 
+> Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+> 
+> (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> 
+> Supongamos que tengo que utilizar esta expresión dos o más veces y no puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> 
+> V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> V4 <-	ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> 
+> Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto en las ordenes (por ejemplo, con una hipotética función xfunc ()). Por
+> ejemplo:
+> 
+> ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> V3 <- ((xfunc (ORD) - V1)/V1)*100
+> V4 <-	ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> 
+> 
+> El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+> 
+> Muchas gracias por la ayuda.
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Fri Aug 11 18:15:18 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Fri, 11 Aug 2023 18:15:18 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <20230810193545.1e5f1a74@debian-dde-tosh>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+Message-ID: <CAF3uytV91ih3z=0NjpWwRSePghtuZkPa6=YmqhHZ11CqRw-dWg@mail.gmail.com>
+
+Esta es la respuesta que te da ChatGPT-4:
+
+Entiendo tu pregunta y, aunque no hay una función nativa en R que te
+permita hacer exactamente lo que estás pidiendo, puedes lograr el mismo
+resultado utilizando una función. Una función te permitiría encapsular la
+lógica de la expresión que quieres reutilizar y luego llamar a esa función
+donde sea necesario.
+
+He aquí cómo podrías hacerlo:
+
+V1  <- c(47, 71, 41, 23, 83, 152, 82, 8, 160, 18)
+V2a <- c(NA, 36, 15, 5, 56, 18, NA, 5, NA, 5)
+V2b <- c(37, NA, 15, NA, NA, NA, 90, NA, 161, NA)
+
+# Definir una función que encapsula la lógica de la expresión
+myFunc <- function(V2a, V2b) {
+  ifelse(is.na(V2a) & !is.na(V2b), V2b, V2a)
+}
+
+# Luego puedes usar esa función donde necesites la expresión
+V3 <- ((myFunc(V2a, V2b) - V1)/V1)*100
+V4 <- ifelse(!is.na(((myFunc(V2a, V2b)-V1)/V1)*100), ifelse(((myFunc(V2a,
+V2b)-V1)/V1)*100 > 0, "1", "0"), NA)
+```
+
+Definir la lógica dentro de una función te brinda la flexibilidad de
+reutilizar esa lógica en diferentes partes de tu código sin tener que
+repetir la misma expresión una y otra vez. Esto hace que tu código sea más
+fácil de leer y mantener.
+
+
+
+El jue, 10 ago 2023 a las 19:36, Griera (<griera en yandex.com>) escribió:
+
+> Hola a todos:
+>
+> Se me ha planteado un problema que no está ligado a ningún problema
+> concreto. Es más teórico.
+>
+> Supongamos que tenemos tres variables:
+>
+> V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+>
+> Supongamos que tengo la expresión (que no puedo asignarlo a ninguna
+> variable):
+>
+> (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+>
+> Supongamos que tengo que utilizar esta expresión dos o más veces y no
+> puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+>
+> V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na
+> (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+>
+> Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto
+> en las ordenes (por ejemplo, con una hipotética función xfunc ()). Por
+> ejemplo:
+>
+> ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> V3 <- ((xfunc (ORD) - V1)/V1)*100
+> V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+>
+>
+> El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+>
+> Muchas gracias por la ayuda.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Fri Aug 11 21:02:46 2023
+From: gr|er@ @end|ng |rom y@ndex@com (Griera-yandex)
+Date: Fri, 11 Aug 2023 21:02:46 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <CAF3uytV91ih3z=0NjpWwRSePghtuZkPa6=YmqhHZ11CqRw-dWg@mail.gmail.com>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <CAF3uytV91ih3z=0NjpWwRSePghtuZkPa6=YmqhHZ11CqRw-dWg@mail.gmail.com>
+Message-ID: <20230811210246.75602460@debian-dde-tosh>
+
+Muchas gracias, Manuel:
+
+Que bueno! No se me había ocurrido lo de GPT!
+
+Lo pruebo.
+
+Saludos.
+
+On Fri, 11 Aug 2023 18:15:18 +0200
+Manuel Mendoza <mmendoza en fulbrightmail.org> wrote:
+
+> Esta es la respuesta que te da ChatGPT-4:
+> 
+> Entiendo tu pregunta y, aunque no hay una función nativa en R que te
+> permita hacer exactamente lo que estás pidiendo, puedes lograr el mismo
+> resultado utilizando una función. Una función te permitiría encapsular la
+> lógica de la expresión que quieres reutilizar y luego llamar a esa función
+> donde sea necesario.
+> 
+> He aquí cómo podrías hacerlo:
+> 
+> V1  <- c(47, 71, 41, 23, 83, 152, 82, 8, 160, 18)
+> V2a <- c(NA, 36, 15, 5, 56, 18, NA, 5, NA, 5)
+> V2b <- c(37, NA, 15, NA, NA, NA, 90, NA, 161, NA)
+> 
+> # Definir una función que encapsula la lógica de la expresión
+> myFunc <- function(V2a, V2b) {
+>   ifelse(is.na(V2a) & !is.na(V2b), V2b, V2a)
+> }
+> 
+> # Luego puedes usar esa función donde necesites la expresión
+> V3 <- ((myFunc(V2a, V2b) - V1)/V1)*100
+> V4 <- ifelse(!is.na(((myFunc(V2a, V2b)-V1)/V1)*100), ifelse(((myFunc(V2a,
+> V2b)-V1)/V1)*100 > 0, "1", "0"), NA)
+> ```
+> 
+> Definir la lógica dentro de una función te brinda la flexibilidad de
+> reutilizar esa lógica en diferentes partes de tu código sin tener que
+> repetir la misma expresión una y otra vez. Esto hace que tu código sea más
+> fácil de leer y mantener.
+> 
+> 
+> 
+> El jue, 10 ago 2023 a las 19:36, Griera (<griera en yandex.com>) escribió:
+> 
+> > Hola a todos:
+> >
+> > Se me ha planteado un problema que no está ligado a ningún problema
+> > concreto. Es más teórico.
+> >
+> > Supongamos que tenemos tres variables:
+> >
+> > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> >
+> > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna
+> > variable):
+> >
+> > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> >
+> > Supongamos que tengo que utilizar esta expresión dos o más veces y no
+> > puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> >
+> > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na
+> > (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> >
+> > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto
+> > en las ordenes (por ejemplo, con una hipotética función xfunc ()). Por
+> > ejemplo:
+> >
+> > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> >
+> >
+> > El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+> >
+> > Muchas gracias por la ayuda.
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Sat Aug 12 05:07:26 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Sat, 12 Aug 2023 05:07:26 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <20230811210246.75602460@debian-dde-tosh>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <CAF3uytV91ih3z=0NjpWwRSePghtuZkPa6=YmqhHZ11CqRw-dWg@mail.gmail.com>
+ <20230811210246.75602460@debian-dde-tosh>
+Message-ID: <CAF3uytVWi=sukqiU1b68A1gJ_Z96Lve-YoCUsDQLeEwpZiVAyQ@mail.gmail.com>
+
+No tuve tiempo de mirarlo, pero, ¿es coherente lo que dice?
+
+El vie, 11 ago 2023 a las 21:02, Griera-yandex (<griera en yandex.com>)
+escribió:
+
+> Muchas gracias, Manuel:
+>
+> Que bueno! No se me había ocurrido lo de GPT!
+>
+> Lo pruebo.
+>
+> Saludos.
+>
+> On Fri, 11 Aug 2023 18:15:18 +0200
+> Manuel Mendoza <mmendoza en fulbrightmail.org> wrote:
+>
+> > Esta es la respuesta que te da ChatGPT-4:
+> >
+> > Entiendo tu pregunta y, aunque no hay una función nativa en R que te
+> > permita hacer exactamente lo que estás pidiendo, puedes lograr el mismo
+> > resultado utilizando una función. Una función te permitiría encapsular la
+> > lógica de la expresión que quieres reutilizar y luego llamar a esa
+> función
+> > donde sea necesario.
+> >
+> > He aquí cómo podrías hacerlo:
+> >
+> > V1  <- c(47, 71, 41, 23, 83, 152, 82, 8, 160, 18)
+> > V2a <- c(NA, 36, 15, 5, 56, 18, NA, 5, NA, 5)
+> > V2b <- c(37, NA, 15, NA, NA, NA, 90, NA, 161, NA)
+> >
+> > # Definir una función que encapsula la lógica de la expresión
+> > myFunc <- function(V2a, V2b) {
+> >   ifelse(is.na(V2a) & !is.na(V2b), V2b, V2a)
+> > }
+> >
+> > # Luego puedes usar esa función donde necesites la expresión
+> > V3 <- ((myFunc(V2a, V2b) - V1)/V1)*100
+> > V4 <- ifelse(!is.na(((myFunc(V2a, V2b)-V1)/V1)*100),
+> ifelse(((myFunc(V2a,
+> > V2b)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > ```
+> >
+> > Definir la lógica dentro de una función te brinda la flexibilidad de
+> > reutilizar esa lógica en diferentes partes de tu código sin tener que
+> > repetir la misma expresión una y otra vez. Esto hace que tu código sea
+> más
+> > fácil de leer y mantener.
+> >
+> >
+> >
+> > El jue, 10 ago 2023 a las 19:36, Griera (<griera en yandex.com>) escribió:
+> >
+> > > Hola a todos:
+> > >
+> > > Se me ha planteado un problema que no está ligado a ningún problema
+> > > concreto. Es más teórico.
+> > >
+> > > Supongamos que tenemos tres variables:
+> > >
+> > > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > >
+> > > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna
+> > > variable):
+> > >
+> > > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> > >
+> > > Supongamos que tengo que utilizar esta expresión dos o más veces y no
+> > > puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> > >
+> > > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) -
+> V1)/V1)*100
+> > > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na
+> > > (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> > >
+> > > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto
+> > > en las ordenes (por ejemplo, con una hipotética función xfunc ()). Por
+> > > ejemplo:
+> > >
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > >
+> > >
+> > > El ejemnplo és absurdo, pero solo lo presento como un hipotético
+> ejercicio.
+> > >
+> > > Muchas gracias por la ayuda.
+> > >
+> > > _______________________________________________
+> > > R-help-es mailing list
+> > > R-help-es en r-project.org
+> > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> > >
+>
+
+	[[alternative HTML version deleted]]
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Sat Aug 12 13:21:26 2023
+From: gr|er@ @end|ng |rom y@ndex@com (Griera-yandex)
+Date: Sat, 12 Aug 2023 13:21:26 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <CAF3uytVWi=sukqiU1b68A1gJ_Z96Lve-YoCUsDQLeEwpZiVAyQ@mail.gmail.com>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <CAF3uytV91ih3z=0NjpWwRSePghtuZkPa6=YmqhHZ11CqRw-dWg@mail.gmail.com>
+ <20230811210246.75602460@debian-dde-tosh>
+ <CAF3uytVWi=sukqiU1b68A1gJ_Z96Lve-YoCUsDQLeEwpZiVAyQ@mail.gmail.com>
+Message-ID: <20230812132126.540db93e@debian-dde-tosh>
+
+Hola, Manuel:
+
+La propuesta es lógica y funciona:
+
+> V1  <- c (47, 71,  41,  23,  83, 152,  82,  8,  160,  18)
++ V2a <- c(NA, 36, 15, 5, 56, 18, NA, 5, NA, 5)
++ V2b <- c(37, NA, 15, NA, NA, NA, 90, NA, 161, NA)
++ # Definir una función que encapsula la lógica de la expresión
++ myFunc <- function (V2a, V2b) {
++  ifelse(is.na(V2a) & !is.na(V2b), V2b, V2a)
++ }
++ # Luego puedes usar esa función donde necesites la expresión
++ V3 <- ((myFunc(V2a, V2b) - V1)/V1)*100
++ V4 <- ifelse(!is.na(((myFunc(V2a, V2b)-V1)/V1)*100),
+  ifelse(((myFunc(V2a, V2b)-V1)/V1)*100 > 0, "1", "0"), NA)
+
+Está en la línea de la solución propuesta por Juan Abasolo.
+
+Pero no es lo qu buscaba que, por lo que veo, no existe.
+
+Gracias a todos por las sugerencias.
+
+Saludos.
+
+
+
+On Sat, 12 Aug 2023 05:07:26 +0200
+Manuel Mendoza <mmendoza en fulbrightmail.org> wrote:
+
+> No tuve tiempo de mirarlo, pero, ¿es coherente lo que dice?
+> 
+> El vie, 11 ago 2023 a las 21:02, Griera-yandex (<griera en yandex.com>)
+> escribió:
+> 
+> > Muchas gracias, Manuel:
+> >
+> > Que bueno! No se me había ocurrido lo de GPT!
+> >
+> > Lo pruebo.
+> >
+> > Saludos.
+> >
+> > On Fri, 11 Aug 2023 18:15:18 +0200
+> > Manuel Mendoza <mmendoza en fulbrightmail.org> wrote:
+> >
+> > > Esta es la respuesta que te da ChatGPT-4:
+> > >
+> > > Entiendo tu pregunta y, aunque no hay una función nativa en R que te
+> > > permita hacer exactamente lo que estás pidiendo, puedes lograr el mismo
+> > > resultado utilizando una función. Una función te permitiría encapsular la
+> > > lógica de la expresión que quieres reutilizar y luego llamar a esa
+> > función
+> > > donde sea necesario.
+> > >
+> > > He aquí cómo podrías hacerlo:
+> > >
+> > > V1  <- c(47, 71, 41, 23, 83, 152, 82, 8, 160, 18)
+> > > V2a <- c(NA, 36, 15, 5, 56, 18, NA, 5, NA, 5)
+> > > V2b <- c(37, NA, 15, NA, NA, NA, 90, NA, 161, NA)
+> > >
+> > > # Definir una función que encapsula la lógica de la expresión
+> > > myFunc <- function(V2a, V2b) {
+> > >   ifelse(is.na(V2a) & !is.na(V2b), V2b, V2a)
+> > > }
+> > >
+> > > # Luego puedes usar esa función donde necesites la expresión
+> > > V3 <- ((myFunc(V2a, V2b) - V1)/V1)*100
+> > > V4 <- ifelse(!is.na(((myFunc(V2a, V2b)-V1)/V1)*100),
+> > ifelse(((myFunc(V2a,
+> > > V2b)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > ```
+> > >
+> > > Definir la lógica dentro de una función te brinda la flexibilidad de
+> > > reutilizar esa lógica en diferentes partes de tu código sin tener que
+> > > repetir la misma expresión una y otra vez. Esto hace que tu código sea
+> > más
+> > > fácil de leer y mantener.
+> > >
+> > >
+> > >
+> > > El jue, 10 ago 2023 a las 19:36, Griera (<griera en yandex.com>) escribió:
+> > >
+> > > > Hola a todos:
+> > > >
+> > > > Se me ha planteado un problema que no está ligado a ningún problema
+> > > > concreto. Es más teórico.
+> > > >
+> > > > Supongamos que tenemos tres variables:
+> > > >
+> > > > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > > > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > > > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > > >
+> > > > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna
+> > > > variable):
+> > > >
+> > > > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> > > >
+> > > > Supongamos que tengo que utilizar esta expresión dos o más veces y no
+> > > > puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> > > >
+> > > > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) -
+> > V1)/V1)*100
+> > > > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > > > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na
+> > > > (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > >
+> > > > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > > > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto
+> > > > en las ordenes (por ejemplo, con una hipotética función xfunc ()). Por
+> > > > ejemplo:
+> > > >
+> > > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > > > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > > > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > >
+> > > >
+> > > > El ejemnplo és absurdo, pero solo lo presento como un hipotético
+> > ejercicio.
+> > > >
+> > > > Muchas gracias por la ayuda.
+> > > >
+> > > > _______________________________________________
+> > > > R-help-es mailing list
+> > > > R-help-es en r-project.org
+> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> > > >
+> >
+
+
+From r-uc@ @end|ng |rom uc@@e@  Mon Aug 14 10:14:06 2023
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Mon, 14 Aug 2023 10:14:06 +0200
+Subject: [R-es] =?iso-8859-1?q?Expresi=F3n_en_un_objeto?=
+In-Reply-To: <20230811123024.1701d9d6@debian-dde-tosh>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+ <20230811123024.1701d9d6@debian-dde-tosh>
+Message-ID: <b2b3fd2c88c7135930c3e07668956f7c24007762.camel@uca.es>
+
+Buenas,
+
+¿Qué tal esto?
+
+> V1 <- 1
+> V2a <- 20
+> V2b <- 200
+> ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> V3 <- "((ORD - V1)/V1)*100"
+> V33 <- sub('ORD', ORD, V3)
+> V33
+[1] "(((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100"
+> eval(parse(text = V33))
+[1] 1900
+
+Un saludo
+
+El vie, 11-08-2023 a las 12:30 +0200, Griera-yandex escribió:
+> Gracias, Isidro, por la ayuda:
+> 
+> On Fri, 11 Aug 2023 09:16:34 +0000
+> Isidro Hidalgo Arellano <ihidalgo en jccm.es> wrote:
+> 
+> > A ver... con que xfunc() esté preparada para tomar un parámetro de tipo "carácter" y evaluarlo, claro que se puede hacer...
+> > Si el problema lo tienes en evaluar la expresión, la función "eval()" te lo hace.
+> > Si no te he entendido bien, explícate más ?
+> 
+> Simplemente quería que en la orden:
+> 
+> V3 <- ((ORD - V1)/V1)*100
+> 
+> ORD lo reconocieses (y lo substituyese), por ejemplo, como "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,
+> V2a))".
+> 
+> Con eval() no parece que funcione:
+> 
+> > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > V3 <- ((eval (ORD) - V1)/V1)*100
+> Error in eval(ORD) - V1 : non-numeric argument to binary operator
+> 
+> Alguna sugerencia?
+> 
+> Gracias y saludos.
+> 
+> 
+> > Saludos
+> > Isidro
+> > 
+> > 
+> > -----Mensaje original-----
+> > De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Griera
+> > Enviado el: jueves, 10 de agosto de 2023 19:36
+> > Para: r-help-es en r-project.org
+> > Asunto: [R-es] Expresión en un objeto
+> > 
+> > Hola a todos:
+> > 
+> > Se me ha planteado un problema que no está ligado a ningún problema concreto. Es más teórico. 
+> > 
+> > Supongamos que tenemos tres variables:
+> > 
+> > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > 
+> > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+> > 
+> > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> > 
+> > Supongamos que tengo que utilizar esta expresión dos o más veces y no puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> > 
+> > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> > 
+> > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto en las ordenes (por ejemplo, con una hipotética función xfunc
+> > ()). Por
+> > ejemplo:
+> > 
+> > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > 
+> > 
+> > El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+> > 
+> > Muchas gracias por la ayuda.
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> >  
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+>  
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Mon Aug 14 16:07:00 2023
+From: gr|er@ @end|ng |rom y@ndex@com (Griera-yandex)
+Date: Mon, 14 Aug 2023 16:07:00 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <b2b3fd2c88c7135930c3e07668956f7c24007762.camel@uca.es>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+ <20230811123024.1701d9d6@debian-dde-tosh>
+ <b2b3fd2c88c7135930c3e07668956f7c24007762.camel@uca.es>
+Message-ID: <20230814160700.0d3853f7@debian-dde-tosh>
+
+Hola:
+
+Si, esto está mucho más cerca de lo que quería! Creo que es la solución.
+
+Gracias! Lo trabajo!
+
+Saludos.
+
+On Mon, 14 Aug 2023 10:14:06 +0200
+Proyecto R-UCA <r-uca en uca.es> wrote:
+
+> Buenas,
+> 
+> ¿Qué tal esto?
+> 
+> > V1 <- 1
+> > V2a <- 20
+> > V2b <- 200
+> > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > V3 <- "((ORD - V1)/V1)*100"
+> > V33 <- sub('ORD', ORD, V3)
+> > V33
+> [1] "(((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100"
+> > eval(parse(text = V33))
+> [1] 1900
+> 
+> Un saludo
+> 
+> El vie, 11-08-2023 a las 12:30 +0200, Griera-yandex escribió:
+> > Gracias, Isidro, por la ayuda:
+> > 
+
+
+> > On Fri, 11 Aug 2023 09:16:34 +0000
+> > Isidro Hidalgo Arellano <ihidalgo en jccm.es> wrote:
+> > 
+> > > A ver... con que xfunc() esté preparada para tomar un parámetro de tipo "carácter" y evaluarlo, claro que se puede hacer...
+> > > Si el problema lo tienes en evaluar la expresión, la función "eval()" te lo hace.
+> > > Si no te he entendido bien, explícate más ?
+> > 
+> > Simplemente quería que en la orden:
+> > 
+> > V3 <- ((ORD - V1)/V1)*100
+> > 
+> > ORD lo reconocieses (y lo substituyese), por ejemplo, como "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,
+> > V2a))".
+> > 
+> > Con eval() no parece que funcione:
+> > 
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((eval (ORD) - V1)/V1)*100
+> > Error in eval(ORD) - V1 : non-numeric argument to binary operator
+> > 
+> > Alguna sugerencia?
+> > 
+> > Gracias y saludos.
+> > 
+> > 
+> > > Saludos
+> > > Isidro
+> > > 
+> > > 
+> > > -----Mensaje original-----
+> > > De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Griera
+> > > Enviado el: jueves, 10 de agosto de 2023 19:36
+> > > Para: r-help-es en r-project.org
+> > > Asunto: [R-es] Expresión en un objeto
+> > > 
+> > > Hola a todos:
+> > > 
+> > > Se me ha planteado un problema que no está ligado a ningún problema concreto. Es más teórico. 
+> > > 
+> > > Supongamos que tenemos tres variables:
+> > > 
+> > > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > > 
+> > > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+> > > 
+> > > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> > > 
+> > > Supongamos que tengo que utilizar esta expresión dos o más veces y no puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> > > 
+> > > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > 
+> > > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto en las ordenes (por ejemplo, con una hipotética función xfunc
+> > > ()). Por
+> > > ejemplo:
+> > > 
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > 
+> > > 
+> > > El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+> > > 
+> > > Muchas gracias por la ayuda.
+> > > 
+> > > _______________________________________________
+> > > R-help-es mailing list
+> > > R-help-es en r-project.org
+> > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> > >  
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> >  
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From gr|er@ @end|ng |rom y@ndex@com  Mon Aug 14 16:37:36 2023
+From: gr|er@ @end|ng |rom y@ndex@com (Griera-yandex)
+Date: Mon, 14 Aug 2023 16:37:36 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <b2b3fd2c88c7135930c3e07668956f7c24007762.camel@uca.es>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+ <20230811123024.1701d9d6@debian-dde-tosh>
+ <b2b3fd2c88c7135930c3e07668956f7c24007762.camel@uca.es>
+Message-ID: <20230814163736.4f10f5e6@debian-dde-tosh>
+
+Hola:
+
+Aplicando tu solución al problema original, seria:
+
+> V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+
+# Sin ORD:
+
+> V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> V3
+ [1] -21.276596 -49.295775 -63.414634 -78.260870 -32.530120 -88.157895
+ [7]   9.756098 -37.500000   0.625000 -72.222222
+
+# Substituyendo "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))" por ORD:
+
+> V3 <- eval(parse(text = paste0 ("((", ORD,  "- V1)/V1)*100")))
+> V3 
+ [1] -21.276596 -49.295775 -63.414634 -78.260870 -32.530120 -88.157895
+ [7]   9.756098 -37.500000   0.625000 -72.222222
+
+# Sin ORD:
+
+> V4 <-	ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, '1', '0'), NA)
+> V4
+ [1] "0" "0" "0" "0" "0" "0" "1" "0" "1" "0"
+
+# Substituyendo "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))" por ORD:
+
+> V4 <-	eval(parse(text = paste0 ("ifelse (! is.na (((", ORD, "-V1)/V1)*100), ifelse (((", ORD, "-V1)/V1)*100 > 0, '1', '0'), NA)")))
+> V4
+ [1] "0" "0" "0" "0" "0" "0" "1" "0" "1" "0"
+
+
+Mucas gracias y saludos.
+
+On Mon, 14 Aug 2023 10:14:06 +0200
+Proyecto R-UCA <r-uca en uca.es> wrote:
+
+> Buenas,
+> 
+> ¿Qué tal esto?
+> 
+> > V1 <- 1
+> > V2a <- 20
+> > V2b <- 200
+> > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > V3 <- "((ORD - V1)/V1)*100"
+> > V33 <- sub('ORD', ORD, V3)
+> > V33
+> [1] "(((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100"
+> > eval(parse(text = V33))
+> [1] 1900
+> 
+> Un saludo
+> 
+> El vie, 11-08-2023 a las 12:30 +0200, Griera-yandex escribió:
+> > Gracias, Isidro, por la ayuda:
+> > 
+> > On Fri, 11 Aug 2023 09:16:34 +0000
+> > Isidro Hidalgo Arellano <ihidalgo en jccm.es> wrote:
+> > 
+> > > A ver... con que xfunc() esté preparada para tomar un parámetro de tipo "carácter" y evaluarlo, claro que se puede hacer...
+> > > Si el problema lo tienes en evaluar la expresión, la función "eval()" te lo hace.
+> > > Si no te he entendido bien, explícate más ?
+> > 
+> > Simplemente quería que en la orden:
+> > 
+> > V3 <- ((ORD - V1)/V1)*100
+> > 
+> > ORD lo reconocieses (y lo substituyese), por ejemplo, como "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,
+> > V2a))".
+> > 
+> > Con eval() no parece que funcione:
+> > 
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((eval (ORD) - V1)/V1)*100
+> > Error in eval(ORD) - V1 : non-numeric argument to binary operator
+> > 
+> > Alguna sugerencia?
+> > 
+> > Gracias y saludos.
+> > 
+> > 
+> > > Saludos
+> > > Isidro
+> > > 
+> > > 
+> > > -----Mensaje original-----
+> > > De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Griera
+> > > Enviado el: jueves, 10 de agosto de 2023 19:36
+> > > Para: r-help-es en r-project.org
+> > > Asunto: [R-es] Expresión en un objeto
+> > > 
+> > > Hola a todos:
+> > > 
+> > > Se me ha planteado un problema que no está ligado a ningún problema concreto. Es más teórico. 
+> > > 
+> > > Supongamos que tenemos tres variables:
+> > > 
+> > > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > > 
+> > > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+> > > 
+> > > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> > > 
+> > > Supongamos que tengo que utilizar esta expresión dos o más veces y no puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> > > 
+> > > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > 
+> > > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto en las ordenes (por ejemplo, con una hipotética función xfunc
+> > > ()). Por
+> > > ejemplo:
+> > > 
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > 
+> > > 
+> > > El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+> > > 
+> > > Muchas gracias por la ayuda.
+> > > 
+> > > _______________________________________________
+> > > R-help-es mailing list
+> > > R-help-es en r-project.org
+> > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> > >  
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> >  
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Mon Aug 14 17:29:00 2023
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Mon, 14 Aug 2023 15:29:00 +0000 (UTC)
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <20230814163736.4f10f5e6@debian-dde-tosh>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+ <20230811123024.1701d9d6@debian-dde-tosh>
+ <b2b3fd2c88c7135930c3e07668956f7c24007762.camel@uca.es>
+ <20230814163736.4f10f5e6@debian-dde-tosh>
+Message-ID: <88843276.4912944.1692026940696@mail.yahoo.com>
+
+ Hola, no estoy seguro de si es esto lo que te hace falta. ¿conoces la funcion "coalesce"?
+coalesce function - RDocumentation
+
+
+| 
+| 
+|  | 
+coalesce function - RDocumentation
+
+<p>Given a set of vectors, <code>coalesce()</code> finds the first non-missing value at each position. This is i...
+ |
+
+ |
+
+ |
+
+
+
+How to implement coalesce efficiently in R
+
+
+| 
+| 
+| 
+|  |  |
+
+ |
+
+ |
+| 
+|  | 
+How to implement coalesce efficiently in R
+
+BackgroundSeveral SQL languages (I mostly use postgreSQL) have a function called coalesce which returns the fi...
+ |
+
+ |
+
+ |
+
+
+
+    En lunes, 14 de agosto de 2023, 16:38:04 CEST, Griera-yandex <griera en yandex.com> escribió:  
+ 
+ Hola:
+
+Aplicando tu solución al problema original, seria:
+
+> V1  <- c (47, 71,  41,  23,  83, 152,  82,  8, 160,  18)
+> V2a <- c (NA, 36,  15,  5,  56,  18,  NA,  5,  NA,  5)
+> V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+
+# Sin ORD:
+
+> V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> V3
+ [1] -21.276596 -49.295775 -63.414634 -78.260870 -32.530120 -88.157895
+ [7]  9.756098 -37.500000  0.625000 -72.222222
+
+# Substituyendo "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))" por ORD:
+
+> V3 <- eval(parse(text = paste0 ("((", ORD,  "- V1)/V1)*100")))
+> V3 
+ [1] -21.276596 -49.295775 -63.414634 -78.260870 -32.530120 -88.157895
+ [7]  9.756098 -37.500000  0.625000 -72.222222
+
+# Sin ORD:
+
+> V4 <-    ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, '1', '0'), NA)
+> V4
+ [1] "0" "0" "0" "0" "0" "0" "1" "0" "1" "0"
+
+# Substituyendo "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))" por ORD:
+
+> V4 <-    eval(parse(text = paste0 ("ifelse (! is.na (((", ORD, "-V1)/V1)*100), ifelse (((", ORD, "-V1)/V1)*100 > 0, '1', '0'), NA)")))
+> V4
+ [1] "0" "0" "0" "0" "0" "0" "1" "0" "1" "0"
+
+
+Mucas gracias y saludos.
+
+On Mon, 14 Aug 2023 10:14:06 +0200
+Proyecto R-UCA <r-uca en uca.es> wrote:
+
+> Buenas,
+> 
+> ¿Qué tal esto?
+> 
+> > V1 <- 1
+> > V2a <- 20
+> > V2b <- 200
+> > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > V3 <- "((ORD - V1)/V1)*100"
+> > V33 <- sub('ORD', ORD, V3)
+> > V33
+> [1] "(((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100"
+> > eval(parse(text = V33))
+> [1] 1900
+> 
+> Un saludo
+> 
+> El vie, 11-08-2023 a las 12:30 +0200, Griera-yandex escribió:
+> > Gracias, Isidro, por la ayuda:
+> > 
+> > On Fri, 11 Aug 2023 09:16:34 +0000
+> > Isidro Hidalgo Arellano <ihidalgo en jccm.es> wrote:
+> > 
+> > > A ver... con que xfunc() esté preparada para tomar un parámetro de tipo "carácter" y evaluarlo, claro que se puede hacer...
+> > > Si el problema lo tienes en evaluar la expresión, la función "eval()" te lo hace.
+> > > Si no te he entendido bien, explícate más ?
+> > 
+> > Simplemente quería que en la orden:
+> > 
+> > V3 <- ((ORD - V1)/V1)*100
+> > 
+> > ORD lo reconocieses (y lo substituyese), por ejemplo, como "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,
+> > V2a))".
+> > 
+> > Con eval() no parece que funcione:
+> > 
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((eval (ORD) - V1)/V1)*100
+> > Error in eval(ORD) - V1 : non-numeric argument to binary operator
+> > 
+> > Alguna sugerencia?
+> > 
+> > Gracias y saludos.
+> > 
+> > 
+> > > Saludos
+> > > Isidro
+> > > 
+> > > 
+> > > -----Mensaje original-----
+> > > De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Griera
+> > > Enviado el: jueves, 10 de agosto de 2023 19:36
+> > > Para: r-help-es en r-project.org
+> > > Asunto: [R-es] Expresión en un objeto
+> > > 
+> > > Hola a todos:
+> > > 
+> > > Se me ha planteado un problema que no está ligado a ningún problema concreto. Es más teórico. 
+> > > 
+> > > Supongamos que tenemos tres variables:
+> > > 
+> > > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > > 
+> > > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+> > > 
+> > > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> > > 
+> > > Supongamos que tengo que utilizar esta expresión dos o más veces y no puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> > > 
+> > > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > 
+> > > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto en las ordenes (por ejemplo, con una hipotética función xfunc
+> > > ()). Por
+> > > ejemplo:
+> > > 
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > 
+> > > 
+> > > El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+> > > 
+> > > Muchas gracias por la ayuda.
+> > > 
+> > > _______________________________________________
+> > > R-help-es mailing list
+> > > R-help-es en r-project.org
+> > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> > >  
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> >  
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+  
+	[[alternative HTML version deleted]]
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Mon Aug 14 19:20:15 2023
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Mon, 14 Aug 2023 17:20:15 +0000 (UTC)
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <88843276.4912944.1692026940696@mail.yahoo.com>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+ <20230811123024.1701d9d6@debian-dde-tosh>
+ <b2b3fd2c88c7135930c3e07668956f7c24007762.camel@uca.es>
+ <20230814163736.4f10f5e6@debian-dde-tosh>
+ <88843276.4912944.1692026940696@mail.yahoo.com>
+Message-ID: <142815799.1636901.1692033615761@mail.yahoo.com>
+
+ Algo asi:
+
+
+
+    En lunes, 14 de agosto de 2023, 17:29:37 CEST, jose luis via R-help-es <r-help-es en r-project.org> escribió:  
+ 
+  Hola, no estoy seguro de si es esto lo que te hace falta. ¿conoces la funcion "coalesce"?
+coalesce function - RDocumentation
+
+
+| 
+| 
+|  | 
+coalesce function - RDocumentation
+
+<p>Given a set of vectors, <code>coalesce()</code> finds the first non-missing value at each position. This is i...
+ |
+
+ |
+
+ |
+
+
+
+How to implement coalesce efficiently in R
+
+
+| 
+| 
+| 
+|  |  |
+
+ |
+
+ |
+| 
+|  | 
+How to implement coalesce efficiently in R
+
+BackgroundSeveral SQL languages (I mostly use postgreSQL) have a function called coalesce which returns the fi...
+ |
+
+ |
+
+ |
+
+
+
+    En lunes, 14 de agosto de 2023, 16:38:04 CEST, Griera-yandex <griera en yandex.com> escribió:  
+ 
+ Hola:
+
+Aplicando tu solución al problema original, seria:
+
+> V1  <- c (47, 71,  41,  23,  83, 152,  82,  8, 160,  18)
+> V2a <- c (NA, 36,  15,  5,  56,  18,  NA,  5,  NA,  5)
+> V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+
+# Sin ORD:
+
+> V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> V3
+ [1] -21.276596 -49.295775 -63.414634 -78.260870 -32.530120 -88.157895
+ [7]  9.756098 -37.500000  0.625000 -72.222222
+
+# Substituyendo "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))" por ORD:
+
+> V3 <- eval(parse(text = paste0 ("((", ORD,  "- V1)/V1)*100")))
+> V3 
+ [1] -21.276596 -49.295775 -63.414634 -78.260870 -32.530120 -88.157895
+ [7]  9.756098 -37.500000  0.625000 -72.222222
+
+# Sin ORD:
+
+> V4 <-    ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, '1', '0'), NA)
+> V4
+ [1] "0" "0" "0" "0" "0" "0" "1" "0" "1" "0"
+
+# Substituyendo "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))" por ORD:
+
+> V4 <-    eval(parse(text = paste0 ("ifelse (! is.na (((", ORD, "-V1)/V1)*100), ifelse (((", ORD, "-V1)/V1)*100 > 0, '1', '0'), NA)")))
+> V4
+ [1] "0" "0" "0" "0" "0" "0" "1" "0" "1" "0"
+
+
+Mucas gracias y saludos.
+
+On Mon, 14 Aug 2023 10:14:06 +0200
+Proyecto R-UCA <r-uca en uca.es> wrote:
+
+> Buenas,
+> 
+> ¿Qué tal esto?
+> 
+> > V1 <- 1
+> > V2a <- 20
+> > V2b <- 200
+> > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > V3 <- "((ORD - V1)/V1)*100"
+> > V33 <- sub('ORD', ORD, V3)
+> > V33
+> [1] "(((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100"
+> > eval(parse(text = V33))
+> [1] 1900
+> 
+> Un saludo
+> 
+> El vie, 11-08-2023 a las 12:30 +0200, Griera-yandex escribió:
+> > Gracias, Isidro, por la ayuda:
+> > 
+> > On Fri, 11 Aug 2023 09:16:34 +0000
+> > Isidro Hidalgo Arellano <ihidalgo en jccm.es> wrote:
+> > 
+> > > A ver... con que xfunc() esté preparada para tomar un parámetro de tipo "carácter" y evaluarlo, claro que se puede hacer...
+> > > Si el problema lo tienes en evaluar la expresión, la función "eval()" te lo hace.
+> > > Si no te he entendido bien, explícate más ?
+> > 
+> > Simplemente quería que en la orden:
+> > 
+> > V3 <- ((ORD - V1)/V1)*100
+> > 
+> > ORD lo reconocieses (y lo substituyese), por ejemplo, como "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,
+> > V2a))".
+> > 
+> > Con eval() no parece que funcione:
+> > 
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((eval (ORD) - V1)/V1)*100
+> > Error in eval(ORD) - V1 : non-numeric argument to binary operator
+> > 
+> > Alguna sugerencia?
+> > 
+> > Gracias y saludos.
+> > 
+> > 
+> > > Saludos
+> > > Isidro
+> > > 
+> > > 
+> > > -----Mensaje original-----
+> > > De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Griera
+> > > Enviado el: jueves, 10 de agosto de 2023 19:36
+> > > Para: r-help-es en r-project.org
+> > > Asunto: [R-es] Expresión en un objeto
+> > > 
+> > > Hola a todos:
+> > > 
+> > > Se me ha planteado un problema que no está ligado a ningún problema concreto. Es más teórico. 
+> > > 
+> > > Supongamos que tenemos tres variables:
+> > > 
+> > > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > > 
+> > > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+> > > 
+> > > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> > > 
+> > > Supongamos que tengo que utilizar esta expresión dos o más veces y no puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> > > 
+> > > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > 
+> > > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto en las ordenes (por ejemplo, con una hipotética función xfunc
+> > > ()). Por
+> > > ejemplo:
+> > > 
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > 
+> > > 
+> > > El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+> > > 
+> > > Muchas gracias por la ayuda.
+> > > 
+> > > _______________________________________________
+> > > R-help-es mailing list
+> > > R-help-es en r-project.org
+> > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> > >  
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> >  
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+  
+    [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+  
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230814/b2016f42/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: 1692033604729blob.jpg
+Type: image/png
+Size: 14406 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230814/b2016f42/attachment-0001.png>
+
+From gr|er@ @end|ng |rom y@ndex@com  Tue Aug 15 19:04:08 2023
+From: gr|er@ @end|ng |rom y@ndex@com (Griera-yandex)
+Date: Tue, 15 Aug 2023 19:04:08 +0200
+Subject: [R-es] =?utf-8?q?Expresi=C3=B3n_en_un_objeto?=
+In-Reply-To: <88843276.4912944.1692026940696@mail.yahoo.com>
+References: <20230810193545.1e5f1a74@debian-dde-tosh>
+ <PAXPR08MB66062206E32007236358843DCC10A@PAXPR08MB6606.eurprd08.prod.outlook.com>
+ <20230811123024.1701d9d6@debian-dde-tosh>
+ <b2b3fd2c88c7135930c3e07668956f7c24007762.camel@uca.es>
+ <20230814163736.4f10f5e6@debian-dde-tosh>
+ <88843276.4912944.1692026940696@mail.yahoo.com>
+Message-ID: <20230815190408.3e9baa35@debian-dde-tosh>
+
+Hola, José Luis:
+
+Muchas gracias por responder. No conocía esta función. La reviso.
+
+Pero en el problema que planteaba, la identificación de los valores desconocidos era como un ejemplo, no que realmente los necesitase identificar. El problema que planteaba era si en una una orden, por ejemplo:
+
+V3 <- ((V1 - V2) / (V2)) * 100
+
+se podía substituir una parte de ella por un texto almacenado en un objeto. Es decir, algo así como en el ejemplo:
+
+> V1 <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
++ V2 <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
++ V3 <- ((V1 - V2) / (V2)) * 100
++ V3
+ [1]        NA  97.22222 173.33333 360.00000  48.21429 744.44444        NA
+ [8]  60.00000        NA 260.00000
+
+substituir "(V1 - V2)" por un texto almacenado en un objeto. La solución de R-UCA seria:
+
+> OBJ <- "(V1 - V2)"
++ V3 <- eval(parse(text = paste0 ("(", OBJ, "/ (V2)) * 100")))
++ V3
+ [1]        NA  97.22222 173.33333 360.00000  48.21429 744.44444        NA
+ [8]  60.00000        NA 260.00000
+
+Gracias por la ayuda y saludos.
+
+
+On Mon, 14 Aug 2023 15:29:00 +0000 (UTC)
+jose luis <pepeceb en yahoo.es> wrote:
+
+>  Hola, no estoy seguro de si es esto lo que te hace falta. ¿conoces la funcion "coalesce"?
+> coalesce function - RDocumentation
+> 
+> 
+> | 
+> | 
+> |  | 
+> coalesce function - RDocumentation
+> 
+> <p>Given a set of vectors, <code>coalesce()</code> finds the first non-missing value at each position. This is i...
+>  |
+> 
+>  |
+> 
+>  |
+> 
+> 
+> 
+> How to implement coalesce efficiently in R
+> 
+> 
+> | 
+> | 
+> | 
+> |  |  |
+> 
+>  |
+> 
+>  |
+> | 
+> |  | 
+> How to implement coalesce efficiently in R
+> 
+> BackgroundSeveral SQL languages (I mostly use postgreSQL) have a function called coalesce which returns the fi...
+>  |
+> 
+>  |
+> 
+>  |
+> 
+> 
+> 
+>     En lunes, 14 de agosto de 2023, 16:38:04 CEST, Griera-yandex <griera en yandex.com> escribió:  
+>  
+>  Hola:
+> 
+> Aplicando tu solución al problema original, seria:
+> 
+> > V1  <- c (47, 71,  41,  23,  83, 152,  82,  8, 160,  18)
+> > V2a <- c (NA, 36,  15,  5,  56,  18,  NA,  5,  NA,  5)
+> > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> 
+> # Sin ORD:
+> 
+> > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> > V3
+>  [1] -21.276596 -49.295775 -63.414634 -78.260870 -32.530120 -88.157895
+>  [7]  9.756098 -37.500000  0.625000 -72.222222
+> 
+> # Substituyendo "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))" por ORD:
+> 
+> > V3 <- eval(parse(text = paste0 ("((", ORD,  "- V1)/V1)*100")))
+> > V3 
+>  [1] -21.276596 -49.295775 -63.414634 -78.260870 -32.530120 -88.157895
+>  [7]  9.756098 -37.500000  0.625000 -72.222222
+> 
+> # Sin ORD:
+> 
+> > V4 <-    ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, '1', '0'), NA)
+> > V4
+>  [1] "0" "0" "0" "0" "0" "0" "1" "0" "1" "0"
+> 
+> # Substituyendo "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))" por ORD:
+> 
+> > V4 <-    eval(parse(text = paste0 ("ifelse (! is.na (((", ORD, "-V1)/V1)*100), ifelse (((", ORD, "-V1)/V1)*100 > 0, '1', '0'), NA)")))
+> > V4
+>  [1] "0" "0" "0" "0" "0" "0" "1" "0" "1" "0"
+> 
+> 
+> Mucas gracias y saludos.
+> 
+> On Mon, 14 Aug 2023 10:14:06 +0200
+> Proyecto R-UCA <r-uca en uca.es> wrote:
+> 
+> > Buenas,
+> > 
+> > ¿Qué tal esto?
+> > 
+> > > V1 <- 1
+> > > V2a <- 20
+> > > V2b <- 200
+> > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > V3 <- "((ORD - V1)/V1)*100"
+> > > V33 <- sub('ORD', ORD, V3)
+> > > V33
+> > [1] "(((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100"
+> > > eval(parse(text = V33))
+> > [1] 1900
+> > 
+> > Un saludo
+> > 
+> > El vie, 11-08-2023 a las 12:30 +0200, Griera-yandex escribió:
+> > > Gracias, Isidro, por la ayuda:
+> > > 
+> > > On Fri, 11 Aug 2023 09:16:34 +0000
+> > > Isidro Hidalgo Arellano <ihidalgo en jccm.es> wrote:
+> > > 
+> > > > A ver... con que xfunc() esté preparada para tomar un parámetro de tipo "carácter" y evaluarlo, claro que se puede hacer...
+> > > > Si el problema lo tienes en evaluar la expresión, la función "eval()" te lo hace.
+> > > > Si no te he entendido bien, explícate más ?
+> > > 
+> > > Simplemente quería que en la orden:
+> > > 
+> > > V3 <- ((ORD - V1)/V1)*100
+> > > 
+> > > ORD lo reconocieses (y lo substituyese), por ejemplo, como "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,
+> > > V2a))".
+> > > 
+> > > Con eval() no parece que funcione:
+> > > 
+> > > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > > V3 <- ((eval (ORD) - V1)/V1)*100
+> > > Error in eval(ORD) - V1 : non-numeric argument to binary operator
+> > > 
+> > > Alguna sugerencia?
+> > > 
+> > > Gracias y saludos.
+> > > 
+> > > 
+> > > > Saludos
+> > > > Isidro
+> > > > 
+> > > > 
+> > > > -----Mensaje original-----
+> > > > De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Griera
+> > > > Enviado el: jueves, 10 de agosto de 2023 19:36
+> > > > Para: r-help-es en r-project.org
+> > > > Asunto: [R-es] Expresión en un objeto
+> > > > 
+> > > > Hola a todos:
+> > > > 
+> > > > Se me ha planteado un problema que no está ligado a ningún problema concreto. Es más teórico. 
+> > > > 
+> > > > Supongamos que tenemos tres variables:
+> > > > 
+> > > > V1  <- c (47, 71,  41,  23,  83, 152,  82,   8, 160,  18)
+> > > > V2a <- c (NA, 36,  15,   5,  56,  18,  NA,   5,  NA,   5)
+> > > > V2b <- c (37, NA,  15,  NA,  NA,  NA,  90,  NA,  161, NA)
+> > > > 
+> > > > Supongamos que tengo la expresión (que no puedo asignarlo a ninguna variable):
+> > > > 
+> > > > (ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))
+> > > > 
+> > > > Supongamos que tengo que utilizar esta expresión dos o más veces y no puedo utilizar ni un xapply () ni un bucle. Por ejemplo:
+> > > > 
+> > > > V3 <- (((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a)) - V1)/V1)*100
+> > > > V4 <-   ifelse (! is.na ((((ifelse (is.na (V2a) & ! is.na (V2b),
+> > > > V2b,  V2a))-V1)/V1)*100), ifelse ((((ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > > 
+> > > > Hay alguna forma de almacenar la expresión "(ifelse (is.na (V2a) & !
+> > > > is.na (V2b), V2b,  V2a))" en un objeto y utilizar el nombre del objeto en las ordenes (por ejemplo, con una hipotética función xfunc
+> > > > ()). Por
+> > > > ejemplo:
+> > > > 
+> > > > ORD <- "(ifelse (is.na (V2a) & ! is.na (V2b), V2b,  V2a))"
+> > > > V3 <- ((xfunc (ORD) - V1)/V1)*100
+> > > > V4 <-   ifelse (! is.na (((xfunc (ORD)-V1)/V1)*100), ifelse
+> > > > (((xfunc (ORD)-V1)/V1)*100 > 0, "1", "0"), NA)
+> > > > 
+> > > > 
+> > > > El ejemnplo és absurdo, pero solo lo presento como un hipotético ejercicio.
+> > > > 
+> > > > Muchas gracias por la ayuda.
+> > > > 
+> > > > _______________________________________________
+> > > > R-help-es mailing list
+> > > > R-help-es en r-project.org
+> > > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> > > >  
+> > > 
+> > > _______________________________________________
+> > > R-help-es mailing list
+> > > R-help-es en r-project.org
+> > > https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XN-cky8L5_OX7y2kyLLm27CRefYwg62XypISxc1W0ZPK_yu5yoIEqqRZK27otqN6Gvr0JcGQZ26m$
+> > >  
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>   
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Mon Aug 28 21:18:58 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Mon, 28 Aug 2023 21:18:58 +0200
+Subject: [R-es] drop-column importance
+Message-ID: <CAF3uytWMUwU-45S1zvRuzyfGrC-9uc-gU2Nzf2B67ihiGpCkwg@mail.gmail.com>
+
+Muy buenas, ¿alguien conoce algún paquete que permita calcular  drop-column
+importance  para distintos tipos de algoritmos, como RF o GBM? Programarlo
+yo sé, pero busco algún paquete que ya lo haga.
+Gracias,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From jb@ut|@t@ @end|ng |rom ne|ker@eu@  Wed Aug 30 11:49:31 2023
+From: jb@ut|@t@ @end|ng |rom ne|ker@eu@ (Relloso Barrio, Juan Bautista)
+Date: Wed, 30 Aug 2023 09:49:31 +0000
+Subject: [R-es] Realizar anovas,
+ por cada uno de los niveles de uno de los factores del ensayo
+In-Reply-To: <7e68b288865a43c2826272287121ecea@EJWP1143.elkarlan.euskadi.eus>
+References: <7e68b288865a43c2826272287121ecea@EJWP1143.elkarlan.euskadi.eus>
+Message-ID: <11dd1d57c1dc416e8eee9048f30c2a2a@EJWP1143.elkarlan.euskadi.eus>
+
+Buenos días.
+Una consulta. Alguiensabe como puedo conseguir que los gráficos Box plot salgan ordenador por los valores dela variable de mayo a menor o de menor a mayor?
+Muchas gracias.
+Un saludo.
+Juan Bautista Relloso Barrio
+Coordinador de Equipos e Infraestructuras | Técnico de Cultivos del Departamento de Producción Vegetal
+Talde eta Azpiegitura Koordinatzailea | Laborantza teknikaria Landare Ekoizpen Departamentua
+jbautista en neiker.eus <mailto:jbautista en neiker.eus> | M. 688 62 98 14
+www.neiker.eus<http://www.neiker.eus/>                [cid:image001.png en 01D9DB38.08EC5DA0] <https://www.linkedin.com/company/neiker/>  [cid:image002.png en 01D9DB38.08EC5DA0] <https://twitter.com/neiker_BRTA> [cid:image003.png en 01D9DB38.08EC5DA0] <https://www.facebook.com/neikerBRTA>  [cid:image004.png en 01D9DB38.08EC5DA0] <https://www.youtube.com/user/neikertec>
+[cid:image005.png en 01D9DB38.08EC5DA0]        [ej_ekonomia_garapen_lateral]           [https://www.emakunde.euskadi.eus/contenidos/informacion/violencia_puntolila/eu_def/adjuntos/punto.lila.jpg]
+
+PRIBATUTASUN POLITIKA<https://neiker.eus/eu/pribatutasun-politika/> | POLÍTICA DE PRIVACIDAD<https://neiker.eus/es/politica-privacidad/> | LEGAL NOTICE<https://neiker.eus/en/privacy-policy/>
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/abfe3553/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 1298 bytes
+Desc: image001.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/abfe3553/attachment-0005.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image002.png
+Type: image/png
+Size: 1318 bytes
+Desc: image002.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/abfe3553/attachment-0006.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image003.png
+Type: image/png
+Size: 1193 bytes
+Desc: image003.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/abfe3553/attachment-0007.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image004.png
+Type: image/png
+Size: 1305 bytes
+Desc: image004.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/abfe3553/attachment-0008.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image005.png
+Type: image/png
+Size: 21076 bytes
+Desc: image005.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/abfe3553/attachment-0009.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image006.jpg
+Type: image/jpeg
+Size: 14174 bytes
+Desc: image006.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/abfe3553/attachment-0002.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image007.jpg
+Type: image/jpeg
+Size: 5590 bytes
+Desc: image007.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/abfe3553/attachment-0003.jpg>
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Wed Aug 30 12:12:19 2023
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Wed, 30 Aug 2023 12:12:19 +0200
+Subject: [R-es] Realizar anovas,
+ por cada uno de los niveles de uno de los factores del ensayo
+In-Reply-To: <11dd1d57c1dc416e8eee9048f30c2a2a@EJWP1143.elkarlan.euskadi.eus>
+References: <7e68b288865a43c2826272287121ecea@EJWP1143.elkarlan.euskadi.eus>
+ <11dd1d57c1dc416e8eee9048f30c2a2a@EJWP1143.elkarlan.euskadi.eus>
+Message-ID: <CA+8ueybbwCPVWdWKVQft7svcPThZtN_+ePihngyuACvGVdV8kA@mail.gmail.com>
+
+Epa, tocayo!
+No me queda claro cómo los estás haciendo, pero de una u otra manera, si
+usás forcats::fct_infreq() , voy de memoria, se te van a ordenar según cuál
+de los valores tengás más veces repetidos. Y si no es ese el que querés,
+fijate dentro del paquete y vas a encontrar el que más te merezca.
+fct_reorder()?
+
+Suerte
+
+Hau idatzi du Relloso Barrio, Juan Bautista (jbautista en neiker.eus)
+erabiltzaileak (2023 abu. 30(a), az. (11:50)):
+
+> Buenos días.
+>
+> Una consulta. Alguiensabe como puedo conseguir que los gráficos Box plot
+> salgan ordenador por los valores dela variable de mayo a menor o de menor a
+> mayor?
+>
+> Muchas gracias.
+>
+> Un saludo.
+>
+> *Juan Bautista Relloso Barrio*
+>
+> Coordinador de Equipos e Infraestructuras | Técnico de Cultivos del
+> Departamento de Producción Vegetal
+>
+> Talde eta Azpiegitura Koordinatzailea | Laborantza teknikaria Landare
+> Ekoizpen Departamentua
+>
+> jbautista en neiker.eus | M. 688 62 98 14
+>
+> *www.neiker.eus* <http://www.neiker.eus/>
+> <https://www.linkedin.com/company/neiker/>
+> <https://twitter.com/neiker_BRTA> <https://www.facebook.com/neikerBRTA>
+> <https://www.youtube.com/user/neikertec>
+>
+> *        [image: ej_ekonomia_garapen_lateral]         * [image:
+> https://www.emakunde.euskadi.eus/contenidos/informacion/violencia_puntolila/eu_def/adjuntos/punto.lila.jpg]
+>
+>
+>
+> PRIBATUTASUN POLITIKA <https://neiker.eus/eu/pribatutasun-politika/> | POLÍTICA
+> DE PRIVACIDAD <https://neiker.eus/es/politica-privacidad/> | LEGAL NOTICE
+> <https://neiker.eus/en/privacy-policy/>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Juan Abasolo, PhD
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T       : (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype   : abasolo72
+Bloga   : juanabasolo.netlify.com
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/3868d178/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 1298 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/3868d178/attachment-0005.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image002.png
+Type: image/png
+Size: 1318 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/3868d178/attachment-0006.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image003.png
+Type: image/png
+Size: 1193 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/3868d178/attachment-0007.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image004.png
+Type: image/png
+Size: 1305 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/3868d178/attachment-0008.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image005.png
+Type: image/png
+Size: 21076 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/3868d178/attachment-0009.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image006.jpg
+Type: image/jpeg
+Size: 14174 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/3868d178/attachment-0002.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image007.jpg
+Type: image/jpeg
+Size: 5590 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230830/3868d178/attachment-0003.jpg>
+

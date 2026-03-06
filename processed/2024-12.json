@@ -1,0 +1,101 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2024-12",
+  "messages": [
+    {
+      "id": "msg-797cbc964792",
+      "message_id": "<CAPr+-cNDawYjzgUNKLf6mTc-wFC8Hr0t06qrUB6JY2ygqRf36g@mail.gmail.com>",
+      "from_name": "Antonio Rodriguez Andres",
+      "from_email_hash": "b9050258336ce93c197247f5f991277e75f93d1c9fcc93d5f0a20285dab617dd",
+      "date": "2024-12-16T13:39:35+02:00",
+      "subject": "[R-es] MODELOS SURE- CON EFECTOS FIJOS USANDO SYSTEMFIT",
+      "subject_clean": "[R-es] MODELOS SURE- CON EFECTOS FIJOS USANDO SYSTEMFIT",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola estimados usuarios de R\n\n\nEstoy usando un conjunto de datos de panel, con variables id country y\nyear. La idea es estimar models separadamente por OLS para cada pais,\ny luego estimarlo de forma conjunta usando systemfit\n\n\nPara ello hago esto\n\n\n\n# Running OLS for each country\ncountry_ols <- data_suicide %>%\n  group_by(country) %>%\n  group_map(~ lm(log_suicide_males ~ index + gdppercapitappp +\ngdpgrowth + alcoholconsumption +\n                   employmentrate + fertilityrate + divorcerate, data = .x))\n\n# Extracting summaries\nols_summaries <- lapply(country_ols, summary)\n\n\nNo he incluido efectos fijos pero cuando uso la siguiente prueba,\nsiempre me da el mismo error, como poder incorporar solo efectos fijos\npor pais y estimar por SURE como Zellner. Entiendo que se puede\nobtener los\n\nresiduos de cada modelo por OLS y luego estimar conjuntamente las\necuaciones (hay 20 paises)\n\n\nCualquier ayuda es bienvenida\n\n\neq1 <- log_suicide_males ~ index + gdppercapitappp + gdpgrowth > eq2\n<- log_suicide_males ~ index + gdppercapitappp + gdpgrowth +\nfertilityrate> eqSystem <- list( model1 = eq1, mdel2 = eq2 )> fitols\n<- systemfit( eqSystem, data = data_suicide )Error in\nsystemfit(eqSystem, data = data_suicide) :\n  argument 'formula' must be an object of class 'formula' for panel-like models\n\n\nUn saludo\nAntonio\n-- \n\nMember, Editorial Committee, *The Economic and Labour Relations Review: *\n\nhttps://www.cambridge.org/core/journals/the-economic-and-labour-relations-review\n\nhttps://www.researchgate.net/profile/Antonio_Andres (Research Gate profile)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola estimados usuarios de R\n\n\nEstoy usando un conjunto de datos de panel, con variables id country y\nyear. La idea es estimar models separadamente por OLS para cada pais,\ny luego estimarlo de forma c",
+      "thread_id": "thread-797cbc964792",
+      "thread_depth": 0,
+      "month": "2024-12"
+    },
+    {
+      "id": "msg-8799bfd58f3c",
+      "message_id": "<D8E1F854-79B9-4E89-876A-CBD376748B2A@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-12-17T10:37:42-03:00",
+      "subject": "[R-es] Colores diseño matriz",
+      "subject_clean": "[R-es] Colores diseño matriz",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados\n\nEstoy pensando en buscar la forma para explicar algo, dentro de la forma que se me ocurriÃ³ estÃ¡ el utilizar colores.\n\nNo importa en sÃ­ el anÃ¡lisis, pero supongamos que es una regresiÃ³n, algo de modelos mixtos, etc.\n\nDentro de los datos supongamos que hay peso, lugar e individuo.\n\nDentro de lugar supongo que hay 3 lugares, Argentina, EspaÃ±a e Italia.\n\nHay 15 individuos con su peso correspondiente y cada uno de estos estÃ¡ en un lugar.\n\nEl modelo serÃ­a algo como Y (peso) = X (lugar +  individuo) + e. Lo mÃ¡s simple que se pueda.\n\nLÃ³gicamente en un momento se crean matrices donde de acuerdo al diseÃ±o podrÃ­a ser, suponiendo\tque lo siguiente son dos matrices.\n\n1 \t\t1,0,0\n2\t\t0,1,0\n3\t\t0,0,1\n\nDe esto 1,2,3 son los tres paÃ­ses, que en matriz es 1,0,0 para el primero, 0,1,0 para el segundo y 0,0,1 para el tercero.\n\nSupongamos el los pesos son 80, 81 y 82, para el primero, segundo y tercero, por lo cuÃ¡l en algÃºn momento se relacionan de esta forma\n\n1,0,0\t80\n0,1,0\t81\n0,0,1\t82\n\nLÃ³gicamente entienden que hay Ã¡lgebra y anotaciones como X?X, XY, etc.\n\nLo que me gustarÃ­a es poder colocar colores, de tal forma que si el lugar 1 es marrÃ³n, el 2 es rojo, el 3 es amarillo, y en una multiplicaciÃ³n de dos matrices, donde la segunda matriz  es negro o blanco, la multiplicaciÃ³n entre ambas serÃ­a algo como: color marrÃ³n por color negro es un ?casi negro? con un valor de 43, rojo por blanco es un ?casi rosa? con un valor de 28, mi intenciÃ³n es explicar en colores como se forman distintas ?combinaciones? de tal forma que si el resultado final es 8 este tenga un color que visualmente se ve mÃ¡s o menos en cuanto contribuyÃ³ cada parte.\n\nLÃ³gicamente es todo con pocos nÃºmeros, realizando todos los pasos con las matrices correspondientes, pero tiene que entenderse para gente que nunca vio R, Ã¡lgebra ni cÃ¡lculos con matrices.\n\nEl siguiente cÃ³digo, muy primitivo, tiene una idea de cÃ³mo visualmente serÃ­a entendible.\n\nM3<-matrix(sample(0:4,25,replace=TRUE),nrow=5)\nM3\ncolors<-c(\"0\"=\"red\",\"1\"=\"red1\",\"2\"=\"red2\",\"3\"=\"red3\",\"4\"=\"red4\")\nimage(1:nrow(M3),1:ncol(M3),M3,col=colors)\n\nSupongamos que la matrÃ­z de este ejemplo M3 es X, en X?X se me deberÃ­an formar los colores.\n\nÂ¿Alguien vio un ejemplo o tiene una idea?\n\nGracias.",
+      "body_snippet": "Estimados\n\nEstoy pensando en buscar la forma para explicar algo, dentro de la forma que se me ocurriÃ³ estÃ¡ el utilizar colores.\n\nNo importa en sÃ­ el anÃ¡lisis, pero supongamos que es una regresiÃ³n",
+      "thread_id": "thread-8799bfd58f3c",
+      "thread_depth": 0,
+      "month": "2024-12"
+    },
+    {
+      "id": "msg-1bc8199dff89",
+      "message_id": "<CAOKbq8iZMYuZMk_oByUUV_eN18+dRmMnozysv2LbeSRD6eFq0g@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2024-12-20T10:42:29+01:00",
+      "subject": "[R-es] Colores diseño matriz",
+      "subject_clean": "[R-es] Colores diseño matriz",
+      "in_reply_to": "<D8E1F854-79B9-4E89-876A-CBD376748B2A@gmail.com>",
+      "references": [
+        "<D8E1F854-79B9-4E89-876A-CBD376748B2A@gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nTienes varios ejemplos de cÃ³mo hacer esto en esta galerÃ­a de grÃ¡ficos,\ntanto de R como de Python.\n\nhttps://r-graph-gallery.com/heatmap.html\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl mar, 17 dic 2024 a las 14:38, Javier Marcuzzi (<\njavier.ruben.marcuzzi en gmail.com>) escribiÃ³:\n\n> Estimados\n>\n> Estoy pensando en buscar la forma para explicar algo, dentro de la forma\n> que se me ocurriÃ³ estÃ¡ el utilizar colores.\n>\n> No importa en sÃ­ el anÃ¡lisis, pero supongamos que es una regresiÃ³n, algo\n> de modelos mixtos, etc.\n>\n> Dentro de los datos supongamos que hay peso, lugar e individuo.\n>\n> Dentro de lugar supongo que hay 3 lugares, Argentina, EspaÃ±a e Italia.\n>\n> Hay 15 individuos con su peso correspondiente y cada uno de estos estÃ¡ en\n> un lugar.\n>\n> El modelo serÃ­a algo como Y (peso) = X (lugar +  individuo) + e. Lo mÃ¡s\n> simple que se pueda.\n>\n> LÃ³gicamente en un momento se crean matrices donde de acuerdo al diseÃ±o\n> podrÃ­a ser, suponiendo   que lo siguiente son dos matrices.\n>\n> 1               1,0,0\n> 2               0,1,0\n> 3               0,0,1\n>\n> De esto 1,2,3 son los tres paÃ­ses, que en matriz es 1,0,0 para el primero,\n> 0,1,0 para el segundo y 0,0,1 para el tercero.\n>\n> Supongamos el los pesos son 80, 81 y 82, para el primero, segundo y\n> tercero, por lo cuÃ¡l en algÃºn momento se relacionan de esta forma\n>\n> 1,0,0   80\n> 0,1,0   81\n> 0,0,1   82\n>\n> LÃ³gicamente entienden que hay Ã¡lgebra y anotaciones como X?X, XY, etc.\n>\n> Lo que me gustarÃ­a es poder colocar colores, de tal forma que si el lugar\n> 1 es marrÃ³n, el 2 es rojo, el 3 es amarillo, y en una multiplicaciÃ³n de dos\n> matrices, donde la segunda matriz  es negro o blanco, la multiplicaciÃ³n\n> entre ambas serÃ­a algo como: color marrÃ³n por color negro es un ?casi\n> negro? con un valor de 43, rojo por blanco es un ?casi rosa? con un valor\n> de 28, mi intenciÃ³n es explicar en colores como se forman distintas\n> ?combinaciones? de tal forma que si el resultado final es 8 este tenga un\n> color que visualmente se ve mÃ¡s o menos en cuanto contribuyÃ³ cada parte.\n>\n> LÃ³gicamente es todo con pocos nÃºmeros, realizando todos los pasos con las\n> matrices correspondientes, pero tiene que entenderse para gente que nunca\n> vio R, Ã¡lgebra ni cÃ¡lculos con matrices.\n>\n> El siguiente cÃ³digo, muy primitivo, tiene una idea de cÃ³mo visualmente\n> serÃ­a entendible.\n>\n> M3<-matrix(sample(0:4,25,replace=TRUE),nrow=5)\n> M3\n> colors<-c(\"0\"=\"red\",\"1\"=\"red1\",\"2\"=\"red2\",\"3\"=\"red3\",\"4\"=\"red4\")\n> image(1:nrow(M3),1:ncol(M3),M3,col=colors)\n>\n> Supongamos que la matrÃ­z de este ejemplo M3 es X, en X?X se me deberÃ­an\n> formar los colores.\n>\n> Â¿Alguien vio un ejemplo o tiene una idea?\n>\n> Gracias.\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nTienes varios ejemplos de cÃ³mo hacer esto en esta galerÃ­a de grÃ¡ficos,\ntanto de R como de Python.\n\nhttps://r-graph-gallery.com/heatmap.html\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n",
+      "thread_id": "thread-8799bfd58f3c",
+      "thread_depth": 1,
+      "month": "2024-12"
+    },
+    {
+      "id": "msg-23ce1f8620c6",
+      "message_id": "<BE2CA382-B63C-433C-AC73-E8A49A4C27E3@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-12-20T10:23:18-03:00",
+      "subject": "[R-es] Colores diseño matriz",
+      "subject_clean": "[R-es] Colores diseño matriz",
+      "in_reply_to": "<CAOKbq8iZMYuZMk_oByUUV_eN18+dRmMnozysv2LbeSRD6eFq0g@mail.gmail.com>",
+      "references": [
+        "<D8E1F854-79B9-4E89-876A-CBD376748B2A@gmail.com>",
+        "<CAOKbq8iZMYuZMk_oByUUV_eN18+dRmMnozysv2LbeSRD6eFq0g@mail.gmail.com>"
+      ],
+      "body_plain": "Muchas gracias Carlos\n\nTengo que continuar ese trabajo, efectivamente esa es una alternativa, tengo que estudiarla un poco con otra mÃ¡s simple, lo que sÃ­ ya encontrÃ© es como generar los colores para la mezcla de informaciÃ³n, pero en principio funcionarÃ­a la mezcla de colores y el cÃ³digo es es siguiente\n\ncolor1 <- \"blue\"\ncolor2 <- ?red\"\nmix_colors <- colorRamp(c(color1, color2))\nmixed_colors2 <- mix_colors(seq(0, 1, length.out = 3))\nmixed_colors_hex2 <- rgb(mixed_colors2, maxColorValue = 255)\nbarplot(c(2,5,3), col=mixed_colors_hex2)\n\nEn este parto de rojo y azul y genero el color del medio. Entonces lo del color del medio es lo que se generÃ³ entre esas dos matrices, y de esta forma con la mezcla de colores intentar explicar algo.\n\nHetmap podrÃ­a ir muy bien para dos matrices XÂ´X, pero en XÂ´Y necesitarÃ­a que todas las X y lasY pertenezcan a colores distintos, pero como ya encontrÃ© como mezclar colores creo que ahora es cuestiÃ³n de buscar la forma visual que explique el problema.\n\n\nMuchas gracias\n\n> El 20 dic 2024, a las 6:42?a. m., Carlos Ortega <cof en qualityexcellence.es> escribiÃ³:\n> \n> Hola,\n> \n> Tienes varios ejemplos de cÃ³mo hacer esto en esta galerÃ­a de grÃ¡ficos, tanto de R como de Python.\n> \n> https://r-graph-gallery.com/heatmap.html\n> \n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es <http://www.qualityexcellence.es/>\n> \n> El mar, 17 dic 2024 a las 14:38, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribiÃ³:\n>> Estimados\n>> \n>> Estoy pensando en buscar la forma para explicar algo, dentro de la forma que se me ocurriÃ³ estÃ¡ el utilizar colores.\n>> \n>> No importa en sÃ­ el anÃ¡lisis, pero supongamos que es una regresiÃ³n, algo de modelos mixtos, etc.\n>> \n>> Dentro de los datos supongamos que hay peso, lugar e individuo.\n>> \n>> Dentro de lugar supongo que hay 3 lugares, Argentina, EspaÃ±a e Italia.\n>> \n>> Hay 15 individuos con su peso correspondiente y cada uno de estos estÃ¡ en un lugar.\n>> \n>> El modelo serÃ­a algo como Y (peso) = X (lugar +  individuo) + e. Lo mÃ¡s simple que se pueda.\n>> \n>> LÃ³gicamente en un momento se crean matrices donde de acuerdo al diseÃ±o podrÃ­a ser, suponiendo   que lo siguiente son dos matrices.\n>> \n>> 1               1,0,0\n>> 2               0,1,0\n>> 3               0,0,1\n>> \n>> De esto 1,2,3 son los tres paÃ­ses, que en matriz es 1,0,0 para el primero, 0,1,0 para el segundo y 0,0,1 para el tercero.\n>> \n>> Supongamos el los pesos son 80, 81 y 82, para el primero, segundo y tercero, por lo cuÃ¡l en algÃºn momento se relacionan de esta forma\n>> \n>> 1,0,0   80\n>> 0,1,0   81\n>> 0,0,1   82\n>> \n>> LÃ³gicamente entienden que hay Ã¡lgebra y anotaciones como X?X, XY, etc.\n>> \n>> Lo que me gustarÃ­a es poder colocar colores, de tal forma que si el lugar 1 es marrÃ³n, el 2 es rojo, el 3 es amarillo, y en una multiplicaciÃ³n de dos matrices, donde la segunda matriz  es negro o blanco, la multiplicaciÃ³n entre ambas serÃ­a algo como: color marrÃ³n por color negro es un ?casi negro? con un valor de 43, rojo por blanco es un ?casi rosa? con un valor de 28, mi intenciÃ³n es explicar en colores como se forman distintas ?combinaciones? de tal forma que si el resultado final es 8 este tenga un color que visualmente se ve mÃ¡s o menos en cuanto contribuyÃ³ cada parte.\n>> \n>> LÃ³gicamente es todo con pocos nÃºmeros, realizando todos los pasos con las matrices correspondientes, pero tiene que entenderse para gente que nunca vio R, Ã¡lgebra ni cÃ¡lculos con matrices.\n>> \n>> El siguiente cÃ³digo, muy primitivo, tiene una idea de cÃ³mo visualmente serÃ­a entendible.\n>> \n>> M3<-matrix(sample(0:4,25,replace=TRUE),nrow=5)\n>> M3\n>> colors<-c(\"0\"=\"red\",\"1\"=\"red1\",\"2\"=\"red2\",\"3\"=\"red3\",\"4\"=\"red4\")\n>> image(1:nrow(M3),1:ncol(M3),M3,col=colors)\n>> \n>> Supongamos que la matrÃ­z de este ejemplo M3 es X, en X?X se me deberÃ­an formar los colores.\n>> \n>> Â¿Alguien vio un ejemplo o tiene una idea?\n>> \n>> Gracias.\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> \n> \n> \n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es <http://www.qualityexcellence.es/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Carlos\n\nTengo que continuar ese trabajo, efectivamente esa es una alternativa, tengo que estudiarla un poco con otra mÃ¡s simple, lo que sÃ­ ya encontrÃ© es como generar los colores par",
+      "thread_id": "thread-8799bfd58f3c",
+      "thread_depth": 2,
+      "month": "2024-12"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-797cbc964792",
+      "subject": "[R-es] MODELOS SURE- CON EFECTOS FIJOS USANDO SYSTEMFIT",
+      "message_count": 1,
+      "participants": [
+        "Antonio Rodriguez Andres"
+      ],
+      "started": "2024-12-16T13:39:35+02:00",
+      "last_reply": "2024-12-16T13:39:35+02:00",
+      "root_message_id": "msg-797cbc964792"
+    },
+    {
+      "id": "thread-8799bfd58f3c",
+      "subject": "[R-es] Colores diseño matriz",
+      "message_count": 3,
+      "participants": [
+        "Carlos Ortega",
+        "Javier Marcuzzi"
+      ],
+      "started": "2024-12-17T10:37:42-03:00",
+      "last_reply": "2024-12-20T10:23:18-03:00",
+      "root_message_id": "msg-8799bfd58f3c"
+    }
+  ]
+}

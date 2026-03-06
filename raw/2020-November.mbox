@@ -1,0 +1,1536 @@
+From miri@m@@iz@te m@iii@g oii u@@v@rr@@es  Wed Nov  4 02:48:53 2020
+From: miri@m@@iz@te m@iii@g oii u@@v@rr@@es (=?iso-8859-1?q?miri=40m=40=40iz=40te_m=40iii=40g_oii_u=40=40v=40rr=40=40e?=
+ =?iso-8859-1?q?s?=)
+Date: Wed, 4 Nov 2020 02:48:53 +0100
+Subject: [R-es] =?utf-8?q?Eliminar_n=C3=BAmeros_de_texto?=
+Message-ID: <beed0f555566e8008b554ad106de6557.squirrel@webmail.unavarra.es>
+
+Buenas,
+
+Estoy analizando texto en R y no encuentro cómo eliminar los números y
+símbolos del texto como ",", "%", etc.
+
+Estoy pasando este código, text_data es donde está el texto en la variable
+"text".
+
+tidy_data <- text_data%>%
+unnest_tokens(word, text)%>%
+anti_join(stop_words)
+
+¿Cómo podría añadirse a ese código?
+
+Muchas gracias
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Wed Nov  4 08:31:48 2020
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Wed, 4 Nov 2020 08:31:48 +0100
+Subject: [R-es] =?utf-8?q?Eliminar_n=C3=BAmeros_de_texto?=
+In-Reply-To: <beed0f555566e8008b554ad106de6557.squirrel@webmail.unavarra.es>
+References: <beed0f555566e8008b554ad106de6557.squirrel@webmail.unavarra.es>
+Message-ID: <5cd088a7-72b2-72fc-2c53-c3e5ee7f60d9@urjc.es>
+
+Hola:
+
+Podrías usar gsub:
+
+gsub("([,%0-9])", "", text_data$text)
+
+Saludos,
+
+Marcelino
+
+El 04/11/2020 a las 2:48, miriam.alzate en unavarra.es escribió:
+> Buenas,
+>
+> Estoy analizando texto en R y no encuentro cómo eliminar los números y
+> símbolos del texto como ",", "%", etc.
+>
+> Estoy pasando este código, text_data es donde está el texto en la variable
+> "text".
+>
+> tidy_data <- text_data%>%
+> unnest_tokens(word, text)%>%
+> anti_join(stop_words)
+>
+> ¿Cómo podría añadirse a ese código?
+>
+> Muchas gracias
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> .
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From miri@m@@iz@te m@iii@g oii u@@v@rr@@es  Wed Nov  4 17:49:13 2020
+From: miri@m@@iz@te m@iii@g oii u@@v@rr@@es (=?iso-8859-1?q?miri=40m=40=40iz=40te_m=40iii=40g_oii_u=40=40v=40rr=40=40e?=
+ =?iso-8859-1?q?s?=)
+Date: Wed, 4 Nov 2020 17:49:13 +0100
+Subject: [R-es] Concatenar secuencia hasta el final con ifelse
+Message-ID: <93365ddcf50a9b4540bb51c4da5bdef0.squirrel@webmail.unavarra.es>
+
+Hola,
+
+Necesito asignar a cada observación un orden según su posición en un
+listado, estoy aplicando el siguiente código, pero no se cómo extenderlo
+para que lo haga hasta el final de las observaciones sin hacerlo
+manualmente:
+
+Data$Order.Page <- ifelse(Data$Order.individual <=5, 1,
+ifelse(Data$Order.individual<=10, 2,
+ ifelse(Data$Order.individual <=15, 3,...
+
+Lo que nos diría es que si el orden individual es menor o igual que 5, la
+nueva variable tenga valor 1; si es menor o igual que 10, tenga valor 2;
+si es menor o igual que 15, valor 3, y así sucesivamente.
+
+Pero hay casos donde la variable Order.individual va del 1 al 16.000, por
+lo tanto no es práctico ponerlo de forma manual. ¿Hay forma de hacerlo
+automático?
+
+Muchas gracias
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Wed Nov  4 18:32:29 2020
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Wed, 4 Nov 2020 18:32:29 +0100
+Subject: [R-es] Concatenar secuencia hasta el final con ifelse
+In-Reply-To: <93365ddcf50a9b4540bb51c4da5bdef0.squirrel@webmail.unavarra.es>
+References: <93365ddcf50a9b4540bb51c4da5bdef0.squirrel@webmail.unavarra.es>
+Message-ID: <6280fc06-d595-7b11-91da-57c8024d4f8f@urjc.es>
+
+Hola:
+
+Si se tratase, como parece implícito, de que cada 5 unidades de 
+Data$Order.individual equivale a 1 unidad de Data$Order.Page, y si el 
+máximo valor es 16000, tendrías en total 16000/5 = 3200 valores posibles 
+para Data$Order.Page.
+
+Por lo tanto, podrías hacer algo así:
+
+valores <- rep(1:3200, each=5)
+Data$Order.Page <- valores[Data$Order.individual]
+
+Saludos,
+Marcelino
+
+El 04/11/2020 a las 17:49, miriam.alzate en unavarra.es escribió:
+> Hola,
+>
+> Necesito asignar a cada observación un orden según su posición en un
+> listado, estoy aplicando el siguiente código, pero no se cómo extenderlo
+> para que lo haga hasta el final de las observaciones sin hacerlo
+> manualmente:
+>
+> Data$Order.Page <- ifelse(Data$Order.individual <=5, 1,
+> ifelse(Data$Order.individual<=10, 2,
+>   ifelse(Data$Order.individual <=15, 3,...
+>
+> Lo que nos diría es que si el orden individual es menor o igual que 5, la
+> nueva variable tenga valor 1; si es menor o igual que 10, tenga valor 2;
+> si es menor o igual que 15, valor 3, y así sucesivamente.
+>
+> Pero hay casos donde la variable Order.individual va del 1 al 16.000, por
+> lo tanto no es práctico ponerlo de forma manual. ¿Hay forma de hacerlo
+> automático?
+>
+> Muchas gracias
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> .
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From miri@m@@iz@te m@iii@g oii u@@v@rr@@es  Wed Nov  4 20:12:00 2020
+From: miri@m@@iz@te m@iii@g oii u@@v@rr@@es (=?iso-8859-1?q?miri=40m=40=40iz=40te_m=40iii=40g_oii_u=40=40v=40rr=40=40e?=
+ =?iso-8859-1?q?s?=)
+Date: Wed, 4 Nov 2020 20:12:00 +0100
+Subject: [R-es] Concatenar secuencia hasta el final con ifelse
+In-Reply-To: <6280fc06-d595-7b11-91da-57c8024d4f8f@urjc.es>
+References: <93365ddcf50a9b4540bb51c4da5bdef0.squirrel@webmail.unavarra.es>
+ <6280fc06-d595-7b11-91da-57c8024d4f8f@urjc.es>
+Message-ID: <4a2526d13ed453c146764b58caf7e830.squirrel@webmail.unavarra.es>
+
+Hola, muchas gracias por contestar,
+Creo que no es exactamente eso porque a veces la variable
+Data$Order.individual es común a varias observaciones de la base de datos,
+es decir, puede haber varias observaciones que tengan valor 1 en esa
+variable. Si lo hago de la forma que me dices, no se si está teniendo eso
+en cuenta. La idea es que el código lea qué valor tiene la observación en
+Data$Order.individual, porque me interesa que por ejemplo de el valor 1 a
+las que tienen 5 o menos (aunque no sean sólo 5 observaciones y sean más).
+
+No se si me explico...
+
+Muchas gracias!
+
+El Mie, 4 de Noviembre de 2020, 18:32, Marcelino de la Cruz Rot escribió:
+> Hola:
+>
+> Si se tratase, como parece implícito, de que cada 5 unidades de
+> Data$Order.individual equivale a 1 unidad de Data$Order.Page, y si el
+> máximo valor es 16000, tendrías en total 16000/5 = 3200 valores posibles
+> para Data$Order.Page.
+>
+> Por lo tanto, podrías hacer algo así:
+>
+> valores <- rep(1:3200, each=5)
+> Data$Order.Page <- valores[Data$Order.individual]
+>
+> Saludos,
+> Marcelino
+>
+> El 04/11/2020 a las 17:49, miriam.alzate en unavarra.es escribió:
+>> Hola,
+>>
+>> Necesito asignar a cada observación un orden según su posición en un
+>> listado, estoy aplicando el siguiente código, pero no se cómo extenderlo
+>> para que lo haga hasta el final de las observaciones sin hacerlo
+>> manualmente:
+>>
+>> Data$Order.Page <- ifelse(Data$Order.individual <=5, 1,
+>> ifelse(Data$Order.individual<=10, 2,
+>>   ifelse(Data$Order.individual <=15, 3,...
+>>
+>> Lo que nos diría es que si el orden individual es menor o igual que 5,
+>> la
+>> nueva variable tenga valor 1; si es menor o igual que 10, tenga valor 2;
+>> si es menor o igual que 15, valor 3, y así sucesivamente.
+>>
+>> Pero hay casos donde la variable Order.individual va del 1 al 16.000,
+>> por
+>> lo tanto no es práctico ponerlo de forma manual. ¿Hay forma de hacerlo
+>> automático?
+>>
+>> Muchas gracias
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> .
+>
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+>
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Wed Nov  4 20:27:54 2020
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Wed, 4 Nov 2020 20:27:54 +0100
+Subject: [R-es] Concatenar secuencia hasta el final con ifelse
+In-Reply-To: <4a2526d13ed453c146764b58caf7e830.squirrel@webmail.unavarra.es>
+References: <93365ddcf50a9b4540bb51c4da5bdef0.squirrel@webmail.unavarra.es>
+ <6280fc06-d595-7b11-91da-57c8024d4f8f@urjc.es>
+ <4a2526d13ed453c146764b58caf7e830.squirrel@webmail.unavarra.es>
+Message-ID: <7593f4f8-4e6b-f9f9-fdb2-180437be2a13@urjc.es>
+
+No sé si te he entendido pero con el código que te he mandado, todas las 
+observaciones que tengan 1, 2, 3, 4 o 5  en Data$Order.individual 
+tendrán 1 en Data$Order.Page; todas las que tengan 6, 7, 8, 9, 0 10, 
+tendrán 2 en Data$Order.Page, etc, aunque haya varias que tengan valor 1 
+en esa variable. Vamos, como en este ejemplo:
+
+ > valores <- rep(1:3200, each=5)
+ >
+ > Order.individual <- c(1:20, 1:20)
+ >
+ > data.frame(Order.individual, Order.Page=valores[Order.individual])
+    Order.individual Order.Page
+1                 1         1
+2                 2         1
+3                 3         1
+4                 4         1
+5                 5         1
+6                 6         2
+7                 7         2
+8                 8         2
+9                 9         2
+10               10         2
+11               11         3
+12               12         3
+13               13         3
+14               14         3
+15               15         3
+16               16         4
+17               17         4
+18               18         4
+19               19         4
+20               20         4
+21                1         1
+22                2         1
+23                3         1
+24                4         1
+25                5         1
+26                6         2
+27                7         2
+28                8         2
+29                9         2
+30               10         2
+31               11         3
+32               12         3
+33               13         3
+34               14         3
+35               15         3
+36               16         4
+37               17         4
+38               18         4
+39               19         4
+40               20         4
+ >
+
+El 04/11/2020 a las 20:12, miriam.alzate en unavarra.es escribió:
+> Hola, muchas gracias por contestar,
+> Creo que no es exactamente eso porque a veces la variable
+> Data$Order.individual es común a varias observaciones de la base de datos,
+> es decir, puede haber varias observaciones que tengan valor 1 en esa
+> variable. Si lo hago de la forma que me dices, no se si está teniendo eso
+> en cuenta. La idea es que el código lea qué valor tiene la observación en
+> Data$Order.individual, porque me interesa que por ejemplo de el valor 1 a
+> las que tienen 5 o menos (aunque no sean sólo 5 observaciones y sean más).
+>
+> No se si me explico...
+>
+> Muchas gracias!
+>
+> El Mie, 4 de Noviembre de 2020, 18:32, Marcelino de la Cruz Rot escribió:
+>> Hola:
+>>
+>> Si se tratase, como parece implícito, de que cada 5 unidades de
+>> Data$Order.individual equivale a 1 unidad de Data$Order.Page, y si el
+>> máximo valor es 16000, tendrías en total 16000/5 = 3200 valores posibles
+>> para Data$Order.Page.
+>>
+>> Por lo tanto, podrías hacer algo así:
+>>
+>> valores <- rep(1:3200, each=5)
+>> Data$Order.Page <- valores[Data$Order.individual]
+>>
+>> Saludos,
+>> Marcelino
+>>
+>> El 04/11/2020 a las 17:49, miriam.alzate en unavarra.es escribió:
+>>> Hola,
+>>>
+>>> Necesito asignar a cada observación un orden según su posición en un
+>>> listado, estoy aplicando el siguiente código, pero no se cómo extenderlo
+>>> para que lo haga hasta el final de las observaciones sin hacerlo
+>>> manualmente:
+>>>
+>>> Data$Order.Page <- ifelse(Data$Order.individual <=5, 1,
+>>> ifelse(Data$Order.individual<=10, 2,
+>>>    ifelse(Data$Order.individual <=15, 3,...
+>>>
+>>> Lo que nos diría es que si el orden individual es menor o igual que 5,
+>>> la
+>>> nueva variable tenga valor 1; si es menor o igual que 10, tenga valor 2;
+>>> si es menor o igual que 15, valor 3, y así sucesivamente.
+>>>
+>>> Pero hay casos donde la variable Order.individual va del 1 al 16.000,
+>>> por
+>>> lo tanto no es práctico ponerlo de forma manual. ¿Hay forma de hacerlo
+>>> automático?
+>>>
+>>> Muchas gracias
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> .
+>>
+>> --
+>> Marcelino de la Cruz Rot
+>> Depto. de Biología y Geología
+>> Física y Química Inorgánica
+>> Universidad Rey Juan Carlos
+>> Móstoles España
+>>
+>>
+>
+> .
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From miri@m@@iz@te m@iii@g oii u@@v@rr@@es  Wed Nov  4 20:49:57 2020
+From: miri@m@@iz@te m@iii@g oii u@@v@rr@@es (=?iso-8859-1?q?miri=40m=40=40iz=40te_m=40iii=40g_oii_u=40=40v=40rr=40=40e?=
+ =?iso-8859-1?q?s?=)
+Date: Wed, 4 Nov 2020 20:49:57 +0100
+Subject: [R-es] Concatenar secuencia hasta el final con ifelse
+In-Reply-To: <7593f4f8-4e6b-f9f9-fdb2-180437be2a13@urjc.es>
+References: <93365ddcf50a9b4540bb51c4da5bdef0.squirrel@webmail.unavarra.es>
+ <6280fc06-d595-7b11-91da-57c8024d4f8f@urjc.es>
+ <4a2526d13ed453c146764b58caf7e830.squirrel@webmail.unavarra.es>
+ <7593f4f8-4e6b-f9f9-fdb2-180437be2a13@urjc.es>
+Message-ID: <55ce5bc2e57e8d0a39f3c4dbbdfee562.squirrel@webmail.unavarra.es>
+
+Perfecto! He ejecutado el código y funciona, sí es lo que necesitaba.
+
+Muchísimas gracias.
+
+Miriam
+
+El Mie, 4 de Noviembre de 2020, 20:27, Marcelino de la Cruz Rot escribió:
+> No sé si te he entendido pero con el código que te he mandado, todas las
+> observaciones que tengan 1, 2, 3, 4 o 5  en Data$Order.individual
+> tendrán 1 en Data$Order.Page; todas las que tengan 6, 7, 8, 9, 0 10,
+> tendrán 2 en Data$Order.Page, etc, aunque haya varias que tengan valor 1
+> en esa variable. Vamos, como en este ejemplo:
+>
+>  > valores <- rep(1:3200, each=5)
+>  >
+>  > Order.individual <- c(1:20, 1:20)
+>  >
+>  > data.frame(Order.individual, Order.Page=valores[Order.individual])
+>     Order.individual Order.Page
+> 1                 1         1
+> 2                 2         1
+> 3                 3         1
+> 4                 4         1
+> 5                 5         1
+> 6                 6         2
+> 7                 7         2
+> 8                 8         2
+> 9                 9         2
+> 10               10         2
+> 11               11         3
+> 12               12         3
+> 13               13         3
+> 14               14         3
+> 15               15         3
+> 16               16         4
+> 17               17         4
+> 18               18         4
+> 19               19         4
+> 20               20         4
+> 21                1         1
+> 22                2         1
+> 23                3         1
+> 24                4         1
+> 25                5         1
+> 26                6         2
+> 27                7         2
+> 28                8         2
+> 29                9         2
+> 30               10         2
+> 31               11         3
+> 32               12         3
+> 33               13         3
+> 34               14         3
+> 35               15         3
+> 36               16         4
+> 37               17         4
+> 38               18         4
+> 39               19         4
+> 40               20         4
+>  >
+>
+> El 04/11/2020 a las 20:12, miriam.alzate en unavarra.es escribió:
+>> Hola, muchas gracias por contestar,
+>> Creo que no es exactamente eso porque a veces la variable
+>> Data$Order.individual es común a varias observaciones de la base de
+>> datos,
+>> es decir, puede haber varias observaciones que tengan valor 1 en esa
+>> variable. Si lo hago de la forma que me dices, no se si está teniendo
+>> eso
+>> en cuenta. La idea es que el código lea qué valor tiene la observación
+>> en
+>> Data$Order.individual, porque me interesa que por ejemplo de el valor 1
+>> a
+>> las que tienen 5 o menos (aunque no sean sólo 5 observaciones y sean
+>> más).
+>>
+>> No se si me explico...
+>>
+>> Muchas gracias!
+>>
+>> El Mie, 4 de Noviembre de 2020, 18:32, Marcelino de la Cruz Rot
+>> escribió:
+>>> Hola:
+>>>
+>>> Si se tratase, como parece implícito, de que cada 5 unidades de
+>>> Data$Order.individual equivale a 1 unidad de Data$Order.Page, y si el
+>>> máximo valor es 16000, tendrías en total 16000/5 = 3200 valores
+>>> posibles
+>>> para Data$Order.Page.
+>>>
+>>> Por lo tanto, podrías hacer algo así:
+>>>
+>>> valores <- rep(1:3200, each=5)
+>>> Data$Order.Page <- valores[Data$Order.individual]
+>>>
+>>> Saludos,
+>>> Marcelino
+>>>
+>>> El 04/11/2020 a las 17:49, miriam.alzate en unavarra.es escribió:
+>>>> Hola,
+>>>>
+>>>> Necesito asignar a cada observación un orden según su posición en un
+>>>> listado, estoy aplicando el siguiente código, pero no se cómo
+>>>> extenderlo
+>>>> para que lo haga hasta el final de las observaciones sin hacerlo
+>>>> manualmente:
+>>>>
+>>>> Data$Order.Page <- ifelse(Data$Order.individual <=5, 1,
+>>>> ifelse(Data$Order.individual<=10, 2,
+>>>>    ifelse(Data$Order.individual <=15, 3,...
+>>>>
+>>>> Lo que nos diría es que si el orden individual es menor o igual que 5,
+>>>> la
+>>>> nueva variable tenga valor 1; si es menor o igual que 10, tenga valor
+>>>> 2;
+>>>> si es menor o igual que 15, valor 3, y así sucesivamente.
+>>>>
+>>>> Pero hay casos donde la variable Order.individual va del 1 al 16.000,
+>>>> por
+>>>> lo tanto no es práctico ponerlo de forma manual. ¿Hay forma de hacerlo
+>>>> automático?
+>>>>
+>>>> Muchas gracias
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>> .
+>>>
+>>> --
+>>> Marcelino de la Cruz Rot
+>>> Depto. de Biología y Geología
+>>> Física y Química Inorgánica
+>>> Universidad Rey Juan Carlos
+>>> Móstoles España
+>>>
+>>>
+>>
+>> .
+>
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+>
+
+
+From cr|@roh@16 @end|ng |rom gm@||@com  Tue Nov 10 18:11:43 2020
+From: cr|@roh@16 @end|ng |rom gm@||@com (Cristian Rodelo-Haad)
+Date: Tue, 10 Nov 2020 18:11:43 +0100
+Subject: [R-es] Help propensity score
+Message-ID: <5FD73480-C0B1-4F82-8E1D-0C6C82DDC957@gmail.com>
+
+Hola chic en s, alguien con experiencia en propensión score matching?
+
+Planteo duda: Clasicamente el PSM se ha utilizado en un intento de homogeneizar cohortes de enfermos quienes han estado ?expuestos? a un tratamiento x Vs aquellos que no han estado expuestos (no expuestos). Esto aplica para medicamentos o procedimientos quirúrgicos o no.
+
+Bien, En algún articulo he leído que el PSM se puede utilizar como un elemento de clasificación y por tanto de homogeneización. 
+Mi intención es aplicar el PSM a un análisis de supervivencia. En este sentido mi hipótesis es que una variable ?x? tanto en su versión cuantitativa como categorizada a terciles,cuartiles o quintiles influye sobre la supervivencia de los sujetos. Esto entiendo que puedo resolverlo con un análisis de supervivencia y posteriormente con una regresión de Cox. Este método seria valido desde el punto de vista estadístico si bien desde el punto de vista biológico podría tener alguna duda de interpretación sobretodo por la inclusión en los modelos de variables colineales o con interacción.
+Por otro lado el PSM me permitiría balancear todas las variables desde el primer momento e incluirlos en el análisis de supervivencia con la premisa de que parten de valores iguales/cuasi-iguales.
+
+Aquí es donde tengo dudas: si decido aplicar el PSM
+Como debo realizar esta homogeneización?
+
+1. Si tengo 2 estados por ejemplo vivo vs Muerto??> Calculo el riesgo de propensión a partir de esta variable ?estado? cuando realize el glm inicial ya que mi variable de exposición/tratamiento es estar vivo o Muerto?
+2. Utilizar mi variable ?x? categorizada como variable exposición y partir de esta calcular el score de propensión?
+
+Muchas gracias, espero haber sido claro.
+
+Saludos,
+
+
+
+
+Cristian Rodelo-Haad
+crisroha16 en gmail.com
+
+
+From cr|@roh@16 @end|ng |rom gm@||@com  Thu Nov 12 18:02:04 2020
+From: cr|@roh@16 @end|ng |rom gm@||@com (Cristian Rodelo-Haad)
+Date: Thu, 12 Nov 2020 18:02:04 +0100
+Subject: [R-es] Propensity Score Matching
+Message-ID: <AF976586-891F-42AD-9AD9-AE5A1A6897B0@gmail.com>
+
+Hola chic en s, alguien con experiencia en propensión score matching?
+
+Planteo duda: Clasicamente el PSM se ha utilizado en un intento de homogeneizar cohortes de enfermos quienes han estado ?expuestos? a un tratamiento x Vs aquellos que no han estado expuestos (no expuestos). Esto aplica para medicamentos o procedimientos quirúrgicos o no.
+
+Bien, En algún articulo he leído que el PSM se puede utilizar como un elemento de clasificación y por tanto de homogeneización. 
+Mi intención es aplicar el PSM a un análisis de supervivencia. En este sentido mi hipótesis es que una variable ?x? tanto en su versión cuantitativa como categorizada a terciles,cuartiles o quintiles influye sobre la supervivencia de los sujetos. Esto entiendo que puedo resolverlo con un análisis de supervivencia y posteriormente con una regresión de Cox. Este método seria valido desde el punto de vista estadístico si bien desde el punto de vista biológico podría tener alguna duda de interpretación sobretodo por la inclusión en los modelos de variables colineales o con interacción.
+Por otro lado el PSM me permitiría balancear todas las variables desde el primer momento e incluirlos en el análisis de supervivencia con la premisa de que parten de valores iguales/cuasi-iguales.
+
+Aquí es donde tengo dudas: si decido aplicar el PSM
+Como debo realizar esta homogeneización?
+
+1. Si tengo 2 estados por ejemplo vivo vs Muerto??> Calculo el riesgo de propensión a partir de esta variable ?estado? cuando realize el glm inicial ya que mi variable de exposición/tratamiento es estar vivo o Muerto?
+2. Utilizar mi variable ?x? categorizada como variable exposición y partir de esta calcular el score de propensión?
+
+Muchas gracias, espero haber sido claro.
+
+Saludos,
+
+
+Cristian Rodelo-Haad
+crisroha16 en gmail.com
+
+
+From @|berto@c@rmon@b@yon@@ @end|ng |rom gm@||@com  Thu Nov 12 18:32:15 2020
+From: @|berto@c@rmon@b@yon@@ @end|ng |rom gm@||@com (Alberto Carmona Bayonas)
+Date: Thu, 12 Nov 2020 18:32:15 +0100
+Subject: [R-es] Propensity Score Matching
+In-Reply-To: <AF976586-891F-42AD-9AD9-AE5A1A6897B0@gmail.com>
+References: <AF976586-891F-42AD-9AD9-AE5A1A6897B0@gmail.com>
+Message-ID: <CAOaVix4h+Zf7su0R0rjx-B_m9Us2-UQ43DyhUhviNXSfn0uWCQ@mail.gmail.com>
+
+Básicamente propensity score matching es una técnica útil cuando tienes
+muchas covariables que ajustar en una base de datos pequeña (por ejemplo,
+si tu número de eventos es menor que el número de predictores por 5). En
+ese caso lo que haces es colapsar toda la información de las covariables en
+un score (un número de cero a cien). El propensity score te permite hacer
+el ajuste de varias formas, a través del matching de sujetos con similar
+propensity score, o incluso usando el propensity score transformado como
+término de la ecuación. Si tienes suficientes pacientes y eventos, la
+regresión multivariable, metiendo en la ecuación todos los predictores,
+suele ser una solución más eficiente, porque te evitas varios problemas
+asociados al PS y es más elegante.
+
+
+
+El jue., 12 nov. 2020 a las 18:03, Cristian Rodelo-Haad (<
+crisroha16 en gmail.com>) escribió:
+
+> Hola chic en s, alguien con experiencia en propensión score matching?
+>
+> Planteo duda: Clasicamente el PSM se ha utilizado en un intento de
+> homogeneizar cohortes de enfermos quienes han estado ?expuestos? a un
+> tratamiento x Vs aquellos que no han estado expuestos (no expuestos). Esto
+> aplica para medicamentos o procedimientos quirúrgicos o no.
+>
+> Bien, En algún articulo he leído que el PSM se puede utilizar como un
+> elemento de clasificación y por tanto de homogeneización.
+> Mi intención es aplicar el PSM a un análisis de supervivencia. En este
+> sentido mi hipótesis es que una variable ?x? tanto en su versión
+> cuantitativa como categorizada a terciles,cuartiles o quintiles influye
+> sobre la supervivencia de los sujetos. Esto entiendo que puedo resolverlo
+> con un análisis de supervivencia y posteriormente con una regresión de Cox.
+> Este método seria valido desde el punto de vista estadístico si bien desde
+> el punto de vista biológico podría tener alguna duda de interpretación
+> sobretodo por la inclusión en los modelos de variables colineales o con
+> interacción.
+> Por otro lado el PSM me permitiría balancear todas las variables desde el
+> primer momento e incluirlos en el análisis de supervivencia con la premisa
+> de que parten de valores iguales/cuasi-iguales.
+>
+> Aquí es donde tengo dudas: si decido aplicar el PSM
+> Como debo realizar esta homogeneización?
+>
+> 1. Si tengo 2 estados por ejemplo vivo vs Muerto??> Calculo el riesgo de
+> propensión a partir de esta variable ?estado? cuando realize el glm inicial
+> ya que mi variable de exposición/tratamiento es estar vivo o Muerto?
+> 2. Utilizar mi variable ?x? categorizada como variable exposición y partir
+> de esta calcular el score de propensión?
+>
+> Muchas gracias, espero haber sido claro.
+>
+> Saludos,
+>
+>
+> Cristian Rodelo-Haad
+> crisroha16 en gmail.com
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Alberto Carmona Bayonas
+Servicio de Hematología y Oncología Médica
+Hospital Universitario Morales Meseguer
+Avda. Marqués de los Vélez, s/n. 30001-Murcia
+Teléfono: 968-360900// 968-360969 (secretaría)
+Fax: 968-360969
+Murcia. Spain.
+
+La información y los archivos adjuntos en esta transmisión puede contener
+información confidencial o información privilegiada y es para uso exclusivo
+del destinatario destinados / s /. Si usted no es el destinatario, se le
+notifica que cualquier divulgación, copia, distribución, o dependencia de
+los contenidos de esta transmisión está estrictamente prohibida. Por favor,
+notifique al remitente y destruir este mensaje. E-mail comunicaciones no se
+puede garantizar que sea seguro o libre de errores, ya que la información
+puede ser interceptada, corrompido, modificado, perdido, destruido, llegar
+tarde o incompleta, o contener virus. No aceptamos la responsabilidad por
+cualquiera de esas cuestiones o de sus consecuencias. Se han tomado todas
+las precauciones razonables para asegurarse de que cualquier archivo
+adjunto a la dirección de e-mail ha sido escaneado en busca de virus. Sin
+embargo, no podemos aceptar la responsabilidad por cualquier daño sufrido
+como resultado de los virus de software y asesorará que el desempeño de su
+propio virus escanea antes de abrir cualquier archivo adjunto.
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Sun Nov 15 07:56:15 2020
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 15 Nov 2020 06:56:15 +0000
+Subject: [R-es] Trabajar con fechas y data.table
+Message-ID: <AM5PR0101MB23883094C9E78FADE946BA7ACCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+
+Buenas
+
+Para trabajar con fechas suelo apoyarme en el paquete lubridate, pero me gustaria ver si hay algo en data.table que me permita quitar esa dependencia. ?Existe algo parecido?
+
+Gracias!
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Nov 15 08:27:43 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 15 Nov 2020 08:27:43 +0100
+Subject: [R-es] Trabajar con fechas y data.table
+In-Reply-To: <AM5PR0101MB23883094C9E78FADE946BA7ACCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+References: <AM5PR0101MB23883094C9E78FADE946BA7ACCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+Message-ID: <CAOKbq8j4VJOaD1iKbd16q=u8rt=pwmvfJxqWpLhwWV3rpoAK2g@mail.gmail.com>
+
+Hola Jesús,
+
+Sí, sí existen ya funciones propias de data.table para esto.
+Mira esta página con todas las funciones disponibles en data.table, al
+principio están todas las relacionadas con fechas:
+
+https://rdatatable.gitlab.io/data.table/reference/index.html
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El dom., 15 nov. 2020 a las 7:56, Jesús Para Fernández (<
+j.para.fernandez en hotmail.com>) escribió:
+
+> Buenas
+>
+> Para trabajar con fechas suelo apoyarme en el paquete lubridate, pero me
+> gustaria ver si hay algo en data.table que me permita quitar esa
+> dependencia. ¿Existe algo parecido?
+>
+> Gracias!
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Sun Nov 15 08:31:26 2020
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 15 Nov 2020 07:31:26 +0000
+Subject: [R-es] Trabajar con fechas y data.table
+In-Reply-To: <CAOKbq8j4VJOaD1iKbd16q=u8rt=pwmvfJxqWpLhwWV3rpoAK2g@mail.gmail.com>
+References: <AM5PR0101MB23883094C9E78FADE946BA7ACCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>,
+ <CAOKbq8j4VJOaD1iKbd16q=u8rt=pwmvfJxqWpLhwWV3rpoAK2g@mail.gmail.com>
+Message-ID: <AM5PR0101MB2388756A3FDCA3F3F3C4A680CCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+
+Cosas como IDate est?n a?n en modo experimental, haces uso de esas funciones?
+
+Obtener Outlook para Android<https://aka.ms/ghei36>
+________________________________
+From: Carlos Ortega <cof en qualityexcellence.es>
+Sent: Sunday, November 15, 2020 8:27:43 AM
+To: Jes?s Para Fern?ndez <j.para.fernandez en hotmail.com>
+Cc: r-help-es en r-project.org <r-help-es en r-project.org>
+Subject: Re: [R-es] Trabajar con fechas y data.table
+
+Hola Jes?s,
+
+S?, s? existen ya funciones propias de data.table para esto.
+Mira esta p?gina con todas las funciones disponibles en data.table, al principio est?n todas las relacionadas con fechas:
+
+https://rdatatable.gitlab.io/data.table/reference/index.html
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+
+El dom., 15 nov. 2020 a las 7:56, Jes?s Para Fern?ndez (<j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>) escribi?:
+Buenas
+
+Para trabajar con fechas suelo apoyarme en el paquete lubridate, pero me gustaria ver si hay algo en data.table que me permita quitar esa dependencia. ?Existe algo parecido?
+
+Gracias!
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+--
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Nov 15 08:46:26 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 15 Nov 2020 08:46:26 +0100
+Subject: [R-es] Trabajar con fechas y data.table
+In-Reply-To: <AM5PR0101MB2388756A3FDCA3F3F3C4A680CCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+References: <AM5PR0101MB23883094C9E78FADE946BA7ACCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <CAOKbq8j4VJOaD1iKbd16q=u8rt=pwmvfJxqWpLhwWV3rpoAK2g@mail.gmail.com>
+ <AM5PR0101MB2388756A3FDCA3F3F3C4A680CCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+Message-ID: <CAOKbq8jwKzSO__D-cP6mwVyWu=Jx9muFRc-vn3UdfMnMz_wGrA@mail.gmail.com>
+
+Hola,
+
+No, sigo usando normalmente "lubridate".
+Pero cada vez más "anytime".
+
+https://cran.r-project.org/web/packages/anytime/vignettes/anytime-introduction.pdf
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El dom., 15 nov. 2020 a las 8:31, Jesús Para Fernández (<
+j.para.fernandez en hotmail.com>) escribió:
+
+> Cosas como IDate están aún en modo experimental, haces uso de esas
+> funciones?
+>
+> Obtener Outlook para Android <https://aka.ms/ghei36>
+> ------------------------------
+> *From:* Carlos Ortega <cof en qualityexcellence.es>
+> *Sent:* Sunday, November 15, 2020 8:27:43 AM
+> *To:* Jesús Para Fernández <j.para.fernandez en hotmail.com>
+> *Cc:* r-help-es en r-project.org <r-help-es en r-project.org>
+> *Subject:* Re: [R-es] Trabajar con fechas y data.table
+>
+> Hola Jesús,
+>
+> Sí, sí existen ya funciones propias de data.table para esto.
+> Mira esta página con todas las funciones disponibles en data.table, al
+> principio están todas las relacionadas con fechas:
+>
+> https://rdatatable.gitlab.io/data.table/reference/index.html
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El dom., 15 nov. 2020 a las 7:56, Jesús Para Fernández (<
+> j.para.fernandez en hotmail.com>) escribió:
+>
+> Buenas
+>
+> Para trabajar con fechas suelo apoyarme en el paquete lubridate, pero me
+> gustaria ver si hay algo en data.table que me permita quitar esa
+> dependencia. ¿Existe algo parecido?
+>
+> Gracias!
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Sun Nov 15 09:38:53 2020
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 15 Nov 2020 08:38:53 +0000
+Subject: [R-es] Trabajar con fechas y data.table
+In-Reply-To: <CAOKbq8jwKzSO__D-cP6mwVyWu=Jx9muFRc-vn3UdfMnMz_wGrA@mail.gmail.com>
+References: <AM5PR0101MB23883094C9E78FADE946BA7ACCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <CAOKbq8j4VJOaD1iKbd16q=u8rt=pwmvfJxqWpLhwWV3rpoAK2g@mail.gmail.com>
+ <AM5PR0101MB2388756A3FDCA3F3F3C4A680CCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>,
+ <CAOKbq8jwKzSO__D-cP6mwVyWu=Jx9muFRc-vn3UdfMnMz_wGrA@mail.gmail.com>
+Message-ID: <AM5PR0101MB23887B5BBE42126CE6FC5A7BCCE40@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+
+Gracias Carlos
+
+Tb he visto fasttime como librer?a...
+
+Un saludo
+
+Obtener Outlook para Android<https://aka.ms/ghei36>
+________________________________
+From: Carlos Ortega <cof en qualityexcellence.es>
+Sent: Sunday, November 15, 2020 8:46:26 AM
+To: Jes?s Para Fern?ndez <j.para.fernandez en hotmail.com>
+Cc: r-help-es en r-project.org <r-help-es en r-project.org>
+Subject: Re: [R-es] Trabajar con fechas y data.table
+
+Hola,
+
+No, sigo usando normalmente "lubridate".
+Pero cada vez m?s "anytime".
+
+https://cran.r-project.org/web/packages/anytime/vignettes/anytime-introduction.pdf
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+El dom., 15 nov. 2020 a las 8:31, Jes?s Para Fern?ndez (<j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>) escribi?:
+Cosas como IDate est?n a?n en modo experimental, haces uso de esas funciones?
+
+Obtener Outlook para Android<https://aka.ms/ghei36>
+________________________________
+From: Carlos Ortega <cof en qualityexcellence.es<mailto:cof en qualityexcellence.es>>
+Sent: Sunday, November 15, 2020 8:27:43 AM
+To: Jes?s Para Fern?ndez <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>
+Cc: r-help-es en r-project.org<mailto:r-help-es en r-project.org> <r-help-es en r-project.org<mailto:r-help-es en r-project.org>>
+Subject: Re: [R-es] Trabajar con fechas y data.table
+
+Hola Jes?s,
+
+S?, s? existen ya funciones propias de data.table para esto.
+Mira esta p?gina con todas las funciones disponibles en data.table, al principio est?n todas las relacionadas con fechas:
+
+https://rdatatable.gitlab.io/data.table/reference/index.html
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+
+El dom., 15 nov. 2020 a las 7:56, Jes?s Para Fern?ndez (<j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>) escribi?:
+Buenas
+
+Para trabajar con fechas suelo apoyarme en el paquete lubridate, pero me gustaria ver si hay algo en data.table que me permita quitar esa dependencia. ?Existe algo parecido?
+
+Gracias!
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+--
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+
+--
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+	[[alternative HTML version deleted]]
+
+
+From miri@m@@iz@te m@iii@g oii u@@v@rr@@es  Thu Nov 19 14:04:03 2020
+From: miri@m@@iz@te m@iii@g oii u@@v@rr@@es (=?iso-8859-1?q?miri=40m=40=40iz=40te_m=40iii=40g_oii_u=40=40v=40rr=40=40e?=
+ =?iso-8859-1?q?s?=)
+Date: Thu, 19 Nov 2020 14:04:03 +0100
+Subject: [R-es] No mostrar standad errors con Stargazer
+Message-ID: <e88fa59512093ee7d4354c29f902a2a4.squirrel@webmail.unavarra.es>
+
+Buenas tardes,
+
+Quiero representar los resultados de una regresión con la librería
+Stargazer pero no se cómo hacer para que no me reporte los standard
+errors. Este es el código:
+
+stargazer(Model 1, Model 2,type = "html", digits = 2, title = "Model
+comparison (count)",out = "Modelcomparison.htm")
+
+¿Qué tendría que señalar en el código?
+
+Muchas gracias
+
+Miriam
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Thu Nov 19 20:44:38 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Thu, 19 Nov 2020 20:44:38 +0100
+Subject: [R-es] No mostrar standad errors con Stargazer
+In-Reply-To: <e88fa59512093ee7d4354c29f902a2a4.squirrel@webmail.unavarra.es>
+References: <e88fa59512093ee7d4354c29f902a2a4.squirrel@webmail.unavarra.es>
+Message-ID: <CAOKbq8i8wnu5z0SKo+u4xJhY6g6bTStX_KmPw22BTsamEhgn2Q@mail.gmail.com>
+
+Hola Miriam,
+
+¿Has visto el punto "2.2 Including Custom Standard Errors" de la viñeta del
+paquete?.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El jue, 19 nov 2020 a las 14:05, <miriam.alzate en unavarra.es> escribió:
+
+> Buenas tardes,
+>
+> Quiero representar los resultados de una regresión con la librería
+> Stargazer pero no se cómo hacer para que no me reporte los standard
+> errors. Este es el código:
+>
+> stargazer(Model 1, Model 2,type = "html", digits = 2, title = "Model
+> comparison (count)",out = "Modelcomparison.htm")
+>
+> ¿Qué tendría que señalar en el código?
+>
+> Muchas gracias
+>
+> Miriam
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From miri@m@@iz@te m@iii@g oii u@@v@rr@@es  Thu Nov 19 21:22:29 2020
+From: miri@m@@iz@te m@iii@g oii u@@v@rr@@es (=?iso-8859-1?q?miri=40m=40=40iz=40te_m=40iii=40g_oii_u=40=40v=40rr=40=40e?=
+ =?iso-8859-1?q?s?=)
+Date: Thu, 19 Nov 2020 21:22:29 +0100
+Subject: [R-es] No mostrar standad errors con Stargazer
+In-Reply-To: <CAOKbq8i8wnu5z0SKo+u4xJhY6g6bTStX_KmPw22BTsamEhgn2Q@mail.gmail.com>
+References: <e88fa59512093ee7d4354c29f902a2a4.squirrel@webmail.unavarra.es>
+ <CAOKbq8i8wnu5z0SKo+u4xJhY6g6bTStX_KmPw22BTsamEhgn2Q@mail.gmail.com>
+Message-ID: <59835bf947d0bd8ebca8e869bc99871d.squirrel@webmail.unavarra.es>
+
+Hola Carlos,
+
+Sí, pero veo que es para incluir "robust standard errors" pero no consigo
+el código para que no incluya ninguno.
+
+Gracias!
+
+El Jue, 19 de Noviembre de 2020, 20:44, Carlos Ortega escribió:
+> Hola Miriam,
+>
+> ¿Has visto el punto "2.2 Including Custom Standard Errors" de la viñeta
+> del
+> paquete?.
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El jue, 19 nov 2020 a las 14:05, <miriam.alzate en unavarra.es> escribió:
+>
+>> Buenas tardes,
+>>
+>> Quiero representar los resultados de una regresión con la librería
+>> Stargazer pero no se cómo hacer para que no me reporte los standard
+>> errors. Este es el código:
+>>
+>> stargazer(Model 1, Model 2,type = "html", digits = 2, title = "Model
+>> comparison (count)",out = "Modelcomparison.htm")
+>>
+>> ¿Qué tendría que señalar en el código?
+>>
+>> Muchas gracias
+>>
+>> Miriam
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Thu Nov 19 21:38:31 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Thu, 19 Nov 2020 21:38:31 +0100
+Subject: [R-es] No mostrar standad errors con Stargazer
+In-Reply-To: <59835bf947d0bd8ebca8e869bc99871d.squirrel@webmail.unavarra.es>
+References: <e88fa59512093ee7d4354c29f902a2a4.squirrel@webmail.unavarra.es>
+ <CAOKbq8i8wnu5z0SKo+u4xJhY6g6bTStX_KmPw22BTsamEhgn2Q@mail.gmail.com>
+ <59835bf947d0bd8ebca8e869bc99871d.squirrel@webmail.unavarra.es>
+Message-ID: <CAOKbq8jCyFk+_dnCUgUvc0ZKrws7piVCJmiUBSkLf80aTH05NA@mail.gmail.com>
+
+Hola,
+
+Mira el detalle del parámetro "se" de la función, porque parece que si lo
+defines con NULL lo evitas.
+
+se=list(NULL, robust.se)
+
+
+El jue, 19 nov 2020 a las 21:23, <miriam.alzate en unavarra.es> escribió:
+
+> Hola Carlos,
+>
+> Sí, pero veo que es para incluir "robust standard errors" pero no consigo
+> el código para que no incluya ninguno.
+>
+> Gracias!
+>
+> El Jue, 19 de Noviembre de 2020, 20:44, Carlos Ortega escribió:
+> > Hola Miriam,
+> >
+> > ¿Has visto el punto "2.2 Including Custom Standard Errors" de la viñeta
+> > del
+> > paquete?.
+> >
+> > Gracias,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+> > El jue, 19 nov 2020 a las 14:05, <miriam.alzate en unavarra.es> escribió:
+> >
+> >> Buenas tardes,
+> >>
+> >> Quiero representar los resultados de una regresión con la librería
+> >> Stargazer pero no se cómo hacer para que no me reporte los standard
+> >> errors. Este es el código:
+> >>
+> >> stargazer(Model 1, Model 2,type = "html", digits = 2, title = "Model
+> >> comparison (count)",out = "Modelcomparison.htm")
+> >>
+> >> ¿Qué tendría que señalar en el código?
+> >>
+> >> Muchas gracias
+> >>
+> >> Miriam
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+> >
+> > --
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+>
+>
+>
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From ruben@coc@ @end|ng |rom gm@||@com  Mon Nov 23 15:00:25 2020
+From: ruben@coc@ @end|ng |rom gm@||@com (=?UTF-8?Q?Rub=C3=A9n_Coca?=)
+Date: Mon, 23 Nov 2020 15:00:25 +0100
+Subject: [R-es] Cargar data frame en app shiny
+In-Reply-To: <AM4PR0302MB257850D21CFD85D56D6C6475DFFC0@AM4PR0302MB2578.eurprd03.prod.outlook.com>
+References: <10fd1721-2e18-4d0e-bf5d-cc2fbb59a383.a150c421-8620-4f20-a345-506b5bf63dca.22aeea26-bb97-4869-a68d-3796c3cb9144@emailsignatures365.codetwo.com>
+ <AM4PR0302MB2578D6797B225E695D0F1257DFFC0@AM4PR0302MB2578.eurprd03.prod.outlook.com>
+ <AM4PR0302MB2578049F1C188C62A2CBA806DFFC0@AM4PR0302MB2578.eurprd03.prod.outlook.com>
+ <AM4PR0302MB257850D21CFD85D56D6C6475DFFC0@AM4PR0302MB2578.eurprd03.prod.outlook.com>
+Message-ID: <CAFxGGR5Bj=5V2Y-jci0-gdGo-EDGMtyoYKoQ0vtqaraeg=A8_Q@mail.gmail.com>
+
+---------- Forwarded message ---------
+De: Ruben Coca <rcocam en fedefarma.com>
+Date: lun., 23 nov. 2020 14:59
+Subject: RV: Cargar data frame en app shiny
+To: ruben.coca en gmail.com <ruben.coca en gmail.com>
+
+
+Hola a todos,
+Tengo problemas con una app de shiny. Al iniciarla me sale este mensaje en
+el navegador:
+An error has occurred
+The application failed to start.
+The application exited during initialization.
+
+Revisando el log me encuentro que falla porque no tiene permiso para
+accecer a un fichero que está alojado en un directorio de otro usuario:
+Esta línea es la que provoca el error:
+load('/home/usuario/OUTPUT/products')
+
+He cambiado los permisos del fichero, pero sigue sin funcionar:
+-rw-rwxrwx. 1 usuario usuario 4500623 nov 23 01:22 products
+
+Alguna idea de por qué está fallando? O en su defecto, alguna estrategia
+para trabajar con datos que no estén en el directorio de la app?
+Gracias por vuestra ayuda. Saludos.
+
+	[[alternative HTML version deleted]]
+
+
+From miri@m@@iz@te m@iii@g oii u@@v@rr@@es  Tue Nov 24 14:38:21 2020
+From: miri@m@@iz@te m@iii@g oii u@@v@rr@@es (=?iso-8859-1?q?miri=40m=40=40iz=40te_m=40iii=40g_oii_u=40=40v=40rr=40=40e?=
+ =?iso-8859-1?q?s?=)
+Date: Tue, 24 Nov 2020 14:38:21 +0100
+Subject: [R-es] =?utf-8?q?Cambiar_nombre_de_topic_en_an=C3=A1lisis_LDA?=
+Message-ID: <9007778ff802ce8a6b8af144a79efadd.squirrel@webmail.unavarra.es>
+
+Buenas tardes
+
+Estoy haciendo un análisis LDA y me gustaría cambiar el nombre de los
+topics a la hora de visualizarlos y en vez de que se llamen 1,2,3...darles
+un nombre. ¿Es posible en este código?
+
+lda22 <- LDA(reviews_dtm, k = 22, control = list(seed = 1234))
+
+lda22 %>%
+  tidy() %>%
+  group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free_y") +
+  coord_flip() +
+  scale_x_reordered()
+
+Muchas gracias
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Tue Nov 24 16:59:59 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Tue, 24 Nov 2020 16:59:59 +0100
+Subject: [R-es] =?utf-8?q?Cambiar_nombre_de_topic_en_an=C3=A1lisis_LDA?=
+In-Reply-To: <9007778ff802ce8a6b8af144a79efadd.squirrel@webmail.unavarra.es>
+References: <9007778ff802ce8a6b8af144a79efadd.squirrel@webmail.unavarra.es>
+Message-ID: <48E11F36-ACF6-4A4C-BFAE-0F252D0E9126@gmail.com>
+
+Hola Miriam,
+
+Si envías un ejemplo más reproducible creo que te podemos ayudar mejor. Al menos, los paquetes que se usan en el código (creía que LDA era de topicmodels  pero después tidy ha fallado).
+
+En todo caso, creo que lo que necesitas es simplemente cambiar las etiquetas del factor tópico:
+
+>  ggplot(aes(term, beta, fill = factor(topic, levels = c(?grupo1?, ?grupo2?, xxxxxxx)))) +
+
+Ya te digo, si mandas algo más reproducible te respondo con código igualmente reproducible
+
+Un saludo,
+Emilio
+
+
+
+> El 24 nov 2020, a las 14:38, miriam.alzate en unavarra.es escribió:
+> 
+> Buenas tardes
+> 
+> Estoy haciendo un análisis LDA y me gustaría cambiar el nombre de los
+> topics a la hora de visualizarlos y en vez de que se llamen 1,2,3...darles
+> un nombre. ¿Es posible en este código?
+> 
+> lda22 <- LDA(reviews_dtm, k = 22, control = list(seed = 1234))
+> 
+> lda22 %>%
+>  tidy() %>%
+>  group_by(topic) %>%
+>  top_n(10, beta) %>%
+>  ungroup() %>%
+>  mutate(term = reorder_within(term, beta, topic)) %>%
+>  ggplot(aes(term, beta, fill = factor(topic))) +
+>  geom_col(show.legend = FALSE) +
+>  facet_wrap(~ topic, scales = "free_y") +
+>  coord_flip() +
+>  scale_x_reordered()
+> 
+> Muchas gracias
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Nov 24 21:08:26 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 24 Nov 2020 21:08:26 +0100
+Subject: [R-es] =?utf-8?q?Cambiar_nombre_de_topic_en_an=C3=A1lisis_LDA?=
+In-Reply-To: <9007778ff802ce8a6b8af144a79efadd.squirrel@webmail.unavarra.es>
+References: <9007778ff802ce8a6b8af144a79efadd.squirrel@webmail.unavarra.es>
+Message-ID: <CAOKbq8jKD+_h7MnJajFGdiMUWV2nVWd13y5eR6VfFMFt3f1K2w@mail.gmail.com>
+
+Hola Miriam,
+
+Además de lo que te comenta Emilio, después del "ungroup()" puedes
+introducir una sentencia con un "mutate()" para que transforme cada
+elemento del "topic" por la cadena que quieras.
+Por no hacerlo en el "mutate()" que ya existe y ver el efecto más claro.
+Consistiría en usar una sentencia del tipo "str_replace_all()" donde
+cambiarías "1" por el nombre que quisieras, y así para el 2 y el 3...
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El mar, 24 nov 2020 a las 14:38, <miriam.alzate en unavarra.es> escribió:
+
+> Buenas tardes
+>
+> Estoy haciendo un análisis LDA y me gustaría cambiar el nombre de los
+> topics a la hora de visualizarlos y en vez de que se llamen 1,2,3...darles
+> un nombre. ¿Es posible en este código?
+>
+> lda22 <- LDA(reviews_dtm, k = 22, control = list(seed = 1234))
+>
+> lda22 %>%
+>   tidy() %>%
+>   group_by(topic) %>%
+>   top_n(10, beta) %>%
+>   ungroup() %>%
+>   mutate(term = reorder_within(term, beta, topic)) %>%
+>   ggplot(aes(term, beta, fill = factor(topic))) +
+>   geom_col(show.legend = FALSE) +
+>   facet_wrap(~ topic, scales = "free_y") +
+>   coord_flip() +
+>   scale_x_reordered()
+>
+> Muchas gracias
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From m@@nto@1389 @end|ng |rom hotm@||@com  Thu Nov 26 15:58:22 2020
+From: m@@nto@1389 @end|ng |rom hotm@||@com (Maicol Santos Anchia)
+Date: Thu, 26 Nov 2020 14:58:22 +0000
+Subject: [R-es] =?windows-1252?q?Error_CLUSTER_=3A_no_se_puede_ubicar_un_?=
+ =?windows-1252?q?vector_de_tama=F1o_1=2E7_gb?=
+Message-ID: <VE1PR09MB31196C22B0C87A24EC6FCBBCB5F90@VE1PR09MB3119.eurprd09.prod.outlook.com>
+
+Buenas Estimados:
+
+Quer?a saber si me pueden ayudar por favor.
+
+Estaba tratando de generar  cluster?s con un set de datos que tengo.Es un set de datos de unas 100 mil filas, y 16 columnas (son datos reales)
+
+Pero me aparece el siguiente error: "ERROR no se puede ubicar un vector de tama?o 1,7 Gb?.
+
+Adem?s, Busque un poco en internet sobre unas librer?as para realizar el algoritmo de matriz de distancias, sin embargo, me arroja diferentes errores y despu?s me vuelve a mostrar el mismo error del tama?o del vector
+
+abajo el C?digo de la Librer?a.
+
+Library(factorextra)
+
+df = read_csv(?ruta?)
+
+mtrx.dist = scale(df[,1:2])
+
+fviz_dist(mtrx.dist, gradient = list(low = "blue", mid = "white", high = "red"))
+
+
+Error in fviz_dist(mtrx.dist, gradient = list(low = "blue", mid = "white", : no se pudo encontrar la funci?n "fviz_dist"
+
+
+Tengo un equipo de 8 RAM y 8 n?cleos. ?Qu? puede estar pasando? ?c?mo lo puedo solucionar?
+
+De antemano muchas gracias
+
+
+	[[alternative HTML version deleted]]
+
+
+From r-uc@ @end|ng |rom uc@@e@  Fri Nov 27 10:07:54 2020
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Fri, 27 Nov 2020 10:07:54 +0100
+Subject: [R-es] Cargar data frame en app shiny
+In-Reply-To: <CAFxGGR5Bj=5V2Y-jci0-gdGo-EDGMtyoYKoQ0vtqaraeg=A8_Q@mail.gmail.com>
+References: <10fd1721-2e18-4d0e-bf5d-cc2fbb59a383.a150c421-8620-4f20-a345-506b5bf63dca.22aeea26-bb97-4869-a68d-3796c3cb9144@emailsignatures365.codetwo.com>
+ <AM4PR0302MB2578D6797B225E695D0F1257DFFC0@AM4PR0302MB2578.eurprd03.prod.outlook.com>
+ <AM4PR0302MB2578049F1C188C62A2CBA806DFFC0@AM4PR0302MB2578.eurprd03.prod.outlook.com>
+ <AM4PR0302MB257850D21CFD85D56D6C6475DFFC0@AM4PR0302MB2578.eurprd03.prod.outlook.com>
+ <CAFxGGR5Bj=5V2Y-jci0-gdGo-EDGMtyoYKoQ0vtqaraeg=A8_Q@mail.gmail.com>
+Message-ID: <7be9a2b08fd97bca084c5632ec5df872f380e44c.camel@uca.es>
+
+Hola:
+
+¿Has comprobado los permisos de las carpetas padre?
+
+Ten en cuenta que shiny tal vez se esté ejecutando por algún usuario de
+sistema con privilegios restringidos como www-data o similar.
+
+Un saludo.
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Nov 27 17:20:12 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 27 Nov 2020 17:20:12 +0100
+Subject: [R-es] 
+	=?utf-8?q?Error_CLUSTER_=3A_no_se_puede_ubicar_un_vector_?=
+	=?utf-8?q?de_tama=C3=B1o_1=2E7_gb?=
+In-Reply-To: <VE1PR09MB31196C22B0C87A24EC6FCBBCB5F90@VE1PR09MB3119.eurprd09.prod.outlook.com>
+References: <VE1PR09MB31196C22B0C87A24EC6FCBBCB5F90@VE1PR09MB3119.eurprd09.prod.outlook.com>
+Message-ID: <CAOKbq8h+xFXFFLDF4w5d6+bqmHzKn6P8YDH6q0YN0O3o=T3JEQ@mail.gmail.com>
+
+Hola,
+
+Una duda parecida apareció hace mucho tiempo en esta lista...(2015)
+
+https://www.mail-archive.com/r-help-es en r-project.org/msg02143.html
+
+Aunque tengas 8Gb de RAM, seguramente no toda esta RAM esté disponible.
+En esa respuesta tienes varias sugerencias de cómo proceder.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El jue, 26 nov 2020 a las 15:58, Maicol Santos Anchia (<
+msantos1389 en hotmail.com>) escribió:
+
+> Buenas Estimados:
+>
+> Quería saber si me pueden ayudar por favor.
+>
+> Estaba tratando de generar  cluster´s con un set de datos que tengo.Es un
+> set de datos de unas 100 mil filas, y 16 columnas (son datos reales)
+>
+> Pero me aparece el siguiente error: "ERROR no se puede ubicar un vector de
+> tamaño 1,7 Gb?.
+>
+> Además, Busque un poco en internet sobre unas librerías para realizar el
+> algoritmo de matriz de distancias, sin embargo, me arroja diferentes
+> errores y después me vuelve a mostrar el mismo error del tamaño del vector
+>
+> abajo el Código de la Librería.
+>
+> Library(factorextra)
+>
+> df = read_csv(?ruta?)
+>
+> mtrx.dist = scale(df[,1:2])
+>
+> fviz_dist(mtrx.dist, gradient = list(low = "blue", mid = "white", high =
+> "red"))
+>
+>
+> Error in fviz_dist(mtrx.dist, gradient = list(low = "blue", mid = "white",
+> : no se pudo encontrar la función "fviz_dist"
+>
+>
+> Tengo un equipo de 8 RAM y 8 núcleos. ¿Qué puede estar pasando? ¿cómo lo
+> puedo solucionar?
+>
+> De antemano muchas gracias
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+

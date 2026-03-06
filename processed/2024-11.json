@@ -1,0 +1,581 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2024-11",
+  "messages": [
+    {
+      "id": "msg-cec4723acccd",
+      "message_id": "<CANuuowPaSMdC998fxDQY-cj1DFeEd_qAmrUvXwePOx6+k9Qitw@mail.gmail.com>",
+      "from_name": "Jose Betancourt Bethencourt",
+      "from_email_hash": "b90847c8177ef52d350c4c371ce07cae9ff1f09ff64386c1848f72e6cd6a3d95",
+      "date": "2024-11-01T09:16:58-04:00",
+      "subject": "[R-es] Fwd: OPTIMIZACIÓN",
+      "subject_clean": "[R-es] Fwd: OPTIMIZACIÓN",
+      "in_reply_to": "<CANuuowMwXVArJDx+AStSVK6WE2gjGt8pU2rer+2bFLquA-o7Zg@mail.gmail.com>",
+      "references": [
+        "<CANuuowMwXVArJDx+AStSVK6WE2gjGt8pU2rer+2bFLquA-o7Zg@mail.gmail.com>"
+      ],
+      "body_plain": "---------- Forwarded message ---------\nDe: Jose Betancourt Bethencourt <betanster en gmail.com>\nDate: sÃ¡b, 26 oct 2024 a las 16:14\nSubject: OPTIMIZACIÃ“N\nTo: <r-help-es-request en r-project.org>\n\n\n\nEstimados\n\nCorri este cÃ³digo y funciona todo bien , menos la ultima parte de\noptimizaciÃ³n apreciaria su ayuda\nJosÃ©\n\n\n# Cargar bibliotecas necesarias\nlibrary(deSolve)\nlibrary(optimx)\n\n# Definir el modelo SIR estocÃ¡stico\nSIR_estocastico <- function(time, state, parameters) {\n  with(as.list(c(state, parameters)), {\n    # Ecuaciones diferenciales estocÃ¡sticas (implementaciÃ³n usando Poisson)\n    dS <- -beta * S * I + rnorm(1, mean = 0, sd = sqrt(beta * S * I))\n    dI <- beta * S * I - gamma * I + rnorm(1, mean = 0, sd = sqrt(beta * S\n* I + gamma * I))\n    dR <- gamma * I\n    list(c(dS, dI, dR))\n  })\n}\n\n# Simular datos\nparametros <- c(beta = 0.3, gamma = 0.1)\nestado <- c(S = 990, I = 10, R = 0)\ntiempos <- seq(0, 100, by = 1)\nsalida <- ode(y = estado, times = tiempos, func = SIR_estocastico, parms =\nparametros)\n\n# FunciÃ³n de verosimilitud (ejemplo)\nlog_verosimilitud <- function(params, data, tiempos) {\n  # Simular el modelo con los nuevos parÃ¡metros\n  sim <- ode(y = estado, times = tiempos, func = SIR_estocastico, parms =\nparams)\n  # Calcular la log-verosimilitud (implementar aquÃ­, considerando la\ndistribuciÃ³n de los datos)\n  # ...\n}\n\n# OptimizaciÃ³n\najuste <- optimx(par = c(beta = 0.2, gamma = 0.1), fn = log_verosimilitud,\ndata = data, tiempos = tiempos,\n             method = \"Nelder-Mead\")\n\n\n=======================\n-- \nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay\n\n\n-- \nDr. Jose A. Betancourt Bethencourt\nUniversidad de Ciencias Medicas Carlos j. Finlay\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "---------- Forwarded message ---------\nDe: Jose Betancourt Bethencourt <betanster en gmail.com>\nDate: sÃ¡b, 26 oct 2024 a las 16:14\nSubject: OPTIMIZACIÃ“N\nTo: <r-help-es-request en r-project.org>\n\n\n\nE",
+      "thread_id": "thread-cec4723acccd",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-cef178f6b89f",
+      "message_id": "<CAOKbq8gziHTyoFwYz3yDF=cHo_ZY70Wg2_G2+aA3Nz95UZmf2A@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2024-11-03T12:22:43+01:00",
+      "subject": "[R-es] Fwd: OPTIMIZACIÓN",
+      "subject_clean": "[R-es] Fwd: OPTIMIZACIÓN",
+      "in_reply_to": "<CANuuowPaSMdC998fxDQY-cj1DFeEd_qAmrUvXwePOx6+k9Qitw@mail.gmail.com>",
+      "references": [
+        "<CANuuowMwXVArJDx+AStSVK6WE2gjGt8pU2rer+2bFLquA-o7Zg@mail.gmail.com>",
+        "<CANuuowPaSMdC998fxDQY-cj1DFeEd_qAmrUvXwePOx6+k9Qitw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nAsÃ­, funciona...\n\n#---------------------\n# Cargar bibliotecas necesarias\nlibrary(deSolve)\nlibrary(optimx)\n\n# Definir el modelo SIR estocÃ¡stico\nSIR_estocastico <- function(time, state, parameters) {\n  with(as.list(c(state, parameters)), {\n    # Ecuaciones diferenciales estocÃ¡sticas (implementaciÃ³n usando Poisson)\n    dS <- -beta * S * I + rnorm(1, mean = 0, sd = sqrt(beta * S * I))\n    dI <- beta * S * I - gamma * I + rnorm(1, mean = 0, sd = sqrt(beta * S\n* I + gamma * I))\n    dR <- gamma * I\n    list(c(dS, dI, dR))\n  })\n}\n\n# Simular datos\nparametros <- c(beta = 0.3, gamma = 0.1)\nestado <- c(S = 990, I = 10, R = 0)\ntiempos <- seq(0, 100, by = 1)\nsalida <- ode(y = estado, times = tiempos, func = SIR_estocastico, parms =\nparametros)\n\n# Crear datos observados para ajustar\ndata <- as.data.frame(salida)  # AquÃ­ suponemos que `data` contiene los\ndatos observados\n\n# FunciÃ³n de verosimilitud\nlog_verosimilitud <- function(params, data, tiempos) {\n  # Simular el modelo con los nuevos parÃ¡metros\n  sim <- ode(y = estado, times = tiempos, func = SIR_estocastico, parms =\nparams)\n  sim <- as.data.frame(sim)\n\n  # Calcular el error cuadrÃ¡tico medio entre datos simulados y observados\ncomo ejemplo de funciÃ³n de verosimilitud\n  # AquÃ­ asumimos que el objetivo es minimizar la diferencia cuadrÃ¡tica\nentre simulaciÃ³n y datos observados\n  ll <- sum((data$I - sim$I)^2)  # Puedes cambiar esta funciÃ³n segÃºn tu\ncriterio de verosimilitud\n  return(ll)\n}\n\n# OptimizaciÃ³n\najuste <- optimx(par = c(beta = 0.2, gamma = 0.1), fn = log_verosimilitud,\ndata = data, tiempos = tiempos, method = \"Nelder-Mead\")\n\nprint(ajuste)\n#---------------------\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl vie, 1 nov 2024 a las 14:17, Jose Betancourt Bethencourt (<\nbetanster en gmail.com>) escribiÃ³:\n\n> ---------- Forwarded message ---------\n> De: Jose Betancourt Bethencourt <betanster en gmail.com>\n> Date: sÃ¡b, 26 oct 2024 a las 16:14\n> Subject: OPTIMIZACIÃ“N\n> To: <r-help-es-request en r-project.org>\n>\n>\n>\n> Estimados\n>\n> Corri este cÃ³digo y funciona todo bien , menos la ultima parte de\n> optimizaciÃ³n apreciaria su ayuda\n> JosÃ©\n>\n>\n> # Cargar bibliotecas necesarias\n> library(deSolve)\n> library(optimx)\n>\n> # Definir el modelo SIR estocÃ¡stico\n> SIR_estocastico <- function(time, state, parameters) {\n>   with(as.list(c(state, parameters)), {\n>     # Ecuaciones diferenciales estocÃ¡sticas (implementaciÃ³n usando Poisson)\n>     dS <- -beta * S * I + rnorm(1, mean = 0, sd = sqrt(beta * S * I))\n>     dI <- beta * S * I - gamma * I + rnorm(1, mean = 0, sd = sqrt(beta * S\n> * I + gamma * I))\n>     dR <- gamma * I\n>     list(c(dS, dI, dR))\n>   })\n> }\n>\n> # Simular datos\n> parametros <- c(beta = 0.3, gamma = 0.1)\n> estado <- c(S = 990, I = 10, R = 0)\n> tiempos <- seq(0, 100, by = 1)\n> salida <- ode(y = estado, times = tiempos, func = SIR_estocastico, parms =\n> parametros)\n>\n> # FunciÃ³n de verosimilitud (ejemplo)\n> log_verosimilitud <- function(params, data, tiempos) {\n>   # Simular el modelo con los nuevos parÃ¡metros\n>   sim <- ode(y = estado, times = tiempos, func = SIR_estocastico, parms =\n> params)\n>   # Calcular la log-verosimilitud (implementar aquÃ­, considerando la\n> distribuciÃ³n de los datos)\n>   # ...\n> }\n>\n> # OptimizaciÃ³n\n> ajuste <- optimx(par = c(beta = 0.2, gamma = 0.1), fn = log_verosimilitud,\n> data = data, tiempos = tiempos,\n>              method = \"Nelder-Mead\")\n>\n>\n> =======================\n> --\n> Dr. Jose A. Betancourt Bethencourt\n> Universidad de Ciencias Medicas Carlos j. Finlay\n>\n>\n> --\n> Dr. Jose A. Betancourt Bethencourt\n> Universidad de Ciencias Medicas Carlos j. Finlay\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nAsÃ­, funciona...\n\n#---------------------\n# Cargar bibliotecas necesarias\nlibrary(deSolve)\nlibrary(optimx)\n\n# Definir el modelo SIR estocÃ¡stico\nSIR_estocastico <- function(time, state, paramet",
+      "thread_id": "thread-cec4723acccd",
+      "thread_depth": 1,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-9a0a0e35b652",
+      "message_id": "<CANVm79=U1HfQF7M5XByRj5b__u9aJ++36FnE4SNHNxkNe_uLeA@mail.gmail.com>",
+      "from_name": "Javier Gómez Gonzalez",
+      "from_email_hash": "93fb02ac2abe743bc78246895029615ce22b4ad94a42cbb3307c0bad33b7b684",
+      "date": "2024-11-13T16:15:07+01:00",
+      "subject": "[R-es] Detectar plagio con R",
+      "subject_clean": "[R-es] Detectar plagio con R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Saludos:\nQuisiera saber si se pueden comparar dos documentos con R para detectar si\nuno estÃ¡ plagiado del otro.\nLos dos documentos los tengo en pdf.\n\nGracias\n\n                                        Javier GÃ³mez GonzÃ¡lez\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Saludos:\nQuisiera saber si se pueden comparar dos documentos con R para detectar si\nuno estÃ¡ plagiado del otro.\nLos dos documentos los tengo en pdf.\n\nGracias\n\n                                        ",
+      "thread_id": "thread-9a0a0e35b652",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-f990f8d22bc9",
+      "message_id": "<CAKL8G3F5p_T0aPR3go_BbHAGBeo0X1njHADuQmYnim=2Gi7OnA@mail.gmail.com>",
+      "from_name": "Jorge I Velez",
+      "from_email_hash": "874dca51563da807a88f095f0afa53c85d1ee3dc475fa731dd1d5c0887e5ea41",
+      "date": "2024-11-14T07:55:10-05:00",
+      "subject": "[R-es] Detectar plagio con R",
+      "subject_clean": "[R-es] Detectar plagio con R",
+      "in_reply_to": "<CANVm79=U1HfQF7M5XByRj5b__u9aJ++36FnE4SNHNxkNe_uLeA@mail.gmail.com>",
+      "references": [
+        "<CANVm79=U1HfQF7M5XByRj5b__u9aJ++36FnE4SNHNxkNe_uLeA@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Javier,\n\nEs posible, pero necesitarÃ­amos mÃ¡s detalles sobre tu caso particular para\nayudarte mejor.\n\nEn todo caso, aquÃ­ hay una opciÃ³n:\nhttps://www.perplexity.ai/search/act-as-an-experienced-r-progra-_6LiyBC2RniP8Vqrt_T39A#0\n\nSaludos,\nJorge VÃ©lez.-\n\n\nOn Wed, Nov 13, 2024 at 10:10?AM Javier GÃ³mez Gonzalez <zaragatan en gmail.com>\nwrote:\n\n> Saludos:\n> Quisiera saber si se pueden comparar dos documentos con R para detectar si\n> uno estÃ¡ plagiado del otro.\n> Los dos documentos los tengo en pdf.\n>\n> Gracias\n>\n>                                         Javier GÃ³mez GonzÃ¡lez\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado Javier,\n\nEs posible, pero necesitarÃ­amos mÃ¡s detalles sobre tu caso particular para\nayudarte mejor.\n\nEn todo caso, aquÃ­ hay una opciÃ³n:\nhttps://www.perplexity.ai/search/act-as-an-experien",
+      "thread_id": "thread-9a0a0e35b652",
+      "thread_depth": 1,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-0be77590bc5f",
+      "message_id": "<CAOKbq8gT72x=RjGu5MixNk3ZH7papSoAvasHv2F679f=TD8MBA@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2024-11-15T22:28:39+01:00",
+      "subject": "[R-es] 93 - Reunión Grupo de R - Madrid: Miércoles 20 de noviembre de 2024",
+      "subject_clean": "[R-es] 93 - Reunión Grupo de R - Madrid: Miércoles 20 de noviembre de 2024",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola,\n\nÂ¿QuÃ© tal?\n\nEl prÃ³ximo *miÃ©rcoles* (20 de noviembre), volvemos con una nueva reuniÃ³n\ndel \"Grupo de R de Madrid\".\n\nContaremos con Gaizka PÃ©rez Mardaras que nos contarÃ¡ cÃ³mo usar el\n\"MachineLearning para el anÃ¡lisis de sensores digitales en salud\".\n\nEl detalle de la agenda lo podÃ©is encontrar aquÃ­:\n\n   -\n   https://www.meetup.com/es-ES/grupo-de-usuarios-de-r-de-madrid/events/304585819/?slug=grupo-de-usuarios-de-r-de-madrid&isFirstPublish=true\n\nEste evento serÃ¡ tanto presencial como online (Zoom).\n\nOs esperamos!.\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nÂ¿QuÃ© tal?\n\nEl prÃ³ximo *miÃ©rcoles* (20 de noviembre), volvemos con una nueva reuniÃ³n\ndel \"Grupo de R de Madrid\".\n\nContaremos con Gaizka PÃ©rez Mardaras que nos contarÃ¡ cÃ³mo usar el\n\"Machi",
+      "thread_id": "thread-0be77590bc5f",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-4cbf0b9a10a8",
+      "message_id": "<122990DE-40FD-47B1-B2A8-D32FAC33A180@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-11-20T14:25:47-03:00",
+      "subject": "[R-es] Rgl Quartz",
+      "subject_clean": "[R-es] Rgl Quartz",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas tardes\n\nLes consulto por lo siguiente, posiblemente solo en Apple con procesadores M.\n\nCopio y pego un ejemplo, utilizando optiSel, no importa este sino el mensaje relacionado a RGL y como trabaja el sistema operativo.\n\nÂ¿Alguna sugerencia?\n\n> library(optiSel)\nError in dyn.load(dynlib <- getDynlib(dir)) : \n  no es posible cargar el objeto compartido '/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rgl/libs/rgl.so':\n  dlopen(/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rgl/libs/rgl.so, 0x0006): Library not loaded: /opt/X11/lib/libGLU.1.dylib\n  Referenced from: <C3FB2FAF-8517-3EBF-A366-EAF5C1C74ED7> /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library/rgl/libs/rgl.so\n  Reason: tried: '/opt/X11/lib/libGLU.1.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OS/opt/X11/lib/libGLU.1.dylib' (no such file), '/opt/X11/lib/libGLU.1.dylib' (no such file), '/Library/Frameworks/R.framework/Resources/lib/libGLU.1.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk-11.0.18+10/Contents/Home/lib/server/libGLU.1.dylib' (no such file)\nError: package or namespace load failed for ?optiSel?:\n .onLoad fallÃ³ en loadNamespace() para 'rgl', detalles:\n  llamada: rgl.init(initValue, onlyNULL)\n  error: OpenGL is not available in this build\nAdemÃ¡s: Avisos:\n1: \tLoading rgl's DLL failed. \n\tThis build of rgl depends on XQuartz, which failed to load.\n See the discussion in https://stackoverflow.com/a/66127391/2554330 \n2: Trying without OpenGL... \n> \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes\n\nLes consulto por lo siguiente, posiblemente solo en Apple con procesadores M.\n\nCopio y pego un ejemplo, utilizando optiSel, no importa este sino el mensaje relacionado a RGL y como trab",
+      "thread_id": "thread-4cbf0b9a10a8",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-013e1c16a5e8",
+      "message_id": "<BN8PR20MB28684D23001C2043A1E0BE24B4212@BN8PR20MB2868.namprd20.prod.outlook.com>",
+      "from_name": "emiliano di iorio",
+      "from_email_hash": "036d52e93f5945939b64844cd01a545ce5e5b918a0d79eb3ddad2fad645ee6e6",
+      "date": "2024-11-20T21:27:09Z",
+      "subject": "[R-es] consulta geolocalizaciones",
+      "subject_clean": "[R-es] consulta geolocalizaciones",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "?Cu?l es el paquete o m?todo m?s preciso en R para geolocalizar direcciones con calle y altura o nro sin pasar por una clave API en google maps ? ?y como graficar luego domicilios con direcciones similares? gracias\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "?Cu?l es el paquete o m?todo m?s preciso en R para geolocalizar direcciones con calle y altura o nro sin pasar por una clave API en google maps ? ?y como graficar luego domicilios con direcciones simi",
+      "thread_id": "thread-013e1c16a5e8",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-651dd189dada",
+      "message_id": "<20241120191604.2c751b70@TheMatrix>",
+      "from_name": "Eric",
+      "from_email_hash": "9592c049134ace3b88d587013cf973f4a2bdf83e2d50d581ff507e78f61f6805",
+      "date": "2024-11-20T19:16:04-03:00",
+      "subject": "[R-es] consulta geolocalizaciones",
+      "subject_clean": "[R-es] consulta geolocalizaciones",
+      "in_reply_to": "<BN8PR20MB28684D23001C2043A1E0BE24B4212@BN8PR20MB2868.namprd20.prod.outlook.com>",
+      "references": [
+        "<BN8PR20MB28684D23001C2043A1E0BE24B4212@BN8PR20MB2868.namprd20.prod.outlook.com>"
+      ],
+      "body_plain": "no creo q R tenga un paquete con una bbdd de las direcciones y esas cosas (no\nseria logico), creo que siempre habra que pasar por una consulta a alguien que\nsi las tenga ... si no te gusta google puedes consultar en www.openstreetmap.org \nq tambien tiene esa info.\n\nslds !!\n\n\n\n\nOn Wed, 20 Nov 2024 21:27:09 +0000\nemiliano di iorio <emilianodiiorio en hotmail.com> wrote:\n\n> _Cu_l es el paquete o m_todo m_s preciso en R para geolocalizar direcciones\n> con calle y altura o nro sin pasar por una clave API en google maps ? _y como\n> graficar luego domicilios con direcciones similares? gracias\n> \n> \t[[alternative HTML version deleted]]\n>",
+      "body_snippet": "no creo q R tenga un paquete con una bbdd de las direcciones y esas cosas (no\nseria logico), creo que siempre habra que pasar por una consulta a alguien que\nsi las tenga ... si no te gusta google pued",
+      "thread_id": "thread-013e1c16a5e8",
+      "thread_depth": 1,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-2db4f28f36bf",
+      "message_id": "<CABkCotQTDGb1o=UHjFgfuzJRfxCtm5QRKSMQZfPT_37TyWpj6A@mail.gmail.com>",
+      "from_name": "Manuel Spínola",
+      "from_email_hash": "bd9f95c558444b18cc0bdb5b953c6863ec4a10dad5e1f84321cbae40474081ca",
+      "date": "2024-11-20T16:32:24-06:00",
+      "subject": "[R-es] consulta geolocalizaciones",
+      "subject_clean": "[R-es] consulta geolocalizaciones",
+      "in_reply_to": "<BN8PR20MB28684D23001C2043A1E0BE24B4212@BN8PR20MB2868.namprd20.prod.outlook.com>",
+      "references": [
+        "<BN8PR20MB28684D23001C2043A1E0BE24B4212@BN8PR20MB2868.namprd20.prod.outlook.com>"
+      ],
+      "body_plain": "Creo que R tiene varios paquetes para esto.  Puedes ver tidygeocoder (Diego\nHernangÃ³mez es coautor)\n\nManuel\n\nEl miÃ©, 20 nov 2024 a las 15:27, emiliano di iorio (<\nemilianodiiorio en hotmail.com>) escribiÃ³:\n\n> Â¿CuÃ¡l es el paquete o mÃ©todo mÃ¡s preciso en R para geolocalizar\n> direcciones con calle y altura o nro sin pasar por una clave API en google\n> maps ? Â¿y como graficar luego domicilios con direcciones similares? gracias\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \n*Manuel SpÃ­nola, Ph.D.*\nInstituto Internacional en ConservaciÃ³n y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola en una.cr <mspinola en una.ac.cr>\nmspinola10 en gmail.com\nTelÃ©fono: (506) 8706 - 4662\nSitio web institucional: ICOMVIS\n<http://www.icomvis.una.ac.cr/index.php/manuel>\nSitio web personal: Sitio personal <https://mspinola-sitioweb.netlify.app>\nBlog sobre Ciencia de Datos: Blog de Ciencia de Datos\n<https://mspinola-ciencia-de-datos.netlify.app>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Creo que R tiene varios paquetes para esto.  Puedes ver tidygeocoder (Diego\nHernangÃ³mez es coautor)\n\nManuel\n\nEl miÃ©, 20 nov 2024 a las 15:27, emiliano di iorio (<\nemilianodiiorio en hotmail.com>) es",
+      "thread_id": "thread-013e1c16a5e8",
+      "thread_depth": 1,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-817a270bb8d5",
+      "message_id": "<PAXPR08MB660652845474C38933998293CC222@PAXPR08MB6606.eurprd08.prod.outlook.com>",
+      "from_name": "Isidro Hidalgo Arellano",
+      "from_email_hash": "0724e196ab2f30e611934ecd7dc684176bcc11dd0a1132c7992011a16f84412a",
+      "date": "2024-11-21T07:45:05Z",
+      "subject": "[R-es] consulta geolocalizaciones",
+      "subject_clean": "[R-es] consulta geolocalizaciones",
+      "in_reply_to": "<20241120191604.2c751b70@TheMatrix>",
+      "references": [
+        "<BN8PR20MB28684D23001C2043A1E0BE24B4212@BN8PR20MB2868.namprd20.prod.outlook.com>",
+        "<20241120191604.2c751b70@TheMatrix>"
+      ],
+      "body_plain": "El problema de OpenStreetMaps es que en las rutas no prioriza las mejores vÃ­as: en algunos casos he visto que las calcula incluyendo caminos sin asfaltar. Y no supe en su momento cÃ³mo cambiar eso...\nSaludos.\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nJunta de Comunidades de Castilla - La Mancha\n\n-----Mensaje original-----\nDe: R-help-es <r-help-es-bounces en r-project.org> En nombre de Eric\nEnviado el: miÃ©rcoles, 20 de noviembre de 2024 23:16\nPara: emiliano di iorio <emilianodiiorio en hotmail.com>\nCC: r-help-es en r-project.org <r-help-es en r-project.org>\nAsunto: Re: [R-es] consulta geolocalizaciones\n\n\nno creo q R tenga un paquete con una bbdd de las direcciones y esas cosas (no seria logico), creo que siempre habra que pasar por una consulta a alguien que si las tenga ... si no te gusta google puedes consultar en www.openstreetmap.org q tambien tiene esa info.\n\nslds !!\n\n\n\n\nOn Wed, 20 Nov 2024 21:27:09 +0000\nemiliano di iorio <emilianodiiorio en hotmail.com> wrote:\n\n> _Cu_l es el paquete o m_todo m_s preciso en R para geolocalizar \n> direcciones con calle y altura o nro sin pasar por una clave API en \n> google maps ? _y como graficar luego domicilios con direcciones \n> similares? gracias\n> \n> \t[[alternative HTML version deleted]]\n>\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "El problema de OpenStreetMaps es que en las rutas no prioriza las mejores vÃ­as: en algunos casos he visto que las calcula incluyendo caminos sin asfaltar. Y no supe en su momento cÃ³mo cambiar eso...",
+      "thread_id": "thread-013e1c16a5e8",
+      "thread_depth": 2,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-7c28e99fcf4f",
+      "message_id": "<BN8PR20MB2868308F0833EEC77CA11EA4B4222@BN8PR20MB2868.namprd20.prod.outlook.com>",
+      "from_name": "emiliano di iorio",
+      "from_email_hash": "036d52e93f5945939b64844cd01a545ce5e5b918a0d79eb3ddad2fad645ee6e6",
+      "date": "2024-11-21T17:50:05Z",
+      "subject": "[R-es] consulta geolocalizaciones",
+      "subject_clean": "[R-es] consulta geolocalizaciones",
+      "in_reply_to": "<PAXPR08MB660652845474C38933998293CC222@PAXPR08MB6606.eurprd08.prod.outlook.com>",
+      "references": [
+        "<BN8PR20MB28684D23001C2043A1E0BE24B4212@BN8PR20MB2868.namprd20.prod.outlook.com>",
+        "<20241120191604.2c751b70@TheMatrix>",
+        "<PAXPR08MB660652845474C38933998293CC222@PAXPR08MB6606.eurprd08.prod.outlook.com>"
+      ],
+      "body_plain": "Yo noto que en zonas de traza urbana difusa, asentamientos por ej, erra bastante. Por otro lado, una vez georreferenciadas las direcciones ?como puede lograrse un m?nimo desplazamiento de coordenadas, de forma generalizada obvio, para que no se superpongan los marcadores?\n________________________________\nDe: Isidro Hidalgo Arellano <ihidalgo en jccm.es>\nEnviado: jueves, 21 de noviembre de 2024 04:45\nPara: Eric <ericconchamunoz en gmail.com>; emiliano di iorio <emilianodiiorio en hotmail.com>\nCc: r-help-es en r-project.org <r-help-es en r-project.org>\nAsunto: RE: [R-es] consulta geolocalizaciones\n\nEl problema de OpenStreetMaps es que en las rutas no prioriza las mejores v?as: en algunos casos he visto que las calcula incluyendo caminos sin asfaltar. Y no supe en su momento c?mo cambiar eso...\nSaludos.\n\nIsidro Hidalgo Arellano\nObservatorio del Mercado de Trabajo\nJunta de Comunidades de Castilla - La Mancha\n\n-----Mensaje original-----\nDe: R-help-es <r-help-es-bounces en r-project.org> En nombre de Eric\nEnviado el: mi?rcoles, 20 de noviembre de 2024 23:16\nPara: emiliano di iorio <emilianodiiorio en hotmail.com>\nCC: r-help-es en r-project.org <r-help-es en r-project.org>\nAsunto: Re: [R-es] consulta geolocalizaciones\n\n\nno creo q R tenga un paquete con una bbdd de las direcciones y esas cosas (no seria logico), creo que siempre habra que pasar por una consulta a alguien que si las tenga ... si no te gusta google puedes consultar en www.openstreetmap.org<http://www.openstreetmap.org> q tambien tiene esa info.\n\nslds !!\n\n\n\n\nOn Wed, 20 Nov 2024 21:27:09 +0000\nemiliano di iorio <emilianodiiorio en hotmail.com> wrote:\n\n> _Cu_l es el paquete o m_todo m_s preciso en R para geolocalizar\n> direcciones con calle y altura o nro sin pasar por una clave API en\n> google maps ? _y como graficar luego domicilios con direcciones\n> similares? gracias\n>\n>        [[alternative HTML version deleted]]\n>\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yo noto que en zonas de traza urbana difusa, asentamientos por ej, erra bastante. Por otro lado, una vez georreferenciadas las direcciones ?como puede lograrse un m?nimo desplazamiento de coordenadas,",
+      "thread_id": "thread-013e1c16a5e8",
+      "thread_depth": 3,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-85ebfdbaa3d4",
+      "message_id": "<F7F02989-C531-4E40-AFAF-3B6601896953@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-11-22T20:15:01-03:00",
+      "subject": "[R-es] Tomar nombres desde la matríz",
+      "subject_clean": "[R-es] Tomar nombres desde la matríz",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados\n\nEstoy probando una alternativa, la cual no tiene ranef \n\nPero puedo saber cuÃ¡les son desde la siguiente matriz, 4 , 5, 6, 7, 8 son hijos de sire1, sire3 y sire4.\n\nObtengo los resultados, pero Â¿como puedo tomar los nombres de filas y columnas, sire1, sire2, sire3, 4, 5, 6, 7, y 8, de forma tal de hacer legible el resultado para cada animal? LÃ³gicamente, un listado de nÃºmeros sin decir que animal es, convengamos que no se entiende mucho.\n\n> diseÃ±o_matriz_\n$sire\n5 x 3 sparse Matrix of class \"dgCMatrix\"\n  sire1 sire3 sire4\n4     1     .     .\n5     .     1     .\n6     1     .     .\n7     .     .     1\n8     .     1     .\n\nGracias",
+      "body_snippet": "Estimados\n\nEstoy probando una alternativa, la cual no tiene ranef \n\nPero puedo saber cuÃ¡les son desde la siguiente matriz, 4 , 5, 6, 7, 8 son hijos de sire1, sire3 y sire4.\n\nObtengo los resultados, p",
+      "thread_id": "thread-85ebfdbaa3d4",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-26cecc1870ae",
+      "message_id": "<7cf3682c3cc35516c52ffffc8b984211cc92b187.camel@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2024-11-23T12:03:04+01:00",
+      "subject": "[R-es] Tomar nombres desde la matríz",
+      "subject_clean": "[R-es] Tomar nombres desde la matríz",
+      "in_reply_to": "<F7F02989-C531-4E40-AFAF-3B6601896953@gmail.com>",
+      "references": [
+        "<F7F02989-C531-4E40-AFAF-3B6601896953@gmail.com>"
+      ],
+      "body_plain": "Buenas, Javier:\n\nEntiendo que lo que quieres es una salida similar a lo siguiente:\nFila: 4 Animal: sire 1\nFila: 5 Animal: sire 2\n\nm <- matrix(c(1,0,1,0,0, 0,1,0,0,1, 0,0,0,1,0), ncol = 3) \ncolnames(m) <- c('sire1', 'sire2', 'sire3')\nfor(r in 1:nrow(m)) {\n    cat(\"Fila:\", r, \"Animal:\", colnames(m)[which(m[r,] == 1)], \"\\n\")\n    }\n\nFila: 1 Animal: sire1 \nFila: 2 Animal: sire2 \nFila: 3 Animal: sire1 \nFila: 4 Animal: sire3 \nFila: 5 Animal: sire2 \n\nTambiÃ©n se podrÃ­a vectorizar usando alguna de las funciones apply.\n\nUn saludo.\n\nEl vie, 22-11-2024 a las 20:15 -0300, Javier Marcuzzi escribiÃ³:\n> Estimados\n> \n> Estoy probando una alternativa, la cual no tiene ranef \n> \n> Pero puedo saber cuÃ¡les son desde la siguiente matriz, 4 , 5, 6, 7, 8 son hijos de sire1, sire3 y sire4.\n> \n> Obtengo los resultados, pero Â¿como puedo tomar los nombres de filas y columnas, sire1, sire2, sire3, 4, 5, 6, 7, y 8, de forma tal de\n> hacer legible el resultado para cada animal? LÃ³gicamente, un listado de nÃºmeros sin decir que animal es, convengamos que no se entiende\n> mucho.\n> \n> > diseÃ±o_matriz_\n> $sire\n> 5 x 3 sparse Matrix of class \"dgCMatrix\"\n> Â  sire1 sire3 sire4\n> 4Â Â Â Â  1Â Â Â Â  .Â Â Â Â  .\n> 5Â Â Â Â  .Â Â Â Â  1Â Â Â Â  .\n> 6Â Â Â Â  1Â Â Â Â  .Â Â Â Â  .\n> 7Â Â Â Â  .Â Â Â Â  .Â Â Â Â  1\n> 8Â Â Â Â  .Â Â Â Â  1Â Â Â Â  .\n> \n> Gracias\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!TKVz_mf3AAKs6ZgIeoAKzkzQj4-3qz0Kpi8kapMdtMg8D7NzVecwa-cutBPtAGJcacTHOZnByrnqEqkLwESShxw$\n>",
+      "body_snippet": "Buenas, Javier:\n\nEntiendo que lo que quieres es una salida similar a lo siguiente:\nFila: 4 Animal: sire 1\nFila: 5 Animal: sire 2\n\nm <- matrix(c(1,0,1,0,0, 0,1,0,0,1, 0,0,0,1,0), ncol = 3) \ncolnames(m)",
+      "thread_id": "thread-85ebfdbaa3d4",
+      "thread_depth": 1,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-1fb344cb436f",
+      "message_id": "<CANVm79mAiM42PHRSPPrwbwj2UbTC97zHu0ks616Os+EHHh3VAg@mail.gmail.com>",
+      "from_name": "Javier Gómez Gonzalez",
+      "from_email_hash": "93fb02ac2abe743bc78246895029615ce22b4ad94a42cbb3307c0bad33b7b684",
+      "date": "2024-11-25T05:38:59+01:00",
+      "subject": "[R-es] Problemas usando paquete textreuse",
+      "subject_clean": "[R-es] Problemas usando paquete textreuse",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Muy buenas:\n\nHe encontrado el paquete textreuse y lo quiero utilizar para comparar dos\narchivos pdf.\n\nMe ha sido imposible cargar los archivos para utilizar las funciones\nTextReuseCorpus() o TextReuseTextDocument().\n\nEn la documentaciÃ³n del paquete los archivos los cargan desde\n\nÂ¿Alguien sabe cÃ³mo se hace?\n\nHe conseguido calcular la similitud de jaccard utilizando este paquete,\npero para ello he empleado el siguiente cÃ³digo.\n\nlibrary(pdftools)\n\nlibrary(textreuse)\n\n text1 <- pdf_text(\"uno.pdf\")\n\ntext2 <- pdf_text(\"dos.pdf\")\n\nfull_text1 <- paste(text1, collapse = \" \")\n\nfull_text2 <- paste(text2, collapse = \" \")\n\na <- tokenize_words(full_text1)\n\nb <- tokenize_words(full_text2)\n\njaccard_similarity(a, b)\n\n\nGracias\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muy buenas:\n\nHe encontrado el paquete textreuse y lo quiero utilizar para comparar dos\narchivos pdf.\n\nMe ha sido imposible cargar los archivos para utilizar las funciones\nTextReuseCorpus() o TextReuse",
+      "thread_id": "thread-1fb344cb436f",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-6f411a1fb2f1",
+      "message_id": "<6A4C210B-B57B-4F2A-92F0-9CD3BE1F1A15@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-11-25T14:12:51-03:00",
+      "subject": "[R-es] Problemas usando paquete textreuse",
+      "subject_clean": "[R-es] Problemas usando paquete textreuse",
+      "in_reply_to": "<CANVm79mAiM42PHRSPPrwbwj2UbTC97zHu0ks616Os+EHHh3VAg@mail.gmail.com>",
+      "references": [
+        "<CANVm79mAiM42PHRSPPrwbwj2UbTC97zHu0ks616Os+EHHh3VAg@mail.gmail.com>"
+      ],
+      "body_plain": "Buenas tardes\n\nÂ¿Te refieres a leer el archivo del disco para que R trabaje sobre estos?\n\nEsto dependerÃ¡ del sistema operativo y la localizaciÃ³n en la computadora. \n\nHay un paquete pdftools, podrÃ­a ser Ãºtil para su caso.\n\nJavier\n\n\n\n> El 25 nov 2024, a las 1:38?a. m., Javier GÃ³mez Gonzalez <zaragatan en gmail.com> escribiÃ³:\n> \n> Muy buenas:\n> \n> He encontrado el paquete textreuse y lo quiero utilizar para comparar dos\n> archivos pdf.\n> \n> Me ha sido imposible cargar los archivos para utilizar las funciones\n> TextReuseCorpus() o TextReuseTextDocument().\n> \n> En la documentaciÃ³n del paquete los archivos los cargan desde\n> \n> Â¿Alguien sabe cÃ³mo se hace?\n> \n> He conseguido calcular la similitud de jaccard utilizando este paquete,\n> pero para ello he empleado el siguiente cÃ³digo.\n> \n> library(pdftools)\n> \n> library(textreuse)\n> \n> text1 <- pdf_text(\"uno.pdf\")\n> \n> text2 <- pdf_text(\"dos.pdf\")\n> \n> full_text1 <- paste(text1, collapse = \" \")\n> \n> full_text2 <- paste(text2, collapse = \" \")\n> \n> a <- tokenize_words(full_text1)\n> \n> b <- tokenize_words(full_text2)\n> \n> jaccard_similarity(a, b)\n> \n> \n> Gracias\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Buenas tardes\n\nÂ¿Te refieres a leer el archivo del disco para que R trabaje sobre estos?\n\nEsto dependerÃ¡ del sistema operativo y la localizaciÃ³n en la computadora. \n\nHay un paquete pdftools, podrÃ­a",
+      "thread_id": "thread-1fb344cb436f",
+      "thread_depth": 1,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-127bd2679718",
+      "message_id": "<747f142f-a7c3-f569-748a-e40666991e5b@ehu.eus>",
+      "from_name": "Juan Abasolo",
+      "from_email_hash": "20be713e36dff382d1fe3151ad684c005f02d119de762911f953e87f656e2d3e",
+      "date": "2024-11-26T11:56:54+01:00",
+      "subject": "[R-es] consulta geolocalizaciones",
+      "subject_clean": "[R-es] consulta geolocalizaciones",
+      "in_reply_to": "<PAXPR08MB660652845474C38933998293CC222@PAXPR08MB6606.eurprd08.prod.outlook.com>",
+      "references": [
+        "<BN8PR20MB28684D23001C2043A1E0BE24B4212@BN8PR20MB2868.namprd20.prod.outlook.com>",
+        "<20241120191604.2c751b70@TheMatrix>",
+        "<PAXPR08MB660652845474C38933998293CC222@PAXPR08MB6606.eurprd08.prod.outlook.com>"
+      ],
+      "body_plain": "Buenas,\nYo hace unos aÃ±os usÃ© este y dirÃ­a que me calculÃ³ todo fantÃ¡sticamente: \nhttps://rpubs.com/HAVB/osrm\n\nNecesitÃ© calcular a piÃ© y tambiÃ©n en auto, uno y otro una maravilla en \nsu momento (solamente datos de Euskal Herria -Paises vascos frances \nespaÃ±ol y navarra-) El tema transfronterizo me acuerdo que necesitÃ³ \nalgÃºn ajuste, eso sÃ­.\n\nLos datos de OSM tienen siempre el handicap de que hay zonas poco o mal \nmapeadas. No me pasÃ³ cuando lo necesitÃ© para esto. SÃ­ me pasÃ³ en algunos \nrincones de Argentina no bien mapeados -Labarden 2023-.\n\nCreo que el problema de Emiliano lo tendrÃ­a que ver in situ\n\nSuerte\n\nJuan\n\n\n\n24/11/21 08:45(e)an, Isidro Hidalgo Arellano via R-help-es igorleak \nidatzi zuen:\n> El problema de OpenStreetMaps es que en las rutas no prioriza las mejores vÃ­as: en algunos casos he visto que las calcula incluyendo caminos sin asfaltar. Y no supe en su momento cÃ³mo cambiar eso...\n> Saludos.\n>\n> Isidro Hidalgo Arellano\n> Observatorio del Mercado de Trabajo\n> Junta de Comunidades de Castilla - La Mancha\n>\n> -----Mensaje original-----\n> De: R-help-es<r-help-es-bounces en r-project.org>  En nombre de Eric\n> Enviado el: miÃ©rcoles, 20 de noviembre de 2024 23:16\n> Para: emiliano di iorio<emilianodiiorio en hotmail.com>\n> CC:r-help-es en r-project.org  <r-help-es en r-project.org>\n> Asunto: Re: [R-es] consulta geolocalizaciones\n>\n>\n> no creo q R tenga un paquete con una bbdd de las direcciones y esas cosas (no seria logico), creo que siempre habra que pasar por una consulta a alguien que si las tenga ... si no te gusta google puedes consultar enwww.openstreetmap.org  q tambien tiene esa info.\n>\n> slds !!\n>\n>\n>\n>\n> On Wed, 20 Nov 2024 21:27:09 +0000\n> emiliano di iorio<emilianodiiorio en hotmail.com>  wrote:\n>\n>> _Cu_l es el paquete o m_todo m_s preciso en R para geolocalizar\n>> direcciones con calle y altura o nro sin pasar por una clave API en\n>> google maps ? _y como graficar luego domicilios con direcciones\n>> similares? gracias\n>>\n>> \t[[alternative HTML version deleted]]\n>>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n-- \nimage/svg+xml eman ta zabal zazu Euskal Herriko Unibertsitatea \nUniversidad del PaÃ­s Vasco\n*Euskal Herriko Unibertsitatea*\n\n*Juan Abasolo*\nIrakasle eta ikertzailea\n/Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea/\n(+34) 94 601 7567 <tel:(+34) 94 601 7567>\njuan.abasolo en ehu.eus\nhttps://mastodon.eus/@juan\nhttps://juanabasolo.netlify.app\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas,\nYo hace unos aÃ±os usÃ© este y dirÃ­a que me calculÃ³ todo fantÃ¡sticamente: \nhttps://rpubs.com/HAVB/osrm\n\nNecesitÃ© calcular a piÃ© y tambiÃ©n en auto, uno y otro una maravilla en \nsu momento",
+      "thread_id": "thread-013e1c16a5e8",
+      "thread_depth": 3,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-95532e304fe7",
+      "message_id": "<33cea69a-7432-4d8b-8bfa-b8a8dfe3ff4e@gmail.com>",
+      "from_name": "Pedro Concejero Cerezo",
+      "from_email_hash": "500b1aaed23f6e7d5bd694e150be41c5221c7c84e187abe82215a575a7fb6b50",
+      "date": "2024-11-26T13:23:54+01:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 187, Envío 10",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 187, Envío 10",
+      "in_reply_to": "<mailman.15245.1.1732532401.55799.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.15245.1.1732532401.55799.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Ayer mandÃ© esta respuesta pero parece que no llegÃ³, parece mentira que \nno recuerde utilizar la lista. Disculpas si sale repetida.\n\nJavier, el paquete textreuse lo que hace es aÃ±adir metadatos de \npre-proceso a la lectura de ficheros de texto, y por tanto parte de \nfichero. No lo conocÃ­a, pero leyendo\n\nhttps://cran.r-project.org/web/packages/textreuse/vignettes/textreuse-introduction.html\n\nverÃ¡s que tanto TextReuseTextDocument como TextReuseTextCorpus tienen \ncomo input rutas de sistema (a fichero -solo .txt? no sÃ©, habrÃ­a que \nmirar; o a directorio, respectivamente).\n\nEn cambio el cÃ³digo que adjuntas lo que hace es generar dos objetos \n(text1 y text2) y concatenar las palabras con paste.\n\nEse paquete menciona que permite manejar \"corpora\" del paquete tm. En \ntext mining, el proceso suele ser 1. generar un corpus 2. generar tokens \n(pueden ser bi-tri-n-gramas) 3. generar matrices dfm 4. hacer cÃ¡lculos \nsobre ellas.\n\ntm es quizÃ¡s un poco engorroso, por lo que yo siempre recomiendo quanteda.\n\nhttps://quanteda.io/articles/quickstart.html\n\nY en concreto para lo de medir distancias:\n\nhttps://quanteda.io/reference/textstat_simil.html\n\n\nPero, oye, a lo mejor lo que te ha calculado te vale. No sÃ©, como te \ndigo no aclaras el objeto de tu trabajo.\n\nEl 25/11/24 a las 12:00, r-help-es-request en r-project.org escribiÃ³:\n> EnvÃ­e los mensajes para la lista R-help-es a\n> \tr-help-es en r-project.org\n>\n> Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n> \thttps://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n> \tr-help-es-request en r-project.org\n>\n> Puede contactar con el responsable de la lista escribiendo a:\n> \tr-help-es-owner en r-project.org\n>\n> Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> respondiendo.\n>\n>\n> Asuntos del dÃ­a:\n>\n>     1. Problemas usando paquete textreuse (Javier GÃ³mez Gonzalez)\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Mon, 25 Nov 2024 05:38:59 +0100\n> From: Javier GÃ³mez Gonzalez<zaragatan en gmail.com>\n> To: r-help-es<r-help-es en r-project.org>\n> Subject: [R-es] Problemas usando paquete textreuse\n> Message-ID:\n> \t<CANVm79mAiM42PHRSPPrwbwj2UbTC97zHu0ks616Os+EHHh3VAg en mail.gmail.com>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Muy buenas:\n>\n> He encontrado el paquete textreuse y lo quiero utilizar para comparar dos\n> archivos pdf.\n>\n> Me ha sido imposible cargar los archivos para utilizar las funciones\n> TextReuseCorpus() o TextReuseTextDocument().\n>\n> En la documentaciÃ³n del paquete los archivos los cargan desde\n>\n> Â¿Alguien sabe cÃ³mo se hace?\n>\n> He conseguido calcular la similitud de jaccard utilizando este paquete,\n> pero para ello he empleado el siguiente cÃ³digo.\n>\n> library(pdftools)\n>\n> library(textreuse)\n>\n>   text1 <- pdf_text(\"uno.pdf\")\n>\n> text2 <- pdf_text(\"dos.pdf\")\n>\n> full_text1 <- paste(text1, collapse = \" \")\n>\n> full_text2 <- paste(text2, collapse = \" \")\n>\n> a <- tokenize_words(full_text1)\n>\n> b <- tokenize_words(full_text2)\n>\n> jaccard_similarity(a, b)\n>\n>\n> Gracias\n>\n> \t[[alternative HTML version deleted]]\n>\n>\n>\n>\n> ------------------------------\n>\n> Subject: PiÃ© de pÃ¡gina del digest\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> ------------------------------\n>\n> Fin de Resumen de R-help-es, Vol 187, EnvÃ­o 10\n> **********************************************\n-- \n*Pedro Concejero\nE-mail: pedro.concejerocerezo en gmail.com\nskype: pedro.concejero\ntwitter @ConcejeroPedro <https://twitter.com/ConcejeroPedro>\nlinkedin pedroconcejero <http://www.linkedin.com/in/pedroconcejero/es>\neRReRo feliz, me puedes encontrar en gRupo R madRid \n<http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13> *\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Ayer mandÃ© esta respuesta pero parece que no llegÃ³, parece mentira que \nno recuerde utilizar la lista. Disculpas si sale repetida.\n\nJavier, el paquete textreuse lo que hace es aÃ±adir metadatos de \n",
+      "thread_id": "thread-95532e304fe7",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-21a36a61b73a",
+      "message_id": "<CAPMe3ftBvgdWSwsoRWwAG1_EFHqp9hS9BYRoc+C-+BEbfMtv9g@mail.gmail.com>",
+      "from_name": "SANTIAGO RAMOS OROPEZA",
+      "from_email_hash": "3d5d369bd65b86a6f175f868546b61ceebf14c373944547902814a39570dff0a",
+      "date": "2024-11-26T09:18:45-04:00",
+      "subject": "[R-es] scrip to run a simple logistic population growth model",
+      "subject_clean": "[R-es] scrip to run a simple logistic population growth model",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Please, send it if available, including a regression  of population net\nincrement vs population number.\nRegards,\n Santiago Ramos.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Please, send it if available, including a regression  of population net\nincrement vs population number.\nRegards,\n Santiago Ramos.\n\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-21a36a61b73a",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-2cb3ca78f408",
+      "message_id": "<CAPMe3fsdEeOt9FGY+utr8G2uN=vx=Dv-peRN1xwXM7tH-iUMQA@mail.gmail.com>",
+      "from_name": "SANTIAGO RAMOS OROPEZA",
+      "from_email_hash": "3d5d369bd65b86a6f175f868546b61ceebf14c373944547902814a39570dff0a",
+      "date": "2024-11-27T09:05:46-04:00",
+      "subject": "[R-es] Simple modelo logístico de crecimiento poblacional.",
+      "subject_clean": "[R-es] Simple modelo logístico de crecimiento poblacional.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados SeÃ±ores.\nLes escribe Santiago Ramos, desde Venezuela, veo que mi solicitud estÃ¡ en\nla lista de asuntos del dÃ­a, gracias por su amable atenciÃ³n,\nEn espera de su ayuda.\n Atte.\n Santiago Ramos.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados SeÃ±ores.\nLes escribe Santiago Ramos, desde Venezuela, veo que mi solicitud estÃ¡ en\nla lista de asuntos del dÃ­a, gracias por su amable atenciÃ³n,\nEn espera de su ayuda.\n Atte.\n Santiago Ra",
+      "thread_id": "thread-2cb3ca78f408",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-77a141613617",
+      "message_id": "<BF2CFB88-EADC-4FCC-8054-6B7AF3E82840@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-11-27T10:29:20-03:00",
+      "subject": "[R-es]  Simple modelo logístico de crecimiento poblacional.",
+      "subject_clean": "[R-es]  Simple modelo logístico de crecimiento poblacional.",
+      "in_reply_to": "<CAPMe3fsdEeOt9FGY+utr8G2uN=vx=Dv-peRN1xwXM7tH-iUMQA@mail.gmail.com>",
+      "references": [
+        "<CAPMe3fsdEeOt9FGY+utr8G2uN=vx=Dv-peRN1xwXM7tH-iUMQA@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Santiago Ramos\n\nÂ¿CuÃ¡l es su pedido?\n\nYo no tengo nada\n\nJavier Marcuzzi\n\n> El 27 nov 2024, a las 10:05?a. m., SANTIAGO RAMOS OROPEZA <ramosantiagoro en gmail.com> escribiÃ³:\n> \n> Estimados SeÃ±ores.\n> Les escribe Santiago Ramos, desde Venezuela, veo que mi solicitud estÃ¡ en\n> la lista de asuntos del dÃ­a, gracias por su amable atenciÃ³n,\n> En espera de su ayuda.\n> Atte.\n> Santiago Ramos.\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Estimado Santiago Ramos\n\nÂ¿CuÃ¡l es su pedido?\n\nYo no tengo nada\n\nJavier Marcuzzi\n\n> El 27 nov 2024, a las 10:05?a. m., SANTIAGO RAMOS OROPEZA <ramosantiagoro en gmail.com> escribiÃ³:\n> \n> Estimados S",
+      "thread_id": "thread-2cb3ca78f408",
+      "thread_depth": 1,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-9e43a71772ae",
+      "message_id": "<07C67652-6394-4BB6-ACD5-5183BD86FD24@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-11-27T17:49:08-03:00",
+      "subject": "[R-es]  Simple modelo logístico de crecimiento poblacional.",
+      "subject_clean": "[R-es]  Simple modelo logístico de crecimiento poblacional.",
+      "in_reply_to": "<CAPMe3fs1pMdhw+U+PmXAHhO9=aB+4XiCfbmJ5wwpr4m0kMFAMA@mail.gmail.com>",
+      "references": [
+        "<CAPMe3fsdEeOt9FGY+utr8G2uN=vx=Dv-peRN1xwXM7tH-iUMQA@mail.gmail.com>",
+        "<BF2CFB88-EADC-4FCC-8054-6B7AF3E82840@gmail.com>",
+        "<CAPMe3fsq6s=zxZD6mSOn1MrCqc0HhaF25HbxxsaVoQBd-w4gnA@mail.gmail.com>",
+        "<B5CE36B3-2F44-4419-BE2B-FF7D2711057D@gmail.com>",
+        "<CAPMe3fs1pMdhw+U+PmXAHhO9=aB+4XiCfbmJ5wwpr4m0kMFAMA@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Santiago\n\nHay un problema, usted supone que el crecimiento es logÃ­stico, curvas de crecimiento hay de todos los colores, justo hoy realizo algo en curvas de lactancia y hay algo de 70 documentadas en R.\n\nNo se como es la utilizaciÃ³n de ese tipo de criaderos con respecto a la genÃ©tica, ahÃ­ se complica, pero si no la tiene en cuenta, yo comenzarÃ­a con modelos mixtos, algÃºn ejemplo sobre su Ã¡rea debe haber.\n\nModelos de crecimiento en R, hay de todos tipos, el problema es por donde usted desea comenzar, luego con una funciÃ³n de predicciÃ³n puede calcular distintos escenarios. Pero hay tanta variedad que usted tendrÃ­a que buscar un ejemplo o compartir algo, y a partir de ahÃ­ se puede intentar ayudarlo.\n\nObserve lo siguiente, yo no lo utilizo, pero puede ser Ãºtil.\n\nhttps://cran.r-project.org/web/packages/growthcurver/readme/README.html?\n\nJavier Marcuzzi\n\n> El 27 nov 2024, a las 11:50?a. m., SANTIAGO RAMOS OROPEZA <ramosantiagoro en gmail.com> escribiÃ³:\n> \n?\n> \n> El miÃ©, 27 nov 2024 a las 9:55, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribiÃ³:\n>> Estimado Santiago \n>> \n>> Script to run \n>> \n>> Â¿Y??\n>> \n>> No me llego otra cosa que eso\n>> \n>> Javier Marcuzzi\n>> \n>>> El 27 nov 2024, a las 10:37?a. m., SANTIAGO RAMOS OROPEZA <ramosantiagoro en gmail.com <mailto:ramosantiagoro en gmail.com>> escribiÃ³:\n>>> \n>>> Estimado Javier Marcuzzi\n>>> Esta es una copia del mensaje recibido.\n>>> <image.png>\n>>> \n>>> \n>>> El miÃ©, 27 nov 2024 a las 9:29, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribiÃ³:\n>>>> Estimado Santiago Ramos\n>>>> \n>>>> Â¿CuÃ¡l es su pedido?\n>>>> \n>>>> Yo no tengo nada\n>>>> \n>>>> Javier Marcuzzi\n>>>> \n>>>> > El 27 nov 2024, a las 10:05?a. m., SANTIAGO RAMOS OROPEZA <ramosantiagoro en gmail.com <mailto:ramosantiagoro en gmail.com>> escribiÃ³:\n>>>> > \n>>>> > Estimados SeÃ±ores.\n>>>> > Les escribe Santiago Ramos, desde Venezuela, veo que mi solicitud estÃ¡ en\n>>>> > la lista de asuntos del dÃ­a, gracias por su amable atenciÃ³n,\n>>>> > En espera de su ayuda.\n>>>> > Atte.\n>>>> > Santiago Ramos.\n>>>> > \n>>>> >       [[alternative HTML version deleted]]\n>>>> > \n>>>> > _______________________________________________\n>>>> > R-help-es mailing list\n>>>> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>\n>>>> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>> \n>> \n\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20241127/cede9cd8/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: favicon.ico\nType: image/vnd.microsoft.icon\nSize: 5430 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20241127/cede9cd8/attachment-0001.ico>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 48943 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20241127/cede9cd8/attachment-0001.png>",
+      "body_snippet": "Estimado Santiago\n\nHay un problema, usted supone que el crecimiento es logÃ­stico, curvas de crecimiento hay de todos los colores, justo hoy realizo algo en curvas de lactancia y hay algo de 70 docume",
+      "thread_id": "thread-9e43a71772ae",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-ffffde350b00",
+      "message_id": "<C4C63A1D-8861-4775-BFB0-3578057C4CB3@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-11-28T16:18:47-03:00",
+      "subject": "[R-es] Presentación linda",
+      "subject_clean": "[R-es] Presentación linda",
+      "in_reply_to": "<CAPMe3fvSzwGM19=R6+QNWSe9bHjkdA108cONTe5S7vBDKXTGbQ@mail.gmail.com>",
+      "references": [
+        "<CAPMe3fsdEeOt9FGY+utr8G2uN=vx=Dv-peRN1xwXM7tH-iUMQA@mail.gmail.com>",
+        "<BF2CFB88-EADC-4FCC-8054-6B7AF3E82840@gmail.com>",
+        "<CAPMe3fsq6s=zxZD6mSOn1MrCqc0HhaF25HbxxsaVoQBd-w4gnA@mail.gmail.com>",
+        "<B5CE36B3-2F44-4419-BE2B-FF7D2711057D@gmail.com>",
+        "<CAPMe3fs1pMdhw+U+PmXAHhO9=aB+4XiCfbmJ5wwpr4m0kMFAMA@mail.gmail.com>",
+        "<07C67652-6394-4BB6-ACD5-5183BD86FD24@gmail.com>",
+        "<CAPMe3fvSzwGM19=R6+QNWSe9bHjkdA108cONTe5S7vBDKXTGbQ@mail.gmail.com>"
+      ],
+      "body_plain": "Estimados\n\nAyer vi una explicaciÃ³n, bÃ¡sicamente tenÃ­a unas palabras, como puede ser el tÃ­tulo, pÃ¡rrafo, alguna ecuaciÃ³n. Luego una tabla con datos. A continuaciÃ³n las matrices que resolvÃ­an el problema. Luego de esto un script que lo realizaba en Julia. \n\nLa traducciÃ³n, son unas palabras, un data frame, la ejecuciÃ³n de lme4 y sus resultados.\n\nLo que me llamÃ³ la atenciÃ³n, es que las matrices estaban escritas como si fuesen en libro de Ã¡lgebra, como si la matrÃ­z pasÃ³ a latex.\n\nLa respuesta del modelo, no estaba ?muy? computadora, era visualmente ?a mano?.\n\nEn R hay algo que por ejemplo en Quarto y Rstudio realicen ese tipo de presentaciÃ³n.\n\nO llevarlo un poco mÃ¡s allÃ¡, presentado en web, donde supongamos que hay dos matrices y segÃºn los nÃºmeros que se colocan en X e Y se forman automÃ¡ticamente las matrices, se ve X Â´X , y esas cosas llenas de numeritos que hay que entender pero luego se lee el resultado, que lo realice la computadora, nadie quiere leer un montÃ³n de matrices haciendo cosas, lo necesario es el resultado, salvo para explicar o aprender el procedimiento interno o  matematico.\n\nO algo intermedio, llevar a mano en latex varias matrices para que se vea lindo, es un trabajo que lleva muy fÃ¡cil a error, en cambio, si tomo los datos, lo envÃ­o desde el data.frame a una matriz en R, multiplicÃ³ matrÃ­ces en R, pero veo su resultado hermoso como si es latex, evitarÃ­a un montÃ³n de errores de tipo y tiempo.\n\nÂ¿En R hay algo semejante o tendrÃ­a que ver de estudiar Julia?\n\nGracias",
+      "body_snippet": "Estimados\n\nAyer vi una explicaciÃ³n, bÃ¡sicamente tenÃ­a unas palabras, como puede ser el tÃ­tulo, pÃ¡rrafo, alguna ecuaciÃ³n. Luego una tabla con datos. A continuaciÃ³n las matrices que resolvÃ­an el",
+      "thread_id": "thread-ffffde350b00",
+      "thread_depth": 0,
+      "month": "2024-11"
+    },
+    {
+      "id": "msg-ffffde350b00",
+      "message_id": "<C4C63A1D-8861-4775-BFB0-3578057C4CB3@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2024-11-28T16:18:47-03:00",
+      "subject": "[R-es] Presentación linda",
+      "subject_clean": "[R-es] Presentación linda",
+      "in_reply_to": "<CAPMe3fvSzwGM19=R6+QNWSe9bHjkdA108cONTe5S7vBDKXTGbQ@mail.gmail.com>",
+      "references": [
+        "<CAPMe3fsdEeOt9FGY+utr8G2uN=vx=Dv-peRN1xwXM7tH-iUMQA@mail.gmail.com>",
+        "<BF2CFB88-EADC-4FCC-8054-6B7AF3E82840@gmail.com>",
+        "<CAPMe3fsq6s=zxZD6mSOn1MrCqc0HhaF25HbxxsaVoQBd-w4gnA@mail.gmail.com>",
+        "<B5CE36B3-2F44-4419-BE2B-FF7D2711057D@gmail.com>",
+        "<CAPMe3fs1pMdhw+U+PmXAHhO9=aB+4XiCfbmJ5wwpr4m0kMFAMA@mail.gmail.com>",
+        "<07C67652-6394-4BB6-ACD5-5183BD86FD24@gmail.com>",
+        "<CAPMe3fvSzwGM19=R6+QNWSe9bHjkdA108cONTe5S7vBDKXTGbQ@mail.gmail.com>"
+      ],
+      "body_plain": "Estimados\n\nAyer vi una explicaciÃ³n, bÃ¡sicamente tenÃ­a unas palabras, como puede ser el tÃ­tulo, pÃ¡rrafo, alguna ecuaciÃ³n. Luego una tabla con datos. A continuaciÃ³n las matrices que resolvÃ­an el problema. Luego de esto un script que lo realizaba en Julia. \n\nLa traducciÃ³n, son unas palabras, un data frame, la ejecuciÃ³n de lme4 y sus resultados.\n\nLo que me llamÃ³ la atenciÃ³n, es que las matrices estaban escritas como si fuesen en libro de Ã¡lgebra, como si la matrÃ­z pasÃ³ a latex.\n\nLa respuesta del modelo, no estaba ?muy? computadora, era visualmente ?a mano?.\n\nEn R hay algo que por ejemplo en Quarto y Rstudio realicen ese tipo de presentaciÃ³n.\n\nO llevarlo un poco mÃ¡s allÃ¡, presentado en web, donde supongamos que hay dos matrices y segÃºn los nÃºmeros que se colocan en X e Y se forman automÃ¡ticamente las matrices, se ve X Â´X , y esas cosas llenas de numeritos que hay que entender pero luego se lee el resultado, que lo realice la computadora, nadie quiere leer un montÃ³n de matrices haciendo cosas, lo necesario es el resultado, salvo para explicar o aprender el procedimiento interno o  matematico.\n\nO algo intermedio, llevar a mano en latex varias matrices para que se vea lindo, es un trabajo que lleva muy fÃ¡cil a error, en cambio, si tomo los datos, lo envÃ­o desde el data.frame a una matriz en R, multiplicÃ³ matrÃ­ces en R, pero veo su resultado hermoso como si es latex, evitarÃ­a un montÃ³n de errores de tipo y tiempo.\n\nÂ¿En R hay algo semejante o tendrÃ­a que ver de estudiar Julia?\n\nGracias",
+      "body_snippet": "Estimados\n\nAyer vi una explicaciÃ³n, bÃ¡sicamente tenÃ­a unas palabras, como puede ser el tÃ­tulo, pÃ¡rrafo, alguna ecuaciÃ³n. Luego una tabla con datos. A continuaciÃ³n las matrices que resolvÃ­an el",
+      "thread_id": "thread-ffffde350b00",
+      "thread_depth": 0,
+      "month": "2024-11"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-cec4723acccd",
+      "subject": "[R-es] Fwd: OPTIMIZACIÓN",
+      "message_count": 2,
+      "participants": [
+        "Carlos Ortega",
+        "Jose Betancourt Bethencourt"
+      ],
+      "started": "2024-11-01T09:16:58-04:00",
+      "last_reply": "2024-11-03T12:22:43+01:00",
+      "root_message_id": "msg-cec4723acccd"
+    },
+    {
+      "id": "thread-9a0a0e35b652",
+      "subject": "[R-es] Detectar plagio con R",
+      "message_count": 2,
+      "participants": [
+        "Javier Gómez Gonzalez",
+        "Jorge I Velez"
+      ],
+      "started": "2024-11-13T16:15:07+01:00",
+      "last_reply": "2024-11-14T07:55:10-05:00",
+      "root_message_id": "msg-9a0a0e35b652"
+    },
+    {
+      "id": "thread-0be77590bc5f",
+      "subject": "[R-es] 93 - Reunión Grupo de R - Madrid: Miércoles 20 de noviembre de 2024",
+      "message_count": 1,
+      "participants": [
+        "Carlos Ortega"
+      ],
+      "started": "2024-11-15T22:28:39+01:00",
+      "last_reply": "2024-11-15T22:28:39+01:00",
+      "root_message_id": "msg-0be77590bc5f"
+    },
+    {
+      "id": "thread-4cbf0b9a10a8",
+      "subject": "[R-es] Rgl Quartz",
+      "message_count": 1,
+      "participants": [
+        "Javier Marcuzzi"
+      ],
+      "started": "2024-11-20T14:25:47-03:00",
+      "last_reply": "2024-11-20T14:25:47-03:00",
+      "root_message_id": "msg-4cbf0b9a10a8"
+    },
+    {
+      "id": "thread-013e1c16a5e8",
+      "subject": "[R-es] consulta geolocalizaciones",
+      "message_count": 6,
+      "participants": [
+        "Eric",
+        "Isidro Hidalgo Arellano",
+        "Juan Abasolo",
+        "Manuel Spínola",
+        "emiliano di iorio"
+      ],
+      "started": "2024-11-20T21:27:09+00:00",
+      "last_reply": "2024-11-26T11:56:54+01:00",
+      "root_message_id": "msg-013e1c16a5e8"
+    },
+    {
+      "id": "thread-85ebfdbaa3d4",
+      "subject": "[R-es] Tomar nombres desde la matríz",
+      "message_count": 2,
+      "participants": [
+        "Javier Marcuzzi",
+        "Proyecto R-UCA"
+      ],
+      "started": "2024-11-22T20:15:01-03:00",
+      "last_reply": "2024-11-23T12:03:04+01:00",
+      "root_message_id": "msg-85ebfdbaa3d4"
+    },
+    {
+      "id": "thread-1fb344cb436f",
+      "subject": "[R-es] Problemas usando paquete textreuse",
+      "message_count": 2,
+      "participants": [
+        "Javier Gómez Gonzalez",
+        "Javier Marcuzzi"
+      ],
+      "started": "2024-11-25T05:38:59+01:00",
+      "last_reply": "2024-11-25T14:12:51-03:00",
+      "root_message_id": "msg-1fb344cb436f"
+    },
+    {
+      "id": "thread-21a36a61b73a",
+      "subject": "[R-es] scrip to run a simple logistic population growth model",
+      "message_count": 1,
+      "participants": [
+        "SANTIAGO RAMOS OROPEZA"
+      ],
+      "started": "2024-11-26T09:18:45-04:00",
+      "last_reply": "2024-11-26T09:18:45-04:00",
+      "root_message_id": "msg-21a36a61b73a"
+    },
+    {
+      "id": "thread-95532e304fe7",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 187, Envío 10",
+      "message_count": 1,
+      "participants": [
+        "Pedro Concejero Cerezo"
+      ],
+      "started": "2024-11-26T13:23:54+01:00",
+      "last_reply": "2024-11-26T13:23:54+01:00",
+      "root_message_id": "msg-95532e304fe7"
+    },
+    {
+      "id": "thread-2cb3ca78f408",
+      "subject": "[R-es] Simple modelo logístico de crecimiento poblacional.",
+      "message_count": 2,
+      "participants": [
+        "Javier Marcuzzi",
+        "SANTIAGO RAMOS OROPEZA"
+      ],
+      "started": "2024-11-27T09:05:46-04:00",
+      "last_reply": "2024-11-27T10:29:20-03:00",
+      "root_message_id": "msg-2cb3ca78f408"
+    },
+    {
+      "id": "thread-9e43a71772ae",
+      "subject": "[R-es]  Simple modelo logístico de crecimiento poblacional.",
+      "message_count": 1,
+      "participants": [
+        "Javier Marcuzzi"
+      ],
+      "started": "2024-11-27T17:49:08-03:00",
+      "last_reply": "2024-11-27T17:49:08-03:00",
+      "root_message_id": "msg-9e43a71772ae"
+    },
+    {
+      "id": "thread-ffffde350b00",
+      "subject": "[R-es] Presentación linda",
+      "message_count": 1,
+      "participants": [
+        "Javier Marcuzzi"
+      ],
+      "started": "2024-11-28T16:18:47-03:00",
+      "last_reply": "2024-11-28T16:18:47-03:00",
+      "root_message_id": "msg-ffffde350b00"
+    },
+    {
+      "id": "thread-ffffde350b00",
+      "subject": "[R-es] Presentación linda",
+      "message_count": 1,
+      "participants": [
+        "Javier Marcuzzi"
+      ],
+      "started": "2024-11-28T16:18:47-03:00",
+      "last_reply": "2024-11-28T16:18:47-03:00",
+      "root_message_id": "msg-ffffde350b00"
+    }
+  ]
+}

@@ -1,0 +1,2519 @@
+From j|mmyreye@ve|@@co @end|ng |rom gm@||@com  Tue Aug 13 00:53:34 2024
+From: j|mmyreye@ve|@@co @end|ng |rom gm@||@com (Jimmy Erney Reyes Velasco)
+Date: Mon, 12 Aug 2024 17:53:34 -0500
+Subject: [R-es] =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+Message-ID: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+
+Buen día, estimados.
+Tengo un problema y me gustaría saber cómo solucionarlo.
+Actualmente me encuentro realizando un estudio estimando la pérdida de
+biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+siguiente problema: algunas hojas han perdido tanta área foliar que han
+perdido también el margen e incluso algunas más de la mitad del área de la
+hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+hoja para así estimar su masa seca en relación con esa área perdida y
+obtener valores de pérdida de biomasa foliar.
+Tengo algunas ideas, pero no sé cómo empezar.
+Una de ellas es usar un algoritmo de machine learning para poder obtener un
+modelo que me permita reconstruir el margen de la hoja, pero la verdad
+desconozco mucho acerca de si puedo usar este método.
+Les agradecería muchísimo si pudieran colaborarme con información o si
+alguien puede darme una idea de cómo abordar este tema.
+Saludos
+Jimmy
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Tue Aug 13 05:35:48 2024
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Tue, 13 Aug 2024 05:35:48 +0200
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+Message-ID: <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+
+Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+forma similar a las que tienes estropeadas, las digitalizas todas y
+utilizas como variable objetivo la masa original. El algoritmo tendrá que
+aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+que se relaciona con la masa, que supongo que sí. Le aplicas el algoritmo a
+las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+es lo que te interesa.
+Keras no es fácil de usar, pero permite hacerlo.
+Ya me dirás,
+Un saludo,
+Manuel
+
+El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+jimmyreyesvelasco en gmail.com>) escribió:
+
+> Buen día, estimados.
+> Tengo un problema y me gustaría saber cómo solucionarlo.
+> Actualmente me encuentro realizando un estudio estimando la pérdida de
+> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+> siguiente problema: algunas hojas han perdido tanta área foliar que han
+> perdido también el margen e incluso algunas más de la mitad del área de la
+> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+> hoja para así estimar su masa seca en relación con esa área perdida y
+> obtener valores de pérdida de biomasa foliar.
+> Tengo algunas ideas, pero no sé cómo empezar.
+> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+> desconozco mucho acerca de si puedo usar este método.
+> Les agradecería muchísimo si pudieran colaborarme con información o si
+> alguien puede darme una idea de cómo abordar este tema.
+> Saludos
+> Jimmy
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Aug 13 16:42:45 2024
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 13 Aug 2024 11:42:45 -0300
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+Message-ID: <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+
+Estimado
+
+Yo no conozco de morfología vegetal, pero si supongo que la hoja es plana, me refiero que al verla sobre el eje se forma un rectángulo, la altura en cada parte de la hoja es la misma, a una misma densidad, puedo calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar un modelo, se podía ?reconstruir? lo perdido.
+
+Pero entiendo que las hojas no deben tener esa forma morfológica, tan plana, miro morfología vegetal en wikipedia y no está a simple vista mi duda, pero agrega nervadura, como una complicación más.
+
+Aquí hay dos problemas, el cálculo realizado con su error, más el error de no tener la masa original y utilizar la calculada con el error más el error estadístico de su cálculo original.
+
+Un agrónomo podría ayudarlo, yo como veterinario se que si corto el forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted también puede tener diferencias de masa.
+
+Posiblemente se ?meta? en un gran problema estadístico o matemático por no haber tenido en cuenta la biología, creo que la mejor solución y la más simple, es tomar las mediciones el año que viene o en las próximas hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de cálculos.
+
+> El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <mmendoza en fulbrightmail.org> escribió:
+> 
+> Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+> hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+> forma similar a las que tienes estropeadas, las digitalizas todas y
+> utilizas como variable objetivo la masa original. El algoritmo tendrá que
+> aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+> que se relaciona con la masa, que supongo que sí. Le aplicas el algoritmo a
+> las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+> frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+> es lo que te interesa.
+> Keras no es fácil de usar, pero permite hacerlo.
+> Ya me dirás,
+> Un saludo,
+> Manuel
+> 
+> El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+> jimmyreyesvelasco en gmail.com>) escribió:
+> 
+>> Buen día, estimados.
+>> Tengo un problema y me gustaría saber cómo solucionarlo.
+>> Actualmente me encuentro realizando un estudio estimando la pérdida de
+>> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+>> siguiente problema: algunas hojas han perdido tanta área foliar que han
+>> perdido también el margen e incluso algunas más de la mitad del área de la
+>> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+>> hoja para así estimar su masa seca en relación con esa área perdida y
+>> obtener valores de pérdida de biomasa foliar.
+>> Tengo algunas ideas, pero no sé cómo empezar.
+>> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+>> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+>> desconozco mucho acerca de si puedo usar este método.
+>> Les agradecería muchísimo si pudieran colaborarme con información o si
+>> alguien puede darme una idea de cómo abordar este tema.
+>> Saludos
+>> Jimmy
+>> 
+>>        [[alternative HTML version deleted]]
+>> 
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From |@rodr|guez@@@nc @end|ng |rom gm@||@com  Tue Aug 13 17:52:12 2024
+From: |@rodr|guez@@@nc @end|ng |rom gm@||@com (Francisco Rodriguez Sanchez)
+Date: Tue, 13 Aug 2024 17:52:12 +0200
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+Message-ID: <4077e4a2-22aa-43fb-9698-1a38ebd92a65@gmail.com>
+
+Hola Jimmy
+
+Hay al menos un par de aplicaciones de móvil gratuitas que te permiten 
+estimar fácilmente la pérdida de área foliar:
+
+BioLeaf: 
+https://play.google.com/store/apps/details?id=upvision.bioleaf&hl=en
+
+LeafByte: https://zoegp.science/leafbyte
+
+Si quieres desarrollar tu propio método, tal vez sea útil investigar 
+cómo trabajan ambas aplicaciones, descritas en estos artículos:
+
+https://doi.org/10.1016/j.compag.2016.09.007
+
+https://doi.org/10.1111/2041-210X.13340
+
+Suerte
+
+Paco
+
+
+
+On 13/8/24 0:53, Jimmy Erney Reyes Velasco wrote:
+> Buen día, estimados.
+> Tengo un problema y me gustaría saber cómo solucionarlo.
+> Actualmente me encuentro realizando un estudio estimando la pérdida de
+> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+> siguiente problema: algunas hojas han perdido tanta área foliar que han
+> perdido también el margen e incluso algunas más de la mitad del área de la
+> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+> hoja para así estimar su masa seca en relación con esa área perdida y
+> obtener valores de pérdida de biomasa foliar.
+> Tengo algunas ideas, pero no sé cómo empezar.
+> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+> desconozco mucho acerca de si puedo usar este método.
+> Les agradecería muchísimo si pudieran colaborarme con información o si
+> alguien puede darme una idea de cómo abordar este tema.
+> Saludos
+> Jimmy
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+-- 
+Dr Francisco Rodríguez-Sánchez
+https://frodriguezsanchez.net
+
+	[[alternative HTML version deleted]]
+
+
+From j|mmyreye@ve|@@co @end|ng |rom gm@||@com  Wed Aug 14 00:40:57 2024
+From: j|mmyreye@ve|@@co @end|ng |rom gm@||@com (Jimmy Erney Reyes Velasco)
+Date: Tue, 13 Aug 2024 17:40:57 -0500
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+Message-ID: <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+
+Muchas gracias por sus respuestas Manuel y Javier.
+El problema al que me enfrento es que a veces estas afectaciones por
+herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan
+sobre sí mismas y otras veces se pierde bastante la configuración de la
+hoja. Por el momento solo me interesa tratar de reconstruir la hoja para
+poder obtener el área que tendría esa hoja si no se hubiese afectado.
+Cuento con hojas escaneadas de individuos sanos y defoliados, por así
+decirlo, la idea mía es comparar los valores predichos de área foliar
+reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo
+hacer sencillamente, porque tengo las relaciones área foliar vs masa seca
+mediante regresión.en este caso las hojas son planas y tienen una forma de
+elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas
+afectadas, y que sí es dificil es saber cuánto sería su biomasa si no
+hubiese perdido su área.
+Mi problema va orientado hacia la siguiente pregunta Si lo hago con
+imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría
+hacerlo? ¿Es mejor en R o en Python?
+Muy relevantes sus aportes y
+muchas gracias por su colaboración, estoy atento
+Saludos
+Jimmy
+
+El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimado
+>
+> Yo no conozco de morfología vegetal, pero si supongo que la hoja es plana,
+> me refiero que al verla sobre el eje se forma un rectángulo, la altura en
+> cada parte de la hoja es la misma, a una misma densidad, puedo calcular la
+> masa. En ese caso como siguieren, por medio de fotos y entrenar un modelo,
+> se podía ?reconstruir? lo perdido.
+>
+> Pero entiendo que las hojas no deben tener esa forma morfológica, tan
+> plana, miro morfología vegetal en wikipedia y no está a simple vista mi
+> duda, pero agrega nervadura, como una complicación más.
+>
+> Aquí hay dos problemas, el cálculo realizado con su error, más el error de
+> no tener la masa original y utilizar la calculada con el error más el error
+> estadístico de su cálculo original.
+>
+> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el
+> forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted
+> también puede tener diferencias de masa.
+>
+> Posiblemente se ?meta? en un gran problema estadístico o matemático por no
+> haber tenido en cuenta la biología, creo que la mejor solución y la más
+> simple, es tomar las mediciones el año que viene o en las próximas hojas.
+> Puede tener demasiado trabajo y al aplicarlo falle por errores de cálculos.
+>
+> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <
+> mmendoza en fulbrightmail.org> escribió:
+> >
+> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+> > hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+> > forma similar a las que tienes estropeadas, las digitalizas todas y
+> > utilizas como variable objetivo la masa original. El algoritmo tendrá que
+> > aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+> > que se relaciona con la masa, que supongo que sí. Le aplicas el
+> algoritmo a
+> > las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+> > frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+> > es lo que te interesa.
+> > Keras no es fácil de usar, pero permite hacerlo.
+> > Ya me dirás,
+> > Un saludo,
+> > Manuel
+> >
+> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+> > jimmyreyesvelasco en gmail.com>) escribió:
+> >
+> >> Buen día, estimados.
+> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+> >> Actualmente me encuentro realizando un estudio estimando la pérdida de
+> >> biomasa foliar de una especies de planta, sin embargo, me encuentro con
+> el
+> >> siguiente problema: algunas hojas han perdido tanta área foliar que han
+> >> perdido también el margen e incluso algunas más de la mitad del área de
+> la
+> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de
+> la
+> >> hoja para así estimar su masa seca en relación con esa área perdida y
+> >> obtener valores de pérdida de biomasa foliar.
+> >> Tengo algunas ideas, pero no sé cómo empezar.
+> >> Una de ellas es usar un algoritmo de machine learning para poder
+> obtener un
+> >> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+> >> desconozco mucho acerca de si puedo usar este método.
+> >> Les agradecería muchísimo si pudieran colaborarme con información o si
+> >> alguien puede darme una idea de cómo abordar este tema.
+> >> Saludos
+> >> Jimmy
+> >>
+> >>        [[alternative HTML version deleted]]
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+> >       [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed Aug 14 14:53:43 2024
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 14 Aug 2024 09:53:43 -0300
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+Message-ID: <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+
+Estimado Jimmy Velasco
+
+Si puede tener la materia seca, podría realizar algún tipo de regresión, pero se me crea la duda biológica, ¿que cambio de agua hay y si este cambio modifica la selección como alimento de ese vegetal? En otras palabras, ¿hay un punto donde se pierde palatabilidad y prefiere otra hoja? En ese caso la regresión por materia seca podría no ser adecuado. Yo se que si modifico un poco la materia seca en bovinos tengo diferencias, me conviene hacerlo antes que el ganado pastoree.
+
+En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para mi gusto personal, R me parece mejor pero Python tomo mucho de R para la parte de estadística, como que se alimenta uno de las ideas de otro, y el otro de las ideas de uno.
+
+La diferencia no está en el lenguaje, sino en la cantidad de algoritmos que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese caso me es ?simple? con R, importo un paquete, paso los datos, tomo los resultados, importo otro paquete para lo mismo pero que internamente realiza los cálculos de otra forma, tomo los datos, y así varias veces, tomando al final una comparación para conocer cuál paquete da mejores resultados para mi trabajo, y esto no sería repetidle. En R sería algo como sumary(modelo1, modelo2, modelo3, modelo ?)
+
+Javier Rubén Marcuzzi
+
+> El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribió:
+> 
+> Muchas gracias por sus respuestas Manuel y Javier.
+> El problema al que me enfrento es que a veces estas afectaciones por herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan sobre sí mismas y otras veces se pierde bastante la configuración de la hoja. Por el momento solo me interesa tratar de reconstruir la hoja para poder obtener el área que tendría esa hoja si no se hubiese afectado. Cuento con hojas escaneadas de individuos sanos y defoliados, por así decirlo, la idea mía es comparar los valores predichos de área foliar reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo hacer sencillamente, porque tengo las relaciones área foliar vs masa seca mediante regresión.en este caso las hojas son planas y tienen una forma de elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas afectadas, y que sí es dificil es saber cuánto sería su biomasa si no hubiese perdido su área.
+> Mi problema va orientado hacia la siguiente pregunta Si lo hago con imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría hacerlo? ¿Es mejor en R o en Python?
+> Muy relevantes sus aportes y
+> muchas gracias por su colaboración, estoy atento
+> Saludos
+> Jimmy
+> 
+> 
+> El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribió:
+>> Estimado
+>> 
+>> Yo no conozco de morfología vegetal, pero si supongo que la hoja es plana, me refiero que al verla sobre el eje se forma un rectángulo, la altura en cada parte de la hoja es la misma, a una misma densidad, puedo calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar un modelo, se podía ?reconstruir? lo perdido.
+>> 
+>> Pero entiendo que las hojas no deben tener esa forma morfológica, tan plana, miro morfología vegetal en wikipedia y no está a simple vista mi duda, pero agrega nervadura, como una complicación más.
+>> 
+>> Aquí hay dos problemas, el cálculo realizado con su error, más el error de no tener la masa original y utilizar la calculada con el error más el error estadístico de su cálculo original.
+>> 
+>> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted también puede tener diferencias de masa.
+>> 
+>> Posiblemente se ?meta? en un gran problema estadístico o matemático por no haber tenido en cuenta la biología, creo que la mejor solución y la más simple, es tomar las mediciones el año que viene o en las próximas hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de cálculos.
+>> 
+>> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org>> escribió:
+>> > 
+>> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+>> > hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+>> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>> > utilizas como variable objetivo la masa original. El algoritmo tendrá que
+>> > aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+>> > que se relaciona con la masa, que supongo que sí. Le aplicas el algoritmo a
+>> > las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+>> > frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+>> > es lo que te interesa.
+>> > Keras no es fácil de usar, pero permite hacerlo.
+>> > Ya me dirás,
+>> > Un saludo,
+>> > Manuel
+>> > 
+>> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>) escribió:
+>> > 
+>> >> Buen día, estimados.
+>> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>> >> Actualmente me encuentro realizando un estudio estimando la pérdida de
+>> >> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+>> >> siguiente problema: algunas hojas han perdido tanta área foliar que han
+>> >> perdido también el margen e incluso algunas más de la mitad del área de la
+>> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+>> >> hoja para así estimar su masa seca en relación con esa área perdida y
+>> >> obtener valores de pérdida de biomasa foliar.
+>> >> Tengo algunas ideas, pero no sé cómo empezar.
+>> >> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+>> >> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+>> >> desconozco mucho acerca de si puedo usar este método.
+>> >> Les agradecería muchísimo si pudieran colaborarme con información o si
+>> >> alguien puede darme una idea de cómo abordar este tema.
+>> >> Saludos
+>> >> Jimmy
+>> >> 
+>> >>        [[alternative HTML version deleted]]
+>> >> 
+>> >> _______________________________________________
+>> >> R-help-es mailing list
+>> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >> 
+>> > 
+>> >       [[alternative HTML version deleted]]
+>> > 
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed Aug 14 23:39:43 2024
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 14 Aug 2024 18:39:43 -0300
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+Message-ID: <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+
+Estimado
+
+Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no distinguirá si es escala de gris, como mezcla de negro y blanco, puede intentar rojo y blanco, rojo y verde, con la idea de detectar cambios en el color relacionado a posibles cambios en la humedad o ?madurez? de las hojas, por ahí, con muy poco trabajo extra y con los mismos datos encuentra algo que le sirve.
+
+Javier Marcuzzi
+
+> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <cof en qualityexcellence.es> escribió:
+> 
+> Hola,
+> 
+> ¿Qué tal?
+> El problema que planteas al final es el de determinar el área de una hoja afectada, ya que su superficie nos es regular.
+> Para todos estos análisis puedes hacerlo perfectamente en R, en concreto los paquetes "magick" y "EBImage" (este último del repositorio BioConductor).
+> Lo que tendrás que hacer es procesar las imágenes, pasarlas a tonos de gris, aplicarles filtros para detectar el contorno y estimar la superficie faltante. Estos cálculos no son complicados. También puedes hacer algún tipo de modelo usando el área de las hojas completas y extrapolando estos resultados a las hojas dañadas.
+> Si luego lo que además quieres es hacer algún tipo de modelo, para tener en cuenta el posible daño en los diferentes tipos de hojas, puedes antes de pasar a usar algo más sofisticado como modelos de DeepLearning, usar la información RGB que tienes en tu imagen, seguramente las distribuciones de los colores serán diferentes entre una hoja en buen estado y otra que ha tenido algún daño (estando ambas completas).
+> 
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+> 
+> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribió:
+>> Estimado Jimmy Velasco
+>> 
+>> Si puede tener la materia seca, podría realizar algún tipo de regresión, pero se me crea la duda biológica, ¿que cambio de agua hay y si este cambio modifica la selección como alimento de ese vegetal? En otras palabras, ¿hay un punto donde se pierde palatabilidad y prefiere otra hoja? En ese caso la regresión por materia seca podría no ser adecuado. Yo se que si modifico un poco la materia seca en bovinos tengo diferencias, me conviene hacerlo antes que el ganado pastoree.
+>> 
+>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para mi gusto personal, R me parece mejor pero Python tomo mucho de R para la parte de estadística, como que se alimenta uno de las ideas de otro, y el otro de las ideas de uno.
+>> 
+>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese caso me es ?simple? con R, importo un paquete, paso los datos, tomo los resultados, importo otro paquete para lo mismo pero que internamente realiza los cálculos de otra forma, tomo los datos, y así varias veces, tomando al final una comparación para conocer cuál paquete da mejores resultados para mi trabajo, y esto no sería repetidle. En R sería algo como sumary(modelo1, modelo2, modelo3, modelo ?)
+>> 
+>> Javier Rubén Marcuzzi
+>> 
+>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>> escribió:
+>> > 
+>> > Muchas gracias por sus respuestas Manuel y Javier.
+>> > El problema al que me enfrento es que a veces estas afectaciones por herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan sobre sí mismas y otras veces se pierde bastante la configuración de la hoja. Por el momento solo me interesa tratar de reconstruir la hoja para poder obtener el área que tendría esa hoja si no se hubiese afectado. Cuento con hojas escaneadas de individuos sanos y defoliados, por así decirlo, la idea mía es comparar los valores predichos de área foliar reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo hacer sencillamente, porque tengo las relaciones área foliar vs masa seca mediante regresión.en este caso las hojas son planas y tienen una forma de elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas afectadas, y que sí es dificil es saber cuánto sería su biomasa si no hubiese perdido su área.
+>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría hacerlo? ¿Es mejor en R o en Python?
+>> > Muy relevantes sus aportes y
+>> > muchas gracias por su colaboración, estoy atento
+>> > Saludos
+>> > Jimmy
+>> > 
+>> > 
+>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com><mailto:javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>> escribió:
+>> >> Estimado
+>> >> 
+>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es plana, me refiero que al verla sobre el eje se forma un rectángulo, la altura en cada parte de la hoja es la misma, a una misma densidad, puedo calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar un modelo, se podía ?reconstruir? lo perdido.
+>> >> 
+>> >> Pero entiendo que las hojas no deben tener esa forma morfológica, tan plana, miro morfología vegetal en wikipedia y no está a simple vista mi duda, pero agrega nervadura, como una complicación más.
+>> >> 
+>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el error de no tener la masa original y utilizar la calculada con el error más el error estadístico de su cálculo original.
+>> >> 
+>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted también puede tener diferencias de masa.
+>> >> 
+>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático por no haber tenido en cuenta la biología, creo que la mejor solución y la más simple, es tomar las mediciones el año que viene o en las próximas hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de cálculos.
+>> >> 
+>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org><mailto:mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org>>> escribió:
+>> >> > 
+>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+>> >> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>> >> > utilizas como variable objetivo la masa original. El algoritmo tendrá que
+>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el algoritmo a
+>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+>> >> > frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+>> >> > es lo que te interesa.
+>> >> > Keras no es fácil de usar, pero permite hacerlo.
+>> >> > Ya me dirás,
+>> >> > Un saludo,
+>> >> > Manuel
+>> >> > 
+>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com> <mailto:jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>>) escribió:
+>> >> > 
+>> >> >> Buen día, estimados.
+>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>> >> >> Actualmente me encuentro realizando un estudio estimando la pérdida de
+>> >> >> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar que han
+>> >> >> perdido también el margen e incluso algunas más de la mitad del área de la
+>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+>> >> >> hoja para así estimar su masa seca en relación con esa área perdida y
+>> >> >> obtener valores de pérdida de biomasa foliar.
+>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+>> >> >> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+>> >> >> desconozco mucho acerca de si puedo usar este método.
+>> >> >> Les agradecería muchísimo si pudieran colaborarme con información o si
+>> >> >> alguien puede darme una idea de cómo abordar este tema.
+>> >> >> Saludos
+>> >> >> Jimmy
+>> >> >> 
+>> >> >>        [[alternative HTML version deleted]]
+>> >> >> 
+>> >> >> _______________________________________________
+>> >> >> R-help-es mailing list
+>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >> >> 
+>> >> > 
+>> >> >       [[alternative HTML version deleted]]
+>> >> > 
+>> >> > _______________________________________________
+>> >> > R-help-es mailing list
+>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >> 
+>> 
+>> 
+>>         [[alternative HTML version deleted]]
+>> 
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+> -- 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+
+	[[alternative HTML version deleted]]
+
+
+From j|mmyreye@ve|@@co @end|ng |rom gm@||@com  Thu Aug 15 19:30:17 2024
+From: j|mmyreye@ve|@@co @end|ng |rom gm@||@com (Jimmy Erney Reyes Velasco)
+Date: Thu, 15 Aug 2024 12:30:17 -0500
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+ <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+Message-ID: <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+
+Muchas gracias por todos sus comentarios.
+Muy valiosa la información, hay algunas cosas que no entiendo muy bien. Si
+tuvieran algunos documentos que pudiera leer les agradecería.
+Yo he trabajado con las relaciones entre largo y ancho de la hoja, esas
+relaciones son muy precisas, sin embargo, el problema está cuando las hojas
+son afectadas, se pierde bastante la estructura. Al yo obtener el área
+puedo estimar muy bien la masa seca que tendría esa hoja y comparar con
+respecto a lo que se ha defoliado.
+Mando unos ejemplos aquí de una hoja sana y otra afectada, la hoja sana
+está por la mitad porque la cortamos para poder escanearla
+Saludos y muchas gracias
+
+Jimmy
+
+El mié, 14 de ago. de 2024 4:40 p. m., Javier Marcuzzi <
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimado
+>
+> Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de
+> grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no
+> distinguirá si es escala de gris, como mezcla de negro y blanco, puede
+> intentar rojo y blanco, rojo y verde, con la idea de detectar cambios en el
+> color relacionado a posibles cambios en la humedad o ?madurez? de las
+> hojas, por ahí, con muy poco trabajo extra y con los mismos datos encuentra
+> algo que le sirve.
+>
+> Javier Marcuzzi
+>
+> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <cof en qualityexcellence.es>
+> escribió:
+>
+> Hola,
+>
+> ¿Qué tal?
+> El problema que planteas al final es el de determinar el área de una hoja
+> afectada, ya que su superficie nos es regular.
+>
+>    - Para todos estos análisis puedes hacerlo perfectamente en R, en
+>    concreto los paquetes "magick" y "EBImage" (este último del repositorio
+>    BioConductor).
+>    - Lo que tendrás que hacer es procesar las imágenes, pasarlas a tonos
+>    de gris, aplicarles filtros para detectar el contorno y estimar la
+>    superficie faltante. Estos cálculos no son complicados. También puedes
+>    hacer algún tipo de modelo usando el área de las hojas completas y
+>    extrapolando estos resultados a las hojas dañadas.
+>
+> Si luego lo que además quieres es hacer algún tipo de modelo, para tener
+> en cuenta el posible daño en los diferentes tipos de hojas, puedes antes de
+> pasar a usar algo más sofisticado como modelos de DeepLearning, usar la
+> información RGB que tienes en tu imagen, seguramente las distribuciones de
+> los colores serán diferentes entre una hoja en buen estado y otra que ha
+> tenido algún daño (estando ambas completas).
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<
+> javier.ruben.marcuzzi en gmail.com>) escribió:
+>
+>> Estimado Jimmy Velasco
+>>
+>> Si puede tener la materia seca, podría realizar algún tipo de regresión,
+>> pero se me crea la duda biológica, ¿que cambio de agua hay y si este cambio
+>> modifica la selección como alimento de ese vegetal? En otras palabras, ¿hay
+>> un punto donde se pierde palatabilidad y prefiere otra hoja? En ese caso la
+>> regresión por materia seca podría no ser adecuado. Yo se que si modifico un
+>> poco la materia seca en bovinos tengo diferencias, me conviene hacerlo
+>> antes que el ganado pastoree.
+>>
+>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para mi
+>> gusto personal, R me parece mejor pero Python tomo mucho de R para la parte
+>> de estadística, como que se alimenta uno de las ideas de otro, y el otro de
+>> las ideas de uno.
+>>
+>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos
+>> que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese
+>> caso me es ?simple? con R, importo un paquete, paso los datos, tomo los
+>> resultados, importo otro paquete para lo mismo pero que internamente
+>> realiza los cálculos de otra forma, tomo los datos, y así varias veces,
+>> tomando al final una comparación para conocer cuál paquete da mejores
+>> resultados para mi trabajo, y esto no sería repetidle. En R sería algo como
+>> sumary(modelo1, modelo2, modelo3, modelo ?)
+>>
+>> Javier Rubén Marcuzzi
+>>
+>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <
+>> jimmyreyesvelasco en gmail.com> escribió:
+>> >
+>> > Muchas gracias por sus respuestas Manuel y Javier.
+>> > El problema al que me enfrento es que a veces estas afectaciones por
+>> herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan
+>> sobre sí mismas y otras veces se pierde bastante la configuración de la
+>> hoja. Por el momento solo me interesa tratar de reconstruir la hoja para
+>> poder obtener el área que tendría esa hoja si no se hubiese afectado.
+>> Cuento con hojas escaneadas de individuos sanos y defoliados, por así
+>> decirlo, la idea mía es comparar los valores predichos de área foliar
+>> reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo
+>> hacer sencillamente, porque tengo las relaciones área foliar vs masa seca
+>> mediante regresión.en este caso las hojas son planas y tienen una forma de
+>> elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas
+>> afectadas, y que sí es dificil es saber cuánto sería su biomasa si no
+>> hubiese perdido su área.
+>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con
+>> imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría
+>> hacerlo? ¿Es mejor en R o en Python?
+>> > Muy relevantes sus aportes y
+>> > muchas gracias por su colaboración, estoy atento
+>> > Saludos
+>> > Jimmy
+>> >
+>> >
+>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <
+>> javier.ruben.marcuzzi en gmail.com<mailto:javier.ruben.marcuzzi en gmail.com>>
+>> escribió:
+>> >> Estimado
+>> >>
+>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es
+>> plana, me refiero que al verla sobre el eje se forma un rectángulo, la
+>> altura en cada parte de la hoja es la misma, a una misma densidad, puedo
+>> calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar
+>> un modelo, se podía ?reconstruir? lo perdido.
+>> >>
+>> >> Pero entiendo que las hojas no deben tener esa forma morfológica, tan
+>> plana, miro morfología vegetal en wikipedia y no está a simple vista mi
+>> duda, pero agrega nervadura, como una complicación más.
+>> >>
+>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el
+>> error de no tener la masa original y utilizar la calculada con el error más
+>> el error estadístico de su cálculo original.
+>> >>
+>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el
+>> forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted
+>> también puede tener diferencias de masa.
+>> >>
+>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático
+>> por no haber tenido en cuenta la biología, creo que la mejor solución y la
+>> más simple, es tomar las mediciones el año que viene o en las próximas
+>> hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de
+>> cálculos.
+>> >>
+>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <
+>> mmendoza en fulbrightmail.org<mailto:mmendoza en fulbrightmail.org>> escribió:
+>> >> >
+>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning.
+>> Tomas
+>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los márgenes
+>> de
+>> >> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>> >> > utilizas como variable objetivo la masa original. El algoritmo
+>> tendrá que
+>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras,
+>> si es
+>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el
+>> algoritmo a
+>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con
+>> hojas
+>> >> > frescas, podrías incluso determinar la masa fresca de las hojas
+>> secas, si
+>> >> > es lo que te interesa.
+>> >> > Keras no es fácil de usar, pero permite hacerlo.
+>> >> > Ya me dirás,
+>> >> > Un saludo,
+>> >> > Manuel
+>> >> >
+>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>)
+>> escribió:
+>> >> >
+>> >> >> Buen día, estimados.
+>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>> >> >> Actualmente me encuentro realizando un estudio estimando la pérdida
+>> de
+>> >> >> biomasa foliar de una especies de planta, sin embargo, me encuentro
+>> con el
+>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar que
+>> han
+>> >> >> perdido también el margen e incluso algunas más de la mitad del
+>> área de la
+>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del área
+>> de la
+>> >> >> hoja para así estimar su masa seca en relación con esa área perdida
+>> y
+>> >> >> obtener valores de pérdida de biomasa foliar.
+>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+>> >> >> Una de ellas es usar un algoritmo de machine learning para poder
+>> obtener un
+>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la
+>> verdad
+>> >> >> desconozco mucho acerca de si puedo usar este método.
+>> >> >> Les agradecería muchísimo si pudieran colaborarme con información o
+>> si
+>> >> >> alguien puede darme una idea de cómo abordar este tema.
+>> >> >> Saludos
+>> >> >> Jimmy
+>> >> >>
+>> >> >>        [[alternative HTML version deleted]]
+>> >> >>
+>> >> >> _______________________________________________
+>> >> >> R-help-es mailing list
+>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >> >>
+>> >> >
+>> >> >       [[alternative HTML version deleted]]
+>> >> >
+>> >> > _______________________________________________
+>> >> > R-help-es mailing list
+>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>
+>>
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20240815/8e6ff64b/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Screenshot_20240815-122420~2.jpg
+Type: image/jpeg
+Size: 45950 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20240815/8e6ff64b/attachment-0002.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Screenshot_20240815-122355~2.jpg
+Type: image/jpeg
+Size: 191955 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20240815/8e6ff64b/attachment-0003.jpg>
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu Aug 15 20:15:00 2024
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 15 Aug 2024 15:15:00 -0300
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+ <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+ <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+Message-ID: <13C950E9-8D62-4722-AA8B-40BB3FE390A8@gmail.com>
+
+Estimado Jimmy
+
+Nooo ¿como la cortas?
+
+Entiendo que no sirve más. 
+Creo que el fondo blanco te perjudica. Mi experiencia, realicé una reconstrucción 3d, foto, foto con fotógrafo que eliminó el resto, filmación pasada a fotos. Lo peor, la foto con fotógrafo, la de mejor calidad.
+
+Quizás deberías estudiar todo nuevamente, tomar los errores, buscar soluciónes y rehacer el trabajo.
+
+Javier Marcuzzi
+
+
+> El 15 ago 2024, a las 2:30?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribió:
+> 
+> Muchas gracias por todos sus comentarios.
+> Muy valiosa la información, hay algunas cosas que no entiendo muy bien. Si tuvieran algunos documentos que pudiera leer les agradecería.
+> Yo he trabajado con las relaciones entre largo y ancho de la hoja, esas relaciones son muy precisas, sin embargo, el problema está cuando las hojas son afectadas, se pierde bastante la estructura. Al yo obtener el área puedo estimar muy bien la masa seca que tendría esa hoja y comparar con respecto a lo que se ha defoliado.
+> Mando unos ejemplos aquí de una hoja sana y otra afectada, la hoja sana está por la mitad porque la cortamos para poder escanearla
+> Saludos y muchas gracias
+> 
+> Jimmy 
+> 
+> 
+> El mié, 14 de ago. de 2024 4:40 p. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribió:
+>> Estimado
+>> 
+>> Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no distinguirá si es escala de gris, como mezcla de negro y blanco, puede intentar rojo y blanco, rojo y verde, con la idea de detectar cambios en el color relacionado a posibles cambios en la humedad o ?madurez? de las hojas, por ahí, con muy poco trabajo extra y con los mismos datos encuentra algo que le sirve.
+>> 
+>> Javier Marcuzzi
+>> 
+>>> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <cof en qualityexcellence.es <mailto:cof en qualityexcellence.es>> escribió:
+>>> 
+>>> Hola,
+>>> 
+>>> ¿Qué tal?
+>>> El problema que planteas al final es el de determinar el área de una hoja afectada, ya que su superficie nos es regular.
+>>> Para todos estos análisis puedes hacerlo perfectamente en R, en concreto los paquetes "magick" y "EBImage" (este último del repositorio BioConductor).
+>>> Lo que tendrás que hacer es procesar las imágenes, pasarlas a tonos de gris, aplicarles filtros para detectar el contorno y estimar la superficie faltante. Estos cálculos no son complicados. También puedes hacer algún tipo de modelo usando el área de las hojas completas y extrapolando estos resultados a las hojas dañadas.
+>>> Si luego lo que además quieres es hacer algún tipo de modelo, para tener en cuenta el posible daño en los diferentes tipos de hojas, puedes antes de pasar a usar algo más sofisticado como modelos de DeepLearning, usar la información RGB que tienes en tu imagen, seguramente las distribuciones de los colores serán diferentes entre una hoja en buen estado y otra que ha tenido algún daño (estando ambas completas).
+>>> 
+>>> Gracias,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+>>> 
+>>> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribió:
+>>>> Estimado Jimmy Velasco
+>>>> 
+>>>> Si puede tener la materia seca, podría realizar algún tipo de regresión, pero se me crea la duda biológica, ¿que cambio de agua hay y si este cambio modifica la selección como alimento de ese vegetal? En otras palabras, ¿hay un punto donde se pierde palatabilidad y prefiere otra hoja? En ese caso la regresión por materia seca podría no ser adecuado. Yo se que si modifico un poco la materia seca en bovinos tengo diferencias, me conviene hacerlo antes que el ganado pastoree.
+>>>> 
+>>>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para mi gusto personal, R me parece mejor pero Python tomo mucho de R para la parte de estadística, como que se alimenta uno de las ideas de otro, y el otro de las ideas de uno.
+>>>> 
+>>>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese caso me es ?simple? con R, importo un paquete, paso los datos, tomo los resultados, importo otro paquete para lo mismo pero que internamente realiza los cálculos de otra forma, tomo los datos, y así varias veces, tomando al final una comparación para conocer cuál paquete da mejores resultados para mi trabajo, y esto no sería repetidle. En R sería algo como sumary(modelo1, modelo2, modelo3, modelo ?)
+>>>> 
+>>>> Javier Rubén Marcuzzi
+>>>> 
+>>>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>> escribió:
+>>>> > 
+>>>> > Muchas gracias por sus respuestas Manuel y Javier.
+>>>> > El problema al que me enfrento es que a veces estas afectaciones por herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan sobre sí mismas y otras veces se pierde bastante la configuración de la hoja. Por el momento solo me interesa tratar de reconstruir la hoja para poder obtener el área que tendría esa hoja si no se hubiese afectado. Cuento con hojas escaneadas de individuos sanos y defoliados, por así decirlo, la idea mía es comparar los valores predichos de área foliar reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo hacer sencillamente, porque tengo las relaciones área foliar vs masa seca mediante regresión.en este caso las hojas son planas y tienen una forma de elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas afectadas, y que sí es dificil es saber cuánto sería su biomasa si no hubiese perdido su área.
+>>>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría hacerlo? ¿Es mejor en R o en Python?
+>>>> > Muy relevantes sus aportes y
+>>>> > muchas gracias por su colaboración, estoy atento
+>>>> > Saludos
+>>>> > Jimmy
+>>>> > 
+>>>> > 
+>>>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com><mailto:javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>> escribió:
+>>>> >> Estimado
+>>>> >> 
+>>>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es plana, me refiero que al verla sobre el eje se forma un rectángulo, la altura en cada parte de la hoja es la misma, a una misma densidad, puedo calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar un modelo, se podía ?reconstruir? lo perdido.
+>>>> >> 
+>>>> >> Pero entiendo que las hojas no deben tener esa forma morfológica, tan plana, miro morfología vegetal en wikipedia y no está a simple vista mi duda, pero agrega nervadura, como una complicación más.
+>>>> >> 
+>>>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el error de no tener la masa original y utilizar la calculada con el error más el error estadístico de su cálculo original.
+>>>> >> 
+>>>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted también puede tener diferencias de masa.
+>>>> >> 
+>>>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático por no haber tenido en cuenta la biología, creo que la mejor solución y la más simple, es tomar las mediciones el año que viene o en las próximas hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de cálculos.
+>>>> >> 
+>>>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org><mailto:mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org>>> escribió:
+>>>> >> > 
+>>>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+>>>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+>>>> >> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>>>> >> > utilizas como variable objetivo la masa original. El algoritmo tendrá que
+>>>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+>>>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el algoritmo a
+>>>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+>>>> >> > frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+>>>> >> > es lo que te interesa.
+>>>> >> > Keras no es fácil de usar, pero permite hacerlo.
+>>>> >> > Ya me dirás,
+>>>> >> > Un saludo,
+>>>> >> > Manuel
+>>>> >> > 
+>>>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>>>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com> <mailto:jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>>) escribió:
+>>>> >> > 
+>>>> >> >> Buen día, estimados.
+>>>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>>>> >> >> Actualmente me encuentro realizando un estudio estimando la pérdida de
+>>>> >> >> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+>>>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar que han
+>>>> >> >> perdido también el margen e incluso algunas más de la mitad del área de la
+>>>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+>>>> >> >> hoja para así estimar su masa seca en relación con esa área perdida y
+>>>> >> >> obtener valores de pérdida de biomasa foliar.
+>>>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+>>>> >> >> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+>>>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+>>>> >> >> desconozco mucho acerca de si puedo usar este método.
+>>>> >> >> Les agradecería muchísimo si pudieran colaborarme con información o si
+>>>> >> >> alguien puede darme una idea de cómo abordar este tema.
+>>>> >> >> Saludos
+>>>> >> >> Jimmy
+>>>> >> >> 
+>>>> >> >>        [[alternative HTML version deleted]]
+>>>> >> >> 
+>>>> >> >> _______________________________________________
+>>>> >> >> R-help-es mailing list
+>>>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>>>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>> >> >> 
+>>>> >> > 
+>>>> >> >       [[alternative HTML version deleted]]
+>>>> >> > 
+>>>> >> > _______________________________________________
+>>>> >> > R-help-es mailing list
+>>>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>>>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>> >> 
+>>>> 
+>>>> 
+>>>>         [[alternative HTML version deleted]]
+>>>> 
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> 
+>>> 
+>>> -- 
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+> <Screenshot_20240815-122420~2.jpg><Screenshot_20240815-122355~2.jpg>
+
+
+	[[alternative HTML version deleted]]
+
+
+From j|mmyreye@ve|@@co @end|ng |rom gm@||@com  Thu Aug 15 20:24:58 2024
+From: j|mmyreye@ve|@@co @end|ng |rom gm@||@com (Jimmy Erney Reyes Velasco)
+Date: Thu, 15 Aug 2024 13:24:58 -0500
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <13C950E9-8D62-4722-AA8B-40BB3FE390A8@gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+ <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+ <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+ <13C950E9-8D62-4722-AA8B-40BB3FE390A8@gmail.com>
+Message-ID: <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+
+Javier, es necesario para así saber el valor de la masa seca, la planta no
+se va a ver muy afectada en terminos de su fisiología, solo se toma una
+hoja por individuo, el problema aquí es calcular el área defoliada, si lo
+hago con una foto va a ser un poco subjetivo, porque hay hojas que están
+plegadas y eso puede afectar la estimación, la extrapolación a otras hojas
+perdería precisión. Este es solo un caso de hoja afectada, pero hay otras
+en las que se perdió más de la mitad del área de la hoja, desde la parte
+media hasta el ápicr.
+Gracias por tu comentario
+Saludos
+Jimmy
+
+El jue, 15 de ago. de 2024 1:15 p. m., Javier Marcuzzi <
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimado Jimmy
+>
+> Nooo ¿como la cortas?
+>
+> Entiendo que no sirve más.
+> Creo que el fondo blanco te perjudica. Mi experiencia, realicé una
+> reconstrucción 3d, foto, foto con fotógrafo que eliminó el resto, filmación
+> pasada a fotos. Lo peor, la foto con fotógrafo, la de mejor calidad.
+>
+> Quizás deberías estudiar todo nuevamente, tomar los errores, buscar
+> soluciónes y rehacer el trabajo.
+>
+> Javier Marcuzzi
+>
+>
+> El 15 ago 2024, a las 2:30?p. m., Jimmy Erney Reyes Velasco <
+> jimmyreyesvelasco en gmail.com> escribió:
+>
+> Muchas gracias por todos sus comentarios.
+> Muy valiosa la información, hay algunas cosas que no entiendo muy bien. Si
+> tuvieran algunos documentos que pudiera leer les agradecería.
+> Yo he trabajado con las relaciones entre largo y ancho de la hoja, esas
+> relaciones son muy precisas, sin embargo, el problema está cuando las hojas
+> son afectadas, se pierde bastante la estructura. Al yo obtener el área
+> puedo estimar muy bien la masa seca que tendría esa hoja y comparar con
+> respecto a lo que se ha defoliado.
+> Mando unos ejemplos aquí de una hoja sana y otra afectada, la hoja sana
+> está por la mitad porque la cortamos para poder escanearla
+> Saludos y muchas gracias
+>
+> Jimmy
+>
+> El mié, 14 de ago. de 2024 4:40 p. m., Javier Marcuzzi <
+> javier.ruben.marcuzzi en gmail.com> escribió:
+>
+>> Estimado
+>>
+>> Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de
+>> grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no
+>> distinguirá si es escala de gris, como mezcla de negro y blanco, puede
+>> intentar rojo y blanco, rojo y verde, con la idea de detectar cambios en el
+>> color relacionado a posibles cambios en la humedad o ?madurez? de las
+>> hojas, por ahí, con muy poco trabajo extra y con los mismos datos encuentra
+>> algo que le sirve.
+>>
+>> Javier Marcuzzi
+>>
+>> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <cof en qualityexcellence.es>
+>> escribió:
+>>
+>> Hola,
+>>
+>> ¿Qué tal?
+>> El problema que planteas al final es el de determinar el área de una hoja
+>> afectada, ya que su superficie nos es regular.
+>>
+>>    - Para todos estos análisis puedes hacerlo perfectamente en R, en
+>>    concreto los paquetes "magick" y "EBImage" (este último del repositorio
+>>    BioConductor).
+>>    - Lo que tendrás que hacer es procesar las imágenes, pasarlas a tonos
+>>    de gris, aplicarles filtros para detectar el contorno y estimar la
+>>    superficie faltante. Estos cálculos no son complicados. También puedes
+>>    hacer algún tipo de modelo usando el área de las hojas completas y
+>>    extrapolando estos resultados a las hojas dañadas.
+>>
+>> Si luego lo que además quieres es hacer algún tipo de modelo, para tener
+>> en cuenta el posible daño en los diferentes tipos de hojas, puedes antes de
+>> pasar a usar algo más sofisticado como modelos de DeepLearning, usar la
+>> información RGB que tienes en tu imagen, seguramente las distribuciones de
+>> los colores serán diferentes entre una hoja en buen estado y otra que ha
+>> tenido algún daño (estando ambas completas).
+>>
+>> Gracias,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<
+>> javier.ruben.marcuzzi en gmail.com>) escribió:
+>>
+>>> Estimado Jimmy Velasco
+>>>
+>>> Si puede tener la materia seca, podría realizar algún tipo de regresión,
+>>> pero se me crea la duda biológica, ¿que cambio de agua hay y si este cambio
+>>> modifica la selección como alimento de ese vegetal? En otras palabras, ¿hay
+>>> un punto donde se pierde palatabilidad y prefiere otra hoja? En ese caso la
+>>> regresión por materia seca podría no ser adecuado. Yo se que si modifico un
+>>> poco la materia seca en bovinos tengo diferencias, me conviene hacerlo
+>>> antes que el ganado pastoree.
+>>>
+>>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para mi
+>>> gusto personal, R me parece mejor pero Python tomo mucho de R para la parte
+>>> de estadística, como que se alimenta uno de las ideas de otro, y el otro de
+>>> las ideas de uno.
+>>>
+>>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos
+>>> que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese
+>>> caso me es ?simple? con R, importo un paquete, paso los datos, tomo los
+>>> resultados, importo otro paquete para lo mismo pero que internamente
+>>> realiza los cálculos de otra forma, tomo los datos, y así varias veces,
+>>> tomando al final una comparación para conocer cuál paquete da mejores
+>>> resultados para mi trabajo, y esto no sería repetidle. En R sería algo como
+>>> sumary(modelo1, modelo2, modelo3, modelo ?)
+>>>
+>>> Javier Rubén Marcuzzi
+>>>
+>>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <
+>>> jimmyreyesvelasco en gmail.com> escribió:
+>>> >
+>>> > Muchas gracias por sus respuestas Manuel y Javier.
+>>> > El problema al que me enfrento es que a veces estas afectaciones por
+>>> herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan
+>>> sobre sí mismas y otras veces se pierde bastante la configuración de la
+>>> hoja. Por el momento solo me interesa tratar de reconstruir la hoja para
+>>> poder obtener el área que tendría esa hoja si no se hubiese afectado.
+>>> Cuento con hojas escaneadas de individuos sanos y defoliados, por así
+>>> decirlo, la idea mía es comparar los valores predichos de área foliar
+>>> reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo
+>>> hacer sencillamente, porque tengo las relaciones área foliar vs masa seca
+>>> mediante regresión.en este caso las hojas son planas y tienen una forma de
+>>> elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas
+>>> afectadas, y que sí es dificil es saber cuánto sería su biomasa si no
+>>> hubiese perdido su área.
+>>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con
+>>> imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría
+>>> hacerlo? ¿Es mejor en R o en Python?
+>>> > Muy relevantes sus aportes y
+>>> > muchas gracias por su colaboración, estoy atento
+>>> > Saludos
+>>> > Jimmy
+>>> >
+>>> >
+>>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <
+>>> javier.ruben.marcuzzi en gmail.com<mailto:javier.ruben.marcuzzi en gmail.com>>
+>>> escribió:
+>>> >> Estimado
+>>> >>
+>>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es
+>>> plana, me refiero que al verla sobre el eje se forma un rectángulo, la
+>>> altura en cada parte de la hoja es la misma, a una misma densidad, puedo
+>>> calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar
+>>> un modelo, se podía ?reconstruir? lo perdido.
+>>> >>
+>>> >> Pero entiendo que las hojas no deben tener esa forma morfológica, tan
+>>> plana, miro morfología vegetal en wikipedia y no está a simple vista mi
+>>> duda, pero agrega nervadura, como una complicación más.
+>>> >>
+>>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el
+>>> error de no tener la masa original y utilizar la calculada con el error más
+>>> el error estadístico de su cálculo original.
+>>> >>
+>>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el
+>>> forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted
+>>> también puede tener diferencias de masa.
+>>> >>
+>>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático
+>>> por no haber tenido en cuenta la biología, creo que la mejor solución y la
+>>> más simple, es tomar las mediciones el año que viene o en las próximas
+>>> hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de
+>>> cálculos.
+>>> >>
+>>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <
+>>> mmendoza en fulbrightmail.org<mailto:mmendoza en fulbrightmail.org>> escribió:
+>>> >> >
+>>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning.
+>>> Tomas
+>>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los
+>>> márgenes de
+>>> >> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>>> >> > utilizas como variable objetivo la masa original. El algoritmo
+>>> tendrá que
+>>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras,
+>>> si es
+>>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el
+>>> algoritmo a
+>>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con
+>>> hojas
+>>> >> > frescas, podrías incluso determinar la masa fresca de las hojas
+>>> secas, si
+>>> >> > es lo que te interesa.
+>>> >> > Keras no es fácil de usar, pero permite hacerlo.
+>>> >> > Ya me dirás,
+>>> >> > Un saludo,
+>>> >> > Manuel
+>>> >> >
+>>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>)
+>>> escribió:
+>>> >> >
+>>> >> >> Buen día, estimados.
+>>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>>> >> >> Actualmente me encuentro realizando un estudio estimando la
+>>> pérdida de
+>>> >> >> biomasa foliar de una especies de planta, sin embargo, me
+>>> encuentro con el
+>>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar
+>>> que han
+>>> >> >> perdido también el margen e incluso algunas más de la mitad del
+>>> área de la
+>>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del
+>>> área de la
+>>> >> >> hoja para así estimar su masa seca en relación con esa área
+>>> perdida y
+>>> >> >> obtener valores de pérdida de biomasa foliar.
+>>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+>>> >> >> Una de ellas es usar un algoritmo de machine learning para poder
+>>> obtener un
+>>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la
+>>> verdad
+>>> >> >> desconozco mucho acerca de si puedo usar este método.
+>>> >> >> Les agradecería muchísimo si pudieran colaborarme con información
+>>> o si
+>>> >> >> alguien puede darme una idea de cómo abordar este tema.
+>>> >> >> Saludos
+>>> >> >> Jimmy
+>>> >> >>
+>>> >> >>        [[alternative HTML version deleted]]
+>>> >> >>
+>>> >> >> _______________________________________________
+>>> >> >> R-help-es mailing list
+>>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> >> >>
+>>> >> >
+>>> >> >       [[alternative HTML version deleted]]
+>>> >> >
+>>> >> > _______________________________________________
+>>> >> > R-help-es mailing list
+>>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> >>
+>>>
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>
+>> <Screenshot_20240815-122420~2.jpg><Screenshot_20240815-122355~2.jpg>
+>
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu Aug 15 20:34:56 2024
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 15 Aug 2024 15:34:56 -0300
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+ <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+ <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+ <13C950E9-8D62-4722-AA8B-40BB3FE390A8@gmail.com>
+ <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+Message-ID: <DE6C22E6-36FF-426E-AEA1-AEEB5DA916FA@gmail.com>
+
+Jimmy
+
+Entiendo lo que deseas, pero el entrenamiento estadístico para calcular a partir de la foto, hasta donde yo se, de esa forma fallará. Puedes intentarlo, pero lo que yo realicé utilizando imágenes, es simple para reconocer cosas, el ejemplo clásico, incluso con ciertos abusos que me dan dudas. Lo que estás realizando creo que no te llevará a buen puerto. Otro ejemplo, utilicé miles de imágenes de perros y gatos, luego utilicé una foto distinta, es increíble el resultado, pero lo guardo para una ?pericia? judicial. 
+
+Javier
+
+> El 15 ago 2024, a las 3:24?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribió:
+> 
+> Javier, es necesario para así saber el valor de la masa seca, la planta no se va a ver muy afectada en terminos de su fisiología, solo se toma una hoja por individuo, el problema aquí es calcular el área defoliada, si lo hago con una foto va a ser un poco subjetivo, porque hay hojas que están plegadas y eso puede afectar la estimación, la extrapolación a otras hojas perdería precisión. Este es solo un caso de hoja afectada, pero hay otras en las que se perdió más de la mitad del área de la hoja, desde la parte media hasta el ápicr.
+> Gracias por tu comentario
+> Saludos
+> Jimmy
+> 
+> 
+> El jue, 15 de ago. de 2024 1:15 p. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribió:
+>> Estimado Jimmy
+>> 
+>> Nooo ¿como la cortas?
+>> 
+>> Entiendo que no sirve más. 
+>> Creo que el fondo blanco te perjudica. Mi experiencia, realicé una reconstrucción 3d, foto, foto con fotógrafo que eliminó el resto, filmación pasada a fotos. Lo peor, la foto con fotógrafo, la de mejor calidad.
+>> 
+>> Quizás deberías estudiar todo nuevamente, tomar los errores, buscar soluciónes y rehacer el trabajo.
+>> 
+>> Javier Marcuzzi
+>> 
+>> 
+>>> El 15 ago 2024, a las 2:30?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>> escribió:
+>>> 
+>>> Muchas gracias por todos sus comentarios.
+>>> Muy valiosa la información, hay algunas cosas que no entiendo muy bien. Si tuvieran algunos documentos que pudiera leer les agradecería.
+>>> Yo he trabajado con las relaciones entre largo y ancho de la hoja, esas relaciones son muy precisas, sin embargo, el problema está cuando las hojas son afectadas, se pierde bastante la estructura. Al yo obtener el área puedo estimar muy bien la masa seca que tendría esa hoja y comparar con respecto a lo que se ha defoliado.
+>>> Mando unos ejemplos aquí de una hoja sana y otra afectada, la hoja sana está por la mitad porque la cortamos para poder escanearla
+>>> Saludos y muchas gracias
+>>> 
+>>> Jimmy 
+>>> 
+>>> 
+>>> El mié, 14 de ago. de 2024 4:40 p. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribió:
+>>>> Estimado
+>>>> 
+>>>> Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no distinguirá si es escala de gris, como mezcla de negro y blanco, puede intentar rojo y blanco, rojo y verde, con la idea de detectar cambios en el color relacionado a posibles cambios en la humedad o ?madurez? de las hojas, por ahí, con muy poco trabajo extra y con los mismos datos encuentra algo que le sirve.
+>>>> 
+>>>> Javier Marcuzzi
+>>>> 
+>>>>> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <cof en qualityexcellence.es <mailto:cof en qualityexcellence.es>> escribió:
+>>>>> 
+>>>>> Hola,
+>>>>> 
+>>>>> ¿Qué tal?
+>>>>> El problema que planteas al final es el de determinar el área de una hoja afectada, ya que su superficie nos es regular.
+>>>>> Para todos estos análisis puedes hacerlo perfectamente en R, en concreto los paquetes "magick" y "EBImage" (este último del repositorio BioConductor).
+>>>>> Lo que tendrás que hacer es procesar las imágenes, pasarlas a tonos de gris, aplicarles filtros para detectar el contorno y estimar la superficie faltante. Estos cálculos no son complicados. También puedes hacer algún tipo de modelo usando el área de las hojas completas y extrapolando estos resultados a las hojas dañadas.
+>>>>> Si luego lo que además quieres es hacer algún tipo de modelo, para tener en cuenta el posible daño en los diferentes tipos de hojas, puedes antes de pasar a usar algo más sofisticado como modelos de DeepLearning, usar la información RGB que tienes en tu imagen, seguramente las distribuciones de los colores serán diferentes entre una hoja en buen estado y otra que ha tenido algún daño (estando ambas completas).
+>>>>> 
+>>>>> Gracias,
+>>>>> Carlos Ortega
+>>>>> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+>>>>> 
+>>>>> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribió:
+>>>>>> Estimado Jimmy Velasco
+>>>>>> 
+>>>>>> Si puede tener la materia seca, podría realizar algún tipo de regresión, pero se me crea la duda biológica, ¿que cambio de agua hay y si este cambio modifica la selección como alimento de ese vegetal? En otras palabras, ¿hay un punto donde se pierde palatabilidad y prefiere otra hoja? En ese caso la regresión por materia seca podría no ser adecuado. Yo se que si modifico un poco la materia seca en bovinos tengo diferencias, me conviene hacerlo antes que el ganado pastoree.
+>>>>>> 
+>>>>>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para mi gusto personal, R me parece mejor pero Python tomo mucho de R para la parte de estadística, como que se alimenta uno de las ideas de otro, y el otro de las ideas de uno.
+>>>>>> 
+>>>>>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese caso me es ?simple? con R, importo un paquete, paso los datos, tomo los resultados, importo otro paquete para lo mismo pero que internamente realiza los cálculos de otra forma, tomo los datos, y así varias veces, tomando al final una comparación para conocer cuál paquete da mejores resultados para mi trabajo, y esto no sería repetidle. En R sería algo como sumary(modelo1, modelo2, modelo3, modelo ?)
+>>>>>> 
+>>>>>> Javier Rubén Marcuzzi
+>>>>>> 
+>>>>>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>> escribió:
+>>>>>> > 
+>>>>>> > Muchas gracias por sus respuestas Manuel y Javier.
+>>>>>> > El problema al que me enfrento es que a veces estas afectaciones por herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan sobre sí mismas y otras veces se pierde bastante la configuración de la hoja. Por el momento solo me interesa tratar de reconstruir la hoja para poder obtener el área que tendría esa hoja si no se hubiese afectado. Cuento con hojas escaneadas de individuos sanos y defoliados, por así decirlo, la idea mía es comparar los valores predichos de área foliar reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo hacer sencillamente, porque tengo las relaciones área foliar vs masa seca mediante regresión.en este caso las hojas son planas y tienen una forma de elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas afectadas, y que sí es dificil es saber cuánto sería su biomasa si no hubiese perdido su área.
+>>>>>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría hacerlo? ¿Es mejor en R o en Python?
+>>>>>> > Muy relevantes sus aportes y
+>>>>>> > muchas gracias por su colaboración, estoy atento
+>>>>>> > Saludos
+>>>>>> > Jimmy
+>>>>>> > 
+>>>>>> > 
+>>>>>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com><mailto:javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>> escribió:
+>>>>>> >> Estimado
+>>>>>> >> 
+>>>>>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es plana, me refiero que al verla sobre el eje se forma un rectángulo, la altura en cada parte de la hoja es la misma, a una misma densidad, puedo calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar un modelo, se podía ?reconstruir? lo perdido.
+>>>>>> >> 
+>>>>>> >> Pero entiendo que las hojas no deben tener esa forma morfológica, tan plana, miro morfología vegetal en wikipedia y no está a simple vista mi duda, pero agrega nervadura, como una complicación más.
+>>>>>> >> 
+>>>>>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el error de no tener la masa original y utilizar la calculada con el error más el error estadístico de su cálculo original.
+>>>>>> >> 
+>>>>>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted también puede tener diferencias de masa.
+>>>>>> >> 
+>>>>>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático por no haber tenido en cuenta la biología, creo que la mejor solución y la más simple, es tomar las mediciones el año que viene o en las próximas hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de cálculos.
+>>>>>> >> 
+>>>>>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org><mailto:mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org>>> escribió:
+>>>>>> >> > 
+>>>>>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+>>>>>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+>>>>>> >> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>>>>>> >> > utilizas como variable objetivo la masa original. El algoritmo tendrá que
+>>>>>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+>>>>>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el algoritmo a
+>>>>>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+>>>>>> >> > frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+>>>>>> >> > es lo que te interesa.
+>>>>>> >> > Keras no es fácil de usar, pero permite hacerlo.
+>>>>>> >> > Ya me dirás,
+>>>>>> >> > Un saludo,
+>>>>>> >> > Manuel
+>>>>>> >> > 
+>>>>>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>>>>>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com> <mailto:jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>>) escribió:
+>>>>>> >> > 
+>>>>>> >> >> Buen día, estimados.
+>>>>>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>>>>>> >> >> Actualmente me encuentro realizando un estudio estimando la pérdida de
+>>>>>> >> >> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+>>>>>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar que han
+>>>>>> >> >> perdido también el margen e incluso algunas más de la mitad del área de la
+>>>>>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+>>>>>> >> >> hoja para así estimar su masa seca en relación con esa área perdida y
+>>>>>> >> >> obtener valores de pérdida de biomasa foliar.
+>>>>>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+>>>>>> >> >> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+>>>>>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+>>>>>> >> >> desconozco mucho acerca de si puedo usar este método.
+>>>>>> >> >> Les agradecería muchísimo si pudieran colaborarme con información o si
+>>>>>> >> >> alguien puede darme una idea de cómo abordar este tema.
+>>>>>> >> >> Saludos
+>>>>>> >> >> Jimmy
+>>>>>> >> >> 
+>>>>>> >> >>        [[alternative HTML version deleted]]
+>>>>>> >> >> 
+>>>>>> >> >> _______________________________________________
+>>>>>> >> >> R-help-es mailing list
+>>>>>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>>>>>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>> >> >> 
+>>>>>> >> > 
+>>>>>> >> >       [[alternative HTML version deleted]]
+>>>>>> >> > 
+>>>>>> >> > _______________________________________________
+>>>>>> >> > R-help-es mailing list
+>>>>>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>>>>>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>> >> 
+>>>>>> 
+>>>>>> 
+>>>>>>         [[alternative HTML version deleted]]
+>>>>>> 
+>>>>>> _______________________________________________
+>>>>>> R-help-es mailing list
+>>>>>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>> 
+>>>>> 
+>>>>> -- 
+>>>>> Saludos,
+>>>>> Carlos Ortega
+>>>>> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+>>> <Screenshot_20240815-122420~2.jpg><Screenshot_20240815-122355~2.jpg>
+>> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From p@@|e||xperezv @end|ng |rom gm@||@com  Thu Aug 15 20:42:25 2024
+From: p@@|e||xperezv @end|ng |rom gm@||@com (Felix Perez)
+Date: Thu, 15 Aug 2024 14:42:25 -0400
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+ <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+ <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+ <13C950E9-8D62-4722-AA8B-40BB3FE390A8@gmail.com>
+ <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+Message-ID: <CAPeydTDngffDQ9eeHTAvwyhZ8mCAbn2FLJRXMsk8ZPZqd9sajw@mail.gmail.com>
+
+Solo como una idea más: alimentar un BD o una machine leraning con
+fotografias y pesos de cada hoja identificando ciertas variables
+adicionales, tales como dónde se extrajo, altura de ubicación de la hoja,
+etc, etc y etc. Luego con ese modelo alimentado definir los otros procesos
+de análisis.
+
+El jue., 15 ago. 2024 14:25, Jimmy Erney Reyes Velasco <
+jimmyreyesvelasco en gmail.com> escribió:
+
+> Javier, es necesario para así saber el valor de la masa seca, la planta no
+> se va a ver muy afectada en terminos de su fisiología, solo se toma una
+> hoja por individuo, el problema aquí es calcular el área defoliada, si lo
+> hago con una foto va a ser un poco subjetivo, porque hay hojas que están
+> plegadas y eso puede afectar la estimación, la extrapolación a otras hojas
+> perdería precisión. Este es solo un caso de hoja afectada, pero hay otras
+> en las que se perdió más de la mitad del área de la hoja, desde la parte
+> media hasta el ápicr.
+> Gracias por tu comentario
+> Saludos
+> Jimmy
+>
+> El jue, 15 de ago. de 2024 1:15 p. m., Javier Marcuzzi <
+> javier.ruben.marcuzzi en gmail.com> escribió:
+>
+> > Estimado Jimmy
+> >
+> > Nooo ¿como la cortas?
+> >
+> > Entiendo que no sirve más.
+> > Creo que el fondo blanco te perjudica. Mi experiencia, realicé una
+> > reconstrucción 3d, foto, foto con fotógrafo que eliminó el resto,
+> filmación
+> > pasada a fotos. Lo peor, la foto con fotógrafo, la de mejor calidad.
+> >
+> > Quizás deberías estudiar todo nuevamente, tomar los errores, buscar
+> > soluciónes y rehacer el trabajo.
+> >
+> > Javier Marcuzzi
+> >
+> >
+> > El 15 ago 2024, a las 2:30?p. m., Jimmy Erney Reyes Velasco <
+> > jimmyreyesvelasco en gmail.com> escribió:
+> >
+> > Muchas gracias por todos sus comentarios.
+> > Muy valiosa la información, hay algunas cosas que no entiendo muy bien.
+> Si
+> > tuvieran algunos documentos que pudiera leer les agradecería.
+> > Yo he trabajado con las relaciones entre largo y ancho de la hoja, esas
+> > relaciones son muy precisas, sin embargo, el problema está cuando las
+> hojas
+> > son afectadas, se pierde bastante la estructura. Al yo obtener el área
+> > puedo estimar muy bien la masa seca que tendría esa hoja y comparar con
+> > respecto a lo que se ha defoliado.
+> > Mando unos ejemplos aquí de una hoja sana y otra afectada, la hoja sana
+> > está por la mitad porque la cortamos para poder escanearla
+> > Saludos y muchas gracias
+> >
+> > Jimmy
+> >
+> > El mié, 14 de ago. de 2024 4:40 p. m., Javier Marcuzzi <
+> > javier.ruben.marcuzzi en gmail.com> escribió:
+> >
+> >> Estimado
+> >>
+> >> Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de
+> >> grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no
+> >> distinguirá si es escala de gris, como mezcla de negro y blanco, puede
+> >> intentar rojo y blanco, rojo y verde, con la idea de detectar cambios
+> en el
+> >> color relacionado a posibles cambios en la humedad o ?madurez? de las
+> >> hojas, por ahí, con muy poco trabajo extra y con los mismos datos
+> encuentra
+> >> algo que le sirve.
+> >>
+> >> Javier Marcuzzi
+> >>
+> >> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <
+> cof en qualityexcellence.es>
+> >> escribió:
+> >>
+> >> Hola,
+> >>
+> >> ¿Qué tal?
+> >> El problema que planteas al final es el de determinar el área de una
+> hoja
+> >> afectada, ya que su superficie nos es regular.
+> >>
+> >>    - Para todos estos análisis puedes hacerlo perfectamente en R, en
+> >>    concreto los paquetes "magick" y "EBImage" (este último del
+> repositorio
+> >>    BioConductor).
+> >>    - Lo que tendrás que hacer es procesar las imágenes, pasarlas a tonos
+> >>    de gris, aplicarles filtros para detectar el contorno y estimar la
+> >>    superficie faltante. Estos cálculos no son complicados. También
+> puedes
+> >>    hacer algún tipo de modelo usando el área de las hojas completas y
+> >>    extrapolando estos resultados a las hojas dañadas.
+> >>
+> >> Si luego lo que además quieres es hacer algún tipo de modelo, para tener
+> >> en cuenta el posible daño en los diferentes tipos de hojas, puedes
+> antes de
+> >> pasar a usar algo más sofisticado como modelos de DeepLearning, usar la
+> >> información RGB que tienes en tu imagen, seguramente las distribuciones
+> de
+> >> los colores serán diferentes entre una hoja en buen estado y otra que ha
+> >> tenido algún daño (estando ambas completas).
+> >>
+> >> Gracias,
+> >> Carlos Ortega
+> >> www.qualityexcellence.es
+> >>
+> >> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<
+> >> javier.ruben.marcuzzi en gmail.com>) escribió:
+> >>
+> >>> Estimado Jimmy Velasco
+> >>>
+> >>> Si puede tener la materia seca, podría realizar algún tipo de
+> regresión,
+> >>> pero se me crea la duda biológica, ¿que cambio de agua hay y si este
+> cambio
+> >>> modifica la selección como alimento de ese vegetal? En otras palabras,
+> ¿hay
+> >>> un punto donde se pierde palatabilidad y prefiere otra hoja? En ese
+> caso la
+> >>> regresión por materia seca podría no ser adecuado. Yo se que si
+> modifico un
+> >>> poco la materia seca en bovinos tengo diferencias, me conviene hacerlo
+> >>> antes que el ganado pastoree.
+> >>>
+> >>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para
+> mi
+> >>> gusto personal, R me parece mejor pero Python tomo mucho de R para la
+> parte
+> >>> de estadística, como que se alimenta uno de las ideas de otro, y el
+> otro de
+> >>> las ideas de uno.
+> >>>
+> >>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos
+> >>> que pueda probar para lo mismo, yo utilizaría varias herramientas, en
+> ese
+> >>> caso me es ?simple? con R, importo un paquete, paso los datos, tomo los
+> >>> resultados, importo otro paquete para lo mismo pero que internamente
+> >>> realiza los cálculos de otra forma, tomo los datos, y así varias veces,
+> >>> tomando al final una comparación para conocer cuál paquete da mejores
+> >>> resultados para mi trabajo, y esto no sería repetidle. En R sería algo
+> como
+> >>> sumary(modelo1, modelo2, modelo3, modelo ?)
+> >>>
+> >>> Javier Rubén Marcuzzi
+> >>>
+> >>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <
+> >>> jimmyreyesvelasco en gmail.com> escribió:
+> >>> >
+> >>> > Muchas gracias por sus respuestas Manuel y Javier.
+> >>> > El problema al que me enfrento es que a veces estas afectaciones por
+> >>> herbivoría dejan cicatrices que pueden deformar la hoja, a veces se
+> pliegan
+> >>> sobre sí mismas y otras veces se pierde bastante la configuración de la
+> >>> hoja. Por el momento solo me interesa tratar de reconstruir la hoja
+> para
+> >>> poder obtener el área que tendría esa hoja si no se hubiese afectado.
+> >>> Cuento con hojas escaneadas de individuos sanos y defoliados, por así
+> >>> decirlo, la idea mía es comparar los valores predichos de área foliar
+> >>> reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo
+> puedo
+> >>> hacer sencillamente, porque tengo las relaciones área foliar vs masa
+> seca
+> >>> mediante regresión.en este caso las hojas son planas y tienen una
+> forma de
+> >>> elipsoide, sin embargo, para mí no es difícil calcular la masa de las
+> hojas
+> >>> afectadas, y que sí es dificil es saber cuánto sería su biomasa si no
+> >>> hubiese perdido su área.
+> >>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con
+> >>> imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría
+> >>> hacerlo? ¿Es mejor en R o en Python?
+> >>> > Muy relevantes sus aportes y
+> >>> > muchas gracias por su colaboración, estoy atento
+> >>> > Saludos
+> >>> > Jimmy
+> >>> >
+> >>> >
+> >>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <
+> >>> javier.ruben.marcuzzi en gmail.com<mailto:javier.ruben.marcuzzi en gmail.com
+> >>
+> >>> escribió:
+> >>> >> Estimado
+> >>> >>
+> >>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es
+> >>> plana, me refiero que al verla sobre el eje se forma un rectángulo, la
+> >>> altura en cada parte de la hoja es la misma, a una misma densidad,
+> puedo
+> >>> calcular la masa. En ese caso como siguieren, por medio de fotos y
+> entrenar
+> >>> un modelo, se podía ?reconstruir? lo perdido.
+> >>> >>
+> >>> >> Pero entiendo que las hojas no deben tener esa forma morfológica,
+> tan
+> >>> plana, miro morfología vegetal en wikipedia y no está a simple vista mi
+> >>> duda, pero agrega nervadura, como una complicación más.
+> >>> >>
+> >>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el
+> >>> error de no tener la masa original y utilizar la calculada con el
+> error más
+> >>> el error estadístico de su cálculo original.
+> >>> >>
+> >>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el
+> >>> forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted
+> >>> también puede tener diferencias de masa.
+> >>> >>
+> >>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático
+> >>> por no haber tenido en cuenta la biología, creo que la mejor solución
+> y la
+> >>> más simple, es tomar las mediciones el año que viene o en las próximas
+> >>> hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores
+> de
+> >>> cálculos.
+> >>> >>
+> >>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <
+> >>> mmendoza en fulbrightmail.org<mailto:mmendoza en fulbrightmail.org>>
+> escribió:
+> >>> >> >
+> >>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning.
+> >>> Tomas
+> >>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los
+> >>> márgenes de
+> >>> >> > forma similar a las que tienes estropeadas, las digitalizas todas
+> y
+> >>> >> > utilizas como variable objetivo la masa original. El algoritmo
+> >>> tendrá que
+> >>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras,
+> >>> si es
+> >>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el
+> >>> algoritmo a
+> >>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con
+> >>> hojas
+> >>> >> > frescas, podrías incluso determinar la masa fresca de las hojas
+> >>> secas, si
+> >>> >> > es lo que te interesa.
+> >>> >> > Keras no es fácil de usar, pero permite hacerlo.
+> >>> >> > Ya me dirás,
+> >>> >> > Un saludo,
+> >>> >> > Manuel
+> >>> >> >
+> >>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+> >>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com
+> >>)
+> >>> escribió:
+> >>> >> >
+> >>> >> >> Buen día, estimados.
+> >>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+> >>> >> >> Actualmente me encuentro realizando un estudio estimando la
+> >>> pérdida de
+> >>> >> >> biomasa foliar de una especies de planta, sin embargo, me
+> >>> encuentro con el
+> >>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar
+> >>> que han
+> >>> >> >> perdido también el margen e incluso algunas más de la mitad del
+> >>> área de la
+> >>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del
+> >>> área de la
+> >>> >> >> hoja para así estimar su masa seca en relación con esa área
+> >>> perdida y
+> >>> >> >> obtener valores de pérdida de biomasa foliar.
+> >>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+> >>> >> >> Una de ellas es usar un algoritmo de machine learning para poder
+> >>> obtener un
+> >>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la
+> >>> verdad
+> >>> >> >> desconozco mucho acerca de si puedo usar este método.
+> >>> >> >> Les agradecería muchísimo si pudieran colaborarme con información
+> >>> o si
+> >>> >> >> alguien puede darme una idea de cómo abordar este tema.
+> >>> >> >> Saludos
+> >>> >> >> Jimmy
+> >>> >> >>
+> >>> >> >>        [[alternative HTML version deleted]]
+> >>> >> >>
+> >>> >> >> _______________________________________________
+> >>> >> >> R-help-es mailing list
+> >>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> >>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>> >> >>
+> >>> >> >
+> >>> >> >       [[alternative HTML version deleted]]
+> >>> >> >
+> >>> >> > _______________________________________________
+> >>> >> > R-help-es mailing list
+> >>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> >>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>> >>
+> >>>
+> >>>
+> >>>         [[alternative HTML version deleted]]
+> >>>
+> >>> _______________________________________________
+> >>> R-help-es mailing list
+> >>> R-help-es en r-project.org
+> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>
+> >>
+> >>
+> >> --
+> >> Saludos,
+> >> Carlos Ortega
+> >> www.qualityexcellence.es
+> >>
+> >>
+> >> <Screenshot_20240815-122420~2.jpg><Screenshot_20240815-122355~2.jpg>
+> >
+> >
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu Aug 15 21:02:20 2024
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 15 Aug 2024 16:02:20 -0300
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+ <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+ <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+ <13C950E9-8D62-4722-AA8B-40BB3FE390A8@gmail.com>
+ <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+Message-ID: <6B499A1A-1330-4972-9241-644F07A12CDD@gmail.com>
+
+Jimmy
+
+Deja de perder el tiempo y haz una prueba. 
+Visitas a una librería, compra hojas de colores, las recortas y fabricas hojas semejantes a las reales.
+Luego con estas intentas realizar la parte estadística, si logras algo, no invertiste tiempo en algo que debes mejorar, si no logras nada no perderás más tiempo, porque acomodar datos cuándo están mal tomados o hay errores de diseño, es lo peor y si el resultado no sirve, es mucho tiempo y dinero perdido.
+
+Javier
+
+> El 15 ago 2024, a las 3:24?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribió:
+> 
+> Javier, es necesario para así saber el valor de la masa seca, la planta no se va a ver muy afectada en terminos de su fisiología, solo se toma una hoja por individuo, el problema aquí es calcular el área defoliada, si lo hago con una foto va a ser un poco subjetivo, porque hay hojas que están plegadas y eso puede afectar la estimación, la extrapolación a otras hojas perdería precisión. Este es solo un caso de hoja afectada, pero hay otras en las que se perdió más de la mitad del área de la hoja, desde la parte media hasta el ápicr.
+> Gracias por tu comentario
+> Saludos
+> Jimmy
+> 
+> 
+> El jue, 15 de ago. de 2024 1:15 p. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribió:
+>> Estimado Jimmy
+>> 
+>> Nooo ¿como la cortas?
+>> 
+>> Entiendo que no sirve más. 
+>> Creo que el fondo blanco te perjudica. Mi experiencia, realicé una reconstrucción 3d, foto, foto con fotógrafo que eliminó el resto, filmación pasada a fotos. Lo peor, la foto con fotógrafo, la de mejor calidad.
+>> 
+>> Quizás deberías estudiar todo nuevamente, tomar los errores, buscar soluciónes y rehacer el trabajo.
+>> 
+>> Javier Marcuzzi
+>> 
+>> 
+>>> El 15 ago 2024, a las 2:30?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>> escribió:
+>>> 
+>>> Muchas gracias por todos sus comentarios.
+>>> Muy valiosa la información, hay algunas cosas que no entiendo muy bien. Si tuvieran algunos documentos que pudiera leer les agradecería.
+>>> Yo he trabajado con las relaciones entre largo y ancho de la hoja, esas relaciones son muy precisas, sin embargo, el problema está cuando las hojas son afectadas, se pierde bastante la estructura. Al yo obtener el área puedo estimar muy bien la masa seca que tendría esa hoja y comparar con respecto a lo que se ha defoliado.
+>>> Mando unos ejemplos aquí de una hoja sana y otra afectada, la hoja sana está por la mitad porque la cortamos para poder escanearla
+>>> Saludos y muchas gracias
+>>> 
+>>> Jimmy 
+>>> 
+>>> 
+>>> El mié, 14 de ago. de 2024 4:40 p. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribió:
+>>>> Estimado
+>>>> 
+>>>> Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no distinguirá si es escala de gris, como mezcla de negro y blanco, puede intentar rojo y blanco, rojo y verde, con la idea de detectar cambios en el color relacionado a posibles cambios en la humedad o ?madurez? de las hojas, por ahí, con muy poco trabajo extra y con los mismos datos encuentra algo que le sirve.
+>>>> 
+>>>> Javier Marcuzzi
+>>>> 
+>>>>> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <cof en qualityexcellence.es <mailto:cof en qualityexcellence.es>> escribió:
+>>>>> 
+>>>>> Hola,
+>>>>> 
+>>>>> ¿Qué tal?
+>>>>> El problema que planteas al final es el de determinar el área de una hoja afectada, ya que su superficie nos es regular.
+>>>>> Para todos estos análisis puedes hacerlo perfectamente en R, en concreto los paquetes "magick" y "EBImage" (este último del repositorio BioConductor).
+>>>>> Lo que tendrás que hacer es procesar las imágenes, pasarlas a tonos de gris, aplicarles filtros para detectar el contorno y estimar la superficie faltante. Estos cálculos no son complicados. También puedes hacer algún tipo de modelo usando el área de las hojas completas y extrapolando estos resultados a las hojas dañadas.
+>>>>> Si luego lo que además quieres es hacer algún tipo de modelo, para tener en cuenta el posible daño en los diferentes tipos de hojas, puedes antes de pasar a usar algo más sofisticado como modelos de DeepLearning, usar la información RGB que tienes en tu imagen, seguramente las distribuciones de los colores serán diferentes entre una hoja en buen estado y otra que ha tenido algún daño (estando ambas completas).
+>>>>> 
+>>>>> Gracias,
+>>>>> Carlos Ortega
+>>>>> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+>>>>> 
+>>>>> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribió:
+>>>>>> Estimado Jimmy Velasco
+>>>>>> 
+>>>>>> Si puede tener la materia seca, podría realizar algún tipo de regresión, pero se me crea la duda biológica, ¿que cambio de agua hay y si este cambio modifica la selección como alimento de ese vegetal? En otras palabras, ¿hay un punto donde se pierde palatabilidad y prefiere otra hoja? En ese caso la regresión por materia seca podría no ser adecuado. Yo se que si modifico un poco la materia seca en bovinos tengo diferencias, me conviene hacerlo antes que el ganado pastoree.
+>>>>>> 
+>>>>>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para mi gusto personal, R me parece mejor pero Python tomo mucho de R para la parte de estadística, como que se alimenta uno de las ideas de otro, y el otro de las ideas de uno.
+>>>>>> 
+>>>>>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese caso me es ?simple? con R, importo un paquete, paso los datos, tomo los resultados, importo otro paquete para lo mismo pero que internamente realiza los cálculos de otra forma, tomo los datos, y así varias veces, tomando al final una comparación para conocer cuál paquete da mejores resultados para mi trabajo, y esto no sería repetidle. En R sería algo como sumary(modelo1, modelo2, modelo3, modelo ?)
+>>>>>> 
+>>>>>> Javier Rubén Marcuzzi
+>>>>>> 
+>>>>>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>> escribió:
+>>>>>> > 
+>>>>>> > Muchas gracias por sus respuestas Manuel y Javier.
+>>>>>> > El problema al que me enfrento es que a veces estas afectaciones por herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan sobre sí mismas y otras veces se pierde bastante la configuración de la hoja. Por el momento solo me interesa tratar de reconstruir la hoja para poder obtener el área que tendría esa hoja si no se hubiese afectado. Cuento con hojas escaneadas de individuos sanos y defoliados, por así decirlo, la idea mía es comparar los valores predichos de área foliar reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo hacer sencillamente, porque tengo las relaciones área foliar vs masa seca mediante regresión.en este caso las hojas son planas y tienen una forma de elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas afectadas, y que sí es dificil es saber cuánto sería su biomasa si no hubiese perdido su área.
+>>>>>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría hacerlo? ¿Es mejor en R o en Python?
+>>>>>> > Muy relevantes sus aportes y
+>>>>>> > muchas gracias por su colaboración, estoy atento
+>>>>>> > Saludos
+>>>>>> > Jimmy
+>>>>>> > 
+>>>>>> > 
+>>>>>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com><mailto:javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>> escribió:
+>>>>>> >> Estimado
+>>>>>> >> 
+>>>>>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es plana, me refiero que al verla sobre el eje se forma un rectángulo, la altura en cada parte de la hoja es la misma, a una misma densidad, puedo calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar un modelo, se podía ?reconstruir? lo perdido.
+>>>>>> >> 
+>>>>>> >> Pero entiendo que las hojas no deben tener esa forma morfológica, tan plana, miro morfología vegetal en wikipedia y no está a simple vista mi duda, pero agrega nervadura, como una complicación más.
+>>>>>> >> 
+>>>>>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el error de no tener la masa original y utilizar la calculada con el error más el error estadístico de su cálculo original.
+>>>>>> >> 
+>>>>>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted también puede tener diferencias de masa.
+>>>>>> >> 
+>>>>>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático por no haber tenido en cuenta la biología, creo que la mejor solución y la más simple, es tomar las mediciones el año que viene o en las próximas hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de cálculos.
+>>>>>> >> 
+>>>>>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org><mailto:mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org>>> escribió:
+>>>>>> >> > 
+>>>>>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+>>>>>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+>>>>>> >> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>>>>>> >> > utilizas como variable objetivo la masa original. El algoritmo tendrá que
+>>>>>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+>>>>>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el algoritmo a
+>>>>>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+>>>>>> >> > frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+>>>>>> >> > es lo que te interesa.
+>>>>>> >> > Keras no es fácil de usar, pero permite hacerlo.
+>>>>>> >> > Ya me dirás,
+>>>>>> >> > Un saludo,
+>>>>>> >> > Manuel
+>>>>>> >> > 
+>>>>>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>>>>>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com> <mailto:jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>>) escribió:
+>>>>>> >> > 
+>>>>>> >> >> Buen día, estimados.
+>>>>>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>>>>>> >> >> Actualmente me encuentro realizando un estudio estimando la pérdida de
+>>>>>> >> >> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+>>>>>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar que han
+>>>>>> >> >> perdido también el margen e incluso algunas más de la mitad del área de la
+>>>>>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+>>>>>> >> >> hoja para así estimar su masa seca en relación con esa área perdida y
+>>>>>> >> >> obtener valores de pérdida de biomasa foliar.
+>>>>>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+>>>>>> >> >> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+>>>>>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+>>>>>> >> >> desconozco mucho acerca de si puedo usar este método.
+>>>>>> >> >> Les agradecería muchísimo si pudieran colaborarme con información o si
+>>>>>> >> >> alguien puede darme una idea de cómo abordar este tema.
+>>>>>> >> >> Saludos
+>>>>>> >> >> Jimmy
+>>>>>> >> >> 
+>>>>>> >> >>        [[alternative HTML version deleted]]
+>>>>>> >> >> 
+>>>>>> >> >> _______________________________________________
+>>>>>> >> >> R-help-es mailing list
+>>>>>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>>>>>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>> >> >> 
+>>>>>> >> > 
+>>>>>> >> >       [[alternative HTML version deleted]]
+>>>>>> >> > 
+>>>>>> >> > _______________________________________________
+>>>>>> >> > R-help-es mailing list
+>>>>>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>>>>>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>> >> 
+>>>>>> 
+>>>>>> 
+>>>>>>         [[alternative HTML version deleted]]
+>>>>>> 
+>>>>>> _______________________________________________
+>>>>>> R-help-es mailing list
+>>>>>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>> 
+>>>>> 
+>>>>> -- 
+>>>>> Saludos,
+>>>>> Carlos Ortega
+>>>>> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+>>> <Screenshot_20240815-122420~2.jpg><Screenshot_20240815-122355~2.jpg>
+>> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Thu Aug 15 21:02:20 2024
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Thu, 15 Aug 2024 16:02:20 -0300
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+ <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+ <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+ <13C950E9-8D62-4722-AA8B-40BB3FE390A8@gmail.com>
+ <CAEK8QGKTOmnWO5JQyLmTWt+6eWVnwACuFh01_2aR3=QFOLXqAQ@mail.gmail.com>
+Message-ID: <6B499A1A-1330-4972-9241-644F07A12CDD@gmail.com>
+
+Jimmy
+
+Deja de perder el tiempo y haz una prueba. 
+Visitas a una librería, compra hojas de colores, las recortas y fabricas hojas semejantes a las reales.
+Luego con estas intentas realizar la parte estadística, si logras algo, no invertiste tiempo en algo que debes mejorar, si no logras nada no perderás más tiempo, porque acomodar datos cuándo están mal tomados o hay errores de diseño, es lo peor y si el resultado no sirve, es mucho tiempo y dinero perdido.
+
+Javier
+
+> El 15 ago 2024, a las 3:24?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com> escribió:
+> 
+> Javier, es necesario para así saber el valor de la masa seca, la planta no se va a ver muy afectada en terminos de su fisiología, solo se toma una hoja por individuo, el problema aquí es calcular el área defoliada, si lo hago con una foto va a ser un poco subjetivo, porque hay hojas que están plegadas y eso puede afectar la estimación, la extrapolación a otras hojas perdería precisión. Este es solo un caso de hoja afectada, pero hay otras en las que se perdió más de la mitad del área de la hoja, desde la parte media hasta el ápicr.
+> Gracias por tu comentario
+> Saludos
+> Jimmy
+> 
+> 
+> El jue, 15 de ago. de 2024 1:15 p. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribió:
+>> Estimado Jimmy
+>> 
+>> Nooo ¿como la cortas?
+>> 
+>> Entiendo que no sirve más. 
+>> Creo que el fondo blanco te perjudica. Mi experiencia, realicé una reconstrucción 3d, foto, foto con fotógrafo que eliminó el resto, filmación pasada a fotos. Lo peor, la foto con fotógrafo, la de mejor calidad.
+>> 
+>> Quizás deberías estudiar todo nuevamente, tomar los errores, buscar soluciónes y rehacer el trabajo.
+>> 
+>> Javier Marcuzzi
+>> 
+>> 
+>>> El 15 ago 2024, a las 2:30?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>> escribió:
+>>> 
+>>> Muchas gracias por todos sus comentarios.
+>>> Muy valiosa la información, hay algunas cosas que no entiendo muy bien. Si tuvieran algunos documentos que pudiera leer les agradecería.
+>>> Yo he trabajado con las relaciones entre largo y ancho de la hoja, esas relaciones son muy precisas, sin embargo, el problema está cuando las hojas son afectadas, se pierde bastante la estructura. Al yo obtener el área puedo estimar muy bien la masa seca que tendría esa hoja y comparar con respecto a lo que se ha defoliado.
+>>> Mando unos ejemplos aquí de una hoja sana y otra afectada, la hoja sana está por la mitad porque la cortamos para poder escanearla
+>>> Saludos y muchas gracias
+>>> 
+>>> Jimmy 
+>>> 
+>>> 
+>>> El mié, 14 de ago. de 2024 4:40 p. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>> escribió:
+>>>> Estimado
+>>>> 
+>>>> Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no distinguirá si es escala de gris, como mezcla de negro y blanco, puede intentar rojo y blanco, rojo y verde, con la idea de detectar cambios en el color relacionado a posibles cambios en la humedad o ?madurez? de las hojas, por ahí, con muy poco trabajo extra y con los mismos datos encuentra algo que le sirve.
+>>>> 
+>>>> Javier Marcuzzi
+>>>> 
+>>>>> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <cof en qualityexcellence.es <mailto:cof en qualityexcellence.es>> escribió:
+>>>>> 
+>>>>> Hola,
+>>>>> 
+>>>>> ¿Qué tal?
+>>>>> El problema que planteas al final es el de determinar el área de una hoja afectada, ya que su superficie nos es regular.
+>>>>> Para todos estos análisis puedes hacerlo perfectamente en R, en concreto los paquetes "magick" y "EBImage" (este último del repositorio BioConductor).
+>>>>> Lo que tendrás que hacer es procesar las imágenes, pasarlas a tonos de gris, aplicarles filtros para detectar el contorno y estimar la superficie faltante. Estos cálculos no son complicados. También puedes hacer algún tipo de modelo usando el área de las hojas completas y extrapolando estos resultados a las hojas dañadas.
+>>>>> Si luego lo que además quieres es hacer algún tipo de modelo, para tener en cuenta el posible daño en los diferentes tipos de hojas, puedes antes de pasar a usar algo más sofisticado como modelos de DeepLearning, usar la información RGB que tienes en tu imagen, seguramente las distribuciones de los colores serán diferentes entre una hoja en buen estado y otra que ha tenido algún daño (estando ambas completas).
+>>>>> 
+>>>>> Gracias,
+>>>>> Carlos Ortega
+>>>>> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+>>>>> 
+>>>>> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>) escribió:
+>>>>>> Estimado Jimmy Velasco
+>>>>>> 
+>>>>>> Si puede tener la materia seca, podría realizar algún tipo de regresión, pero se me crea la duda biológica, ¿que cambio de agua hay y si este cambio modifica la selección como alimento de ese vegetal? En otras palabras, ¿hay un punto donde se pierde palatabilidad y prefiere otra hoja? En ese caso la regresión por materia seca podría no ser adecuado. Yo se que si modifico un poco la materia seca en bovinos tengo diferencias, me conviene hacerlo antes que el ganado pastoree.
+>>>>>> 
+>>>>>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para mi gusto personal, R me parece mejor pero Python tomo mucho de R para la parte de estadística, como que se alimenta uno de las ideas de otro, y el otro de las ideas de uno.
+>>>>>> 
+>>>>>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese caso me es ?simple? con R, importo un paquete, paso los datos, tomo los resultados, importo otro paquete para lo mismo pero que internamente realiza los cálculos de otra forma, tomo los datos, y así varias veces, tomando al final una comparación para conocer cuál paquete da mejores resultados para mi trabajo, y esto no sería repetidle. En R sería algo como sumary(modelo1, modelo2, modelo3, modelo ?)
+>>>>>> 
+>>>>>> Javier Rubén Marcuzzi
+>>>>>> 
+>>>>>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>> escribió:
+>>>>>> > 
+>>>>>> > Muchas gracias por sus respuestas Manuel y Javier.
+>>>>>> > El problema al que me enfrento es que a veces estas afectaciones por herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan sobre sí mismas y otras veces se pierde bastante la configuración de la hoja. Por el momento solo me interesa tratar de reconstruir la hoja para poder obtener el área que tendría esa hoja si no se hubiese afectado. Cuento con hojas escaneadas de individuos sanos y defoliados, por así decirlo, la idea mía es comparar los valores predichos de área foliar reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo hacer sencillamente, porque tengo las relaciones área foliar vs masa seca mediante regresión.en este caso las hojas son planas y tienen una forma de elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas afectadas, y que sí es dificil es saber cuánto sería su biomasa si no hubiese perdido su área.
+>>>>>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría hacerlo? ¿Es mejor en R o en Python?
+>>>>>> > Muy relevantes sus aportes y
+>>>>>> > muchas gracias por su colaboración, estoy atento
+>>>>>> > Saludos
+>>>>>> > Jimmy
+>>>>>> > 
+>>>>>> > 
+>>>>>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com><mailto:javier.ruben.marcuzzi en gmail.com <mailto:javier.ruben.marcuzzi en gmail.com>>> escribió:
+>>>>>> >> Estimado
+>>>>>> >> 
+>>>>>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es plana, me refiero que al verla sobre el eje se forma un rectángulo, la altura en cada parte de la hoja es la misma, a una misma densidad, puedo calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar un modelo, se podía ?reconstruir? lo perdido.
+>>>>>> >> 
+>>>>>> >> Pero entiendo que las hojas no deben tener esa forma morfológica, tan plana, miro morfología vegetal en wikipedia y no está a simple vista mi duda, pero agrega nervadura, como una complicación más.
+>>>>>> >> 
+>>>>>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el error de no tener la masa original y utilizar la calculada con el error más el error estadístico de su cálculo original.
+>>>>>> >> 
+>>>>>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted también puede tener diferencias de masa.
+>>>>>> >> 
+>>>>>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático por no haber tenido en cuenta la biología, creo que la mejor solución y la más simple, es tomar las mediciones el año que viene o en las próximas hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de cálculos.
+>>>>>> >> 
+>>>>>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org><mailto:mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org>>> escribió:
+>>>>>> >> > 
+>>>>>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning. Tomas
+>>>>>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los márgenes de
+>>>>>> >> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>>>>>> >> > utilizas como variable objetivo la masa original. El algoritmo tendrá que
+>>>>>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras, si es
+>>>>>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el algoritmo a
+>>>>>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con hojas
+>>>>>> >> > frescas, podrías incluso determinar la masa fresca de las hojas secas, si
+>>>>>> >> > es lo que te interesa.
+>>>>>> >> > Keras no es fácil de usar, pero permite hacerlo.
+>>>>>> >> > Ya me dirás,
+>>>>>> >> > Un saludo,
+>>>>>> >> > Manuel
+>>>>>> >> > 
+>>>>>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>>>>>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com> <mailto:jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>>) escribió:
+>>>>>> >> > 
+>>>>>> >> >> Buen día, estimados.
+>>>>>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>>>>>> >> >> Actualmente me encuentro realizando un estudio estimando la pérdida de
+>>>>>> >> >> biomasa foliar de una especies de planta, sin embargo, me encuentro con el
+>>>>>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar que han
+>>>>>> >> >> perdido también el margen e incluso algunas más de la mitad del área de la
+>>>>>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del área de la
+>>>>>> >> >> hoja para así estimar su masa seca en relación con esa área perdida y
+>>>>>> >> >> obtener valores de pérdida de biomasa foliar.
+>>>>>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+>>>>>> >> >> Una de ellas es usar un algoritmo de machine learning para poder obtener un
+>>>>>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la verdad
+>>>>>> >> >> desconozco mucho acerca de si puedo usar este método.
+>>>>>> >> >> Les agradecería muchísimo si pudieran colaborarme con información o si
+>>>>>> >> >> alguien puede darme una idea de cómo abordar este tema.
+>>>>>> >> >> Saludos
+>>>>>> >> >> Jimmy
+>>>>>> >> >> 
+>>>>>> >> >>        [[alternative HTML version deleted]]
+>>>>>> >> >> 
+>>>>>> >> >> _______________________________________________
+>>>>>> >> >> R-help-es mailing list
+>>>>>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>>>>>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>> >> >> 
+>>>>>> >> > 
+>>>>>> >> >       [[alternative HTML version deleted]]
+>>>>>> >> > 
+>>>>>> >> > _______________________________________________
+>>>>>> >> > R-help-es mailing list
+>>>>>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+>>>>>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>>> >> 
+>>>>>> 
+>>>>>> 
+>>>>>>         [[alternative HTML version deleted]]
+>>>>>> 
+>>>>>> _______________________________________________
+>>>>>> R-help-es mailing list
+>>>>>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>> 
+>>>>> 
+>>>>> -- 
+>>>>> Saludos,
+>>>>> Carlos Ortega
+>>>>> www.qualityexcellence.es <http://www.qualityexcellence.es/>
+>>> <Screenshot_20240815-122420~2.jpg><Screenshot_20240815-122355~2.jpg>
+>> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From j|mmyreye@ve|@@co @end|ng |rom gm@||@com  Fri Aug 16 03:39:32 2024
+From: j|mmyreye@ve|@@co @end|ng |rom gm@||@com (Jimmy Erney Reyes Velasco)
+Date: Thu, 15 Aug 2024 20:39:32 -0500
+Subject: [R-es] 
+ =?utf-8?q?Reconstrucci=C3=B3n_de_hojas_con_herbivor=C3=AD?=
+ =?utf-8?q?a?=
+In-Reply-To: <CAOKbq8iBhaLPwaQG5tWA4WYAdEWCs5BRTKYOH2z9SL7n6ARMWw@mail.gmail.com>
+References: <CAEK8QG+RdbCL0Fe_MWF8r3Bn2gP+7V0FHOhaLOQHhE6ZXJtB2g@mail.gmail.com>
+ <CAF3uytXt915Lcaog30XhZ+uJpi_BLp4PXhpZr2k_C+D0J5af_g@mail.gmail.com>
+ <0314369D-5D74-431D-BAAA-5653E22817F2@gmail.com>
+ <CAEK8QGLOG_1FXoLrmUe=kAm0=BOH6xG7ditsoTYUj9Y16xJykQ@mail.gmail.com>
+ <2C035EA6-2B5B-428A-AA64-D481844ADBC6@gmail.com>
+ <CAOKbq8hxntitxxym=W9wTUj1nDkVj88Tid23X-5XPVH6euVtsw@mail.gmail.com>
+ <6275BC03-75AA-4526-BDC4-C09A80C89E6B@gmail.com>
+ <CAEK8QGKQR7O_sbBpEiar_a2qs_bnJQJY6kTQ3g6nDYrC2XsoPw@mail.gmail.com>
+ <CAOKbq8iBhaLPwaQG5tWA4WYAdEWCs5BRTKYOH2z9SL7n6ARMWw@mail.gmail.com>
+Message-ID: <CAEK8QGJRKWFbM-mpCMWOgAg+yPapdNz+ko=nfEGpGDXwfMfh4Q@mail.gmail.com>
+
+Muchas gracias a todos, por sus Portes valiosos.
+¡Saludos!
+
+El jue, 15 de ago. de 2024 2:17 p. m., Carlos Ortega <
+cof en qualityexcellence.es> escribió:
+
+> Hola,
+> ¿Qué tal?
+>
+> Sí, antes de ponerte a calcular cosas, es bueno que plantees un enfoque
+> para abordar el problema. Si ya de partida ves que no va a tener sentido,
+> pues se abandona la idea y a por otra.
+>
+> Si las fotos que tienes de las hojas son de la misma especie, puedes
+> estimar a partir de las hojas no afectadas el ratio de largo y ancho. Con
+> este ratio podrías reconstruir el ancho de la hoja afectada por lo que veo
+> se suele conservar el largo. Claro esto tendrá un margen de error, pero al
+> menos tendrás una estimación del tamaño. De las hojas no afectadas, la
+> relación ancho/largo estará asociada a un valor de superficie. Con estos
+> cálculos de forma sencilla podrías tener el área estimada de la hoja
+> afectada.
+>
+> Si no es correcto que tienes varias  hojas de la misma especie de árbol,
+> entonces lo que veo más directo es que con tu criterio experto, estimes
+> este área de forma "manual".
+>
+> El cálculo del área, el ancho y el largo de una hoja no afectada puedes
+> hacerlo de forma programática manipulando las imágenes como he comentado
+> anteriormente.
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El jue, 15 ago 2024 a las 19:30, Jimmy Erney Reyes Velasco (<
+> jimmyreyesvelasco en gmail.com>) escribió:
+>
+>> Muchas gracias por todos sus comentarios.
+>> Muy valiosa la información, hay algunas cosas que no entiendo muy bien.
+>> Si tuvieran algunos documentos que pudiera leer les agradecería.
+>> Yo he trabajado con las relaciones entre largo y ancho de la hoja, esas
+>> relaciones son muy precisas, sin embargo, el problema está cuando las hojas
+>> son afectadas, se pierde bastante la estructura. Al yo obtener el área
+>> puedo estimar muy bien la masa seca que tendría esa hoja y comparar con
+>> respecto a lo que se ha defoliado.
+>> Mando unos ejemplos aquí de una hoja sana y otra afectada, la hoja sana
+>> está por la mitad porque la cortamos para poder escanearla
+>> Saludos y muchas gracias
+>>
+>> Jimmy
+>>
+>> El mié, 14 de ago. de 2024 4:40 p. m., Javier Marcuzzi <
+>> javier.ruben.marcuzzi en gmail.com> escribió:
+>>
+>>> Estimado
+>>>
+>>> Quizás, por lo que dice Carlos Ortega, antes de pasarlo a escala de
+>>> grises, podría pasarlo a escala RGB, jugar un poco, el entrenamiento no
+>>> distinguirá si es escala de gris, como mezcla de negro y blanco, puede
+>>> intentar rojo y blanco, rojo y verde, con la idea de detectar cambios en el
+>>> color relacionado a posibles cambios en la humedad o ?madurez? de las
+>>> hojas, por ahí, con muy poco trabajo extra y con los mismos datos encuentra
+>>> algo que le sirve.
+>>>
+>>> Javier Marcuzzi
+>>>
+>>> El 14 ago 2024, a las 3:16?p. m., Carlos Ortega <
+>>> cof en qualityexcellence.es> escribió:
+>>>
+>>> Hola,
+>>>
+>>> ¿Qué tal?
+>>> El problema que planteas al final es el de determinar el área de una
+>>> hoja afectada, ya que su superficie nos es regular.
+>>>
+>>>    - Para todos estos análisis puedes hacerlo perfectamente en R, en
+>>>    concreto los paquetes "magick" y "EBImage" (este último del repositorio
+>>>    BioConductor).
+>>>    - Lo que tendrás que hacer es procesar las imágenes, pasarlas a
+>>>    tonos de gris, aplicarles filtros para detectar el contorno y estimar la
+>>>    superficie faltante. Estos cálculos no son complicados. También puedes
+>>>    hacer algún tipo de modelo usando el área de las hojas completas y
+>>>    extrapolando estos resultados a las hojas dañadas.
+>>>
+>>> Si luego lo que además quieres es hacer algún tipo de modelo, para tener
+>>> en cuenta el posible daño en los diferentes tipos de hojas, puedes antes de
+>>> pasar a usar algo más sofisticado como modelos de DeepLearning, usar la
+>>> información RGB que tienes en tu imagen, seguramente las distribuciones de
+>>> los colores serán diferentes entre una hoja en buen estado y otra que ha
+>>> tenido algún daño (estando ambas completas).
+>>>
+>>> Gracias,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>> El mié, 14 ago 2024 a las 14:54, Javier Marcuzzi (<
+>>> javier.ruben.marcuzzi en gmail.com>) escribió:
+>>>
+>>>> Estimado Jimmy Velasco
+>>>>
+>>>> Si puede tener la materia seca, podría realizar algún tipo de
+>>>> regresión, pero se me crea la duda biológica, ¿que cambio de agua hay y si
+>>>> este cambio modifica la selección como alimento de ese vegetal? En otras
+>>>> palabras, ¿hay un punto donde se pierde palatabilidad y prefiere otra hoja?
+>>>> En ese caso la regresión por materia seca podría no ser adecuado. Yo se que
+>>>> si modifico un poco la materia seca en bovinos tengo diferencias, me
+>>>> conviene hacerlo antes que el ganado pastoree.
+>>>>
+>>>> En cuanto a R y Python, yo de Fortran pasé a Python y luego a R, para
+>>>> mi gusto personal, R me parece mejor pero Python tomo mucho de R para la
+>>>> parte de estadística, como que se alimenta uno de las ideas de otro, y el
+>>>> otro de las ideas de uno.
+>>>>
+>>>> La diferencia no está en el lenguaje, sino en la cantidad de algoritmos
+>>>> que pueda probar para lo mismo, yo utilizaría varias herramientas, en ese
+>>>> caso me es ?simple? con R, importo un paquete, paso los datos, tomo los
+>>>> resultados, importo otro paquete para lo mismo pero que internamente
+>>>> realiza los cálculos de otra forma, tomo los datos, y así varias veces,
+>>>> tomando al final una comparación para conocer cuál paquete da mejores
+>>>> resultados para mi trabajo, y esto no sería repetidle. En R sería algo como
+>>>> sumary(modelo1, modelo2, modelo3, modelo ?)
+>>>>
+>>>> Javier Rubén Marcuzzi
+>>>>
+>>>> > El 13 ago 2024, a las 7:40?p. m., Jimmy Erney Reyes Velasco <
+>>>> jimmyreyesvelasco en gmail.com> escribió:
+>>>> >
+>>>> > Muchas gracias por sus respuestas Manuel y Javier.
+>>>> > El problema al que me enfrento es que a veces estas afectaciones por
+>>>> herbivoría dejan cicatrices que pueden deformar la hoja, a veces se pliegan
+>>>> sobre sí mismas y otras veces se pierde bastante la configuración de la
+>>>> hoja. Por el momento solo me interesa tratar de reconstruir la hoja para
+>>>> poder obtener el área que tendría esa hoja si no se hubiese afectado.
+>>>> Cuento con hojas escaneadas de individuos sanos y defoliados, por así
+>>>> decirlo, la idea mía es comparar los valores predichos de área foliar
+>>>> reconstruida y estimar la pérdida de biomasa, aunque la biomasa lo puedo
+>>>> hacer sencillamente, porque tengo las relaciones área foliar vs masa seca
+>>>> mediante regresión.en este caso las hojas son planas y tienen una forma de
+>>>> elipsoide, sin embargo, para mí no es difícil calcular la masa de las hojas
+>>>> afectadas, y que sí es dificil es saber cuánto sería su biomasa si no
+>>>> hubiese perdido su área.
+>>>> > Mi problema va orientado hacia la siguiente pregunta Si lo hago con
+>>>> imágenes, ¿qué datos debería ingresar? ¿Con qué paquetes en R podría
+>>>> hacerlo? ¿Es mejor en R o en Python?
+>>>> > Muy relevantes sus aportes y
+>>>> > muchas gracias por su colaboración, estoy atento
+>>>> > Saludos
+>>>> > Jimmy
+>>>> >
+>>>> >
+>>>> > El mar, 13 de ago. de 2024 9:43 a. m., Javier Marcuzzi <
+>>>> javier.ruben.marcuzzi en gmail.com<mailto:javier.ruben.marcuzzi en gmail.com>>
+>>>> escribió:
+>>>> >> Estimado
+>>>> >>
+>>>> >> Yo no conozco de morfología vegetal, pero si supongo que la hoja es
+>>>> plana, me refiero que al verla sobre el eje se forma un rectángulo, la
+>>>> altura en cada parte de la hoja es la misma, a una misma densidad, puedo
+>>>> calcular la masa. En ese caso como siguieren, por medio de fotos y entrenar
+>>>> un modelo, se podía ?reconstruir? lo perdido.
+>>>> >>
+>>>> >> Pero entiendo que las hojas no deben tener esa forma morfológica,
+>>>> tan plana, miro morfología vegetal en wikipedia y no está a simple vista mi
+>>>> duda, pero agrega nervadura, como una complicación más.
+>>>> >>
+>>>> >> Aquí hay dos problemas, el cálculo realizado con su error, más el
+>>>> error de no tener la masa original y utilizar la calculada con el error más
+>>>> el error estadístico de su cálculo original.
+>>>> >>
+>>>> >> Un agrónomo podría ayudarlo, yo como veterinario se que si corto el
+>>>> forraje a la mañana, tengo diferencias a la tarde, por lo cuál, usted
+>>>> también puede tener diferencias de masa.
+>>>> >>
+>>>> >> Posiblemente se ?meta? en un gran problema estadístico o matemático
+>>>> por no haber tenido en cuenta la biología, creo que la mejor solución y la
+>>>> más simple, es tomar las mediciones el año que viene o en las próximas
+>>>> hojas. Puede tener demasiado trabajo y al aplicarlo falle por errores de
+>>>> cálculos.
+>>>> >>
+>>>> >> > El 13 ago 2024, a las 12:35?a. m., Manuel Mendoza <
+>>>> mmendoza en fulbrightmail.org<mailto:mmendoza en fulbrightmail.org>>
+>>>> escribió:
+>>>> >> >
+>>>> >> > Hola  Jimmy, creo que solo podrías intentarlo con deep learning.
+>>>> Tomas
+>>>> >> > hojas enteras, las pesas, a algunas de ellas les quitas los
+>>>> márgenes de
+>>>> >> > forma similar a las que tienes estropeadas, las digitalizas todas y
+>>>> >> > utilizas como variable objetivo la masa original. El algoritmo
+>>>> tendrá que
+>>>> >> > aprender a inferir la masa a partir del patrón en las  nervaduras,
+>>>> si es
+>>>> >> > que se relaciona con la masa, que supongo que sí. Le aplicas el
+>>>> algoritmo a
+>>>> >> > las estropeadas y tendrás su masa original. Si lo haces todo con
+>>>> hojas
+>>>> >> > frescas, podrías incluso determinar la masa fresca de las hojas
+>>>> secas, si
+>>>> >> > es lo que te interesa.
+>>>> >> > Keras no es fácil de usar, pero permite hacerlo.
+>>>> >> > Ya me dirás,
+>>>> >> > Un saludo,
+>>>> >> > Manuel
+>>>> >> >
+>>>> >> > El mar, 13 ago 2024 a las 0:54, Jimmy Erney Reyes Velasco (<
+>>>> >> > jimmyreyesvelasco en gmail.com <mailto:jimmyreyesvelasco en gmail.com>>)
+>>>> escribió:
+>>>> >> >
+>>>> >> >> Buen día, estimados.
+>>>> >> >> Tengo un problema y me gustaría saber cómo solucionarlo.
+>>>> >> >> Actualmente me encuentro realizando un estudio estimando la
+>>>> pérdida de
+>>>> >> >> biomasa foliar de una especies de planta, sin embargo, me
+>>>> encuentro con el
+>>>> >> >> siguiente problema: algunas hojas han perdido tanta área foliar
+>>>> que han
+>>>> >> >> perdido también el margen e incluso algunas más de la mitad del
+>>>> área de la
+>>>> >> >> hojas. Mi objetivo es realizar un modelo de reconstrucción del
+>>>> área de la
+>>>> >> >> hoja para así estimar su masa seca en relación con esa área
+>>>> perdida y
+>>>> >> >> obtener valores de pérdida de biomasa foliar.
+>>>> >> >> Tengo algunas ideas, pero no sé cómo empezar.
+>>>> >> >> Una de ellas es usar un algoritmo de machine learning para poder
+>>>> obtener un
+>>>> >> >> modelo que me permita reconstruir el margen de la hoja, pero la
+>>>> verdad
+>>>> >> >> desconozco mucho acerca de si puedo usar este método.
+>>>> >> >> Les agradecería muchísimo si pudieran colaborarme con información
+>>>> o si
+>>>> >> >> alguien puede darme una idea de cómo abordar este tema.
+>>>> >> >> Saludos
+>>>> >> >> Jimmy
+>>>> >> >>
+>>>> >> >>        [[alternative HTML version deleted]]
+>>>> >> >>
+>>>> >> >> _______________________________________________
+>>>> >> >> R-help-es mailing list
+>>>> >> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>>> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>> >> >>
+>>>> >> >
+>>>> >> >       [[alternative HTML version deleted]]
+>>>> >> >
+>>>> >> > _______________________________________________
+>>>> >> > R-help-es mailing list
+>>>> >> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>>> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>> >>
+>>>>
+>>>>
+>>>>         [[alternative HTML version deleted]]
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>>>
+>>> --
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>>
+>>>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+

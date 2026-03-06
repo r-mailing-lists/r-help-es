@@ -1,0 +1,6510 @@
+From j.para.fernandez en hotmail.com  Sat Jul  1 11:06:21 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sat, 1 Jul 2017 09:06:21 +0000
+Subject: [R-es] OFFTOPIC: SPARK Y H2O
+Message-ID: <VI1PR0801MB2096739735E62BCBFF748AB9CCD00@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Buenas erreros!!
+
+
+Una cuestión de las que tengo ciertas dudas es saber en que se diferencian Spark y H2o, si son competencia, si  valen para lo mismo o no....
+
+
+Según lo poco que se, Spark es una manera de agilizar el Map-Reduce, y con la libreria MLlib, puedes hacer datamining de grandes datasheets, y si lo conectas con R o con Python, puedes usar ese lenguaje.
+
+
+H2O es una herramienta que nos permite hacer datamining para grandes datasets, balanceando entre los nodos/clusters del sistema, y  conectado con R o Python puedes hacerlo usando el lenguaje de estos.
+
+Entonces, para que me vale Spark si tengo ya H2O?
+
+
+Es que no veo claro para que vale cada herramienta.
+
+
+Gracias
+
+Jesús
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sat Jul  1 23:28:33 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 1 Jul 2017 23:28:33 +0200
+Subject: [R-es] OFFTOPIC: SPARK Y H2O
+In-Reply-To: <VI1PR0801MB2096739735E62BCBFF748AB9CCD00@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB2096739735E62BCBFF748AB9CCD00@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <CAOKbq8j=hErWXt5FB_8Gq8PitiRs3iRiqdB1QdcWZn-OtA1JcQ@mail.gmail.com>
+
+Hola Jesús,
+
+Te comento varios detalles, aunque son muchos los matices...
+
+   - Desde el punto de vista de algoritmos, H2O tiene ventajas sobre Spark
+   tanto de performance como de variedad. H2O incorpora ya un algoritmo propio
+   de deeplearning y recientemente ya es compatible con Keras, Tensorflow,
+   Mxnet ademas de con xgboost. Spark no ha entrado en este mundo todavía.
+      - Estos son los algoritmos que recoge Spark:
+      https://spark.apache.org/docs/latest/mllib-guide.html
+      - Y estos los de H2O:
+      http://docs.h2o.ai/h2o/latest-stable/index.html#algorithms
+      - No me olvidaría de dar una vuelta por esta comparativa de H2O,
+      Spark, Python, R para diferentes tamaños de conjuntos, capacidad de
+      predicción, velocidad, etc: https://github.com/szilard/benchm-ml
+
+
+   - Desde el punto de vista de implementación en "producción". Spark está
+   mucho más extendido, se utiliza como solución para procesamiento en
+   streaming mientras que h2o no está planteado para esto, aunque puedes crear
+   un modelo y como objeto ponerlo en producción independiente de arrancar
+   H2O.
+
+
+   - Spark forma parte de las distribuciones enterprise por defecto y hay
+   mucho apoyo de las grandes empresas que junto con una gran comunidad hace
+   más fácil encontrar respuesta a dudas, problemas. H2O está consolidándose
+   cada vez más pero es una compañía de 70 empleados y está centrada puramente
+   en el MachineLearning Aunque van creciendo muy rápido y los acuerdos
+   recientes con Nvidia harán que veamos ya H2O sobre GPUs.
+
+
+Saludos,
+Carlos Ortega
+www.qualiytexcellence.es
+
+El 1 de julio de 2017, 11:06, Jesús Para Fernández <
+j.para.fernandez en hotmail.com> escribió:
+
+> Buenas erreros!!
+>
+>
+> Una cuestión de las que tengo ciertas dudas es saber en que se diferencian
+> Spark y H2o, si son competencia, si  valen para lo mismo o no....
+>
+>
+> Según lo poco que se, Spark es una manera de agilizar el Map-Reduce, y con
+> la libreria MLlib, puedes hacer datamining de grandes datasheets, y si lo
+> conectas con R o con Python, puedes usar ese lenguaje.
+>
+>
+> H2O es una herramienta que nos permite hacer datamining para grandes
+> datasets, balanceando entre los nodos/clusters del sistema, y  conectado
+> con R o Python puedes hacerlo usando el lenguaje de estos.
+>
+> Entonces, para que me vale Spark si tengo ya H2O?
+>
+>
+> Es que no veo claro para que vale cada herramienta.
+>
+>
+> Gracias
+>
+> Jesús
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Sun Jul  2 10:36:26 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 2 Jul 2017 08:36:26 +0000
+Subject: [R-es] OFFTOPIC: SPARK Y H2O
+In-Reply-To: <CAOKbq8j=hErWXt5FB_8Gq8PitiRs3iRiqdB1QdcWZn-OtA1JcQ@mail.gmail.com>
+References: <VI1PR0801MB2096739735E62BCBFF748AB9CCD00@VI1PR0801MB2096.eurprd08.prod.outlook.com>,
+ <CAOKbq8j=hErWXt5FB_8Gq8PitiRs3iRiqdB1QdcWZn-OtA1JcQ@mail.gmail.com>
+Message-ID: <VI1PR0801MB2096B38C33B6C329C93073E0CCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Te estoy entendiendo entonces que salvo el streaming, hacen mas o menos lo mismo con las salvedades de que Spark tiene mucho más soporte a día de hoy?
+
+
+
+Enviado desde Correo<https://go.microsoft.com/fwlink/?LinkId=550986> para Windows 10
+
+De: Carlos Ortega<mailto:cof en qualityexcellence.es>
+Enviado: sábado, 1 de julio de 2017 23:28
+Para: Jesús Para Fernández<mailto:j.para.fernandez en hotmail.com>
+CC: r-help-es en r-project.org<mailto:r-help-es en r-project.org>
+Asunto: Re: [R-es] OFFTOPIC: SPARK Y H2O
+
+Hola Jesús,
+
+Te comento varios detalles, aunque son muchos los matices...
+
+  *   Desde el punto de vista de algoritmos, H2O tiene ventajas sobre Spark tanto de performance como de variedad. H2O incorpora ya un algoritmo propio de deeplearning y recientemente ya es compatible con Keras, Tensorflow, Mxnet ademas de con xgboost. Spark no ha entrado en este mundo todavía.
+
+     *   Estos son los algoritmos que recoge Spark: https://spark.apache.org/docs/latest/mllib-guide.html
+     *   Y estos los de H2O: http://docs.h2o.ai/h2o/latest-stable/index.html#algorithms
+     *   No me olvidaría de dar una vuelta por esta comparativa de H2O, Spark, Python, R para diferentes tamaños de conjuntos, capacidad de predicción, velocidad, etc: https://github.com/szilard/benchm-ml
+
+  *   Desde el punto de vista de implementación en "producción". Spark está mucho más extendido, se utiliza como solución para procesamiento en streaming mientras que h2o no está planteado para esto, aunque puedes crear un modelo y como objeto ponerlo en producción independiente de arrancar H2O.
+
+  *   Spark forma parte de las distribuciones enterprise por defecto y hay mucho apoyo de las grandes empresas que junto con una gran comunidad hace más fácil encontrar respuesta a dudas, problemas. H2O está consolidándose cada vez más pero es una compañía de 70 empleados y está centrada puramente en el MachineLearning Aunque van creciendo muy rápido y los acuerdos recientes con Nvidia harán que veamos ya H2O sobre GPUs.
+
+Saludos,
+Carlos Ortega
+www.qualiytexcellence.es<http://www.qualiytexcellence.es>
+
+El 1 de julio de 2017, 11:06, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+Buenas erreros!!
+
+
+Una cuestión de las que tengo ciertas dudas es saber en que se diferencian Spark y H2o, si son competencia, si  valen para lo mismo o no....
+
+
+Según lo poco que se, Spark es una manera de agilizar el Map-Reduce, y con la libreria MLlib, puedes hacer datamining de grandes datasheets, y si lo conectas con R o con Python, puedes usar ese lenguaje.
+
+
+H2O es una herramienta que nos permite hacer datamining para grandes datasets, balanceando entre los nodos/clusters del sistema, y  conectado con R o Python puedes hacerlo usando el lenguaje de estos.
+
+Entonces, para que me vale Spark si tengo ya H2O?
+
+
+Es que no veo claro para que vale cada herramienta.
+
+
+Gracias
+
+Jesús
+
+        [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+--
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es<http://www.qualityexcellence.es>
+
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Sun Jul  2 10:45:20 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 2 Jul 2017 08:45:20 +0000
+Subject: [R-es] Plantear problema desde el punto de vista Big Data
+Message-ID: <VI1PR0801MB2096C1E530053DF976607CDBCCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Buenas,
+
+Como planteairiais el siguiente problema desde el punto de vista Big DATA.
+
+Imaginad que teneis un sistema que genera un csv cada segundo de 2 megas aprox. Ese csv tiene que ser preprocesado para sacar las variables importantes y luego relacionado con la variable respuesta, la cual es dicotomica (OK,NOK)
+
+
+Mi idea seria, usar spark para la ingesta de ese archivo, luego preprocesarlo con H2O conectado con R, y subirlo a una base de datos sql.
+
+
+Una vez que la base de datos se va llenando, intentar genear algun modelo usando H2O conectado con R, y con el modelo ya validado, cada nueva instancia hacerla pasar por ese modelo.
+
+¿Qué os parece la propuesta? ¿Lo hariais de otra manera?
+
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sun Jul  2 14:32:39 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sun, 2 Jul 2017 14:32:39 +0200
+Subject: [R-es] OFFTOPIC: SPARK Y H2O
+In-Reply-To: <VI1PR0801MB2096B38C33B6C329C93073E0CCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB2096739735E62BCBFF748AB9CCD00@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+ <CAOKbq8j=hErWXt5FB_8Gq8PitiRs3iRiqdB1QdcWZn-OtA1JcQ@mail.gmail.com>
+ <VI1PR0801MB2096B38C33B6C329C93073E0CCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <CAOKbq8jnLOpn1LjYpitemhNJpxGfQe93N+KD=j3tNXsRUZZJ1w@mail.gmail.com>
+
+El streaming, la diferencia entre algoritmos y el soporte...
+
+El 2 de julio de 2017, 10:36, Jesús Para Fernández <
+j.para.fernandez en hotmail.com> escribió:
+
+> Te estoy entendiendo entonces que salvo el streaming, hacen mas o menos lo
+> mismo con las salvedades de que Spark tiene mucho más soporte a día de hoy?
+>
+>
+>
+>
+>
+>
+>
+> Enviado desde Correo <https://go.microsoft.com/fwlink/?LinkId=550986>
+> para Windows 10
+>
+>
+>
+> *De: *Carlos Ortega <cof en qualityexcellence.es>
+> *Enviado: *sábado, 1 de julio de 2017 23:28
+> *Para: *Jesús Para Fernández <j.para.fernandez en hotmail.com>
+> *CC: *r-help-es en r-project.org
+> *Asunto: *Re: [R-es] OFFTOPIC: SPARK Y H2O
+>
+>
+>
+> Hola Jesús,
+>
+>
+>
+> Te comento varios detalles, aunque son muchos los matices...
+>
+>    - Desde el punto de vista de algoritmos, H2O tiene ventajas sobre
+>    Spark tanto de performance como de variedad. H2O incorpora ya un algoritmo
+>    propio de deeplearning y recientemente ya es compatible con Keras,
+>    Tensorflow, Mxnet ademas de con xgboost. Spark no ha entrado en este mundo
+>    todavía.
+>
+>
+>    - Estos son los algoritmos que recoge Spark:
+>       https://spark.apache.org/docs/latest/mllib-guide.html
+>       <https://spark.apache.org/docs/latest/mllib-guide.html>
+>       - Y estos los de H2O: http://docs.h2o.ai/h2o/
+>       latest-stable/index.html#algorithms
+>       <http://docs.h2o.ai/h2o/latest-stable/index.html#algorithms>
+>       - No me olvidaría de dar una vuelta por esta comparativa de H2O,
+>       Spark, Python, R para diferentes tamaños de conjuntos, capacidad de
+>       predicción, velocidad, etc: https://github.com/szilard/benchm-ml
+>
+>
+>    - Desde el punto de vista de implementación en "producción". Spark
+>    está mucho más extendido, se utiliza como solución para procesamiento en
+>    streaming mientras que h2o no está planteado para esto, aunque puedes crear
+>    un modelo y como objeto ponerlo en producción independiente de arrancar
+>    H2O.
+>
+>
+>    - Spark forma parte de las distribuciones enterprise por defecto y hay
+>    mucho apoyo de las grandes empresas que junto con una gran comunidad hace
+>    más fácil encontrar respuesta a dudas, problemas. H2O está consolidándose
+>    cada vez más pero es una compañía de 70 empleados y está centrada puramente
+>    en el MachineLearning Aunque van creciendo muy rápido y los acuerdos
+>    recientes con Nvidia harán que veamos ya H2O sobre GPUs.
+>
+>
+>
+> Saludos,
+>
+> Carlos Ortega
+>
+> www.qualiytexcellence.es
+>
+>
+>
+> El 1 de julio de 2017, 11:06, Jesús Para Fernández <
+> j.para.fernandez en hotmail.com> escribió:
+>
+> Buenas erreros!!
+>
+>
+> Una cuestión de las que tengo ciertas dudas es saber en que se diferencian
+> Spark y H2o, si son competencia, si  valen para lo mismo o no....
+>
+>
+> Según lo poco que se, Spark es una manera de agilizar el Map-Reduce, y con
+> la libreria MLlib, puedes hacer datamining de grandes datasheets, y si lo
+> conectas con R o con Python, puedes usar ese lenguaje.
+>
+>
+> H2O es una herramienta que nos permite hacer datamining para grandes
+> datasets, balanceando entre los nodos/clusters del sistema, y  conectado
+> con R o Python puedes hacerlo usando el lenguaje de estos.
+>
+> Entonces, para que me vale Spark si tengo ya H2O?
+>
+>
+> Es que no veo claro para que vale cada herramienta.
+>
+>
+> Gracias
+>
+> Jesús
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+>
+> --
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sun Jul  2 14:37:37 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sun, 2 Jul 2017 14:37:37 +0200
+Subject: [R-es] Plantear problema desde el punto de vista Big Data
+In-Reply-To: <VI1PR0801MB2096C1E530053DF976607CDBCCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB2096C1E530053DF976607CDBCCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <CAOKbq8jRXZ+1ZDOe2wGz+QZ0=mx2nPSbxFhZ4gQiVS0MMr2JHQ@mail.gmail.com>
+
+Mira esto, sobre como productivizar H2O...
+
+https://github.com/h2oai/h2o-meetups/tree/master/2016_07_19_H2O_Open_Tour_NYC_Prod
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 2 de julio de 2017, 10:45, Jesús Para Fernández <
+j.para.fernandez en hotmail.com> escribió:
+
+> Buenas,
+>
+> Como planteairiais el siguiente problema desde el punto de vista Big DATA.
+>
+> Imaginad que teneis un sistema que genera un csv cada segundo de 2 megas
+> aprox. Ese csv tiene que ser preprocesado para sacar las variables
+> importantes y luego relacionado con la variable respuesta, la cual es
+> dicotomica (OK,NOK)
+>
+>
+> Mi idea seria, usar spark para la ingesta de ese archivo, luego
+> preprocesarlo con H2O conectado con R, y subirlo a una base de datos sql.
+>
+>
+> Una vez que la base de datos se va llenando, intentar genear algun modelo
+> usando H2O conectado con R, y con el modelo ya validado, cada nueva
+> instancia hacerla pasar por ese modelo.
+>
+> ¿Qué os parece la propuesta? ¿Lo hariais de otra manera?
+>
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From gustavo.redondo en ustadistancia.edu.co  Sun Jul  2 17:23:14 2017
+From: gustavo.redondo en ustadistancia.edu.co (Gustavo Adolfo Redondo)
+Date: Sun, 2 Jul 2017 10:23:14 -0500
+Subject: [R-es] Favor ayuda
+Message-ID: <CAL8-oU6z3XHuymQkcC8dxAvFidJhTi2U+4RA16dMBoqQVN5U3w@mail.gmail.com>
+
+Buen día
+
+Tengo el problema que *siempre que voy a dibujar algo (plot()), me aparece
+la grafica en una venta alterna y no en la ventana inferior izquierda
+(Plots) de Rstudio.*
+
+Por favor con que instrucción pudo reconfigurar esto, para que siempre
+aparezca en la parte inferior izquierda y no en una alterna ?
+
+Agradezco su colaboración.
+
+Atte.,
+
+Gustavo
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sun Jul  2 17:45:23 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sun, 2 Jul 2017 17:45:23 +0200
+Subject: [R-es] Favor ayuda
+In-Reply-To: <CAL8-oU6z3XHuymQkcC8dxAvFidJhTi2U+4RA16dMBoqQVN5U3w@mail.gmail.com>
+References: <CAL8-oU6z3XHuymQkcC8dxAvFidJhTi2U+4RA16dMBoqQVN5U3w@mail.gmail.com>
+Message-ID: <CAOKbq8htAi9yds55kY45xCy+T3hH=Lx-kVP73_1QP9FvfaYo-w@mail.gmail.com>
+
+Hola,
+
+¿Nos puedes escribir el código "R" con el que te está pasando esto?..
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 2 de julio de 2017, 17:23, Gustavo Adolfo Redondo <
+gustavo.redondo en ustadistancia.edu.co> escribió:
+
+> Buen día
+>
+> Tengo el problema que *siempre que voy a dibujar algo (plot()), me aparece
+> la grafica en una venta alterna y no en la ventana inferior izquierda
+> (Plots) de Rstudio.*
+>
+> Por favor con que instrucción pudo reconfigurar esto, para que siempre
+> aparezca en la parte inferior izquierda y no en una alterna ?
+>
+> Agradezco su colaboración.
+>
+> Atte.,
+>
+> Gustavo
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From freddy.lopez.quintero en gmail.com  Sun Jul  2 17:50:27 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Sun, 2 Jul 2017 11:50:27 -0400
+Subject: [R-es] Favor ayuda
+In-Reply-To: <CAL8-oU6z3XHuymQkcC8dxAvFidJhTi2U+4RA16dMBoqQVN5U3w@mail.gmail.com>
+References: <CAL8-oU6z3XHuymQkcC8dxAvFidJhTi2U+4RA16dMBoqQVN5U3w@mail.gmail.com>
+Message-ID: <CALCOUqu5BDkWL6bmVYJV5XMs+JojoPiSiv_yxC_bdM1CO9b=wQ@mail.gmail.com>
+
+2017-07-02 11:23 GMT-04:00 Gustavo Adolfo Redondo <
+gustavo.redondo en ustadistancia.edu.co>:
+
+> Por favor con que instrucción pudo reconfigurar esto, para que siempre
+> aparezca en la parte inferior izquierda y no en una alterna ?
+>
+
+?Parece un problema de vieja data:
+
+https://support.rstudio.com/hc/en-us/community/posts/207640217-Graphic-devices-are-opened-outside-RStudio
+>
+
+de esos que suelen resolverse reinstalando/actualizando Rstudio...
+
+¿Sobre qué sistema estás y qué versión de R y RStudio manejas?
+
+¡Salud!
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Sun Jul  2 19:04:17 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 2 Jul 2017 17:04:17 +0000
+Subject: [R-es] Favor ayuda
+In-Reply-To: <CAL8-oU6z3XHuymQkcC8dxAvFidJhTi2U+4RA16dMBoqQVN5U3w@mail.gmail.com>
+References: <CAL8-oU6z3XHuymQkcC8dxAvFidJhTi2U+4RA16dMBoqQVN5U3w@mail.gmail.com>
+Message-ID: <VI1PR0801MB20961877E2895B42BD16DE50CCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Comprueba que en tu código no has puesto windows(), que hace que se abra una nueva ventana....
+
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Gustavo Adolfo Redondo <gustavo.redondo en ustadistancia.edu.co>
+Enviado: domingo, 2 de julio de 2017 17:23
+Para: r-help-es en r-project.org
+Asunto: [R-es] Favor ayuda
+
+Buen día
+
+Tengo el problema que *siempre que voy a dibujar algo (plot()), me aparece
+la grafica en una venta alterna y no en la ventana inferior izquierda
+(Plots) de Rstudio.*
+
+Por favor con que instrucción pudo reconfigurar esto, para que siempre
+aparezca en la parte inferior izquierda y no en una alterna ?
+
+Agradezco su colaboración.
+
+Atte.,
+
+Gustavo
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+Página de Información de R-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>
+stat.ethz.ch
+Esta es una lista de correo para solicitar ayuda sobre R en español y se entiende como un complemento social a la documentación, libros, etc. disponibles sobre R ...
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Sun Jul  2 19:05:33 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 2 Jul 2017 17:05:33 +0000
+Subject: [R-es] Big datasheet
+Message-ID: <VI1PR0801MB2096181FF12DBE0F4196A18BCCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Alguien sabe donde puedo encontrar algun datasheet gigante, de más de 5 gigas, para poder practicar con grandes volumenes de información?
+
+Lo que quiero es probar a cargarlos con h20 y crear  modelos con ellos. Me gustaria sobretodo problemas de clasificación...
+
+Gracias
+
+Jesús
+
+
+	[[alternative HTML version deleted]]
+
+
+From cgb en datanalytics.com  Sun Jul  2 19:11:26 2017
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Sun, 2 Jul 2017 19:11:26 +0200
+Subject: [R-es] Big datasheet
+In-Reply-To: <VI1PR0801MB2096181FF12DBE0F4196A18BCCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB2096181FF12DBE0F4196A18BCCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <CADg83edFk2wLhiTtpnd6tFg0Z5_2-meZrJZvSKLnYEy72kpZcw@mail.gmail.com>
+
+Todo el mundo está usando esto
+<http://stat-computing.org/dataexpo/2009/the-data.html>.
+
+Si quieres ser más original, prueba con los microdatos del español de 2011,
+que viene a ser un par de GB.
+
+
+El 2 de julio de 2017, 19:05, Jesús Para Fernández <
+j.para.fernandez en hotmail.com> escribió:
+
+> Alguien sabe donde puedo encontrar algun datasheet gigante, de más de 5
+> gigas, para poder practicar con grandes volumenes de información?
+>
+> Lo que quiero es probar a cargarlos con h20 y crear  modelos con ellos. Me
+> gustaria sobretodo problemas de clasificación...
+>
+> Gracias
+>
+> Jesús
+>
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Sun Jul  2 20:15:14 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 2 Jul 2017 18:15:14 +0000
+Subject: [R-es] Big datasheet
+In-Reply-To: <CADg83edFk2wLhiTtpnd6tFg0Z5_2-meZrJZvSKLnYEy72kpZcw@mail.gmail.com>
+References: <VI1PR0801MB2096181FF12DBE0F4196A18BCCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>,
+ <CADg83edFk2wLhiTtpnd6tFg0Z5_2-meZrJZvSKLnYEy72kpZcw@mail.gmail.com>
+Message-ID: <VI1PR0801MB2096D88B8B0629FCB0A22FA1CCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Gracias Carlos!!
+
+Aprovecho para compartir esto que he encontrado de H20, para los que como yo estén comenzando con él. Muy bien explicado.
+
+La verdad es que H2O no parece muy complicado de usar...
+
+http://docs.h2o.ai/h2o/latest-stable/h2o-docs/booklets/RBooklet.pdf
+
+Mark Landry Edited by: Angela Bartz - H2O<http://docs.h2o.ai/h2o/latest-stable/h2o-docs/booklets/RBooklet.pdf>
+docs.h2o.ai
+Machine Learning with R and H2O by Mark Landry with assistance from Spencer Aiello, Eric Eckstrand, Anqi Fu, & Patrick Aboyoun Edited by: Angela Bartz
+
+
+
+
+
+________________________________
+De: gilbellosta en gmail.com <gilbellosta en gmail.com> en nombre de Carlos J. Gil Bellosta <cgb en datanalytics.com>
+Enviado: domingo, 2 de julio de 2017 19:11
+Para: Jesús Para Fernández
+Cc: r-help-es en r-project.org
+Asunto: Re: [R-es] Big datasheet
+
+Todo el mundo está usando esto<http://stat-computing.org/dataexpo/2009/the-data.html>.
+
+Si quieres ser más original, prueba con los microdatos del español de 2011, que viene a ser un par de GB.
+
+
+El 2 de julio de 2017, 19:05, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+Alguien sabe donde puedo encontrar algun datasheet gigante, de más de 5 gigas, para poder practicar con grandes volumenes de información?
+
+Lo que quiero es probar a cargarlos con h20 y crear  modelos con ellos. Me gustaria sobretodo problemas de clasificación...
+
+Gracias
+
+Jesús
+
+
+        [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Sun Jul  2 22:31:09 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Sun, 2 Jul 2017 20:31:09 +0000
+Subject: [R-es] Crear boxplots con H2O R
+Message-ID: <VI1PR0801MB209685AFCBC80A9F0A21B0D9CCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Buenas,
+
+
+Estoy mirando pero no he encontrado en ningún sitio donde poder crear Boxplots con grandes bases de datos. ¿Como puedo hacerlo?
+
+Se sacar los quantiles con H2O pero no se como sacar de ahi un boxplot.
+
+
+Gracias
+
+Jesús
+
+	[[alternative HTML version deleted]]
+
+
+From afmellad en uc.cl  Mon Jul  3 00:03:24 2017
+From: afmellad en uc.cl (ALEX FABIAN Mellado)
+Date: Sun, 2 Jul 2017 18:03:24 -0400
+Subject: [R-es] alguien me ayuda con algo particular del wordclud
+Message-ID: <CAFNGuEtayKc3N=b24DTm9U1TZAXHFo65=GkHbwaitDMzb0qcPQ@mail.gmail.com>
+
+Hola Estimados R Amigos,
+queria contarles que he aplicado una rutina para la creacion de un
+wordcloud, el proceso super bien pero ahora estoy intentando buscar la
+rutinas que me faltan, y esto es lo que deseo si me pueden ayudar.
+
+ahora con el wordcloud quiisiera destacar en él algunas palabras
+especificas que estoy buscando en los dicursos de unos niños con los que
+trabajo en ciencias y conocer en que en frecuecia y/o porcentaje se
+encuentran.
+
+eso mis queridos amigos, espero puedan ayudarme,
+Gracias
+
+Alex
+Biologo Marino, msc en Epidemiologia
+
+---------------------------------------------------
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Mon Jul  3 00:03:47 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 3 Jul 2017 00:03:47 +0200
+Subject: [R-es] Crear boxplots con H2O R
+In-Reply-To: <VI1PR0801MB209685AFCBC80A9F0A21B0D9CCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB209685AFCBC80A9F0A21B0D9CCD10@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <CAOKbq8gfdzauQ0VFScSJKX3Kt+gGL=NgG3JcytrCbuePcoaJsA@mail.gmail.com>
+
+Prueba para empezar con h2o.hist().
+Puedes pedir que añadan la funcionalidad en el JIRA de H2O...
+
+Y para grandes bases de datos, mira Zeppelin:
+https://ruchiookalkar.wordpress.com/2016/05/28/boxplot-visualisation-zeppelin/
+
+Saludos,
+Carlos Ortega
+www.qualiytexcellence.es
+
+
+El 2 de julio de 2017, 22:31, Jesús Para Fernández <
+j.para.fernandez en hotmail.com> escribió:
+
+> Buenas,
+>
+>
+> Estoy mirando pero no he encontrado en ningún sitio donde poder crear
+> Boxplots con grandes bases de datos. ¿Como puedo hacerlo?
+>
+> Se sacar los quantiles con H2O pero no se como sacar de ahi un boxplot.
+>
+>
+> Gracias
+>
+> Jesús
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Mon Jul  3 00:09:46 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 3 Jul 2017 00:09:46 +0200
+Subject: [R-es] alguien me ayuda con algo particular del wordclud
+In-Reply-To: <CAFNGuEtayKc3N=b24DTm9U1TZAXHFo65=GkHbwaitDMzb0qcPQ@mail.gmail.com>
+References: <CAFNGuEtayKc3N=b24DTm9U1TZAXHFo65=GkHbwaitDMzb0qcPQ@mail.gmail.com>
+Message-ID: <CAOKbq8jvRH4xWjx004WLcvCns5jLK-ehzRhxCQE54V7rh4XFbw@mail.gmail.com>
+
+Hola,
+
+Si has hecho un "wordcloud" entonces tienes las frecuencias de aparición de
+cada palabra...
+Y si quieres destacar algunas palabras, creo que no hay ninguna opción
+dentro de la función wordcloud, pero puedes extraers esas palabras y
+pintarlas por separado con "textplot".
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 3 de julio de 2017, 0:03, ALEX FABIAN Mellado <afmellad en uc.cl> escribió:
+
+> Hola Estimados R Amigos,
+> queria contarles que he aplicado una rutina para la creacion de un
+> wordcloud, el proceso super bien pero ahora estoy intentando buscar la
+> rutinas que me faltan, y esto es lo que deseo si me pueden ayudar.
+>
+> ahora con el wordcloud quiisiera destacar en él algunas palabras
+> especificas que estoy buscando en los dicursos de unos niños con los que
+> trabajo en ciencias y conocer en que en frecuecia y/o porcentaje se
+> encuentran.
+>
+> eso mis queridos amigos, espero puedan ayudarme,
+> Gracias
+>
+> Alex
+> Biologo Marino, msc en Epidemiologia
+>
+> ---------------------------------------------------
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Wed Jul  5 21:17:31 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Wed, 5 Jul 2017 19:17:31 +0000
+Subject: [R-es] Deep learning y redes neuronales
+Message-ID: <VI1PR0801MB2096EF5B5711E1DE65ECBF38CCD40@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Buenas,
+
+He estado leyendo publicaciones sobre las redes neuronales ( y el deep learning) pero no consigo entender el tipo de operaciones que se hacen en cada una de las capas de las redes neuronales. Necesito alguna explicacion más para tontos. ¿Alguien entiende bien lo que hace una red neuronal?
+
+Por ejemplo, un randomForest hace el ensamble por boostrap de árbole sde clasificación. Un SVM crea  hiperplanos separando zonas, y una red neuronal hace "operaciones" en las capas, y les va asignando pesos, ¿pero uqe transformaciones?
+
+Gracias!!!
+
+
+	[[alternative HTML version deleted]]
+
+
+From xavitibau en gmail.com  Wed Jul  5 21:24:37 2017
+From: xavitibau en gmail.com (Xavi tibau alberdi)
+Date: Wed, 5 Jul 2017 21:24:37 +0200
+Subject: [R-es] Deep learning y redes neuronales
+In-Reply-To: <VI1PR0801MB2096EF5B5711E1DE65ECBF38CCD40@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB2096EF5B5711E1DE65ECBF38CCD40@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <CAC2QCPpNH_Z8jHC0w5EDXD9x9Qe-D0at2r0vi73kaW=0qGFbqA@mail.gmail.com>
+
+Buenas,
+
+Aquí tienes un conjunto de videos, poquitos, donde se explica
+perfectamente, todas las operaciones e incluso el algorithmo de
+backpropagation.
+
+https://www.youtube.com/watch?v=jaEIv_E29sk
+
+Espero que se te sea útil.
+
+Saludos,
+
+Xavier
+
+2017-07-05 21:17 GMT+02:00 Jesús Para Fernández <
+j.para.fernandez en hotmail.com>:
+
+> Buenas,
+>
+> He estado leyendo publicaciones sobre las redes neuronales ( y el deep
+> learning) pero no consigo entender el tipo de operaciones que se hacen en
+> cada una de las capas de las redes neuronales. Necesito alguna explicacion
+> más para tontos. ¿Alguien entiende bien lo que hace una red neuronal?
+>
+> Por ejemplo, un randomForest hace el ensamble por boostrap de árbole sde
+> clasificación. Un SVM crea  hiperplanos separando zonas, y una red neuronal
+> hace "operaciones" en las capas, y les va asignando pesos, ¿pero uqe
+> transformaciones?
+>
+> Gracias!!!
+>
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Wed Jul  5 21:26:35 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Wed, 5 Jul 2017 19:26:35 +0000
+Subject: [R-es] Deep learning y redes neuronales
+In-Reply-To: <CAC2QCPpNH_Z8jHC0w5EDXD9x9Qe-D0at2r0vi73kaW=0qGFbqA@mail.gmail.com>
+References: <VI1PR0801MB2096EF5B5711E1DE65ECBF38CCD40@VI1PR0801MB2096.eurprd08.prod.outlook.com>,
+ <CAC2QCPpNH_Z8jHC0w5EDXD9x9Qe-D0at2r0vi73kaW=0qGFbqA@mail.gmail.com>
+Message-ID: <VI1PR0801MB209643507E5282BC83677A78CCD40@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Lo esoty viendo y esta muy bien!!
+
+Gracias!!!
+
+
+________________________________
+De: Xavi tibau alberdi <xavitibau en gmail.com>
+Enviado: miércoles, 5 de julio de 2017 21:24
+Para: Jesús Para Fernández
+Cc: r-help-es en r-project.org
+Asunto: Re: [R-es] Deep learning y redes neuronales
+
+Buenas,
+
+Aquí tienes un conjunto de videos, poquitos, donde se explica perfectamente, todas las operaciones e incluso el algorithmo de backpropagation.
+
+https://www.youtube.com/watch?v=jaEIv_E29sk
+[https://www.bing.com/th?id=OVP.Vib71kNk05vSBxAnnegKnQEsCH&pid=Api]<https://www.youtube.com/watch?v=jaEIv_E29sk>
+
+1.- Redes Neuronales: Fácil y desde cero<https://www.youtube.com/watch?v=jaEIv_E29sk>
+www.youtube.com
+Minicurso de redes neuronales que explica paso a paso la construcción de un perceptrón multicapa. Los perceptrones se usan frecuentemente en el ámbito de la ...
+
+
+
+Espero que se te sea útil.
+
+Saludos,
+
+Xavier
+
+2017-07-05 21:17 GMT+02:00 Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>:
+Buenas,
+
+He estado leyendo publicaciones sobre las redes neuronales ( y el deep learning) pero no consigo entender el tipo de operaciones que se hacen en cada una de las capas de las redes neuronales. Necesito alguna explicacion más para tontos. ¿Alguien entiende bien lo que hace una red neuronal?
+
+Por ejemplo, un randomForest hace el ensamble por boostrap de árbole sde clasificación. Un SVM crea  hiperplanos separando zonas, y una red neuronal hace "operaciones" en las capas, y les va asignando pesos, ¿pero uqe transformaciones?
+
+Gracias!!!
+
+
+        [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Jul  5 22:04:14 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Wed, 5 Jul 2017 17:04:14 -0300
+Subject: [R-es] Deep learning y redes neuronales
+In-Reply-To: <VI1PR0801MB209643507E5282BC83677A78CCD40@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB2096EF5B5711E1DE65ECBF38CCD40@VI1PR0801MB2096.eurprd08.prod.outlook.com>,
+ <CAC2QCPpNH_Z8jHC0w5EDXD9x9Qe-D0at2r0vi73kaW=0qGFbqA@mail.gmail.com>
+ <VI1PR0801MB209643507E5282BC83677A78CCD40@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <595d463f.d8a2370a.dd09f.69de@mx.google.com>
+
+Estimados
+
+Esos videos no son de R, sin embargo son recomendables, yo supe mirar algunos, incluso la explicación de la teoría de la relatividad está genial, entendible casi para todo el mundo (hasta para mí).
+
+Tampoco es R, pero hay una librería ahora desactualizada respecto a otras, lo importante no es la librería, sino el libro al respecto donde en mi caso me ayudo a comprender sobre redes neuronales y algunas otras cosas, luego es muy simple ir a R comprendiendo que es casa cosa. La referencia es http://www.heatonresearch.com/encog/ 
+
+Javier Rubén Marcuzzi
+
+De: Jesús Para Fernández
+Enviado: miércoles, 5 de julio de 2017 16:44
+Para: Xavi tibau alberdi
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] Deep learning y redes neuronales
+
+Lo esoty viendo y esta muy bien!!
+
+Gracias!!!
+
+
+________________________________
+De: Xavi tibau alberdi <xavitibau en gmail.com>
+Enviado: mi?rcoles, 5 de julio de 2017 21:24
+Para: Jes?s Para Fern?ndez
+Cc: r-help-es en r-project.org
+Asunto: Re: [R-es] Deep learning y redes neuronales
+
+Buenas,
+
+Aqu? tienes un conjunto de videos, poquitos, donde se explica perfectamente, todas las operaciones e incluso el algorithmo de backpropagation.
+
+https://www.youtube.com/watch?v=jaEIv_E29sk
+[https://www.bing.com/th?id=OVP.Vib71kNk05vSBxAnnegKnQEsCH&pid=Api]<https://www.youtube.com/watch?v=jaEIv_E29sk>
+
+1.- Redes Neuronales: F?cil y desde cero<https://www.youtube.com/watch?v=jaEIv_E29sk>
+www.youtube.com
+Minicurso de redes neuronales que explica paso a paso la construcci?n de un perceptr?n multicapa. Los perceptrones se usan frecuentemente en el ?mbito de la ...
+
+
+
+Espero que se te sea ?til.
+
+Saludos,
+
+Xavier
+
+2017-07-05 21:17 GMT+02:00 Jes?s Para Fern?ndez <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>:
+Buenas,
+
+He estado leyendo publicaciones sobre las redes neuronales ( y el deep learning) pero no consigo entender el tipo de operaciones que se hacen en cada una de las capas de las redes neuronales. Necesito alguna explicacion m?s para tontos. ?Alguien entiende bien lo que hace una red neuronal?
+
+Por ejemplo, un randomForest hace el ensamble por boostrap de ?rbole sde clasificaci?n. Un SVM crea  hiperplanos separando zonas, y una red neuronal hace "operaciones" en las capas, y les va asignando pesos, ?pero uqe transformaciones?
+
+Gracias!!!
+
+
+        [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Thu Jul  6 15:03:45 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Thu, 6 Jul 2017 13:03:45 +0000
+Subject: [R-es] calcular punto de inflexion
+Message-ID: <VI1PR0801MB209654471ABC7E98326B2C95CCD50@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Buenas,
+
+
+¿Cómo calculariais el punto de inflexion de esta curva marcado en rojo?
+
+[X]
+
+
+He probado de la siguiente manera:
+
+1- Haciendo la segunda derivada:No me sirve, porque m edetecta muchas veces esos casos
+
+2- Mirando si el siguiente valor es mayor que el anterior. No me vale, ya que si hay ruido, no lo va a detectar.
+
+3. Mirando que el punto siguiente crezca respecto al anterior. No me vale, ya que en este caso, al haber puntos iguales no encuentra nada.
+
+
+¿Qué solucion creeis que es la mejor para encontrar el punto de inflexion marcado?
+
+
+Gracias!!!
+
+
+	[[alternative HTML version deleted]]
+
+
+From xavitibau en gmail.com  Thu Jul  6 15:15:24 2017
+From: xavitibau en gmail.com (Xavi tibau alberdi)
+Date: Thu, 6 Jul 2017 15:15:24 +0200
+Subject: [R-es] calcular punto de inflexion
+In-Reply-To: <VI1PR0801MB209654471ABC7E98326B2C95CCD50@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB209654471ABC7E98326B2C95CCD50@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <CAC2QCPqs0P6gakkhdYO3SNRirMrs=R5agMQqnRWMupy+to-trw@mail.gmail.com>
+
+Buenas,
+
+No veo la imagen. Pero nos podrías describir como la tienes? Es decir, la
+tienes en un objeto R, son datos en un csv? Quieres encontrar la solución
+con R? Que buscas una solución eucarística?
+
+Seguramente, por los problemas que describes la mejor aproximación es una
+versión hill-climbing, es decir, nos movemos por el gradiente de un punto
+hasta que encontramos un mínimo, luego, empezamos en otro punto aleatorio,
+y repetimos. Vamos apuntando los mínimos, al final si hay convergencia o
+bien decidimos que hemos buscado bastante X veces con un mínimo local
+superior al encontrado, nos quedamos con esta "aproximación". El minimo más
+minimo de los locales. Es el mínimo absoluto? No creo que podamos saberlo...
+
+Espero haberte ayudado,
+
+Un saludo,
+
+Xavier-Andoni Tibau
+
+2017-07-06 15:03 GMT+02:00 Jesús Para Fernández <
+j.para.fernandez en hotmail.com>:
+
+> Buenas,
+>
+>
+> ¿Cómo calculariais el punto de inflexion de esta curva marcado en rojo?
+>
+> [X]
+>
+>
+> He probado de la siguiente manera:
+>
+> 1- Haciendo la segunda derivada:No me sirve, porque m edetecta muchas
+> veces esos casos
+>
+> 2- Mirando si el siguiente valor es mayor que el anterior. No me vale, ya
+> que si hay ruido, no lo va a detectar.
+>
+> 3. Mirando que el punto siguiente crezca respecto al anterior. No me vale,
+> ya que en este caso, al haber puntos iguales no encuentra nada.
+>
+>
+> ¿Qué solucion creeis que es la mejor para encontrar el punto de inflexion
+> marcado?
+>
+>
+> Gracias!!!
+>
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j.para.fernandez en hotmail.com  Thu Jul  6 16:22:09 2017
+From: j.para.fernandez en hotmail.com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Thu, 6 Jul 2017 14:22:09 +0000
+Subject: [R-es] calcular punto de inflexion
+In-Reply-To: <CAC2QCPqs0P6gakkhdYO3SNRirMrs=R5agMQqnRWMupy+to-trw@mail.gmail.com>
+References: <VI1PR0801MB209654471ABC7E98326B2C95CCD50@VI1PR0801MB2096.eurprd08.prod.outlook.com>,
+ <CAC2QCPqs0P6gakkhdYO3SNRirMrs=R5agMQqnRWMupy+to-trw@mail.gmail.com>
+Message-ID: <VI1PR0801MB2096B509EA84635EC4D7823ACCD50@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+
+Buenas,
+
+He usado el paquete inflection de R, que calcula de una manera rápida los puntos de inflexión.
+
+
+Gracias por el aporte!!!
+https://cran.r-project.org/web/packages/inflection/inflection.pdf
+
+Jesús
+
+
+
+
+________________________________
+De: Xavi tibau alberdi <xavitibau en gmail.com>
+Enviado: jueves, 6 de julio de 2017 15:15
+Para: Jesús Para Fernández
+Cc: r-help-es en r-project.org
+Asunto: Re: [R-es] calcular punto de inflexion
+
+Buenas,
+
+No veo la imagen. Pero nos podrías describir como la tienes? Es decir, la tienes en un objeto R, son datos en un csv? Quieres encontrar la solución con R? Que buscas una solución eucarística?
+
+Seguramente, por los problemas que describes la mejor aproximación es una versión hill-climbing, es decir, nos movemos por el gradiente de un punto hasta que encontramos un mínimo, luego, empezamos en otro punto aleatorio, y repetimos. Vamos apuntando los mínimos, al final si hay convergencia o bien decidimos que hemos buscado bastante X veces con un mínimo local superior al encontrado, nos quedamos con esta "aproximación". El minimo más minimo de los locales. Es el mínimo absoluto? No creo que podamos saberlo...
+
+Espero haberte ayudado,
+
+Un saludo,
+
+Xavier-Andoni Tibau
+
+2017-07-06 15:03 GMT+02:00 Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>:
+Buenas,
+
+
+¿Cómo calculariais el punto de inflexion de esta curva marcado en rojo?
+
+[X]
+
+
+He probado de la siguiente manera:
+
+1- Haciendo la segunda derivada:No me sirve, porque m edetecta muchas veces esos casos
+
+2- Mirando si el siguiente valor es mayor que el anterior. No me vale, ya que si hay ruido, no lo va a detectar.
+
+3. Mirando que el punto siguiente crezca respecto al anterior. No me vale, ya que en este caso, al haber puntos iguales no encuentra nada.
+
+
+¿Qué solucion creeis que es la mejor para encontrar el punto de inflexion marcado?
+
+
+Gracias!!!
+
+
+        [[alternative HTML version deleted]]
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From trujillo en unex.es  Thu Jul  6 17:27:54 2017
+From: trujillo en unex.es (=?UTF-8?Q?Jos=c3=a9_Trujillo_Carmona?=)
+Date: Thu, 6 Jul 2017 17:27:54 +0200
+Subject: [R-es] calcular punto de inflexion
+In-Reply-To: <VI1PR0801MB209654471ABC7E98326B2C95CCD50@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+References: <VI1PR0801MB209654471ABC7E98326B2C95CCD50@VI1PR0801MB2096.eurprd08.prod.outlook.com>
+Message-ID: <a710b005-10a6-d697-f275-e2a95ce335de@unex.es>
+
+Definitivamente no hay curva en el mensaje. No hay nada marcado en rojo.
+
+Saludos
+
+El 06/07/17 a las 15:03, Jesús Para Fernández escribió:
+> Buenas,
+> ?C?mo calculariais el punto de inflexion de esta curva marcado en rojo?
+> [X]
+> He probado de la siguiente manera:
+> 1- Haciendo la segunda derivada:No me sirve, porque m edetecta muchas veces esos casos
+> 2- Mirando si el siguiente valor es mayor que el anterior. No me vale, ya que si hay ruido, no lo va a detectar.
+> 3. Mirando que el punto siguiente crezca respecto al anterior. No me vale, ya que en este caso, al haber puntos iguales no encuentra nada.
+> ?Qu? solucion creeis que es la mejor para encontrar el punto de inflexion marcado?
+> Gracias!!!
+> 	[[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From josebetancourt.cmw en infomed.sld.cu  Fri Jul  7 18:05:50 2017
+From: josebetancourt.cmw en infomed.sld.cu (=?iso-8859-1?Q?Dr._Jos=E9_A._Betancourt_Bethencourt?=)
+Date: Fri, 7 Jul 2017 12:05:50 -0400
+Subject: [R-es] =?iso-8859-1?q?RV=3A_gr=E1fico_dispersi=F3n?=
+Message-ID: <000801d2f73a$f2566dc0$d7034940$@infomed.sld.cu>
+
+ 
+
+ 
+
+De: Dr. José A. Betancourt Bethencourt [mailto:jbetancourt en iscmc.cmw.sld.cu]
+
+Enviado el: viernes, 7 de julio de 2017 12:05
+Para: 'r-help-es en r-project.org' <r-help-es en r-project.org>
+Asunto: RV: gráfico dispersión
+
+ 
+
+ 
+
+ 
+
+De: Dr. José A. Betancourt Bethencourt [mailto:jbetancourt en iscmc.cmw.sld.cu]
+
+Enviado el: viernes, 7 de julio de 2017 12:05
+Para: 'r-help-es en r-project.org' <r-help-es en r-project.org
+<mailto:r-help-es en r-project.org> >
+CC: 'josebetancourt.cmw en infomed.sld.cu' <josebetancourt.cmw en infomed.sld.cu
+<mailto:josebetancourt.cmw en infomed.sld.cu> >
+Asunto: gráfico dispersión
+
+ 
+
+Estimados
+
+ 
+
+He buscado en ggplot2 y no encuentro un script que me permita plotear una
+variable cuantitativa continua (representada con una   línea) contra cuatro
+variables cuantitativas ( representadas con puntos de diferentes colores)
+
+ 
+
+Mis saludos
+
+José
+
+
+
+--
+Este mensaje le ha llegado mediante el servicio de correo electronico que ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema Nacional de Salud. La persona que envia este correo asume el compromiso de usar el servicio a tales fines y cumplir con las regulaciones establecidas
+
+Infomed: http://www.sld.cu/
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Fri Jul  7 19:25:18 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 7 Jul 2017 19:25:18 +0200
+Subject: [R-es] =?utf-8?b?UlY6IGdyw6FmaWNvIGRpc3BlcnNpw7Nu?=
+In-Reply-To: <000801d2f73a$f2566dc0$d7034940$@infomed.sld.cu>
+References: <000801d2f73a$f2566dc0$d7034940$@infomed.sld.cu>
+Message-ID: <CAOKbq8gK4ANgvQSipmDE-5v9wKeTvfmewD_qA_WH6Lsmq6aX2A@mail.gmail.com>
+
+Hola,
+
+Aquí puedes buscar algún ejemplo que se ajuste a lo que busques...
+
+http://www.r-graph-gallery.com/portfolio/ggplot2-package/
+
+Gracias,
+Carlos Ortega
+www.qualityexecellence.es
+
+El 7 de julio de 2017, 18:05, Dr. José A. Betancourt Bethencourt <
+josebetancourt.cmw en infomed.sld.cu> escribió:
+
+>
+>
+>
+>
+> De: Dr. José A. Betancourt Bethencourt [mailto:jbetancourt en iscmc.cmw.
+> sld.cu]
+>
+> Enviado el: viernes, 7 de julio de 2017 12:05
+> Para: 'r-help-es en r-project.org' <r-help-es en r-project.org>
+> Asunto: RV: gráfico dispersión
+>
+>
+>
+>
+>
+>
+>
+> De: Dr. José A. Betancourt Bethencourt [mailto:jbetancourt en iscmc.cmw.
+> sld.cu]
+>
+> Enviado el: viernes, 7 de julio de 2017 12:05
+> Para: 'r-help-es en r-project.org' <r-help-es en r-project.org
+> <mailto:r-help-es en r-project.org> >
+> CC: 'josebetancourt.cmw en infomed.sld.cu' <josebetancourt.cmw en infomed.sld.cu
+> <mailto:josebetancourt.cmw en infomed.sld.cu> >
+> Asunto: gráfico dispersión
+>
+>
+>
+> Estimados
+>
+>
+>
+> He buscado en ggplot2 y no encuentro un script que me permita plotear una
+> variable cuantitativa continua (representada con una   línea) contra cuatro
+> variables cuantitativas ( representadas con puntos de diferentes colores)
+>
+>
+>
+> Mis saludos
+>
+> José
+>
+>
+>
+> --
+> Este mensaje le ha llegado mediante el servicio de correo electronico que
+> ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema
+> Nacional de Salud. La persona que envia este correo asume el compromiso de
+> usar el servicio a tales fines y cumplir con las regulaciones establecidas
+>
+> Infomed: http://www.sld.cu/
+>
+>
+>
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From tania.dionisio en utec.edu.pe  Fri Jul  7 20:15:06 2017
+From: tania.dionisio en utec.edu.pe (Tania mayra)
+Date: Fri, 7 Jul 2017 13:15:06 -0500
+Subject: [R-es] consulta
+Message-ID: <CAA_s-2-te-yoJxkYY1CSfF7zEDzTUCJah-abQMX6ZT5eZ4QT6w@mail.gmail.com>
+
+deseo ayuda sobre como iniciar este proyecto en r:
+
+## Cuerpo del proyecto
+Para este proyecto, deben generar un $M/G/\infty$ para las siguientes
+distribuciones:
+
+1. G es la función de distribución de una variable "aleatoria" constante.
+2. G es la función de distribución de una variable aleatoria Geométrica
+parámetro $p=\frac{\lambda}{\mu}$ con $\lambda < \mu$
+3. G es la distribución de una variable aleatoria $Exp(\mu)$
+
+En cada caso, estime empíricamente **$S=$ el tiempo promedio que pasa un
+cliente en el sistema una vez que el mismo ha alcanzado su estado estable**
+y ** $L=$ el número promedio de clientes en el sistema una vez que el mismo
+ha alcanzado su estado estable** y trate de verificar si se cumple la *ley
+de Little*, que en este caso se enuncia como $L=\lambda S$, para esos tres
+sistemas cuando $\lambda=2/hora$ y $\mu=3/hora$.
+
+
+
+Gracias de antemano.
+
+-- 
+La información contenida en este e-mail y sus anexos es confidencial, 
+privilegiada y está dirigida exclusivamente a su destinatario, en 
+consecuencia, solo puede ser utilizada por aquel. Si usted no es el 
+destinatario original, no deberá examinar, usar, copiar o distribuir este 
+mensaje o la información que contiene. Si lo recibe por error, por favor 
+reenvíelo a la persona que se lo envió y elimínelo. Cualquier retención o 
+uso total o parcial no autorizada de este mensaje está estrictamente 
+prohibida y sancionada por ley.
+
+	[[alternative HTML version deleted]]
+
+
+From cgb en datanalytics.com  Fri Jul  7 20:17:11 2017
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta)
+Date: Fri, 07 Jul 2017 18:17:11 +0000
+Subject: [R-es] consulta
+In-Reply-To: <CAA_s-2-te-yoJxkYY1CSfF7zEDzTUCJah-abQMX6ZT5eZ4QT6w@mail.gmail.com>
+References: <CAA_s-2-te-yoJxkYY1CSfF7zEDzTUCJah-abQMX6ZT5eZ4QT6w@mail.gmail.com>
+Message-ID: <CADg83eedJ8TVQLTNzHPpzFvoorG8MO3paWUJGEG6O7xAtbd6iQ@mail.gmail.com>
+
+https://cran.r-project.org/web/packages/simmer/index.html
+
+Mira las viñetas.
+
+El vie., 7 jul. 2017 a las 20:15, Tania mayra (<tania.dionisio en utec.edu.pe>)
+escribió:
+
+> deseo ayuda sobre como iniciar este proyecto en r:
+>
+> ## Cuerpo del proyecto
+> Para este proyecto, deben generar un $M/G/\infty$ para las siguientes
+> distribuciones:
+>
+> 1. G es la función de distribución de una variable "aleatoria" constante.
+> 2. G es la función de distribución de una variable aleatoria Geométrica
+> parámetro $p=\frac{\lambda}{\mu}$ con $\lambda < \mu$
+> 3. G es la distribución de una variable aleatoria $Exp(\mu)$
+>
+> En cada caso, estime empíricamente **$S=$ el tiempo promedio que pasa un
+> cliente en el sistema una vez que el mismo ha alcanzado su estado estable**
+> y ** $L=$ el número promedio de clientes en el sistema una vez que el mismo
+> ha alcanzado su estado estable** y trate de verificar si se cumple la *ley
+> de Little*, que en este caso se enuncia como $L=\lambda S$, para esos tres
+> sistemas cuando $\lambda=2/hora$ y $\mu=3/hora$.
+>
+>
+>
+> Gracias de antemano.
+>
+> --
+> La información contenida en este e-mail y sus anexos es confidencial,
+> privilegiada y está dirigida exclusivamente a su destinatario, en
+> consecuencia, solo puede ser utilizada por aquel. Si usted no es el
+> destinatario original, no deberá examinar, usar, copiar o distribuir este
+> mensaje o la información que contiene. Si lo recibe por error, por favor
+> reenvíelo a la persona que se lo envió y elimínelo. Cualquier retención o
+> uso total o parcial no autorizada de este mensaje está estrictamente
+> prohibida y sancionada por ley.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From jcantallopts en gmx.com  Fri Jul  7 20:20:22 2017
+From: jcantallopts en gmx.com (javier valdes)
+Date: Fri, 7 Jul 2017 20:20:22 +0200
+Subject: [R-es] =?utf-8?b?UlY6IGdyw6FmaWNvIGRpc3BlcnNpw7Nu?=
+In-Reply-To: <CAOKbq8gK4ANgvQSipmDE-5v9wKeTvfmewD_qA_WH6Lsmq6aX2A@mail.gmail.com>
+References: <000801d2f73a$f2566dc0$d7034940$@infomed.sld.cu>
+ <CAOKbq8gK4ANgvQSipmDE-5v9wKeTvfmewD_qA_WH6Lsmq6aX2A@mail.gmail.com>
+Message-ID: <trinity-ca6e630d-ad75-4cb7-af6f-715dcc9b0fb9-1499451622626@msvc-mesg-gmx019>
+
+Prueba con lattice  xyplot<-vari1+vari2...,data=df) lejos lo más fácil para esos casos.
+
+Sent using the GMX mail app
+
+On 07-07-17 at 13:25, Carlos Ortega wrote:
+
+> Hola,
+> 
+> Aquí puedes buscar algún ejemplo que se ajuste a lo que busques...
+> 
+> http://www.r-graph-gallery.com/portfolio/ggplot2-package/
+> 
+> Gracias,
+> Carlos Ortega
+> www.qualityexecellence.es
+> 
+> El 7 de julio de 2017, 18:05, Dr. José A. Betancourt Bethencourt <
+> josebetancourt.cmw en infomed.sld.cu> escribió:
+> 
+> >
+> >
+> >
+> >
+> > De: Dr. José A. Betancourt Bethencourt [mailto:jbetancourt en iscmc.cmw.
+> > sld.cu]
+> >
+> > Enviado el: viernes, 7 de julio de 2017 12:05
+> > Para: 'r-help-es en r-project.org' <r-help-es en r-project.org>
+> > Asunto: RV: gráfico dispersión
+> >
+> >
+> >
+> >
+> >
+> >
+> >
+> > De: Dr. José A. Betancourt Bethencourt [mailto:jbetancourt en iscmc.cmw.
+> > sld.cu]
+> >
+> > Enviado el: viernes, 7 de julio de 2017 12:05
+> > Para: 'r-help-es en r-project.org' <r-help-es en r-project.org
+> > <mailto:r-help-es en r-project.org> >
+> > CC: 'josebetancourt.cmw en infomed.sld.cu' <josebetancourt.cmw en infomed.sld.cu
+> > <mailto:josebetancourt.cmw en infomed.sld.cu> >
+> > Asunto: gráfico dispersión
+> >
+> >
+> >
+> > Estimados
+> >
+> >
+> >
+> > He buscado en ggplot2 y no encuentro un script que me permita plotear una
+> > variable cuantitativa continua (representada con una   línea) contra cuatro
+> > variables cuantitativas ( representadas con puntos de diferentes colores)
+> >
+> >
+> >
+> > Mis saludos
+> >
+> > José
+> >
+> >
+> >
+> > --
+> > Este mensaje le ha llegado mediante el servicio de correo electronico que
+> > ofrece Infomed para respaldar el cumplimiento de las misiones del Sistema
+> > Nacional de Salud. La persona que envia este correo asume el compromiso de
+> > usar el servicio a tales fines y cumplir con las regulaciones establecidas
+> >
+> > Infomed: http://www.sld.cu/
+> >
+> >
+> >
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> 
+> 
+> 
+> -- 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From m.monsalvo en gmail.com  Tue Jul 11 12:17:50 2017
+From: m.monsalvo en gmail.com (Mauricio Monsalvo)
+Date: Tue, 11 Jul 2017 07:17:50 -0300
+Subject: [R-es] Weighted Likelihood
+In-Reply-To: <869967888.5293832.1429177227946.JavaMail.zimbra@unex.es>
+References: <CAHbHS_f741J3ojxg+RPgV9LAJ4Mf_+yNbGJomgzUHBgrSj9ciQ@mail.gmail.com>
+ <1021800134.5273982.1429173890276.JavaMail.zimbra@unex.es>
+ <CAHbHS_dcBtfN-+PDN3a4jBgLv+zGu7HSwXzDaPHv3_NNWvivuw@mail.gmail.com>
+ <CAHbHS_ehwxAJDCqRUQzdErjA1rKM=2hQo0yE53+CoFr7aDShPA@mail.gmail.com>
+ <869967888.5293832.1429177227946.JavaMail.zimbra@unex.es>
+Message-ID: <CAKXoZH_3_bpOdKZAhZ-bh1+8NwoYZ56g58-eb1rY5Etux-5E_g@mail.gmail.com>
+
+Hola Olivier,
+Tengo un set de datos (N = 309) con un "ponderador", que puedo interpretar
+como la representatividad del dato en la población.  Tal que si
+datos$Ponderador =  3,5556, implica que mi observación "vale" por 3,5556.
+Estuve buscando una forma de utilizar el WEIGHT BY Ponderador . del SPSS
+pero, "Unlike SPSS, weights in R are applied at the operation level rather
+than globally." https://stackoverflow.com/questions/
+36838581/easy-way-like-in-spss-to-weight-my-variables-
+by-another-variable-in-r-studio
+La discusión se extiende un poco más acá: https://stackoverflow.
+com/questions/7026549/weight-data-with-r-part-ii Sinceramente, no me da la
+nafta para discutir la cuestión de fondo.
+Lo cierto es que necesito "ponderar" mis casos en varias funciones, la
+mayoría de las cuales son distribuciones de frecuencia. Pueden sintetizarse
+en esta forma:
+
+*Capacitación al personal docente, según Región y Dependencia*
+
+*Recibieron Capacitación*
+
+*N*
+
+*Porc*
+
+*PorcAc*
+
+*NEA*
+
+*NOA*
+
+*No EPI*
+
+*Semi EPI*
+
+*EPI*
+
+Sí, regularmente
+
+191
+
+61,4
+
+61,4
+
+69,8
+
+57,7
+
+36
+
+67,8
+
+81,1
+
+Sí, ocasionalmente
+
+66
+
+21,2
+
+82,6
+
+21,9
+
+20,9
+
+25
+
+24,8
+
+12,2
+
+Nunca
+
+53
+
+17
+
+99,6
+
+7,3
+
+21,4
+
+38
+
+7,4
+
+6,7
+
+NS/NC
+
+1
+
+0,3
+
+99,9
+
+1
+(Creo que no es necesario el código).?
+Pondero mi matriz:
+>
+? library(
+??
+survey
+?)
+?
+?
+> datos <- svydesign(id = ~1 #  is a formula for no clusters
++                      , weights = ~datos$Ponderador
++                      , data = datos
+? ?
+#
+data may be a character string giving the name of a table?
++                      # , fpc = ~fpc
++                      )
+> class(datos)
+[1] "survey.design2" "survey.design"
+?
+Ahora bien, cuando intento llevar a cabo el análisis, resulta:
+?
+> datos[, .N, by =
+? ?
+.(B2a)]
+Independent Sampling design (with replacement)
+svydesign(id = ~1, weights = ~datos$Ponderador, data = datos)
+?
+¿Solo puedo correr funciones contenidas en la librería "?survey", como por
+ejemplo svytable? En esta entrada parece confirmarlo
+https://www.r-bloggers.com/social-science-goes-r-weighted-survey-data/,
+pero necesito que me lo digan en Castellano :(
+? ?
+Le di una mirada a:
+library(weights) #
+https://cran.r-project.org/web/packages/weights/weights.pdf
+Pero no me resultó. Creo que tiene un alcance limitado y no
+
+?¿No existe una forma alternativa para ponderar datos[, .N, by =
+.(B2a)]  utilizando
+la variable Ponderador?
+
+?Muchas gracias.?
+Saludos
+
+
+
+El 16 de abril de 2015, 6:40, Olivier Nuñez <onunez en unex.es> escribió:
+
+> No das muchos detalles sobre porque quieres ponderar los datos, pero
+> intuyo que es por el diseño.
+> Si es así, la función svydesign del paquete te permite especificar bien la
+> probabilidad de selección del dato (probs) en la muestra o de manera
+> equivalente, o el "sampling weight" que puedes interpretar como la
+> representatividad del dato en la población. Una vez especificado el diseño
+> mediante esta función, puedes llevar cualquier análisis estandár de tus
+> datos. Un saludo. Olivier
+>
+> ----- Mensaje original -----
+>
+> De: "Víctor Nalda Castellet" <victor.nalda.castellet en gmail.com>
+> Para: "Olivier Nuñez" <onunez en unex.es>
+> CC: "r-help-es" <r-help-es en r-project.org>
+> Enviados: Jueves, 16 de Abril 2015 11:25:10
+> Asunto: Re: [R-es] Weighted Likelihood
+>
+> Hola,
+>
+> He buscado por el pdf de la documentación qué función es la que me puede
+> servir pero no encuentro ninguna.
+> ¿Tenías alguna función especifica de ese paquete pensada?
+>
+>
+> Un saludo, y muchas gracias por la ayuda.
+>
+> El 16 de abril de 2015, 10:45, Víctor Nalda Castellet <
+> victor.nalda.castellet en gmail.com > escribió:
+>
+>
+>
+> ¡Muchas gracias Olivier!
+>
+>
+> Un saludo.
+>
+> El 16 de abril de 2015, 10:44, Olivier Nuñez < onunez en unex.es > escribió:
+>
+> <blockquote>
+> Mira el paquete survey.
+> Un saludo. Olivier
+>
+> ----- Mensaje original -----
+> De: "Víctor Nalda Castellet" < victor.nalda.castellet en gmail.com >
+> Para: "r-help-es" < r-help-es en r-project.org >
+> Enviados: Miércoles, 15 de Abril 2015 14:21:33
+> Asunto: [R-es] Weighted Likelihood
+>
+> Buenas tardes,
+>
+> Estoy intentando ajustar distribuciones utilizando un vector de ponderación
+> en los datos (Weighted Likelihood). ¿Existen paquetes en R que resuelven
+> esto? He mirado ya el paquete "wle" pero no me permite introducir los pesos
+> mediante los cuales ponderar los datos.
+>
+> En un primer momento, se me ha ocurrido realizar lo siguiente: repetir
+> cada elemento del vector datos tantas veces como indique el vector pesos
+> ?modificado? (multiplicado por una potencia de 10, para que sean todos
+> números enteros). Y con este vector de datos repetidos realizar el ajuste.
+>
+> Pero me gustaría conocer si existen otras formas "más elegantes" de
+> hacerlo.
+>
+>
+> Un saludo, y muchas gracias por adelantado.
+>
+> --
+> Víctor Nalda Castellet
+>
+> [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+>
+>
+> --
+> Víctor Nalda Castellet
+>
+> </blockquote>
+>
+>
+>
+>
+> --
+> Víctor Nalda Castellet
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Mauricio
+
+	[[alternative HTML version deleted]]
+
+
+From joseramirezcosta en gmail.com  Wed Jul 12 17:32:58 2017
+From: joseramirezcosta en gmail.com (Jose Ramirez Costa)
+Date: Wed, 12 Jul 2017 12:32:58 -0300
+Subject: [R-es] consulta por varTypes de sqlSave en RODBC
+Message-ID: <CAFOGFnJGh1CvBrENWa33XJSsSm4xf8pzA-o+=i1jw+cW0c9q_w@mail.gmail.com>
+
+Buen dia compañerxs de R, les traigo una pregunta bastante especifica.
+
+En el trabajo me estan requiriendo el uso de SQL, asi q estoy aprendiendo a
+usarlo desde R, con el paquete RODBC.
+
+Mi problema puntual es que al crear una tabla en el servidor SQL a partir
+de un data frame en R (usando la funcion sqlSave) no puedo definir el tipo
+de variables que quiero usar en el data frame.
+
+Segun entiendo esto se deberia poder hacer con el parametro vartypes, pero
+hasta ahora solo he podido cargar un vector q dice el tipo de variables
+(varchar, int, o numeric) pero no he podido indicarle el ancho q tiene cad
+variable.
+
+Esto en SQL se escribiria algo asi:
+[ACTA] int,
+[APENAC] varchar(25),
+[PESONAC] numeric(4,0),
+
+Alguien uso vartypes de esta forma?
+
+Desde ya gracias por el tiempo y un abrazo a todxs.
+
+-- 
+"*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+pássaro.? *
+*Nietzsche, "Assim Falou Zaratustra?.*
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Jul 12 20:33:02 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Wed, 12 Jul 2017 15:33:02 -0300
+Subject: [R-es] consulta por varTypes de sqlSave en RODBC
+In-Reply-To: <CAFOGFnJGh1CvBrENWa33XJSsSm4xf8pzA-o+=i1jw+cW0c9q_w@mail.gmail.com>
+References: <CAFOGFnJGh1CvBrENWa33XJSsSm4xf8pzA-o+=i1jw+cW0c9q_w@mail.gmail.com>
+Message-ID: <59666b60.479e370a.9d79.d9e8@mx.google.com>
+
+Estimado José Ramirez Costa
+
+Yo tengo un archivo donde guarde lo que realizaba cuándo aprendía, habría que ver si actualmente es así o hay cambios, por lo que usted dice creo que usa sql server, si no es así busco el archivo para otras bases de datos. Si es sqlserver se podría realizar con la ayuda de visual studio, hay una integración al respecto.
+
+Le copio y pego la forma que utilicé para aprender, espero que le sea útil.
+
+
+cn <- odbcDriverConnect(connection="Driver={SQL Server Native Client 11.0};
+                        server=localhost;
+                        database=far;
+                        trusted_connection=yes;")
+# DESKTOP-HEO7TLB
+cosa <- sqlFetch(cn,'cosa')
+cosa
+
+A <- c(1,2,3,4)
+B <- c(4,5,6,7)
+dat <- data.frame(A,B)
+colnames(dat) <- c("A", "B")
+sqlSave(cn, dat, tablename = "tblTest", rownames=FALSE, append=TRUE)
+
+cosa <- c("auto", "bici", "libro")
+cantidad <- c(2,4,7)
+dat <- data.frame(cosa, cantidad)
+
+colnames(dat) <- c("A", "B")
+sqlSave(cn, dat, tablename = "cosa",
+        rownames=FALSE, 
+        colnames=TRUE, 
+        append=TRUE,
+        addPK=TRUE,
+        fast=TRUE)
+
+# http://stackoverflow.com/questions/36202414/r-download-image-using-rvest
+# https://www.r-bloggers.com/parameterized-sql-queries/
+# https://cran.r-project.org/web/packages/RODBCext/vignettes/Parameterized_SQL_queries.html
+
+library(RODBCext)
+filterData <- data.frame('cosa'= c('libros'))
+data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa = ?", filterData, fetch = TRUE)
+if(length(data$id) == 0)
+{
+  print ("no hay elementos")
+} else
+{
+  print ('hay elementos')
+}
+
+# generar lo que se inserta o actualiza
+id <- 1
+cosa <- "casa"
+cantidad <- 3
+valor <- 4.5
+dfDato <- data.frame(id,cosa, cantidad,valor)
+colnames(dfDato) <- c("id", "cosa","cantidad","valor")
+print(dfDato)
+insertar <- function(dfDato) {
+  dfNuevoDato <- data.frame(dfDato$cosa, dfDato$cantidad, dfDato$valor)
+  colnames(dfNuevoDato) <- c("cosa","cantidad","valor")
+  # Parameterized query
+   sqlExecute(cn, "INSERT INTO prueba
+              (cosa
+                ,cantidad
+                ,valor)
+              VALUES (?,?,?)", dfNuevoDato)
+  print(dfNuevoDato)
+}
+
+# comprobar si existe el id
+filterId <- data.frame('id'= dfDato$id)
+data <- sqlExecute(cn, "SELECT * FROM prueba WHERE id = ?", filterId, fetch = TRUE)
+if(length(data$id) == 0)
+{
+  print ('no existe el id')
+  insertar(dfDato)
+}else{
+  print('Existe el id')
+  # buscar la palabra si existe
+  filterPalabra <- data.frame('cosa'=dfDato$cosa)
+  data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa like ?", filterPalabra, fetch = TRUE)
+  print(data)
+    if(length(data$cosa) > 0)
+    {
+      print ('existe debo actualizar')
+     # query <- "UPDATE cakes SET price = ? WHERE cake = ?"
+       query <- "UPDATE prueba
+       SET cosa = ?
+       ,cantidad = ?
+       ,valor = ?
+       WHERE id = ?"
+       sqlExecute(cn, query, dfDato)
+      print(dfDato)
+    }else{
+      print ('puedo insertar')
+      insertar(dfDato)
+    }
+  }
+#http://finzi.psych.upenn.edu/R/library/RODBC/html/sqlSave.html
+
+Javier Rubén Marcuzzi
+
+De: Jose Ramirez Costa
+Enviado: miércoles, 12 de julio de 2017 12:33
+Para: r-help-es
+Asunto: [R-es] consulta por varTypes de sqlSave en RODBC
+
+Buen dia compañerxs de R, les traigo una pregunta bastante especifica.
+
+En el trabajo me estan requiriendo el uso de SQL, asi q estoy aprendiendo a
+usarlo desde R, con el paquete RODBC.
+
+Mi problema puntual es que al crear una tabla en el servidor SQL a partir
+de un data frame en R (usando la funcion sqlSave) no puedo definir el tipo
+de variables que quiero usar en el data frame.
+
+Segun entiendo esto se deberia poder hacer con el parametro vartypes, pero
+hasta ahora solo he podido cargar un vector q dice el tipo de variables
+(varchar, int, o numeric) pero no he podido indicarle el ancho q tiene cad
+variable.
+
+Esto en SQL se escribiria algo asi:
+[ACTA] int,
+[APENAC] varchar(25),
+[PESONAC] numeric(4,0),
+
+Alguien uso vartypes de esta forma?
+
+Desde ya gracias por el tiempo y un abrazo a todxs.
+
+-- 
+"*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+pássaro.? *
+*Nietzsche, "Assim Falou Zaratustra?.*
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From joseramirezcosta en gmail.com  Thu Jul 13 15:31:27 2017
+From: joseramirezcosta en gmail.com (Jose Ramirez Costa)
+Date: Thu, 13 Jul 2017 10:31:27 -0300
+Subject: [R-es] consulta por varTypes de sqlSave en RODBC
+In-Reply-To: <59666b60.479e370a.9d79.d9e8@mx.google.com>
+References: <CAFOGFnJGh1CvBrENWa33XJSsSm4xf8pzA-o+=i1jw+cW0c9q_w@mail.gmail.com>
+ <59666b60.479e370a.9d79.d9e8@mx.google.com>
+Message-ID: <CAFOGFn+HF7gxNL8PNmLH3+pE8_sbv39n3U10wZZVqu_66JfATA@mail.gmail.com>
+
+Buen dia Javier, muchas gracias por tu ayuda y el script compartido.
+
+Me va a servir como ayuda para seguir aprendiendo sobre RODBC pero no
+encuentro una solucion para este problema puntual de poder definir el tipo
+y ancho de las variables, q segun creo se hace con el argumento varTypes.
+
+Si alguien tien algun ejemplo donde haya usado la SqlSave y VarTypes, me
+sera de gran ayuda.
+
+Abrazo a todos
+
+2017-07-12 15:33 GMT-03:00 Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>
+:
+
+> Estimado José Ramirez Costa
+>
+>
+>
+> Yo tengo un archivo donde guarde lo que realizaba cuándo aprendía, habría
+> que ver si actualmente es así o hay cambios, por lo que usted dice creo que
+> usa sql server, si no es así busco el archivo para otras bases de datos. Si
+> es sqlserver se podría realizar con la ayuda de visual studio, hay una
+> integración al respecto.
+>
+>
+>
+> Le copio y pego la forma que utilicé para aprender, espero que le sea útil.
+>
+>
+>
+>
+>
+> cn <- odbcDriverConnect(connection="Driver={SQL Server Native Client
+> 11.0};
+>
+>                         server=localhost;
+>
+>                         database=far;
+>
+>                         trusted_connection=yes;")
+>
+> # DESKTOP-HEO7TLB
+>
+> cosa <- sqlFetch(cn,'cosa')
+>
+> cosa
+>
+>
+>
+> A <- c(1,2,3,4)
+>
+> B <- c(4,5,6,7)
+>
+> dat <- data.frame(A,B)
+>
+> colnames(dat) <- c("A", "B")
+>
+> sqlSave(cn, dat, tablename = "tblTest", rownames=FALSE, append=TRUE)
+>
+>
+>
+> cosa <- c("auto", "bici", "libro")
+>
+> cantidad <- c(2,4,7)
+>
+> dat <- data.frame(cosa, cantidad)
+>
+>
+>
+> colnames(dat) <- c("A", "B")
+>
+> sqlSave(cn, dat, tablename = "cosa",
+>
+>         rownames=FALSE,
+>
+>         colnames=TRUE,
+>
+>         append=TRUE,
+>
+>         addPK=TRUE,
+>
+>         fast=TRUE)
+>
+>
+>
+> # http://stackoverflow.com/questions/36202414/r-download-image-using-rvest
+>
+> # https://www.r-bloggers.com/parameterized-sql-queries/
+>
+> # https://cran.r-project.org/web/packages/RODBCext/
+> vignettes/Parameterized_SQL_queries.html
+>
+>
+>
+> library(RODBCext)
+>
+> filterData <- data.frame('cosa'= c('libros'))
+>
+> data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa = ?", filterData,
+> fetch = TRUE)
+>
+> if(length(data$id) == 0)
+>
+> {
+>
+>   print ("no hay elementos")
+>
+> } else
+>
+> {
+>
+>   print ('hay elementos')
+>
+> }
+>
+>
+>
+> # generar lo que se inserta o actualiza
+>
+> id <- 1
+>
+> cosa <- "casa"
+>
+> cantidad <- 3
+>
+> valor <- 4.5
+>
+> dfDato <- data.frame(id,cosa, cantidad,valor)
+>
+> colnames(dfDato) <- c("id", "cosa","cantidad","valor")
+>
+> print(dfDato)
+>
+> insertar <- function(dfDato) {
+>
+>   dfNuevoDato <- data.frame(dfDato$cosa, dfDato$cantidad, dfDato$valor)
+>
+>   colnames(dfNuevoDato) <- c("cosa","cantidad","valor")
+>
+>   # Parameterized query
+>
+>    sqlExecute(cn, "INSERT INTO prueba
+>
+>               (cosa
+>
+>                 ,cantidad
+>
+>                 ,valor)
+>
+>               VALUES (?,?,?)", dfNuevoDato)
+>
+>   print(dfNuevoDato)
+>
+> }
+>
+>
+>
+> # comprobar si existe el id
+>
+> filterId <- data.frame('id'= dfDato$id)
+>
+> data <- sqlExecute(cn, "SELECT * FROM prueba WHERE id = ?", filterId,
+> fetch = TRUE)
+>
+> if(length(data$id) == 0)
+>
+> {
+>
+>   print ('no existe el id')
+>
+>   insertar(dfDato)
+>
+> }else{
+>
+>   print('Existe el id')
+>
+>   # buscar la palabra si existe
+>
+>   filterPalabra <- data.frame('cosa'=dfDato$cosa)
+>
+>   data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa like ?",
+> filterPalabra, fetch = TRUE)
+>
+>   print(data)
+>
+>     if(length(data$cosa) > 0)
+>
+>     {
+>
+>       print ('existe debo actualizar')
+>
+>      # query <- "UPDATE cakes SET price = ? WHERE cake = ?"
+>
+>        query <- "UPDATE prueba
+>
+>        SET cosa = ?
+>
+>        ,cantidad = ?
+>
+>        ,valor = ?
+>
+>        WHERE id = ?"
+>
+>        sqlExecute(cn, query, dfDato)
+>
+>       print(dfDato)
+>
+>     }else{
+>
+>       print ('puedo insertar')
+>
+>       insertar(dfDato)
+>
+>     }
+>
+>   }
+>
+> #http://finzi.psych.upenn.edu/R/library/RODBC/html/sqlSave.html
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Jose Ramirez Costa <joseramirezcosta en gmail.com>
+> *Enviado: *miércoles, 12 de julio de 2017 12:33
+> *Para: *r-help-es <r-help-es en r-project.org>
+> *Asunto: *[R-es] consulta por varTypes de sqlSave en RODBC
+>
+>
+>
+> Buen dia compañerxs de R, les traigo una pregunta bastante especifica.
+>
+>
+>
+> En el trabajo me estan requiriendo el uso de SQL, asi q estoy aprendiendo a
+>
+> usarlo desde R, con el paquete RODBC.
+>
+>
+>
+> Mi problema puntual es que al crear una tabla en el servidor SQL a partir
+>
+> de un data frame en R (usando la funcion sqlSave) no puedo definir el tipo
+>
+> de variables que quiero usar en el data frame.
+>
+>
+>
+> Segun entiendo esto se deberia poder hacer con el parametro vartypes, pero
+>
+> hasta ahora solo he podido cargar un vector q dice el tipo de variables
+>
+> (varchar, int, o numeric) pero no he podido indicarle el ancho q tiene cad
+>
+> variable.
+>
+>
+>
+> Esto en SQL se escribiria algo asi:
+>
+> [ACTA] int,
+>
+> [APENAC] varchar(25),
+>
+> [PESONAC] numeric(4,0),
+>
+>
+>
+> Alguien uso vartypes de esta forma?
+>
+>
+>
+> Desde ya gracias por el tiempo y un abrazo a todxs.
+>
+>
+>
+> --
+>
+> "*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+>
+> pássaro.? *
+>
+> *Nietzsche, "Assim Falou Zaratustra?.*
+>
+>
+>
+>                 [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+
+
+-- 
+"*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+pássaro.? *
+*Nietzsche, "Assim Falou Zaratustra?.*
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Jul 13 15:39:02 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 13 Jul 2017 10:39:02 -0300
+Subject: [R-es] consulta por varTypes de sqlSave en RODBC
+In-Reply-To: <CAFOGFn+HF7gxNL8PNmLH3+pE8_sbv39n3U10wZZVqu_66JfATA@mail.gmail.com>
+References: <CAFOGFnJGh1CvBrENWa33XJSsSm4xf8pzA-o+=i1jw+cW0c9q_w@mail.gmail.com>
+ <59666b60.479e370a.9d79.d9e8@mx.google.com>
+ <CAFOGFn+HF7gxNL8PNmLH3+pE8_sbv39n3U10wZZVqu_66JfATA@mail.gmail.com>
+Message-ID: <596777f7.0837ed0a.5b841.9dad@mx.google.com>
+
+Estimado Ramirez Costa
+
+Si usted desea configurar los parámetros SQL podría escribirlos en lenguaje SQL y enviarlos por medio de una consulta, por otro lado ¿el manual especifica la opción que usted desea utilizar? Posiblemente está documentado (no lo se).
+
+Javier Rubén Marcuzzi
+
+De: Jose Ramirez Costa
+Enviado: jueves, 13 de julio de 2017 10:31
+Para: Javier Marcuzzi
+CC: r-help-es
+Asunto: Re: [R-es] consulta por varTypes de sqlSave en RODBC
+
+Buen dia Javier, muchas gracias por tu ayuda y el script compartido.
+
+Me va a servir como ayuda para seguir aprendiendo sobre RODBC pero no encuentro una solucion para este problema puntual de poder definir el tipo y ancho de las variables, q segun creo se hace con el argumento varTypes.
+
+Si alguien tien algun ejemplo donde haya usado la SqlSave y VarTypes, me sera de gran ayuda.
+
+Abrazo a todos
+
+2017-07-12 15:33 GMT-03:00 Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>:
+Estimado José Ramirez Costa
+ 
+Yo tengo un archivo donde guarde lo que realizaba cuándo aprendía, habría que ver si actualmente es así o hay cambios, por lo que usted dice creo que usa sql server, si no es así busco el archivo para otras bases de datos. Si es sqlserver se podría realizar con la ayuda de visual studio, hay una integración al respecto.
+ 
+Le copio y pego la forma que utilicé para aprender, espero que le sea útil.
+ 
+ 
+cn <- odbcDriverConnect(connection="Driver={SQL Server Native Client 11.0};
+                        server=localhost;
+                        database=far;
+                        trusted_connection=yes;")
+# DESKTOP-HEO7TLB
+cosa <- sqlFetch(cn,'cosa')
+cosa
+ 
+A <- c(1,2,3,4)
+B <- c(4,5,6,7)
+dat <- data.frame(A,B)
+colnames(dat) <- c("A", "B")
+sqlSave(cn, dat, tablename = "tblTest", rownames=FALSE, append=TRUE)
+ 
+cosa <- c("auto", "bici", "libro")
+cantidad <- c(2,4,7)
+dat <- data.frame(cosa, cantidad)
+ 
+colnames(dat) <- c("A", "B")
+sqlSave(cn, dat, tablename = "cosa",
+        rownames=FALSE, 
+        colnames=TRUE, 
+        append=TRUE,
+        addPK=TRUE,
+        fast=TRUE)
+ 
+# http://stackoverflow.com/questions/36202414/r-download-image-using-rvest
+# https://www.r-bloggers.com/parameterized-sql-queries/
+# https://cran.r-project.org/web/packages/RODBCext/vignettes/Parameterized_SQL_queries.html
+ 
+library(RODBCext)
+filterData <- data.frame('cosa'= c('libros'))
+data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa = ?", filterData, fetch = TRUE)
+if(length(data$id) == 0)
+{
+  print ("no hay elementos")
+} else
+{
+  print ('hay elementos')
+}
+ 
+# generar lo que se inserta o actualiza
+id <- 1
+cosa <- "casa"
+cantidad <- 3
+valor <- 4.5
+dfDato <- data.frame(id,cosa, cantidad,valor)
+colnames(dfDato) <- c("id", "cosa","cantidad","valor")
+print(dfDato)
+insertar <- function(dfDato) {
+  dfNuevoDato <- data.frame(dfDato$cosa, dfDato$cantidad, dfDato$valor)
+  colnames(dfNuevoDato) <- c("cosa","cantidad","valor")
+  # Parameterized query
+   sqlExecute(cn, "INSERT INTO prueba
+              (cosa
+                ,cantidad
+                ,valor)
+              VALUES (?,?,?)", dfNuevoDato)
+  print(dfNuevoDato)
+}
+ 
+# comprobar si existe el id
+filterId <- data.frame('id'= dfDato$id)
+data <- sqlExecute(cn, "SELECT * FROM prueba WHERE id = ?", filterId, fetch = TRUE)
+if(length(data$id) == 0)
+{
+  print ('no existe el id')
+  insertar(dfDato)
+}else{
+  print('Existe el id')
+  # buscar la palabra si existe
+  filterPalabra <- data.frame('cosa'=dfDato$cosa)
+  data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa like ?", filterPalabra, fetch = TRUE)
+  print(data)
+    if(length(data$cosa) > 0)
+    {
+      print ('existe debo actualizar')
+     # query <- "UPDATE cakes SET price = ? WHERE cake = ?"
+       query <- "UPDATE prueba
+       SET cosa = ?
+       ,cantidad = ?
+       ,valor = ?
+       WHERE id = ?"
+       sqlExecute(cn, query, dfDato)
+      print(dfDato)
+    }else{
+      print ('puedo insertar')
+      insertar(dfDato)
+    }
+  }
+#http://finzi.psych.upenn.edu/R/library/RODBC/html/sqlSave.html
+ 
+Javier Rubén Marcuzzi
+ 
+De: Jose Ramirez Costa
+Enviado: miércoles, 12 de julio de 2017 12:33
+Para: r-help-es
+Asunto: [R-es] consulta por varTypes de sqlSave en RODBC
+ 
+Buen dia compañerxs de R, les traigo una pregunta bastante especifica.
+ 
+En el trabajo me estan requiriendo el uso de SQL, asi q estoy aprendiendo a
+usarlo desde R, con el paquete RODBC.
+ 
+Mi problema puntual es que al crear una tabla en el servidor SQL a partir
+de un data frame en R (usando la funcion sqlSave) no puedo definir el tipo
+de variables que quiero usar en el data frame.
+ 
+Segun entiendo esto se deberia poder hacer con el parametro vartypes, pero
+hasta ahora solo he podido cargar un vector q dice el tipo de variables
+(varchar, int, o numeric) pero no he podido indicarle el ancho q tiene cad
+variable.
+ 
+Esto en SQL se escribiria algo asi:
+[ACTA] int,
+[APENAC] varchar(25),
+[PESONAC] numeric(4,0),
+ 
+Alguien uso vartypes de esta forma?
+ 
+Desde ya gracias por el tiempo y un abrazo a todxs.
+ 
+-- 
+"*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+pássaro.? *
+*Nietzsche, "Assim Falou Zaratustra?.*
+ 
+                [[alternative HTML version deleted]]
+ 
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+ 
+
+
+
+
+-- 
+"?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito, pássaro.? 
+Nietzsche, "Assim Falou Zaratustra?.
+
+
+	[[alternative HTML version deleted]]
+
+
+From joseramirezcosta en gmail.com  Thu Jul 13 15:57:55 2017
+From: joseramirezcosta en gmail.com (Jose Ramirez Costa)
+Date: Thu, 13 Jul 2017 10:57:55 -0300
+Subject: [R-es] consulta por varTypes de sqlSave en RODBC
+In-Reply-To: <596777f7.0837ed0a.5b841.9dad@mx.google.com>
+References: <CAFOGFnJGh1CvBrENWa33XJSsSm4xf8pzA-o+=i1jw+cW0c9q_w@mail.gmail.com>
+ <59666b60.479e370a.9d79.d9e8@mx.google.com>
+ <CAFOGFn+HF7gxNL8PNmLH3+pE8_sbv39n3U10wZZVqu_66JfATA@mail.gmail.com>
+ <596777f7.0837ed0a.5b841.9dad@mx.google.com>
+Message-ID: <CAFOGFnKfZY9aBHnfdf5rZGPVb=bHiTdMfq9GX4SKAhY334gD_g@mail.gmail.com>
+
+Hola Javier, si no estoy entendiendo mal, lo q deseo hacer no se trata de
+configurar los parametros SQL, sino solo de colocar un vector en el
+argumento VarTypes de la funcion sqlSave.
+
+El manual especifica esa opcion, pero no da ningun ejemplo de como usarla.
+
+*varTypes an optional named character vector giving the DBMSs datatypes to
+be used for*
+*some (or all) of the columns if a table is to be created.*
+
+En este pdf
+https://cran.r-project.org/web/packages/RODBC/vignettes/RODBC.pdf, solo se
+hace referencia al argumento en este parrafo
+
+*4.1 Data types when saving a data frame When sqlSave creates a table,
+there is some choice as to the SQL data types used. The default is to
+select the SQL data type from the R type via the typeInfo argument to
+sqlSave. If this is not supplied (usual) a default mapping is looked up
+using getSqlTypeInfo() or by interrogating sqlTypeInfo(). This will almost
+always produce the correct mapping for numeric, integer and character
+columns of up to 254 characters (or bytes). In other cases (include dates
+and date-times) the desired SQL type can be specified for each column via
+the argument varTypes, a named character vector with names corresponding to
+(some of) the names in the data frame to be saved.*
+
+Muchas gracias por tu ayuda y disculpa si no entiendi bien alguna de tus
+preguntas.
+
+Saludos
+
+El 13 de julio de 2017, 10:39, Javier Marcuzzi <
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Estimado Ramirez Costa
+>
+>
+>
+> Si usted desea configurar los parámetros SQL podría escribirlos en
+> lenguaje SQL y enviarlos por medio de una consulta, por otro lado ¿el
+> manual especifica la opción que usted desea utilizar? Posiblemente está
+> documentado (no lo se).
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Jose Ramirez Costa <joseramirezcosta en gmail.com>
+> *Enviado: *jueves, 13 de julio de 2017 10:31
+> *Para: *Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>
+> *CC: *r-help-es <r-help-es en r-project.org>
+> *Asunto: *Re: [R-es] consulta por varTypes de sqlSave en RODBC
+>
+>
+>
+> Buen dia Javier, muchas gracias por tu ayuda y el script compartido.
+>
+>
+>
+> Me va a servir como ayuda para seguir aprendiendo sobre RODBC pero no
+> encuentro una solucion para este problema puntual de poder definir el tipo
+> y ancho de las variables, q segun creo se hace con el argumento varTypes.
+>
+>
+>
+> Si alguien tien algun ejemplo donde haya usado la SqlSave y VarTypes, me
+> sera de gran ayuda.
+>
+>
+>
+> Abrazo a todos
+>
+>
+>
+> 2017-07-12 15:33 GMT-03:00 Javier Marcuzzi <javier.ruben.marcuzzi en gmail.
+> com>:
+>
+> Estimado José Ramirez Costa
+>
+>
+>
+> Yo tengo un archivo donde guarde lo que realizaba cuándo aprendía, habría
+> que ver si actualmente es así o hay cambios, por lo que usted dice creo que
+> usa sql server, si no es así busco el archivo para otras bases de datos. Si
+> es sqlserver se podría realizar con la ayuda de visual studio, hay una
+> integración al respecto.
+>
+>
+>
+> Le copio y pego la forma que utilicé para aprender, espero que le sea útil.
+>
+>
+>
+>
+>
+> cn <- odbcDriverConnect(connection="Driver={SQL Server Native Client
+> 11.0};
+>
+>                         server=localhost;
+>
+>                         database=far;
+>
+>                         trusted_connection=yes;")
+>
+> # DESKTOP-HEO7TLB
+>
+> cosa <- sqlFetch(cn,'cosa')
+>
+> cosa
+>
+>
+>
+> A <- c(1,2,3,4)
+>
+> B <- c(4,5,6,7)
+>
+> dat <- data.frame(A,B)
+>
+> colnames(dat) <- c("A", "B")
+>
+> sqlSave(cn, dat, tablename = "tblTest", rownames=FALSE, append=TRUE)
+>
+>
+>
+> cosa <- c("auto", "bici", "libro")
+>
+> cantidad <- c(2,4,7)
+>
+> dat <- data.frame(cosa, cantidad)
+>
+>
+>
+> colnames(dat) <- c("A", "B")
+>
+> sqlSave(cn, dat, tablename = "cosa",
+>
+>         rownames=FALSE,
+>
+>         colnames=TRUE,
+>
+>         append=TRUE,
+>
+>         addPK=TRUE,
+>
+>         fast=TRUE)
+>
+>
+>
+> # http://stackoverflow.com/questions/36202414/r-download-image-using-rvest
+>
+> # https://www.r-bloggers.com/parameterized-sql-queries/
+>
+> # https://cran.r-project.org/web/packages/RODBCext/
+> vignettes/Parameterized_SQL_queries.html
+>
+>
+>
+> library(RODBCext)
+>
+> filterData <- data.frame('cosa'= c('libros'))
+>
+> data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa = ?", filterData,
+> fetch = TRUE)
+>
+> if(length(data$id) == 0)
+>
+> {
+>
+>   print ("no hay elementos")
+>
+> } else
+>
+> {
+>
+>   print ('hay elementos')
+>
+> }
+>
+>
+>
+> # generar lo que se inserta o actualiza
+>
+> id <- 1
+>
+> cosa <- "casa"
+>
+> cantidad <- 3
+>
+> valor <- 4.5
+>
+> dfDato <- data.frame(id,cosa, cantidad,valor)
+>
+> colnames(dfDato) <- c("id", "cosa","cantidad","valor")
+>
+> print(dfDato)
+>
+> insertar <- function(dfDato) {
+>
+>   dfNuevoDato <- data.frame(dfDato$cosa, dfDato$cantidad, dfDato$valor)
+>
+>   colnames(dfNuevoDato) <- c("cosa","cantidad","valor")
+>
+>   # Parameterized query
+>
+>    sqlExecute(cn, "INSERT INTO prueba
+>
+>               (cosa
+>
+>                 ,cantidad
+>
+>                 ,valor)
+>
+>               VALUES (?,?,?)", dfNuevoDato)
+>
+>   print(dfNuevoDato)
+>
+> }
+>
+>
+>
+> # comprobar si existe el id
+>
+> filterId <- data.frame('id'= dfDato$id)
+>
+> data <- sqlExecute(cn, "SELECT * FROM prueba WHERE id = ?", filterId,
+> fetch = TRUE)
+>
+> if(length(data$id) == 0)
+>
+> {
+>
+>   print ('no existe el id')
+>
+>   insertar(dfDato)
+>
+> }else{
+>
+>   print('Existe el id')
+>
+>   # buscar la palabra si existe
+>
+>   filterPalabra <- data.frame('cosa'=dfDato$cosa)
+>
+>   data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa like ?",
+> filterPalabra, fetch = TRUE)
+>
+>   print(data)
+>
+>     if(length(data$cosa) > 0)
+>
+>     {
+>
+>       print ('existe debo actualizar')
+>
+>      # query <- "UPDATE cakes SET price = ? WHERE cake = ?"
+>
+>        query <- "UPDATE prueba
+>
+>        SET cosa = ?
+>
+>        ,cantidad = ?
+>
+>        ,valor = ?
+>
+>        WHERE id = ?"
+>
+>        sqlExecute(cn, query, dfDato)
+>
+>       print(dfDato)
+>
+>     }else{
+>
+>       print ('puedo insertar')
+>
+>       insertar(dfDato)
+>
+>     }
+>
+>   }
+>
+> #http://finzi.psych.upenn.edu/R/library/RODBC/html/sqlSave.html
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Jose Ramirez Costa <joseramirezcosta en gmail.com>
+> *Enviado: *miércoles, 12 de julio de 2017 12:33
+> *Para: *r-help-es <r-help-es en r-project.org>
+> *Asunto: *[R-es] consulta por varTypes de sqlSave en RODBC
+>
+>
+>
+> Buen dia compañerxs de R, les traigo una pregunta bastante especifica.
+>
+>
+>
+> En el trabajo me estan requiriendo el uso de SQL, asi q estoy aprendiendo a
+>
+> usarlo desde R, con el paquete RODBC.
+>
+>
+>
+> Mi problema puntual es que al crear una tabla en el servidor SQL a partir
+>
+> de un data frame en R (usando la funcion sqlSave) no puedo definir el tipo
+>
+> de variables que quiero usar en el data frame.
+>
+>
+>
+> Segun entiendo esto se deberia poder hacer con el parametro vartypes, pero
+>
+> hasta ahora solo he podido cargar un vector q dice el tipo de variables
+>
+> (varchar, int, o numeric) pero no he podido indicarle el ancho q tiene cad
+>
+> variable.
+>
+>
+>
+> Esto en SQL se escribiria algo asi:
+>
+> [ACTA] int,
+>
+> [APENAC] varchar(25),
+>
+> [PESONAC] numeric(4,0),
+>
+>
+>
+> Alguien uso vartypes de esta forma?
+>
+>
+>
+> Desde ya gracias por el tiempo y un abrazo a todxs.
+>
+>
+>
+> --
+>
+> "*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+>
+> pássaro.? *
+>
+> *Nietzsche, "Assim Falou Zaratustra?.*
+>
+>
+>
+>                 [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+>
+>
+>
+> --
+>
+> "*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+> pássaro.? *
+> *Nietzsche, "Assim Falou Zaratustra?.*
+>
+>
+>
+
+
+
+-- 
+"*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+pássaro.? *
+*Nietzsche, "Assim Falou Zaratustra?.*
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Jul 13 16:11:24 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 13 Jul 2017 11:11:24 -0300
+Subject: [R-es] consulta por varTypes de sqlSave en RODBC
+In-Reply-To: <CAFOGFnKfZY9aBHnfdf5rZGPVb=bHiTdMfq9GX4SKAhY334gD_g@mail.gmail.com>
+References: <CAFOGFnJGh1CvBrENWa33XJSsSm4xf8pzA-o+=i1jw+cW0c9q_w@mail.gmail.com>
+ <59666b60.479e370a.9d79.d9e8@mx.google.com>
+ <CAFOGFn+HF7gxNL8PNmLH3+pE8_sbv39n3U10wZZVqu_66JfATA@mail.gmail.com>
+ <596777f7.0837ed0a.5b841.9dad@mx.google.com>
+ <CAFOGFnKfZY9aBHnfdf5rZGPVb=bHiTdMfq9GX4SKAhY334gD_g@mail.gmail.com>
+Message-ID: <59677f8c.5163370a.4e0f.8223@mx.google.com>
+
+Mira algo de esto, puede ser útil, para no enviar directamente en lenguaje SQL (dos caminos para lo mismo, porque R lo escribe a SQL, salvo SQL server 2016, el resto no entendería R). Disculpas por enviarlo muy en bruto, falta trabajo al código, pero como usted ahora está conectado es lo más rápido que puedo hacer.
+
+sqlSave(dbCon, dataSet, dbTable, append=TRUE, rownames=FALSE, 
+varTypes=varTypes, verbose=T)
+
+tmp <- sqlColumns(channel, correctTableName)
+varTypes = as.character(tmp$TYPE_NAME)
+names(varTypes) = as.character(tmp$COLUMN_NAME)
+
+o
+
+varTypes = c(somecolumn="datetime")
+
+Javier Rubén Marcuzzi
+
+De: Jose Ramirez Costa
+Enviado: jueves, 13 de julio de 2017 10:57
+Para: Javier Marcuzzi
+CC: r-help-es
+Asunto: Re: [R-es] consulta por varTypes de sqlSave en RODBC
+
+Hola Javier, si no estoy entendiendo mal, lo q deseo hacer no se trata de configurar los parametros SQL, sino solo de colocar un vector en el argumento VarTypes de la funcion sqlSave.
+
+El manual especifica esa opcion, pero no da ningun ejemplo de como usarla.
+
+varTypes an optional named character vector giving the DBMSs datatypes to be used for
+some (or all) of the columns if a table is to be created.
+
+En este pdf https://cran.r-project.org/web/packages/RODBC/vignettes/RODBC.pdf, solo se hace referencia al argumento en este parrafo
+
+4.1 Data types when saving a data frame When sqlSave creates a table, there is some choice as to the SQL data types used. The default is to select the SQL data type from the R type via the typeInfo argument to sqlSave. If this is not supplied (usual) a default mapping is looked up using getSqlTypeInfo() or by interrogating sqlTypeInfo(). This will almost always produce the correct mapping for numeric, integer and character columns of up to 254 characters (or bytes). In other cases (include dates and date-times) the desired SQL type can be specified for each column via the argument varTypes, a named character vector with names corresponding to (some of) the names in the data frame to be saved.
+
+Muchas gracias por tu ayuda y disculpa si no entiendi bien alguna de tus preguntas.
+
+Saludos
+
+El 13 de julio de 2017, 10:39, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:
+Estimado Ramirez Costa
+ 
+Si usted desea configurar los parámetros SQL podría escribirlos en lenguaje SQL y enviarlos por medio de una consulta, por otro lado ¿el manual especifica la opción que usted desea utilizar? Posiblemente está documentado (no lo se).
+ 
+Javier Rubén Marcuzzi
+ 
+De: Jose Ramirez Costa
+Enviado: jueves, 13 de julio de 2017 10:31
+Para: Javier Marcuzzi
+CC: r-help-es
+Asunto: Re: [R-es] consulta por varTypes de sqlSave en RODBC
+ 
+Buen dia Javier, muchas gracias por tu ayuda y el script compartido.
+ 
+Me va a servir como ayuda para seguir aprendiendo sobre RODBC pero no encuentro una solucion para este problema puntual de poder definir el tipo y ancho de las variables, q segun creo se hace con el argumento varTypes.
+ 
+Si alguien tien algun ejemplo donde haya usado la SqlSave y VarTypes, me sera de gran ayuda.
+ 
+Abrazo a todos
+ 
+2017-07-12 15:33 GMT-03:00 Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>:
+Estimado José Ramirez Costa
+ 
+Yo tengo un archivo donde guarde lo que realizaba cuándo aprendía, habría que ver si actualmente es así o hay cambios, por lo que usted dice creo que usa sql server, si no es así busco el archivo para otras bases de datos. Si es sqlserver se podría realizar con la ayuda de visual studio, hay una integración al respecto.
+ 
+Le copio y pego la forma que utilicé para aprender, espero que le sea útil.
+ 
+ 
+cn <- odbcDriverConnect(connection="Driver={SQL Server Native Client 11.0};
+                        server=localhost;
+                        database=far;
+                        trusted_connection=yes;")
+# DESKTOP-HEO7TLB
+cosa <- sqlFetch(cn,'cosa')
+cosa
+ 
+A <- c(1,2,3,4)
+B <- c(4,5,6,7)
+dat <- data.frame(A,B)
+colnames(dat) <- c("A", "B")
+sqlSave(cn, dat, tablename = "tblTest", rownames=FALSE, append=TRUE)
+ 
+cosa <- c("auto", "bici", "libro")
+cantidad <- c(2,4,7)
+dat <- data.frame(cosa, cantidad)
+ 
+colnames(dat) <- c("A", "B")
+sqlSave(cn, dat, tablename = "cosa",
+        rownames=FALSE, 
+        colnames=TRUE, 
+        append=TRUE,
+        addPK=TRUE,
+        fast=TRUE)
+ 
+# http://stackoverflow.com/questions/36202414/r-download-image-using-rvest
+# https://www.r-bloggers.com/parameterized-sql-queries/
+# https://cran.r-project.org/web/packages/RODBCext/vignettes/Parameterized_SQL_queries.html
+ 
+library(RODBCext)
+filterData <- data.frame('cosa'= c('libros'))
+data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa = ?", filterData, fetch = TRUE)
+if(length(data$id) == 0)
+{
+  print ("no hay elementos")
+} else
+{
+  print ('hay elementos')
+}
+ 
+# generar lo que se inserta o actualiza
+id <- 1
+cosa <- "casa"
+cantidad <- 3
+valor <- 4.5
+dfDato <- data.frame(id,cosa, cantidad,valor)
+colnames(dfDato) <- c("id", "cosa","cantidad","valor")
+print(dfDato)
+insertar <- function(dfDato) {
+  dfNuevoDato <- data.frame(dfDato$cosa, dfDato$cantidad, dfDato$valor)
+  colnames(dfNuevoDato) <- c("cosa","cantidad","valor")
+  # Parameterized query
+   sqlExecute(cn, "INSERT INTO prueba
+              (cosa
+                ,cantidad
+                ,valor)
+              VALUES (?,?,?)", dfNuevoDato)
+  print(dfNuevoDato)
+}
+ 
+# comprobar si existe el id
+filterId <- data.frame('id'= dfDato$id)
+data <- sqlExecute(cn, "SELECT * FROM prueba WHERE id = ?", filterId, fetch = TRUE)
+if(length(data$id) == 0)
+{
+  print ('no existe el id')
+  insertar(dfDato)
+}else{
+  print('Existe el id')
+  # buscar la palabra si existe
+  filterPalabra <- data.frame('cosa'=dfDato$cosa)
+  data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa like ?", filterPalabra, fetch = TRUE)
+  print(data)
+    if(length(data$cosa) > 0)
+    {
+      print ('existe debo actualizar')
+     # query <- "UPDATE cakes SET price = ? WHERE cake = ?"
+       query <- "UPDATE prueba
+       SET cosa = ?
+       ,cantidad = ?
+       ,valor = ?
+       WHERE id = ?"
+       sqlExecute(cn, query, dfDato)
+      print(dfDato)
+    }else{
+      print ('puedo insertar')
+      insertar(dfDato)
+    }
+  }
+#http://finzi.psych.upenn.edu/R/library/RODBC/html/sqlSave.html
+ 
+Javier Rubén Marcuzzi
+ 
+De: Jose Ramirez Costa
+Enviado: miércoles, 12 de julio de 2017 12:33
+Para: r-help-es
+Asunto: [R-es] consulta por varTypes de sqlSave en RODBC
+ 
+Buen dia compañerxs de R, les traigo una pregunta bastante especifica.
+ 
+En el trabajo me estan requiriendo el uso de SQL, asi q estoy aprendiendo a
+usarlo desde R, con el paquete RODBC.
+ 
+Mi problema puntual es que al crear una tabla en el servidor SQL a partir
+de un data frame en R (usando la funcion sqlSave) no puedo definir el tipo
+de variables que quiero usar en el data frame.
+ 
+Segun entiendo esto se deberia poder hacer con el parametro vartypes, pero
+hasta ahora solo he podido cargar un vector q dice el tipo de variables
+(varchar, int, o numeric) pero no he podido indicarle el ancho q tiene cad
+variable.
+ 
+Esto en SQL se escribiria algo asi:
+[ACTA] int,
+[APENAC] varchar(25),
+[PESONAC] numeric(4,0),
+ 
+Alguien uso vartypes de esta forma?
+ 
+Desde ya gracias por el tiempo y un abrazo a todxs.
+ 
+-- 
+"*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+pássaro.? *
+*Nietzsche, "Assim Falou Zaratustra?.*
+ 
+                [[alternative HTML version deleted]]
+ 
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+ 
+
+
+
+ 
+-- 
+"?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito, pássaro.? 
+Nietzsche, "Assim Falou Zaratustra?.
+ 
+
+
+
+
+-- 
+"?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito, pássaro.? 
+Nietzsche, "Assim Falou Zaratustra?.
+
+
+	[[alternative HTML version deleted]]
+
+
+From joseramirezcosta en gmail.com  Thu Jul 13 16:52:51 2017
+From: joseramirezcosta en gmail.com (Jose Ramirez Costa)
+Date: Thu, 13 Jul 2017 11:52:51 -0300
+Subject: [R-es] consulta por varTypes de sqlSave en RODBC
+In-Reply-To: <59677f8c.5163370a.4e0f.8223@mx.google.com>
+References: <CAFOGFnJGh1CvBrENWa33XJSsSm4xf8pzA-o+=i1jw+cW0c9q_w@mail.gmail.com>
+ <59666b60.479e370a.9d79.d9e8@mx.google.com>
+ <CAFOGFn+HF7gxNL8PNmLH3+pE8_sbv39n3U10wZZVqu_66JfATA@mail.gmail.com>
+ <596777f7.0837ed0a.5b841.9dad@mx.google.com>
+ <CAFOGFnKfZY9aBHnfdf5rZGPVb=bHiTdMfq9GX4SKAhY334gD_g@mail.gmail.com>
+ <59677f8c.5163370a.4e0f.8223@mx.google.com>
+Message-ID: <CAFOGFn+swmNocj6dMdrLWAd6_XTy7TvNA3Fhq0um6P==d_9KkQ@mail.gmail.com>
+
+Gracias Javier! Ahi encontre la solucion, se puede usar de la siguiente
+forma:
+
+varTypes = c(nomvrevariable1="datetime", nombrevariable2="varchar (2)")
+
+Era tan sencillo mi error que no podia encontrar la forma, escribia los
+nombres de las variables sin comillas y los tipos de variables con
+comillas, o cosas asi.
+
+Muchas gracias por tu tiempo y disposicion, espero q mi consulta sirva para
+otros.
+
+Abrazo!
+
+El 13 de julio de 2017, 11:11, Javier Marcuzzi <
+javier.ruben.marcuzzi en gmail.com> escribió:
+
+> Mira algo de esto, puede ser útil, para no enviar directamente en lenguaje
+> SQL (dos caminos para lo mismo, porque R lo escribe a SQL, salvo SQL server
+> 2016, el resto no entendería R). Disculpas por enviarlo muy en bruto, falta
+> trabajo al código, pero como usted ahora está conectado es lo más rápido
+> que puedo hacer.
+>
+>
+>
+> sqlSave(dbCon, dataSet, dbTable, append=TRUE, rownames=FALSE,
+> varTypes=varTypes, verbose=T)
+>
+>
+>
+> tmp <- sqlColumns(channel, correctTableName)
+>
+> varTypes = as.character(tmp$TYPE_NAME)
+>
+> names(varTypes) = as.character(tmp$COLUMN_NAME)
+>
+>
+>
+> o
+>
+>
+>
+> varTypes = c(somecolumn="datetime")
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Jose Ramirez Costa <joseramirezcosta en gmail.com>
+> *Enviado: *jueves, 13 de julio de 2017 10:57
+>
+> *Para: *Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>
+> *CC: *r-help-es <r-help-es en r-project.org>
+> *Asunto: *Re: [R-es] consulta por varTypes de sqlSave en RODBC
+>
+>
+>
+> Hola Javier, si no estoy entendiendo mal, lo q deseo hacer no se trata de
+> configurar los parametros SQL, sino solo de colocar un vector en el
+> argumento VarTypes de la funcion sqlSave.
+>
+>
+>
+> El manual especifica esa opcion, pero no da ningun ejemplo de como usarla.
+>
+>
+>
+> *varTypes an optional named character vector giving the DBMSs datatypes to
+> be used for*
+>
+> *some (or all) of the columns if a table is to be created.*
+>
+>
+>
+> En este pdf https://cran.r-project.org/web/packages/RODBC/
+> vignettes/RODBC.pdf, solo se hace referencia al argumento en este parrafo
+>
+>
+>
+> *4.1 Data types when saving a data frame When sqlSave creates a table,
+> there is some choice as to the SQL data types used. The default is to
+> select the SQL data type from the R type via the typeInfo argument to
+> sqlSave. If this is not supplied (usual) a default mapping is looked up
+> using getSqlTypeInfo() or by interrogating sqlTypeInfo(). This will almost
+> always produce the correct mapping for numeric, integer and character
+> columns of up to 254 characters (or bytes). In other cases (include dates
+> and date-times) the desired SQL type can be specified for each column via
+> the argument varTypes, a named character vector with names corresponding to
+> (some of) the names in the data frame to be saved.*
+>
+>
+>
+> Muchas gracias por tu ayuda y disculpa si no entiendi bien alguna de tus
+> preguntas.
+>
+>
+>
+> Saludos
+>
+>
+>
+> El 13 de julio de 2017, 10:39, Javier Marcuzzi <
+> javier.ruben.marcuzzi en gmail.com> escribió:
+>
+> Estimado Ramirez Costa
+>
+>
+>
+> Si usted desea configurar los parámetros SQL podría escribirlos en
+> lenguaje SQL y enviarlos por medio de una consulta, por otro lado ¿el
+> manual especifica la opción que usted desea utilizar? Posiblemente está
+> documentado (no lo se).
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Jose Ramirez Costa <joseramirezcosta en gmail.com>
+> *Enviado: *jueves, 13 de julio de 2017 10:31
+> *Para: *Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>
+> *CC: *r-help-es <r-help-es en r-project.org>
+> *Asunto: *Re: [R-es] consulta por varTypes de sqlSave en RODBC
+>
+>
+>
+> Buen dia Javier, muchas gracias por tu ayuda y el script compartido.
+>
+>
+>
+> Me va a servir como ayuda para seguir aprendiendo sobre RODBC pero no
+> encuentro una solucion para este problema puntual de poder definir el tipo
+> y ancho de las variables, q segun creo se hace con el argumento varTypes.
+>
+>
+>
+> Si alguien tien algun ejemplo donde haya usado la SqlSave y VarTypes, me
+> sera de gran ayuda.
+>
+>
+>
+> Abrazo a todos
+>
+>
+>
+> 2017-07-12 15:33 GMT-03:00 Javier Marcuzzi <javier.ruben.marcuzzi en gmail.
+> com>:
+>
+> Estimado José Ramirez Costa
+>
+>
+>
+> Yo tengo un archivo donde guarde lo que realizaba cuándo aprendía, habría
+> que ver si actualmente es así o hay cambios, por lo que usted dice creo que
+> usa sql server, si no es así busco el archivo para otras bases de datos. Si
+> es sqlserver se podría realizar con la ayuda de visual studio, hay una
+> integración al respecto.
+>
+>
+>
+> Le copio y pego la forma que utilicé para aprender, espero que le sea útil.
+>
+>
+>
+>
+>
+> cn <- odbcDriverConnect(connection="Driver={SQL Server Native Client
+> 11.0};
+>
+>                         server=localhost;
+>
+>                         database=far;
+>
+>                         trusted_connection=yes;")
+>
+> # DESKTOP-HEO7TLB
+>
+> cosa <- sqlFetch(cn,'cosa')
+>
+> cosa
+>
+>
+>
+> A <- c(1,2,3,4)
+>
+> B <- c(4,5,6,7)
+>
+> dat <- data.frame(A,B)
+>
+> colnames(dat) <- c("A", "B")
+>
+> sqlSave(cn, dat, tablename = "tblTest", rownames=FALSE, append=TRUE)
+>
+>
+>
+> cosa <- c("auto", "bici", "libro")
+>
+> cantidad <- c(2,4,7)
+>
+> dat <- data.frame(cosa, cantidad)
+>
+>
+>
+> colnames(dat) <- c("A", "B")
+>
+> sqlSave(cn, dat, tablename = "cosa",
+>
+>         rownames=FALSE,
+>
+>         colnames=TRUE,
+>
+>         append=TRUE,
+>
+>         addPK=TRUE,
+>
+>         fast=TRUE)
+>
+>
+>
+> # http://stackoverflow.com/questions/36202414/r-download-image-using-rvest
+>
+> # https://www.r-bloggers.com/parameterized-sql-queries/
+>
+> # https://cran.r-project.org/web/packages/RODBCext/
+> vignettes/Parameterized_SQL_queries.html
+>
+>
+>
+> library(RODBCext)
+>
+> filterData <- data.frame('cosa'= c('libros'))
+>
+> data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa = ?", filterData,
+> fetch = TRUE)
+>
+> if(length(data$id) == 0)
+>
+> {
+>
+>   print ("no hay elementos")
+>
+> } else
+>
+> {
+>
+>   print ('hay elementos')
+>
+> }
+>
+>
+>
+> # generar lo que se inserta o actualiza
+>
+> id <- 1
+>
+> cosa <- "casa"
+>
+> cantidad <- 3
+>
+> valor <- 4.5
+>
+> dfDato <- data.frame(id,cosa, cantidad,valor)
+>
+> colnames(dfDato) <- c("id", "cosa","cantidad","valor")
+>
+> print(dfDato)
+>
+> insertar <- function(dfDato) {
+>
+>   dfNuevoDato <- data.frame(dfDato$cosa, dfDato$cantidad, dfDato$valor)
+>
+>   colnames(dfNuevoDato) <- c("cosa","cantidad","valor")
+>
+>   # Parameterized query
+>
+>    sqlExecute(cn, "INSERT INTO prueba
+>
+>               (cosa
+>
+>                 ,cantidad
+>
+>                 ,valor)
+>
+>               VALUES (?,?,?)", dfNuevoDato)
+>
+>   print(dfNuevoDato)
+>
+> }
+>
+>
+>
+> # comprobar si existe el id
+>
+> filterId <- data.frame('id'= dfDato$id)
+>
+> data <- sqlExecute(cn, "SELECT * FROM prueba WHERE id = ?", filterId,
+> fetch = TRUE)
+>
+> if(length(data$id) == 0)
+>
+> {
+>
+>   print ('no existe el id')
+>
+>   insertar(dfDato)
+>
+> }else{
+>
+>   print('Existe el id')
+>
+>   # buscar la palabra si existe
+>
+>   filterPalabra <- data.frame('cosa'=dfDato$cosa)
+>
+>   data <- sqlExecute(cn, "SELECT * FROM prueba WHERE cosa like ?",
+> filterPalabra, fetch = TRUE)
+>
+>   print(data)
+>
+>     if(length(data$cosa) > 0)
+>
+>     {
+>
+>       print ('existe debo actualizar')
+>
+>      # query <- "UPDATE cakes SET price = ? WHERE cake = ?"
+>
+>        query <- "UPDATE prueba
+>
+>        SET cosa = ?
+>
+>        ,cantidad = ?
+>
+>        ,valor = ?
+>
+>        WHERE id = ?"
+>
+>        sqlExecute(cn, query, dfDato)
+>
+>       print(dfDato)
+>
+>     }else{
+>
+>       print ('puedo insertar')
+>
+>       insertar(dfDato)
+>
+>     }
+>
+>   }
+>
+> #http://finzi.psych.upenn.edu/R/library/RODBC/html/sqlSave.html
+>
+>
+>
+> Javier Rubén Marcuzzi
+>
+>
+>
+> *De: *Jose Ramirez Costa <joseramirezcosta en gmail.com>
+> *Enviado: *miércoles, 12 de julio de 2017 12:33
+> *Para: *r-help-es <r-help-es en r-project.org>
+> *Asunto: *[R-es] consulta por varTypes de sqlSave en RODBC
+>
+>
+>
+> Buen dia compañerxs de R, les traigo una pregunta bastante especifica.
+>
+>
+>
+> En el trabajo me estan requiriendo el uso de SQL, asi q estoy aprendiendo a
+>
+> usarlo desde R, con el paquete RODBC.
+>
+>
+>
+> Mi problema puntual es que al crear una tabla en el servidor SQL a partir
+>
+> de un data frame en R (usando la funcion sqlSave) no puedo definir el tipo
+>
+> de variables que quiero usar en el data frame.
+>
+>
+>
+> Segun entiendo esto se deberia poder hacer con el parametro vartypes, pero
+>
+> hasta ahora solo he podido cargar un vector q dice el tipo de variables
+>
+> (varchar, int, o numeric) pero no he podido indicarle el ancho q tiene cad
+>
+> variable.
+>
+>
+>
+> Esto en SQL se escribiria algo asi:
+>
+> [ACTA] int,
+>
+> [APENAC] varchar(25),
+>
+> [PESONAC] numeric(4,0),
+>
+>
+>
+> Alguien uso vartypes de esta forma?
+>
+>
+>
+> Desde ya gracias por el tiempo y un abrazo a todxs.
+>
+>
+>
+> --
+>
+> "*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+>
+> pássaro.? *
+>
+> *Nietzsche, "Assim Falou Zaratustra?.*
+>
+>
+>
+>                 [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+>
+> R-help-es mailing list
+>
+> R-help-es en r-project.org
+>
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+>
+>
+>
+> --
+>
+> "*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+> pássaro.? *
+> *Nietzsche, "Assim Falou Zaratustra?.*
+>
+>
+>
+>
+>
+>
+>
+> --
+>
+> "*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+> pássaro.? *
+> *Nietzsche, "Assim Falou Zaratustra?.*
+>
+>
+>
+
+
+
+-- 
+"*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+pássaro.? *
+*Nietzsche, "Assim Falou Zaratustra?.*
+
+	[[alternative HTML version deleted]]
+
+
+From wilmercs en ufps.edu.co  Thu Jul 13 19:00:59 2017
+From: wilmercs en ufps.edu.co (WILMER CONTRERAS SEPULVEDA)
+Date: Thu, 13 Jul 2017 12:00:59 -0500
+Subject: [R-es] Leer archivos con read.csv
+Message-ID: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+
+Buen día para todos.
+
+Tengo un pequeño problema en el quisiera que me colaboraran.
+
+Estos días estoy trabajando en la lectura de una gran cantidad de archivos
+de extención .csv, se trata de una lista de documentos de 11 estaciones
+meteorologicas. Cada estación esta clasificada por meses y cada mes por
+dias, asi que tengo un archivo cada día. Por ejemplo tengo un archivo .csv
+para el día uno del mes de enero, otro archivo para el día dos del mes de
+enero, otro para el día tres del mes de enero y así sucesivamente hasta
+completar todos los meses.
+
+Mi problema es, que hay algunos archivos faltantes. Me refiero a que por
+ejemplo el día 5 del mes de febrero hace falta.
+
+Al tratar de leer los archivos FALTANTES con read.csv() me arroja el
+siguiente error:
+
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'C:/R/Zonas rurales/Corponor/2017/7. PUNTO DE
+CONTROL/Febrero/27-02-2017.csv': No such file or directory
+
+Lo que es logico, debido a que no estan.
+
+Sin embargo al arrojarme este error se rompe el ciclo for y no me permite
+continuar trabajando.
+
+Mi pregunta es:
+
+*¿Existe alguna forma de indicarle al comando read.csv() que evite los
+archivos faltantes? *
+
+Muchas Gracias de antemano.
+
+*Wilmer Contreras Sepulveda.*
+
+	[[alternative HTML version deleted]]
+
+
+From mac_javi en hotmail.com  Thu Jul 13 19:18:22 2017
+From: mac_javi en hotmail.com (Javier Nieto)
+Date: Thu, 13 Jul 2017 17:18:22 +0000
+Subject: [R-es] Leer archivos con read.csv
+In-Reply-To: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+References: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+Message-ID: <BN6PR1201MB246699651A7ED01C71C5DEF8EBAC0@BN6PR1201MB2466.namprd12.prod.outlook.com>
+
+Hola, no he visto tu código pero puedes utilizar la función try.
+
+
+Saludos
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de WILMER CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+Enviado: jueves, 13 de julio de 2017 12:00:59 p. m.
+Para: r-help-es en r-project.org
+Asunto: [R-es] Leer archivos con read.csv
+
+Buen día para todos.
+
+Tengo un pequeño problema en el quisiera que me colaboraran.
+
+Estos días estoy trabajando en la lectura de una gran cantidad de archivos
+de extención .csv, se trata de una lista de documentos de 11 estaciones
+meteorologicas. Cada estación esta clasificada por meses y cada mes por
+dias, asi que tengo un archivo cada día. Por ejemplo tengo un archivo .csv
+para el día uno del mes de enero, otro archivo para el día dos del mes de
+enero, otro para el día tres del mes de enero y así sucesivamente hasta
+completar todos los meses.
+
+Mi problema es, que hay algunos archivos faltantes. Me refiero a que por
+ejemplo el día 5 del mes de febrero hace falta.
+
+Al tratar de leer los archivos FALTANTES con read.csv() me arroja el
+siguiente error:
+
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file 'C:/R/Zonas rurales/Corponor/2017/7. PUNTO DE
+CONTROL/Febrero/27-02-2017.csv': No such file or directory
+
+Lo que es logico, debido a que no estan.
+
+Sin embargo al arrojarme este error se rompe el ciclo for y no me permite
+continuar trabajando.
+
+Mi pregunta es:
+
+*¿Existe alguna forma de indicarle al comando read.csv() que evite los
+archivos faltantes? *
+
+Muchas Gracias de antemano.
+
+*Wilmer Contreras Sepulveda.*
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From freddy.lopez.quintero en gmail.com  Thu Jul 13 20:47:08 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Thu, 13 Jul 2017 14:47:08 -0400
+Subject: [R-es] Leer archivos con read.csv
+In-Reply-To: <BN6PR1201MB246699651A7ED01C71C5DEF8EBAC0@BN6PR1201MB2466.namprd12.prod.outlook.com>
+References: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+ <BN6PR1201MB246699651A7ED01C71C5DEF8EBAC0@BN6PR1201MB2466.namprd12.prod.outlook.com>
+Message-ID: <CALCOUquS9kbEQOiffxpjforNgkyAZXk8wpoW+6J_dwU-iZu__g@mail.gmail.com>
+
+Hola.
+
+Una manera puede ser tomar una lista de todos los archivos de un directorio
+y trabajar con ellos, puesto que ciertamente existen. ¿Cómo? Supongamos que
+tienes una carpeta llena de archivos csv. Entonces, puedes guardar el
+nombre de tus archivos en un objeto con
+
+lista_archivos<-dir()
+>
+
+y esto te dará todos los csv de esa carpeta (si tienes otros archivos
+también estarán allí, pero insistamos por ahora en suponer que son solo
+csvs...).
+
+Luego puedes hacer algo como
+
+read.csv(lista_archivos[s])
+>
+
+dentro del bucle que ya estabas utilizando, para s entre 1 y el tamaño de
+lista_archivos.
+
+Finalmente, si en tu carpeta no hay solo csvs sino otros archivos, puedes
+usar alguna variante de
+
+grepl('.csv', lista_archivos[s])
+>
+
+para quedarte solo con aquellos archivos que cumplan con ser csv, por
+ejemplo. Esto ya depende mucho de la entropía que haya en tus carpetas jeje.
+
+Ojala sirva.
+
+¡Salud!
+
+2017-07-13 13:18 GMT-04:00 Javier Nieto <mac_javi en hotmail.com>:
+
+> Hola, no he visto tu código pero puedes utilizar la función try.
+>
+>
+> Saludos
+>
+> ________________________________
+> De: R-help-es <r-help-es-bounces en r-project.org> en nombre de WILMER
+> CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+> Enviado: jueves, 13 de julio de 2017 12:00:59 p. m.
+> Para: r-help-es en r-project.org
+> Asunto: [R-es] Leer archivos con read.csv
+>
+> Buen día para todos.
+>
+> Tengo un pequeño problema en el quisiera que me colaboraran.
+>
+> Estos días estoy trabajando en la lectura de una gran cantidad de archivos
+> de extención .csv, se trata de una lista de documentos de 11 estaciones
+> meteorologicas. Cada estación esta clasificada por meses y cada mes por
+> dias, asi que tengo un archivo cada día. Por ejemplo tengo un archivo .csv
+> para el día uno del mes de enero, otro archivo para el día dos del mes de
+> enero, otro para el día tres del mes de enero y así sucesivamente hasta
+> completar todos los meses.
+>
+> Mi problema es, que hay algunos archivos faltantes. Me refiero a que por
+> ejemplo el día 5 del mes de febrero hace falta.
+>
+> Al tratar de leer los archivos FALTANTES con read.csv() me arroja el
+> siguiente error:
+>
+> Error in file(file, "rt") : cannot open the connection
+> In addition: Warning message:
+> In file(file, "rt") :
+>   cannot open file 'C:/R/Zonas rurales/Corponor/2017/7. PUNTO DE
+> CONTROL/Febrero/27-02-2017.csv': No such file or directory
+>
+> Lo que es logico, debido a que no estan.
+>
+> Sin embargo al arrojarme este error se rompe el ciclo for y no me permite
+> continuar trabajando.
+>
+> Mi pregunta es:
+>
+> *¿Existe alguna forma de indicarle al comando read.csv() que evite los
+> archivos faltantes? *
+>
+> Muchas Gracias de antemano.
+>
+> *Wilmer Contreras Sepulveda.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Jul 13 23:56:42 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Thu, 13 Jul 2017 18:56:42 -0300
+Subject: [R-es] Leer archivos con read.csv
+In-Reply-To: <CALCOUquS9kbEQOiffxpjforNgkyAZXk8wpoW+6J_dwU-iZu__g@mail.gmail.com>
+References: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+ <BN6PR1201MB246699651A7ED01C71C5DEF8EBAC0@BN6PR1201MB2466.namprd12.prod.outlook.com>
+ <CALCOUquS9kbEQOiffxpjforNgkyAZXk8wpoW+6J_dwU-iZu__g@mail.gmail.com>
+Message-ID: <5967ec9b.9131c80a.ff087.1937@mx.google.com>
+
+Estimado Freddy Omar López Quintero
+
+La idea de Javier Nieto me parece buena, try cath es muy útil, a esto le sumaría print, como para ver en pantalla el nombre del archivo y un Si o No, mientras se cargan los datos, aunque esto es solo gusto personal.
+
+Javier Rubén Marcuzzi
+
+De: Freddy Omar López Quintero
+Enviado: jueves, 13 de julio de 2017 15:47
+Para: Javier Nieto
+CC: r-help-es en r-project.org
+Asunto: Re: [R-es] Leer archivos con read.csv
+
+Hola.
+
+Una manera puede ser tomar una lista de todos los archivos de un directorio
+y trabajar con ellos, puesto que ciertamente existen. ¿Cómo? Supongamos que
+tienes una carpeta llena de archivos csv. Entonces, puedes guardar el
+nombre de tus archivos en un objeto con
+
+lista_archivos<-dir()
+>
+
+y esto te dará todos los csv de esa carpeta (si tienes otros archivos
+también estarán allí, pero insistamos por ahora en suponer que son solo
+csvs...).
+
+Luego puedes hacer algo como
+
+read.csv(lista_archivos[s])
+>
+
+dentro del bucle que ya estabas utilizando, para s entre 1 y el tamaño de
+lista_archivos.
+
+Finalmente, si en tu carpeta no hay solo csvs sino otros archivos, puedes
+usar alguna variante de
+
+grepl('.csv', lista_archivos[s])
+>
+
+para quedarte solo con aquellos archivos que cumplan con ser csv, por
+ejemplo. Esto ya depende mucho de la entropía que haya en tus carpetas jeje.
+
+Ojala sirva.
+
+¡Salud!
+
+2017-07-13 13:18 GMT-04:00 Javier Nieto <mac_javi en hotmail.com>:
+
+> Hola, no he visto tu código pero puedes utilizar la función try.
+>
+>
+> Saludos
+>
+> ________________________________
+> De: R-help-es <r-help-es-bounces en r-project.org> en nombre de WILMER
+> CONTRERAS SEPULVEDA <wilmercs en ufps.edu.co>
+> Enviado: jueves, 13 de julio de 2017 12:00:59 p. m.
+> Para: r-help-es en r-project.org
+> Asunto: [R-es] Leer archivos con read.csv
+>
+> Buen día para todos.
+>
+> Tengo un pequeño problema en el quisiera que me colaboraran.
+>
+> Estos días estoy trabajando en la lectura de una gran cantidad de archivos
+> de extención .csv, se trata de una lista de documentos de 11 estaciones
+> meteorologicas. Cada estación esta clasificada por meses y cada mes por
+> dias, asi que tengo un archivo cada día. Por ejemplo tengo un archivo .csv
+> para el día uno del mes de enero, otro archivo para el día dos del mes de
+> enero, otro para el día tres del mes de enero y así sucesivamente hasta
+> completar todos los meses.
+>
+> Mi problema es, que hay algunos archivos faltantes. Me refiero a que por
+> ejemplo el día 5 del mes de febrero hace falta.
+>
+> Al tratar de leer los archivos FALTANTES con read.csv() me arroja el
+> siguiente error:
+>
+> Error in file(file, "rt") : cannot open the connection
+> In addition: Warning message:
+> In file(file, "rt") :
+>   cannot open file 'C:/R/Zonas rurales/Corponor/2017/7. PUNTO DE
+> CONTROL/Febrero/27-02-2017.csv': No such file or directory
+>
+> Lo que es logico, debido a que no estan.
+>
+> Sin embargo al arrojarme este error se rompe el ciclo for y no me permite
+> continuar trabajando.
+>
+> Mi pregunta es:
+>
+> *¿Existe alguna forma de indicarle al comando read.csv() que evite los
+> archivos faltantes? *
+>
+> Muchas Gracias de antemano.
+>
+> *Wilmer Contreras Sepulveda.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From patricio.fuenmayor en gmail.com  Fri Jul 14 00:44:46 2017
+From: patricio.fuenmayor en gmail.com (patricio fuenmayor)
+Date: Thu, 13 Jul 2017 17:44:46 -0500
+Subject: [R-es]
+	=?utf-8?q?Resumen_de_R-help-es=2C_Vol_101=2C_Env=C3=ADo_12?=
+In-Reply-To: <mailman.5627.1499965683.47836.r-help-es@r-project.org>
+References: <mailman.5627.1499965683.47836.r-help-es@r-project.org>
+Message-ID: <CACEaGhMOgQK1uD8fqiuFSGd-7fYdPsab7tQqfOnC5zK0abwgsQ@mail.gmail.com>
+
+Hola.
+Personalmente uso rsqlserver para conexiones con bases sqlserver
+https://github.com/agstudy/rsqlserver
+Mira el Benchmarking y te darás cuenta las ventajas
+
+Al ser similar a DBI, puedes enviar una consulta de creación de una tabla y
+luego una consulta de inserción
+
+	[[alternative HTML version deleted]]
+
+
+From joseramirezcosta en gmail.com  Fri Jul 14 00:55:13 2017
+From: joseramirezcosta en gmail.com (Jose Ramirez Costa)
+Date: Thu, 13 Jul 2017 19:55:13 -0300
+Subject: [R-es]
+	=?utf-8?q?Resumen_de_R-help-es=2C_Vol_101=2C_Env=C3=ADo_12?=
+In-Reply-To: <CACEaGhMOgQK1uD8fqiuFSGd-7fYdPsab7tQqfOnC5zK0abwgsQ@mail.gmail.com>
+References: <mailman.5627.1499965683.47836.r-help-es@r-project.org>
+ <CACEaGhMOgQK1uD8fqiuFSGd-7fYdPsab7tQqfOnC5zK0abwgsQ@mail.gmail.com>
+Message-ID: <CAFOGFnKbkZpgyPqphhunyuWH-_RKrdDa0NBE8snVvx_gr8tCEw@mail.gmail.com>
+
+Hola Patricio, muchas gracias por tu aporte, voy a mirar ese paquete.
+
+Abrazo!
+
+PD: agradezco la celeridad con la cual siempre recibo respuestas en el
+grupo, prometo estar mas atento para dar respuestas al pedido de ayudas.
+
+El 13 de julio de 2017, 19:44, patricio fuenmayor <
+patricio.fuenmayor en gmail.com> escribió:
+
+> Hola.
+> Personalmente uso rsqlserver para conexiones con bases sqlserver
+> https://github.com/agstudy/rsqlserver
+> Mira el Benchmarking y te darás cuenta las ventajas
+>
+> Al ser similar a DBI, puedes enviar una consulta de creación de una tabla
+> y luego una consulta de inserción
+>
+>
+>
+
+
+-- 
+"*?Que tudo pesado se torne leve, todo corpo, dançarino, e todo espírito,
+pássaro.? *
+*Nietzsche, "Assim Falou Zaratustra?.*
+
+	[[alternative HTML version deleted]]
+
+
+From freddy.lopez.quintero en gmail.com  Fri Jul 14 11:33:59 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Fri, 14 Jul 2017 05:33:59 -0400
+Subject: [R-es] Leer archivos con read.csv
+In-Reply-To: <5967ec9b.9131c80a.ff087.1937@mx.google.com>
+References: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+ <BN6PR1201MB246699651A7ED01C71C5DEF8EBAC0@BN6PR1201MB2466.namprd12.prod.outlook.com>
+ <CALCOUquS9kbEQOiffxpjforNgkyAZXk8wpoW+6J_dwU-iZu__g@mail.gmail.com>
+ <5967ec9b.9131c80a.ff087.1937@mx.google.com>
+Message-ID: <CALCOUqu_zQkf1LBAOsOZa=N7feVpVBpDr9EpswFMJ1xK9hQ6NQ@mail.gmail.com>
+
+> La idea de Javier Nieto me parece buena, try cath es muy útil, a esto le
+> sumaría print, como para ver en pantalla el nombre del archivo y un Si o
+> No, mientras se cargan los datos, aunque esto es solo gusto personal.
+>
+
+?De eso se trata ¿no?: que la persona que consulta obtenga una o varias
+respuestas con posibles soluciones para que pueda experimentar con ellas y
+adecuarlas a su situación.?
+
+
+Saludos.
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From ericconchamunoz en gmail.com  Fri Jul 14 13:51:56 2017
+From: ericconchamunoz en gmail.com (eric)
+Date: Fri, 14 Jul 2017 07:51:56 -0400
+Subject: [R-es] Leer archivos con read.csv
+In-Reply-To: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+References: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+Message-ID: <ec20151e-0931-1ba8-9b20-498ce24b0a62@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170714/c3b195c3/attachment.html>
+
+From manueldavid83 en gmail.com  Mon Jul 17 18:55:55 2017
+From: manueldavid83 en gmail.com (=?UTF-8?Q?Manuel_Jim=C3=A9nez?=)
+Date: Mon, 17 Jul 2017 18:55:55 +0200
+Subject: [R-es] Duda sobre nivel de significancia
+Message-ID: <CAMxvFemmpdn2Rz8X_quMNh8MPkBANKycD+U330eAQv+1_QyNqQ@mail.gmail.com>
+
+Hola buenas a todxs, comento mi duda:
+
+Calculo la correlación entre dos variables (calculo por años que: mayor
+tasa de desempleo implica menos venta de coches) y me sale positiva la
+correlación por lo tanto tienen una relación directa. Mi duda:
+
+¿para que esta prediccíón sea cierta, además de una correlación positiva
+tengo que calcular el nivel de significancia entre las dos variables?
+
+Saludos y gracias de antemano.
+
+	[[alternative HTML version deleted]]
+
+
+From ericconchamunoz en gmail.com  Mon Jul 17 19:15:30 2017
+From: ericconchamunoz en gmail.com (eric)
+Date: Mon, 17 Jul 2017 13:15:30 -0400
+Subject: [R-es] Duda sobre nivel de significancia
+In-Reply-To: <CAMxvFemmpdn2Rz8X_quMNh8MPkBANKycD+U330eAQv+1_QyNqQ@mail.gmail.com>
+References: <CAMxvFemmpdn2Rz8X_quMNh8MPkBANKycD+U330eAQv+1_QyNqQ@mail.gmail.com>
+Message-ID: <b8674b04-f93a-4c68-ecf4-d10afd0702e3@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170717/bb7474b0/attachment.html>
+
+From manueldavid83 en gmail.com  Mon Jul 17 19:22:54 2017
+From: manueldavid83 en gmail.com (=?UTF-8?Q?Manuel_Jim=C3=A9nez?=)
+Date: Mon, 17 Jul 2017 19:22:54 +0200
+Subject: [R-es] Duda sobre nivel de significancia
+In-Reply-To: <b8674b04-f93a-4c68-ecf4-d10afd0702e3@gmail.com>
+References: <CAMxvFemmpdn2Rz8X_quMNh8MPkBANKycD+U330eAQv+1_QyNqQ@mail.gmail.com>
+ <b8674b04-f93a-4c68-ecf4-d10afd0702e3@gmail.com>
+Message-ID: <CAMxvFe=Rb8Qb7NWNHfRqhOeG7poofAKD=SVAoztNvhjpUGnisA@mail.gmail.com>
+
+Muchas gracias por la respuesta!
+
+como datos adicionales decir que tengo también calculado:
+
+grados de libertad = 30
+t = 17.32
+
+pero no sé como sacarle partido a estos datos y calcular el nivel de
+significancia o algo similar que me dé la predicción por buena.
+
+Saludos y gracias de nuevo.
+
+2017-07-17 19:15 GMT+02:00 eric <ericconchamunoz en gmail.com>:
+
+> Yo haria lo siguiente:
+>
+> ya que ambas variables son numericas, tal cual haz hecho tu, estimaria la
+> funcion de regresion Y = B0 + B1*X , y para esa funcion de regresion
+> probaria la hipotesis de que el parametro B1 que acompaña a la X (la vble
+> independiente) es distinto de cero.
+>
+> en R, cuando estimas la funcion de regresion con lm() y luego pides un
+> summary() ya te aparece el valor-p del test-t que indica si la hipotesis
+> B1=0 se puede rechazar o no ... algo asi
+>
+> summary(lm( X ~ Y, data=tusdatos))
+>
+> eso, espero te sirva
+>
+> saludos, eric.
+>
+>
+>
+>
+> On 07/17/2017 12:55 PM, Manuel Jiménez wrote:
+>
+> Hola buenas a todxs, comento mi duda:
+>
+> Calculo la correlación entre dos variables (calculo por años que: mayor
+> tasa de desempleo implica menos venta de coches) y me sale positiva la
+> correlación por lo tanto tienen una relación directa. Mi duda:
+>
+> ¿para que esta prediccíón sea cierta, además de una correlación positiva
+> tengo que calcular el nivel de significancia entre las dos variables?
+>
+> Saludos y gracias de antemano.
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing listR-help-es en r-project.orghttps://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> --
+> Forest Engineer
+> Master in Environmental and Natural Resource Economics
+> Ph.D. student in Sciences of Natural Resources at La Frontera University
+> Member in AguaDeTemu2030, citizen movement for Temuco with green city standards for living
+>
+> Nota: Las tildes se han omitido para asegurar compatibilidad con algunos lectores de correo.
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Mon Jul 17 21:56:18 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Mon, 17 Jul 2017 16:56:18 -0300
+Subject: [R-es] Duda sobre nivel de significancia
+In-Reply-To: <CAMxvFe=Rb8Qb7NWNHfRqhOeG7poofAKD=SVAoztNvhjpUGnisA@mail.gmail.com>
+References: <CAMxvFemmpdn2Rz8X_quMNh8MPkBANKycD+U330eAQv+1_QyNqQ@mail.gmail.com>
+ <b8674b04-f93a-4c68-ecf4-d10afd0702e3@gmail.com>
+ <CAMxvFe=Rb8Qb7NWNHfRqhOeG7poofAKD=SVAoztNvhjpUGnisA@mail.gmail.com>
+Message-ID: <596d1664.8908370a.256b1.0b86@mx.google.com>
+
+Estimado Manuel Jiménez
+
+Comprendo su pregunta porque su duda es muy simple, la verdad es que todo depende, porque hay ciertas áreas donde un nivel es aceptado, siendo esto inaceptable para otra área de la ciencia, básicamente por poder trabajar con mayor cantidad de datos, por decirlo de alguna forma no es lo mismo lo que puede llegar a realizar una persona con datos de una especie de la Antárdida que otra con datos del banco central. Por otro lado depende que parte de R está usted utilizando, la respuesta de Eric le da una pista, posiblemente cualquier libro de R tiene eso que a usted le hace falta con un ejemplo, pero también dentro de su código que no comparte en estos mensajes, suponiendo que la pista de Eric con summay no le alcanza, puede escribir ¿? (los dos iguales, el programa me cambia un signo) y ver dentro de lo que usted tiene instalado, porque puede ser que usted esté en alguno de los ejemplos siguientes http://www.statmethods.net/stats/correlations.html 
+
+Javier Rubén Marcuzzi
+
+De: Manuel Jiménez
+Enviado: lunes, 17 de julio de 2017 14:23
+Para: eric
+CC: r-help-es
+Asunto: Re: [R-es] Duda sobre nivel de significancia
+
+Muchas gracias por la respuesta!
+
+como datos adicionales decir que tengo también calculado:
+
+grados de libertad = 30
+t = 17.32
+
+pero no sé como sacarle partido a estos datos y calcular el nivel de
+significancia o algo similar que me dé la predicción por buena.
+
+Saludos y gracias de nuevo.
+
+2017-07-17 19:15 GMT+02:00 eric <ericconchamunoz en gmail.com>:
+
+> Yo haria lo siguiente:
+>
+> ya que ambas variables son numericas, tal cual haz hecho tu, estimaria la
+> funcion de regresion Y = B0 + B1*X , y para esa funcion de regresion
+> probaria la hipotesis de que el parametro B1 que acompaña a la X (la vble
+> independiente) es distinto de cero.
+>
+> en R, cuando estimas la funcion de regresion con lm() y luego pides un
+> summary() ya te aparece el valor-p del test-t que indica si la hipotesis
+> B1=0 se puede rechazar o no ... algo asi
+>
+> summary(lm( X ~ Y, data=tusdatos))
+>
+> eso, espero te sirva
+>
+> saludos, eric.
+>
+>
+>
+>
+> On 07/17/2017 12:55 PM, Manuel Jiménez wrote:
+>
+> Hola buenas a todxs, comento mi duda:
+>
+> Calculo la correlación entre dos variables (calculo por años que: mayor
+> tasa de desempleo implica menos venta de coches) y me sale positiva la
+> correlación por lo tanto tienen una relación directa. Mi duda:
+>
+> ¿para que esta prediccíón sea cierta, además de una correlación positiva
+> tengo que calcular el nivel de significancia entre las dos variables?
+>
+> Saludos y gracias de antemano.
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing listR-help-es en r-project.orghttps://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> --
+> Forest Engineer
+> Master in Environmental and Natural Resource Economics
+> Ph.D. student in Sciences of Natural Resources at La Frontera University
+> Member in AguaDeTemu2030, citizen movement for Temuco with green city standards for living
+>
+> Nota: Las tildes se han omitido para asegurar compatibilidad con algunos lectores de correo.
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From doblett en gmail.com  Tue Jul 18 10:33:43 2017
+From: doblett en gmail.com (doblett)
+Date: Tue, 18 Jul 2017 10:33:43 +0200
+Subject: [R-es] Leer archivos con read.csv
+In-Reply-To: <ec20151e-0931-1ba8-9b20-498ce24b0a62@gmail.com>
+References: <CAOYqKJ6UXdCotnuFi1hKNLSr2uX420_cqESXO9puJO6xi5A6yg@mail.gmail.com>
+ <ec20151e-0931-1ba8-9b20-498ce24b0a62@gmail.com>
+Message-ID: <CAPd+W+2252Yr+aW=zXUs0F9JJUrxAkT=W3CmsemQ-y4XvNhO_g@mail.gmail.com>
+
+Buenos días,
+Como te han comentado anteriormente, creo que es más conveniente listar
+directamente los archivos y leerlos todos a la vez. A mi se me presento una
+situación similar hace un tiempo y lo resolví así:
+
+library(dplyr)
+
+# Importacion de los ficheros
+
+df.a <-
+  list.files("./data/", full.names = T, pattern = "nombre\\.csv")
+df.a <- lapply(df.a, read.csv2, stringsAsFactors = F)
+df.a <- bind_rows(df.a)
+
+
+Como ves el directorio desde el cual leía los fichero tenía otros archivos
+y por tanto selecciono solo los que cumplen con un patrón.
+Espero que te sirva.
+
+
+Saludos.
+
+El 14 de julio de 2017, 13:51, eric <ericconchamunoz en gmail.com> escribió:
+
+> Hola Wilmer, diariamente tengo que hacer lo que indicas, y lo mas simple
+> que he encontrado es:
+>
+> filenames <- list.files(path ="/tu/path/", pattern="*.csv")
+>
+> i <- 1
+> for (i in 1:length(filenames))
+> {
+>         tmp <- fread(filenames[i], header=FALSE)
+>
+> }
+>
+> Asi se pueden leer selectivamente los archivos .csv del directorio que
+> indicas en /tu/path/, aunque hayan otros tipos de archivos dentro.
+>
+> fread() lee bastante mas rapido que otras opciones como read.csv(), es
+> bastante inteligente para seleccionar el tipo de dato correcto en cada
+> columna y el archivo resultante es directamente del tipo data.table.
+>
+> Espero que te ayude,
+>
+> Saludos, Eric.
+>
+>
+>
+> On 07/13/2017 01:00 PM, WILMER CONTRERAS SEPULVEDA wrote:
+>
+> Buen día para todos.
+>
+> Tengo un pequeño problema en el quisiera que me colaboraran.
+>
+> Estos días estoy trabajando en la lectura de una gran cantidad de archivos
+> de extención .csv, se trata de una lista de documentos de 11 estaciones
+> meteorologicas. Cada estación esta clasificada por meses y cada mes por
+> dias, asi que tengo un archivo cada día. Por ejemplo tengo un archivo .csv
+> para el día uno del mes de enero, otro archivo para el día dos del mes de
+> enero, otro para el día tres del mes de enero y así sucesivamente hasta
+> completar todos los meses.
+>
+> Mi problema es, que hay algunos archivos faltantes. Me refiero a que por
+> ejemplo el día 5 del mes de febrero hace falta.
+>
+> Al tratar de leer los archivos FALTANTES con read.csv() me arroja el
+> siguiente error:
+>
+> Error in file(file, "rt") : cannot open the connection
+> In addition: Warning message:
+> In file(file, "rt") :
+>   cannot open file 'C:/R/Zonas rurales/Corponor/2017/7. PUNTO DE
+> CONTROL/Febrero/27-02-2017.csv': No such file or directory
+>
+> Lo que es logico, debido a que no estan.
+>
+> Sin embargo al arrojarme este error se rompe el ciclo for y no me permite
+> continuar trabajando.
+>
+> Mi pregunta es:
+>
+> *¿Existe alguna forma de indicarle al comando read.csv() que evite los
+> archivos faltantes? *
+>
+> Muchas Gracias de antemano.
+>
+> *Wilmer Contreras Sepulveda.*
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing listR-help-es en r-project.orghttps://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> --
+> Forest Engineer
+> Master in Environmental and Natural Resource Economics
+> Ph.D. student in Sciences of Natural Resources at La Frontera University
+> Member in AguaDeTemu2030, citizen movement for Temuco with green city standards for living
+>
+> Nota: Las tildes se han omitido para asegurar compatibilidad con algunos lectores de correo.
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From jcantallopts en gmx.com  Wed Jul 19 05:32:28 2017
+From: jcantallopts en gmx.com (javier valdes)
+Date: Wed, 19 Jul 2017 05:32:28 +0200
+Subject: [R-es] remover y reemplazar
+Message-ID: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170719/597123ea/attachment.html>
+
+From ihidalgo en jccm.es  Wed Jul 19 08:14:42 2017
+From: ihidalgo en jccm.es (Isidro Hidalgo Arellano)
+Date: Wed, 19 Jul 2017 08:14:42 +0200
+Subject: [R-es] remover y reemplazar
+In-Reply-To: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+References: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+Message-ID: <000601d30056$4f5ae220$ee10a660$@jccm.es>
+
+Si la condición del valor erróneo es que sea negativo:
+
+Datos[datos<0, ] <- NA
+
+No creo que sea lo que necesitas porque hablas de filtrar por fecha, ¿cuáles son las condiciones para hacer el filtro? Es decir, ¿qué fechas quieres quitar? No lo indicas?
+
+Un saludo
+
+ 
+
+ 
+
+Isidro Hidalgo Arellano
+
+Observatorio del Mercado de Trabajo
+
+Consejería de Economía, Empresas y Empleo
+
+ <http://www.castillalamancha.es/> http://www.castillalamancha.es/
+
+ 
+
+ 
+
+ 
+
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de javier valdes
+Enviado el: miércoles, 19 de julio de 2017 5:32
+Para: carlos ortega <cof en qualityexcellence.es>
+CC: help helpe <r-help-es en r-project.org>
+Asunto: [R-es] remover y reemplazar
+
+ 
+
+Estimados ;
+
+tengo una base de datos extensa. El tema es que gran parte de esos datos(dentro de columnas especificas) contienen datos erroneos.
+
+ 
+
+La idea es poder identificar esos datos, por medio de la fecha y removerlos.
+
+ 
+
+Idealmente despues de removerlos reemplazarlos por NA, PARA DESPUES APLICAR ALGÚN TIPO DE RELLENO.
+
+EJEMPLO
+
+         date    A B C
+
+    2016-1-2  1 -5 1
+
+    2016-1-3  2 -9 2
+
+    2016-1-4  3  3  3
+
+    2016-1-5  4  4  4 
+
+ 
+
+la idea es remover en este caso los valores de la columna B(-5,-9), filtrando por fecha, y en lo posible dejarlo de la siguiente forma;
+
+     
+
+     date        A  B  C
+
+    2016-1-2  1 n.a 1
+
+    2016-1-3  2 n.a 2
+
+    2016-1-4  3  3   3
+
+    2016-1-5  4  4   4
+
+                  
+
+saludos a todos.
+
+
+	[[alternative HTML version deleted]]
+
+
+From ericconchamunoz en gmail.com  Wed Jul 19 12:17:31 2017
+From: ericconchamunoz en gmail.com (eric)
+Date: Wed, 19 Jul 2017 06:17:31 -0400
+Subject: [R-es] remover y reemplazar
+In-Reply-To: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+References: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+Message-ID: <44ed13ff-5881-e57a-0d92-5949875c0782@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170719/85826755/attachment.html>
+
+From ihidalgo en jccm.es  Wed Jul 19 13:28:18 2017
+From: ihidalgo en jccm.es (Isidro Hidalgo Arellano)
+Date: Wed, 19 Jul 2017 13:28:18 +0200
+Subject: [R-es] remover y reemplazar
+In-Reply-To: <trinity-6e44aef1-216d-4e5d-ab39-cdac37fa88ff-1500462822894@msvc-mesg-gmx020>
+References: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+ <000601d30056$4f5ae220$ee10a660$@jccm.es>
+ <trinity-6e44aef1-216d-4e5d-ab39-cdac37fa88ff-1500462822894@msvc-mesg-gmx020>
+Message-ID: <000c01d30082$1ed91cd0$5c8b5670$@jccm.es>
+
+Primero asegúrate de que la columna "date" es de clase "fecha":
+datos$date <- as.Date(datos$date)
+
+Si quieres seleccionar las fechas anteriores al 4 de enero, sería, por ejemplo:
+datos$B[datos$date < "2016-1-4"] <- NA
+
+Si quieres seleccionar en un rango:
+datos$B[datos$date > "2016-1-2" & datos$date < "2016-1-4"] <- NA
+
+Un saludo
+
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+
+
+-----Mensaje original-----
+De: javier valdes [mailto:jcantallopts en gmx.com] 
+Enviado el: miércoles, 19 de julio de 2017 13:14
+Para: Isidro Hidalgo Arellano <ihidalgo en jccm.es>
+Asunto: Re: RE: [R-es] remover y reemplazar
+
+Filtrar por fecha, quiero decir que los valores a remover corresponden a rangos con fechas conocidas, pertenecientes a "solo 1 columna en particular"
+Saludos.
+
+Sent using the GMX mail app
+
+On 19-07-17 at 02:14, Isidro Hidalgo Arellano wrote:
+
+> Si la condición del valor erróneo es que sea negativo:
+> 
+> Datos[datos<0, ] <- NA
+> 
+> No creo que sea lo que necesitas porque hablas de filtrar por fecha, 
+> ¿cuáles son las condiciones para hacer el filtro? Es decir, ¿qué 
+> fechas quieres quitar? No lo indicas?
+> 
+> Un saludo
+> 
+>  
+> 
+>  
+> 
+> Isidro Hidalgo Arellano
+> 
+> Observatorio del Mercado de Trabajo
+> 
+> Consejería de Economía, Empresas y Empleo
+> 
+>  <http://www.castillalamancha.es/> http://www.castillalamancha.es/
+> 
+>  
+> 
+>  
+> 
+>  
+> 
+> De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de 
+> javier valdes Enviado el: miércoles, 19 de julio de 2017 5:32
+> Para: carlos ortega <cof en qualityexcellence.es>
+> CC: help helpe <r-help-es en r-project.org>
+> Asunto: [R-es] remover y reemplazar
+> 
+>  
+> 
+> Estimados ;
+> 
+> tengo una base de datos extensa. El tema es que gran parte de esos datos(dentro de columnas especificas) contienen datos erroneos.
+> 
+>  
+> 
+> La idea es poder identificar esos datos, por medio de la fecha y removerlos.
+> 
+>  
+> 
+> Idealmente despues de removerlos reemplazarlos por NA, PARA DESPUES APLICAR ALGÚN TIPO DE RELLENO.
+> 
+> EJEMPLO
+> 
+>          date    A B C
+> 
+>     2016-1-2  1 -5 1
+> 
+>     2016-1-3  2 -9 2
+> 
+>     2016-1-4  3  3  3
+> 
+>     2016-1-5  4  4  4
+> 
+>  
+> 
+> la idea es remover en este caso los valores de la columna B(-5,-9), 
+> filtrando por fecha, y en lo posible dejarlo de la siguiente forma;
+> 
+>      
+> 
+>      date        A  B  C
+> 
+>     2016-1-2  1 n.a 1
+> 
+>     2016-1-3  2 n.a 2
+> 
+>     2016-1-4  3  3   3
+> 
+>     2016-1-5  4  4   4
+> 
+>                   
+> 
+> saludos a todos.
+
+
+From npolanco en uij.edu.cu  Wed Jul 19 14:07:34 2017
+From: npolanco en uij.edu.cu (Hibiki)
+Date: Wed, 19 Jul 2017 08:07:34 -0400
+Subject: [R-es] remover y reemplazar
+In-Reply-To: <000c01d30082$1ed91cd0$5c8b5670$@jccm.es>
+References: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+ <000601d30056$4f5ae220$ee10a660$@jccm.es>
+ <trinity-6e44aef1-216d-4e5d-ab39-cdac37fa88ff-1500462822894@msvc-mesg-gmx020>
+ <000c01d30082$1ed91cd0$5c8b5670$@jccm.es>
+Message-ID: <000b01d30087$9f8cb4e0$dea61ea0$@uij.edu.cu>
+
+Javier hay algo que no entiendo, no aclaras bien porque el filtrado por fechas para modificar el valor de un campo según su valor actual, sino aclaras bien eso las soluciones que te brinden por buenas que sean puede que no resuelvan el problema porque va a satisfacer totalmente los casos, igual por lo que dices no entiendo lo de las fechas, solo vas a rectificar los valores erróneos de fechas determinadas o todo los valores erróneos de tus datos?
+
+
+
+
+Ing. Nivaildo Polanco Martínez
+Director Ejecutivo de ACM-ICPC-UIJ
+Email:  casa: hibiki en nauta.cu, trabajo: npolanco en cuij.edu.cu 
+
+Dpto: (46) 352337
+FCT:  (46) 323567
+
+
+
+
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de Isidro Hidalgo Arellano
+Enviado el: miércoles, 19 de julio de 2017 7:28
+Para: 'javier valdes' <jcantallopts en gmx.com>; 'help helpe' <r-help-es en r-project.org>
+Asunto: Re: [R-es] remover y reemplazar
+
+Primero asegúrate de que la columna "date" es de clase "fecha":
+datos$date <- as.Date(datos$date)
+
+Si quieres seleccionar las fechas anteriores al 4 de enero, sería, por ejemplo:
+datos$B[datos$date < "2016-1-4"] <- NA
+
+Si quieres seleccionar en un rango:
+datos$B[datos$date > "2016-1-2" & datos$date < "2016-1-4"] <- NA
+
+Un saludo
+
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo http://www.castillalamancha.es/
+
+
+
+-----Mensaje original-----
+De: javier valdes [mailto:jcantallopts en gmx.com] Enviado el: miércoles, 19 de julio de 2017 13:14
+Para: Isidro Hidalgo Arellano <ihidalgo en jccm.es>
+Asunto: Re: RE: [R-es] remover y reemplazar
+
+Filtrar por fecha, quiero decir que los valores a remover corresponden a rangos con fechas conocidas, pertenecientes a "solo 1 columna en particular"
+Saludos.
+
+Sent using the GMX mail app
+
+On 19-07-17 at 02:14, Isidro Hidalgo Arellano wrote:
+
+> Si la condición del valor erróneo es que sea negativo:
+> 
+> Datos[datos<0, ] <- NA
+> 
+> No creo que sea lo que necesitas porque hablas de filtrar por fecha, 
+> ¿cuáles son las condiciones para hacer el filtro? Es decir, ¿qué 
+> fechas quieres quitar? No lo indicas?
+> 
+> Un saludo
+> 
+>  
+> 
+>  
+> 
+> Isidro Hidalgo Arellano
+> 
+> Observatorio del Mercado de Trabajo
+> 
+> Consejería de Economía, Empresas y Empleo
+> 
+>  <http://www.castillalamancha.es/> http://www.castillalamancha.es/
+> 
+>  
+> 
+>  
+> 
+>  
+> 
+> De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de 
+> javier valdes Enviado el: miércoles, 19 de julio de 2017 5:32
+> Para: carlos ortega <cof en qualityexcellence.es>
+> CC: help helpe <r-help-es en r-project.org>
+> Asunto: [R-es] remover y reemplazar
+> 
+>  
+> 
+> Estimados ;
+> 
+> tengo una base de datos extensa. El tema es que gran parte de esos datos(dentro de columnas especificas) contienen datos erroneos.
+> 
+>  
+> 
+> La idea es poder identificar esos datos, por medio de la fecha y removerlos.
+> 
+>  
+> 
+> Idealmente despues de removerlos reemplazarlos por NA, PARA DESPUES APLICAR ALGÚN TIPO DE RELLENO.
+> 
+> EJEMPLO
+> 
+>          date    A B C
+> 
+>     2016-1-2  1 -5 1
+> 
+>     2016-1-3  2 -9 2
+> 
+>     2016-1-4  3  3  3
+> 
+>     2016-1-5  4  4  4
+> 
+>  
+> 
+> la idea es remover en este caso los valores de la columna B(-5,-9), 
+> filtrando por fecha, y en lo posible dejarlo de la siguiente forma;
+> 
+>      
+> 
+>      date        A  B  C
+> 
+>     2016-1-2  1 n.a 1
+> 
+>     2016-1-3  2 n.a 2
+> 
+>     2016-1-4  3  3   3
+> 
+>     2016-1-5  4  4   4
+> 
+>                   
+> 
+> saludos a todos.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Evento Universidad 2018. Conozca todos los detalles en http://universidad2018.uij.edu.cu
+
+
+From javier.ruben.marcuzzi en gmail.com  Wed Jul 19 16:32:02 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Wed, 19 Jul 2017 11:32:02 -0300
+Subject: [R-es] remover y reemplazar
+In-Reply-To: <000b01d30087$9f8cb4e0$dea61ea0$@uij.edu.cu>
+References: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+ <000601d30056$4f5ae220$ee10a660$@jccm.es>
+ <trinity-6e44aef1-216d-4e5d-ab39-cdac37fa88ff-1500462822894@msvc-mesg-gmx020>
+ <000c01d30082$1ed91cd0$5c8b5670$@jccm.es>
+ <000b01d30087$9f8cb4e0$dea61ea0$@uij.edu.cu>
+Message-ID: <596f6d63.0308c80a.44803.0c05@mx.google.com>
+
+Estimados
+
+Desde mi punto de vista, si los datos están en una base de datos es más simple trabajarlos en la base de datos, en caso de no poder modificar datos guardados se podría colocar en la consulta la parte sql que limpiaría los datos con unos simples if. Claro que cuándo los datos vienen muy mal, se podría realizar casi artesanalmente con R, aunque hay que tener mucho cuidado, muchas veces aparecen datos mal sobre los erróneos, y hay que realizar más de una corrección en el orden correcto.
+
+Javier Rubén Marcuzzi
+
+De: Hibiki
+Enviado: miércoles, 19 de julio de 2017 9:07
+Para: 'help helpe'
+Asunto: Re: [R-es] remover y reemplazar
+Importancia: Alta
+
+Javier hay algo que no entiendo, no aclaras bien porque el filtrado por fechas para modificar el valor de un campo según su valor actual, sino aclaras bien eso las soluciones que te brinden por buenas que sean puede que no resuelvan el problema porque va a satisfacer totalmente los casos, igual por lo que dices no entiendo lo de las fechas, solo vas a rectificar los valores erróneos de fechas determinadas o todo los valores erróneos de tus datos?
+
+
+
+
+Ing. Nivaildo Polanco Martínez
+Director Ejecutivo de ACM-ICPC-UIJ
+Email:  casa: hibiki en nauta.cu, trabajo: npolanco en cuij.edu.cu 
+
+Dpto: (46) 352337
+FCT:  (46) 323567
+
+
+
+
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de Isidro Hidalgo Arellano
+Enviado el: miércoles, 19 de julio de 2017 7:28
+Para: 'javier valdes' <jcantallopts en gmx.com>; 'help helpe' <r-help-es en r-project.org>
+Asunto: Re: [R-es] remover y reemplazar
+
+Primero asegúrate de que la columna "date" es de clase "fecha":
+datos$date <- as.Date(datos$date)
+
+Si quieres seleccionar las fechas anteriores al 4 de enero, sería, por ejemplo:
+datos$B[datos$date < "2016-1-4"] <- NA
+
+Si quieres seleccionar en un rango:
+datos$B[datos$date > "2016-1-2" & datos$date < "2016-1-4"] <- NA
+
+Un saludo
+
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo http://www.castillalamancha.es/
+
+
+
+-----Mensaje original-----
+De: javier valdes [mailto:jcantallopts en gmx.com] Enviado el: miércoles, 19 de julio de 2017 13:14
+Para: Isidro Hidalgo Arellano <ihidalgo en jccm.es>
+Asunto: Re: RE: [R-es] remover y reemplazar
+
+Filtrar por fecha, quiero decir que los valores a remover corresponden a rangos con fechas conocidas, pertenecientes a "solo 1 columna en particular"
+Saludos.
+
+Sent using the GMX mail app
+
+On 19-07-17 at 02:14, Isidro Hidalgo Arellano wrote:
+
+> Si la condición del valor erróneo es que sea negativo:
+> 
+> Datos[datos<0, ] <- NA
+> 
+> No creo que sea lo que necesitas porque hablas de filtrar por fecha, 
+> ¿cuáles son las condiciones para hacer el filtro? Es decir, ¿qué 
+> fechas quieres quitar? No lo indicas?
+> 
+> Un saludo
+> 
+>  
+> 
+>  
+> 
+> Isidro Hidalgo Arellano
+> 
+> Observatorio del Mercado de Trabajo
+> 
+> Consejería de Economía, Empresas y Empleo
+> 
+>  <http://www.castillalamancha.es/> http://www.castillalamancha.es/
+> 
+>  
+> 
+>  
+> 
+>  
+> 
+> De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de 
+> javier valdes Enviado el: miércoles, 19 de julio de 2017 5:32
+> Para: carlos ortega <cof en qualityexcellence.es>
+> CC: help helpe <r-help-es en r-project.org>
+> Asunto: [R-es] remover y reemplazar
+> 
+>  
+> 
+> Estimados ;
+> 
+> tengo una base de datos extensa. El tema es que gran parte de esos datos(dentro de columnas especificas) contienen datos erroneos.
+> 
+>  
+> 
+> La idea es poder identificar esos datos, por medio de la fecha y removerlos.
+> 
+>  
+> 
+> Idealmente despues de removerlos reemplazarlos por NA, PARA DESPUES APLICAR ALGÚN TIPO DE RELLENO.
+> 
+> EJEMPLO
+> 
+>          date    A B C
+> 
+>     2016-1-2  1 -5 1
+> 
+>     2016-1-3  2 -9 2
+> 
+>     2016-1-4  3  3  3
+> 
+>     2016-1-5  4  4  4
+> 
+>  
+> 
+> la idea es remover en este caso los valores de la columna B(-5,-9), 
+> filtrando por fecha, y en lo posible dejarlo de la siguiente forma;
+> 
+>      
+> 
+>      date        A  B  C
+> 
+>     2016-1-2  1 n.a 1
+> 
+>     2016-1-3  2 n.a 2
+> 
+>     2016-1-4  3  3   3
+> 
+>     2016-1-5  4  4   4
+> 
+>                   
+> 
+> saludos a todos.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Evento Universidad 2018. Conozca todos los detalles en http://universidad2018.uij.edu.cu
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From jcantallopts en gmx.com  Wed Jul 19 17:08:25 2017
+From: jcantallopts en gmx.com (javier valdes)
+Date: Wed, 19 Jul 2017 17:08:25 +0200
+Subject: [R-es] remover y reemplazar
+In-Reply-To: <000b01d30087$9f8cb4e0$dea61ea0$@uij.edu.cu>
+References: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+ <000601d30056$4f5ae220$ee10a660$@jccm.es>
+ <trinity-6e44aef1-216d-4e5d-ab39-cdac37fa88ff-1500462822894@msvc-mesg-gmx020>
+ <000c01d30082$1ed91cd0$5c8b5670$@jccm.es>
+ <000b01d30087$9f8cb4e0$dea61ea0$@uij.edu.cu>
+Message-ID: <trinity-a19c56db-cc22-4d43-a30e-2383d31569f3-1500476905417@3capp-mailcom-bs01>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170719/a0ff297d/attachment.html>
+
+From javier.ruben.marcuzzi en gmail.com  Wed Jul 19 17:20:01 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Wed, 19 Jul 2017 12:20:01 -0300
+Subject: [R-es] remover y reemplazar
+In-Reply-To: <trinity-a19c56db-cc22-4d43-a30e-2383d31569f3-1500476905417@3capp-mailcom-bs01>
+References: <trinity-3b8cee8e-56ef-4fd4-8ef1-906c835aefed-1500435148705@3capp-mailcom-bs04>
+ <000601d30056$4f5ae220$ee10a660$@jccm.es>
+ <trinity-6e44aef1-216d-4e5d-ab39-cdac37fa88ff-1500462822894@msvc-mesg-gmx020>
+ <000c01d30082$1ed91cd0$5c8b5670$@jccm.es>
+ <000b01d30087$9f8cb4e0$dea61ea0$@uij.edu.cu>
+ <trinity-a19c56db-cc22-4d43-a30e-2383d31569f3-1500476905417@3capp-mailcom-bs01>
+Message-ID: <596f78a1.4fa5370a.c636e.15f1@mx.google.com>
+
+Estimado Javier Valdes
+
+¿Tienes espacios en blanco en las fechas? Si es así posiblemente deba realizar str(data.frame) y comprobar la columna B, sospecho que usted tiene en realidad almacenado texto y no fecha (aunque la lectura al ojo humano sea una fecha).
+
+Si es así lo escrito por Isidro iría bien, excepto algún problema de conversión entre texto y fecha, para este fin yo utilizo striptime, aunque hay muchas posibilidades para el mismo fin.
+
+Javier Rubén Marcuzzi
+
+De: javier valdes
+Enviado: miércoles, 19 de julio de 2017 12:08
+Para: Hibiki
+CC: 'help helpe'
+Asunto: Re: [R-es] remover y reemplazar
+
+Necesito eliminar los datos de la COLUMNA"B" COMPRENDIDOS ENTRE EL 1-1-2016 y el 4-4-2016. Obviamente se entiende que son solo de la columna "B", DE MULTIPLES COLUMNAS de un data frame
+Queda más claro asi?
+Ahora, si al mismo tiempo, esos espacios en blanco se pudieses remplazar con NAN sería ideal.
+Saludos.
+  
+Sent: Wednesday, July 19, 2017 at 8:07 AM
+From: Hibiki <npolanco en uij.edu.cu>
+To: "'help helpe'" <r-help-es en r-project.org>
+Subject: Re: [R-es] remover y reemplazar
+Javier hay algo que no entiendo, no aclaras bien porque el filtrado por fechas para modificar el valor de un campo según su valor actual, sino aclaras bien eso las soluciones que te brinden por buenas que sean puede que no resuelvan el problema porque va a satisfacer totalmente los casos, igual por lo que dices no entiendo lo de las fechas, solo vas a rectificar los valores erróneos de fechas determinadas o todo los valores erróneos de tus datos?
+
+
+
+
+Ing. Nivaildo Polanco Martínez
+Director Ejecutivo de ACM-ICPC-UIJ
+Email: casa: hibiki en nauta.cu, trabajo: npolanco en cuij.edu.cu
+
+Dpto: (46) 352337
+FCT: (46) 323567
+
+
+
+
+
+-----Mensaje original-----
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de Isidro Hidalgo Arellano
+Enviado el: miércoles, 19 de julio de 2017 7:28
+Para: 'javier valdes' <jcantallopts en gmx.com>; 'help helpe' <r-help-es en r-project.org>
+Asunto: Re: [R-es] remover y reemplazar
+
+Primero asegúrate de que la columna "date" es de clase "fecha":
+datos$date <- as.Date(datos$date)
+
+Si quieres seleccionar las fechas anteriores al 4 de enero, sería, por ejemplo:
+datos$B[datos$date < "2016-1-4"] <- NA
+
+Si quieres seleccionar en un rango:
+datos$B[datos$date > "2016-1-2" & datos$date < "2016-1-4"] <- NA
+
+Un saludo
+
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo http://www.castillalamancha.es/
+
+
+
+-----Mensaje original-----
+De: javier valdes [mailto:jcantallopts en gmx.com] Enviado el: miércoles, 19 de julio de 2017 13:14
+Para: Isidro Hidalgo Arellano <ihidalgo en jccm.es>
+Asunto: Re: RE: [R-es] remover y reemplazar
+
+Filtrar por fecha, quiero decir que los valores a remover corresponden a rangos con fechas conocidas, pertenecientes a "solo 1 columna en particular"
+Saludos.
+
+Sent using the GMX mail app
+
+On 19-07-17 at 02:14, Isidro Hidalgo Arellano wrote:
+
+> Si la condición del valor erróneo es que sea negativo:
+>
+> Datos[datos<0, ] <- NA
+>
+> No creo que sea lo que necesitas porque hablas de filtrar por fecha,
+> ¿cuáles son las condiciones para hacer el filtro? Es decir, ¿qué
+> fechas quieres quitar? No lo indicas?
+>
+> Un saludo
+>
+>
+>
+>
+>
+> Isidro Hidalgo Arellano
+>
+> Observatorio del Mercado de Trabajo
+>
+> Consejería de Economía, Empresas y Empleo
+>
+> <http://www.castillalamancha.es/> http://www.castillalamancha.es/
+>
+>
+>
+>
+>
+>
+>
+> De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de
+> javier valdes Enviado el: miércoles, 19 de julio de 2017 5:32
+> Para: carlos ortega <cof en qualityexcellence.es>
+> CC: help helpe <r-help-es en r-project.org>
+> Asunto: [R-es] remover y reemplazar
+>
+>
+>
+> Estimados ;
+>
+> tengo una base de datos extensa. El tema es que gran parte de esos datos(dentro de columnas especificas) contienen datos erroneos.
+>
+>
+>
+> La idea es poder identificar esos datos, por medio de la fecha y removerlos.
+>
+>
+>
+> Idealmente despues de removerlos reemplazarlos por NA, PARA DESPUES APLICAR ALGÚN TIPO DE RELLENO.
+>
+> EJEMPLO
+>
+> date A B C
+>
+> 2016-1-2 1 -5 1
+>
+> 2016-1-3 2 -9 2
+>
+> 2016-1-4 3 3 3
+>
+> 2016-1-5 4 4 4
+>
+>
+>
+> la idea es remover en este caso los valores de la columna B(-5,-9),
+> filtrando por fecha, y en lo posible dejarlo de la siguiente forma;
+>
+>
+>
+> date A B C
+>
+> 2016-1-2 1 n.a 1
+>
+> 2016-1-3 2 n.a 2
+>
+> 2016-1-4 3 3 3
+>
+> 2016-1-5 4 4 4
+>
+>
+>
+> saludos a todos.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Evento Universidad 2018. Conozca todos los detalles en http://universidad2018.uij.edu.cu
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From javier.valdes en mop.gov.cl  Fri Jul 21 23:07:12 2017
+From: javier.valdes en mop.gov.cl (Javier Valdes Cantallopts (DGA))
+Date: Fri, 21 Jul 2017 21:07:12 +0000
+Subject: [R-es] impute TS y resultados en consola.
+Message-ID: <023AE46828930542B1F3839F47A15400220A45C3@EXMBX02.moptt.gov.cl>
+
+Hola estimados.
+
+Alguien ha utilizado alguna vez el paquete IMPUTE_TS?
+
+La verdad es que es bastante recomendable, sin embargo hay un tema que no he podido resolver.
+
+El programa te entrega los resultados en la consola...sin embargo, la idea es rellenar los (N.A) del dataset ORIGINAL.
+
+La pregunta es: Cómo rellenar los (N.A) del dataset original si tengo los resultados en la consola? O como llevar los resultados de la consola a un formato que me permita hacerlo?
+Me explico bien?
+
+Saludos a todos.
+
+[Descripción: FIRMA3]
+
+
+________________________________
+
+CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los archivos adjuntos es de carácter confidencial o privilegiada y está destinada al uso exclusivo del emisor y/o de la persona o entidad a quien va dirigida. Si usted no es el destinatario, cualquier almacenamiento, divulgación, distribución o copia de esta información está estrictamente prohibido y sancionado por la ley. Si recibió este mensaje por error, por favor infórmenos inmediatamente respondiendo este mismo mensaje y borre todos los archivos adjuntos. Gracias.
+
+CONFIDENTIAL NOTE: The information transmitted in this message and/or attachments is confidential and/or privileged and is intented only for use of the person or entity to whom it is addressed. If you are not the intended recipient, any retention, dissemination, distribution or copy of this information is strictly prohibited and sanctioned by law. If you received this message in error, please reply us this same message and delete this message and all attachments. Thank you.
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170721/e1e257e2/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: image001.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170721/e1e257e2/attachment-0001.png>
+
+From freddy.lopez.quintero en gmail.com  Sat Jul 22 03:28:06 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Sat, 22 Jul 2017 03:28:06 +0200
+Subject: [R-es] impute TS y resultados en consola.
+In-Reply-To: <023AE46828930542B1F3839F47A15400220A45C3@EXMBX02.moptt.gov.cl>
+References: <023AE46828930542B1F3839F47A15400220A45C3@EXMBX02.moptt.gov.cl>
+Message-ID: <CALCOUqsBgHNb=JBqGLz0Mvex-hoSeE7Z2mqxzsLD5hg=DX7ZQg@mail.gmail.com>
+
+Hola.
+
+Yo no he usado el paquete antes y es altamente probable que esté
+entendiendo mal la pregunta pero intentaré responder.
+
+Me parece que el argumento principal de las funciones del paquete son un
+vector o una serie de tiempo. Dependiendo de cuál función te estés
+refiriendo pudiera haber un comportamiento distinto (quizá habrías de
+aclararlo), pero con la mayoría que probé creo que solo reemplazando el
+nombre con el resultado de la función misma es suficiente.
+
+Usando el ejemplo de na.mean():
+
+x <- ts(c(2,3,4,5,6,NA,7,8))
+>
+
+no sé si baste con:
+
+x <- na.mean(x)
+>
+
+y así para las demás funciones. Si lo que quieres es ver específicamente
+cuáles fueron los valores imputados, con
+
+na.mean(x)[is.na(x)]
+>
+
+los tendrías (antes de hacer la imputación, claro está).
+
+Ojalá sirva de algo.
+
+¡Salud!
+
+2017-07-21 23:07 GMT+02:00 Javier Valdes Cantallopts (DGA) <
+javier.valdes en mop.gov.cl>:
+
+> Hola estimados.
+>
+>
+>
+> Alguien ha utilizado alguna vez el paquete IMPUTE_TS?
+>
+>
+>
+> La verdad es que es bastante recomendable, sin embargo hay un tema que no
+> he podido resolver.
+>
+>
+>
+> El programa te entrega los resultados *en la consola*?sin embargo, la
+> idea es rellenar los (*N.A) del dataset ORIGINAL*.
+>
+>
+>
+> La pregunta es: Cómo rellenar los (*N.A)* *del dataset* *original* si
+> tengo los resultados en la consola? O como llevar los *resultados de la
+> consola a un formato que me permita hacerlo*?
+>
+> Me explico bien?
+>
+>
+>
+> Saludos a todos.
+>
+>
+>
+> [image: Descripción: FIRMA3]
+>
+>
+>
+> ------------------------------
+>
+> CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los
+> archivos adjuntos es de carácter confidencial o privilegiada y está
+> destinada al uso exclusivo del emisor y/o de la persona o entidad a quien
+> va dirigida. Si usted no es el destinatario, cualquier almacenamiento,
+> divulgación, distribución o copia de esta información está estrictamente
+> prohibido y sancionado por la ley. Si recibió este mensaje por error, por
+> favor infórmenos inmediatamente respondiendo este mismo mensaje y borre
+> todos los archivos adjuntos. Gracias.
+>
+> CONFIDENTIAL NOTE: The information transmitted in this message and/or
+> attachments is confidential and/or privileged and is intented only for use
+> of the person or entity to whom it is addressed. If you are not the
+> intended recipient, any retention, dissemination, distribution or copy of
+> this information is strictly prohibited and sanctioned by law. If you
+> received this message in error, please reply us this same message and
+> delete this message and all attachments. Thank you.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170722/650254d9/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 33786 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170722/650254d9/attachment-0001.png>
+
+From cleiver_yam en hotmail.com  Sun Jul 23 21:13:44 2017
+From: cleiver_yam en hotmail.com (Clei Y)
+Date: Sun, 23 Jul 2017 19:13:44 +0000
+Subject: [R-es] Suma de columna en data.frame con restricciones
+Message-ID: <MWHPR12MB11354AFA526AFA03B536B45187BA0@MWHPR12MB1135.namprd12.prod.outlook.com>
+
+Buen día,
+
+
+Tengo un data frame con los siguientes datos
+
+
+
+
+> Sexo<-c(1,1,1,2,2,2,2,1)
+> edad<-c(10,12,15,12,10,15,12,15)
+> frec<-c(150,125,147,123,156,174,185,195)
+> df<-data.frame(Sexo,edad,frec)
+
+
+Quisiera saber como elaborar una tabla en la cual seleccione el sexo y la edad y R realice la suma de la frecuencia debido a que la lista original incluye miles de observaciones y existen muchas observaciones con mismo sexo, misma edad y es necesario realizar la suma de las frecuencias.
+
+
+Saludos y gracias
+
+	[[alternative HTML version deleted]]
+
+
+From javier.ruben.marcuzzi en gmail.com  Sun Jul 23 21:24:40 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Sun, 23 Jul 2017 16:24:40 -0300
+Subject: [R-es] Suma de columna en data.frame con restricciones
+In-Reply-To: <MWHPR12MB11354AFA526AFA03B536B45187BA0@MWHPR12MB1135.namprd12.prod.outlook.com>
+References: <MWHPR12MB11354AFA526AFA03B536B45187BA0@MWHPR12MB1135.namprd12.prod.outlook.com>
+Message-ID: <5974f7fa.5422ed0a.7a132.a1e0@mx.google.com>
+
+Estimado Clei Y
+
+Su pregunta es muy básica, está en muchos libros y hay muchas formas de resolverla.
+
+Le paso una pista donde se preguntan por lo mismo, no se desaliente, es una duda común al haber tantas formas para algo tan simple, incluso observe apply, mapply, plyr, dplyr, do.call,  un algunas otras alternativas, cualquiera lo lleva a una respuesta para su caso.
+
+https://stackoverflow.com/questions/15059076/call-apply-like-function-on-each-row-of-dataframe-with-multiple-arguments-from-e
+
+
+Javier Rubén Marcuzzi
+
+De: Clei Y
+Enviado: domingo, 23 de julio de 2017 16:13
+Para: r-help-es en r-project.org
+Asunto: [R-es] Suma de columna en data.frame con restricciones
+
+Buen d?a,
+
+
+Tengo un data frame con los siguientes datos
+
+
+
+
+> Sexo<-c(1,1,1,2,2,2,2,1)
+> edad<-c(10,12,15,12,10,15,12,15)
+> frec<-c(150,125,147,123,156,174,185,195)
+> df<-data.frame(Sexo,edad,frec)
+
+
+Quisiera saber como elaborar una tabla en la cual seleccione el sexo y la edad y R realice la suma de la frecuencia debido a que la lista original incluye miles de observaciones y existen muchas observaciones con mismo sexo, misma edad y es necesario realizar la suma de las frecuencias.
+
+
+Saludos y gracias
+
+	[[alternative HTML version deleted]]
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Sun Jul 23 22:45:55 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sun, 23 Jul 2017 22:45:55 +0200
+Subject: [R-es] Suma de columna en data.frame con restricciones
+In-Reply-To: <MWHPR12MB11354AFA526AFA03B536B45187BA0@MWHPR12MB1135.namprd12.prod.outlook.com>
+References: <MWHPR12MB11354AFA526AFA03B536B45187BA0@MWHPR12MB1135.namprd12.prod.outlook.com>
+Message-ID: <CAOKbq8gLtangNz3e2EAAA=L8t0bfyWm_FGsJrwvvc+wzckbqsw@mail.gmail.com>
+
+Hola,
+
+Esas son diferentes opciones.
+Si tu conjunto es muy grande, las opciones de dplyr, sqldf y especialmente
+data.table son por las que optaría...
+
+
+#-----------------------------------------
+> # Opcion 1
+> aggregate(frec ~ edad + Sexo, data = df, FUN = sum)
+  edad Sexo frec
+1   10    1  150
+2   12    1  125
+3   15    1  342
+4   10    2  156
+5   12    2  308
+6   15    2  174
+>
+> # Opcion 2
+> library(dplyr)
+> res_out <- df %>%
++   group_by(edad, Sexo) %>%
++   summarise( res = sum(frec))
+> res_out
+# A tibble: 6 x 3
+# Groups:   edad [?]
+   edad  Sexo   res
+  <dbl> <dbl> <dbl>
+1    10     1   150
+2    10     2   156
+3    12     1   125
+4    12     2   308
+5    15     1   342
+6    15     2   174
+>
+> # Opcion 3
+> library(data.table)
+> DT <- as.data.table(df)
+> DT[, mi_sum := sum(frec), by=c('Sexo','edad')]
+> DT
+   Sexo edad frec mi_sum
+1:    1   10  150    150
+2:    1   12  125    125
+3:    1   15  147    342
+4:    2   12  123    308
+5:    2   10  156    156
+6:    2   15  174    174
+7:    2   12  185    308
+8:    1   15  195    342
+>
+> # Opcion 4
+> library(sqldf)
+> res_sql <- sqldf("select Sexo, edad, sum(frec) as sumfrec from df group
+by Sexo,edad")
+> res_sql
+  Sexo edad sumfrec
+1    1   10     150
+2    1   12     125
+3    1   15     342
+4    2   10     156
+5    2   12     308
+6    2   15     174
+>
+#-----------------------------------------
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El 23 de julio de 2017, 21:13, Clei Y <cleiver_yam en hotmail.com> escribió:
+
+> Buen día,
+>
+>
+> Tengo un data frame con los siguientes datos
+>
+>
+>
+>
+> > Sexo<-c(1,1,1,2,2,2,2,1)
+> > edad<-c(10,12,15,12,10,15,12,15)
+> > frec<-c(150,125,147,123,156,174,185,195)
+> > df<-data.frame(Sexo,edad,frec)
+>
+>
+> Quisiera saber como elaborar una tabla en la cual seleccione el sexo y la
+> edad y R realice la suma de la frecuencia debido a que la lista original
+> incluye miles de observaciones y existen muchas observaciones con mismo
+> sexo, misma edad y es necesario realizar la suma de las frecuencias.
+>
+>
+> Saludos y gracias
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From ericconchamunoz en gmail.com  Mon Jul 24 10:15:35 2017
+From: ericconchamunoz en gmail.com (eric)
+Date: Mon, 24 Jul 2017 04:15:35 -0400
+Subject: [R-es] Suma de columna en data.frame con restricciones
+In-Reply-To: <CAOKbq8gLtangNz3e2EAAA=L8t0bfyWm_FGsJrwvvc+wzckbqsw@mail.gmail.com>
+References: <MWHPR12MB11354AFA526AFA03B536B45187BA0@MWHPR12MB1135.namprd12.prod.outlook.com>
+ <CAOKbq8gLtangNz3e2EAAA=L8t0bfyWm_FGsJrwvvc+wzckbqsw@mail.gmail.com>
+Message-ID: <48ae8696-c18d-c19c-6c17-eedbc53170f2@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170724/11ef824a/attachment-0001.html>
+
+From jcantallopts en gmx.com  Mon Jul 24 22:10:48 2017
+From: jcantallopts en gmx.com (javier valdes)
+Date: Mon, 24 Jul 2017 22:10:48 +0200
+Subject: [R-es] impute TS y resultados en consola.
+In-Reply-To: <CALCOUqsBgHNb=JBqGLz0Mvex-hoSeE7Z2mqxzsLD5hg=DX7ZQg@mail.gmail.com>
+References: <023AE46828930542B1F3839F47A15400220A45C3@EXMBX02.moptt.gov.cl>
+ <CALCOUqsBgHNb=JBqGLz0Mvex-hoSeE7Z2mqxzsLD5hg=DX7ZQg@mail.gmail.com>
+Message-ID: <trinity-da4536ce-2300-4ea7-b671-49b6dcb16d4d-1500927048007@msvc-mesg-gmx005>
+
+Gracias Freddy, me sirvió tu idea.
+Saludos.
+
+Sent using the GMX mail app
+
+On 21-07-17 at 21:28, Freddy Omar López Quintero wrote:
+
+> Hola.
+> 
+> Yo no he usado el paquete antes y es altamente probable que esté
+> entendiendo mal la pregunta pero intentaré responder.
+> 
+> Me parece que el argumento principal de las funciones del paquete son un
+> vector o una serie de tiempo. Dependiendo de cuál función te estés
+> refiriendo pudiera haber un comportamiento distinto (quizá habrías de
+> aclararlo), pero con la mayoría que probé creo que solo reemplazando el
+> nombre con el resultado de la función misma es suficiente.
+> 
+> Usando el ejemplo de na.mean():
+> 
+> x <- ts(c(2,3,4,5,6,NA,7,8))
+> >
+> 
+> no sé si baste con:
+> 
+> x <- na.mean(x)
+> >
+> 
+> y así para las demás funciones. Si lo que quieres es ver específicamente
+> cuáles fueron los valores imputados, con
+> 
+> na.mean(x)[is.na(x)]
+> >
+> 
+> los tendrías (antes de hacer la imputación, claro está).
+> 
+> Ojalá sirva de algo.
+> 
+> ¡Salud!
+> 
+> 2017-07-21 23:07 GMT+02:00 Javier Valdes Cantallopts (DGA) <
+> javier.valdes en mop.gov.cl>:
+> 
+> > Hola estimados.
+> >
+> >
+> >
+> > Alguien ha utilizado alguna vez el paquete IMPUTE_TS?
+> >
+> >
+> >
+> > La verdad es que es bastante recomendable, sin embargo hay un tema que no
+> > he podido resolver.
+> >
+> >
+> >
+> > El programa te entrega los resultados *en la consola*?sin embargo, la
+> > idea es rellenar los (*N.A) del dataset ORIGINAL*.
+> >
+> >
+> >
+> > La pregunta es: Cómo rellenar los (*N.A)* *del dataset* *original* si
+> > tengo los resultados en la consola? O como llevar los *resultados de la
+> > consola a un formato que me permita hacerlo*?
+> >
+> > Me explico bien?
+> >
+> >
+> >
+> > Saludos a todos.
+> >
+> >
+> >
+> > [image: Descripción: FIRMA3]
+> >
+> >
+> >
+> > ------------------------------
+> >
+> > CONFIDENCIALIDAD: La información contenida en este mensaje y/o en los
+> > archivos adjuntos es de carácter confidencial o privilegiada y está
+> > destinada al uso exclusivo del emisor y/o de la persona o entidad a quien
+> > va dirigida. Si usted no es el destinatario, cualquier almacenamiento,
+> > divulgación, distribución o copia de esta información está estrictamente
+> > prohibido y sancionado por la ley. Si recibió este mensaje por error, por
+> > favor infórmenos inmediatamente respondiendo este mismo mensaje y borre
+> > todos los archivos adjuntos. Gracias.
+> >
+> > CONFIDENTIAL NOTE: The information transmitted in this message and/or
+> > attachments is confidential and/or privileged and is intented only for use
+> > of the person or entity to whom it is addressed. If you are not the
+> > intended recipient, any retention, dissemination, distribution or copy of
+> > this information is strictly prohibited and sanctioned by law. If you
+> > received this message in error, please reply us this same message and
+> > delete this message and all attachments. Thank you.
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> 
+> 
+> 
+> -- 
+> «Pídeles sus títulos a los que te persiguen, pregúntales
+> cuándo nacieron, diles que te demuestren su existencia.»
+> 
+> Rafael Cadenas
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From Guillermo.Vinue en uv.es  Tue Jul 25 10:44:45 2017
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Tue, 25 Jul 2017 10:44:45 +0200 (CEST)
+Subject: [R-es] Problema con shiny en Fedora
+Message-ID: <4987137615vivigui@uv.es>
+
+Hola,
+
+He actualizado las versiones con las que trabajo de Fedora, R y RStudio y shiny me ha dejado de funcionar. Cuando ejecuto simplemente:
+
+library(shiny)
+runExample("01_hello")
+
+RStudio se cierra. He buscado en google con cosas similares a "Rstudio crashes shiny linux" y no me ha funcionado ninguna de las sugerencias que he encontrado. Tengo actualizados todos los paquetes. En este link:
+
+https://shiny.rstudio.com/articles/upgrade-R.html
+
+en el apartado "Reinstalling packages with the new version of R" dice "The following code should be run as root after upgrading R on Linux". Esto podría ser una solución pero ciertamente no sé cómo hacerlo porque en la terminal:
+$ sudo update.packages(ask = FALSE, checkBuilt = TRUE)
+no se puede ejecutar. 
+
+Estos son los datos de las versiones con las que trabajo: ¿Alguien ha tenido un problema similar y sabe cómo resolverlo? Muchas gracias.
+
+> RStudio.Version()
+$mode
+[1] "desktop"
+
+$version
+[1] ?1.0.153?
+
+> sessionInfo()
+R version 3.4.1 (2017-06-30)
+Platform: x86_64-redhat-linux-gnu (64-bit)
+Running under: Fedora 26 (Workstation Edition)
+
+Matrix products: default
+BLAS/LAPACK: /usr/lib64/R/lib/libRblas.so
+
+locale:
+[1] LC_CTYPE=en_US.UTF-8    LC_NUMERIC=C   LC_TIME=en_US.UTF-8       
+[4] LC_COLLATE=en_US.UTF-8  LC_MONETARY=en_US.UTF-8   LC_MESSAGES=en_US.UTF-8   
+[7] LC_PAPER=en_US.UTF-8    LC_NAME=C   LC_ADDRESS=C              
+[10] LC_TELEPHONE=C         LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+[1] compiler_3.4.1 tools_3.4.1 
+
+
+From freddy.lopez.quintero en gmail.com  Tue Jul 25 13:39:09 2017
+From: freddy.lopez.quintero en gmail.com (=?UTF-8?Q?Freddy_Omar_L=C3=B3pez_Quintero?=)
+Date: Tue, 25 Jul 2017 13:39:09 +0200
+Subject: [R-es] Problema con shiny en Fedora
+In-Reply-To: <4987137615vivigui@uv.es>
+References: <4987137615vivigui@uv.es>
+Message-ID: <CALCOUqvy3s0Q3UW-1E0hmF9BH+O8NZ4p7JdvCX9EpXcyyDCGyw@mail.gmail.com>
+
+?Hola Guillermo.
+?
+
+"Reinstalling packages with the new version of R" dice "The following code
+> should be run as root after upgrading R on Linux". Esto podría ser una
+> solución pero ciertamente no sé cómo hacerlo porque en la terminal:
+> $ sudo update.packages(ask = FALSE, checkBuilt = TRUE)
+> no se puede ejecutar.
+>
+
+?¿Servirá escribir desde la terminal
+
+sudo R?
+>
+
+?ingresar la contraseña y luego actualizar con
+
+update.packages(ask = FALSE, checkBuilt = TRUE)?
+
+
+?
+
+?Haznos saber.
+
+¡Salud!?
+
+-- 
+«Pídeles sus títulos a los que te persiguen, pregúntales
+cuándo nacieron, diles que te demuestren su existencia.»
+
+Rafael Cadenas
+
+	[[alternative HTML version deleted]]
+
+
+From Guillermo.Vinue en uv.es  Tue Jul 25 14:46:53 2017
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Tue, 25 Jul 2017 14:46:53 +0200 (CEST)
+Subject: [R-es] Problema con shiny en Fedora
+Message-ID: <5334714792vivigui@uv.es>
+
+Hola Freddy,
+
+Muchas gracias por la respuesta. Lo he probado y no ha funcionado. Una vez ejecutado update.packages(ask = FALSE, checkBuilt = TRUE)?, cuando entro en R desde la terminal con: 
+$ sudo R 
+
+y ejecuto la app:
+
+> library(shiny)
+> runExample("01_hello")
+
+me aparece el mensaje de error que adjunto en un txt.
+
+En cambio, cuando entro en R desde la terminal simplemente con:
+$ R 
+sí que me aparece la aplicación de 01_hello y funciona bien.
+
+Viendo el mensaje de error, he probado a poner google-chrome como servidor por defecto (en lugar de firefox), pero entrando con $ sudo R la app sigue sin abrirse y entrando con $ R sí que se sigue abriendo, es decir, la app se abre en el servidor que esté definido por defecto, que es como debería ser, tanto entrando con $ sudo R como desde RStudio, donde tampoco se abre.
+
+He mirado si es un problema de las librerías y RStudio y R sin ser root tienen las mismas:
+
+$ sudo R
+> libPaths()
+[1] "/usr/lib64/R/library" 
+[2] "/usr/share/R/library"
+
+$ R
+> libPaths()
+[1] "/home/guillevinue/R/x86_64-redhat-linux-gnu-library/3.4"
+[2] "/usr/lib64/R/library"                                   
+[3] "/usr/share/R/library" 
+
+En RStudio:
+> .libPaths()
+[1] "/home/guillevinue/R/x86_64-redhat-linux-gnu-library/3.4"
+[2] "/usr/lib64/R/library"                                   
+[3] "/usr/share/R/library" 
+
+¿Alguna posible sugerencia?
+
+Saludos,
+
+Guillermo
+
+> ?Hola Guillermo.
+> ?
+> 
+> "Reinstalling packages with the new version of R" dice "The following code
+> > should be run as root after upgrading R on Linux". Esto podría ser una
+> > solución pero ciertamente no sé cómo hacerlo porque en la terminal:
+> > $ sudo update.packages(ask = FALSE, checkBuilt = TRUE)
+> > no se puede ejecutar.
+> >
+> 
+> ?¿Servirá escribir desde la terminal
+> 
+> sudo R?
+> >
+> 
+> ?ingresar la contraseña y luego actualizar con
+> 
+> update.packages(ask = FALSE, checkBuilt = TRUE)?
+> 
+> 
+> ?
+> 
+> ?Haznos saber.
+> 
+> ¡Salud!?
+> 
+> -- 
+> «Pídeles sus títulos a los que te persiguen, pregúntales
+> cuándo nacieron, diles que te demuestren su existencia.»
+> 
+> Rafael Cadenas
+> 
+
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: r_message.txt
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170725/210d8350/attachment.txt>
+
+From javier.ruben.marcuzzi en gmail.com  Tue Jul 25 15:02:42 2017
+From: javier.ruben.marcuzzi en gmail.com (Javier Marcuzzi)
+Date: Tue, 25 Jul 2017 10:02:42 -0300
+Subject: [R-es] Un correo sobre R
+In-Reply-To: <trinity-da4536ce-2300-4ea7-b671-49b6dcb16d4d-1500927048007@msvc-mesg-gmx005>
+References: <023AE46828930542B1F3839F47A15400220A45C3@EXMBX02.moptt.gov.cl>
+ <CALCOUqsBgHNb=JBqGLz0Mvex-hoSeE7Z2mqxzsLD5hg=DX7ZQg@mail.gmail.com>
+ <trinity-da4536ce-2300-4ea7-b671-49b6dcb16d4d-1500927048007@msvc-mesg-gmx005>
+Message-ID: <59774174.8771370a.741c9.6a63@mx.google.com>
+
+Estimados
+
+Comparto un correo electrónico sobre R, lo interesante es la enumeración de algunas herramientas disponibles, lógicamente cada uno es libre de utilizar lo que crea conveniente.
+
+https://www.infoq.com/podcasts/martin-hadley-r-ecosystem?utm_source=infoqWeeklyNewsletter&utm_medium=WeeklyNL_EditorialContent_podcasts&utm_campaign=07252017news&utm_content=other
+
+
+Javier Rubén Marcuzzi
+
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Thu Jul 27 08:02:43 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Thu, 27 Jul 2017 01:02:43 -0500
+Subject: [R-es] =?utf-8?q?A=C3=B1adir_columnas?=
+Message-ID: <CAG9EJTLoTpadv4Q+9U18pZCtEgfaochKDyHjx9__qc38Sb34xw@mail.gmail.com>
+
+Estimados Colegas:
+
+Tengo una matriz de la que adjunto con el nombre Sma746.csv, a esta le
+quiero añadir repetidamente una 'etiqueta' a cada columna que llamo 'h',
+para lo cual uso el script que también adjunto 'TOT.r'.
+Mi problema consiste en que no sucede así, porque pasando de 9 juegos, el
+sistema me pone otros números de no se donde.
+Ojalá alguno de ustedes me pueda ayudar y a quién(es) anticipo las gracias
+más cumplidas.
+
+
+*?Atentamente;?MANOLO MÁRQUEZ P.*
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170727/ae7d8e91/attachment.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Sma746.csv
+Type: text/csv
+Size: 4934 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170727/ae7d8e91/attachment.csv>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: TOT.r
+Type: text/x-r-source
+Size: 1526 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170727/ae7d8e91/attachment.bin>
+
+From ericconchamunoz en gmail.com  Thu Jul 27 18:00:39 2017
+From: ericconchamunoz en gmail.com (eric)
+Date: Thu, 27 Jul 2017 12:00:39 -0400
+Subject: [R-es] =?utf-8?q?A=C3=B1adir_columnas?=
+In-Reply-To: <CAG9EJTLoTpadv4Q+9U18pZCtEgfaochKDyHjx9__qc38Sb34xw@mail.gmail.com>
+References: <CAG9EJTLoTpadv4Q+9U18pZCtEgfaochKDyHjx9__qc38Sb34xw@mail.gmail.com>
+Message-ID: <d15755e4-fbcc-e418-eb95-0c88a3cf59ca@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20170727/99e69128/attachment.html>
+
+From manuelmx11 en gmail.com  Thu Jul 27 20:22:43 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Thu, 27 Jul 2017 13:22:43 -0500
+Subject: [R-es] =?utf-8?q?A=C3=B1adir_columnas?=
+Message-ID: <CAG9EJTJmb3chNqe9do75cDKXWcRABv=fW_PuJ5ShZ_T1CZ441g@mail.gmail.com>
+
+Estimado Eric:
+Gracias por tu pronta respuesta.
+El objeto de poner h, es que este 'vector', da nombre a cada renglón de la
+matriz, y así poder separar el par de columnas (h y dato[mf]) de las 39
+columnas originales convirtiéndolas a 78 columnas.
+Voy a dar una vista a data.table, con objeto de tratar de usar y así
+solucionar mi pregunta.
+Nuevamente, Eric, muchísimas gracias.
+
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From patricio.fuenmayor en gmail.com  Fri Jul 28 14:44:41 2017
+From: patricio.fuenmayor en gmail.com (patricio fuenmayor)
+Date: Fri, 28 Jul 2017 07:44:41 -0500
+Subject: [R-es] =?utf-8?b?W1JlXSBBw7FhZGlyIGNvbHVtbmFz?=
+Message-ID: <CACEaGhOmTFiyJRFxtjS-H_8TQhOeBFLV59WukJV=XJ2s11JLNg@mail.gmail.com>
+
+Hola...
+Comprendo lo tratas de hacer ... el paquete data.table tiene una función
+llamada melt que lo que hace es concatenar varias columnas en una sola... y
+con esto, solo creas una única columna 'h' para etiquetar los valores.
+
+https://cran.r-project.org/web/packages/data.table/vignettes/datatable-reshape.html
+
+espero te sea de utilidad
+
+El jul. 28, 2017 5:03 AM, <r-help-es-request en r-project.org> escribió:
+
+> Envíe los mensajes para la lista R-help-es a
+>         r-help-es en r-project.org
+>
+> Para subscribirse o anular su subscripción a través de la WEB
+>         https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+>         r-help-es-request en r-project.org
+>
+> Puede contactar con el responsable de la lista escribiendo a:
+>         r-help-es-owner en r-project.org
+>
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+>
+> Asuntos del día:
+>
+>    1. Re: Añadir columnas (eric)
+>    2. Añadir columnas (Manuel Máquez)
+>
+>
+> ---------- Mensaje reenviado ----------
+> From: eric <ericconchamunoz en gmail.com>
+> To: "Manuel Máquez" <manuelmx11 en gmail.com>, r-help-es <
+> R-help-es en r-project.org>
+> Cc:
+> Bcc:
+> Date: Thu, 27 Jul 2017 12:00:39 -0400
+> Subject: Re: [R-es] Añadir columnas
+>
+> Estimado manuel, lo que veo de tu codigo es que no estas poniendo
+> "etiquetas" a las columnas que agregas (por otro lado, por que llamar a
+> todas las columnas como "h", asi no podras diferenciarlas, y si no son
+> diferentes porque no poner todo en una sola columna ?) , si no que con
+> cbind() al vector mf[1,] le estas agregando un objeto "h" , luego agregas
+> mf[2,] y luego otra vez "h", y asi ...
+>
+> quiza lo que deseas hacer es cambiar el nombre original de las columnas de
+> tu matriz mf[]
+>
+> en ese caso puede usar la funcion colnames() si mf[] es un data.frame o
+> setnames() si es un data.table
+>
+> puedes consultar la ayuda de R para esas funciones con ?colnames y
+> ?setnames
+>
+> espero que el comentario te ayude, Suerte !!!!
+>
+> eric.
+>
+>
+>
+>
+>
+> On 07/27/2017 02:02 AM, Manuel Máquez wrote:
+>
+> Estimados Colegas:
+>
+> Tengo una matriz de la que adjunto con el nombre Sma746.csv, a esta le
+> quiero añadir repetidamente una 'etiqueta' a cada columna que llamo 'h',
+> para lo cual uso el script que también adjunto 'TOT.r'.
+> Mi problema consiste en que no sucede así, porque pasando de 9 juegos, el
+> sistema me pone otros números de no se donde.
+> Ojalá alguno de ustedes me pueda ayudar y a quién(es) anticipo las gracias
+> más cumplidas.
+>
+>
+> * ?Atentamente;? MANOLO MÁRQUEZ P.*
+>
+>
+> _______________________________________________
+> R-help-es mailing listR-help-es en r-project.orghttps://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> --
+> Forest Engineer
+> Master in Environmental and Natural Resource Economics
+> Ph.D. student in Sciences of Natural Resources at La Frontera University
+> Member in AguaDeTemu2030, citizen movement for Temuco with green city standards for living
+>
+> Nota: Las tildes se han omitido para asegurar compatibilidad con algunos lectores de correo.
+>
+>
+>
+> ---------- Mensaje reenviado ----------
+> From: "Manuel Máquez" <manuelmx11 en gmail.com>
+> To: r-help-es <R-help-es en r-project.org>
+> Cc:
+> Bcc:
+> Date: Thu, 27 Jul 2017 13:22:43 -0500
+> Subject: [R-es] Añadir columnas
+> Estimado Eric:
+> Gracias por tu pronta respuesta.
+> El objeto de poner h, es que este 'vector', da nombre a cada renglón de la
+> matriz, y así poder separar el par de columnas (h y dato[mf]) de las 39
+> columnas originales convirtiéndolas a 78 columnas.
+> Voy a dar una vista a data.table, con objeto de tratar de usar y así
+> solucionar mi pregunta.
+> Nuevamente, Eric, muchísimas gracias.
+>
+> *MANOLO MÁRQUEZ P.*
+>
+>         [[alternative HTML version deleted]]
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From cof en qualityexcellence.es  Fri Jul 28 16:22:50 2017
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 28 Jul 2017 16:22:50 +0200
+Subject: [R-es] =?utf-8?q?A=C3=B1adir_columnas?=
+In-Reply-To: <CAG9EJTJmb3chNqe9do75cDKXWcRABv=fW_PuJ5ShZ_T1CZ441g@mail.gmail.com>
+References: <CAG9EJTJmb3chNqe9do75cDKXWcRABv=fW_PuJ5ShZ_T1CZ441g@mail.gmail.com>
+Message-ID: <CAOKbq8i=-LNN_s=9aUYmdogtby63orNkDypM7Wdk0hZKA8sLtw@mail.gmail.com>
+
+Hola,
+
+Si por favor puedes explicar un poco más lo que quieres hacer...
+En tu script:
+
+v <- (mf[1,])
+v <- cbind(v, h)
+v <- cbind(v, mf[2,])
+...
+
+Lo que haces en la primera sentencia es seleccionar la primera fila de mf y
+la concatenas con "h" que supongo que tendrá un string con un nombre (¿?).
+
+Y en la siguiente lo que haces es concatenar "v" con otra fila nueva
+"mf[2,]"... y así sucesivamente...
+
+¿Es esto lo que quieres hacer?.
+Si es lo que quieres, tendrás un gran vector con la secuencia de filas de
+"mf" intercaladas con los nombres "h"...
+
+Vaya me suena un tanto extraño.
+
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+
+El 27 de julio de 2017, 20:22, Manuel Máquez <manuelmx11 en gmail.com>
+escribió:
+
+> Estimado Eric:
+> Gracias por tu pronta respuesta.
+> El objeto de poner h, es que este 'vector', da nombre a cada renglón de la
+> matriz, y así poder separar el par de columnas (h y dato[mf]) de las 39
+> columnas originales convirtiéndolas a 78 columnas.
+> Voy a dar una vista a data.table, con objeto de tratar de usar y así
+> solucionar mi pregunta.
+> Nuevamente, Eric, muchísimas gracias.
+>
+> *MANOLO MÁRQUEZ P.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Fri Jul 28 21:22:36 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Fri, 28 Jul 2017 14:22:36 -0500
+Subject: [R-es] =?utf-8?q?A=C3=B1adir_columnas?=
+Message-ID: <CAG9EJTJ1nxysr9ojRxh_MkGsKw43c4KiP-fjgtCDxG8AC7GJbQ@mail.gmail.com>
+
+Patricio, Carlos:
+Agradezco mucho su interés por asunto de referencia.
+Efectivamente, se trata de transformar mf en un conjunto del doble al
+original, para luego ordenar cada grupo y comparar su evolución, con el
+paso del tiempo; como el ejemplo siguiente:
+
+0
+
+22
+
+18
+
+24
+
+15
+
+22
+
+0
+
+18
+
+28
+
+23
+
+18
+
+18
+
+0
+.
+
+13
+
+24
+
+28
+
+20
+
+0
+
+26
+
+15
+
+23
+
+13
+
+26
+
+0
+
+Al aplicar la introducción de h quedaría:
+
+1
+
+0
+
+1
+
+22
+
+1
+
+18
+
+1
+
+24
+
+1
+
+15
+
+2
+
+22
+
+2
+
+0
+
+2
+
+18
+
+2
+
+28
+
+2
+
+23
+
+3
+
+18
+
+3
+
+18
+
+3
+
+0
+
+3
+
+20
+
+3
+
+13
+
+4
+
+24
+
+4
+
+28
+
+4
+
+20
+
+4
+
+0
+
+4
+
+26
+
+5
+
+15
+
+5
+
+23
+
+5
+
+13
+
+5
+
+26
+
+5
+
+0
+
+Ahora ya puedo tomar cada grupo y guardarlo en diferentes carpetas, así es
+posible vigilar la evolución de cada grupo más fácilmente.
+
+Nuevamente muchas, muchas gracias.
+
+
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From manuelmx11 en gmail.com  Sat Jul 29 05:09:28 2017
+From: manuelmx11 en gmail.com (=?UTF-8?Q?Manuel_M=C3=A1quez?=)
+Date: Fri, 28 Jul 2017 22:09:28 -0500
+Subject: [R-es] =?utf-8?q?A=C3=B1adir_columnas?=
+Message-ID: <CAG9EJTKnDVg+sBOenMXoqace1CqhLjWTZggEj4B5fQ7GOKkw6A@mail.gmail.com>
+
+Sí, Carlos es la misma; los datos entrecomillados son los encabezados y
+podrían quitarse de momento, por otra parte renglones y columnas son
+iguales porque se han transpuesto los renglones, los elementos cero
+corresponden a que no hay interacción entre eventos del mismo tipo; pues
+como se puede observar son de 1 vs 1, 2 vs 2 etc.; pero al ordenarse se
+pierde el dato de 1 vs 5 o 4 vs 30 y por ello se necesitan de las etiquetas
+que se añaden con h.
+Gracias otra vez.
+*MANOLO MÁRQUEZ P.*
+
+	[[alternative HTML version deleted]]
+
+
+From diego.ibayo en gmail.com  Sun Jul 30 05:23:37 2017
+From: diego.ibayo en gmail.com (Diego Iglesias)
+Date: Sat, 29 Jul 2017 22:23:37 -0500
+Subject: [R-es] =?utf-8?q?Motor_de_decisi=C3=B3n?=
+Message-ID: <CA+JHNdfrnb17B=Ogi+sw=DwYMwZ_A-whtTkzYG6eQTok1wxMnw@mail.gmail.com>
+
+Hola,
+
+Solicitando su generosa ayuda: soy medio nuevo en R y vengo del campo de la
+Economía. Trabajo en una pequeña microfinanciera en México, prestamos a la
+base de la pirámide. Actualmente tenemos un modelo de aceptación de nuevos
+posibles clientes basado en un árbol de decisión, y estas reglas están
+parametrizadas en nuestro core bancario. Estamos cambiando de core
+bancario, y el nuevo no posee un módulo para definir estas reglas de
+aceptación de clientes. Existen soluciones en el mercado llamadas "motores
+de decisión", pero tienen un costo muy elevado. Una vez escuché que esto se
+podía hacer con R, es decir que automáticamente el core bancario le envíe
+información de las variables definidas a R, R basándose en las reglas
+establecidas defina la decisión, y le devuelva esta decisión al core
+bancario de si el cliente es aceptado o rechazado. Lo mismo podría ser a
+través de una regresión logística parametrizada en R junto con un punto de
+corte.
+¿Alguien sabe algo al respecto que me pueda encaminar para buscar más
+información?
+Gracias de antemano,
+
+Diego
+
+	[[alternative HTML version deleted]]
+
+

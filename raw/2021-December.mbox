@@ -1,0 +1,960 @@
+From ju@m@d|@@ @end|ng |rom gm@||@com  Tue Dec 14 16:09:45 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 14 Dec 2021 12:09:45 -0300
+Subject: [R-es] extraer una sub cadena hasta el primer punto y coma (;)
+Message-ID: <CAOF0weEjRsLq16zWmofq49BezUdO_GF8sCrbvvfHKEsnXSdfGA@mail.gmail.com>
+
+Hola, como andan!
+
+Tengo un data frame y una de las variables es una cadena larga...de la cuál
+solo necesito quedarme con la cadena que llega hasta un punto y coma (;).
+
+El texto es así:
+
+texto<-c("S. TRANSPORTE DE VACUNAS; DESCRIPCION: TRANSPORTE DE
+VACUNAS","SERV. DE ALMACENAMIENTO; DESCRIPCION: SERVICIO DE ALMACENAMIENTO"
+)
+
+s<-str_split(texto, pattern = fixed(";"), simplify = TRUE)
+s
+
+[image: image.png]
+
+En principio esto funciona así como está, pero cuándo lo incluyo dentro de
+un objeto tidy
+
+   mutate (primer_desc_item=(str_split(listado_nuevo$`Descripción ítem`,
+pattern = fixed(";"), simplify = TRUE)))
+
+Se me complica y me sale el siguiente error.
+
+Error: Problem with `mutate()` column `primer_desc_item`.
+i `primer_desc_item = (...)`.
+i `primer_desc_item` must be size 3136 or 1, not 1507.
+Run `rlang::last_error()` to see where the error occurred.
+
+Se les ocurre que puede estar pasando?
+
+Muchas gracias! Juan.
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211214/4028e68f/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 6942 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211214/4028e68f/attachment.png>
+
+From em||opezc@no @end|ng |rom gm@||@com  Tue Dec 14 16:12:12 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Tue, 14 Dec 2021 16:12:12 +0100
+Subject: [R-es] extraer una sub cadena hasta el primer punto y coma (;)
+In-Reply-To: <CAOF0weEjRsLq16zWmofq49BezUdO_GF8sCrbvvfHKEsnXSdfGA@mail.gmail.com>
+References: <CAOF0weEjRsLq16zWmofq49BezUdO_GF8sCrbvvfHKEsnXSdfGA@mail.gmail.com>
+Message-ID: <1971D362-D973-4747-BF38-3C7EFE5EFB10@gmail.com>
+
+Hola,
+Si lo usas dentro de mutate, tienes que hacerlo sobre la variable del data.frame. Es decir, te sobraría listado_nuevo$
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com 
+
+
+
+
+> El 14 dic 2021, a las 16:09, juan manuel dias <juamadias en gmail.com> escribió:
+> 
+> Hola, como andan!
+> 
+> Tengo un data frame y una de las variables es una cadena larga...de la cuál solo necesito quedarme con la cadena que llega hasta un punto y coma (;).
+> 
+> El texto es así:
+> 
+> texto<-c("S. TRANSPORTE DE VACUNAS; DESCRIPCION: TRANSPORTE DE VACUNAS","SERV. DE ALMACENAMIENTO; DESCRIPCION: SERVICIO DE ALMACENAMIENTO" )
+> 
+> s<-str_split(texto, pattern = fixed(";"), simplify = TRUE)
+> s
+> 
+> <image.png>
+> 
+> En principio esto funciona así como está, pero cuándo lo incluyo dentro de un objeto tidy 
+> 
+>    mutate (primer_desc_item=(str_split(listado_nuevo$`Descripción ítem`, pattern = fixed(";"), simplify = TRUE))) 
+> 
+> Se me complica y me sale el siguiente error.
+> 
+> Error: Problem with `mutate()` column `primer_desc_item`.
+> i `primer_desc_item = (...)`.
+> i `primer_desc_item` must be size 3136 or 1, not 1507.
+> Run `rlang::last_error()` to see where the error occurred.
+> 
+> Se les ocurre que puede estar pasando?
+> 
+> Muchas gracias! Juan.
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Tue Dec 14 16:18:09 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 14 Dec 2021 12:18:09 -0300
+Subject: [R-es] extraer una sub cadena hasta el primer punto y coma (;)
+In-Reply-To: <1971D362-D973-4747-BF38-3C7EFE5EFB10@gmail.com>
+References: <CAOF0weEjRsLq16zWmofq49BezUdO_GF8sCrbvvfHKEsnXSdfGA@mail.gmail.com>
+ <1971D362-D973-4747-BF38-3C7EFE5EFB10@gmail.com>
+Message-ID: <CAOF0weGpYZjEZ+qvmCMb5GrYFL=FskLLnkm1VOFPTmX11r6NFQ@mail.gmail.com>
+
+Muchas gracias! Creo que lo resolví así
+
+aaa<-listado_nuevo %>%
+  mutate(sub_label = stringr::str_split(listado_nuevo$`Descripción
+ítem`,";") %>%
+           map_chr(.,1))
+
+El mar, 14 dic 2021 a las 12:12, Emilio L. Cano (<emilopezcano en gmail.com>)
+escribió:
+
+> Hola,
+> Si lo usas dentro de mutate, tienes que hacerlo sobre la variable del
+> data.frame. Es decir, te sobraría listado_nuevo$
+>
+> Un saludo,
+>
+> Emilio L. Cano
+> http://emilio.lcano.com
+>
+>
+>
+>
+> > El 14 dic 2021, a las 16:09, juan manuel dias <juamadias en gmail.com>
+> escribió:
+> >
+> > Hola, como andan!
+> >
+> > Tengo un data frame y una de las variables es una cadena larga...de la
+> cuál solo necesito quedarme con la cadena que llega hasta un punto y coma
+> (;).
+> >
+> > El texto es así:
+> >
+> > texto<-c("S. TRANSPORTE DE VACUNAS; DESCRIPCION: TRANSPORTE DE
+> VACUNAS","SERV. DE ALMACENAMIENTO; DESCRIPCION: SERVICIO DE ALMACENAMIENTO"
+> )
+> >
+> > s<-str_split(texto, pattern = fixed(";"), simplify = TRUE)
+> > s
+> >
+> > <image.png>
+> >
+> > En principio esto funciona así como está, pero cuándo lo incluyo dentro
+> de un objeto tidy
+> >
+> >    mutate (primer_desc_item=(str_split(listado_nuevo$`Descripción ítem`,
+> pattern = fixed(";"), simplify = TRUE)))
+> >
+> > Se me complica y me sale el siguiente error.
+> >
+> > Error: Problem with `mutate()` column `primer_desc_item`.
+> > i `primer_desc_item = (...)`.
+> > i `primer_desc_item` must be size 3136 or 1, not 1507.
+> > Run `rlang::last_error()` to see where the error occurred.
+> >
+> > Se les ocurre que puede estar pasando?
+> >
+> > Muchas gracias! Juan.
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Tue Dec 14 16:25:00 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 14 Dec 2021 12:25:00 -0300
+Subject: [R-es] extraer una sub cadena hasta el primer punto y coma (;)
+In-Reply-To: <CAOF0weGpYZjEZ+qvmCMb5GrYFL=FskLLnkm1VOFPTmX11r6NFQ@mail.gmail.com>
+References: <CAOF0weEjRsLq16zWmofq49BezUdO_GF8sCrbvvfHKEsnXSdfGA@mail.gmail.com>
+ <1971D362-D973-4747-BF38-3C7EFE5EFB10@gmail.com>
+ <CAOF0weGpYZjEZ+qvmCMb5GrYFL=FskLLnkm1VOFPTmX11r6NFQ@mail.gmail.com>
+Message-ID: <CAOF0weF5tPWwAdVN0P49dnXE8a=3qsH=4pYCgx=yziRsTedK8Q@mail.gmail.com>
+
+de esa forma me arroja el mismo error!
+
+Error: Problem with `mutate()` column `sub_label`.
+i `sub_label = `%>%`(...)`.
+i `sub_label` must be size 3136 or 1, not 1507.
+
+El mar, 14 dic 2021 a las 12:18, juan manuel dias (<juamadias en gmail.com>)
+escribió:
+
+> Muchas gracias! Creo que lo resolví así
+>
+> aaa<-listado_nuevo %>%
+>   mutate(sub_label = stringr::str_split(listado_nuevo$`Descripción
+> ítem`,";") %>%
+>            map_chr(.,1))
+>
+> El mar, 14 dic 2021 a las 12:12, Emilio L. Cano (<emilopezcano en gmail.com>)
+> escribió:
+>
+>> Hola,
+>> Si lo usas dentro de mutate, tienes que hacerlo sobre la variable del
+>> data.frame. Es decir, te sobraría listado_nuevo$
+>>
+>> Un saludo,
+>>
+>> Emilio L. Cano
+>> http://emilio.lcano.com
+>>
+>>
+>>
+>>
+>> > El 14 dic 2021, a las 16:09, juan manuel dias <juamadias en gmail.com>
+>> escribió:
+>> >
+>> > Hola, como andan!
+>> >
+>> > Tengo un data frame y una de las variables es una cadena larga...de la
+>> cuál solo necesito quedarme con la cadena que llega hasta un punto y coma
+>> (;).
+>> >
+>> > El texto es así:
+>> >
+>> > texto<-c("S. TRANSPORTE DE VACUNAS; DESCRIPCION: TRANSPORTE DE
+>> VACUNAS","SERV. DE ALMACENAMIENTO; DESCRIPCION: SERVICIO DE ALMACENAMIENTO"
+>> )
+>> >
+>> > s<-str_split(texto, pattern = fixed(";"), simplify = TRUE)
+>> > s
+>> >
+>> > <image.png>
+>> >
+>> > En principio esto funciona así como está, pero cuándo lo incluyo dentro
+>> de un objeto tidy
+>> >
+>> >    mutate (primer_desc_item=(str_split(listado_nuevo$`Descripción
+>> ítem`, pattern = fixed(";"), simplify = TRUE)))
+>> >
+>> > Se me complica y me sale el siguiente error.
+>> >
+>> > Error: Problem with `mutate()` column `primer_desc_item`.
+>> > i `primer_desc_item = (...)`.
+>> > i `primer_desc_item` must be size 3136 or 1, not 1507.
+>> > Run `rlang::last_error()` to see where the error occurred.
+>> >
+>> > Se les ocurre que puede estar pasando?
+>> >
+>> > Muchas gracias! Juan.
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Tue Dec 14 16:27:57 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 14 Dec 2021 12:27:57 -0300
+Subject: [R-es] extraer una sub cadena hasta el primer punto y coma (;)
+In-Reply-To: <CAOF0weF5tPWwAdVN0P49dnXE8a=3qsH=4pYCgx=yziRsTedK8Q@mail.gmail.com>
+References: <CAOF0weEjRsLq16zWmofq49BezUdO_GF8sCrbvvfHKEsnXSdfGA@mail.gmail.com>
+ <1971D362-D973-4747-BF38-3C7EFE5EFB10@gmail.com>
+ <CAOF0weGpYZjEZ+qvmCMb5GrYFL=FskLLnkm1VOFPTmX11r6NFQ@mail.gmail.com>
+ <CAOF0weF5tPWwAdVN0P49dnXE8a=3qsH=4pYCgx=yziRsTedK8Q@mail.gmail.com>
+Message-ID: <CAOF0weG8BfRiCRHgE8_OCNRzQYn_ecOGojFLY-CV4NrmfgBSjQ@mail.gmail.com>
+
+Recién lo hice como me recomendó Emilio y funcionó, gracias!
+
+El mar, 14 dic 2021 a las 12:25, juan manuel dias (<juamadias en gmail.com>)
+escribió:
+
+> de esa forma me arroja el mismo error!
+>
+> Error: Problem with `mutate()` column `sub_label`.
+> i `sub_label = `%>%`(...)`.
+> i `sub_label` must be size 3136 or 1, not 1507.
+>
+> El mar, 14 dic 2021 a las 12:18, juan manuel dias (<juamadias en gmail.com>)
+> escribió:
+>
+>> Muchas gracias! Creo que lo resolví así
+>>
+>> aaa<-listado_nuevo %>%
+>>   mutate(sub_label = stringr::str_split(listado_nuevo$`Descripción
+>> ítem`,";") %>%
+>>            map_chr(.,1))
+>>
+>> El mar, 14 dic 2021 a las 12:12, Emilio L. Cano (<emilopezcano en gmail.com>)
+>> escribió:
+>>
+>>> Hola,
+>>> Si lo usas dentro de mutate, tienes que hacerlo sobre la variable del
+>>> data.frame. Es decir, te sobraría listado_nuevo$
+>>>
+>>> Un saludo,
+>>>
+>>> Emilio L. Cano
+>>> http://emilio.lcano.com
+>>>
+>>>
+>>>
+>>>
+>>> > El 14 dic 2021, a las 16:09, juan manuel dias <juamadias en gmail.com>
+>>> escribió:
+>>> >
+>>> > Hola, como andan!
+>>> >
+>>> > Tengo un data frame y una de las variables es una cadena larga...de la
+>>> cuál solo necesito quedarme con la cadena que llega hasta un punto y coma
+>>> (;).
+>>> >
+>>> > El texto es así:
+>>> >
+>>> > texto<-c("S. TRANSPORTE DE VACUNAS; DESCRIPCION: TRANSPORTE DE
+>>> VACUNAS","SERV. DE ALMACENAMIENTO; DESCRIPCION: SERVICIO DE ALMACENAMIENTO"
+>>> )
+>>> >
+>>> > s<-str_split(texto, pattern = fixed(";"), simplify = TRUE)
+>>> > s
+>>> >
+>>> > <image.png>
+>>> >
+>>> > En principio esto funciona así como está, pero cuándo lo incluyo
+>>> dentro de un objeto tidy
+>>> >
+>>> >    mutate (primer_desc_item=(str_split(listado_nuevo$`Descripción
+>>> ítem`, pattern = fixed(";"), simplify = TRUE)))
+>>> >
+>>> > Se me complica y me sale el siguiente error.
+>>> >
+>>> > Error: Problem with `mutate()` column `primer_desc_item`.
+>>> > i `primer_desc_item = (...)`.
+>>> > i `primer_desc_item` must be size 3136 or 1, not 1507.
+>>> > Run `rlang::last_error()` to see where the error occurred.
+>>> >
+>>> > Se les ocurre que puede estar pasando?
+>>> >
+>>> > Muchas gracias! Juan.
+>>> > _______________________________________________
+>>> > R-help-es mailing list
+>>> > R-help-es en r-project.org
+>>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Tue Dec 14 21:20:08 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 14 Dec 2021 17:20:08 -0300
+Subject: [R-es] Visualizar fecha sin horas minutos y segundos
+Message-ID: <CAOF0weGc0uBA6AfChZxhYBcph_14mweJfrh0_kfHWvveCzvQ6A@mail.gmail.com>
+
+Hola,
+Estoy trabajando con fechas en formato "POSIXct" "POSIXt", pero al levantar
+las fechas con datatable de librería DT, querría que solo se visualice
+d/m/y sin las horas minutos y segundos.
+
+Actualmente se ven así
+
+[image: image.png]
+
+Estoy probando distintas formas
+
+mutate(`Día de Fecha inicio contrato`=format(as.POSIXct(`Día de Fecha
+inicio contrato`,format='%m/%d/%Y %H:%M:%S'),format='%d/%m/%Y')) %>%
+
+Pero de esta forma se convierten a formato character
+
+Alguien se le ocurre como hacer?
+
+Muchas gracias!
+
+Juan.
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211214/833436fc/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 6576 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211214/833436fc/attachment-0001.png>
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Wed Dec 15 01:14:50 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 14 Dec 2021 21:14:50 -0300
+Subject: [R-es] Visualizar fecha sin horas minutos y segundos
+In-Reply-To: <CAOKbq8hfFFE1_p-iCRVdv7Y8OTM0zFwboT2ATwvFJx1WBzyWnQ@mail.gmail.com>
+References: <CAOF0weGc0uBA6AfChZxhYBcph_14mweJfrh0_kfHWvveCzvQ6A@mail.gmail.com>
+ <CAOKbq8hfFFE1_p-iCRVdv7Y8OTM0zFwboT2ATwvFJx1WBzyWnQ@mail.gmail.com>
+Message-ID: <CAOF0weGn1_a2f2VDThSuqa6o3V3wR3b7N7dSPpq6y8Cu4B9pJA@mail.gmail.com>
+
+Muchas gracias!
+
+El mar, 14 dic 2021 a las 19:22, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola,
+>
+> Sí, tienes la duda resuelta aquí:
+>
+>
+> https://stackoverflow.com/questions/16557028/date-conversion-from-posixct-to-date-in-r
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mar, 14 dic 2021 a las 21:20, juan manuel dias (<juamadias en gmail.com>)
+> escribió:
+>
+>> Hola,
+>> Estoy trabajando con fechas en formato "POSIXct" "POSIXt", pero al
+>> levantar las fechas con datatable de librería DT, querría que solo se
+>> visualice d/m/y sin las horas minutos y segundos.
+>>
+>> Actualmente se ven así
+>>
+>> [image: image.png]
+>>
+>> Estoy probando distintas formas
+>>
+>> mutate(`Día de Fecha inicio contrato`=format(as.POSIXct(`Día de Fecha
+>> inicio contrato`,format='%m/%d/%Y %H:%M:%S'),format='%d/%m/%Y')) %>%
+>>
+>> Pero de esta forma se convierten a formato character
+>>
+>> Alguien se le ocurre como hacer?
+>>
+>> Muchas gracias!
+>>
+>> Juan.
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211214/3d3d96d4/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 6576 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211214/3d3d96d4/attachment.png>
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Fri Dec 17 18:04:51 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Fri, 17 Dec 2021 14:04:51 -0300
+Subject: [R-es] =?utf-8?q?generar_variable_consecutiva_en_funci=C3=B3n_de?=
+	=?utf-8?q?_los_valores_de_otras_variables?=
+Message-ID: <CAOF0weGgP2nZ1B6v-Jtds6mZQCT2dN2OXm3r+z4Oce6tqMWzHA@mail.gmail.com>
+
+Hola, como andan!
+
+Estoy joineando varias bases que tienen información de de entregas de
+productos pero me encuentro con un problema de multiplicación de filas.
+
+Para solucionarlo se me ocurre que puedo generar un variable consecutiva
+que identifique unívocamente a cada entrega para cada orden de compra y
+renglón, como la variable n_entrega que muestro abajo.
+[image: image.png]
+Luego concateno "Número orden de compra", "Renglón" y "n_entrega", y con
+esa variable podría joinear evitando la multiplicación de filas.
+
+Se les ocurre como puede genera la variable "n_entrega"?
+
+Adjunto un recorte de la base.
+
+Muchas gracias! Juan.
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211217/7e3ddcb3/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 18921 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211217/7e3ddcb3/attachment-0001.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: datos_ejemplo.xlsx
+Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Size: 11024 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211217/7e3ddcb3/attachment-0001.xlsx>
+
+From jc|opez5 @end|ng |rom un@|@edu@co  Mon Dec 20 12:20:28 2021
+From: jc|opez5 @end|ng |rom un@|@edu@co (Juan Carlos Lopez Mesa)
+Date: Mon, 20 Dec 2021 06:20:28 -0500
+Subject: [R-es] 
+	=?utf-8?q?generar_variable_consecutiva_en_funci=C3=B3n_de?=
+	=?utf-8?q?_los_valores_de_otras_variables?=
+In-Reply-To: <CAOF0weGgP2nZ1B6v-Jtds6mZQCT2dN2OXm3r+z4Oce6tqMWzHA@mail.gmail.com>
+References: <CAOF0weGgP2nZ1B6v-Jtds6mZQCT2dN2OXm3r+z4Oce6tqMWzHA@mail.gmail.com>
+Message-ID: <CAHUWr6qTjJ8A4mDVV7gKF1Ji8BtgVHaDO=CbtvPJDhWfU=WnOQ@mail.gmail.com>
+
+Hola,
+
+datos %>%
+  diplyr::group_by(nro_orden) %>%
+  diplyr::mutate(n_entrega = row_number())
+
+Saludos.
+
+El vie, 17 dic 2021 a las 12:06, juan manuel dias (<juamadias en gmail.com>)
+escribió:
+
+> Hola, como andan!
+>
+> Estoy joineando varias bases que tienen información de de entregas de
+> productos pero me encuentro con un problema de multiplicación de filas.
+>
+> Para solucionarlo se me ocurre que puedo generar un variable consecutiva
+> que identifique unívocamente a cada entrega para cada orden de compra y
+> renglón, como la variable n_entrega que muestro abajo.
+> [image: image.png]
+> Luego concateno "Número orden de compra", "Renglón" y "n_entrega", y con
+> esa variable podría joinear evitando la multiplicación de filas.
+>
+> Se les ocurre como puede genera la variable "n_entrega"?
+>
+> Adjunto un recorte de la base.
+>
+> Muchas gracias! Juan.
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+-- 
+*Aviso legal:* El contenido de este mensaje y los archivos adjuntos son 
+confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. 
+Se encuentran dirigidos sólo para el uso del destinatario al cual van 
+enviados. La reproducción, lectura y/o copia se encuentran prohibidas a 
+cualquier persona diferente a este y puede ser ilegal. Si usted lo ha 
+recibido por error, infórmenos y elimínelo de su correo. Los Datos 
+Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra 
+Política de Datos Personales que podrá consultar en la página web 
+www.unal.edu.co <http://www.unal.edu.co/>.* *Las opiniones, informaciones, 
+conclusiones y cualquier otro tipo de dato contenido en este correo 
+electrónico, no relacionados con la actividad de la Universidad Nacional de 
+Colombia, se entenderá como personales y de ninguna manera son avaladas por 
+la Universidad.
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211220/ec27412d/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 18921 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211220/ec27412d/attachment-0001.png>
+
+From jcm|d @end|ng |rom c@rmon@roch@@com  Mon Dec 20 15:35:27 2021
+From: jcm|d @end|ng |rom c@rmon@roch@@com (JCMld)
+Date: Mon, 20 Dec 2021 15:35:27 +0100
+Subject: [R-es] =?utf-8?b?PT9VVEYtOD9RP1JFOl89NUJSLWVzPTVEXwlnZW5lcmFy?=
+	=?utf-8?q?=5Fvariable=5Fcon=3F=3Dsecutiva_en_funci=C3=B3n_de_los_v?=
+	=?utf-8?q?alores_de_otras_variables?=
+In-Reply-To: <CAHUWr6qTjJ8A4mDVV7gKF1Ji8BtgVHaDO=CbtvPJDhWfU=WnOQ@mail.gmail.com>
+References: <CAOF0weGgP2nZ1B6v-Jtds6mZQCT2dN2OXm3r+z4Oce6tqMWzHA@mail.gmail.com>
+ <CAHUWr6qTjJ8A4mDVV7gKF1Ji8BtgVHaDO=CbtvPJDhWfU=WnOQ@mail.gmail.com>
+Message-ID: <008301d7f5ae$d5b013c0$81103b40$@carmonarocha.com>
+
+Creo que faltaría el campo del renglón  en el group_by:
+
+ 
+
+datos %>% 
+  diplyr::group_by(nro_orden, renglon) %>% 
+  diplyr::mutate(n_entrega = row_number())
+
+ 
+
+Saludos
+
+ 
+
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Juan Carlos Lopez Mesa
+Enviado el: lunes, 20 de diciembre de 2021 12:20
+Para: juan manuel dias <juamadias en gmail.com>
+CC: Lista R <r-help-es en r-project.org>
+Asunto: Re: [R-es] generar variable consecutiva en función de los valores de otras variables
+
+ 
+
+Hola,
+
+ 
+
+datos %>% 
+  diplyr::group_by(nro_orden) %>% 
+  diplyr::mutate(n_entrega = row_number())
+
+ 
+
+Saludos.
+
+ 
+
+El vie, 17 dic 2021 a las 12:06, juan manuel dias (<juamadias en gmail.com <mailto:juamadias en gmail.com> >) escribió:
+
+Hola, como andan!
+
+Estoy joineando varias bases que tienen información de de entregas de productos pero me encuentro con un problema de multiplicación de filas.  
+
+Para solucionarlo se me ocurre que puedo generar un variable consecutiva que identifique unívocamente a cada entrega para cada orden de compra y renglón, como la variable n_entrega que muestro abajo.
+
+
+
+Luego concateno "Número orden de compra", "Renglón" y "n_entrega", y con esa variable podría joinear evitando la multiplicación de filas. 
+
+Se les ocurre como puede genera la variable "n_entrega"?
+
+Adjunto un recorte de la base. 
+
+Muchas gracias! Juan.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org <mailto:R-help-es en r-project.org> 
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+Aviso legal: El contenido de este mensaje y los archivos adjuntos son confidenciales y de uso exclusivo de la Universidad Nacional de Colombia. Se encuentran dirigidos sólo para el uso del destinatario al cual van enviados. La reproducción, lectura y/o copia se encuentran prohibidas a cualquier persona diferente a este y puede ser ilegal. Si usted lo ha recibido por error, infórmenos y elimínelo de su correo. Los Datos Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra Política de Datos Personales que podrá consultar en la página web  <http://www.unal.edu.co/> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier otro tipo de dato contenido en este correo electrónico, no relacionados con la actividad de la Universidad Nacional de Colombia, se entenderá como personales y de ninguna manera son avaladas por la Universidad.
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211220/b36cf146/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 18921 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211220/b36cf146/attachment-0001.png>
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Mon Dec 20 19:58:49 2021
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Mon, 20 Dec 2021 15:58:49 -0300
+Subject: [R-es] 
+	=?utf-8?q?generar_variable_consecutiva_en_funci=C3=B3n_de?=
+	=?utf-8?q?_los_valores_de_otras_variables?=
+In-Reply-To: <008301d7f5ae$d5b013c0$81103b40$@carmonarocha.com>
+References: <CAOF0weGgP2nZ1B6v-Jtds6mZQCT2dN2OXm3r+z4Oce6tqMWzHA@mail.gmail.com>
+ <CAHUWr6qTjJ8A4mDVV7gKF1Ji8BtgVHaDO=CbtvPJDhWfU=WnOQ@mail.gmail.com>
+ <008301d7f5ae$d5b013c0$81103b40$@carmonarocha.com>
+Message-ID: <CAOF0weE--V_HsKTOtBctTE8yn9FqTXj+XOu4emtWqEWspiYcmA@mail.gmail.com>
+
+Muchas gracias!
+Lo resolví de este modo...que creo no es muy distinto del que me pasaste!
+
+fecha_perf_entrega %>%
+  group_by(`Número orden de compra`,Renglón) %>%
+  mutate(n_entrega = seq_len(n())) ## con esta línea lo resolví
+
+El lun, 20 dic 2021 a las 11:35, JCMld (<jcmld en carmonarocha.com>) escribió:
+
+> Creo que faltaría el campo del renglón  en el group_by:
+>
+>
+>
+> datos %>%
+>   diplyr::group_by(nro_orden, renglon) %>%
+>   diplyr::mutate(n_entrega = row_number())
+>
+>
+>
+> Saludos
+>
+>
+>
+> *De:* R-help-es <r-help-es-bounces en r-project.org> *En nombre de *Juan
+> Carlos Lopez Mesa
+> *Enviado el:* lunes, 20 de diciembre de 2021 12:20
+> *Para:* juan manuel dias <juamadias en gmail.com>
+> *CC:* Lista R <r-help-es en r-project.org>
+> *Asunto:* Re: [R-es] generar variable consecutiva en función de los
+> valores de otras variables
+>
+>
+>
+> Hola,
+>
+>
+>
+> datos %>%
+>   diplyr::group_by(nro_orden) %>%
+>   diplyr::mutate(n_entrega = row_number())
+>
+>
+>
+> Saludos.
+>
+>
+>
+> El vie, 17 dic 2021 a las 12:06, juan manuel dias (<juamadias en gmail.com>)
+> escribió:
+>
+> Hola, como andan!
+>
+> Estoy joineando varias bases que tienen información de de entregas de
+> productos pero me encuentro con un problema de multiplicación de filas.
+>
+> Para solucionarlo se me ocurre que puedo generar un variable consecutiva
+> que identifique unívocamente a cada entrega para cada orden de compra y
+> renglón, como la variable n_entrega que muestro abajo.
+>
+> Luego concateno "Número orden de compra", "Renglón" y "n_entrega", y con
+> esa variable podría joinear evitando la multiplicación de filas.
+>
+> Se les ocurre como puede genera la variable "n_entrega"?
+>
+> Adjunto un recorte de la base.
+>
+> Muchas gracias! Juan.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> *Aviso legal:* El contenido de este mensaje y los archivos adjuntos son
+> confidenciales y de uso exclusivo de la Universidad Nacional de Colombia.
+> Se encuentran dirigidos sólo para el uso del destinatario al cual van
+> enviados. La reproducción, lectura y/o copia se encuentran prohibidas a
+> cualquier persona diferente a este y puede ser ilegal. Si usted lo ha
+> recibido por error, infórmenos y elimínelo de su correo. Los Datos
+> Personales serán tratados conforme a la Ley 1581 de 2012 y a nuestra
+> Política de Datos Personales que podrá consultar en la página web
+> www.unal.edu.co. Las opiniones, informaciones, conclusiones y cualquier
+> otro tipo de dato contenido en este correo electrónico, no relacionados con
+> la actividad de la Universidad Nacional de Colombia, se entenderá como
+> personales y de ninguna manera son avaladas por la Universidad.
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211220/0d67a7fc/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 18921 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20211220/0d67a7fc/attachment-0001.png>
+
+From drm@|don@dog @end|ng |rom y@hoo@e@  Wed Dec 29 02:38:32 2021
+From: drm@|don@dog @end|ng |rom y@hoo@e@ (Diego Maldonado)
+Date: Wed, 29 Dec 2021 01:38:32 +0000 (UTC)
+Subject: [R-es] raspado web desde Shiny
+References: <75687552.110518.1640741912518.ref@mail.yahoo.com>
+Message-ID: <75687552.110518.1640741912518@mail.yahoo.com>
+
+Saludos comunidad por consultarles si alguien a realizado un raspado web en paginas dinámicas desde Shiny app en la nube. He utilizado el paquete crrri pero solo me funciona en Shiny de manera local y no lo logro desde la nube. 
+
+Si alguien me podría indicar donde puedo encontrar mayor documentación para poder hacer raspado web con Shiny desde la nube les agradecería.
+
+Saludos
+Diego M.
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Wed Dec 29 14:03:54 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Wed, 29 Dec 2021 14:03:54 +0100
+Subject: [R-es] raspado web desde Shiny
+In-Reply-To: <75687552.110518.1640741912518@mail.yahoo.com>
+References: <75687552.110518.1640741912518.ref@mail.yahoo.com>
+ <75687552.110518.1640741912518@mail.yahoo.com>
+Message-ID: <8853AD35-AF4C-42DE-A07D-542F5916AD6F@gmail.com>
+
+Hola Diego,
+
+No sé si es exactamente lo que buscas, pero yo probaría el paquete rvest. En este artículo lo combinan con shiny, pero no sé si es eso lo que quieres https://towardsdatascience.com/scrape-data-and-build-a-webapp-in-r-using-rvest-and-shiny-f20d84dd1b74 <https://towardsdatascience.com/scrape-data-and-build-a-webapp-in-r-using-rvest-and-shiny-f20d84dd1b74>
+
+Emilio
+
+
+
+> El 29 dic 2021, a las 2:38, Diego Maldonado via R-help-es <r-help-es en r-project.org> escribió:
+> 
+> Saludos comunidad por consultarles si alguien a realizado un raspado web en paginas dinámicas desde Shiny app en la nube. He utilizado el paquete crrri pero solo me funciona en Shiny de manera local y no lo logro desde la nube. 
+> 
+> Si alguien me podría indicar donde puedo encontrar mayor documentación para poder hacer raspado web con Shiny desde la nube les agradecería.
+> 
+> Saludos
+> Diego M.
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed Dec 29 21:40:57 2021
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 29 Dec 2021 17:40:57 -0300
+Subject: [R-es] raspado web desde Shiny
+In-Reply-To: <75687552.110518.1640741912518@mail.yahoo.com>
+References: <75687552.110518.1640741912518.ref@mail.yahoo.com>
+ <75687552.110518.1640741912518@mail.yahoo.com>
+Message-ID: <CAHo_aEQb5cX0ds1HsJS0cJCZNtM1t43UE7LUdi0BW=Q2Y6mU-w@mail.gmail.com>
+
+Estimado Diego Maldonado
+
+Tal como dice Emiliano Cano, posiblemente rvest, pero usted debe tener en
+cuenta que el gasto en tiempo es importante, las personas están
+acostumbradas a que el navegador de internet de una respuesta rápida,
+pueden pensar que hay problemas y se van cuándo no lo hay. Por otro lado,
+rvest no tiene, salvo un cambio que yo desconozco, una forma para
+javascript, hay otras alternativas que tienen conección a un navegador,
+pero este se abre y busca cada página, con la descarga de imágenes y etc.,
+lo que se traduce en tiempo. O si el sitio es moderno y utiliza web
+ensambly, otra posibilidad que usted debe contemplar.
+
+Su desafío en R es muy grande.
+
+Javier Rubén Marcuzzi
+
+El mar, 28 dic 2021 a las 22:40, Diego Maldonado via R-help-es (<
+r-help-es en r-project.org>) escribió:
+
+> Saludos comunidad por consultarles si alguien a realizado un raspado web
+> en paginas dinámicas desde Shiny app en la nube. He utilizado el paquete
+> crrri pero solo me funciona en Shiny de manera local y no lo logro desde la
+> nube.
+>
+> Si alguien me podría indicar donde puedo encontrar mayor documentación
+> para poder hacer raspado web con Shiny desde la nube les agradecería.
+>
+> Saludos
+> Diego M.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From drm@|don@dog @end|ng |rom y@hoo@e@  Thu Dec 30 05:07:08 2021
+From: drm@|don@dog @end|ng |rom y@hoo@e@ (Diego Maldonado)
+Date: Thu, 30 Dec 2021 04:07:08 +0000 (UTC)
+Subject: [R-es] raspado web desde Shiny
+In-Reply-To: <CAHo_aEQb5cX0ds1HsJS0cJCZNtM1t43UE7LUdi0BW=Q2Y6mU-w@mail.gmail.com>
+References: <75687552.110518.1640741912518.ref@mail.yahoo.com>
+ <75687552.110518.1640741912518@mail.yahoo.com>
+ <CAHo_aEQb5cX0ds1HsJS0cJCZNtM1t43UE7LUdi0BW=Q2Y6mU-w@mail.gmail.com>
+Message-ID: <532943196.66905.1640837228186@mail.yahoo.com>
+
+ Gracias Javier por tu consejo
+     En miércoles, 29 de diciembre de 2021 15:41:09 GMT-5, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:  
+ 
+ Estimado Diego Maldonado
+Tal como dice Emiliano Cano, posiblemente rvest, pero usted debe tener en cuenta que el gasto en tiempo es importante, las personas están acostumbradas a que el navegador de internet de una respuesta rápida, pueden pensar que hay problemas y se van cuándo no lo hay. Por otro lado, rvest no tiene, salvo un cambio que yo desconozco, una forma para javascript, hay otras alternativas que tienen conección a un navegador, pero este se abre y busca cada página, con la descarga de imágenes y etc., lo que se traduce en tiempo. O si el sitio es moderno y utiliza web ensambly, otra posibilidad que usted debe contemplar.
+Su desafío en R es muy grande. 
+Javier Rubén Marcuzzi
+El mar, 28 dic 2021 a las 22:40, Diego Maldonado via R-help-es (<r-help-es en r-project.org>) escribió:
+
+Saludos comunidad por consultarles si alguien a realizado un raspado web en paginas dinámicas desde Shiny app en la nube. He utilizado el paquete crrri pero solo me funciona en Shiny de manera local y no lo logro desde la nube. 
+
+Si alguien me podría indicar donde puedo encontrar mayor documentación para poder hacer raspado web con Shiny desde la nube les agradecería.
+
+Saludos
+Diego M.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+  
+	[[alternative HTML version deleted]]
+
+
+From drm@|don@dog @end|ng |rom y@hoo@e@  Thu Dec 30 05:08:58 2021
+From: drm@|don@dog @end|ng |rom y@hoo@e@ (Diego Maldonado)
+Date: Thu, 30 Dec 2021 04:08:58 +0000 (UTC)
+Subject: [R-es] raspado web desde Shiny
+In-Reply-To: <8853AD35-AF4C-42DE-A07D-542F5916AD6F@gmail.com>
+References: <75687552.110518.1640741912518.ref@mail.yahoo.com>
+ <75687552.110518.1640741912518@mail.yahoo.com>
+ <8853AD35-AF4C-42DE-A07D-542F5916AD6F@gmail.com>
+Message-ID: <369436529.70237.1640837338645@mail.yahoo.com>
+
+ Gracias lo voy a revisar pero no se si se pueda aplicar a páginas dinámicas con Java Script
+     En miércoles, 29 de diciembre de 2021 08:03:57 GMT-5, Emilio L. Cano <emilopezcano en gmail.com> escribió:  
+ 
+ Hola Diego,
+No sé si es exactamente lo que buscas, pero yo probaría el paquete rvest. En este artículo lo combinan con shiny, pero no sé si es eso lo que quieres https://towardsdatascience.com/scrape-data-and-build-a-webapp-in-r-using-rvest-and-shiny-f20d84dd1b74
+Emilio
+
+
+
+El 29 dic 2021, a las 2:38, Diego Maldonado via R-help-es <r-help-es en r-project.org> escribió:
+Saludos comunidad por consultarles si alguien a realizado un raspado web en paginas dinámicas desde Shiny app en la nube. He utilizado el paquete crrri pero solo me funciona en Shiny de manera local y no lo logro desde la nube. 
+
+Si alguien me podría indicar donde puedo encontrar mayor documentación para poder hacer raspado web con Shiny desde la nube les agradecería.
+
+Saludos
+Diego M.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+  
+	[[alternative HTML version deleted]]
+
+

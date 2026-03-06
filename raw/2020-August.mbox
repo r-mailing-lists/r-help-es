@@ -1,0 +1,3423 @@
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Sun Aug  2 19:26:32 2020
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Sun, 2 Aug 2020 19:26:32 +0200
+Subject: [R-es] State-of-the-art NLP models from R
+Message-ID: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+
+Estimados compañeros:
+
+                                     Estoy interesado en el NLP, así que,
+al hallar el post State-of-the-art NLP models from R
+<https://blogs.rstudio.com/ai/posts/2020-07-30-state-of-the-art-nlp-models-from-r/>,
+gracias a Carlos Ortega, me puse con ilusión a leerlo. Sin embargo, tengo
+problemas con lo más básico, la instalación del paquete *transformers*. No
+puedo continuar sin ello.
+
+                                     El hecho es que me pasa lo siguiente:
+
+> library(reticulate)
+> use_python("/usr/local/bin/python3.7")
+> Sys.which(c("python3.7"))
+                 python3.7
+"/usr/local/bin/python3.7"
+> py_install(packages = c("transformers"),
++            python_version = 'python3.7',
++            pip = TRUE)
+Error: could not find a Python environment for /usr/bin/python
+
+                                  Vamos, que no puede encontrar donde está
+Python en mi máquina. Pero yo creía haberlo dicho con:
+*use_python("/usr/local/bin/python3.7")*, lo cual había comprobado
+accediendo a consultar en el directorio de mi máquina oportunamente. Lo
+muestro a continuación.
+
+MacBook-Pro-de-Diego:bin Diego$ pwd
+
+/usr/local/bin
+
+MacBook-Pro-de-Diego:bin Diego$ ls python*
+
+python python2.7-config python3.7m
+
+python-config python3 python3.7m-config
+
+python2 python3-config pythonw
+
+python2-config python3.7 pythonw2
+
+python2.7 python3.7-config pythonw2.7
+
+MacBook-Pro-de-Diego:bin Diego$
+
+                                    Si pusiera python, sin especificar 3.7,
+tampoco conseguiría más. Mirad.
+
+> use_python("/usr/local/bin/python")
+> Sys.which(c("python"))
+           python
+"/usr/bin/python"
+> py_install(packages = c("transformers"),
++            python_version = 'python',
++            pip = TRUE)
+Error: could not find a Python environment for /usr/bin/python
+
+                                    He mirado qué podría estar pasando y
+como me dicen en  R Interface to Python
+<https://rstudio.github.io/reticulate/>, tengo que especificar el camino;
+pero eso he hecho, o al menos eso creo.
+
+                                    Python en mi máquina está bien, porque
+tengo Anaconda-Navigator y uso Spyder, y funciona muy bien. Es más
+recientemente he estado haciendo un curso usando este IDE, y no tuve el más
+mínimo problema.
+
+                                    Por favor, ¿alguno de ustedes sabe qué
+podría estar pasándome?, ¿qué confundo o qué me falta?.
+
+                                    Muchísimas gracias por adelantado por
+la ayuda y paciencia que me presten.
+
+                                     Diego Martín Oliva.
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Aug  2 20:58:57 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 2 Aug 2020 20:58:57 +0200
+Subject: [R-es] State-of-the-art NLP models from R
+In-Reply-To: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+References: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+Message-ID: <CAOKbq8icyQLEeM3Q6tyrVJofiec417bUu51DGcDy+5th8jRgiQ@mail.gmail.com>
+
+Hola Diego,
+
+El error que obtienes no es de usar una versión específica de Python, si no
+de encontrar un "environment" específico donde hacer la instalación con
+"pip".
+Mira aquí en la ayuda:
+
+https://rstudio.github.io/reticulate/articles/python_packages.html
+
+En la sección de "Conda" donde aparece cómo crear un entorno e indicárselo
+a R para que instale ahí tus nuevas librerías.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El dom., 2 ago. 2020 a las 19:27, Diego Martín (<ako.sistemas en gmail.com>)
+escribió:
+
+> Estimados compañeros:
+>
+>                                      Estoy interesado en el NLP, así que,
+> al hallar el post State-of-the-art NLP models from R
+> <
+> https://blogs.rstudio.com/ai/posts/2020-07-30-state-of-the-art-nlp-models-from-r/
+> >,
+> gracias a Carlos Ortega, me puse con ilusión a leerlo. Sin embargo, tengo
+> problemas con lo más básico, la instalación del paquete *transformers*. No
+> puedo continuar sin ello.
+>
+>                                      El hecho es que me pasa lo siguiente:
+>
+> > library(reticulate)
+> > use_python("/usr/local/bin/python3.7")
+> > Sys.which(c("python3.7"))
+>                  python3.7
+> "/usr/local/bin/python3.7"
+> > py_install(packages = c("transformers"),
+> +            python_version = 'python3.7',
+> +            pip = TRUE)
+> Error: could not find a Python environment for /usr/bin/python
+>
+>                                   Vamos, que no puede encontrar donde está
+> Python en mi máquina. Pero yo creía haberlo dicho con:
+> *use_python("/usr/local/bin/python3.7")*, lo cual había comprobado
+> accediendo a consultar en el directorio de mi máquina oportunamente. Lo
+> muestro a continuación.
+>
+> MacBook-Pro-de-Diego:bin Diego$ pwd
+>
+> /usr/local/bin
+>
+> MacBook-Pro-de-Diego:bin Diego$ ls python*
+>
+> python python2.7-config python3.7m
+>
+> python-config python3 python3.7m-config
+>
+> python2 python3-config pythonw
+>
+> python2-config python3.7 pythonw2
+>
+> python2.7 python3.7-config pythonw2.7
+>
+> MacBook-Pro-de-Diego:bin Diego$
+>
+>                                     Si pusiera python, sin especificar 3.7,
+> tampoco conseguiría más. Mirad.
+>
+> > use_python("/usr/local/bin/python")
+> > Sys.which(c("python"))
+>            python
+> "/usr/bin/python"
+> > py_install(packages = c("transformers"),
+> +            python_version = 'python',
+> +            pip = TRUE)
+> Error: could not find a Python environment for /usr/bin/python
+>
+>                                     He mirado qué podría estar pasando y
+> como me dicen en  R Interface to Python
+> <https://rstudio.github.io/reticulate/>, tengo que especificar el camino;
+> pero eso he hecho, o al menos eso creo.
+>
+>                                     Python en mi máquina está bien, porque
+> tengo Anaconda-Navigator y uso Spyder, y funciona muy bien. Es más
+> recientemente he estado haciendo un curso usando este IDE, y no tuve el más
+> mínimo problema.
+>
+>                                     Por favor, ¿alguno de ustedes sabe qué
+> podría estar pasándome?, ¿qué confundo o qué me falta?.
+>
+>                                     Muchísimas gracias por adelantado por
+> la ayuda y paciencia que me presten.
+>
+>                                      Diego Martín Oliva.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sun Aug  2 23:00:42 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sun, 2 Aug 2020 18:00:42 -0300
+Subject: [R-es] State-of-the-art NLP models from R
+In-Reply-To: <CAOKbq8icyQLEeM3Q6tyrVJofiec417bUu51DGcDy+5th8jRgiQ@mail.gmail.com>
+References: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+ <CAOKbq8icyQLEeM3Q6tyrVJofiec417bUu51DGcDy+5th8jRgiQ@mail.gmail.com>
+Message-ID: <CAHo_aEQX+sH7S2Ssqpo598xfzK+QEfm4O0JqT2FsqHCdHM50Qw@mail.gmail.com>
+
+Estimados
+
+Una pregunta, ¿Que posibilidad hay que esté instalado todo correctamente,
+pero algo cambie en entorno de python, el cual al ser buscado por R esté
+dando problemas?
+
+Hace años que no utilizo macOS, pero se me ocurre que un programa coloque
+en entorno adecuado para él, pero al mismo tiempo este toque al entorno
+requerido por R.
+
+Javier Rubén Marcuzzi
+
+El dom., 2 ago. 2020 a las 15:59, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola Diego,
+>
+> El error que obtienes no es de usar una versión específica de Python, si no
+> de encontrar un "environment" específico donde hacer la instalación con
+> "pip".
+> Mira aquí en la ayuda:
+>
+> https://rstudio.github.io/reticulate/articles/python_packages.html
+>
+> En la sección de "Conda" donde aparece cómo crear un entorno e indicárselo
+> a R para que instale ahí tus nuevas librerías.
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El dom., 2 ago. 2020 a las 19:27, Diego Martín (<ako.sistemas en gmail.com>)
+> escribió:
+>
+> > Estimados compañeros:
+> >
+> >                                      Estoy interesado en el NLP, así que,
+> > al hallar el post State-of-the-art NLP models from R
+> > <
+> >
+> https://blogs.rstudio.com/ai/posts/2020-07-30-state-of-the-art-nlp-models-from-r/
+> > >,
+> > gracias a Carlos Ortega, me puse con ilusión a leerlo. Sin embargo, tengo
+> > problemas con lo más básico, la instalación del paquete *transformers*.
+> No
+> > puedo continuar sin ello.
+> >
+> >                                      El hecho es que me pasa lo
+> siguiente:
+> >
+> > > library(reticulate)
+> > > use_python("/usr/local/bin/python3.7")
+> > > Sys.which(c("python3.7"))
+> >                  python3.7
+> > "/usr/local/bin/python3.7"
+> > > py_install(packages = c("transformers"),
+> > +            python_version = 'python3.7',
+> > +            pip = TRUE)
+> > Error: could not find a Python environment for /usr/bin/python
+> >
+> >                                   Vamos, que no puede encontrar donde
+> está
+> > Python en mi máquina. Pero yo creía haberlo dicho con:
+> > *use_python("/usr/local/bin/python3.7")*, lo cual había comprobado
+> > accediendo a consultar en el directorio de mi máquina oportunamente. Lo
+> > muestro a continuación.
+> >
+> > MacBook-Pro-de-Diego:bin Diego$ pwd
+> >
+> > /usr/local/bin
+> >
+> > MacBook-Pro-de-Diego:bin Diego$ ls python*
+> >
+> > python python2.7-config python3.7m
+> >
+> > python-config python3 python3.7m-config
+> >
+> > python2 python3-config pythonw
+> >
+> > python2-config python3.7 pythonw2
+> >
+> > python2.7 python3.7-config pythonw2.7
+> >
+> > MacBook-Pro-de-Diego:bin Diego$
+> >
+> >                                     Si pusiera python, sin especificar
+> 3.7,
+> > tampoco conseguiría más. Mirad.
+> >
+> > > use_python("/usr/local/bin/python")
+> > > Sys.which(c("python"))
+> >            python
+> > "/usr/bin/python"
+> > > py_install(packages = c("transformers"),
+> > +            python_version = 'python',
+> > +            pip = TRUE)
+> > Error: could not find a Python environment for /usr/bin/python
+> >
+> >                                     He mirado qué podría estar pasando y
+> > como me dicen en  R Interface to Python
+> > <https://rstudio.github.io/reticulate/>, tengo que especificar el
+> camino;
+> > pero eso he hecho, o al menos eso creo.
+> >
+> >                                     Python en mi máquina está bien,
+> porque
+> > tengo Anaconda-Navigator y uso Spyder, y funciona muy bien. Es más
+> > recientemente he estado haciendo un curso usando este IDE, y no tuve el
+> más
+> > mínimo problema.
+> >
+> >                                     Por favor, ¿alguno de ustedes sabe
+> qué
+> > podría estar pasándome?, ¿qué confundo o qué me falta?.
+> >
+> >                                     Muchísimas gracias por adelantado por
+> > la ayuda y paciencia que me presten.
+> >
+> >                                      Diego Martín Oliva.
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Mon Aug  3 13:53:20 2020
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Mon, 3 Aug 2020 13:53:20 +0200
+Subject: [R-es] State-of-the-art NLP models from R
+In-Reply-To: <CAHo_aEQX+sH7S2Ssqpo598xfzK+QEfm4O0JqT2FsqHCdHM50Qw@mail.gmail.com>
+References: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+ <CAOKbq8icyQLEeM3Q6tyrVJofiec417bUu51DGcDy+5th8jRgiQ@mail.gmail.com>
+ <CAHo_aEQX+sH7S2Ssqpo598xfzK+QEfm4O0JqT2FsqHCdHM50Qw@mail.gmail.com>
+Message-ID: <CAKHhLBJjMQd=Hg8_7__12uJM7FXrguyYbm8AHeMmkSXESumwKw@mail.gmail.com>
+
+Estimados compañeros:
+
+                                      Muchísimas gracias a todos por
+responderme. Especialmente a Carlos Ortega que, como siempre, me ha vuelto
+a enseñar el camino.
+
+                                      El asunto era exactamente como decía
+Carlos; habiendo yo aplicado la siguiente solución:
+
+library(reticulate)
+
+conda_create(envname = "r-reticulate",
+             packages = "python",
+             forge = TRUE,
+             channel = character(),
+             conda = "auto")           # Create a new environment. No
+muestro el resultado porque ha sido muy largo.
+                                       # Pero puedo resumirlo con la
+siguiente función.
+> conda_list()
+
+          name
+1    anaconda3
+2 r-reticulate
+3 r-tensorflow
+                                   python
+1                   /anaconda3/bin/python
+2 /anaconda3/envs/r-reticulate/bin/python
+3 /anaconda3/envs/r-tensorflow/bin/python
+
+py_install(
+  packages = c("transformers"),
+  envname = "r-reticulate",
+  method = c("conda"),
+  conda = "auto",
+  python_version = NULL,
+  pip = TRUE
+  )                            # Tampoco saco el resultado porque es
+igualmente largo, solo dejo la prueba
+                               # de que fue bien.
+
+Solving environment: ...working... done
+
+                            Por tanto, parecería que todo está resuelto,
+sobre todo tras cargar las librerías de keras, tensorflow, dplyr y
+tfdatasets, como indica el post citado. Sin embargo, algo no debo estar
+haciendo bien, porque el siguiente paso imprescindible para seguir
+entendiendo el post, el que muestro ahora, da un error.
+
+> transformer <- reticulate::import(module = "transformers",
++                            as = NULL,
++                            convert = TRUE,
++                            delay_load = FALSE)
+Error in py_module_import(module, convert = convert) :
+  ModuleNotFoundError: No module named 'transformers'
+
+                              Había yo creído que, habiendo ido bien
+py_install, con el *package* transformers, no podría decirme ahora import,
+que no hay un módulo llamado 'transformers'. De hecho vi como tras acabar
+py_install, decía:
+
+Successfully built regex sacremoses
+
+Installing collected packages: urllib3, idna, chardet, requests, pyparsing,
+six, packaging, regex, click, joblib, tqdm, sacremoses, sentencepiece,
+numpy, tokenizers, filelock, *transformers*
+
+Successfully installed chardet-3.0.4 click-7.1.2 filelock-3.0.12 idna-2.10
+joblib-0.16.0 numpy-1.19.1 packaging-20.4 pyparsing-2.4.7 regex-2020.7.14
+requests-2.24.0 sacremoses-0.0.43 sentencepiece-0.1.91 six-1.15.0
+tokenizers-0.8.1rc1 tqdm-4.48.1 *transformers-3.0.2* urllib3-1.25.10
+
+                         Con lo cual, me pareció haber logrado el paso de
+instalación pero, está claro que no es así, porque no daría sino, el error
+en import de *ModuleNotFoundError*.
+
+                          Me resulta embarazoso, pero es que no lo veo. No
+sé si alguno de ustedes ve lo que no hago bien.
+
+                          Muchas gracias una vez más. Atentamente.
+
+                          Diego Martín Oliva.
+
+
+
+
+
+
+
+
+El dom., 2 ago. 2020 a las 23:00, Javier Marcuzzi (<
+javier.ruben.marcuzzi en gmail.com>) escribió:
+
+> Estimados
+>
+> Una pregunta, ¿Que posibilidad hay que esté instalado todo correctamente,
+> pero algo cambie en entorno de python, el cual al ser buscado por R esté
+> dando problemas?
+>
+> Hace años que no utilizo macOS, pero se me ocurre que un programa coloque
+> en entorno adecuado para él, pero al mismo tiempo este toque al entorno
+> requerido por R.
+>
+> Javier Rubén Marcuzzi
+>
+> El dom., 2 ago. 2020 a las 15:59, Carlos Ortega (<cof en qualityexcellence.es>)
+> escribió:
+>
+>> Hola Diego,
+>>
+>> El error que obtienes no es de usar una versión específica de Python, si
+>> no
+>> de encontrar un "environment" específico donde hacer la instalación con
+>> "pip".
+>> Mira aquí en la ayuda:
+>>
+>> https://rstudio.github.io/reticulate/articles/python_packages.html
+>>
+>> En la sección de "Conda" donde aparece cómo crear un entorno e indicárselo
+>> a R para que instale ahí tus nuevas librerías.
+>>
+>> Gracias,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>> El dom., 2 ago. 2020 a las 19:27, Diego Martín (<ako.sistemas en gmail.com>)
+>> escribió:
+>>
+>> > Estimados compañeros:
+>> >
+>> >                                      Estoy interesado en el NLP, así
+>> que,
+>> > al hallar el post State-of-the-art NLP models from R
+>> > <
+>> >
+>> https://blogs.rstudio.com/ai/posts/2020-07-30-state-of-the-art-nlp-models-from-r/
+>> > >,
+>> > gracias a Carlos Ortega, me puse con ilusión a leerlo. Sin embargo,
+>> tengo
+>> > problemas con lo más básico, la instalación del paquete *transformers*.
+>> No
+>> > puedo continuar sin ello.
+>> >
+>> >                                      El hecho es que me pasa lo
+>> siguiente:
+>> >
+>> > > library(reticulate)
+>> > > use_python("/usr/local/bin/python3.7")
+>> > > Sys.which(c("python3.7"))
+>> >                  python3.7
+>> > "/usr/local/bin/python3.7"
+>> > > py_install(packages = c("transformers"),
+>> > +            python_version = 'python3.7',
+>> > +            pip = TRUE)
+>> > Error: could not find a Python environment for /usr/bin/python
+>> >
+>> >                                   Vamos, que no puede encontrar donde
+>> está
+>> > Python en mi máquina. Pero yo creía haberlo dicho con:
+>> > *use_python("/usr/local/bin/python3.7")*, lo cual había comprobado
+>> > accediendo a consultar en el directorio de mi máquina oportunamente. Lo
+>> > muestro a continuación.
+>> >
+>> > MacBook-Pro-de-Diego:bin Diego$ pwd
+>> >
+>> > /usr/local/bin
+>> >
+>> > MacBook-Pro-de-Diego:bin Diego$ ls python*
+>> >
+>> > python python2.7-config python3.7m
+>> >
+>> > python-config python3 python3.7m-config
+>> >
+>> > python2 python3-config pythonw
+>> >
+>> > python2-config python3.7 pythonw2
+>> >
+>> > python2.7 python3.7-config pythonw2.7
+>> >
+>> > MacBook-Pro-de-Diego:bin Diego$
+>> >
+>> >                                     Si pusiera python, sin especificar
+>> 3.7,
+>> > tampoco conseguiría más. Mirad.
+>> >
+>> > > use_python("/usr/local/bin/python")
+>> > > Sys.which(c("python"))
+>> >            python
+>> > "/usr/bin/python"
+>> > > py_install(packages = c("transformers"),
+>> > +            python_version = 'python',
+>> > +            pip = TRUE)
+>> > Error: could not find a Python environment for /usr/bin/python
+>> >
+>> >                                     He mirado qué podría estar pasando y
+>> > como me dicen en  R Interface to Python
+>> > <https://rstudio.github.io/reticulate/>, tengo que especificar el
+>> camino;
+>> > pero eso he hecho, o al menos eso creo.
+>> >
+>> >                                     Python en mi máquina está bien,
+>> porque
+>> > tengo Anaconda-Navigator y uso Spyder, y funciona muy bien. Es más
+>> > recientemente he estado haciendo un curso usando este IDE, y no tuve el
+>> más
+>> > mínimo problema.
+>> >
+>> >                                     Por favor, ¿alguno de ustedes sabe
+>> qué
+>> > podría estar pasándome?, ¿qué confundo o qué me falta?.
+>> >
+>> >                                     Muchísimas gracias por adelantado
+>> por
+>> > la ayuda y paciencia que me presten.
+>> >
+>> >                                      Diego Martín Oliva.
+>> >
+>> >         [[alternative HTML version deleted]]
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Mon Aug  3 16:08:19 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Mon, 3 Aug 2020 16:08:19 +0200
+Subject: [R-es] State-of-the-art NLP models from R
+In-Reply-To: <CAKHhLBJjMQd=Hg8_7__12uJM7FXrguyYbm8AHeMmkSXESumwKw@mail.gmail.com>
+References: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+ <CAOKbq8icyQLEeM3Q6tyrVJofiec417bUu51DGcDy+5th8jRgiQ@mail.gmail.com>
+ <CAHo_aEQX+sH7S2Ssqpo598xfzK+QEfm4O0JqT2FsqHCdHM50Qw@mail.gmail.com>
+ <CAKHhLBJjMQd=Hg8_7__12uJM7FXrguyYbm8AHeMmkSXESumwKw@mail.gmail.com>
+Message-ID: <CAOKbq8hReGsijjKsO=bEpyGXyTcE+02XwsUYUw2=RU96oqiWow@mail.gmail.com>
+
+Hola Diego,
+
+Prueba a hacer otra cosa.
+
+   - Abre una consola y activa ese environment que has creado (r-reticulate)
+   - Y una vez activado escribe "python". Entrarás a  la consola de
+   "python".
+   - Ahí, escribe "import transformers"
+   - Si no te devuelve error, es que en el entorno está bien instalado esa
+   librería y por tanto el problema es de acceso desde "R".
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El lun., 3 ago. 2020 a las 13:53, Diego Martín (<ako.sistemas en gmail.com>)
+escribió:
+
+> Estimados compañeros:
+>
+>                                       Muchísimas gracias a todos por
+> responderme. Especialmente a Carlos Ortega que, como siempre, me ha vuelto
+> a enseñar el camino.
+>
+>                                       El asunto era exactamente como decía
+> Carlos; habiendo yo aplicado la siguiente solución:
+>
+> library(reticulate)
+>
+> conda_create(envname = "r-reticulate",
+>              packages = "python",
+>              forge = TRUE,
+>              channel = character(),
+>              conda = "auto")           # Create a new environment. No
+> muestro el resultado porque ha sido muy largo.
+>                                        # Pero puedo resumirlo con la
+> siguiente función.
+> > conda_list()
+>
+>           name
+> 1    anaconda3
+> 2 r-reticulate
+> 3 r-tensorflow
+>                                    python
+> 1                   /anaconda3/bin/python
+> 2 /anaconda3/envs/r-reticulate/bin/python
+> 3 /anaconda3/envs/r-tensorflow/bin/python
+>
+> py_install(
+>   packages = c("transformers"),
+>   envname = "r-reticulate",
+>   method = c("conda"),
+>   conda = "auto",
+>   python_version = NULL,
+>   pip = TRUE
+>   )                            # Tampoco saco el resultado porque es
+> igualmente largo, solo dejo la prueba
+>                                # de que fue bien.
+>
+> Solving environment: ...working... done
+>
+>                             Por tanto, parecería que todo está resuelto,
+> sobre todo tras cargar las librerías de keras, tensorflow, dplyr y
+> tfdatasets, como indica el post citado. Sin embargo, algo no debo estar
+> haciendo bien, porque el siguiente paso imprescindible para seguir
+> entendiendo el post, el que muestro ahora, da un error.
+>
+> > transformer <- reticulate::import(module = "transformers",
+> +                            as = NULL,
+> +                            convert = TRUE,
+> +                            delay_load = FALSE)
+> Error in py_module_import(module, convert = convert) :
+>   ModuleNotFoundError: No module named 'transformers'
+>
+>                               Había yo creído que, habiendo ido bien
+> py_install, con el *package* transformers, no podría decirme ahora
+> import, que no hay un módulo llamado 'transformers'. De hecho vi como tras
+> acabar py_install, decía:
+>
+> Successfully built regex sacremoses
+>
+> Installing collected packages: urllib3, idna, chardet, requests,
+> pyparsing, six, packaging, regex, click, joblib, tqdm, sacremoses,
+> sentencepiece, numpy, tokenizers, filelock, *transformers*
+>
+> Successfully installed chardet-3.0.4 click-7.1.2 filelock-3.0.12 idna-2.10
+> joblib-0.16.0 numpy-1.19.1 packaging-20.4 pyparsing-2.4.7 regex-2020.7.14
+> requests-2.24.0 sacremoses-0.0.43 sentencepiece-0.1.91 six-1.15.0
+> tokenizers-0.8.1rc1 tqdm-4.48.1 *transformers-3.0.2* urllib3-1.25.10
+>
+>                          Con lo cual, me pareció haber logrado el paso de
+> instalación pero, está claro que no es así, porque no daría sino, el error
+> en import de *ModuleNotFoundError*.
+>
+>                           Me resulta embarazoso, pero es que no lo veo. No
+> sé si alguno de ustedes ve lo que no hago bien.
+>
+>                           Muchas gracias una vez más. Atentamente.
+>
+>                           Diego Martín Oliva.
+>
+>
+>
+>
+>
+>
+>
+>
+> El dom., 2 ago. 2020 a las 23:00, Javier Marcuzzi (<
+> javier.ruben.marcuzzi en gmail.com>) escribió:
+>
+>> Estimados
+>>
+>> Una pregunta, ¿Que posibilidad hay que esté instalado todo correctamente,
+>> pero algo cambie en entorno de python, el cual al ser buscado por R esté
+>> dando problemas?
+>>
+>> Hace años que no utilizo macOS, pero se me ocurre que un programa coloque
+>> en entorno adecuado para él, pero al mismo tiempo este toque al entorno
+>> requerido por R.
+>>
+>> Javier Rubén Marcuzzi
+>>
+>> El dom., 2 ago. 2020 a las 15:59, Carlos Ortega (<
+>> cof en qualityexcellence.es>) escribió:
+>>
+>>> Hola Diego,
+>>>
+>>> El error que obtienes no es de usar una versión específica de Python, si
+>>> no
+>>> de encontrar un "environment" específico donde hacer la instalación con
+>>> "pip".
+>>> Mira aquí en la ayuda:
+>>>
+>>> https://rstudio.github.io/reticulate/articles/python_packages.html
+>>>
+>>> En la sección de "Conda" donde aparece cómo crear un entorno e
+>>> indicárselo
+>>> a R para que instale ahí tus nuevas librerías.
+>>>
+>>> Gracias,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>> El dom., 2 ago. 2020 a las 19:27, Diego Martín (<ako.sistemas en gmail.com
+>>> >)
+>>> escribió:
+>>>
+>>> > Estimados compañeros:
+>>> >
+>>> >                                      Estoy interesado en el NLP, así
+>>> que,
+>>> > al hallar el post State-of-the-art NLP models from R
+>>> > <
+>>> >
+>>> https://blogs.rstudio.com/ai/posts/2020-07-30-state-of-the-art-nlp-models-from-r/
+>>> > >,
+>>> > gracias a Carlos Ortega, me puse con ilusión a leerlo. Sin embargo,
+>>> tengo
+>>> > problemas con lo más básico, la instalación del paquete
+>>> *transformers*. No
+>>> > puedo continuar sin ello.
+>>> >
+>>> >                                      El hecho es que me pasa lo
+>>> siguiente:
+>>> >
+>>> > > library(reticulate)
+>>> > > use_python("/usr/local/bin/python3.7")
+>>> > > Sys.which(c("python3.7"))
+>>> >                  python3.7
+>>> > "/usr/local/bin/python3.7"
+>>> > > py_install(packages = c("transformers"),
+>>> > +            python_version = 'python3.7',
+>>> > +            pip = TRUE)
+>>> > Error: could not find a Python environment for /usr/bin/python
+>>> >
+>>> >                                   Vamos, que no puede encontrar donde
+>>> está
+>>> > Python en mi máquina. Pero yo creía haberlo dicho con:
+>>> > *use_python("/usr/local/bin/python3.7")*, lo cual había comprobado
+>>> > accediendo a consultar en el directorio de mi máquina oportunamente. Lo
+>>> > muestro a continuación.
+>>> >
+>>> > MacBook-Pro-de-Diego:bin Diego$ pwd
+>>> >
+>>> > /usr/local/bin
+>>> >
+>>> > MacBook-Pro-de-Diego:bin Diego$ ls python*
+>>> >
+>>> > python python2.7-config python3.7m
+>>> >
+>>> > python-config python3 python3.7m-config
+>>> >
+>>> > python2 python3-config pythonw
+>>> >
+>>> > python2-config python3.7 pythonw2
+>>> >
+>>> > python2.7 python3.7-config pythonw2.7
+>>> >
+>>> > MacBook-Pro-de-Diego:bin Diego$
+>>> >
+>>> >                                     Si pusiera python, sin especificar
+>>> 3.7,
+>>> > tampoco conseguiría más. Mirad.
+>>> >
+>>> > > use_python("/usr/local/bin/python")
+>>> > > Sys.which(c("python"))
+>>> >            python
+>>> > "/usr/bin/python"
+>>> > > py_install(packages = c("transformers"),
+>>> > +            python_version = 'python',
+>>> > +            pip = TRUE)
+>>> > Error: could not find a Python environment for /usr/bin/python
+>>> >
+>>> >                                     He mirado qué podría estar pasando
+>>> y
+>>> > como me dicen en  R Interface to Python
+>>> > <https://rstudio.github.io/reticulate/>, tengo que especificar el
+>>> camino;
+>>> > pero eso he hecho, o al menos eso creo.
+>>> >
+>>> >                                     Python en mi máquina está bien,
+>>> porque
+>>> > tengo Anaconda-Navigator y uso Spyder, y funciona muy bien. Es más
+>>> > recientemente he estado haciendo un curso usando este IDE, y no tuve
+>>> el más
+>>> > mínimo problema.
+>>> >
+>>> >                                     Por favor, ¿alguno de ustedes sabe
+>>> qué
+>>> > podría estar pasándome?, ¿qué confundo o qué me falta?.
+>>> >
+>>> >                                     Muchísimas gracias por adelantado
+>>> por
+>>> > la ayuda y paciencia que me presten.
+>>> >
+>>> >                                      Diego Martín Oliva.
+>>> >
+>>> >         [[alternative HTML version deleted]]
+>>> >
+>>> > _______________________________________________
+>>> > R-help-es mailing list
+>>> > R-help-es en r-project.org
+>>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> >
+>>>
+>>>
+>>> --
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Mon Aug  3 18:58:25 2020
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Mon, 3 Aug 2020 18:58:25 +0200
+Subject: [R-es] State-of-the-art NLP models from R
+In-Reply-To: <CAOKbq8hReGsijjKsO=bEpyGXyTcE+02XwsUYUw2=RU96oqiWow@mail.gmail.com>
+References: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+ <CAOKbq8icyQLEeM3Q6tyrVJofiec417bUu51DGcDy+5th8jRgiQ@mail.gmail.com>
+ <CAHo_aEQX+sH7S2Ssqpo598xfzK+QEfm4O0JqT2FsqHCdHM50Qw@mail.gmail.com>
+ <CAKHhLBJjMQd=Hg8_7__12uJM7FXrguyYbm8AHeMmkSXESumwKw@mail.gmail.com>
+ <CAOKbq8hReGsijjKsO=bEpyGXyTcE+02XwsUYUw2=RU96oqiWow@mail.gmail.com>
+Message-ID: <CAKHhLBKrpZKNMGFwk2S62E9ur+3AbAUrT9fp6WwR3vKbQmkmhA@mail.gmail.com>
+
+Estimado Carlos:
+
+                         Hago lo que me dices y creo que poniéndote el
+resultado seré más expresivo y claro, que tratando de explicarlo.
+
+(r-reticulate) MacBook-Pro-de-Diego:~ Diego$ python
+Could not find platform independent libraries <prefix>
+Could not find platform dependent libraries <exec_prefix>
+Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
+Python path configuration:
+  PYTHONHOME = (not set)
+  PYTHONPATH = (not set)
+  program name = '/anaconda3/bin/python'
+  isolated = 0
+  environment = 1
+  user site = 1
+  import site = 1
+  sys._base_executable = '/anaconda3/bin/python'
+  sys.base_prefix =
+'/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+  sys.base_exec_prefix =
+'/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+  sys.executable = '/anaconda3/bin/python'
+  sys.prefix =
+'/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+  sys.exec_prefix =
+'/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+  sys.path = [
+
+'/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/
+*python38.zip*',
+
+'/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/
+*python3.8*',
+
+'/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/lib-dynload',
+  ]
+Fatal Python error: init_fs_encoding: failed to get the Python codec of the
+filesystem encoding
+Python runtime state: core initialized
+ModuleNotFoundError: No module named 'encodings'
+
+Current thread 0x00007fff72602000 (most recent call first):
+<no Python frame>
+(r-reticulate) MacBook-Pro-de-Diego:~ Diego$
+
+Obviamente no está bien creado el entorno. Además he destacado del
+resultado las referencias python3.8 que he visto, y que no pueden hallarse
+porque yo tengo instalado python3.6.5, aunque sabía que estábamos ya en la
+versión 3.8, pero no me había animado a instalarla porque no sé cómo
+hacerla y tenía muchos otros asuntos entre manos, entre ellos un estudio de
+NLP.
+
+Ahora, visto esto, no sé qué hacer. Creo que voy a actualizar la versión de
+python y también la de anaconda-navigator, que acabo de ver que está
+desactualizada y, luego, voy a empezar de nuevo. Permitidme que os cuente
+luego.
+
+                               Muchísimas gracias. Atentamente.
+
+                               Diego Martín Oliva.
+
+El lun., 3 ago. 2020 a las 16:08, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola Diego,
+>
+> Prueba a hacer otra cosa.
+>
+>    - Abre una consola y activa ese environment que has creado
+>    (r-reticulate)
+>    - Y una vez activado escribe "python". Entrarás a  la consola de
+>    "python".
+>    - Ahí, escribe "import transformers"
+>    - Si no te devuelve error, es que en el entorno está bien instalado
+>    esa librería y por tanto el problema es de acceso desde "R".
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El lun., 3 ago. 2020 a las 13:53, Diego Martín (<ako.sistemas en gmail.com>)
+> escribió:
+>
+>> Estimados compañeros:
+>>
+>>                                       Muchísimas gracias a todos por
+>> responderme. Especialmente a Carlos Ortega que, como siempre, me ha vuelto
+>> a enseñar el camino.
+>>
+>>                                       El asunto era exactamente como
+>> decía Carlos; habiendo yo aplicado la siguiente solución:
+>>
+>> library(reticulate)
+>>
+>> conda_create(envname = "r-reticulate",
+>>              packages = "python",
+>>              forge = TRUE,
+>>              channel = character(),
+>>              conda = "auto")           # Create a new environment. No
+>> muestro el resultado porque ha sido muy largo.
+>>                                        # Pero puedo resumirlo con la
+>> siguiente función.
+>> > conda_list()
+>>
+>>           name
+>> 1    anaconda3
+>> 2 r-reticulate
+>> 3 r-tensorflow
+>>                                    python
+>> 1                   /anaconda3/bin/python
+>> 2 /anaconda3/envs/r-reticulate/bin/python
+>> 3 /anaconda3/envs/r-tensorflow/bin/python
+>>
+>> py_install(
+>>   packages = c("transformers"),
+>>   envname = "r-reticulate",
+>>   method = c("conda"),
+>>   conda = "auto",
+>>   python_version = NULL,
+>>   pip = TRUE
+>>   )                            # Tampoco saco el resultado porque es
+>> igualmente largo, solo dejo la prueba
+>>                                # de que fue bien.
+>>
+>> Solving environment: ...working... done
+>>
+>>                             Por tanto, parecería que todo está resuelto,
+>> sobre todo tras cargar las librerías de keras, tensorflow, dplyr y
+>> tfdatasets, como indica el post citado. Sin embargo, algo no debo estar
+>> haciendo bien, porque el siguiente paso imprescindible para seguir
+>> entendiendo el post, el que muestro ahora, da un error.
+>>
+>> > transformer <- reticulate::import(module = "transformers",
+>> +                            as = NULL,
+>> +                            convert = TRUE,
+>> +                            delay_load = FALSE)
+>> Error in py_module_import(module, convert = convert) :
+>>   ModuleNotFoundError: No module named 'transformers'
+>>
+>>                               Había yo creído que, habiendo ido bien
+>> py_install, con el *package* transformers, no podría decirme ahora
+>> import, que no hay un módulo llamado 'transformers'. De hecho vi como tras
+>> acabar py_install, decía:
+>>
+>> Successfully built regex sacremoses
+>>
+>> Installing collected packages: urllib3, idna, chardet, requests,
+>> pyparsing, six, packaging, regex, click, joblib, tqdm, sacremoses,
+>> sentencepiece, numpy, tokenizers, filelock, *transformers*
+>>
+>> Successfully installed chardet-3.0.4 click-7.1.2 filelock-3.0.12
+>> idna-2.10 joblib-0.16.0 numpy-1.19.1 packaging-20.4 pyparsing-2.4.7
+>> regex-2020.7.14 requests-2.24.0 sacremoses-0.0.43 sentencepiece-0.1.91
+>> six-1.15.0 tokenizers-0.8.1rc1 tqdm-4.48.1 *transformers-3.0.2*
+>> urllib3-1.25.10
+>>
+>>                          Con lo cual, me pareció haber logrado el paso de
+>> instalación pero, está claro que no es así, porque no daría sino, el error
+>> en import de *ModuleNotFoundError*.
+>>
+>>                           Me resulta embarazoso, pero es que no lo veo.
+>> No sé si alguno de ustedes ve lo que no hago bien.
+>>
+>>                           Muchas gracias una vez más. Atentamente.
+>>
+>>                           Diego Martín Oliva.
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> El dom., 2 ago. 2020 a las 23:00, Javier Marcuzzi (<
+>> javier.ruben.marcuzzi en gmail.com>) escribió:
+>>
+>>> Estimados
+>>>
+>>> Una pregunta, ¿Que posibilidad hay que esté instalado todo
+>>> correctamente, pero algo cambie en entorno de python, el cual al ser
+>>> buscado por R esté dando problemas?
+>>>
+>>> Hace años que no utilizo macOS, pero se me ocurre que un programa
+>>> coloque en entorno adecuado para él, pero al mismo tiempo este toque al
+>>> entorno requerido por R.
+>>>
+>>> Javier Rubén Marcuzzi
+>>>
+>>> El dom., 2 ago. 2020 a las 15:59, Carlos Ortega (<
+>>> cof en qualityexcellence.es>) escribió:
+>>>
+>>>> Hola Diego,
+>>>>
+>>>> El error que obtienes no es de usar una versión específica de Python,
+>>>> si no
+>>>> de encontrar un "environment" específico donde hacer la instalación con
+>>>> "pip".
+>>>> Mira aquí en la ayuda:
+>>>>
+>>>> https://rstudio.github.io/reticulate/articles/python_packages.html
+>>>>
+>>>> En la sección de "Conda" donde aparece cómo crear un entorno e
+>>>> indicárselo
+>>>> a R para que instale ahí tus nuevas librerías.
+>>>>
+>>>> Gracias,
+>>>> Carlos Ortega
+>>>> www.qualityexcellence.es
+>>>>
+>>>> El dom., 2 ago. 2020 a las 19:27, Diego Martín (<ako.sistemas en gmail.com
+>>>> >)
+>>>> escribió:
+>>>>
+>>>> > Estimados compañeros:
+>>>> >
+>>>> >                                      Estoy interesado en el NLP, así
+>>>> que,
+>>>> > al hallar el post State-of-the-art NLP models from R
+>>>> > <
+>>>> >
+>>>> https://blogs.rstudio.com/ai/posts/2020-07-30-state-of-the-art-nlp-models-from-r/
+>>>> > >,
+>>>> > gracias a Carlos Ortega, me puse con ilusión a leerlo. Sin embargo,
+>>>> tengo
+>>>> > problemas con lo más básico, la instalación del paquete
+>>>> *transformers*. No
+>>>> > puedo continuar sin ello.
+>>>> >
+>>>> >                                      El hecho es que me pasa lo
+>>>> siguiente:
+>>>> >
+>>>> > > library(reticulate)
+>>>> > > use_python("/usr/local/bin/python3.7")
+>>>> > > Sys.which(c("python3.7"))
+>>>> >                  python3.7
+>>>> > "/usr/local/bin/python3.7"
+>>>> > > py_install(packages = c("transformers"),
+>>>> > +            python_version = 'python3.7',
+>>>> > +            pip = TRUE)
+>>>> > Error: could not find a Python environment for /usr/bin/python
+>>>> >
+>>>> >                                   Vamos, que no puede encontrar donde
+>>>> está
+>>>> > Python en mi máquina. Pero yo creía haberlo dicho con:
+>>>> > *use_python("/usr/local/bin/python3.7")*, lo cual había comprobado
+>>>> > accediendo a consultar en el directorio de mi máquina oportunamente.
+>>>> Lo
+>>>> > muestro a continuación.
+>>>> >
+>>>> > MacBook-Pro-de-Diego:bin Diego$ pwd
+>>>> >
+>>>> > /usr/local/bin
+>>>> >
+>>>> > MacBook-Pro-de-Diego:bin Diego$ ls python*
+>>>> >
+>>>> > python python2.7-config python3.7m
+>>>> >
+>>>> > python-config python3 python3.7m-config
+>>>> >
+>>>> > python2 python3-config pythonw
+>>>> >
+>>>> > python2-config python3.7 pythonw2
+>>>> >
+>>>> > python2.7 python3.7-config pythonw2.7
+>>>> >
+>>>> > MacBook-Pro-de-Diego:bin Diego$
+>>>> >
+>>>> >                                     Si pusiera python, sin
+>>>> especificar 3.7,
+>>>> > tampoco conseguiría más. Mirad.
+>>>> >
+>>>> > > use_python("/usr/local/bin/python")
+>>>> > > Sys.which(c("python"))
+>>>> >            python
+>>>> > "/usr/bin/python"
+>>>> > > py_install(packages = c("transformers"),
+>>>> > +            python_version = 'python',
+>>>> > +            pip = TRUE)
+>>>> > Error: could not find a Python environment for /usr/bin/python
+>>>> >
+>>>> >                                     He mirado qué podría estar
+>>>> pasando y
+>>>> > como me dicen en  R Interface to Python
+>>>> > <https://rstudio.github.io/reticulate/>, tengo que especificar el
+>>>> camino;
+>>>> > pero eso he hecho, o al menos eso creo.
+>>>> >
+>>>> >                                     Python en mi máquina está bien,
+>>>> porque
+>>>> > tengo Anaconda-Navigator y uso Spyder, y funciona muy bien. Es más
+>>>> > recientemente he estado haciendo un curso usando este IDE, y no tuve
+>>>> el más
+>>>> > mínimo problema.
+>>>> >
+>>>> >                                     Por favor, ¿alguno de ustedes
+>>>> sabe qué
+>>>> > podría estar pasándome?, ¿qué confundo o qué me falta?.
+>>>> >
+>>>> >                                     Muchísimas gracias por adelantado
+>>>> por
+>>>> > la ayuda y paciencia que me presten.
+>>>> >
+>>>> >                                      Diego Martín Oliva.
+>>>> >
+>>>> >         [[alternative HTML version deleted]]
+>>>> >
+>>>> > _______________________________________________
+>>>> > R-help-es mailing list
+>>>> > R-help-es en r-project.org
+>>>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>> >
+>>>>
+>>>>
+>>>> --
+>>>> Saludos,
+>>>> Carlos Ortega
+>>>> www.qualityexcellence.es
+>>>>
+>>>>         [[alternative HTML version deleted]]
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Mon Aug  3 21:21:21 2020
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Mon, 3 Aug 2020 14:21:21 -0500
+Subject: [R-es] State-of-the-art NLP models from R
+In-Reply-To: <CAKHhLBKrpZKNMGFwk2S62E9ur+3AbAUrT9fp6WwR3vKbQmkmhA@mail.gmail.com>
+References: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+ <CAOKbq8icyQLEeM3Q6tyrVJofiec417bUu51DGcDy+5th8jRgiQ@mail.gmail.com>
+ <CAHo_aEQX+sH7S2Ssqpo598xfzK+QEfm4O0JqT2FsqHCdHM50Qw@mail.gmail.com>
+ <CAKHhLBJjMQd=Hg8_7__12uJM7FXrguyYbm8AHeMmkSXESumwKw@mail.gmail.com>
+ <CAOKbq8hReGsijjKsO=bEpyGXyTcE+02XwsUYUw2=RU96oqiWow@mail.gmail.com>
+ <CAKHhLBKrpZKNMGFwk2S62E9ur+3AbAUrT9fp6WwR3vKbQmkmhA@mail.gmail.com>
+Message-ID: <CAKL8G3GVAwf2-0J-f8E9RtBPhW5uyQPkOfBPbSUHQbUpCLdajQ@mail.gmail.com>
+
+Diego,
+Existe una razón (de peso) para no hacer este análisis directamente con
+Python?
+Saludos,
+Jorge.-
+
+El El lun, 3 de ago. de 2020 a la(s) 11:58 a. m., Diego Martín <
+ako.sistemas en gmail.com> escribió:
+
+> Estimado Carlos:
+>
+>                          Hago lo que me dices y creo que poniéndote el
+> resultado seré más expresivo y claro, que tratando de explicarlo.
+>
+> (r-reticulate) MacBook-Pro-de-Diego:~ Diego$ python
+> Could not find platform independent libraries <prefix>
+> Could not find platform dependent libraries <exec_prefix>
+> Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
+> Python path configuration:
+>   PYTHONHOME = (not set)
+>   PYTHONPATH = (not set)
+>   program name = '/anaconda3/bin/python'
+>   isolated = 0
+>   environment = 1
+>   user site = 1
+>   import site = 1
+>   sys._base_executable = '/anaconda3/bin/python'
+>   sys.base_prefix =
+>
+> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+>   sys.base_exec_prefix =
+>
+> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+>   sys.executable = '/anaconda3/bin/python'
+>   sys.prefix =
+>
+> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+>   sys.exec_prefix =
+>
+> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+>   sys.path = [
+>
+>
+> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/
+> *python38.zip*',
+>
+>
+> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/
+> *python3.8*',
+>
+>
+> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/lib-dynload',
+>   ]
+> Fatal Python error: init_fs_encoding: failed to get the Python codec of the
+> filesystem encoding
+> Python runtime state: core initialized
+> ModuleNotFoundError: No module named 'encodings'
+>
+> Current thread 0x00007fff72602000 (most recent call first):
+> <no Python frame>
+> (r-reticulate) MacBook-Pro-de-Diego:~ Diego$
+>
+> Obviamente no está bien creado el entorno. Además he destacado del
+> resultado las referencias python3.8 que he visto, y que no pueden hallarse
+> porque yo tengo instalado python3.6.5, aunque sabía que estábamos ya en la
+> versión 3.8, pero no me había animado a instalarla porque no sé cómo
+> hacerla y tenía muchos otros asuntos entre manos, entre ellos un estudio de
+> NLP.
+>
+> Ahora, visto esto, no sé qué hacer. Creo que voy a actualizar la versión de
+> python y también la de anaconda-navigator, que acabo de ver que está
+> desactualizada y, luego, voy a empezar de nuevo. Permitidme que os cuente
+> luego.
+>
+>                                Muchísimas gracias. Atentamente.
+>
+>                                Diego Martín Oliva.
+>
+> El lun., 3 ago. 2020 a las 16:08, Carlos Ortega (<cof en qualityexcellence.es
+> >)
+> escribió:
+>
+> > Hola Diego,
+> >
+> > Prueba a hacer otra cosa.
+> >
+> >    - Abre una consola y activa ese environment que has creado
+> >    (r-reticulate)
+> >    - Y una vez activado escribe "python". Entrarás a  la consola de
+> >    "python".
+> >    - Ahí, escribe "import transformers"
+> >    - Si no te devuelve error, es que en el entorno está bien instalado
+> >    esa librería y por tanto el problema es de acceso desde "R".
+> >
+> > Gracias,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+> > El lun., 3 ago. 2020 a las 13:53, Diego Martín (<ako.sistemas en gmail.com
+> >)
+> > escribió:
+> >
+> >> Estimados compañeros:
+> >>
+> >>                                       Muchísimas gracias a todos por
+> >> responderme. Especialmente a Carlos Ortega que, como siempre, me ha
+> vuelto
+> >> a enseñar el camino.
+> >>
+> >>                                       El asunto era exactamente como
+> >> decía Carlos; habiendo yo aplicado la siguiente solución:
+> >>
+> >> library(reticulate)
+> >>
+> >> conda_create(envname = "r-reticulate",
+> >>              packages = "python",
+> >>              forge = TRUE,
+> >>              channel = character(),
+> >>              conda = "auto")           # Create a new environment. No
+> >> muestro el resultado porque ha sido muy largo.
+> >>                                        # Pero puedo resumirlo con la
+> >> siguiente función.
+> >> > conda_list()
+> >>
+> >>           name
+> >> 1    anaconda3
+> >> 2 r-reticulate
+> >> 3 r-tensorflow
+> >>                                    python
+> >> 1                   /anaconda3/bin/python
+> >> 2 /anaconda3/envs/r-reticulate/bin/python
+> >> 3 /anaconda3/envs/r-tensorflow/bin/python
+> >>
+> >> py_install(
+> >>   packages = c("transformers"),
+> >>   envname = "r-reticulate",
+> >>   method = c("conda"),
+> >>   conda = "auto",
+> >>   python_version = NULL,
+> >>   pip = TRUE
+> >>   )                            # Tampoco saco el resultado porque es
+> >> igualmente largo, solo dejo la prueba
+> >>                                # de que fue bien.
+> >>
+> >> Solving environment: ...working... done
+> >>
+> >>                             Por tanto, parecería que todo está resuelto,
+> >> sobre todo tras cargar las librerías de keras, tensorflow, dplyr y
+> >> tfdatasets, como indica el post citado. Sin embargo, algo no debo estar
+> >> haciendo bien, porque el siguiente paso imprescindible para seguir
+> >> entendiendo el post, el que muestro ahora, da un error.
+> >>
+> >> > transformer <- reticulate::import(module = "transformers",
+> >> +                            as = NULL,
+> >> +                            convert = TRUE,
+> >> +                            delay_load = FALSE)
+> >> Error in py_module_import(module, convert = convert) :
+> >>   ModuleNotFoundError: No module named 'transformers'
+> >>
+> >>                               Había yo creído que, habiendo ido bien
+> >> py_install, con el *package* transformers, no podría decirme ahora
+> >> import, que no hay un módulo llamado 'transformers'. De hecho vi como
+> tras
+> >> acabar py_install, decía:
+> >>
+> >> Successfully built regex sacremoses
+> >>
+> >> Installing collected packages: urllib3, idna, chardet, requests,
+> >> pyparsing, six, packaging, regex, click, joblib, tqdm, sacremoses,
+> >> sentencepiece, numpy, tokenizers, filelock, *transformers*
+> >>
+> >> Successfully installed chardet-3.0.4 click-7.1.2 filelock-3.0.12
+> >> idna-2.10 joblib-0.16.0 numpy-1.19.1 packaging-20.4 pyparsing-2.4.7
+> >> regex-2020.7.14 requests-2.24.0 sacremoses-0.0.43 sentencepiece-0.1.91
+> >> six-1.15.0 tokenizers-0.8.1rc1 tqdm-4.48.1 *transformers-3.0.2*
+> >> urllib3-1.25.10
+> >>
+> >>                          Con lo cual, me pareció haber logrado el paso
+> de
+> >> instalación pero, está claro que no es así, porque no daría sino, el
+> error
+> >> en import de *ModuleNotFoundError*.
+> >>
+> >>                           Me resulta embarazoso, pero es que no lo veo.
+> >> No sé si alguno de ustedes ve lo que no hago bien.
+> >>
+> >>                           Muchas gracias una vez más. Atentamente.
+> >>
+> >>                           Diego Martín Oliva.
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >>
+> >> El dom., 2 ago. 2020 a las 23:00, Javier Marcuzzi (<
+> >> javier.ruben.marcuzzi en gmail.com>) escribió:
+> >>
+> >>> Estimados
+> >>>
+> >>> Una pregunta, ¿Que posibilidad hay que esté instalado todo
+> >>> correctamente, pero algo cambie en entorno de python, el cual al ser
+> >>> buscado por R esté dando problemas?
+> >>>
+> >>> Hace años que no utilizo macOS, pero se me ocurre que un programa
+> >>> coloque en entorno adecuado para él, pero al mismo tiempo este toque al
+> >>> entorno requerido por R.
+> >>>
+> >>> Javier Rubén Marcuzzi
+> >>>
+> >>> El dom., 2 ago. 2020 a las 15:59, Carlos Ortega (<
+> >>> cof en qualityexcellence.es>) escribió:
+> >>>
+> >>>> Hola Diego,
+> >>>>
+> >>>> El error que obtienes no es de usar una versión específica de Python,
+> >>>> si no
+> >>>> de encontrar un "environment" específico donde hacer la instalación
+> con
+> >>>> "pip".
+> >>>> Mira aquí en la ayuda:
+> >>>>
+> >>>> https://rstudio.github.io/reticulate/articles/python_packages.html
+> >>>>
+> >>>> En la sección de "Conda" donde aparece cómo crear un entorno e
+> >>>> indicárselo
+> >>>> a R para que instale ahí tus nuevas librerías.
+> >>>>
+> >>>> Gracias,
+> >>>> Carlos Ortega
+> >>>> www.qualityexcellence.es
+> >>>>
+> >>>> El dom., 2 ago. 2020 a las 19:27, Diego Martín (<
+> ako.sistemas en gmail.com
+> >>>> >)
+> >>>> escribió:
+> >>>>
+> >>>> > Estimados compañeros:
+> >>>> >
+> >>>> >                                      Estoy interesado en el NLP, así
+> >>>> que,
+> >>>> > al hallar el post State-of-the-art NLP models from R
+> >>>> > <
+> >>>> >
+> >>>>
+> https://blogs.rstudio.com/ai/posts/2020-07-30-state-of-the-art-nlp-models-from-r/
+> >>>> > >,
+> >>>> > gracias a Carlos Ortega, me puse con ilusión a leerlo. Sin embargo,
+> >>>> tengo
+> >>>> > problemas con lo más básico, la instalación del paquete
+> >>>> *transformers*. No
+> >>>> > puedo continuar sin ello.
+> >>>> >
+> >>>> >                                      El hecho es que me pasa lo
+> >>>> siguiente:
+> >>>> >
+> >>>> > > library(reticulate)
+> >>>> > > use_python("/usr/local/bin/python3.7")
+> >>>> > > Sys.which(c("python3.7"))
+> >>>> >                  python3.7
+> >>>> > "/usr/local/bin/python3.7"
+> >>>> > > py_install(packages = c("transformers"),
+> >>>> > +            python_version = 'python3.7',
+> >>>> > +            pip = TRUE)
+> >>>> > Error: could not find a Python environment for /usr/bin/python
+> >>>> >
+> >>>> >                                   Vamos, que no puede encontrar
+> donde
+> >>>> está
+> >>>> > Python en mi máquina. Pero yo creía haberlo dicho con:
+> >>>> > *use_python("/usr/local/bin/python3.7")*, lo cual había comprobado
+> >>>> > accediendo a consultar en el directorio de mi máquina oportunamente.
+> >>>> Lo
+> >>>> > muestro a continuación.
+> >>>> >
+> >>>> > MacBook-Pro-de-Diego:bin Diego$ pwd
+> >>>> >
+> >>>> > /usr/local/bin
+> >>>> >
+> >>>> > MacBook-Pro-de-Diego:bin Diego$ ls python*
+> >>>> >
+> >>>> > python python2.7-config python3.7m
+> >>>> >
+> >>>> > python-config python3 python3.7m-config
+> >>>> >
+> >>>> > python2 python3-config pythonw
+> >>>> >
+> >>>> > python2-config python3.7 pythonw2
+> >>>> >
+> >>>> > python2.7 python3.7-config pythonw2.7
+> >>>> >
+> >>>> > MacBook-Pro-de-Diego:bin Diego$
+> >>>> >
+> >>>> >                                     Si pusiera python, sin
+> >>>> especificar 3.7,
+> >>>> > tampoco conseguiría más. Mirad.
+> >>>> >
+> >>>> > > use_python("/usr/local/bin/python")
+> >>>> > > Sys.which(c("python"))
+> >>>> >            python
+> >>>> > "/usr/bin/python"
+> >>>> > > py_install(packages = c("transformers"),
+> >>>> > +            python_version = 'python',
+> >>>> > +            pip = TRUE)
+> >>>> > Error: could not find a Python environment for /usr/bin/python
+> >>>> >
+> >>>> >                                     He mirado qué podría estar
+> >>>> pasando y
+> >>>> > como me dicen en  R Interface to Python
+> >>>> > <https://rstudio.github.io/reticulate/>, tengo que especificar el
+> >>>> camino;
+> >>>> > pero eso he hecho, o al menos eso creo.
+> >>>> >
+> >>>> >                                     Python en mi máquina está bien,
+> >>>> porque
+> >>>> > tengo Anaconda-Navigator y uso Spyder, y funciona muy bien. Es más
+> >>>> > recientemente he estado haciendo un curso usando este IDE, y no tuve
+> >>>> el más
+> >>>> > mínimo problema.
+> >>>> >
+> >>>> >                                     Por favor, ¿alguno de ustedes
+> >>>> sabe qué
+> >>>> > podría estar pasándome?, ¿qué confundo o qué me falta?.
+> >>>> >
+> >>>> >                                     Muchísimas gracias por
+> adelantado
+> >>>> por
+> >>>> > la ayuda y paciencia que me presten.
+> >>>> >
+> >>>> >                                      Diego Martín Oliva.
+> >>>> >
+> >>>> >         [[alternative HTML version deleted]]
+> >>>> >
+> >>>> > _______________________________________________
+> >>>> > R-help-es mailing list
+> >>>> > R-help-es en r-project.org
+> >>>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>> >
+> >>>>
+> >>>>
+> >>>> --
+> >>>> Saludos,
+> >>>> Carlos Ortega
+> >>>> www.qualityexcellence.es
+> >>>>
+> >>>>         [[alternative HTML version deleted]]
+> >>>>
+> >>>> _______________________________________________
+> >>>> R-help-es mailing list
+> >>>> R-help-es en r-project.org
+> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>>
+> >>>
+> >
+> > --
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+-- 
+Sent from my phone. Please excuse my brevity and misspelling.
+
+	[[alternative HTML version deleted]]
+
+
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Tue Aug  4 17:44:50 2020
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Tue, 4 Aug 2020 17:44:50 +0200
+Subject: [R-es] State-of-the-art NLP models from R
+In-Reply-To: <CAKL8G3GVAwf2-0J-f8E9RtBPhW5uyQPkOfBPbSUHQbUpCLdajQ@mail.gmail.com>
+References: <CAKHhLB+KY27e7ThJAFtW_L2fuVS=Oq5YHM_Oo3nWQ5kBW=bQgA@mail.gmail.com>
+ <CAOKbq8icyQLEeM3Q6tyrVJofiec417bUu51DGcDy+5th8jRgiQ@mail.gmail.com>
+ <CAHo_aEQX+sH7S2Ssqpo598xfzK+QEfm4O0JqT2FsqHCdHM50Qw@mail.gmail.com>
+ <CAKHhLBJjMQd=Hg8_7__12uJM7FXrguyYbm8AHeMmkSXESumwKw@mail.gmail.com>
+ <CAOKbq8hReGsijjKsO=bEpyGXyTcE+02XwsUYUw2=RU96oqiWow@mail.gmail.com>
+ <CAKHhLBKrpZKNMGFwk2S62E9ur+3AbAUrT9fp6WwR3vKbQmkmhA@mail.gmail.com>
+ <CAKL8G3GVAwf2-0J-f8E9RtBPhW5uyQPkOfBPbSUHQbUpCLdajQ@mail.gmail.com>
+Message-ID: <CAKHhLB+Z-A79_FAKO4d0XH4urzFPbk1KPpP=3qmySLU4MezcHA@mail.gmail.com>
+
+Estimados compañeros:
+
+                                     Bien, hecho lo dicho. Pero me temo que
+no he dado más que un pequeño paso. Lo primero, muchas gracias Carlos, son
+muy oportunos los comentarios que me haces, y ahora comentaré qué ha
+pasado. Gracias Jorge, por intervenir; sí, hay una razón, estoy aprendiendo
+Python, así que, digamos, no me hallo tan suelto con él como con R. De
+todas formas, por encima de ello, la idea de base, es no dejar de saber qué
+posibilidades tengo con R para avanzar en NLP o en asuntos de Geografía,
+así que el post en cuestión, me pareció de gran interés. Mirad, sin
+embargo, la guerra que me está danto.
+
+                                     Muestro esta consulta en consola que
+prueba el punto de avance.
+
+*Last login: Tue Aug  4 17:08:11 on ttys000*
+. /anaconda3/bin/activate && conda activate /anaconda3/envs/r-reticulate;
+python -i
+MacBook-Pro-de-Diego:~ Diego$ . /anaconda3/bin/activate && conda activate
+/anaconda3/envs/r-reticulate; python -i
+*Python 3.8.5* | packaged by conda-forge | (default, Jul 31 2020, 02:18:36)
+[Clang 10.0.1 ] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import transformers
+To use data.metrics please install scikit-learn. See
+https://scikit-learn.org/stable/index.html
+Neither PyTorch nor TensorFlow >= 2.0 have been found.Models won't be
+available and only tokenizers, configurationand file/data utilities can be
+used.
+>>>
+
+                                 Bueno, ahí veo que sí tengo *transformers*,
+como quería, y que no tengo accesible PyTorch ni TensorFlow, pero no me
+preocupa porque lo cargaré en R, que es desde donde voy a hacer la
+importación.
+
+                                 Ya en R, pasa lo siguiente:
+
+> library(reticulate)
+> library(keras)
+> library(tensorflow)
+> library(dplyr)
+
+Attaching package: ?dplyr?
+
+The following objects are masked from ?package:stats?:
+
+    filter, lag
+
+The following objects are masked from ?package:base?:
+
+    intersect, setdiff, setequal, union
+
+> library(tfdatasets)  # Interface to 'TensorFlow' Datasets
+>
+> transformer <- import(module = "transformers",
++                       as = NULL,
++                       convert = TRUE,
++                       delay_load = FALSE)
+Error in py_module_import(module, convert = convert) :
+  ModuleNotFoundError: No module named 'transformers'
+
+                 Lo cual es "chispa más o menos", donde estaba antes de
+arreglar todo el asunto del *environment* y las versiones. Esto me mueve a
+pensar en algo más próximo al propio R, en relación a la importación. En
+Anaconda-Navigator, se puede ver muy bien que está instalada la librería,
+en el environment, solo me sorprende que no tiene descripción. Véase un
+recorte de éste:
+
+[image: image.png]
+
+                  ¡Qué cosas!. Lo que echo de menos en el post, como en
+otros post, que he leído, es exponer como en un guion de cine, los pasos a
+dar, aunque no quiero con esto parecer desagradecido con el autor del post,
+sino llamar la atención de la variabilidad que los lectores tenemos en
+nuestros ámbitos y que no convergen con lo que se expone o resulta difícil
+de lograr reproducir.
+
+                  Esto último que digo me lo ha motivado el intentar cargar
+otros *packages* que si bien nada tienen que ver con los objetivos del
+post, me ha parecido de interés para probar. Mirad que pasa en R, justo con
+el contexto que tenemos descrito:
+
+> scipy <- import(module = "scipy",
++                 as = NULL,
++                 convert = TRUE,
++                 delay_load = FALSE
++                 ) # import SciPy
+>                   # (it will be automatically discovered
+>                   # in "r-reticulate") ?
+>
+> class(scipy)
+[1] "python.builtin.module" "python.builtin.object"
+>
+> numpy <- import(module = "numpy",
++                 as = NULL,
++                 convert = TRUE,
++                 delay_load = FALSE)
+>
+> class(numpy)
+[1] "python.builtin.module" "python.builtin.object"
+>
+>
+                Así que hay algo muy relacionado con *transformers* para
+que esto no vaya bien. Tendría yo que saber mucho más de Python y también
+de R, probablemente, para que me llegara cierta inspiración de qué es.
+
+                  Muchas gracias a todos por vuestra dedicación a mis
+consultas y comentarios.
+
+                  Atentamente.
+
+                  Diego Martín Oliva.
+
+El lun., 3 ago. 2020 a las 21:21, Jorge I Velez (<jorgeivanvelez en gmail.com>)
+escribió:
+
+> Diego,
+> Existe una razón (de peso) para no hacer este análisis directamente con
+> Python?
+> Saludos,
+> Jorge.-
+>
+> El El lun, 3 de ago. de 2020 a la(s) 11:58 a. m., Diego Martín <
+> ako.sistemas en gmail.com> escribió:
+>
+>> Estimado Carlos:
+>>
+>>                          Hago lo que me dices y creo que poniéndote el
+>> resultado seré más expresivo y claro, que tratando de explicarlo.
+>>
+>> (r-reticulate) MacBook-Pro-de-Diego:~ Diego$ python
+>> Could not find platform independent libraries <prefix>
+>> Could not find platform dependent libraries <exec_prefix>
+>> Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
+>> Python path configuration:
+>>   PYTHONHOME = (not set)
+>>   PYTHONPATH = (not set)
+>>   program name = '/anaconda3/bin/python'
+>>   isolated = 0
+>>   environment = 1
+>>   user site = 1
+>>   import site = 1
+>>   sys._base_executable = '/anaconda3/bin/python'
+>>   sys.base_prefix =
+>>
+>> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+>>   sys.base_exec_prefix =
+>>
+>> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+>>   sys.executable = '/anaconda3/bin/python'
+>>   sys.prefix =
+>>
+>> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+>>   sys.exec_prefix =
+>>
+>> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol'
+>>   sys.path = [
+>>
+>>
+>> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/
+>> *python38.zip*',
+>>
+>>
+>> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/
+>> *python3.8*',
+>>
+>>
+>> '/opt/concourse/worker/volumes/live/47090e1c-dc82-4ab8-7ab0-318c9b6b0520/volume/python_1593706456233/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehol/lib/lib-dynload',
+>>   ]
+>> Fatal Python error: init_fs_encoding: failed to get the Python codec of
+>> the
+>> filesystem encoding
+>> Python runtime state: core initialized
+>> ModuleNotFoundError: No module named 'encodings'
+>>
+>> Current thread 0x00007fff72602000 (most recent call first):
+>> <no Python frame>
+>> (r-reticulate) MacBook-Pro-de-Diego:~ Diego$
+>>
+>> Obviamente no está bien creado el entorno. Además he destacado del
+>> resultado las referencias python3.8 que he visto, y que no pueden hallarse
+>> porque yo tengo instalado python3.6.5, aunque sabía que estábamos ya en la
+>> versión 3.8, pero no me había animado a instalarla porque no sé cómo
+>> hacerla y tenía muchos otros asuntos entre manos, entre ellos un estudio
+>> de
+>> NLP.
+>>
+>> Ahora, visto esto, no sé qué hacer. Creo que voy a actualizar la versión
+>> de
+>> python y también la de anaconda-navigator, que acabo de ver que está
+>> desactualizada y, luego, voy a empezar de nuevo. Permitidme que os cuente
+>> luego.
+>>
+>>                                Muchísimas gracias. Atentamente.
+>>
+>>                                Diego Martín Oliva.
+>>
+>> El lun., 3 ago. 2020 a las 16:08, Carlos Ortega (<
+>> cof en qualityexcellence.es>)
+>> escribió:
+>>
+>> > Hola Diego,
+>> >
+>> > Prueba a hacer otra cosa.
+>> >
+>> >    - Abre una consola y activa ese environment que has creado
+>> >    (r-reticulate)
+>> >    - Y una vez activado escribe "python". Entrarás a  la consola de
+>> >    "python".
+>> >    - Ahí, escribe "import transformers"
+>> >    - Si no te devuelve error, es que en el entorno está bien instalado
+>> >    esa librería y por tanto el problema es de acceso desde "R".
+>> >
+>> > Gracias,
+>> > Carlos Ortega
+>> > www.qualityexcellence.es
+>> >
+>> > El lun., 3 ago. 2020 a las 13:53, Diego Martín (<ako.sistemas en gmail.com
+>> >)
+>> > escribió:
+>> >
+>> >> Estimados compañeros:
+>> >>
+>> >>                                       Muchísimas gracias a todos por
+>> >> responderme. Especialmente a Carlos Ortega que, como siempre, me ha
+>> vuelto
+>> >> a enseñar el camino.
+>> >>
+>> >>                                       El asunto era exactamente como
+>> >> decía Carlos; habiendo yo aplicado la siguiente solución:
+>> >>
+>> >> library(reticulate)
+>> >>
+>> >> conda_create(envname = "r-reticulate",
+>> >>              packages = "python",
+>> >>              forge = TRUE,
+>> >>              channel = character(),
+>> >>              conda = "auto")           # Create a new environment. No
+>> >> muestro el resultado porque ha sido muy largo.
+>> >>                                        # Pero puedo resumirlo con la
+>> >> siguiente función.
+>> >> > conda_list()
+>> >>
+>> >>           name
+>> >> 1    anaconda3
+>> >> 2 r-reticulate
+>> >> 3 r-tensorflow
+>> >>                                    python
+>> >> 1                   /anaconda3/bin/python
+>> >> 2 /anaconda3/envs/r-reticulate/bin/python
+>> >> 3 /anaconda3/envs/r-tensorflow/bin/python
+>> >>
+>> >> py_install(
+>> >>   packages = c("transformers"),
+>> >>   envname = "r-reticulate",
+>> >>   method = c("conda"),
+>> >>   conda = "auto",
+>> >>   python_version = NULL,
+>> >>   pip = TRUE
+>> >>   )                            # Tampoco saco el resultado porque es
+>> >> igualmente largo, solo dejo la prueba
+>> >>                                # de que fue bien.
+>> >>
+>> >> Solving environment: ...working... done
+>> >>
+>> >>                             Por tanto, parecería que todo está
+>> resuelto,
+>> >> sobre todo tras cargar las librerías de keras, tensorflow, dplyr y
+>> >> tfdatasets, como indica el post citado. Sin embargo, algo no debo estar
+>> >> haciendo bien, porque el siguiente paso imprescindible para seguir
+>> >> entendiendo el post, el que muestro ahora, da un error.
+>> >>
+>> >> > transformer <- reticulate::import(module = "transformers",
+>> >> +                            as = NULL,
+>> >> +                            convert = TRUE,
+>> >> +                            delay_load = FALSE)
+>> >> Error in py_module_import(module, convert = convert) :
+>> >>   ModuleNotFoundError: No module named 'transformers'
+>> >>
+>> >>                               Había yo creído que, habiendo ido bien
+>> >> py_install, con el *package* transformers, no podría decirme ahora
+>> >> import, que no hay un módulo llamado 'transformers'. De hecho vi como
+>> tras
+>> >> acabar py_install, decía:
+>> >>
+>> >> Successfully built regex sacremoses
+>> >>
+>> >> Installing collected packages: urllib3, idna, chardet, requests,
+>> >> pyparsing, six, packaging, regex, click, joblib, tqdm, sacremoses,
+>> >> sentencepiece, numpy, tokenizers, filelock, *transformers*
+>> >>
+>> >> Successfully installed chardet-3.0.4 click-7.1.2 filelock-3.0.12
+>> >> idna-2.10 joblib-0.16.0 numpy-1.19.1 packaging-20.4 pyparsing-2.4.7
+>> >> regex-2020.7.14 requests-2.24.0 sacremoses-0.0.43 sentencepiece-0.1.91
+>> >> six-1.15.0 tokenizers-0.8.1rc1 tqdm-4.48.1 *transformers-3.0.2*
+>> >> urllib3-1.25.10
+>> >>
+>> >>                          Con lo cual, me pareció haber logrado el paso
+>> de
+>> >> instalación pero, está claro que no es así, porque no daría sino, el
+>> error
+>> >> en import de *ModuleNotFoundError*.
+>> >>
+>> >>                           Me resulta embarazoso, pero es que no lo veo.
+>> >> No sé si alguno de ustedes ve lo que no hago bien.
+>> >>
+>> >>                           Muchas gracias una vez más. Atentamente.
+>> >>
+>> >>                           Diego Martín Oliva.
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >>
+>> >> El dom., 2 ago. 2020 a las 23:00, Javier Marcuzzi (<
+>> >> javier.ruben.marcuzzi en gmail.com>) escribió:
+>> >>
+>> >>> Estimados
+>> >>>
+>> >>> Una pregunta, ¿Que posibilidad hay que esté instalado todo
+>> >>> correctamente, pero algo cambie en entorno de python, el cual al ser
+>> >>> buscado por R esté dando problemas?
+>> >>>
+>> >>> Hace años que no utilizo macOS, pero se me ocurre que un programa
+>> >>> coloque en entorno adecuado para él, pero al mismo tiempo este toque
+>> al
+>> >>> entorno requerido por R.
+>> >>>
+>> >>> Javier Rubén Marcuzzi
+>> >>>
+>> >>> El dom., 2 ago. 2020 a las 15:59, Carlos Ortega (<
+>> >>> cof en qualityexcellence.es>) escribió:
+>> >>>
+>> >>>> Hola Diego,
+>> >>>>
+>> >>>> El error que obtienes no es de usar una versión específica de Python,
+>> >>>> si no
+>> >>>> de encontrar un "environment" específico donde hacer la instalación
+>> con
+>> >>>> "pip".
+>> >>>> Mira aquí en la ayuda:
+>> >>>>
+>> >>>> https://rstudio.github.io/reticulate/articles/python_packages.html
+>> >>>>
+>> >>>> En la sección de "Conda" donde aparece cómo crear un entorno e
+>> >>>> indicárselo
+>> >>>> a R para que instale ahí tus nuevas librerías.
+>> >>>>
+>> >>>> Gracias,
+>> >>>> Carlos Ortega
+>> >>>> www.qualityexcellence.es
+>> >>>>
+>> >>>> El dom., 2 ago. 2020 a las 19:27, Diego Martín (<
+>> ako.sistemas en gmail.com
+>> >>>> >)
+>> >>>> escribió:
+>> >>>>
+>> >>>> > Estimados compañeros:
+>> >>>> >
+>> >>>> >                                      Estoy interesado en el NLP,
+>> así
+>> >>>> que,
+>> >>>> > al hallar el post State-of-the-art NLP models from R
+>> >>>> > <
+>> >>>> >
+>> >>>>
+>> https://blogs.rstudio.com/ai/posts/2020-07-30-state-of-the-art-nlp-models-from-r/
+>> >>>> > >,
+>> >>>> > gracias a Carlos Ortega, me puse con ilusión a leerlo. Sin embargo,
+>> >>>> tengo
+>> >>>> > problemas con lo más básico, la instalación del paquete
+>> >>>> *transformers*. No
+>> >>>> > puedo continuar sin ello.
+>> >>>> >
+>> >>>> >                                      El hecho es que me pasa lo
+>> >>>> siguiente:
+>> >>>> >
+>> >>>> > > library(reticulate)
+>> >>>> > > use_python("/usr/local/bin/python3.7")
+>> >>>> > > Sys.which(c("python3.7"))
+>> >>>> >                  python3.7
+>> >>>> > "/usr/local/bin/python3.7"
+>> >>>> > > py_install(packages = c("transformers"),
+>> >>>> > +            python_version = 'python3.7',
+>> >>>> > +            pip = TRUE)
+>> >>>> > Error: could not find a Python environment for /usr/bin/python
+>> >>>> >
+>> >>>> >                                   Vamos, que no puede encontrar
+>> donde
+>> >>>> está
+>> >>>> > Python en mi máquina. Pero yo creía haberlo dicho con:
+>> >>>> > *use_python("/usr/local/bin/python3.7")*, lo cual había comprobado
+>> >>>> > accediendo a consultar en el directorio de mi máquina
+>> oportunamente.
+>> >>>> Lo
+>> >>>> > muestro a continuación.
+>> >>>> >
+>> >>>> > MacBook-Pro-de-Diego:bin Diego$ pwd
+>> >>>> >
+>> >>>> > /usr/local/bin
+>> >>>> >
+>> >>>> > MacBook-Pro-de-Diego:bin Diego$ ls python*
+>> >>>> >
+>> >>>> > python python2.7-config python3.7m
+>> >>>> >
+>> >>>> > python-config python3 python3.7m-config
+>> >>>> >
+>> >>>> > python2 python3-config pythonw
+>> >>>> >
+>> >>>> > python2-config python3.7 pythonw2
+>> >>>> >
+>> >>>> > python2.7 python3.7-config pythonw2.7
+>> >>>> >
+>> >>>> > MacBook-Pro-de-Diego:bin Diego$
+>> >>>> >
+>> >>>> >                                     Si pusiera python, sin
+>> >>>> especificar 3.7,
+>> >>>> > tampoco conseguiría más. Mirad.
+>> >>>> >
+>> >>>> > > use_python("/usr/local/bin/python")
+>> >>>> > > Sys.which(c("python"))
+>> >>>> >            python
+>> >>>> > "/usr/bin/python"
+>> >>>> > > py_install(packages = c("transformers"),
+>> >>>> > +            python_version = 'python',
+>> >>>> > +            pip = TRUE)
+>> >>>> > Error: could not find a Python environment for /usr/bin/python
+>> >>>> >
+>> >>>> >                                     He mirado qué podría estar
+>> >>>> pasando y
+>> >>>> > como me dicen en  R Interface to Python
+>> >>>> > <https://rstudio.github.io/reticulate/>, tengo que especificar el
+>> >>>> camino;
+>> >>>> > pero eso he hecho, o al menos eso creo.
+>> >>>> >
+>> >>>> >                                     Python en mi máquina está bien,
+>> >>>> porque
+>> >>>> > tengo Anaconda-Navigator y uso Spyder, y funciona muy bien. Es más
+>> >>>> > recientemente he estado haciendo un curso usando este IDE, y no
+>> tuve
+>> >>>> el más
+>> >>>> > mínimo problema.
+>> >>>> >
+>> >>>> >                                     Por favor, ¿alguno de ustedes
+>> >>>> sabe qué
+>> >>>> > podría estar pasándome?, ¿qué confundo o qué me falta?.
+>> >>>> >
+>> >>>> >                                     Muchísimas gracias por
+>> adelantado
+>> >>>> por
+>> >>>> > la ayuda y paciencia que me presten.
+>> >>>> >
+>> >>>> >                                      Diego Martín Oliva.
+>> >>>> >
+>> >>>> >         [[alternative HTML version deleted]]
+>> >>>> >
+>> >>>> > _______________________________________________
+>> >>>> > R-help-es mailing list
+>> >>>> > R-help-es en r-project.org
+>> >>>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>>> >
+>> >>>>
+>> >>>>
+>> >>>> --
+>> >>>> Saludos,
+>> >>>> Carlos Ortega
+>> >>>> www.qualityexcellence.es
+>> >>>>
+>> >>>>         [[alternative HTML version deleted]]
+>> >>>>
+>> >>>> _______________________________________________
+>> >>>> R-help-es mailing list
+>> >>>> R-help-es en r-project.org
+>> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>>>
+>> >>>
+>> >
+>> > --
+>> > Saludos,
+>> > Carlos Ortega
+>> > www.qualityexcellence.es
+>> >
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+> --
+> Sent from my phone. Please excuse my brevity and misspelling.
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/2afb6a59/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 43918 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/2afb6a59/attachment-0001.png>
+
+From @ndre@h|r|goyen @end|ng |rom gm@||@com  Tue Aug  4 19:10:21 2020
+From: @ndre@h|r|goyen @end|ng |rom gm@||@com (=?UTF-8?Q?Andr=C3=A9s_Hirigoyen?=)
+Date: Tue, 4 Aug 2020 14:10:21 -0300
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fico_barras_3_ejes?=
+Message-ID: <CAOaTypWNTRFPoS1zixeHoaL=Wczd96QZZ=wY5LiY+6r+A78=kg@mail.gmail.com>
+
+Buenas tardes, quisiera hacer un gráfico como el de la figura ¿alguna
+sugerencia? con ggplot2 no he podido.
+Muchas gracias  [image: Captura.JPG]
+
+-- 
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSc) *
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/06b65f5b/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura.JPG
+Type: image/jpeg
+Size: 101129 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/06b65f5b/attachment-0002.jpe>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura.JPG
+Type: image/jpeg
+Size: 101129 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/06b65f5b/attachment-0003.jpe>
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Tue Aug  4 19:19:46 2020
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Tue, 4 Aug 2020 11:19:46 -0600
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fico_barras_3_ejes?=
+In-Reply-To: <CAOaTypWNTRFPoS1zixeHoaL=Wczd96QZZ=wY5LiY+6r+A78=kg@mail.gmail.com>
+References: <CAOaTypWNTRFPoS1zixeHoaL=Wczd96QZZ=wY5LiY+6r+A78=kg@mail.gmail.com>
+Message-ID: <CABkCotTANA1pSoqm+E7YzEFdCUrPzhPb_v8V5jKdrAmzc-xk0Q@mail.gmail.com>
+
+Hola Andrés,
+
+Quizá este enlace te sirva:
+
+http://www.sthda.com/english/wiki/impressive-package-for-3d-and-4d-graph-r-software-and-data-visualization
+
+Manuel
+
+
+
+
+
+El mar., 4 ago. 2020 a las 11:10, Andrés Hirigoyen (<
+andreshirigoyen en gmail.com>) escribió:
+
+> Buenas tardes, quisiera hacer un gráfico como el de la figura ¿alguna
+> sugerencia? con ggplot2 no he podido.
+> Muchas gracias  [image: Captura.JPG]
+>
+> --
+> *Andrés Hirigoyen*
+> * Prof. Ciencias Biológicas*
+> *Ing. Agr. Forestal (MSc) *
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+*Manuel Spínola, Ph.D.*
+Instituto Internacional en Conservación y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Teléfono: (506) 8706 - 4662
+Personal website: Lobito de río <https://sites.google.com/site/lobitoderio/>
+Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/9cdb29a7/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura.JPG
+Type: image/jpeg
+Size: 101129 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/9cdb29a7/attachment-0001.jpe>
+
+From @ndre@h|r|goyen @end|ng |rom gm@||@com  Tue Aug  4 20:39:56 2020
+From: @ndre@h|r|goyen @end|ng |rom gm@||@com (=?UTF-8?Q?Andr=C3=A9s_Hirigoyen?=)
+Date: Tue, 4 Aug 2020 15:39:56 -0300
+Subject: [R-es] 
+ =?utf-8?q?Resumen_de_R-help-es=2C_Vol_138=2C_Env=C3=ADo_7?=
+In-Reply-To: <mailman.14046.2177.1596562044.1128.r-help-es@r-project.org>
+References: <mailman.14046.2177.1596562044.1128.r-help-es@r-project.org>
+Message-ID: <CAOaTypVaJMtfHNw2MRvYfAQ18gJvgH0GekiMujNz+-iv3kQySw@mail.gmail.com>
+
+Muchas gracias voy a probar
+
+El mar., 4 de ago. de 2020 a la(s) 14:27, <r-help-es-request en r-project.org>
+escribió:
+
+> Envíe los mensajes para la lista R-help-es a
+>         r-help-es en r-project.org
+>
+> Para subscribirse o anular su subscripción a través de la WEB
+>         https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+>         r-help-es-request en r-project.org
+>
+> Puede contactar con el responsable de la lista escribiendo a:
+>         r-help-es-owner en r-project.org
+>
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+>
+>
+> Asuntos del día:
+>
+>    1. Re: Gráfico barras 3 ejes (Manuel Spínola)
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Tue, 4 Aug 2020 11:19:46 -0600
+> From: Manuel Spínola <mspinola10 en gmail.com>
+> To: Andrés Hirigoyen <andreshirigoyen en gmail.com>
+> Cc: Lista R <r-help-es en r-project.org>
+> Subject: Re: [R-es] Gráfico barras 3 ejes
+> Message-ID:
+>         <
+> CABkCotTANA1pSoqm+E7YzEFdCUrPzhPb_v8V5jKdrAmzc-xk0Q en mail.gmail.com>
+> Content-Type: text/plain; charset="utf-8"
+>
+> Hola Andrés,
+>
+> Quizá este enlace te sirva:
+>
+>
+> http://www.sthda.com/english/wiki/impressive-package-for-3d-and-4d-graph-r-software-and-data-visualization
+>
+> Manuel
+>
+>
+>
+>
+>
+> El mar., 4 ago. 2020 a las 11:10, Andrés Hirigoyen (<
+> andreshirigoyen en gmail.com>) escribió:
+>
+> > Buenas tardes, quisiera hacer un gráfico como el de la figura ¿alguna
+> > sugerencia? con ggplot2 no he podido.
+> > Muchas gracias  [image: Captura.JPG]
+> >
+> > --
+> > *Andrés Hirigoyen*
+> > * Prof. Ciencias Biológicas*
+> > *Ing. Agr. Forestal (MSc) *
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>
+> --
+> *Manuel Spínola, Ph.D.*
+> Instituto Internacional en Conservación y Manejo de Vida Silvestre
+> Universidad Nacional
+> Apartado 1350-3000
+> Heredia
+> COSTA RICA
+> mspinola en una.cr <mspinola en una.ac.cr>
+> mspinola10 en gmail.com
+> Teléfono: (506) 8706 - 4662
+> Personal website: Lobito de río <
+> https://sites.google.com/site/lobitoderio/>
+> Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+>
+> ------------ próxima parte ------------
+> Se ha borrado un adjunto en formato HTML...
+> URL: <
+> https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/9cdb29a7/attachment.html
+> >
+>
+> ------------ próxima parte ------------
+> A non-text attachment was scrubbed...
+> Name: Captura.JPG
+> Type: image/jpeg
+> Size: 101129 bytes
+> Desc: no disponible
+> URL: <
+> https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/9cdb29a7/attachment.jpe
+> >
+>
+>
+> ------------------------------
+>
+> Subject: Pié de página del digest
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> ------------------------------
+>
+> Fin de Resumen de R-help-es, Vol 138, Envío 7
+> *********************************************
+>
+
+
+-- 
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSc) *
+
+	[[alternative HTML version deleted]]
+
+
+From @ndre@h|r|goyen @end|ng |rom gm@||@com  Tue Aug  4 21:18:54 2020
+From: @ndre@h|r|goyen @end|ng |rom gm@||@com (=?UTF-8?Q?Andr=C3=A9s_Hirigoyen?=)
+Date: Tue, 4 Aug 2020 16:18:54 -0300
+Subject: [R-es] 
+ =?utf-8?q?Resumen_de_R-help-es=2C_Vol_138=2C_Env=C3=ADo_7?=
+In-Reply-To: <mailman.14046.2177.1596562044.1128.r-help-es@r-project.org>
+References: <mailman.14046.2177.1596562044.1128.r-help-es@r-project.org>
+Message-ID: <CAOaTypVmBk930wp9F71uv8pYy9NG9SDt_yfTYSEJ03A3bkE+=A@mail.gmail.com>
+
+Dejo por aquí otro material útil sobre este tipo de gráficos
+http://www.uvm.edu/~ngotelli/Rscripts/s3d.pdf
+
+El mar., 4 de ago. de 2020 a la(s) 14:27, <r-help-es-request en r-project.org>
+escribió:
+
+> Envíe los mensajes para la lista R-help-es a
+>         r-help-es en r-project.org
+>
+> Para subscribirse o anular su subscripción a través de la WEB
+>         https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+>         r-help-es-request en r-project.org
+>
+> Puede contactar con el responsable de la lista escribiendo a:
+>         r-help-es-owner en r-project.org
+>
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+>
+>
+> Asuntos del día:
+>
+>    1. Re: Gráfico barras 3 ejes (Manuel Spínola)
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Tue, 4 Aug 2020 11:19:46 -0600
+> From: Manuel Spínola <mspinola10 en gmail.com>
+> To: Andrés Hirigoyen <andreshirigoyen en gmail.com>
+> Cc: Lista R <r-help-es en r-project.org>
+> Subject: Re: [R-es] Gráfico barras 3 ejes
+> Message-ID:
+>         <
+> CABkCotTANA1pSoqm+E7YzEFdCUrPzhPb_v8V5jKdrAmzc-xk0Q en mail.gmail.com>
+> Content-Type: text/plain; charset="utf-8"
+>
+> Hola Andrés,
+>
+> Quizá este enlace te sirva:
+>
+>
+> http://www.sthda.com/english/wiki/impressive-package-for-3d-and-4d-graph-r-software-and-data-visualization
+>
+> Manuel
+>
+>
+>
+>
+>
+> El mar., 4 ago. 2020 a las 11:10, Andrés Hirigoyen (<
+> andreshirigoyen en gmail.com>) escribió:
+>
+> > Buenas tardes, quisiera hacer un gráfico como el de la figura ¿alguna
+> > sugerencia? con ggplot2 no he podido.
+> > Muchas gracias  [image: Captura.JPG]
+> >
+> > --
+> > *Andrés Hirigoyen*
+> > * Prof. Ciencias Biológicas*
+> > *Ing. Agr. Forestal (MSc) *
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>
+> --
+> *Manuel Spínola, Ph.D.*
+> Instituto Internacional en Conservación y Manejo de Vida Silvestre
+> Universidad Nacional
+> Apartado 1350-3000
+> Heredia
+> COSTA RICA
+> mspinola en una.cr <mspinola en una.ac.cr>
+> mspinola10 en gmail.com
+> Teléfono: (506) 8706 - 4662
+> Personal website: Lobito de río <
+> https://sites.google.com/site/lobitoderio/>
+> Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+>
+> ------------ próxima parte ------------
+> Se ha borrado un adjunto en formato HTML...
+> URL: <
+> https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/9cdb29a7/attachment.html
+> >
+>
+> ------------ próxima parte ------------
+> A non-text attachment was scrubbed...
+> Name: Captura.JPG
+> Type: image/jpeg
+> Size: 101129 bytes
+> Desc: no disponible
+> URL: <
+> https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/9cdb29a7/attachment.jpe
+> >
+>
+>
+> ------------------------------
+>
+> Subject: Pié de página del digest
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> ------------------------------
+>
+> Fin de Resumen de R-help-es, Vol 138, Envío 7
+> *********************************************
+>
+
+
+-- 
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSc) *
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Tue Aug  4 22:40:35 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Tue, 4 Aug 2020 22:40:35 +0200
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fico_barras_3_ejes?=
+In-Reply-To: <CAOaTypWNTRFPoS1zixeHoaL=Wczd96QZZ=wY5LiY+6r+A78=kg@mail.gmail.com>
+References: <CAOaTypWNTRFPoS1zixeHoaL=Wczd96QZZ=wY5LiY+6r+A78=kg@mail.gmail.com>
+Message-ID: <CAOKbq8gJt=PyN5h2mxK4d==4OqxqSqKWWCrSnygaKyz8_KCKOg@mail.gmail.com>
+
+Hola,
+
+Sí, esto lo puedes hacer con la librería "lattice", "ggplot" no lo permite.
+ Mira la página 53 de este documento. En "lattice" se hace con la función
+"cloud()".
+
+Saludos,
+Carlos Ortega.
+www.qualityexcellence.es
+
+El mar., 4 ago. 2020 a las 19:10, Andrés Hirigoyen (<
+andreshirigoyen en gmail.com>) escribió:
+
+> Buenas tardes, quisiera hacer un gráfico como el de la figura ¿alguna
+> sugerencia? con ggplot2 no he podido.
+> Muchas gracias  [image: Captura.JPG]
+>
+> --
+> *Andrés Hirigoyen*
+> * Prof. Ciencias Biológicas*
+> *Ing. Agr. Forestal (MSc) *
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/318107ec/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura.JPG
+Type: image/jpeg
+Size: 101129 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/318107ec/attachment-0001.jpe>
+
+From @ndre@h|r|goyen @end|ng |rom gm@||@com  Tue Aug  4 23:35:27 2020
+From: @ndre@h|r|goyen @end|ng |rom gm@||@com (=?UTF-8?Q?Andr=C3=A9s_Hirigoyen?=)
+Date: Tue, 4 Aug 2020 18:35:27 -0300
+Subject: [R-es] =?utf-8?q?Gr=C3=A1fico_barras_3_ejes?=
+In-Reply-To: <CAOKbq8gJt=PyN5h2mxK4d==4OqxqSqKWWCrSnygaKyz8_KCKOg@mail.gmail.com>
+References: <CAOaTypWNTRFPoS1zixeHoaL=Wczd96QZZ=wY5LiY+6r+A78=kg@mail.gmail.com>
+ <CAOKbq8gJt=PyN5h2mxK4d==4OqxqSqKWWCrSnygaKyz8_KCKOg@mail.gmail.com>
+Message-ID: <CAOaTypVg9neiS1QGnL6B-zAaERAandL0HhZhoCoLGRq6cKhsAA@mail.gmail.com>
+
+Gracias Carlos
+
+El mar., 4 de ago. de 2020 a la(s) 17:40, Carlos Ortega (
+cof en qualityexcellence.es) escribió:
+
+> Hola,
+>
+> Sí, esto lo puedes hacer con la librería "lattice", "ggplot" no lo permite.
+>  Mira la página 53 de este documento. En "lattice" se hace con la función
+> "cloud()".
+>
+> Saludos,
+> Carlos Ortega.
+> www.qualityexcellence.es
+>
+> El mar., 4 ago. 2020 a las 19:10, Andrés Hirigoyen (<
+> andreshirigoyen en gmail.com>) escribió:
+>
+>> Buenas tardes, quisiera hacer un gráfico como el de la figura ¿alguna
+>> sugerencia? con ggplot2 no he podido.
+>> Muchas gracias  [image: Captura.JPG]
+>>
+>> --
+>> *Andrés Hirigoyen*
+>> * Prof. Ciencias Biológicas*
+>> *Ing. Agr. Forestal (MSc) *
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSc) *
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/c5da889c/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura.JPG
+Type: image/jpeg
+Size: 101129 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200804/c5da889c/attachment-0001.jpe>
+
+From jmtdcoo| @end|ng |rom gm@||@com  Fri Aug  7 23:08:42 2020
+From: jmtdcoo| @end|ng |rom gm@||@com (=?UTF-8?Q?Jos=C3=A9_Miguel_Torregrosa_D=C3=ADaz?=)
+Date: Fri, 7 Aug 2020 23:08:42 +0200
+Subject: [R-es] =?utf-8?q?transformaci=C3=B3n_a_formato_largo_en_modelos_?=
+	=?utf-8?q?multietapa?=
+Message-ID: <CAFC6K+Z-2RXYygkDjDqjEJ8eqn__9mXWVFuX-5BmH_e+Ur88xw@mail.gmail.com>
+
+Hola,
+
+Estoy intentando realizar una estimación de riesgos de evento mediante un
+modelo de cox multietapa. El trabajo es un modelo básico de cancer: estado
+inicial --> evento intermedio --> evento final (normalmente la muerte).
+
+Para ello estoy usando el paquete mstate de Hein Putter. Así, he definido
+mi matriz de transición y mis covariables de interés, pero al intentar
+poner los datos en formato largo (una fila = un estado a riesgo de una
+transición, en lugar de una fila un paciente) usando el comando msprep, me
+escupe un error , a saber :
+
+Error in hlpsrt[, 1] - hlpsrt[, 2] :
+  argumento no-numérico para operador binario
+
+Mi código para esta parte es:
+formato_largo<-msprep(time = c(*NA*, "tiempo_evento_intermedio",
+"tiempo_evento_final"),
+              status = c(*NA*, "evento_intermedio", "evento_final"),
+              data = mydata,
+              trans = tmat,
+              keep = covs)
+
+Por más que modifico las variables no consigo salir del error. Si alguien
+tiene una sugerencia o me puede ayudar, estaré enormemente agradecido.
+
+Un saludo y gracias de antemano
+
+Jose
+
+
+
+-- 
+Jose Miguel Torregrosa Díaz
+Hématoloie Oncologique et Thérapie Cellulaire
+CHU de Poitiers, France
+
+
+
+
+************************* AVISO LEGAL *************************
+Este mensaje electrónico está dirigido exclusivamente a sus
+destinatarios, pudiendo contener documentos anexos de carácter privado
+y confidencial.
+Si por error, ha recibido este mensaje y no se encuentra entre los
+destinatarios, por favor, no use, informe, distribuya, imprima o copie
+su contenido por ningún medio. Le ruego lo comunique al remitente y
+borre completamente el mensaje y sus anexos.
+
+	[[alternative HTML version deleted]]
+
+
+From ||@@ette401 @end|ng |rom gm@||@com  Sat Aug  8 16:46:00 2020
+From: ||@@ette401 @end|ng |rom gm@||@com (Lissette Fuentes Lorca)
+Date: Sat, 8 Aug 2020 11:46:00 -0300
+Subject: [R-es] =?utf-8?q?error_al_cargar_librer=C3=ADa_Tidyverse?=
+Message-ID: <CAC5WVbWNNtmuT-C5ZdKdiO1Okq-50AhVTeu8U4qk6vviC9nN-Q@mail.gmail.com>
+
+Hola! estoy intentando cargar la librería Tydiverse y me da el siguiente
+error:
+Error: package or namespace load failed for ?tidyverse?:
+ .onLoad failed in loadNamespace() for 'broom', details:
+  call: loadNamespace(name)
+  error: there is no package called ?backports?
+
+En la instalación del paquete no tuve inconvenientes.
+Alguna idea de por dónde viene este error?
+
+Muchas gracias!
+Lissette
+
+	[[alternative HTML version deleted]]
+
+
+From @|berto@c@rmon@b@yon@@ @end|ng |rom gm@||@com  Sat Aug  8 17:53:56 2020
+From: @|berto@c@rmon@b@yon@@ @end|ng |rom gm@||@com (Alberto Carmona Bayonas)
+Date: Sat, 8 Aug 2020 17:53:56 +0200
+Subject: [R-es] 
+	=?utf-8?q?transformaci=C3=B3n_a_formato_largo_en_modelos_?=
+	=?utf-8?q?multietapa?=
+In-Reply-To: <CAFC6K+Z-2RXYygkDjDqjEJ8eqn__9mXWVFuX-5BmH_e+Ur88xw@mail.gmail.com>
+References: <CAFC6K+Z-2RXYygkDjDqjEJ8eqn__9mXWVFuX-5BmH_e+Ur88xw@mail.gmail.com>
+Message-ID: <CAOaVix5qZwOm+r2g9K-nhA_ZYUg6+r3-5GZkJc+vYfGHo4+6BA@mail.gmail.com>
+
+Eso puede ser por errores en las fechas, por ejemplo que el estado
+intermedio sea posterior a la muerte, etc.
+Repasa todas las fechas.
+
+El vie., 7 ago. 2020 23:09, José Miguel Torregrosa Díaz <jmtdcool en gmail.com>
+escribió:
+
+> Hola,
+>
+> Estoy intentando realizar una estimación de riesgos de evento mediante un
+> modelo de cox multietapa. El trabajo es un modelo básico de cancer: estado
+> inicial --> evento intermedio --> evento final (normalmente la muerte).
+>
+> Para ello estoy usando el paquete mstate de Hein Putter. Así, he definido
+> mi matriz de transición y mis covariables de interés, pero al intentar
+> poner los datos en formato largo (una fila = un estado a riesgo de una
+> transición, en lugar de una fila un paciente) usando el comando msprep, me
+> escupe un error , a saber :
+>
+> Error in hlpsrt[, 1] - hlpsrt[, 2] :
+>   argumento no-numérico para operador binario
+>
+> Mi código para esta parte es:
+> formato_largo<-msprep(time = c(*NA*, "tiempo_evento_intermedio",
+> "tiempo_evento_final"),
+>               status = c(*NA*, "evento_intermedio", "evento_final"),
+>               data = mydata,
+>               trans = tmat,
+>               keep = covs)
+>
+> Por más que modifico las variables no consigo salir del error. Si alguien
+> tiene una sugerencia o me puede ayudar, estaré enormemente agradecido.
+>
+> Un saludo y gracias de antemano
+>
+> Jose
+>
+>
+>
+> --
+> Jose Miguel Torregrosa Díaz
+> Hématoloie Oncologique et Thérapie Cellulaire
+> CHU de Poitiers, France
+>
+>
+>
+>
+> ************************* AVISO LEGAL *************************
+> Este mensaje electrónico está dirigido exclusivamente a sus
+> destinatarios, pudiendo contener documentos anexos de carácter privado
+> y confidencial.
+> Si por error, ha recibido este mensaje y no se encuentra entre los
+> destinatarios, por favor, no use, informe, distribuya, imprima o copie
+> su contenido por ningún medio. Le ruego lo comunique al remitente y
+> borre completamente el mensaje y sus anexos.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Aug  8 21:56:42 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 8 Aug 2020 21:56:42 +0200
+Subject: [R-es] =?utf-8?q?error_al_cargar_librer=C3=ADa_Tidyverse?=
+In-Reply-To: <CAC5WVbWNNtmuT-C5ZdKdiO1Okq-50AhVTeu8U4qk6vviC9nN-Q@mail.gmail.com>
+References: <CAC5WVbWNNtmuT-C5ZdKdiO1Okq-50AhVTeu8U4qk6vviC9nN-Q@mail.gmail.com>
+Message-ID: <CAOKbq8he3mQTUN-Qzsfw7DFpPAu9j5tp22SLr0F+szEo2ehzow@mail.gmail.com>
+
+Hola,
+
+Sí, el propio mensaje de error te lo está diciendo...
+
+*error: there is no package called ?backports?*
+
+Prueba a instalar este paquete primero (backports) y luego ya instala
+"tidyverse".
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El sáb., 8 ago. 2020 a las 16:46, Lissette Fuentes Lorca (<
+lissette401 en gmail.com>) escribió:
+
+> Hola! estoy intentando cargar la librería Tydiverse y me da el siguiente
+> error:
+> Error: package or namespace load failed for ?tidyverse?:
+>  .onLoad failed in loadNamespace() for 'broom', details:
+>   call: loadNamespace(name)
+>   error: there is no package called ?backports?
+>
+> En la instalación del paquete no tuve inconvenientes.
+> Alguna idea de por dónde viene este error?
+>
+> Muchas gracias!
+> Lissette
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Wed Aug 19 19:52:00 2020
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Wed, 19 Aug 2020 19:52:00 +0200
+Subject: [R-es] Redo en RStudio, Ctrl y?
+Message-ID: <CAF3uytWnXBUBJTVLi40M3Hhw6T-MO0hSk-HLPtw24OyJm4CUYA@mail.gmail.com>
+
+Buenas tardes. Más bien una curiosidad.
+Echaba de menos poder rehacer con *Ctrl y* lo deshecho con *Ctrl z*. Lo
+curioso es que RStudio, desde hace un tiempo, en la pestaña *Edit*, al lado
+de *Redo *pone "*Ctrl y", *pero *Ctrl y* no funciona. ¿sabe alguien por
+qué?
+Gracias,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Wed Aug 19 21:46:07 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Wed, 19 Aug 2020 21:46:07 +0200
+Subject: [R-es] Redo en RStudio, Ctrl y?
+In-Reply-To: <CAF3uytWnXBUBJTVLi40M3Hhw6T-MO0hSk-HLPtw24OyJm4CUYA@mail.gmail.com>
+References: <CAF3uytWnXBUBJTVLi40M3Hhw6T-MO0hSk-HLPtw24OyJm4CUYA@mail.gmail.com>
+Message-ID: <CAOKbq8jGhrs7Cvae2sU+zvp=ndeHofy=ee3ZZH8KztToZ+6oeA@mail.gmail.com>
+
+Hola Manuel,
+
+En Mac son otra combinación, pero sí que funcionan.
+RStudio tiene un grupo de soporte (más bien es una Community) donde podrías
+comentarlo por si es un bug.
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El mié., 19 ago. 2020 a las 19:52, Manuel Mendoza (<
+mmendoza en fulbrightmail.org>) escribió:
+
+> Buenas tardes. Más bien una curiosidad.
+> Echaba de menos poder rehacer con *Ctrl y* lo deshecho con *Ctrl z*. Lo
+> curioso es que RStudio, desde hace un tiempo, en la pestaña *Edit*, al lado
+> de *Redo *pone "*Ctrl y", *pero *Ctrl y* no funciona. ¿sabe alguien por
+> qué?
+> Gracias,
+> Manuel
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From x@v|t|b@u @end|ng |rom gm@||@com  Wed Aug 19 21:57:39 2020
+From: x@v|t|b@u @end|ng |rom gm@||@com (Xavier-Andoni Tibau Alberdi)
+Date: Wed, 19 Aug 2020 21:57:39 +0200
+Subject: [R-es] Redo en RStudio, Ctrl y?
+In-Reply-To: <CAOKbq8jGhrs7Cvae2sU+zvp=ndeHofy=ee3ZZH8KztToZ+6oeA@mail.gmail.com>
+References: <CAF3uytWnXBUBJTVLi40M3Hhw6T-MO0hSk-HLPtw24OyJm4CUYA@mail.gmail.com>
+ <CAOKbq8jGhrs7Cvae2sU+zvp=ndeHofy=ee3ZZH8KztToZ+6oeA@mail.gmail.com>
+Message-ID: <CAC2QCPrVvxw2sMtxn+9s3ugSqt+T3s3_ncdfFEpQu11_=bcDfQ@mail.gmail.com>
+
+En mi caso a veces funciona ctr+alt+Z.
+
+El mié., 19 ago. 2020 21:46, Carlos Ortega <cof en qualityexcellence.es>
+escribió:
+
+> Hola Manuel,
+>
+> En Mac son otra combinación, pero sí que funcionan.
+> RStudio tiene un grupo de soporte (más bien es una Community) donde podrías
+> comentarlo por si es un bug.
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El mié., 19 ago. 2020 a las 19:52, Manuel Mendoza (<
+> mmendoza en fulbrightmail.org>) escribió:
+>
+> > Buenas tardes. Más bien una curiosidad.
+> > Echaba de menos poder rehacer con *Ctrl y* lo deshecho con *Ctrl z*. Lo
+> > curioso es que RStudio, desde hace un tiempo, en la pestaña *Edit*, al
+> lado
+> > de *Redo *pone "*Ctrl y", *pero *Ctrl y* no funciona. ¿sabe alguien por
+> > qué?
+> > Gracias,
+> > Manuel
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Thu Aug 20 05:30:33 2020
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Thu, 20 Aug 2020 05:30:33 +0200
+Subject: [R-es] Redo en RStudio, Ctrl y?
+In-Reply-To: <CAC2QCPrVvxw2sMtxn+9s3ugSqt+T3s3_ncdfFEpQu11_=bcDfQ@mail.gmail.com>
+References: <CAF3uytWnXBUBJTVLi40M3Hhw6T-MO0hSk-HLPtw24OyJm4CUYA@mail.gmail.com>
+ <CAOKbq8jGhrs7Cvae2sU+zvp=ndeHofy=ee3ZZH8KztToZ+6oeA@mail.gmail.com>
+ <CAC2QCPrVvxw2sMtxn+9s3ugSqt+T3s3_ncdfFEpQu11_=bcDfQ@mail.gmail.com>
+Message-ID: <CAF3uytWyXmKDEmKFTH66cRUK8HMRE6NhTcj8Eobu+iZ8G8rfDg@mail.gmail.com>
+
+Gracias Xavier,  ctr+alt+Z si me funciona y me será de gran utilidad.
+Carlos, si  pone "Ctrl Y",  y no funciona, pero sí funciona ctr+alt+Z,
+supongo que es un error de programación. Miraré lo de la comunidad de
+RStudio, a ver que me dicen.
+Gracias,
+Manuel
+
+El mié., 19 ago. 2020 a las 21:57, Xavier-Andoni Tibau Alberdi (<
+xavitibau en gmail.com>) escribió:
+
+> En mi caso a veces funciona ctr+alt+Z.
+>
+> El mié., 19 ago. 2020 21:46, Carlos Ortega <cof en qualityexcellence.es>
+> escribió:
+>
+>> Hola Manuel,
+>>
+>> En Mac son otra combinación, pero sí que funcionan.
+>> RStudio tiene un grupo de soporte (más bien es una Community) donde
+>> podrías
+>> comentarlo por si es un bug.
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>
+>> El mié., 19 ago. 2020 a las 19:52, Manuel Mendoza (<
+>> mmendoza en fulbrightmail.org>) escribió:
+>>
+>> > Buenas tardes. Más bien una curiosidad.
+>> > Echaba de menos poder rehacer con *Ctrl y* lo deshecho con *Ctrl z*. Lo
+>> > curioso es que RStudio, desde hace un tiempo, en la pestaña *Edit*, al
+>> lado
+>> > de *Redo *pone "*Ctrl y", *pero *Ctrl y* no funciona. ¿sabe alguien por
+>> > qué?
+>> > Gracias,
+>> > Manuel
+>> >
+>> >         [[alternative HTML version deleted]]
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From x@v|t|b@u @end|ng |rom gm@||@com  Thu Aug 20 06:37:28 2020
+From: x@v|t|b@u @end|ng |rom gm@||@com (Xavier-Andoni Tibau Alberdi)
+Date: Thu, 20 Aug 2020 06:37:28 +0200
+Subject: [R-es] Redo en RStudio, Ctrl y?
+In-Reply-To: <CAF3uytWyXmKDEmKFTH66cRUK8HMRE6NhTcj8Eobu+iZ8G8rfDg@mail.gmail.com>
+References: <CAF3uytWnXBUBJTVLi40M3Hhw6T-MO0hSk-HLPtw24OyJm4CUYA@mail.gmail.com>
+ <CAOKbq8jGhrs7Cvae2sU+zvp=ndeHofy=ee3ZZH8KztToZ+6oeA@mail.gmail.com>
+ <CAC2QCPrVvxw2sMtxn+9s3ugSqt+T3s3_ncdfFEpQu11_=bcDfQ@mail.gmail.com>
+ <CAF3uytWyXmKDEmKFTH66cRUK8HMRE6NhTcj8Eobu+iZ8G8rfDg@mail.gmail.com>
+Message-ID: <CAC2QCPo1A51TdypwxrGCC_KK=3WUyvLgjAAEhLigT1uOWuH+gA@mail.gmail.com>
+
+No se si tiene nada que ver. Pero en mi caso es porque uso SO en aleman. u
+de hecho, es cotrol+alt+Z en todo, no solo Rstudio.
+
+Salud!
+
+Xavi
+
+El jue., 20 ago. 2020 5:31, Manuel Mendoza <mmendoza en fulbrightmail.org>
+escribió:
+
+> Gracias Xavier,  ctr+alt+Z si me funciona y me será de gran utilidad.
+> Carlos, si  pone "Ctrl Y",  y no funciona, pero sí funciona ctr+alt+Z,
+> supongo que es un error de programación. Miraré lo de la comunidad de
+> RStudio, a ver que me dicen.
+> Gracias,
+> Manuel
+>
+> El mié., 19 ago. 2020 a las 21:57, Xavier-Andoni Tibau Alberdi (<
+> xavitibau en gmail.com>) escribió:
+>
+> > En mi caso a veces funciona ctr+alt+Z.
+> >
+> > El mié., 19 ago. 2020 21:46, Carlos Ortega <cof en qualityexcellence.es>
+> > escribió:
+> >
+> >> Hola Manuel,
+> >>
+> >> En Mac son otra combinación, pero sí que funcionan.
+> >> RStudio tiene un grupo de soporte (más bien es una Community) donde
+> >> podrías
+> >> comentarlo por si es un bug.
+> >>
+> >> Saludos,
+> >> Carlos Ortega
+> >> www.qualityexcellence.es
+> >>
+> >>
+> >> El mié., 19 ago. 2020 a las 19:52, Manuel Mendoza (<
+> >> mmendoza en fulbrightmail.org>) escribió:
+> >>
+> >> > Buenas tardes. Más bien una curiosidad.
+> >> > Echaba de menos poder rehacer con *Ctrl y* lo deshecho con *Ctrl z*.
+> Lo
+> >> > curioso es que RStudio, desde hace un tiempo, en la pestaña *Edit*, al
+> >> lado
+> >> > de *Redo *pone "*Ctrl y", *pero *Ctrl y* no funciona. ¿sabe alguien
+> por
+> >> > qué?
+> >> > Gracias,
+> >> > Manuel
+> >> >
+> >> >         [[alternative HTML version deleted]]
+> >> >
+> >> > _______________________________________________
+> >> > R-help-es mailing list
+> >> > R-help-es en r-project.org
+> >> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >> >
+> >>
+> >>
+> >> --
+> >> Saludos,
+> >> Carlos Ortega
+> >> www.qualityexcellence.es
+> >>
+> >>         [[alternative HTML version deleted]]
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Thu Aug 20 18:38:28 2020
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Thu, 20 Aug 2020 18:38:28 +0200
+Subject: [R-es] Puntos de corte de dos curvas de densidad
+Message-ID: <CAF3uytUiYuM-TzdzROa8KO0J1C9NOo2kziu_120kZ-3VPGn=3g@mail.gmail.com>
+
+Buenas tardes, tengo una variable bimodal (*var)*, de presencias y
+ausencias (1s y 0s) y otra variable, *prob*, con las probabilidades (entre
+0 y 1) que le asigna un modelo.
+Con: *ggplot(Preds, aes(x=prob, fill= var )) + geom_density(alpha=.3)*
+obtengo la distribución de las presencias y de las ausencias, por separado,
+en función del valor de probabilidad asignado. Las dos curvas se cruzan dos
+veces. ¿Hay forma de determinar los valores de *prob* con los que se
+corresponden esos puntos de corte?
+Gracias,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Mon Aug 24 14:16:19 2020
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Mon, 24 Aug 2020 14:16:19 +0200
+Subject: [R-es] =?iso-8859-1?q?=28sin_asunto=29?=
+Message-ID: <CAF3uytURsrL_MOD3gYPoNn=cmVYPrZ+QWTJm1UFam7fs0T0_OA@mail.gmail.com>
+
+Buenas tardes, tengo una variable bimodal (*var)*, de presencias y
+ausencias (1s y 0s) y otra variable, *prob*, con las probabilidades que le
+asigna un modelo (entre 0 y 1).
+Con: *ggplot(Preds, aes(x=prob, fill= var )) + geom_density(alpha=.3)*
+obtengo la distribución de las presencias y de las ausencias, por separado,
+en función del valor de probabilidad asignado. Las dos curvas se cruzan
+en un punto. ¿Sabéis si hay forma de averiguar el valor de *prob* de ese
+punto analíticamente?
+Gracias,
+Manuel
+[image: image.png]
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200824/e5ac9c22/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 12490 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200824/e5ac9c22/attachment.png>
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Mon Aug 24 18:52:21 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Mon, 24 Aug 2020 18:52:21 +0200
+Subject: [R-es] (sin asunto)
+In-Reply-To: <CAF3uytURsrL_MOD3gYPoNn=cmVYPrZ+QWTJm1UFam7fs0T0_OA@mail.gmail.com>
+References: <CAF3uytURsrL_MOD3gYPoNn=cmVYPrZ+QWTJm1UFam7fs0T0_OA@mail.gmail.com>
+Message-ID: <CAOKbq8jafVBpGgyVf_wrKxW1vopRLdy4Vx8k-ExK86L7BDP=0g@mail.gmail.com>
+
+Hola Manuel,
+
+Resolver el punto de corte de forma analítica implicaría el tener ajustada
+cada densidad también de forma analítica.
+Una alternativa que se me ocurre es la siguiente:
+
+   - Con la función "density()" ajustar la densidad de las presencias y las
+   ausencias.
+      - Con esta función (del paquete base) obtienes los valores x e y.
+      Seguro que dentro del objeto de ggplot también está, pero con "density()"
+      acceder a esos valores es mucho más sencillo.
+   - Esos valores x, y de cada densidad, los puedes ajustar con una función
+   polinómica, o vaya si conoces el tipo de función analítica a la que se
+   debieran de ajustar, puedes ajustar los valores a esos datos (función
+   "nls()" ).
+      - Y teniendo ya las funciones analíticas el problema se reduce a
+      solucionar el sistema de ecuaciones para encontrar los puntos de corte
+      (función "solve()").
+
+Vaya, es un tanto elaborado, pero con un par de funciones sencillas, se
+puede automatizar todo esto. :-).
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El lun., 24 ago. 2020 a las 14:17, Manuel Mendoza (<
+mmendoza en fulbrightmail.org>) escribió:
+
+> Buenas tardes, tengo una variable bimodal (*var)*, de presencias y
+> ausencias (1s y 0s) y otra variable, *prob*, con las probabilidades que
+> le asigna un modelo (entre 0 y 1).
+> Con: *ggplot(Preds, aes(x=prob, fill= var )) + geom_density(alpha=.3)*
+> obtengo la distribución de las presencias y de las ausencias, por
+> separado, en función del valor de probabilidad asignado. Las dos curvas se
+> cruzan en un punto. ¿Sabéis si hay forma de averiguar el valor de *prob* de
+> ese punto analíticamente?
+> Gracias,
+> Manuel
+> [image: image.png]
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200824/1047dcd5/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 12490 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200824/1047dcd5/attachment-0001.png>
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Mon Aug 24 18:57:46 2020
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric)
+Date: Mon, 24 Aug 2020 12:57:46 -0400
+Subject: [R-es] (sin asunto)
+In-Reply-To: <CAOKbq8jafVBpGgyVf_wrKxW1vopRLdy4Vx8k-ExK86L7BDP=0g@mail.gmail.com>
+References: <CAF3uytURsrL_MOD3gYPoNn=cmVYPrZ+QWTJm1UFam7fs0T0_OA@mail.gmail.com>
+ <CAOKbq8jafVBpGgyVf_wrKxW1vopRLdy4Vx8k-ExK86L7BDP=0g@mail.gmail.com>
+Message-ID: <e3f3b4f5-7f64-04b9-494f-9e1259f31bb2@gmail.com>
+
+Creo que el problema se podría simplificar y aún obtener un resultado 
+aceptable si simplemente haces un ajuste lineal en un entorno del punto. 
+Como ya tienes los valores de los puntos de cada curva como dices 
+Carlos, creo que con esa información podrías identificar un entorno 
+adecuado en el cual ajustar linealmente.
+
+Cuéntanos como te va,
+
+Saludos !!
+
+Eric.
+
+
+
+On 24-08-20 12:52, Carlos Ortega wrote:
+> Hola Manuel,
+>
+> Resolver el punto de corte de forma analítica implicaría el tener 
+> ajustada cada densidad también de forma analítica.
+> Una alternativa que se me ocurre es la siguiente:
+>
+>   * Con la función "density()" ajustar la densidad de las presencias y
+>     las ausencias.
+>       o Con esta función (del paquete base) obtienes los valores x e
+>         y. Seguro que dentro del objeto de ggplot también está, pero
+>         con "density()" acceder a esos valores es mucho más sencillo.
+>   * Esos valores x, y de cada densidad, los puedes ajustar con una
+>     función polinómica, o vaya si conoces el tipo de función analítica
+>     a la que se debieran de ajustar, puedes ajustar los valores a esos
+>     datos (función "nls()" ).
+>       o Y teniendo ya las funciones analíticas el problema se reduce a
+>         solucionar el sistema de ecuaciones para encontrar los puntos
+>         de corte (función "solve()").
+>
+> Vaya, es un tanto elaborado, pero con un par de funciones sencillas, 
+> se puede automatizar todo esto. :-).
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es>
+>
+> El lun., 24 ago. 2020 a las 14:17, Manuel Mendoza 
+> (<mmendoza en fulbrightmail.org <mailto:mmendoza en fulbrightmail.org>>) 
+> escribió:
+>
+>     Buenas tardes, tengo una variable bimodal (/var)/, de presencias y
+>     ausencias (1s y 0s) y otra variable, /prob/, con las
+>     probabilidades que le asigna un modelo (entre 0 y 1).
+>     Con: *ggplot(Preds, aes(x=prob, fill= var )) + geom_density(alpha=.3)*
+>     obtengo la distribución de las presencias y de las ausencias, por
+>     separado, en función del valor de probabilidad asignado. Las dos
+>     curvas se cruzan en un punto. ¿Sabéis si hay forma de averiguar el
+>     valor de /prob/ de ese punto analíticamente?
+>     Gracias,
+>     Manuel
+>     image.png
+>     _______________________________________________
+>     R-help-es mailing list
+>     R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>     https://stat.ethz.ch/mailman/listinfo/r-help-es
+>     <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>
+>
+>
+> -- 
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es <http://www.qualityexcellence.es>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200824/c6bd9cf0/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 12490 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200824/c6bd9cf0/attachment-0001.png>
+
+From d@v|dcontrer@@00 @end|ng |rom gm@||@com  Tue Aug 25 23:11:43 2020
+From: d@v|dcontrer@@00 @end|ng |rom gm@||@com (David Contreras)
+Date: Tue, 25 Aug 2020 16:11:43 -0500
+Subject: [R-es] =?utf-8?q?Conexi=C3=B3n_R_y_Lime_survey?=
+Message-ID: <CAELk-FHtnNB87uzbhdReXhfkmWCLNnj=J3JWJi7pE4BMKt2tsw@mail.gmail.com>
+
+Cordial saludo a todos,
+
+Espero que se encuentren muy bien.
+
+Estoy tratando de automatizar un cleaning de una base de datos, por lo que
+requiero que se conecte automáticamente a una data generada de una encuesta
+en LimeSurvey. Para esto seguí un par de códigos sencillos que encontré de
+LimeSurvey y GitHub:
+
+# first limer (check version: must be recent) must be
+installedif(!require("devtools")) {
+  install.packages("devtools")
+  library("devtools")}
+install_github("cloudyr/limer")#############################################################
+library(limer)
+#change the next options (website, user, password)options(lime_api =
+'https://www.XXX.nl/index.php/admin/remotecontrol')options(lime_username
+= 'user')options(lime_password =
+'password')#############################################################
+
+# first get a session access key
+get_session_key()
+
+
+Pero al ejecutar el get_session_key () se genera este error:
+
+Error: Argument 'txt' must be a JSON string, URL or file.
+
+Luego de leer varios casos no entiendo aún realmente cómo solucionar esto,
+por lo que si alguien ha presentado esto mismo y lo ha solucionado
+agradecería una guía,
+
+Agradezco la ayuda que me puedan dar con esto.
+
+Saludos,
+
+*David Contreras*
+
+Estadístico
+
+	[[alternative HTML version deleted]]
+
+

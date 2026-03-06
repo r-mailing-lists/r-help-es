@@ -1,0 +1,1677 @@
+From re@|duo@@o|ow @end|ng |rom gm@||@com  Thu May  4 13:45:28 2023
+From: re@|duo@@o|ow @end|ng |rom gm@||@com (=?utf-8?Q?Sebasti=C3=A1n_Kruk_Gencarelli?=)
+Date: Thu, 4 May 2023 08:45:28 -0300
+Subject: [R-es] Error al actualizar R 4.3.0
+Message-ID: <EEFC6C1D-99F4-422A-AEE9-089FBE7267DA@hxcore.ol>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230504/2a5c79d5/attachment.html>
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Thu May  4 14:04:45 2023
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Thu, 4 May 2023 12:04:45 +0000
+Subject: [R-es] Error al actualizar R 4.3.0
+In-Reply-To: <EEFC6C1D-99F4-422A-AEE9-089FBE7267DA@hxcore.ol>
+References: <EEFC6C1D-99F4-422A-AEE9-089FBE7267DA@hxcore.ol>
+Message-ID: <d93993955cf04112bb8e6b62c9ed18a6@sergas.es>
+
+Hola Sebasti?n.
+
+
+
+Has probado a especificarle otro mirror del CRAN?
+
+
+Por ejemplo:
+
+
+local({r <- getOption("repos")
+       r["CRAN"] <- "https://ftp.cixug.es/CRAN/"
+       options(repos=r)})
+
+
+
+Y luego hacer el update...
+
+
+
+Un saludo,
+
+Miguel.
+
+
+
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Sebasti?n Kruk Gencarelli <residuo.solow en gmail.com>
+Enviado: jueves, 4 de mayo de 2023 13:45
+Para: r-help-es en r-project.org
+Asunto: [R-es] Error al actualizar R 4.3.0
+
+
+Hola usuarios-R.
+
+
+
+El lunes pasado en mi m?quina Windows 10 el R 4.2.3 a 4.3.0.
+
+
+
+Una vez instalado dej? de funcionar la actualizaci?n.
+
+
+
+Me aparece lo siguiente:
+
+
+
+>update.packages()
+
+Warning: unable to access index for repository https://cloud.r-project.org/src/contrib:
+
+  no fue posible abrir la URL 'https://cloud.r-project.org/src/contrib/PACKAGES'
+
+
+
+Es un equipo en el trabajo y estoy bajo un proxy. No soy administrador.
+
+
+
+No me funcion? cambiar el proxy usando Sys.setenv pero si si hago update.packages(method = "wininet") con los consiguientes warnings.
+
+
+
+?Hay alguna forma de solucionarlo yo sin privilegios de administrador o preciso de un administrador?
+
+
+
+Saludos y gracias de antemano,
+
+
+
+Sebasti?n.
+
+
+
+________________________________
+
+Nota: A informaci?n contida nesta mensaxe e os seus posibles documentos adxuntos ? privada e confidencial e est? dirixida ?nicamente ? seu destinatario/a. Se vostede non ? o/a destinatario/a orixinal desta mensaxe, por favor elim?nea. A distribuci?n ou copia desta mensaxe non est? autorizada.
+
+Nota: La informaci?n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est? dirigida ?nicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?nelo. La distribuci?n o copia de este mensaje no est? autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Sat May  6 15:24:35 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Sat, 6 May 2023 09:24:35 -0400
+Subject: [R-es] meta
+Message-ID: <CANuuowO4zxnYK=t-6Bzz-UpnqHZ1p8hSTgyu5RHQy-MWpxJTaA@mail.gmail.com>
+
+Estimados
+Como logro en el forest plot que el gráfico quede en unos margenes que
+se pueda ver completo. Adjunto archivo
+saludos
+José
+
+library(readxl)
+Sistolica <- read_excel("000 EN DISEñO/0000 eli cardio 2/0000 para
+metanalisis/Sistolica.xlsx")
+library(meta
+m <- metacont(Ne, Me, Se, Nc, Mc, Sc,
+              studlab=paste(Author, year),
+forest(m)
+funnel(m)
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Sistolica1.xlsx
+Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Size: 9622 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230506/8b5bcf85/attachment.xlsx>
+
+From bet@n@ter @end|ng |rom gm@||@com  Sun May  7 13:26:04 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Sun, 7 May 2023 07:26:04 -0400
+Subject: [R-es] meta
+In-Reply-To: <CAOKbq8iBnQ6a1Ards03j0hWnFCn_D3by-KGuj2rk+VgiomPzRw@mail.gmail.com>
+References: <CANuuowO4zxnYK=t-6Bzz-UpnqHZ1p8hSTgyu5RHQy-MWpxJTaA@mail.gmail.com>
+ <CAOKbq8iBnQ6a1Ards03j0hWnFCn_D3by-KGuj2rk+VgiomPzRw@mail.gmail.com>
+Message-ID: <CANuuowN5S3yCrKt8VCqwsR5dtxwNqB3piBPc5VE7fTcmWFgB_Q@mail.gmail.com>
+
+Estimado
+
+Gracias por su ayuda
+José
+
+2023-05-06 19:47 GMT-04:00, Carlos Ortega <cof en qualityexcellence.es>:
+> Hola,
+>
+> Si añades lo que destaco, defines el layout y queda más ajustado en la
+> pantalla.
+>
+> #--------------------------
+> library(readxl)
+> Sistolica <- read_excel("./Sistolica1.xlsx")
+> library(meta)
+> m <- metacont(
+>               Ne, Me, Se, Nc, Mc, Sc,
+>               data = Sistolica,
+>               studlab = paste(Author, year),
+>              * layout = "RevMan5", common = FALSE*
+>              )
+>
+>
+> forest(m)
+> funnel(m)
+> #--------------------------
+>
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El sáb, 6 may 2023 a las 15:24, Jose Betancourt Bethencourt (<
+> betanster en gmail.com>) escribió:
+>
+>> Estimados
+>> Como logro en el forest plot que el gráfico quede en unos margenes que
+>> se pueda ver completo. Adjunto archivo
+>> saludos
+>> José
+>>
+>> library(readxl)
+>> Sistolica <- read_excel("000 EN DISEñO/0000 eli cardio 2/0000 para
+>> metanalisis/Sistolica.xlsx")
+>> library(meta
+>> m <- metacont(Ne, Me, Se, Nc, Mc, Sc,
+>>               studlab=paste(Author, year),
+>> forest(m)
+>> funnel(m)
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+Dr. Jose A. Betancourt Bethencourt
+Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From r-uc@ @end|ng |rom uc@@e@  Mon May  8 11:56:59 2023
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Mon, 08 May 2023 11:56:59 +0200
+Subject: [R-es] Error al actualizar R 4.3.0
+In-Reply-To: <EEFC6C1D-99F4-422A-AEE9-089FBE7267DA@hxcore.ol>
+References: <EEFC6C1D-99F4-422A-AEE9-089FBE7267DA@hxcore.ol>
+Message-ID: <430bad0dd40a873c3de26d21a3ea02621260ba4a.camel@uca.es>
+
+Buenas,
+
+Según
+https://stackoverflow.com/questions/14524449/how-to-install-r-packages-via-proxy-user-password
+
+el problema puede ser que estés estableciendo únicamente el proxy para el protocolo http, lo tienes que establecer para http y https.
+
+Además tienes que hacerlo antes de intentar descargar nada, si lo haces después no funcionará,
+
+Un saludo, Manuel
+
+El jue, 04-05-2023 a las 08:45 -0300, Sebastián Kruk Gencarelli escribió:
+> Hola usuarios-R.
+>  
+> El lunes pasado en mi máquina Windows 10 el R 4.2.3 a 4.3.0.
+>  
+> Una vez instalado dejó de funcionar la actualización.
+>  
+> Me aparece lo siguiente:
+>  
+> >update.packages()
+> Warning: unable to access index for repository https://cloud.r-project.org/src/contrib:
+>   no fue posible abrir la URL 'https://cloud.r-project.org/src/contrib/PACKAGES'
+>  
+> Es un equipo en el trabajo y estoy bajo un proxy. No soy administrador.
+>  
+> No me funcionó cambiar el proxy usando Sys.setenv pero si si hago update.packages(method = "wininet") con los consiguientes warnings.
+>  
+> ¿Hay alguna forma de solucionarlo yo sin privilegios de administrador o preciso de un administrador?
+>  
+> Saludos y gracias de antemano,
+>  
+> Sebastián.
+>  
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!Tf6Lpg8ZiPobrqgQnBnJUjUrKVJzKJbOc_2DcvE_oAwTqq3k9Mvi8NcuaYzrb5kh-1IOPboauFsMjQsssC_G$
+>  
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Mon May 15 18:30:29 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Mon, 15 May 2023 18:30:29 +0200
+Subject: [R-es] =?utf-8?q?Deep_learning_=C2=BFAlguna_recomendaci=C3=B3n?=
+ =?utf-8?q?=3F?=
+Message-ID: <CAF3uytWV58AOxpDRqA370j2wOV8Gq+BS=jL5nb8ev5q_j95M3g@mail.gmail.com>
+
+Muy buenas, he decidido aplicar Deep learning en mi trabajo y me he
+encontrado con que hay numerosos paquetes, que utilizan, además, distintos
+algoritmos de optimización. Encontré ejemplos muy sencillos de aplicar con
+los paquetes deepnet y neuralnet, pero pienso que quizás haya paquetes
+claramente mejores ¿Alguna recomendación?
+Gracias,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From re@|duo@@o|ow @end|ng |rom gm@||@com  Tue May 16 14:08:51 2023
+From: re@|duo@@o|ow @end|ng |rom gm@||@com (Sebastian Kruk)
+Date: Tue, 16 May 2023 09:08:51 -0300
+Subject: [R-es] Error al actualizar R 4.3.0
+In-Reply-To: <CAOKbq8i-_XuQaEJHGAigNMO77gMokHN4=KhtpAA_1_ig=Dk_WQ@mail.gmail.com>
+References: <EEFC6C1D-99F4-422A-AEE9-089FBE7267DA@hxcore.ol>
+ <CAOKbq8i-_XuQaEJHGAigNMO77gMokHN4=KhtpAA_1_ig=Dk_WQ@mail.gmail.com>
+Message-ID: <CAMn86NfweBRjczJgEeAxa0kuCqBUH4s_VSEr4oq+z7jSZvYSbA@mail.gmail.com>
+
+Hola, lo pude corregir de la siguiente forma:
+
+
+Edité el archivo Rprofile.site agregando las siguientes líneas:
+
+
+options(download.file.method = "libcurl")
+Sys.setenv("http_proxy"="http://mi_proxy::mi_puerto")
+Sys.setenv("https_proxy"="http:// http://mi_proxy::mi_puerto")
+Sys.setenv("ftp_proxy"="http:// http://mi_proxy::mi_puerto")
+
+
+
+Sienddo mi_proxy y mi_puerto el proxy y puerto que tenemos habilitado.
+
+
+Si al inicio de una sesión ejecutaba las líneas anteriores solo funcionaban
+para esa sesión y a la siguiente las tenía que correr de vuelta.
+
+
+Saludos,
+
+
+Sebastián.
+
+
+
+Enviado desde Correo <https://go.microsoft.com/fwlink/?LinkId=550986> para
+Windows
+
+
+
+*De: *Carlos Ortega <cof en qualityexcellence.es>
+*Enviado: *jueves, 4 de mayo de 2023 9:04
+*Para: *Sebastián Kruk Gencarelli <residuo.solow en gmail.com>
+*CC: *r-help-es en r-project.org
+*Asunto: *Re: [R-es] Error al actualizar R 4.3.0
+
+
+
+Hola,
+
+
+
+Sí, esos errores son los típicos cuando no tienes permiso para salir por el
+proxy...
+
+Te hace falta permisos de administrador.
+
+
+
+Gracias,
+
+Carlos Ortega
+
+www.qualityexcellence.es
+
+
+
+El jue, 4 may 2023 a las 13:46, Sebastián Kruk Gencarelli (<
+residuo.solow en gmail.com>) escribió:
+
+Hola usuarios-R.
+
+
+
+El lunes pasado en mi máquina Windows 10 el R 4.2.3 a 4.3.0.
+
+
+
+Una vez instalado dejó de funcionar la actualización.
+
+
+
+Me aparece lo siguiente:
+
+
+
+>update.packages()
+
+Warning: unable to access index for repository
+https://cloud.r-project.org/src/contrib:
+
+  no fue posible abrir la URL '
+https://cloud.r-project.org/src/contrib/PACKAGES'
+
+
+
+Es un equipo en el trabajo y estoy bajo un proxy. No soy administrador.
+
+
+
+No me funcionó cambiar el proxy usando Sys.setenv pero si si hago
+update.packages(method = "wininet") con los consiguientes warnings.
+
+
+
+¿Hay alguna forma de solucionarlo yo sin privilegios de administrador o
+preciso de un administrador?
+
+
+
+Saludos y gracias de antemano,
+
+
+
+Sebastián.
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+-- 
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Wed May 24 13:23:33 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Wed, 24 May 2023 07:23:33 -0400
+Subject: [R-es] R pred
+Message-ID: <CANuuowPi0Gxp_o6yEZ+_x01XMtM96SreNR68ajz4oiV3uye_Vw@mail.gmail.com>
+
+Estimados
+Quisiera saber porque el modelo siguiente no me hace las predicciones
+
+-- 
+library(EpiModel)
+
+# Definir los parámetros iniciales
+param <- param.icm(inf.prob = 0.2, act.rate = 0.25, rec.rate = 1/50)
+
+# Definir las condiciones iniciales
+init <- init.icm(s.num = 500, i.num = 1, r.num = 0)
+
+# Definir las opciones de control
+control <- control.icm(type = "SIR", nsteps = 500, nsims = 10)
+
+# Crear el modelo original
+mod1 <- icm(param, init, control)
+
+# Ajustar los parámetros para reflejar la situación actual
+param2 <- param.icm(inf.prob = 0.3, act.rate = 0.3, rec.rate = 1/40)
+
+# Crear un nuevo modelo conlos nuevos parámetros
+mod2 <- icm(param2, init, control)
+
+# Generar predicciones para los próximos 7 días
+pred <- predict(mod2, times = 501:508, nsims = 100)
+
+# Graficar las predicciones
+plot(pred)
+
+
+
+
+saludos
+José
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed May 24 13:34:47 2023
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 24 May 2023 08:34:47 -0300
+Subject: [R-es] R pred
+In-Reply-To: <CANuuowPi0Gxp_o6yEZ+_x01XMtM96SreNR68ajz4oiV3uye_Vw@mail.gmail.com>
+References: <CANuuowPi0Gxp_o6yEZ+_x01XMtM96SreNR68ajz4oiV3uye_Vw@mail.gmail.com>
+Message-ID: <60F46D78-7B3B-411B-A5A5-72A0627ACB6F@gmail.com>
+
+Estimado José Betancourt
+
+Corrí si código en Mac, el mensaje que me da a mí es el siguiente:
+
+Error in UseMethod("predict") : 
+  no applicable method for 'predict' applied to an object of class "icm"
+
+No sabría más que decir.
+
+Javier Rubén Marcuzzi
+
+> El 24 may. 2023, a las 08:23, Jose Betancourt Bethencourt <betanster en gmail.com> escribió:
+> 
+> library(EpiModel)
+> 
+> # Definir los parámetros iniciales
+> param <- param.icm(inf.prob = 0.2, act.rate = 0.25, rec.rate = 1/50)
+> 
+> # Definir las condiciones iniciales
+> init <- init.icm(s.num = 500, i.num = 1, r.num = 0)
+> 
+> # Definir las opciones de control
+> control <- control.icm(type = "SIR", nsteps = 500, nsims = 10)
+> 
+> # Crear el modelo original
+> mod1 <- icm(param, init, control)
+> 
+> # Ajustar los parámetros para reflejar la situación actual
+> param2 <- param.icm(inf.prob = 0.3, act.rate = 0.3, rec.rate = 1/40)
+> 
+> # Crear un nuevo modelo conlos nuevos parámetros
+> mod2 <- icm(param2, init, control)
+> 
+> # Generar predicciones para los próximos 7 días
+> pred <- predict(mod2, times = 501:508, nsims = 100)
+> 
+> # Graficar las predicciones
+> plot(pred)
+
+
+	[[alternative HTML version deleted]]
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Wed May 24 13:39:31 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Wed, 24 May 2023 07:39:31 -0400
+Subject: [R-es] R pred
+In-Reply-To: <60F46D78-7B3B-411B-A5A5-72A0627ACB6F@gmail.com>
+References: <CANuuowPi0Gxp_o6yEZ+_x01XMtM96SreNR68ajz4oiV3uye_Vw@mail.gmail.com>
+ <60F46D78-7B3B-411B-A5A5-72A0627ACB6F@gmail.com>
+Message-ID: <CANuuowMAb6o5FFKRVm7_u6-s2YwoNeHsJXGVsZHPw83v6L2d_A@mail.gmail.com>
+
+Quisiéramos agregar predicción para siete días a este modelo : library(EpiModel)
+
+param <- param.dcm(inf.prob = 0.2, act.rate = 5,
+rec.rate = 1/3, a.rate = 1/90, ds.rate = 1/100,
+di.rate = 1/35, dr.rate = 1/100)
+init <- init.dcm(s.num = 500, i.num = 1, r.num = 0)
+control <- control.dcm(type = "SIR", nsteps = 500)
+mod2 <- dcm(param, init, control)
+mod2
+plot(mod2)
+
+El 24/5/23, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:
+> Estimado José Betancourt
+>
+> Corrí si código en Mac, el mensaje que me da a mí es el siguiente:
+>
+> Error in UseMethod("predict") :
+>   no applicable method for 'predict' applied to an object of class "icm"
+>
+> No sabría más que decir.
+>
+> Javier Rubén Marcuzzi
+>
+>> El 24 may. 2023, a las 08:23, Jose Betancourt Bethencourt
+>> <betanster en gmail.com> escribió:
+>>
+>> library(EpiModel)
+>>
+>> # Definir los parámetros iniciales
+>> param <- param.icm(inf.prob = 0.2, act.rate = 0.25, rec.rate = 1/50)
+>>
+>> # Definir las condiciones iniciales
+>> init <- init.icm(s.num = 500, i.num = 1, r.num = 0)
+>>
+>> # Definir las opciones de control
+>> control <- control.icm(type = "SIR", nsteps = 500, nsims = 10)
+>>
+>> # Crear el modelo original
+>> mod1 <- icm(param, init, control)
+>>
+>> # Ajustar los parámetros para reflejar la situación actual
+>> param2 <- param.icm(inf.prob = 0.3, act.rate = 0.3, rec.rate = 1/40)
+>>
+>> # Crear un nuevo modelo conlos nuevos parámetros
+>> mod2 <- icm(param2, init, control)
+>>
+>> # Generar predicciones para los próximos 7 días
+>> pred <- predict(mod2, times = 501:508, nsims = 100)
+>>
+>> # Graficar las predicciones
+>> plot(pred)
+>
+>
+
+
+-- 
+Dr. Jose A. Betancourt Bethencourt
+Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed May 24 13:43:50 2023
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 24 May 2023 08:43:50 -0300
+Subject: [R-es] R pred
+In-Reply-To: <CANuuowMAb6o5FFKRVm7_u6-s2YwoNeHsJXGVsZHPw83v6L2d_A@mail.gmail.com>
+References: <CANuuowPi0Gxp_o6yEZ+_x01XMtM96SreNR68ajz4oiV3uye_Vw@mail.gmail.com>
+ <60F46D78-7B3B-411B-A5A5-72A0627ACB6F@gmail.com>
+ <CANuuowMAb6o5FFKRVm7_u6-s2YwoNeHsJXGVsZHPw83v6L2d_A@mail.gmail.com>
+Message-ID: <3482D385-7605-425F-AA1D-3027A5B5F70C@gmail.com>
+
+Estimado José
+
+Ese último código me da esta gráfica
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura de pantalla 2023-05-24 a la(s) 08.42.49.png
+Type: image/png
+Size: 251278 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230524/4ea738b0/attachment-0001.png>
+
+------------ próxima parte ------------
+
+
+Javier Rubén Marcuzzi
+
+> El 24 may. 2023, a las 08:39, Jose Betancourt Bethencourt <betanster en gmail.com> escribió:
+> 
+> Quisiéramos agregar predicción para siete días a este modelo : library(EpiModel)
+> 
+> param <- param.dcm(inf.prob = 0.2, act.rate = 5,
+> rec.rate = 1/3, a.rate = 1/90, ds.rate = 1/100,
+> di.rate = 1/35, dr.rate = 1/100)
+> init <- init.dcm(s.num = 500, i.num = 1, r.num = 0)
+> control <- control.dcm(type = "SIR", nsteps = 500)
+> mod2 <- dcm(param, init, control)
+> mod2
+> plot(mod2)
+> 
+> El 24/5/23, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:
+>> Estimado José Betancourt
+>> 
+>> Corrí si código en Mac, el mensaje que me da a mí es el siguiente:
+>> 
+>> Error in UseMethod("predict") :
+>>  no applicable method for 'predict' applied to an object of class "icm"
+>> 
+>> No sabría más que decir.
+>> 
+>> Javier Rubén Marcuzzi
+>> 
+>>> El 24 may. 2023, a las 08:23, Jose Betancourt Bethencourt
+>>> <betanster en gmail.com> escribió:
+>>> 
+>>> library(EpiModel)
+>>> 
+>>> # Definir los parámetros iniciales
+>>> param <- param.icm(inf.prob = 0.2, act.rate = 0.25, rec.rate = 1/50)
+>>> 
+>>> # Definir las condiciones iniciales
+>>> init <- init.icm(s.num = 500, i.num = 1, r.num = 0)
+>>> 
+>>> # Definir las opciones de control
+>>> control <- control.icm(type = "SIR", nsteps = 500, nsims = 10)
+>>> 
+>>> # Crear el modelo original
+>>> mod1 <- icm(param, init, control)
+>>> 
+>>> # Ajustar los parámetros para reflejar la situación actual
+>>> param2 <- param.icm(inf.prob = 0.3, act.rate = 0.3, rec.rate = 1/40)
+>>> 
+>>> # Crear un nuevo modelo conlos nuevos parámetros
+>>> mod2 <- icm(param2, init, control)
+>>> 
+>>> # Generar predicciones para los próximos 7 días
+>>> pred <- predict(mod2, times = 501:508, nsims = 100)
+>>> 
+>>> # Graficar las predicciones
+>>> plot(pred)
+>> 
+>> 
+> 
+> 
+> -- 
+> Dr. Jose A. Betancourt Bethencourt
+> Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed May 24 13:50:30 2023
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 24 May 2023 08:50:30 -0300
+Subject: [R-es] R pred
+In-Reply-To: <CANuuowMAb6o5FFKRVm7_u6-s2YwoNeHsJXGVsZHPw83v6L2d_A@mail.gmail.com>
+References: <CANuuowPi0Gxp_o6yEZ+_x01XMtM96SreNR68ajz4oiV3uye_Vw@mail.gmail.com>
+ <60F46D78-7B3B-411B-A5A5-72A0627ACB6F@gmail.com>
+ <CANuuowMAb6o5FFKRVm7_u6-s2YwoNeHsJXGVsZHPw83v6L2d_A@mail.gmail.com>
+Message-ID: <D76EC48D-6355-4412-A1DF-F6B106A63FD9@gmail.com>
+
+José
+
+Envié antes el correo
+
+El código anda, yo tendría que estudiarlo, pero, posiblemente no funcione predict porque no está pensado para eso, pero podría calcularlo, sin saber como, posiblemente desde tiempo, su gráfica da 500 en tiempo. Pero no trabajo sobre esa librería, opinar de mi parte sería absurdo.
+
+Javier Marcuzzi
+
+> El 24 may. 2023, a las 08:39, Jose Betancourt Bethencourt <betanster en gmail.com> escribió:
+> 
+> Quisiéramos agregar predicción para siete días a este modelo : library(EpiModel)
+> 
+> param <- param.dcm(inf.prob = 0.2, act.rate = 5,
+> rec.rate = 1/3, a.rate = 1/90, ds.rate = 1/100,
+> di.rate = 1/35, dr.rate = 1/100)
+> init <- init.dcm(s.num = 500, i.num = 1, r.num = 0)
+> control <- control.dcm(type = "SIR", nsteps = 500)
+> mod2 <- dcm(param, init, control)
+> mod2
+> plot(mod2)
+> 
+> El 24/5/23, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:
+>> Estimado José Betancourt
+>> 
+>> Corrí si código en Mac, el mensaje que me da a mí es el siguiente:
+>> 
+>> Error in UseMethod("predict") :
+>>  no applicable method for 'predict' applied to an object of class "icm"
+>> 
+>> No sabría más que decir.
+>> 
+>> Javier Rubén Marcuzzi
+>> 
+>>> El 24 may. 2023, a las 08:23, Jose Betancourt Bethencourt
+>>> <betanster en gmail.com> escribió:
+>>> 
+>>> library(EpiModel)
+>>> 
+>>> # Definir los parámetros iniciales
+>>> param <- param.icm(inf.prob = 0.2, act.rate = 0.25, rec.rate = 1/50)
+>>> 
+>>> # Definir las condiciones iniciales
+>>> init <- init.icm(s.num = 500, i.num = 1, r.num = 0)
+>>> 
+>>> # Definir las opciones de control
+>>> control <- control.icm(type = "SIR", nsteps = 500, nsims = 10)
+>>> 
+>>> # Crear el modelo original
+>>> mod1 <- icm(param, init, control)
+>>> 
+>>> # Ajustar los parámetros para reflejar la situación actual
+>>> param2 <- param.icm(inf.prob = 0.3, act.rate = 0.3, rec.rate = 1/40)
+>>> 
+>>> # Crear un nuevo modelo conlos nuevos parámetros
+>>> mod2 <- icm(param2, init, control)
+>>> 
+>>> # Generar predicciones para los próximos 7 días
+>>> pred <- predict(mod2, times = 501:508, nsims = 100)
+>>> 
+>>> # Graficar las predicciones
+>>> plot(pred)
+>> 
+>> 
+> 
+> 
+> -- 
+> Dr. Jose A. Betancourt Bethencourt
+> Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Wed May 24 15:02:41 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Wed, 24 May 2023 09:02:41 -0400
+Subject: [R-es] R pred
+In-Reply-To: <D76EC48D-6355-4412-A1DF-F6B106A63FD9@gmail.com>
+References: <CANuuowPi0Gxp_o6yEZ+_x01XMtM96SreNR68ajz4oiV3uye_Vw@mail.gmail.com>
+ <60F46D78-7B3B-411B-A5A5-72A0627ACB6F@gmail.com>
+ <CANuuowMAb6o5FFKRVm7_u6-s2YwoNeHsJXGVsZHPw83v6L2d_A@mail.gmail.com>
+ <D76EC48D-6355-4412-A1DF-F6B106A63FD9@gmail.com>
+Message-ID: <CANuuowNMaJ7_oNWcyBPyU03yW=9TWDyXHKr5oKjixhzuCnhRCg@mail.gmail.com>
+
+Otro ejemplo
+Se está realizando vigilancia epidemiológica y al décimo día se
+observa esta situación. Se necesita hacer un pronóstico de este brote
+durante 10 días más
+
+
+library(EpiModel)
+param <- param.dcm(inf.prob = 0.2, act.rate = 5,
+                   rec.rate = 1/5, a.rate = 1/90, ds.rate = 1/100,
+                   di.rate = 1/35, dr.rate = 1/100)
+init <- init.dcm(s.num = 500, i.num = 1, r.num = 0)
+control <- control.dcm(type = "SIR", nsteps = 10)
+mod2 <- dcm(param, init, control)
+mod2
+plot(mod2)
+
+
+El 24/5/23, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:
+> José
+>
+> Envié antes el correo
+>
+> El código anda, yo tendría que estudiarlo, pero, posiblemente no funcione
+> predict porque no está pensado para eso, pero podría calcularlo, sin saber
+> como, posiblemente desde tiempo, su gráfica da 500 en tiempo. Pero no
+> trabajo sobre esa librería, opinar de mi parte sería absurdo.
+>
+> Javier Marcuzzi
+>
+>> El 24 may. 2023, a las 08:39, Jose Betancourt Bethencourt
+>> <betanster en gmail.com> escribió:
+>>
+>> Quisiéramos agregar predicción para siete días a este modelo :
+>> library(EpiModel)
+>>
+>> param <- param.dcm(inf.prob = 0.2, act.rate = 5,
+>> rec.rate = 1/3, a.rate = 1/90, ds.rate = 1/100,
+>> di.rate = 1/35, dr.rate = 1/100)
+>> init <- init.dcm(s.num = 500, i.num = 1, r.num = 0)
+>> control <- control.dcm(type = "SIR", nsteps = 500)
+>> mod2 <- dcm(param, init, control)
+>> mod2
+>> plot(mod2)
+>>
+>> El 24/5/23, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:
+>>> Estimado José Betancourt
+>>>
+>>> Corrí si código en Mac, el mensaje que me da a mí es el siguiente:
+>>>
+>>> Error in UseMethod("predict") :
+>>>  no applicable method for 'predict' applied to an object of class "icm"
+>>>
+>>> No sabría más que decir.
+>>>
+>>> Javier Rubén Marcuzzi
+>>>
+>>>> El 24 may. 2023, a las 08:23, Jose Betancourt Bethencourt
+>>>> <betanster en gmail.com> escribió:
+>>>>
+>>>> library(EpiModel)
+>>>>
+>>>> # Definir los parámetros iniciales
+>>>> param <- param.icm(inf.prob = 0.2, act.rate = 0.25, rec.rate = 1/50)
+>>>>
+>>>> # Definir las condiciones iniciales
+>>>> init <- init.icm(s.num = 500, i.num = 1, r.num = 0)
+>>>>
+>>>> # Definir las opciones de control
+>>>> control <- control.icm(type = "SIR", nsteps = 500, nsims = 10)
+>>>>
+>>>> # Crear el modelo original
+>>>> mod1 <- icm(param, init, control)
+>>>>
+>>>> # Ajustar los parámetros para reflejar la situación actual
+>>>> param2 <- param.icm(inf.prob = 0.3, act.rate = 0.3, rec.rate = 1/40)
+>>>>
+>>>> # Crear un nuevo modelo conlos nuevos parámetros
+>>>> mod2 <- icm(param2, init, control)
+>>>>
+>>>> # Generar predicciones para los próximos 7 días
+>>>> pred <- predict(mod2, times = 501:508, nsims = 100)
+>>>>
+>>>> # Graficar las predicciones
+>>>> plot(pred)
+>>>
+>>>
+>>
+>>
+>> --
+>> Dr. Jose A. Betancourt Bethencourt
+>> Universidad de Ciencias Medicas Carlos j. Finlay
+>
+>
+
+
+-- 
+Dr. Jose A. Betancourt Bethencourt
+Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed May 24 16:53:25 2023
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 24 May 2023 11:53:25 -0300
+Subject: [R-es] R pred
+In-Reply-To: <CANuuowNMaJ7_oNWcyBPyU03yW=9TWDyXHKr5oKjixhzuCnhRCg@mail.gmail.com>
+References: <CANuuowPi0Gxp_o6yEZ+_x01XMtM96SreNR68ajz4oiV3uye_Vw@mail.gmail.com>
+ <60F46D78-7B3B-411B-A5A5-72A0627ACB6F@gmail.com>
+ <CANuuowMAb6o5FFKRVm7_u6-s2YwoNeHsJXGVsZHPw83v6L2d_A@mail.gmail.com>
+ <D76EC48D-6355-4412-A1DF-F6B106A63FD9@gmail.com>
+ <CANuuowNMaJ7_oNWcyBPyU03yW=9TWDyXHKr5oKjixhzuCnhRCg@mail.gmail.com>
+Message-ID: <3C95D5BC-C528-45A3-AB26-7B00B8F1E94D@gmail.com>
+
+Estimado José
+
+Hay que leer mucho esa librería, funciona distinto a la regla general, por ejemplo, recién realizo un modelo lineal con solo diez números, del uno al cinco y semejantes con decimales, una tontería, pero su utilizo la función summary()  hay parámetros, a los cuáles puedo acceder utilizando el símbolo $, sin embargo esto no se da resultado en EpiModel, posiblemente por esa razón no anda la predicción. 
+
+Seguramente en la documentación hay algún ejemplo, o el autor explica la fórmula o algoritmo utilizado en el cálculo, lo que haría posible calcular según sus requerimientos.
+
+Mire este ejemplo, por la cuál la regla general de R no funciona, pero alguna forma muy específica debe haber, lo cuál yo desconozco.
+
+> summary(modelo)
+
+Call:
+lm(formula = datos)
+
+Residuals:
+        1         2         3         4         5 
+ 0.007605  0.095057 -0.121673 -0.338403  0.357414 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)   
+(Intercept)  -2.9620     0.5846  -5.067  0.01484 * 
+x             3.0418     0.2904  10.474  0.00186 **
+---
+Signif. codes:  0 ?***? 0.001 ?**? 0.01 ?*? 0.05 ?.? 0.1 ? ? 1
+
+Residual standard error: 0.2979 on 3 degrees of freedom
+Multiple R-squared:  0.9734,	Adjusted R-squared:  0.9645 
+F-statistic: 109.7 on 1 and 3 DF,  p-value: 0.001858
+
+> summary(mod2)
+Error in summary.dcm(mod2) : Specify at between 1 and 10
+
+Javier Rubén Marcuzzi
+
+> El 24 may. 2023, a las 10:02, Jose Betancourt Bethencourt <betanster en gmail.com> escribió:
+> 
+> Otro ejemplo
+> Se está realizando vigilancia epidemiológica y al décimo día se
+> observa esta situación. Se necesita hacer un pronóstico de este brote
+> durante 10 días más
+> 
+> 
+> library(EpiModel)
+> param <- param.dcm(inf.prob = 0.2, act.rate = 5,
+>                   rec.rate = 1/5, a.rate = 1/90, ds.rate = 1/100,
+>                   di.rate = 1/35, dr.rate = 1/100)
+> init <- init.dcm(s.num = 500, i.num = 1, r.num = 0)
+> control <- control.dcm(type = "SIR", nsteps = 10)
+> mod2 <- dcm(param, init, control)
+> mod2
+> plot(mod2)
+> 
+> 
+> El 24/5/23, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:
+>> José
+>> 
+>> Envié antes el correo
+>> 
+>> El código anda, yo tendría que estudiarlo, pero, posiblemente no funcione
+>> predict porque no está pensado para eso, pero podría calcularlo, sin saber
+>> como, posiblemente desde tiempo, su gráfica da 500 en tiempo. Pero no
+>> trabajo sobre esa librería, opinar de mi parte sería absurdo.
+>> 
+>> Javier Marcuzzi
+>> 
+>>> El 24 may. 2023, a las 08:39, Jose Betancourt Bethencourt
+>>> <betanster en gmail.com> escribió:
+>>> 
+>>> Quisiéramos agregar predicción para siete días a este modelo :
+>>> library(EpiModel)
+>>> 
+>>> param <- param.dcm(inf.prob = 0.2, act.rate = 5,
+>>> rec.rate = 1/3, a.rate = 1/90, ds.rate = 1/100,
+>>> di.rate = 1/35, dr.rate = 1/100)
+>>> init <- init.dcm(s.num = 500, i.num = 1, r.num = 0)
+>>> control <- control.dcm(type = "SIR", nsteps = 500)
+>>> mod2 <- dcm(param, init, control)
+>>> mod2
+>>> plot(mod2)
+>>> 
+>>> El 24/5/23, Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com> escribió:
+>>>> Estimado José Betancourt
+>>>> 
+>>>> Corrí si código en Mac, el mensaje que me da a mí es el siguiente:
+>>>> 
+>>>> Error in UseMethod("predict") :
+>>>> no applicable method for 'predict' applied to an object of class "icm"
+>>>> 
+>>>> No sabría más que decir.
+>>>> 
+>>>> Javier Rubén Marcuzzi
+>>>> 
+>>>>> El 24 may. 2023, a las 08:23, Jose Betancourt Bethencourt
+>>>>> <betanster en gmail.com> escribió:
+>>>>> 
+>>>>> library(EpiModel)
+>>>>> 
+>>>>> # Definir los parámetros iniciales
+>>>>> param <- param.icm(inf.prob = 0.2, act.rate = 0.25, rec.rate = 1/50)
+>>>>> 
+>>>>> # Definir las condiciones iniciales
+>>>>> init <- init.icm(s.num = 500, i.num = 1, r.num = 0)
+>>>>> 
+>>>>> # Definir las opciones de control
+>>>>> control <- control.icm(type = "SIR", nsteps = 500, nsims = 10)
+>>>>> 
+>>>>> # Crear el modelo original
+>>>>> mod1 <- icm(param, init, control)
+>>>>> 
+>>>>> # Ajustar los parámetros para reflejar la situación actual
+>>>>> param2 <- param.icm(inf.prob = 0.3, act.rate = 0.3, rec.rate = 1/40)
+>>>>> 
+>>>>> # Crear un nuevo modelo conlos nuevos parámetros
+>>>>> mod2 <- icm(param2, init, control)
+>>>>> 
+>>>>> # Generar predicciones para los próximos 7 días
+>>>>> pred <- predict(mod2, times = 501:508, nsims = 100)
+>>>>> 
+>>>>> # Graficar las predicciones
+>>>>> plot(pred)
+>>>> 
+>>>> 
+>>> 
+>>> 
+>>> --
+>>> Dr. Jose A. Betancourt Bethencourt
+>>> Universidad de Ciencias Medicas Carlos j. Finlay
+>> 
+>> 
+> 
+> 
+> -- 
+> Dr. Jose A. Betancourt Bethencourt
+> Universidad de Ciencias Medicas Carlos j. Finlay
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Sun May 28 13:28:41 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Sun, 28 May 2023 13:28:41 +0200
+Subject: [R-es] Error: protect(): protection stack overflow
+Message-ID: <CAF3uytWGhXTFvKJZWhC3-UV=hxAV2shg4f6igBUQOE8oAEV39w@mail.gmail.com>
+
+Muy buenas, estoy aplicando random forest a una df de 256 filas y 54973
+columnas y me quedo sin memoria. He probado con randomForest y con ranger,
+y con los dos pasa. ¿Tenéis alguna solución para esto (que no sea comprarse
+un ordenador más potente:-) ?. Pude aplicar XgBoost, incluso cerca de 2000
+veces  (unas 16 horas), para optimizar los hiperparámetros con una rejilla
+de búsqueda, pero XgBoost utiliza varios núcleos a la vez. No sé si hay
+forma de hacer que randomForest o ranger utilicen más núcleos. Cualquier
+otra solución sería buena, claro.
+Gracias,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Mon May 29 07:22:54 2023
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Mon, 29 May 2023 05:22:54 +0000
+Subject: [R-es] Error: protect(): protection stack overflow
+In-Reply-To: <CAF3uytWGhXTFvKJZWhC3-UV=hxAV2shg4f6igBUQOE8oAEV39w@mail.gmail.com>
+References: <CAF3uytWGhXTFvKJZWhC3-UV=hxAV2shg4f6igBUQOE8oAEV39w@mail.gmail.com>
+Message-ID: <PAXPR08MB66062EFB73912291203912AECC4A9@PAXPR08MB6606.eurprd08.prod.outlook.com>
+
+Buenos días :
+Quizá lo mejor en tu caso es lanzar una regresión penalizada y eliminar algunas variables... ?
+Saludos,
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Junta de Comunidades de Castilla ? La Mancha
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Manuel Mendoza
+Enviado el: domingo, 28 de mayo de 2023 13:29
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] Error: protect(): protection stack overflow
+
+Muy buenas, estoy aplicando random forest a una df de 256 filas y 54973 columnas y me quedo sin memoria. He probado con randomForest y con ranger, y con los dos pasa. ¿Tenéis alguna solución para esto (que no sea comprarse un ordenador más potente:-) ?. Pude aplicar XgBoost, incluso cerca de 2000 veces  (unas 16 horas), para optimizar los hiperparámetros con una rejilla de búsqueda, pero XgBoost utiliza varios núcleos a la vez. No sé si hay forma de hacer que randomForest o ranger utilicen más núcleos. Cualquier otra solución sería buena, claro.
+Gracias,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Mon May 29 11:18:07 2023
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Mon, 29 May 2023 11:18:07 +0200
+Subject: [R-es] Error: protect(): protection stack overflow
+In-Reply-To: <CAOKbq8gq73Q7bTnwv0vYadUFvLehKTRSTU7j+-it=VDKuiKxUQ@mail.gmail.com>
+References: <CAF3uytWGhXTFvKJZWhC3-UV=hxAV2shg4f6igBUQOE8oAEV39w@mail.gmail.com>
+ <CAOKbq8gq73Q7bTnwv0vYadUFvLehKTRSTU7j+-it=VDKuiKxUQ@mail.gmail.com>
+Message-ID: <CAF3uytXuXXFm=jW37GeP_pJDOkJ_xSOy16gEk31_D3A+U=NPWw@mail.gmail.com>
+
+Gracias Carlos e Isidro, finalmente utilicé el propio XgBoost para
+seleccionar las variables con las que hacer el RF. Había 47, de las casi
+55.000, que mostraban una ganancia superior que el resto, así que hice el
+RF con esas sin problema. La idea original era aplicar RF para seleccionar
+las variables más importantes por su contribución a la predicción,
+utilizando meandecraseaccuracy, y es lo que hice, aunque partiendo de esas
+47. Resultó que con tan solo 5 genes puedo predecir la malignidad de
+tumores (neurofibromas) con una sensibilidad del 98%. Un hallazgo
+interesante.
+Gracias de nuevo,
+Manuel
+
+El dom, 28 may 2023 a las 21:58, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola Manuel,
+>
+> "ranger" paraleliza de forma automática, usando todos los cores que
+> tienes. Está bastante optimizado...
+>
+> El que se quede sin memoria, puede tener que ver, tanto por el número de
+> columnas que comentas, como que alguna de tus variables (o varias) si es
+> categórica y tiene múltiples niveles esas 54973 columnas pueden aumentar
+> mucho ("ranger" hace un one-hot interno).
+>
+> Y si el problema son las columnas. ¿Tienes que usar todas las columnas?.
+> Puedes plantearte alguna alternativa para seleccionar las variables
+> importantes. El paquete "Boruta" es uno de ellos, pero también puedes hacer
+> diferentes modelos en modo "boostrap" seleccionado diferentes columnas para
+> ver con cuáles quedarte al final.
+>
+> Y otra alternativa cuando tienes problemas de memoria, es usar H2O....
+> Gestiona muy bien la memoria.
+>
+> Gracias,
+> Carlos.
+>
+> El dom, 28 may 2023 a las 13:29, Manuel Mendoza (<
+> mmendoza en fulbrightmail.org>) escribió:
+>
+>> Muy buenas, estoy aplicando random forest a una df de 256 filas y 54973
+>> columnas y me quedo sin memoria. He probado con randomForest y con ranger,
+>> y con los dos pasa. ¿Tenéis alguna solución para esto (que no sea
+>> comprarse
+>> un ordenador más potente:-) ?. Pude aplicar XgBoost, incluso cerca de 2000
+>> veces  (unas 16 horas), para optimizar los hiperparámetros con una rejilla
+>> de búsqueda, pero XgBoost utiliza varios núcleos a la vez. No sé si hay
+>> forma de hacer que randomForest o ranger utilicen más núcleos. Cualquier
+>> otra solución sería buena, claro.
+>> Gracias,
+>> Manuel
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Tue May 30 19:49:36 2023
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Tue, 30 May 2023 19:49:36 +0200
+Subject: [R-es] Error: protect(): protection stack overflow
+In-Reply-To: <CAF3uytXuXXFm=jW37GeP_pJDOkJ_xSOy16gEk31_D3A+U=NPWw@mail.gmail.com>
+References: <CAF3uytWGhXTFvKJZWhC3-UV=hxAV2shg4f6igBUQOE8oAEV39w@mail.gmail.com>
+ <CAOKbq8gq73Q7bTnwv0vYadUFvLehKTRSTU7j+-it=VDKuiKxUQ@mail.gmail.com>
+ <CAF3uytXuXXFm=jW37GeP_pJDOkJ_xSOy16gEk31_D3A+U=NPWw@mail.gmail.com>
+Message-ID: <CA+8ueyaNAyodiDciBB3ojY+5AgWnuVsK2P0ADHO-wcwOigCc7Q@mail.gmail.com>
+
+Qué lindo participar desde la ventana de tu descubrimiento.
+
+Te deseo que tengás un buen camino llevándolo adelante, por el bien de
+tantos.
+
+Hau idatzi du Manuel Mendoza (mmendoza en fulbrightmail.org) erabiltzaileak
+(2023 mai. 29(a), al. (11:19)):
+
+> Gracias Carlos e Isidro, finalmente utilicé el propio XgBoost para
+> seleccionar las variables con las que hacer el RF. Había 47, de las casi
+> 55.000, que mostraban una ganancia superior que el resto, así que hice el
+> RF con esas sin problema. La idea original era aplicar RF para seleccionar
+> las variables más importantes por su contribución a la predicción,
+> utilizando meandecraseaccuracy, y es lo que hice, aunque partiendo de esas
+> 47. Resultó que con tan solo 5 genes puedo predecir la malignidad de
+> tumores (neurofibromas) con una sensibilidad del 98%. Un hallazgo
+> interesante.
+> Gracias de nuevo,
+> Manuel
+>
+> El dom, 28 may 2023 a las 21:58, Carlos Ortega (<cof en qualityexcellence.es
+> >)
+> escribió:
+>
+> > Hola Manuel,
+> >
+> > "ranger" paraleliza de forma automática, usando todos los cores que
+> > tienes. Está bastante optimizado...
+> >
+> > El que se quede sin memoria, puede tener que ver, tanto por el número de
+> > columnas que comentas, como que alguna de tus variables (o varias) si es
+> > categórica y tiene múltiples niveles esas 54973 columnas pueden aumentar
+> > mucho ("ranger" hace un one-hot interno).
+> >
+> > Y si el problema son las columnas. ¿Tienes que usar todas las columnas?.
+> > Puedes plantearte alguna alternativa para seleccionar las variables
+> > importantes. El paquete "Boruta" es uno de ellos, pero también puedes
+> hacer
+> > diferentes modelos en modo "boostrap" seleccionado diferentes columnas
+> para
+> > ver con cuáles quedarte al final.
+> >
+> > Y otra alternativa cuando tienes problemas de memoria, es usar H2O....
+> > Gestiona muy bien la memoria.
+> >
+> > Gracias,
+> > Carlos.
+> >
+> > El dom, 28 may 2023 a las 13:29, Manuel Mendoza (<
+> > mmendoza en fulbrightmail.org>) escribió:
+> >
+> >> Muy buenas, estoy aplicando random forest a una df de 256 filas y 54973
+> >> columnas y me quedo sin memoria. He probado con randomForest y con
+> ranger,
+> >> y con los dos pasa. ¿Tenéis alguna solución para esto (que no sea
+> >> comprarse
+> >> un ordenador más potente:-) ?. Pude aplicar XgBoost, incluso cerca de
+> 2000
+> >> veces  (unas 16 horas), para optimizar los hiperparámetros con una
+> rejilla
+> >> de búsqueda, pero XgBoost utiliza varios núcleos a la vez. No sé si hay
+> >> forma de hacer que randomForest o ranger utilicen más núcleos. Cualquier
+> >> otra solución sería buena, claro.
+> >> Gracias,
+> >> Manuel
+> >>
+> >>         [[alternative HTML version deleted]]
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+> >
+> > --
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Juan Abasolo, PhD
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T       : (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype   : abasolo72
+Bloga   : juanabasolo.netlify.com
+
+	[[alternative HTML version deleted]]
+
+
+From jmcontrer@@ @end|ng |rom ugr@e@  Tue May 30 19:51:05 2023
+From: jmcontrer@@ @end|ng |rom ugr@e@ (Jose Miguel Contreras)
+Date: Tue, 30 May 2023 19:51:05 +0200
+Subject: [R-es] Trabajar con variables JSON
+Message-ID: <08D6CF8C-0CEE-4759-B879-622C8FD88670@ugr.es>
+
+Hola a todos
+
+Tengo una variable ?medios', sacada de un JSON con la siguiente forma:
+
+{'A': 2406, 'A1': 'Casa', 'media': [{'id': 1021, 'id_type': 7, 'type': None, 'url': 'https://www.aaa1.com', 'from_date': 12}, {'id': 1036, 'id_type': 3, 'type': None, 'url': 'https://bbb1.com', 'from_date': 12}, {'id': 1037, 'id_type': 6, 'type': None, 'url': 'https://ccc1.com', 'from_date': 12}]}
+{'B': 2407, 'A1': 'Casa', 'media': [{'id': 1022, 'id_type': 7, 'type': None, 'url': 'https://www.aaa2.com', 'from_date': 13}, {'id': 1036, 'id_type': 3, 'type': None, 'url': 'https://bbb2.com', 'from_date': 13}, {'id': 1037, 'id_type': 6, 'type': None, 'url': 'https://ccc2.com', 'from_date': 13}]}
+?..
+
+
+La variable se carga como ?character?.
+
+La duda es esta, necesitaría extraer de cada fila las tres ?url? y meterlas en tres columnas distintas. Primero las convierto en JSON para trabajar con jsonlite, con toJSON, y luego utilizo 
+data <- jsonlite::fromJSON(json_str) para intentar entrar en ella  con media_list <- data$medios, pero siempre me da el "error $ operator is invalid for atomic vectors?
+
+Me podríais ayudar
+
+Gracias
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed May 31 01:34:11 2023
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 30 May 2023 20:34:11 -0300
+Subject: [R-es] Error: protect(): protection stack overflow
+In-Reply-To: <CAF3uytXuXXFm=jW37GeP_pJDOkJ_xSOy16gEk31_D3A+U=NPWw@mail.gmail.com>
+References: <CAF3uytWGhXTFvKJZWhC3-UV=hxAV2shg4f6igBUQOE8oAEV39w@mail.gmail.com>
+ <CAOKbq8gq73Q7bTnwv0vYadUFvLehKTRSTU7j+-it=VDKuiKxUQ@mail.gmail.com>
+ <CAF3uytXuXXFm=jW37GeP_pJDOkJ_xSOy16gEk31_D3A+U=NPWw@mail.gmail.com>
+Message-ID: <6EB08585-C4C2-493A-9A35-4358152E3445@gmail.com>
+
+Estimado Manuel Mendoza
+
+Puede ser que a usted no le sea de utilidad, pero cuándo nombran genes y evalúan, yo siempre de acuerdo del libro Introducción a la Genética Cuantitativa, de Falconer. Digo esto porque la expresión que usted nombra puede ser por deriva genética y no por un efecto real del gen.
+
+Un abrazo
+Javier Rubén Marcuzzi
+
+
+
+> El 29 may. 2023, a las 06:18, Manuel Mendoza <mmendoza en fulbrightmail.org> escribió:
+> 
+> Gracias Carlos e Isidro, finalmente utilicé el propio XgBoost para
+> seleccionar las variables con las que hacer el RF. Había 47, de las casi
+> 55.000, que mostraban una ganancia superior que el resto, así que hice el
+> RF con esas sin problema. La idea original era aplicar RF para seleccionar
+> las variables más importantes por su contribución a la predicción,
+> utilizando meandecraseaccuracy, y es lo que hice, aunque partiendo de esas
+> 47. Resultó que con tan solo 5 genes puedo predecir la malignidad de
+> tumores (neurofibromas) con una sensibilidad del 98%. Un hallazgo
+> interesante.
+> Gracias de nuevo,
+> Manuel
+> 
+> El dom, 28 may 2023 a las 21:58, Carlos Ortega (<cof en qualityexcellence.es>)
+> escribió:
+> 
+>> Hola Manuel,
+>> 
+>> "ranger" paraleliza de forma automática, usando todos los cores que
+>> tienes. Está bastante optimizado...
+>> 
+>> El que se quede sin memoria, puede tener que ver, tanto por el número de
+>> columnas que comentas, como que alguna de tus variables (o varias) si es
+>> categórica y tiene múltiples niveles esas 54973 columnas pueden aumentar
+>> mucho ("ranger" hace un one-hot interno).
+>> 
+>> Y si el problema son las columnas. ¿Tienes que usar todas las columnas?.
+>> Puedes plantearte alguna alternativa para seleccionar las variables
+>> importantes. El paquete "Boruta" es uno de ellos, pero también puedes hacer
+>> diferentes modelos en modo "boostrap" seleccionado diferentes columnas para
+>> ver con cuáles quedarte al final.
+>> 
+>> Y otra alternativa cuando tienes problemas de memoria, es usar H2O....
+>> Gestiona muy bien la memoria.
+>> 
+>> Gracias,
+>> Carlos.
+>> 
+>> El dom, 28 may 2023 a las 13:29, Manuel Mendoza (<
+>> mmendoza en fulbrightmail.org>) escribió:
+>> 
+>>> Muy buenas, estoy aplicando random forest a una df de 256 filas y 54973
+>>> columnas y me quedo sin memoria. He probado con randomForest y con ranger,
+>>> y con los dos pasa. ¿Tenéis alguna solución para esto (que no sea
+>>> comprarse
+>>> un ordenador más potente:-) ?. Pude aplicar XgBoost, incluso cerca de 2000
+>>> veces  (unas 16 horas), para optimizar los hiperparámetros con una rejilla
+>>> de búsqueda, pero XgBoost utiliza varios núcleos a la vez. No sé si hay
+>>> forma de hacer que randomForest o ranger utilicen más núcleos. Cualquier
+>>> otra solución sería buena, claro.
+>>> Gracias,
+>>> Manuel
+>>> 
+>>>        [[alternative HTML version deleted]]
+>>> 
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> 
+>> 
+>> 
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Wed May 31 20:55:35 2023
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Wed, 31 May 2023 14:55:35 -0400
+Subject: [R-es] ayuda sobre grafico de barras simple
+Message-ID: <CANuuowOhUm9JS68-ttBSN60K9HQdYQSY7vLaDCyK8dbM=6nVqg@mail.gmail.com>
+
+Estimados
+
+mi pregunta viene en archivo adjunto
+
+saludos
+José
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: R pregunta.docx
+Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+Size: 23104 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230531/6f6315f2/attachment-0001.docx>
+
+From r-uc@ @end|ng |rom uc@@e@  Wed May 31 21:34:25 2023
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Wed, 31 May 2023 21:34:25 +0200
+Subject: [R-es] ayuda sobre grafico de barras simple
+In-Reply-To: <CANuuowOhUm9JS68-ttBSN60K9HQdYQSY7vLaDCyK8dbM=6nVqg@mail.gmail.com>
+References: <CANuuowOhUm9JS68-ttBSN60K9HQdYQSY7vLaDCyK8dbM=6nVqg@mail.gmail.com>
+Message-ID: <293c81b5ce0bed8399f187dc1ea5bd00c04de01a.camel@uca.es>
+
+Buenas, José:
+
+En una lista de software libre es preferible no usar formatos privativos de archivos como los que utiliza Microsoft.
+
+Las instrucciones siguientes hacen un gráfico de barras:
+x <- rbinom(10, 20, .3)
+barplot(table(x))
+
+¿Los valores no se corresponden con una variable cuantitativa discreta? En caso contrario no es ese el gráfico que debe usarse.
+
+Un saludo.
+
+
+-- 
+--------------------------------------------------
+http://knuth.uca.es/R
+--------------------------------------------------
+Proyecto R-UCA
+--------------------------------------------------
+Nombre: Manuel Muñoz Márquez
+Departamento: Departamento de Estadística e Investigación Operativa
+Institución: Escuela Superior de Ingeniería
+Organización: Universidad de Cádiz
+--------------------------------------------------
+
+
+El mié, 31-05-2023 a las 14:55 -0400, Jose Betancourt Bethencourt escribió:
+> Estimados
+> 
+> mi pregunta viene en archivo adjunto
+> 
+> saludos
+> José
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XqMLNpizJGItFNcLlVaD1vaSzng5UjUXgQR3uDGGDDb4RrDrXvhBziOOcA8knGBgnxvH4O3aOZNQmnU$
+>  
+
+
+From z@r@g@t@n @end|ng |rom gm@||@com  Wed May 31 22:52:58 2023
+From: z@r@g@t@n @end|ng |rom gm@||@com (=?UTF-8?Q?Javier_G=C3=B3mez_Gonzalez?=)
+Date: Wed, 31 May 2023 22:52:58 +0200
+Subject: [R-es] scale_colour_viridis en ggplot2
+Message-ID: <CANVm79n-mr3Gr75M3zxoyKdGD1J=NfNPpo7fhKCTUFc_nATYcA@mail.gmail.com>
+
+Hola a todos:
+
+Alguién me podría explicar cuales son las diferencias entre las diferentes
+escalas de viridis en ggplot2, es decir en qué se diferencian
+scale-colour_viridis_d de scale_colour_viridis_c, scale_colour_viridis_b.
+Y cual es la diferencia entre scale-fiil-viridis_d de scale-fill_viridis_c
+y de scale_fill_viridis-b.
+He estado buscando la diferencia en internet y no he encontrado nada al
+respecto.
+El motivo de querer saber las diferencias es que necesito hacer una serie
+de gráficos para imprimirlos en blanco y negro.
+
+Gracias
+
+                                      Javier Gómez González
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Wed May 31 22:55:31 2023
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Wed, 31 May 2023 14:55:31 -0600
+Subject: [R-es] scale_colour_viridis en ggplot2
+In-Reply-To: <CANVm79n-mr3Gr75M3zxoyKdGD1J=NfNPpo7fhKCTUFc_nATYcA@mail.gmail.com>
+References: <CANVm79n-mr3Gr75M3zxoyKdGD1J=NfNPpo7fhKCTUFc_nATYcA@mail.gmail.com>
+Message-ID: <CABkCotQaR7a0jhR0D9fufjujUfQTuxpRMB6QkpOH5z8dpcb3hA@mail.gmail.com>
+
+Hola Javier,
+
+d = discrete
+c  = continuous
+b = binary
+
+Manuel
+
+On Wed, 31 May 2023 at 14:51 Javier Gómez Gonzalez <zaragatan en gmail.com>
+wrote:
+
+> Hola a todos:
+>
+> Alguién me podría explicar cuales son las diferencias entre las diferentes
+> escalas de viridis en ggplot2, es decir en qué se diferencian
+> scale-colour_viridis_d de scale_colour_viridis_c, scale_colour_viridis_b.
+> Y cual es la diferencia entre scale-fiil-viridis_d de scale-fill_viridis_c
+> y de scale_fill_viridis-b.
+> He estado buscando la diferencia en internet y no he encontrado nada al
+> respecto.
+> El motivo de querer saber las diferencias es que necesito hacer una serie
+> de gráficos para imprimirlos en blanco y negro.
+>
+> Gracias
+>
+>                                       Javier Gómez González
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+-- 
+*Manuel Spínola, Ph.D.*
+Instituto Internacional en Conservación y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Teléfono: (506) 8706 - 4662
+Institutional website: ICOMVIS
+<http://www.icomvis.una.ac.cr/index.php/manuel>
+Blog sobre Ciencia de Datos: https://mspinola-ciencia-de-datos.netlify.app
+
+	[[alternative HTML version deleted]]
+
+
+From m@ur|c|o@m@rdone@ @end|ng |rom ||op@c|  Wed May 31 23:06:29 2023
+From: m@ur|c|o@m@rdone@ @end|ng |rom ||op@c| (MAURICIO MARDONES)
+Date: Wed, 31 May 2023 23:06:29 +0200
+Subject: [R-es] scale_colour_viridis en ggplot2
+In-Reply-To: <CANVm79n-mr3Gr75M3zxoyKdGD1J=NfNPpo7fhKCTUFc_nATYcA@mail.gmail.com>
+References: <CANVm79n-mr3Gr75M3zxoyKdGD1J=NfNPpo7fhKCTUFc_nATYcA@mail.gmail.com>
+Message-ID: <00A50765-583F-40E8-9139-D8C3F72D940A@ifop.cl>
+
+De acuerdo a Bard;
+
+    ? scale_colour_viridis_d: Esta función utiliza la paleta de colores "viridis" en una escala continua, donde los colores varían de forma suave y continua. Es adecuada para representar datos en los que se desea resaltar las variaciones sutiles en los valores de la variable.
+
+    ? scale_colour_viridis_c: Esta función también utiliza la paleta de colores "viridis", pero en una escala categórica discreta. Los colores se asignan a categorías específicas, como niveles de una variable categórica. Es útil cuando se desea asignar colores diferentes a categorías distintas sin una relación de orden.
+
+    ? scale_colour_viridis_b: Esta función es similar a scale_colour_viridis_d, pero utiliza una versión más brillante de la paleta de colores "viridis". Los colores son más intensos y brillantes en comparación con scale_colour_viridis_d. Puede ser útil cuando se desea resaltar los valores más altos o cuando se busca un efecto visual más llamativo.
+
+En resumen, la diferencia principal radica en el tipo de escala (continua o categórica) y en la intensidad de los colores utilizados en cada función. Debes seleccionar la opción que mejor se ajuste a tus datos y a tus objetivos de representación visual.
+Ahora para imprimir en blanco y negro, creo lo mejor sería pensar en `scale_shape`
+
+https://ggplot2.tidyverse.org/reference/scale_shape.html
+
+Saludos
+
+Mauricio Mardones I.
+Researcher
+Instituto de Fomento Pesquero
+PhD Student
+Antarctic and SubAntarctic Science
+Universidad de Magallanes, Chile
++56 9 66209279
++34 611709287
+
+> On May 31, 2023, at 10:52 PM, Javier Gómez Gonzalez <zaragatan en gmail.com> wrote:
+> 
+> Hola a todos:
+> 
+> Alguién me podría explicar cuales son las diferencias entre las diferentes
+> escalas de viridis en ggplot2, es decir en qué se diferencian
+> scale-colour_viridis_d de scale_colour_viridis_c, scale_colour_viridis_b.
+> Y cual es la diferencia entre scale-fiil-viridis_d de scale-fill_viridis_c
+> y de scale_fill_viridis-b.
+> He estado buscando la diferencia en internet y no he encontrado nada al
+> respecto.
+> El motivo de querer saber las diferencias es que necesito hacer una serie
+> de gráficos para imprimirlos en blanco y negro.
+> 
+> Gracias
+> 
+>                                      Javier Gómez González
+> 
+> [[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+-- 
+C*ertificación ISO 9001/2015*: Sistema de Datos Biológico-Pesqueros (Arica, 
+Iquique, Coquimbo, Valparaíso, San Antonio, Talcahuano y Calbuco, 
+pesquerías industriales y artesanales)
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed May 31 23:56:05 2023
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Wed, 31 May 2023 18:56:05 -0300
+Subject: [R-es] ayuda sobre grafico de barras simple
+In-Reply-To: <293c81b5ce0bed8399f187dc1ea5bd00c04de01a.camel@uca.es>
+References: <CANuuowOhUm9JS68-ttBSN60K9HQdYQSY7vLaDCyK8dbM=6nVqg@mail.gmail.com>
+ <293c81b5ce0bed8399f187dc1ea5bd00c04de01a.camel@uca.es>
+Message-ID: <FE09F1CF-901D-4E86-8A76-42A0F490EFEB@gmail.com>
+
+Estimados
+
+José envio un archivo, pero no es privativo.  Hay varios programas para abrir un documento word, pero, dicho de otra forma, es docx, especificado en:
+
+https://es.wikipedia.org/wiki/Office_Open_XML?
+
+Bajo esas especificaciones es posible crear reportes escritos con extensión docx, o pdf, la diferencia es que uno es creado por Microsoft y otro por Adobe.
+
+Yo se utilizar lo especificado y código libre para recorrer datos en archivos de excel, incluso hay dos formas de realizar la lectura, lo importante de este es que al recorrer el archivo ya todo decisiones en forma automática para continuar con el trabajo posterior de datos. Es un rompe cabezas, pero da algunos beneficios.
+
+Javier Rubén Marcuzzi
+
+
+> El 31 may. 2023, a las 16:34, Proyecto R-UCA <r-uca en uca.es> escribió:
+> 
+> Buenas, José:
+> 
+> En una lista de software libre es preferible no usar formatos privativos de archivos como los que utiliza Microsoft.
+> 
+> Las instrucciones siguientes hacen un gráfico de barras:
+> x <- rbinom(10, 20, .3)
+> barplot(table(x))
+> 
+> ¿Los valores no se corresponden con una variable cuantitativa discreta? En caso contrario no es ese el gráfico que debe usarse.
+> 
+> Un saludo.
+> 
+> 
+> -- 
+> --------------------------------------------------
+> http://knuth.uca.es/R
+> --------------------------------------------------
+> Proyecto R-UCA
+> --------------------------------------------------
+> Nombre: Manuel Muñoz Márquez
+> Departamento: Departamento de Estadística e Investigación Operativa
+> Institución: Escuela Superior de Ingeniería
+> Organización: Universidad de Cádiz
+> --------------------------------------------------
+> 
+> 
+> El mié, 31-05-2023 a las 14:55 -0400, Jose Betancourt Bethencourt escribió:
+>> Estimados
+>> 
+>> mi pregunta viene en archivo adjunto
+>> 
+>> saludos
+>> José
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!XqMLNpizJGItFNcLlVaD1vaSzng5UjUXgQR3uDGGDDb4RrDrXvhBziOOcA8knGBgnxvH4O3aOZNQmnU$
+>>  
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230531/95bae7d2/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: wikipedia.png
+Type: image/png
+Size: 1313 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20230531/95bae7d2/attachment-0001.png>
+

@@ -1,0 +1,2391 @@
+From ju@m@d|@@ @end|ng |rom gm@||@com  Wed Jun  1 01:51:29 2022
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Tue, 31 May 2022 20:51:29 -0300
+Subject: [R-es] 
+	=?utf-8?q?separar_una_variable_en_dos_variables_por_una_o?=
+	=?utf-8?q?_m=C3=A1s_condiciones?=
+In-Reply-To: <CAOKbq8jcowk6oFecPVdRV9FUKVfrDFSa9hAM=FpLPqqWPxyZ2w@mail.gmail.com>
+References: <CAOF0weGrS7QqjQOqFv39rNBDMWMbtMtq7x0ZmmSCO6aGXL0AwQ@mail.gmail.com>
+ <9b920e45-6a77-41cf-924d-9778e9f17948@urjc.es>
+ <CAOF0weGRLAi1M99EaZevcW8Jk=hQiFGOmYZsJagqA9vNJNo4yg@mail.gmail.com>
+ <CAOKbq8jcowk6oFecPVdRV9FUKVfrDFSa9hAM=FpLPqqWPxyZ2w@mail.gmail.com>
+Message-ID: <CAOF0weHkQmsndCZ6bwzJK0HTTL8i4WYt-zY5F_ZUnD6iDkaFmw@mail.gmail.com>
+
+Muy bueno gracias Carlos!
+
+El mar., 31 de mayo de 2022 18:25, Carlos Ortega <cof en qualityexcellence.es>
+escribió:
+
+> Hola,
+>
+> Esta es otra forma de resolverlo en una sola pasada...
+>
+> > library(data.table)
+> > library(tidytable)
+> > library(stringi)
+> >
+> > variable<- c("9,301E+11","8,301E+11","00001-00170818","1000055365","G.A.
+> 001-24699570")
+> > Unidades <- c("remito","remito","remito","remito","remito")
+> > # base_1<-cbind(variable,Unidades)
+> >
+> > datos <- data.table(
+> +   variable = variable,
+> +   Unidades = Unidades
+> + )
+> >
+> > datos %>%
+> +   mutate.( variable_1 = ifelse.(stri_detect_fixed(variable, "E+"),
+> variable, NA)) %>%
+> +   mutate.( variable_2 = ifelse.(is.na(variable_1), variable, NA)) %>%
+> +   as.data.table()
+>             variable Unidades variable_1        variable_2
+>               <char>   <char>     <char>            <char>
+> 1:         9,301E+11   remito  9,301E+11              <NA>
+> 2:         8,301E+11   remito  8,301E+11              <NA>
+> 3:    00001-00170818   remito       <NA>    00001-00170818
+> 4:        1000055365   remito       <NA>        1000055365
+> 5: G.A. 001-24699570   remito       <NA> G.A. 001-24699570
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El mar, 31 may 2022 a las 23:10, juan manuel dias (<juamadias en gmail.com>)
+> escribió:
+>
+>> hola muchas gracias! ahora prueba esto que me decís!
+>> por ahora resolví así, seguro luego lo mejore!
+>>
+>> a$var.3<-(!str_detect(a$Remito,"\\E\\+"))
+>> a$var.4<-(str_detect(a$Remito,"\\E\\+"))
+>>
+>> a<-a %>%
+>>   mutate(var4=ifelse (var.3==FALSE ,Remito,NA))
+>>
+>> a<-a %>%
+>>   mutate(var5=ifelse (var.3==TRUE ,Remito,NA))
+>>
+>> a$var.6<-ifelse(is.na(a$var4),a$var5,a$var4)
+>>
+>>
+>> El mar, 31 may 2022 a las 17:53, Marcelino de la Cruz Rot (<
+>> marcelino.delacruz en urjc.es>) escribió:
+>>
+>> > Hola:
+>> > Puedes conseguirlo fácilmente con algunas frases de R básico:
+>> >
+>> > variable<- c("9,301E+11","8,301E+11","00001-00170818","1000055365","G.A.
+>> > 001-24699570")
+>> > cuales.cientificos <- grep("E+", variable)
+>> >
+>> > cientificos <- variable[cuales.cientificos]
+>> > cientificos <- sub(",", ".", cientificos)
+>> > options(scipen=999)
+>> > cientificos <- as.character(as.numeric(cientificos))
+>> >
+>> > variable3 <- variable
+>> > variable3[cuales.cientificos] <- cientificos
+>> > variable3
+>> > [1] "930100000000" "830100000000"      "00001-00170818"
+>> > "1000055365"        "G.A. 001-24699570"
+>> >
+>> >
+>> > Un saludo,
+>> > Marcelino
+>> >
+>> >
+>> >
+>> > El 31/05/2022 a las 21:38, juan manuel dias escribió:
+>> > > Hola,
+>> > >
+>> > > Tengo una base de datos y en uno de las variables/vectores, que es
+>> > > formato character, dentro de ese vector me encuentro que tengo casos
+>> > > con notación científica, casos alfanuméricos etc.
+>> > >
+>> > > Tengo que dividir esa variable en dos nuevas variables, de forma tal
+>> > > que me quede una variable con los casos que tengan notación científica
+>> > > para convertir a número, otro que donde tenga los alfanuméricos.
+>> > > variable<-
+>> > > c("9,301E+11","8,301E+11","00001-00170818","1000055365","G.A.
+>> > > 001-24699570")
+>> > > Unidades <- c("remito","remito","remito","remito","remito")
+>> > > base.1<-cbind(variable,Unidades)
+>> > > base.1
+>> > > image.png
+>> > >
+>> > > Lo que necesito sería separar "variable" asi:
+>> > >
+>> > > variable<-
+>> > > c("9,301E+11","8,301E+11","00001-00170818","1000055365","G.A.
+>> > > 001-24699570")
+>> > > variable.1<-c("9,301E+11","8,301E+11",NA,NA,NA)
+>> > > variable.2<-c("","","00001-00170818","1000055365","G.A. 001-24699570")
+>> > > Unidades <- c("remito","remito","remito","remito","remito")
+>> > > base.2<-as.data.frame(cbind(variable,variable.1,variable.2,Unidades))
+>> > >
+>> > > image.png
+>> > >
+>> > > Lo que no logro hacer es separar "variable" en variable.1 y
+>> variable.2.
+>> > > Intenté con str_detect dentro de un mutate y con if_else pero no logré
+>> > > que me de el resultado que busco.
+>> > >
+>> > > ####
+>> > > !str_detect(base2$variable.1,"\\E\\+"))
+>> > > str_detect( base2$variable.1  ,"\\E\\+"))
+>> > >
+>> > > Teniendo esa separación luego hago lo siguiente:
+>> > >
+>> > > ## reemplazo comas por puntos "." en  variable.1 para convertir a
+>> > numérica
+>> > > ## convierto numérica variable.1
+>> > > ## y finalmente elimino notación científica
+>> > > base.2$variable.1 <-(gsub(",", ".", base.2$variable.1))
+>> > > base.2$variable.1 <-as.numeric(base.2$variable.1)
+>> > > base.2$variable.1<-format(base.2$variable.1, scientific=F)
+>> > >
+>> > > Y finalmente crear una variable "variable.3" que quede así:
+>> > >
+>> > > ## genero una variable final
+>> > > base.2$variable.3<-ifelse(base.2$variable.1=="
+>> > >  NA",base.2$variable.2,base.2$variable.1)
+>> > > view(base.2)
+>> > >
+>> > > image.png
+>> > >
+>> > > Gracias!
+>> > >
+>> > > Juan.
+>> > >
+>> > >
+>> > > _______________________________________________
+>> > > R-help-es mailing list
+>> > > R-help-es en r-project.org
+>> > > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>> >
+>> > --
+>> > Marcelino de la Cruz Rot
+>> > Depto. de Biología y Geología
+>> > Física y Química Inorgánica
+>> > Universidad Rey Juan Carlos
+>> > Móstoles España
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Thu Jun  2 12:08:20 2022
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Thu, 2 Jun 2022 12:08:20 +0200
+Subject: [R-es] =?iso-8859-1?q?Mis_archivos_de_c=F3digo_est=E1n_vacios?=
+Message-ID: <000901d87668$affc6620$0ff53260$@jccm.es>
+
+Buenos d?as:
+
+Desde que instal? la nueva versi?n de R (4.2.0 Patched) en Windows, algo no
+funciona correctamente con mis archivos de c?digo en RStudio (2022.02.2
+Build 485): se ven vac?os, a pesar de que ocupan espacio en disco (se ven
+perfectamente en el explorador con worpad o similares). Es como si RStudio
+los grabara internamente en el proyecto de turno, y no los leyera del disco
+duro.
+
+Asusta mucho, porque da la impresi?n de que has perdido el c?digo; pero
+afortunadamente tengo todo lo importante en git?
+
+Intuyo que es un asunto de encoding, pero ni siquiera forzando source() con
+?encoding = ?ISO-8859-1??, o abri?ndolos con el encoding correcto consigo
+cargar bien los archivos. Tampoco ha sido suficiente con especificar el
+encoding por defecto en las opciones de RStudio?
+
+Necesito usar el abecedario latino porque los ficheros de texto que proceso
+tienen ?? y compa??a, as? que trabajar por defecto con UTF-8 no me vale.
+
+He constatado que este problema de RStudio colea desde hace a?os, pero a m?
+nunca me hab?a pasado? y me est? haciendo perder mucho tiempo, a parte de
+ser muy molesto?
+
+Antes de desinstalar e instalar en limpio todo otra vez, quer?a saber si
+existe alguna soluci?n sencilla. 
+
+Gracias por anticipado.
+
+ 
+
+Isidro Hidalgo Arellano
+
+Observatorio del Mercado de Trabajo
+
+Consejer?a de Econom?a, Empresas y Empleo
+
+ <http://www.castillalamancha.es/> http://www.castillalamancha.es/
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Thu Jun  2 12:36:02 2022
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Thu, 2 Jun 2022 12:36:02 +0200
+Subject: [R-es] =?iso-8859-1?q?Mis_archivos_de_c=F3digo_est=E1n_vacios?=
+Message-ID: <001001d8766c$8e85ab60$ab910220$@jccm.es>
+
+Por ahora olvidadlo: el build 492 de RStudio parece que me lo ha
+solucionado. Si sigue el problema m?s adelante, os lo comunicar?.
+
+Gracias.
+
+ 
+
+Isidro Hidalgo Arellano
+
+Observatorio del Mercado de Trabajo
+
+Consejer?a de Econom?a, Empresas y Empleo
+
+ <http://www.castillalamancha.es/> http://www.castillalamancha.es/
+
+ 
+
+De: Isidro Hidalgo Arellano <> 
+Enviado el: jueves, 2 de junio de 2022 12:08
+Para: r-help-es en r-project.org
+Asunto: Mis archivos de c?digo est?n vacios
+
+ 
+
+Buenos d?as:
+
+Desde que instal? la nueva versi?n de R (4.2.0 Patched) en Windows, algo no
+funciona correctamente con mis archivos de c?digo en RStudio (2022.02.2
+Build 485): se ven vac?os, a pesar de que ocupan espacio en disco (se ven
+perfectamente en el explorador con worpad o similares). Es como si RStudio
+los grabara internamente en el proyecto de turno, y no los leyera del disco
+duro.
+
+Asusta mucho, porque da la impresi?n de que has perdido el c?digo; pero
+afortunadamente tengo todo lo importante en git?
+
+Intuyo que es un asunto de encoding, pero ni siquiera forzando source() con
+?encoding = ?ISO-8859-1??, o abri?ndolos con el encoding correcto consigo
+cargar bien los archivos. Tampoco ha sido suficiente con especificar el
+encoding por defecto en las opciones de RStudio?
+
+Necesito usar el abecedario latino porque los ficheros de texto que proceso
+tienen ?? y compa??a, as? que trabajar por defecto con UTF-8 no me vale.
+
+He constatado que este problema de RStudio colea desde hace a?os, pero a m?
+nunca me hab?a pasado? y me est? haciendo perder mucho tiempo, a parte de
+ser muy molesto?
+
+Antes de desinstalar e instalar en limpio todo otra vez, quer?a saber si
+existe alguna soluci?n sencilla. 
+
+Gracias por anticipado.
+
+ 
+
+Isidro Hidalgo Arellano
+
+Observatorio del Mercado de Trabajo
+
+Consejer?a de Econom?a, Empresas y Empleo
+
+ <http://www.castillalamancha.es/> http://www.castillalamancha.es/
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+	[[alternative HTML version deleted]]
+
+
+From @uror@@gonz@|ez2 @end|ng |rom um@e@  Thu Jun  2 16:49:04 2022
+From: @uror@@gonz@|ez2 @end|ng |rom um@e@ (AURORA GONZALEZ VIDAL)
+Date: Thu, 02 Jun 2022 16:49:04 +0200
+Subject: [R-es] recomendaciones bioestadistica con R
+Message-ID: <20220602164904.Horde.PsMH5PZPjTKqiFiZ5dG0b8I@webmail.um.es>
+
+Hola a tod en s!
+
+Una amiga está buscando un máster o buen curso en bioestadística con  
+R. ¿Tenéis alguna recomendación?
+
+Muchas gracias!
+
+
+------
+
+
+
+
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Thu Jun  2 18:39:22 2022
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Thu, 2 Jun 2022 18:39:22 +0200
+Subject: [R-es] recomendaciones bioestadistica con R
+In-Reply-To: <20220602164904.Horde.PsMH5PZPjTKqiFiZ5dG0b8I@webmail.um.es>
+References: <20220602164904.Horde.PsMH5PZPjTKqiFiZ5dG0b8I@webmail.um.es>
+Message-ID: <05A4EB7B-419C-4F71-800A-445668C3317C@gmail.com>
+
+Aurora,
+
+Me consta que este de la Complutense es muy bueno: https://estudiosestadisticos.ucm.es/master-bioestadistica <https://estudiosestadisticos.ucm.es/master-bioestadistica>
+
+Aprovecho para comentar que una empresa del sector de producción animal me ha pedido ayuda para seleccionar a un/a bioestadístico/a para incorporación inmediata (en Huesca). Si hay alguien en la lista interesado/a que me escriba a emilio.lopez en urjc.es <mailto:emilio.lopez en urjc.es>.
+
+Un saludo,
+
+Emilio L. Cano
+Tel: 665 676 225
+
+
+
+> El 2 jun 2022, a las 16:49, AURORA GONZALEZ VIDAL <aurora.gonzalez2 en um.es> escribió:
+> 
+> Hola a tod en s!
+> 
+> Una amiga está buscando un máster o buen curso en bioestadística con  
+> R. ¿Tenéis alguna recomendación?
+> 
+> Muchas gracias!
+> 
+> 
+> ------
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From Guiiiermo@Vi@ue m@iii@g oii uv@es  Thu Jun  2 19:26:07 2022
+From: Guiiiermo@Vi@ue m@iii@g oii uv@es (=?iso-8859-1?q?Guiiiermo=40Vi=40ue_m=40iii=40g_oii_uv=40es?=)
+Date: Thu, 2 Jun 2022 19:26:07 +0200 (CEST)
+Subject: [R-es] recomendaciones bioestadistica con R
+In-Reply-To: <05A4EB7B-419C-4F71-800A-445668C3317C@gmail.com>
+References: <05A4EB7B-419C-4F71-800A-445668C3317C@gmail.com>
+Message-ID: <7226213161vivigui@uv.es>
+
+Hola, Aurora:
+
+Yo cursé el que imparte la Universidad de Valencia y aprendí mucho:
+
+https://www.uv.es/uvweb/universidad/es/estudios-postgrado/masteres-oficiales/oferta-masteres-oficiales/master-universitario-bioestadistica-1285848941532/Titulacio.html?id=1285853711048
+
+Saludos,
+
+Guillermo
+
+> Aurora,
+> 
+> Me consta que este de la Complutense es muy bueno: https://estudiosestadisticos.ucm.es/master-bioestadistica <https://estudiosestadisticos.ucm.es/master-bioestadistica>
+> 
+> Aprovecho para comentar que una empresa del sector de producción animal me ha pedido ayuda para seleccionar a un/a bioestadístico/a para incorporación inmediata (en Huesca). Si hay alguien en la lista interesado/a que me escriba a emilio.lopez en urjc.es <mailto:emilio.lopez en urjc.es>.
+> 
+> Un saludo,
+> 
+> Emilio L. Cano
+> Tel: 665 676 225
+> 
+> 
+> 
+> > El 2 jun 2022, a las 16:49, AURORA GONZALEZ VIDAL <aurora.gonzalez2 en um.es> escribió:
+> > 
+> > Hola a tod en s!
+> > 
+> > Una amiga está buscando un máster o buen curso en bioestadística con  
+> > R. ¿Tenéis alguna recomendación?
+> > 
+> > Muchas gracias!
+> > 
+> > 
+> > ------
+> > 
+> > 
+> > 
+> > 
+> > 
+> > 
+> > 
+> > 
+> > 	[[alternative HTML version deleted]]
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+
+
+From c@rmon@pont@que @end|ng |rom gm@||@com  Thu Jun  2 22:21:16 2022
+From: c@rmon@pont@que @end|ng |rom gm@||@com (Francesc Carmona Pontaque)
+Date: Thu, 2 Jun 2022 22:21:16 +0200
+Subject: [R-es] recomendaciones bioestadistica con R
+In-Reply-To: <7226213161vivigui@uv.es>
+References: <7226213161vivigui@uv.es>
+Message-ID: <DEC05846-274C-4912-8B38-44D8EB0AF3C7@gmail.com>
+
+https://estudios.uoc.edu/es/masters-universitarios/bioinformatica-bioestadistica/presentacion
+
+Francesc
+
+> El 2 juny 2022, a les 19:26, Guillermo.Vinue en uv.es va escriure:
+> 
+> ?Hola, Aurora:
+> 
+> Yo cursé el que imparte la Universidad de Valencia y aprendí mucho:
+> 
+> https://www.uv.es/uvweb/universidad/es/estudios-postgrado/masteres-oficiales/oferta-masteres-oficiales/master-universitario-bioestadistica-1285848941532/Titulacio.html?id=1285853711048
+> 
+> Saludos,
+> 
+> Guillermo
+> 
+>> Aurora,
+>> 
+>> Me consta que este de la Complutense es muy bueno: https://estudiosestadisticos.ucm.es/master-bioestadistica <https://estudiosestadisticos.ucm.es/master-bioestadistica>
+>> 
+>> Aprovecho para comentar que una empresa del sector de producción animal me ha pedido ayuda para seleccionar a un/a bioestadístico/a para incorporación inmediata (en Huesca). Si hay alguien en la lista interesado/a que me escriba a emilio.lopez en urjc.es <mailto:emilio.lopez en urjc.es>.
+>> 
+>> Un saludo,
+>> 
+>> Emilio L. Cano
+>> Tel: 665 676 225
+>> 
+>> 
+>> 
+>>>> El 2 jun 2022, a las 16:49, AURORA GONZALEZ VIDAL <aurora.gonzalez2 en um.es> escribió:
+>>> 
+>>> Hola a tod en s!
+>>> 
+>>> Una amiga está buscando un máster o buen curso en bioestadística con  
+>>> R. ¿Tenéis alguna recomendación?
+>>> 
+>>> Muchas gracias!
+>>> 
+>>> 
+>>> ------
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>> 
+>>>    [[alternative HTML version deleted]]
+>>> 
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> 
+>> 
+>>    [[alternative HTML version deleted]]
+>> 
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Fri Jun  3 09:39:26 2022
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Fri, 3 Jun 2022 09:39:26 +0200
+Subject: [R-es] A vueltas con el encoding
+Message-ID: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+
+La ?ltima versi?n de R (4.2.0. patched), a la que estoy cogiendo una man?a
+nada despreciable, no me carga correctamente ficheros de texto latinos (con
+?? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+
+Obtengo el mismo resultado con ?readLines(fichero)? que con
+?readLines(fichero, encoding = ?ISO-8859-1?)?.
+
+Por ejemplo, estas l?neas me las carga as?:
+
+ 
+
+[1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+ACTIVOS)"               
+
+[2] "                                          MES:        MAYO     A\xd1O:
+2022"            
+
+ 
+
+? cuando el contenido del fichero es ?ste:
+
+ 
+
+[1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+ACTIVOS)"               
+
+[2] "                                          MES:        MAYO     A?O:
+2022"            
+
+ 
+
+En las notas oficiales de la nueva versi?n se hace referencia a que se ha
+cambiado algo para que en Windows se utilice por defecto UTF-8. Me parece
+perfecto, pero si especificas un juego de caracteres espec?fico, R deber?a
+ser obediente, ?no?
+
+ 
+
+No es un problema de RStudio, he comprobado que R 4.1.3. a pelo funciona
+perfectamente, pero R 4.2.0. patched falla, no hace caso del encoding?
+
+ 
+
+A ver si pod?is ayudarme, please. Gracias
+
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Fri Jun  3 10:24:05 2022
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Fri, 3 Jun 2022 10:24:05 +0200
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+Message-ID: <e4ed5f81-f1ea-f6e5-f4b1-91e94a58ef4a@urjc.es>
+
+Hola Isidro:
+
+Yo creo que puedes solucionarlo con algo así:
+
+readLines(con <- file("fichero.txt", encoding = ""), encoding="latin1")
+
+Es decir, especificando el encoding como "" en la connection e indicando 
+el encoding del fichero en readLines.
+
+Lo cuentan en la sección "Encoding"  de ?connections.
+
+Un saludo,
+
+Marcelino
+
+
+
+El 03/06/2022 a las 9:39, Isidro Hidalgo Arellano escribió:
+> La ?ltima versi?n de R (4.2.0. patched), a la que estoy cogiendo una man?a
+> nada despreciable, no me carga correctamente ficheros de texto latinos (con
+> ?? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+>
+> Obtengo el mismo resultado con ?readLines(fichero)? que con
+> ?readLines(fichero, encoding = ?ISO-8859-1?)?.
+>
+> Por ejemplo, estas l?neas me las carga as?:
+>
+>   
+>
+> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+> ACTIVOS)"
+>
+> [2] "                                          MES:        MAYO     A\xd1O:
+> 2022"
+>
+>   
+>
+> ? cuando el contenido del fichero es ?ste:
+>
+>   
+>
+> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+> ACTIVOS)"
+>
+> [2] "                                          MES:        MAYO     A?O:
+> 2022"
+>
+>   
+>
+> En las notas oficiales de la nueva versi?n se hace referencia a que se ha
+> cambiado algo para que en Windows se utilice por defecto UTF-8. Me parece
+> perfecto, pero si especificas un juego de caracteres espec?fico, R deber?a
+> ser obediente, ?no?
+>
+>   
+>
+> No es un problema de RStudio, he comprobado que R 4.1.3. a pelo funciona
+> perfectamente, pero R 4.2.0. patched falla, no hace caso del encoding?
+>
+>   
+>
+> A ver si pod?is ayudarme, please. Gracias
+>
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Fri Jun  3 12:24:41 2022
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Fri, 3 Jun 2022 12:24:41 +0200
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <e4ed5f81-f1ea-f6e5-f4b1-91e94a58ef4a@urjc.es>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+ <e4ed5f81-f1ea-f6e5-f4b1-91e94a58ef4a@urjc.es>
+Message-ID: <002801d87734$22ac6dc0$68054940$@jccm.es>
+
+Ya lo había probado. Tampoco funciona. En Windows NO hace nada el encoding, es muy frustante.
+Pero tenéis que tener este problema mucha gente, una burrada de ficheros llevan caracteres latinos... ¿de verdad soy el único pardillo al que le pasa? Jajajajaja
+Gracias
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: R-help-es <> En nombre de Marcelino de la Cruz Rot
+Enviado el: viernes, 3 de junio de 2022 10:24
+Para: r-help-es en r-project.org
+Asunto: Re: [R-es] A vueltas con el encoding
+
+Hola Isidro:
+
+Yo creo que puedes solucionarlo con algo así:
+
+readLines(con <- file("fichero.txt", encoding = ""), encoding="latin1")
+
+Es decir, especificando el encoding como "" en la connection e indicando el encoding del fichero en readLines.
+
+Lo cuentan en la sección "Encoding"  de ?connections.
+
+Un saludo,
+
+Marcelino
+
+
+
+El 03/06/2022 a las 9:39, Isidro Hidalgo Arellano escribió:
+> La  ltima versi n de R (4.2.0. patched), a la que estoy cogiendo una 
+> man a nada despreciable, no me carga correctamente ficheros de texto 
+> latinos (con  ? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+>
+> Obtengo el mismo resultado con  readLines(fichero)  que con 
+>  readLines(fichero, encoding =  ISO-8859-1 ) .
+>
+> Por ejemplo, estas l neas me las carga as :
+>
+>   
+>
+> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+> ACTIVOS)"
+>
+> [2] "                                          MES:        MAYO     A\xd1O:
+> 2022"
+>
+>   
+>
+>   cuando el contenido del fichero es  ste:
+>
+>   
+>
+> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+> ACTIVOS)"
+>
+> [2] "                                          MES:        MAYO     A O:
+> 2022"
+>
+>   
+>
+> En las notas oficiales de la nueva versi n se hace referencia a que se 
+> ha cambiado algo para que en Windows se utilice por defecto UTF-8. Me 
+> parece perfecto, pero si especificas un juego de caracteres 
+> espec fico, R deber a ser obediente,  no?
+>
+>   
+>
+> No es un problema de RStudio, he comprobado que R 4.1.3. a pelo 
+> funciona perfectamente, pero R 4.2.0. patched falla, no hace caso del 
+> encoding 
+>
+>   
+>
+> A ver si pod is ayudarme, please. Gracias
+>
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+--
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Fri Jun  3 12:25:30 2022
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Fri, 3 Jun 2022 12:25:30 +0200
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <CAOKbq8grqQPf6=ttGW=1Cn7Jg51xiCTL5ZV+k38Xn83M=W7jPw@mail.gmail.com>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+ <CAOKbq8grqQPf6=ttGW=1Cn7Jg51xiCTL5ZV+k38Xn83M=W7jPw@mail.gmail.com>
+Message-ID: <002901d87734$402b3d90$c081b8b0$@jccm.es>
+
+El problema es en Windows, sí, ya veo que en Mac no pasa.
+
+Gracias
+
+ 
+
+Isidro Hidalgo Arellano
+
+Observatorio del Mercado de Trabajo
+
+Consejería de Economía, Empresas y Empleo
+
+http://www.castillalamancha.es/
+
+ 
+
+De: Carlos Ortega <> 
+Enviado el: viernes, 3 de junio de 2022 10:02
+Para: Isidro Hidalgo Arellano <ihidalgo en jccm.es>
+CC: Lista R <r-help-es en r-project.org>
+Asunto: Re: [R-es] A vueltas con el encoding
+
+ 
+
+Hola,
+
+ 
+
+No es Windows.... y creo que no he instalado esa versión parcheada, no sé si existe para Mac...
+
+Con "UTF-8" y "Latin-1" me funciona sin problemas.
+
+ 
+
+> readLines("fichero.txt", encoding = "UTF-8")
+[1] "[1] \"             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES."   
+[2] "ACTIVOS)\"               "                                                
+[3] ""                                                                         
+[4] "[2] \"                                          MES:        MAYO     AÑO:"
+[5] "2022\"            "                                                       
+Warning message:
+In readLines("fichero.txt", encoding = "UTF-8") :
+  incomplete final line found on 'fichero.txt'
+> readLines("fichero.txt", encoding = "Latin-1")
+[1] "[1] \"             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES."   
+[2] "ACTIVOS)\"               "                                                
+[3] ""                                                                         
+[4] "[2] \"                                          MES:        MAYO     AÑO:"
+[5] "2022\"            "                                                       
+Warning message:
+In readLines("fichero.txt", encoding = "Latin-1") :
+  incomplete final line found on 'fichero.txt'
+> version
+               _                           
+platform       x86_64-apple-darwin17.0     
+arch           x86_64                      
+os             darwin17.0                  
+system         x86_64, darwin17.0          
+status                                     
+major          4                           
+minor          2.0                         
+year           2022                        
+month          04                          
+day            22                          
+svn rev        82229                       
+language       R                           
+version.string R version 4.2.0 (2022-04-22)
+nickname       Vigorous Calisthenics   
+
+ 
+
+Gracias,
+
+Carlos Ortega
+
+http://secure-web.cisco.com/1ESgn7BOIhx4dz8dHh5dGz0vD6MpY3v8uGkuIEpCUgTf-IiFQTa3-s8QqjaOJNL6eMN8lFTneyXV1_20ssfyZs_Y4dVRU0jFbiqdThu0q6TsoK-ATgHBqLIiIVQLycgW7NjRU36XqXpm6WTTEye23lgIhwJQp71whLgZTSk3VvZQySfE2rE4rbPIXIUWWPAFwXfD3urSFgqJI6XM9R6bVq1LgYmsRrWnT2d8UztCVRdGp8MkyjpD6_TVxgbhwfv0S7a8d4h2FupO7GFReZWswuzLXSTrWJnX4RXOE8YMrNk_zAwOUwqR8OdlkkTaVed64RF5C6LzUYsW3Tz10UiUOsA/http%3A%2F%2Fwww.qualityexcellence.es
+
+ 
+
+El vie, 3 jun 2022 a las 9:39, Isidro Hidalgo Arellano (<ihidalgo en jccm.es <mailto:ihidalgo en jccm.es> >) escribió:
+
+La última versión de R (4.2.0. patched), a la que estoy cogiendo una manía
+nada despreciable, no me carga correctamente ficheros de texto latinos (con
+?Ñ? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+
+Obtengo el mismo resultado con ?readLines(fichero)? que con
+?readLines(fichero, encoding = ?ISO-8859-1?)?.
+
+Por ejemplo, estas líneas me las carga así?:
+
+
+
+[1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+ACTIVOS)"               
+
+[2] "                                          MES:        MAYO     A\xd1O:
+2022"            
+
+
+
+? cuando el contenido del fichero es éste:
+
+
+
+[1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+ACTIVOS)"               
+
+[2] "                                          MES:        MAYO     AÑO:
+2022"            
+
+
+
+En las notas oficiales de la nueva versión se hace referencia a que se ha
+cambiado algo para que en Windows se utilice por defecto UTF-8. Me parece
+perfecto, pero si especificas un juego de caracteres específico, R debería
+ser obediente, ¿no?
+
+
+
+No es un problema de RStudio, he comprobado que R 4.1.3. a pelo funciona
+perfectamente, pero R 4.2.0. patched falla, no hace caso del encoding?
+
+
+
+A ver si podéis ayudarme, please. Gracias
+
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org <mailto:R-help-es en r-project.org> 
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+-- 
+
+Saludos,
+Carlos Ortega
+http://secure-web.cisco.com/1ESgn7BOIhx4dz8dHh5dGz0vD6MpY3v8uGkuIEpCUgTf-IiFQTa3-s8QqjaOJNL6eMN8lFTneyXV1_20ssfyZs_Y4dVRU0jFbiqdThu0q6TsoK-ATgHBqLIiIVQLycgW7NjRU36XqXpm6WTTEye23lgIhwJQp71whLgZTSk3VvZQySfE2rE4rbPIXIUWWPAFwXfD3urSFgqJI6XM9R6bVq1LgYmsRrWnT2d8UztCVRdGp8MkyjpD6_TVxgbhwfv0S7a8d4h2FupO7GFReZWswuzLXSTrWJnX4RXOE8YMrNk_zAwOUwqR8OdlkkTaVed64RF5C6LzUYsW3Tz10UiUOsA/http%3A%2F%2Fwww.qualityexcellence.es
+
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Fri Jun  3 12:29:16 2022
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Fri, 3 Jun 2022 12:29:16 +0200
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <002801d87734$22ac6dc0$68054940$@jccm.es>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+ <e4ed5f81-f1ea-f6e5-f4b1-91e94a58ef4a@urjc.es>
+ <002801d87734$22ac6dc0$68054940$@jccm.es>
+Message-ID: <4bd28ff5-6937-003e-b4b3-a6d19a3fa953@urjc.es>
+
+¿Pero lo has usado con "latin1"?
+
+Yo lo he probado en Windows (R version 4.2.0 (2022-04-22 ucrt) -- 
+"Vigorous Calisthenics")
+y me ha funcionado correctamente para leer palabras con tildes, ñ, etc.
+
+Marcelino
+
+
+El 03/06/2022 a las 12:24, Isidro Hidalgo Arellano escribió:
+> Ya lo había probado. Tampoco funciona. En Windows NO hace nada el encoding, es muy frustante.
+> Pero tenéis que tener este problema mucha gente, una burrada de ficheros llevan caracteres latinos... ¿de verdad soy el único pardillo al que le pasa? Jajajajaja
+> Gracias
+>
+> Isidro Hidalgo Arellano
+> Observatorio del Mercado de Trabajo
+> Consejería de Economía, Empresas y Empleo
+> http://www.castillalamancha.es/
+>
+> -----Mensaje original-----
+> De: R-help-es <> En nombre de Marcelino de la Cruz Rot
+> Enviado el: viernes, 3 de junio de 2022 10:24
+> Para: r-help-es en r-project.org
+> Asunto: Re: [R-es] A vueltas con el encoding
+>
+> Hola Isidro:
+>
+> Yo creo que puedes solucionarlo con algo así:
+>
+> readLines(con <- file("fichero.txt", encoding = ""), encoding="latin1")
+>
+> Es decir, especificando el encoding como "" en la connection e indicando el encoding del fichero en readLines.
+>
+> Lo cuentan en la sección "Encoding"  de ?connections.
+>
+> Un saludo,
+>
+> Marcelino
+>
+>
+>
+> El 03/06/2022 a las 9:39, Isidro Hidalgo Arellano escribió:
+>> La  ltima versi n de R (4.2.0. patched), a la que estoy cogiendo una
+>> man a nada despreciable, no me carga correctamente ficheros de texto
+>> latinos (con  ? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+>>
+>> Obtengo el mismo resultado con  readLines(fichero)  que con
+>>   readLines(fichero, encoding =  ISO-8859-1 ) .
+>>
+>> Por ejemplo, estas l neas me las carga as :
+>>
+>>    
+>>
+>> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>> ACTIVOS)"
+>>
+>> [2] "                                          MES:        MAYO     A\xd1O:
+>> 2022"
+>>
+>>    
+>>
+>>    cuando el contenido del fichero es  ste:
+>>
+>>    
+>>
+>> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>> ACTIVOS)"
+>>
+>> [2] "                                          MES:        MAYO     A O:
+>> 2022"
+>>
+>>    
+>>
+>> En las notas oficiales de la nueva versi n se hace referencia a que se
+>> ha cambiado algo para que en Windows se utilice por defecto UTF-8. Me
+>> parece perfecto, pero si especificas un juego de caracteres
+>> espec fico, R deber a ser obediente,  no?
+>>
+>>    
+>>
+>> No es un problema de RStudio, he comprobado que R 4.1.3. a pelo
+>> funciona perfectamente, pero R 4.2.0. patched falla, no hace caso del
+>> encoding
+>>
+>>    
+>>
+>> A ver si pod is ayudarme, please. Gracias
+>>
+>>
+>> 	[[alternative HTML version deleted]]
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> .
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Fri Jun  3 12:39:34 2022
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Fri, 3 Jun 2022 12:39:34 +0200
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <4bd28ff5-6937-003e-b4b3-a6d19a3fa953@urjc.es>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+ <e4ed5f81-f1ea-f6e5-f4b1-91e94a58ef4a@urjc.es>
+ <002801d87734$22ac6dc0$68054940$@jccm.es>
+ <4bd28ff5-6937-003e-b4b3-a6d19a3fa953@urjc.es>
+Message-ID: <002e01d87736$375cfd50$a616f7f0$@jccm.es>
+
+Acabo de descubrir que si especificas "latin1" en vez de "ISO-8859-1" funciona.
+Por favor, que alguien me lo explique...
+Mil gracias, os debo una cerveza XD
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: R-help-es <> En nombre de Marcelino de la Cruz Rot
+Enviado el: viernes, 3 de junio de 2022 12:29
+Para: r-help-es en r-project.org
+Asunto: Re: [R-es] A vueltas con el encoding
+
+¿Pero lo has usado con "latin1"?
+
+Yo lo he probado en Windows (R version 4.2.0 (2022-04-22 ucrt) -- "Vigorous Calisthenics") y me ha funcionado correctamente para leer palabras con tildes, ñ, etc.
+
+Marcelino
+
+
+El 03/06/2022 a las 12:24, Isidro Hidalgo Arellano escribió:
+> Ya lo había probado. Tampoco funciona. En Windows NO hace nada el encoding, es muy frustante.
+> Pero tenéis que tener este problema mucha gente, una burrada de 
+> ficheros llevan caracteres latinos... ¿de verdad soy el único pardillo 
+> al que le pasa? Jajajajaja Gracias
+>
+> Isidro Hidalgo Arellano
+> Observatorio del Mercado de Trabajo
+> Consejería de Economía, Empresas y Empleo 
+> http://www.castillalamancha.es/
+>
+> -----Mensaje original-----
+> De: R-help-es <> En nombre de Marcelino de la Cruz Rot Enviado el: 
+> viernes, 3 de junio de 2022 10:24
+> Para: r-help-es en r-project.org
+> Asunto: Re: [R-es] A vueltas con el encoding
+>
+> Hola Isidro:
+>
+> Yo creo que puedes solucionarlo con algo así:
+>
+> readLines(con <- file("fichero.txt", encoding = ""), 
+> encoding="latin1")
+>
+> Es decir, especificando el encoding como "" en la connection e indicando el encoding del fichero en readLines.
+>
+> Lo cuentan en la sección "Encoding"  de ?connections.
+>
+> Un saludo,
+>
+> Marcelino
+>
+>
+>
+> El 03/06/2022 a las 9:39, Isidro Hidalgo Arellano escribió:
+>> La  ltima versi n de R (4.2.0. patched), a la que estoy cogiendo una 
+>> man a nada despreciable, no me carga correctamente ficheros de texto 
+>> latinos (con  ? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+>>
+>> Obtengo el mismo resultado con  readLines(fichero)  que con
+>>   readLines(fichero, encoding =  ISO-8859-1 ) .
+>>
+>> Por ejemplo, estas l neas me las carga as :
+>>
+>>    
+>>
+>> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>> ACTIVOS)"
+>>
+>> [2] "                                          MES:        MAYO     A\xd1O:
+>> 2022"
+>>
+>>    
+>>
+>>    cuando el contenido del fichero es  ste:
+>>
+>>    
+>>
+>> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>> ACTIVOS)"
+>>
+>> [2] "                                          MES:        MAYO     A O:
+>> 2022"
+>>
+>>    
+>>
+>> En las notas oficiales de la nueva versi n se hace referencia a que 
+>> se ha cambiado algo para que en Windows se utilice por defecto UTF-8. 
+>> Me parece perfecto, pero si especificas un juego de caracteres espec 
+>> fico, R deber a ser obediente,  no?
+>>
+>>    
+>>
+>> No es un problema de RStudio, he comprobado que R 4.1.3. a pelo 
+>> funciona perfectamente, pero R 4.2.0. patched falla, no hace caso del 
+>> encoding
+>>
+>>    
+>>
+>> A ver si pod is ayudarme, please. Gracias
+>>
+>>
+>> 	[[alternative HTML version deleted]]
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> .
+
+
+--
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Fri Jun  3 13:04:29 2022
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Fri, 3 Jun 2022 13:04:29 +0200
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <002e01d87736$375cfd50$a616f7f0$@jccm.es>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+ <e4ed5f81-f1ea-f6e5-f4b1-91e94a58ef4a@urjc.es>
+ <002801d87734$22ac6dc0$68054940$@jccm.es>
+ <4bd28ff5-6937-003e-b4b3-a6d19a3fa953@urjc.es>
+ <002e01d87736$375cfd50$a616f7f0$@jccm.es>
+Message-ID: <55aa022e-268b-de26-8e0a-8a41dbcf425b@urjc.es>
+
+Podría deberse a que no codificas el encoding de la manera adecuada o a 
+que tu Windows no reconoce ese encoding.
+
+Con iconvlist() puedes ver la lista de encodings que reconoce tu 
+sistema. En el mío, ISO-8859-1 debería codificarse como "iso_8859_1".
+Más sobre esto en ?iconv.
+
+Marcelino
+
+
+
+El 03/06/2022 a las 12:39, Isidro Hidalgo Arellano escribió:
+> Acabo de descubrir que si especificas "latin1" en vez de "ISO-8859-1" funciona.
+> Por favor, que alguien me lo explique...
+> Mil gracias, os debo una cerveza XD
+>
+> Isidro Hidalgo Arellano
+> Observatorio del Mercado de Trabajo
+> Consejería de Economía, Empresas y Empleo
+> http://www.castillalamancha.es/
+>
+> -----Mensaje original-----
+> De: R-help-es <> En nombre de Marcelino de la Cruz Rot
+> Enviado el: viernes, 3 de junio de 2022 12:29
+> Para: r-help-es en r-project.org
+> Asunto: Re: [R-es] A vueltas con el encoding
+>
+> ¿Pero lo has usado con "latin1"?
+>
+> Yo lo he probado en Windows (R version 4.2.0 (2022-04-22 ucrt) -- "Vigorous Calisthenics") y me ha funcionado correctamente para leer palabras con tildes, ñ, etc.
+>
+> Marcelino
+>
+>
+> El 03/06/2022 a las 12:24, Isidro Hidalgo Arellano escribió:
+>> Ya lo había probado. Tampoco funciona. En Windows NO hace nada el encoding, es muy frustante.
+>> Pero tenéis que tener este problema mucha gente, una burrada de
+>> ficheros llevan caracteres latinos... ¿de verdad soy el único pardillo
+>> al que le pasa? Jajajajaja Gracias
+>>
+>> Isidro Hidalgo Arellano
+>> Observatorio del Mercado de Trabajo
+>> Consejería de Economía, Empresas y Empleo
+>> http://www.castillalamancha.es/
+>>
+>> -----Mensaje original-----
+>> De: R-help-es <> En nombre de Marcelino de la Cruz Rot Enviado el:
+>> viernes, 3 de junio de 2022 10:24
+>> Para: r-help-es en r-project.org
+>> Asunto: Re: [R-es] A vueltas con el encoding
+>>
+>> Hola Isidro:
+>>
+>> Yo creo que puedes solucionarlo con algo así:
+>>
+>> readLines(con <- file("fichero.txt", encoding = ""),
+>> encoding="latin1")
+>>
+>> Es decir, especificando el encoding como "" en la connection e indicando el encoding del fichero en readLines.
+>>
+>> Lo cuentan en la sección "Encoding"  de ?connections.
+>>
+>> Un saludo,
+>>
+>> Marcelino
+>>
+>>
+>>
+>> El 03/06/2022 a las 9:39, Isidro Hidalgo Arellano escribió:
+>>> La  ltima versi n de R (4.2.0. patched), a la que estoy cogiendo una
+>>> man a nada despreciable, no me carga correctamente ficheros de texto
+>>> latinos (con  ? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+>>>
+>>> Obtengo el mismo resultado con  readLines(fichero)  que con
+>>>    readLines(fichero, encoding =  ISO-8859-1 ) .
+>>>
+>>> Por ejemplo, estas l neas me las carga as :
+>>>
+>>>     
+>>>
+>>> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>>> ACTIVOS)"
+>>>
+>>> [2] "                                          MES:        MAYO     A\xd1O:
+>>> 2022"
+>>>
+>>>     
+>>>
+>>>     cuando el contenido del fichero es  ste:
+>>>
+>>>     
+>>>
+>>> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>>> ACTIVOS)"
+>>>
+>>> [2] "                                          MES:        MAYO     A O:
+>>> 2022"
+>>>
+>>>     
+>>>
+>>> En las notas oficiales de la nueva versi n se hace referencia a que
+>>> se ha cambiado algo para que en Windows se utilice por defecto UTF-8.
+>>> Me parece perfecto, pero si especificas un juego de caracteres espec
+>>> fico, R deber a ser obediente,  no?
+>>>
+>>>     
+>>>
+>>> No es un problema de RStudio, he comprobado que R 4.1.3. a pelo
+>>> funciona perfectamente, pero R 4.2.0. patched falla, no hace caso del
+>>> encoding
+>>>
+>>>     
+>>>
+>>> A ver si pod is ayudarme, please. Gracias
+>>>
+>>>
+>>> 	[[alternative HTML version deleted]]
+>>>
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> --
+>> Marcelino de la Cruz Rot
+>> Depto. de Biología y Geología
+>> Física y Química Inorgánica
+>> Universidad Rey Juan Carlos
+>> Móstoles España
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> .
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> .
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Fri Jun  3 13:23:04 2022
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Fri, 3 Jun 2022 13:23:04 +0200
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <55aa022e-268b-de26-8e0a-8a41dbcf425b@urjc.es>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+ <e4ed5f81-f1ea-f6e5-f4b1-91e94a58ef4a@urjc.es>
+ <002801d87734$22ac6dc0$68054940$@jccm.es>
+ <4bd28ff5-6937-003e-b4b3-a6d19a3fa953@urjc.es>
+ <002e01d87736$375cfd50$a616f7f0$@jccm.es>
+ <55aa022e-268b-de26-8e0a-8a41dbcf425b@urjc.es>
+Message-ID: <003801d8773c$4af12390$e0d36ab0$@jccm.es>
+
+Vaya tela. "latin1" en mi máquina debe especificarse alternativamente con "iso_8859-1", yo lo estaba especificando con "ISO-8859-1".
+Utilizaré "latin1" a partir de ahora.
+De verdad, mil gracias, Marcelino.
+
+AVISO A NAVEGANTES... hay funciones que no usan el parámetro "encoding =", sino "fileEncoding =". Un ejemplo es "read.fwf()", que utilizo a menudo. En Windows, con la versión 4.2.0 patched TENEMOS QUE ESPECIFICAR SIEMPRE EL JUEGO DE CARACTERES
+
+Saludos a todos,
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: R-help-es <> En nombre de Marcelino de la Cruz Rot
+Enviado el: viernes, 3 de junio de 2022 13:04
+Para: r-help-es en r-project.org
+Asunto: Re: [R-es] A vueltas con el encoding
+
+Podría deberse a que no codificas el encoding de la manera adecuada o a que tu Windows no reconoce ese encoding.
+
+Con iconvlist() puedes ver la lista de encodings que reconoce tu sistema. En el mío, ISO-8859-1 debería codificarse como "iso_8859_1".
+Más sobre esto en ?iconv.
+
+Marcelino
+
+
+
+El 03/06/2022 a las 12:39, Isidro Hidalgo Arellano escribió:
+> Acabo de descubrir que si especificas "latin1" en vez de "ISO-8859-1" funciona.
+> Por favor, que alguien me lo explique...
+> Mil gracias, os debo una cerveza XD
+>
+> Isidro Hidalgo Arellano
+> Observatorio del Mercado de Trabajo
+> Consejería de Economía, Empresas y Empleo 
+> http://www.castillalamancha.es/
+>
+> -----Mensaje original-----
+> De: R-help-es <> En nombre de Marcelino de la Cruz Rot Enviado el: 
+> viernes, 3 de junio de 2022 12:29
+> Para: r-help-es en r-project.org
+> Asunto: Re: [R-es] A vueltas con el encoding
+>
+> ¿Pero lo has usado con "latin1"?
+>
+> Yo lo he probado en Windows (R version 4.2.0 (2022-04-22 ucrt) -- "Vigorous Calisthenics") y me ha funcionado correctamente para leer palabras con tildes, ñ, etc.
+>
+> Marcelino
+>
+>
+> El 03/06/2022 a las 12:24, Isidro Hidalgo Arellano escribió:
+>> Ya lo había probado. Tampoco funciona. En Windows NO hace nada el encoding, es muy frustante.
+>> Pero tenéis que tener este problema mucha gente, una burrada de 
+>> ficheros llevan caracteres latinos... ¿de verdad soy el único 
+>> pardillo al que le pasa? Jajajajaja Gracias
+>>
+>> Isidro Hidalgo Arellano
+>> Observatorio del Mercado de Trabajo
+>> Consejería de Economía, Empresas y Empleo 
+>> http://www.castillalamancha.es/
+>>
+>> -----Mensaje original-----
+>> De: R-help-es <> En nombre de Marcelino de la Cruz Rot Enviado el:
+>> viernes, 3 de junio de 2022 10:24
+>> Para: r-help-es en r-project.org
+>> Asunto: Re: [R-es] A vueltas con el encoding
+>>
+>> Hola Isidro:
+>>
+>> Yo creo que puedes solucionarlo con algo así:
+>>
+>> readLines(con <- file("fichero.txt", encoding = ""),
+>> encoding="latin1")
+>>
+>> Es decir, especificando el encoding como "" en la connection e indicando el encoding del fichero en readLines.
+>>
+>> Lo cuentan en la sección "Encoding"  de ?connections.
+>>
+>> Un saludo,
+>>
+>> Marcelino
+>>
+>>
+>>
+>> El 03/06/2022 a las 9:39, Isidro Hidalgo Arellano escribió:
+>>> La  ltima versi n de R (4.2.0. patched), a la que estoy cogiendo una 
+>>> man a nada despreciable, no me carga correctamente ficheros de texto 
+>>> latinos (con  ? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+>>>
+>>> Obtengo el mismo resultado con  readLines(fichero)  que con
+>>>    readLines(fichero, encoding =  ISO-8859-1 ) .
+>>>
+>>> Por ejemplo, estas l neas me las carga as :
+>>>
+>>>     
+>>>
+>>> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>>> ACTIVOS)"
+>>>
+>>> [2] "                                          MES:        MAYO     A\xd1O:
+>>> 2022"
+>>>
+>>>     
+>>>
+>>>     cuando el contenido del fichero es  ste:
+>>>
+>>>     
+>>>
+>>> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>>> ACTIVOS)"
+>>>
+>>> [2] "                                          MES:        MAYO     A O:
+>>> 2022"
+>>>
+>>>     
+>>>
+>>> En las notas oficiales de la nueva versi n se hace referencia a que 
+>>> se ha cambiado algo para que en Windows se utilice por defecto UTF-8.
+>>> Me parece perfecto, pero si especificas un juego de caracteres espec 
+>>> fico, R deber a ser obediente,  no?
+>>>
+>>>     
+>>>
+>>> No es un problema de RStudio, he comprobado que R 4.1.3. a pelo 
+>>> funciona perfectamente, pero R 4.2.0. patched falla, no hace caso 
+>>> del encoding
+>>>
+>>>     
+>>>
+>>> A ver si pod is ayudarme, please. Gracias
+>>>
+>>>
+>>> 	[[alternative HTML version deleted]]
+>>>
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> --
+>> Marcelino de la Cruz Rot
+>> Depto. de Biología y Geología
+>> Física y Química Inorgánica
+>> Universidad Rey Juan Carlos
+>> Móstoles España
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> .
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> .
+
+
+--
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From pepeceb @end|ng |rom y@hoo@e@  Fri Jun  3 13:48:03 2022
+From: pepeceb @end|ng |rom y@hoo@e@ (jose luis)
+Date: Fri, 3 Jun 2022 11:48:03 +0000 (UTC)
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <55aa022e-268b-de26-8e0a-8a41dbcf425b@urjc.es>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+ <e4ed5f81-f1ea-f6e5-f4b1-91e94a58ef4a@urjc.es>
+ <002801d87734$22ac6dc0$68054940$@jccm.es>
+ <4bd28ff5-6937-003e-b4b3-a6d19a3fa953@urjc.es>
+ <002e01d87736$375cfd50$a616f7f0$@jccm.es>
+ <55aa022e-268b-de26-8e0a-8a41dbcf425b@urjc.es>
+Message-ID: <670622584.10708463.1654256883234@mail.yahoo.com>
+
+ Hola Pues a mi el que nunca me falla es este: datos<- read_csv("datos.csv",     locale = locale(encoding = "WINDOWS-1252"))
+
+
+ UTF-8  a veces me da problemas con tildes y ñ.
+Saludos    En viernes, 3 de junio de 2022 13:05:18 CEST, Marcelino de la Cruz Rot <marcelino.delacruz en urjc.es> escribió:  
+ 
+ Podría deberse a que no codificas el encoding de la manera adecuada o a 
+que tu Windows no reconoce ese encoding.
+
+Con iconvlist() puedes ver la lista de encodings que reconoce tu 
+sistema. En el mío, ISO-8859-1 debería codificarse como "iso_8859_1".
+Más sobre esto en ?iconv.
+
+Marcelino
+
+
+
+El 03/06/2022 a las 12:39, Isidro Hidalgo Arellano escribió:
+> Acabo de descubrir que si especificas "latin1" en vez de "ISO-8859-1" funciona.
+> Por favor, que alguien me lo explique...
+> Mil gracias, os debo una cerveza XD
+>
+> Isidro Hidalgo Arellano
+> Observatorio del Mercado de Trabajo
+> Consejería de Economía, Empresas y Empleo
+> http://www.castillalamancha.es/
+>
+> -----Mensaje original-----
+> De: R-help-es <> En nombre de Marcelino de la Cruz Rot
+> Enviado el: viernes, 3 de junio de 2022 12:29
+> Para: r-help-es en r-project.org
+> Asunto: Re: [R-es] A vueltas con el encoding
+>
+> ¿Pero lo has usado con "latin1"?
+>
+> Yo lo he probado en Windows (R version 4.2.0 (2022-04-22 ucrt) -- "Vigorous Calisthenics") y me ha funcionado correctamente para leer palabras con tildes, ñ, etc.
+>
+> Marcelino
+>
+>
+> El 03/06/2022 a las 12:24, Isidro Hidalgo Arellano escribió:
+>> Ya lo había probado. Tampoco funciona. En Windows NO hace nada el encoding, es muy frustante.
+>> Pero tenéis que tener este problema mucha gente, una burrada de
+>> ficheros llevan caracteres latinos... ¿de verdad soy el único pardillo
+>> al que le pasa? Jajajajaja Gracias
+>>
+>> Isidro Hidalgo Arellano
+>> Observatorio del Mercado de Trabajo
+>> Consejería de Economía, Empresas y Empleo
+>> http://www.castillalamancha.es/
+>>
+>> -----Mensaje original-----
+>> De: R-help-es <> En nombre de Marcelino de la Cruz Rot Enviado el:
+>> viernes, 3 de junio de 2022 10:24
+>> Para: r-help-es en r-project.org
+>> Asunto: Re: [R-es] A vueltas con el encoding
+>>
+>> Hola Isidro:
+>>
+>> Yo creo que puedes solucionarlo con algo así:
+>>
+>> readLines(con <- file("fichero.txt", encoding = ""),
+>> encoding="latin1")
+>>
+>> Es decir, especificando el encoding como "" en la connection e indicando el encoding del fichero en readLines.
+>>
+>> Lo cuentan en la sección "Encoding"  de ?connections.
+>>
+>> Un saludo,
+>>
+>> Marcelino
+>>
+>>
+>>
+>> El 03/06/2022 a las 9:39, Isidro Hidalgo Arellano escribió:
+>>> La  ltima versi n de R (4.2.0. patched), a la que estoy cogiendo una
+>>> man a nada despreciable, no me carga correctamente ficheros de texto
+>>> latinos (con  ? y otros caracteres) aunque especifique el encoding ISO-8859-1.
+>>>
+>>> Obtengo el mismo resultado con  readLines(fichero)  que con
+>>>    readLines(fichero, encoding =  ISO-8859-1 ) .
+>>>
+>>> Por ejemplo, estas l neas me las carga as :
+>>>
+>>>    
+>>>
+>>> [1] "            ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>>> ACTIVOS)"
+>>>
+>>> [2] "                                          MES:        MAYO    A\xd1O:
+>>> 2022"
+>>>
+>>>    
+>>>
+>>>    cuando el contenido del fichero es  ste:
+>>>
+>>>    
+>>>
+>>> [1] "            ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+>>> ACTIVOS)"
+>>>
+>>> [2] "                                          MES:        MAYO    A O:
+>>> 2022"
+>>>
+>>>    
+>>>
+>>> En las notas oficiales de la nueva versi n se hace referencia a que
+>>> se ha cambiado algo para que en Windows se utilice por defecto UTF-8.
+>>> Me parece perfecto, pero si especificas un juego de caracteres espec
+>>> fico, R deber a ser obediente,  no?
+>>>
+>>>    
+>>>
+>>> No es un problema de RStudio, he comprobado que R 4.1.3. a pelo
+>>> funciona perfectamente, pero R 4.2.0. patched falla, no hace caso del
+>>> encoding
+>>>
+>>>    
+>>>
+>>> A ver si pod is ayudarme, please. Gracias
+>>>
+>>>
+>>>     [[alternative HTML version deleted]]
+>>>
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> --
+>> Marcelino de la Cruz Rot
+>> Depto. de Biología y Geología
+>> Física y Química Inorgánica
+>> Universidad Rey Juan Carlos
+>> Móstoles España
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> .
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> .
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+  
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Fri Jun  3 23:19:31 2022
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Fri, 3 Jun 2022 18:19:31 -0300
+Subject: [R-es] A vueltas con el encoding
+In-Reply-To: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+References: <001801d8771d$0d50b6a0$27f223e0$@jccm.es>
+Message-ID: <C809B4F2-DAA5-4AA8-A445-44435AD94F97@gmail.com>
+
+Estimado Isidro Hidalgo Avellano
+
+No sé que sistema operativo está utilizando, en estos momentos yo estoy en Mac m1, pero en Windows 10 intel, yo tenía problemas al mover los archivos de una carpeta a otra, y eran problemas de codificación	, por ejemplo, de la carpeta prueba los movía a la carpeta final, aún estando todo R cerrado, solo el sistema, al abrir nuevamente, todo funcionaba menos la codificación. Nunca comprendí que pasaba.
+
+Javier Rubén Marcuzzi
+
+
+
+> El 3 jun. 2022, a las 04:39, Isidro Hidalgo Arellano <ihidalgo en jccm.es> escribió:
+> 
+> La última versión de R (4.2.0. patched), a la que estoy cogiendo una manía
+> nada despreciable, no me carga correctamente ficheros de texto latinos (con
+> “Ñ” y otros caracteres) aunque especifique el encoding ISO-8859-1.
+> 
+> Obtengo el mismo resultado con “readLines(fichero)” que con
+> “readLines(fichero, encoding = “ISO-8859-1”)”.
+> 
+> Por ejemplo, estas líneas me las carga así
+> :
+> 
+> 
+> 
+> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+> ACTIVOS)"               
+> 
+> [2] "                                          MES:        MAYO     A\xd1O:
+> 2022"            
+> 
+> 
+> 
+> 
+> cuando el contenido del fichero es éste:
+> 
+> 
+> 
+> [1] "             ESTADISTICA MENSUAL DE EMPLEO POR MUNICIPIOS (DTES.
+> ACTIVOS)"               
+> 
+> [2] "                                          MES:        MAYO     AÑO:
+> 2022"            
+> 
+> 
+> 
+> En las notas oficiales de la nueva versión se hace referencia a que se ha
+> cambiado algo para que en Windows se utilice por defecto UTF-8. Me parece
+> perfecto, pero si especificas un juego de caracteres específico, R debería
+> ser obediente, ¿no?
+> 
+> 
+> 
+> No es un problema de RStudio, he comprobado que R 4.1.3. a pelo funciona
+> perfectamente, pero R 4.2.0. patched falla, no hace caso del encoding
+> 
+> 
+> 
+> 
+> A ver si podéis ayudarme, please. Gracias
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From jm@@nt @end|ng |rom p|co@@com  Mon Jun  6 07:45:37 2022
+From: jm@@nt @end|ng |rom p|co@@com (jmsant)
+Date: Mon, 06 Jun 2022 07:45:37 +0200
+Subject: [R-es] =?utf-8?q?t=C3=ADldes_en_la_ruta_de_inicio?=
+Message-ID: <1f8ebd9abfc347df935fd1cda019e54f@dinahosting.email>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220606/fdb72158/attachment.html>
+
+From |h|d@|go @end|ng |rom jccm@e@  Wed Jun  8 07:06:35 2022
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Wed, 8 Jun 2022 07:06:35 +0200
+Subject: [R-es] =?utf-8?q?t=C3=ADldes_en_la_ruta_de_inicio?=
+In-Reply-To: <1f8ebd9abfc347df935fd1cda019e54f@dinahosting.email>
+References: <1f8ebd9abfc347df935fd1cda019e54f@dinahosting.email>
+Message-ID: <005401d87af5$86d630f0$948292d0$@jccm.es>
+
+¿Ha puesto el encoding ?ISO-8859-1? por defecto en las opciones de RStudio? La ruta en opciones es:
+
+?Global options/Code/Saving/Default text encoding?
+
+A ver si con eso te vale?
+
+ 
+
+Isidro Hidalgo Arellano
+
+Observatorio del Mercado de Trabajo
+
+Consejería de Economía, Empresas y Empleo
+
+http://www.castillalamancha.es/
+
+ 
+
+De: R-help-es <> En nombre de jmsant
+Enviado el: lunes, 6 de junio de 2022 7:46
+Para: r-help-es en r-project.org
+Asunto: [R-es] tíldes en la ruta de inicio
+
+ 
+
+Hola. He actualizado R a la versión 4.2 y Rstudio a 2022.02.3+492. Mi problema es que en el directorio que debe abrir al iniciar Rstudio tengo una tilde y no puedo cambiar el nombre de esa carpeta al ser de sistema.
+
+El mensaje que me sale es el siguiente:
+
+Error in nchar(homeDir) : invalid multibyte string, element 1
+In addition: Warning message:
+In normalizePath(path.expand(path), winslash, mustWork) : path[1]="C:/Users/Jose Mar?a/Documents": El sistema no puede encontrar la ruta especificada
+
+¿Cómo puedo hacer que Rstudio "entienda" las tildes?
+
+Muchas gracias,
+
+JM
+
+---
+
+ 
+Dr. José María Santiago (PhD)
+Lab. de Hidrobiología
+ETSI Montes, Forestal y del Medio Natural
+Universidad Politécnica de Madrid
+Madrid - España/Spain
++34 646 165 291; +34 910 671 778
+jmsant en picos.com <mailto:jmsant en picos.com> 
+https://sites.google.com/site/santiagojosemaria/
+  <http://gifsde.com/uploads/60ca37_trucha4.gif> 
+ 
+
+	[[alternative HTML version deleted]]
+
+
+From jm@@nt @end|ng |rom p|co@@com  Wed Jun  8 16:03:16 2022
+From: jm@@nt @end|ng |rom p|co@@com (jmsant)
+Date: Wed, 08 Jun 2022 16:03:16 +0200
+Subject: [R-es] =?utf-8?q?t=C3=ADldes_en_la_ruta_de_inicio?=
+Message-ID: <d157c2ef9770ebcd8bcefad3684da06c@dinahosting.email>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220608/169a46dc/attachment.html>
+
+From jm@@nt @end|ng |rom p|co@@com  Wed Jun  8 16:06:50 2022
+From: jm@@nt @end|ng |rom p|co@@com (jmsant)
+Date: Wed, 08 Jun 2022 16:06:50 +0200
+Subject: [R-es] =?utf-8?q?t=C3=ADldes_en_la_ruta_de_inicio?=
+Message-ID: <eb4d507ae0a33f82126df63328170a4e@dinahosting.email>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220608/f3778e38/attachment.html>
+
+From r-uc@ @end|ng |rom uc@@e@  Tue Jun 14 11:37:38 2022
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Tue, 14 Jun 2022 11:37:38 +0200
+Subject: [R-es] Github y software libre
+Message-ID: <0ed9efc6-6ac1-e2d6-1ee3-7aad33a63aef@uca.es>
+
+Buenas,
+
+Algunos de nosotros hemos tenido la oportunidad de encontrarnos en 
+persona recientemente en Granada.
+
+Me consta que muchos de nosotros somos defensores del software libre. 
+Todos los presentes parecían usar Github, al parecer yo era la única 
+excepción y nadie dijo lo contrario.
+
+Casualmente me he encontrado con una entrevista a Richard Stallman en la 
+que habla de Github. Una de las cuestiones que recalca es que el hecho 
+de publicar software, en Github o cualquier otro sitio, no lo hace 
+libre, para eso hace falta que se publique con la licencia apropiada.
+
+Os recomiendo la lectura de la entrevista:
+
+https://unaaldia.hispasec.com/2022/06/chema-alonso-entrevista-a-richard-stallman-parte-i.html
+
+Un saludo
+
+
+From miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es  Tue Jun 14 13:27:54 2022
+From: miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es (=?iso-8859-1?q?miguei=40=40=40gei=40rodriguez=40mui=40os_m=40iii=40g_oii_?=
+ =?iso-8859-1?q?serg=40s=40es?=)
+Date: Tue, 14 Jun 2022 11:27:54 +0000
+Subject: [R-es] Github y software libre
+In-Reply-To: <0ed9efc6-6ac1-e2d6-1ee3-7aad33a63aef@uca.es>
+References: <0ed9efc6-6ac1-e2d6-1ee3-7aad33a63aef@uca.es>
+Message-ID: <4145c1bf1fa74461b842db6da74bb58a@sergas.es>
+
+Has abierto una caja de Pandora interesante...
+:-)
+
+Efectivamente, lo que se puede (o no) hacer con una obra viene delimitado por su licencia de uso (la autoría de dicha obra es irrenunciable; lo que sí podemos/debemos hacer es decir qué se puede hacer con ella).
+
+Para que un software se considere "libre" debemos permitir que el usario pueda usarlo libremente PERO además, debe tener la posibilidad de estudiarlo y modificarlo (de ahí que el código fuente deba estar disponible) Y, además, debe poder distribuir/publicar copias del software (original o modificadas). Por eso con publicar sólo el código (en GitHub, por ejemplo) no es suficiente si no otorgamos esos derechos a mayores.
+
+Existen numerosas licencias que nos permiten publicar el software en estas condiciones (GNU GPL, algunas Creative Commons, ...)
+
+Para el caso particular de GitHub tenéis aquí más información:
+https://docs.github.com/es/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository
+
+
+Esto podemos hacerlo extensible a programas de ordenador, artículos, libros, presentaciones, contenidos en una web, ...
+*En ciertos casos (artículos, libros...), la mayoría de las veces, estáis renunciando a esos derechos (salvo a la autoría, claro) en favor de un tercero (empresa?) y son ellos los que decide en qué condiciones se va a publicar/explotar esa obra.
+
+
+
+Un saludo,
+Miguel.
+
+
+
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Proyecto R-UCA <r-uca en uca.es>
+Enviado: martes, 14 de junio de 2022 11:37
+Para: Lista R
+Asunto: [R-es] Github y software libre
+
+Buenas,
+
+Algunos de nosotros hemos tenido la oportunidad de encontrarnos en
+persona recientemente en Granada.
+
+Me consta que muchos de nosotros somos defensores del software libre.
+Todos los presentes parecían usar Github, al parecer yo era la única
+excepción y nadie dijo lo contrario.
+
+Casualmente me he encontrado con una entrevista a Richard Stallman en la
+que habla de Github. Una de las cuestiones que recalca es que el hecho
+de publicar software, en Github o cualquier otro sitio, no lo hace
+libre, para eso hace falta que se publique con la licencia apropiada.
+
+Os recomiendo la lectura de la entrevista:
+
+https://unaaldia.hispasec.com/2022/06/chema-alonso-entrevista-a-richard-stallman-parte-i.html
+
+Un saludo
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+
+
+
+
+________________________________
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso-confidencialidad
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Mon Jun 20 00:43:30 2022
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Sun, 19 Jun 2022 17:43:30 -0500
+Subject: [R-es] forest plot
+Message-ID: <CANuuowMVPSK6UXMdJA4cDYmzp1DefjcFvDbn32NNoh=gm9rMyg@mail.gmail.com>
+
+Estimados
+Intentaba hacer el gráfico de forest plot imitando los códigos de un
+libro, lo del libro sale bien (parte de arriba, lo mio (parte de abajo
+no sale y no veo porque, apreciaria su ayuda.
+Adjunto ambas bases de datos
+
+
+
+
+
+LA DEL LIBRO QUE FUNCIONA
+
+rm(list = ls())
+
+library(readr)
+data1 <- read_csv("000 EN DISEñO/00 Meta/LIBRO/dataset01.csv")
+View(data1)
+
+
+wd=("D:/Public/Documents/000 EN DISEñO/00 Meta/"LIBRO")
+# 1. Read in the data
+data1 <- read.csv("dataset01.csv", as.is=TRUE)
+
+ 2. Print structure of R object data1
+str(data1)
+# 3. To view an R object, just type its name:
+data1
+
+ # 1. Load add-on package meta
+   library(meta)
+
+ # 2. Do meta-analysis
+   m <- metacont(Ne, Me, Se, Nc, Mc, Sc,
+                   studlab=paste(author, year),
+                   data=data1)
+
+     # 3. Produce forest plot
+   forest(m, xlab="Maximum % fall in FEV1")
+
+
+#=====================================================================
+HAGO ESTO CON UNA BASE DE DATOS MIA EN EXCEL Y NO ME FUNCIONA
+
+rm(list = ls())
+
+library(readxl)
+data1 <- read_excel("000 EN DISEñO/00 BIA/guia1.xlsx")
+View(data1)
+
+2. Print structure of R object data1
+str(data1)
+# 3. To view an R object, just type its name:
+data1
+attach(data1)
+# 1. Load add-on package meta
+library(meta)
+
+
+# 2. Do meta-analysis
+m <- metacont(Fat,SD1, Sist, SD2,
+              studlab=paste(author, year),
+              data=data1)
+##AQUI ME DICE
+Error: Provide either argument 'mean.c' or 'median.c'
+
+
+# 3. Produce forest plot
+forest(m, xlab="Maximum % fall in FEV1")
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: dataset01.csv
+Type: text/csv
+Size: 757 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220619/34e4117a/attachment.csv>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: guia1.xlsx
+Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Size: 10094 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20220619/34e4117a/attachment.xlsx>
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Mon Jun 20 09:54:07 2022
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino de la Cruz Rot)
+Date: Mon, 20 Jun 2022 09:54:07 +0200
+Subject: [R-es] forest plot
+In-Reply-To: <CANuuowMVPSK6UXMdJA4cDYmzp1DefjcFvDbn32NNoh=gm9rMyg@mail.gmail.com>
+References: <CANuuowMVPSK6UXMdJA4cDYmzp1DefjcFvDbn32NNoh=gm9rMyg@mail.gmail.com>
+Message-ID: <2405e390-f82c-45d9-e387-c2a464917f86@urjc.es>
+
+Hola Jose:
+
+Si miras la ayuda de metacont() verás que antes del argumento "studlab" 
+requiere otros seis argumentos adicionales 
+(n.e,mean.e,sd.e,n.c,mean.c,sd.c).
+
+Tú le estás suministrando sólo 4 y de ahí que se queje de que no le 
+suministras el 5º, "mean.c".
+
+
+Un saludo,
+Marcelino
+
+El 20/06/2022 a las 0:43, Jose Betancourt Bethencourt escribió:
+> Estimados
+> Intentaba hacer el gráfico de forest plot imitando los códigos de un
+> libro, lo del libro sale bien (parte de arriba, lo mio (parte de abajo
+> no sale y no veo porque, apreciaria su ayuda.
+> Adjunto ambas bases de datos
+>
+>
+>
+>
+>
+> LA DEL LIBRO QUE FUNCIONA
+>
+> rm(list = ls())
+>
+> library(readr)
+> data1 <- read_csv("000 EN DISEñO/00 Meta/LIBRO/dataset01.csv")
+> View(data1)
+>
+>
+> wd=("D:/Public/Documents/000 EN DISEñO/00 Meta/"LIBRO")
+> # 1. Read in the data
+> data1 <- read.csv("dataset01.csv", as.is=TRUE)
+>
+>   2. Print structure of R object data1
+> str(data1)
+> # 3. To view an R object, just type its name:
+> data1
+>
+>   # 1. Load add-on package meta
+>     library(meta)
+>
+>   # 2. Do meta-analysis
+>     m <- metacont(Ne, Me, Se, Nc, Mc, Sc,
+>                     studlab=paste(author, year),
+>                     data=data1)
+>
+>       # 3. Produce forest plot
+>     forest(m, xlab="Maximum % fall in FEV1")
+>
+>
+> #=====================================================================
+> HAGO ESTO CON UNA BASE DE DATOS MIA EN EXCEL Y NO ME FUNCIONA
+>
+> rm(list = ls())
+>
+> library(readxl)
+> data1 <- read_excel("000 EN DISEñO/00 BIA/guia1.xlsx")
+> View(data1)
+>
+> 2. Print structure of R object data1
+> str(data1)
+> # 3. To view an R object, just type its name:
+> data1
+> attach(data1)
+> # 1. Load add-on package meta
+> library(meta)
+>
+>
+> # 2. Do meta-analysis
+> m <- metacont(Fat,SD1, Sist, SD2,
+>                studlab=paste(author, year),
+>                data=data1)
+> ##AQUI ME DICE
+> Error: Provide either argument 'mean.c' or 'median.c'
+>
+>
+> # 3. Produce forest plot
+> forest(m, xlab="Maximum % fall in FEV1")
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From bet@n@ter @end|ng |rom gm@||@com  Mon Jun 20 12:39:33 2022
+From: bet@n@ter @end|ng |rom gm@||@com (Jose Betancourt Bethencourt)
+Date: Mon, 20 Jun 2022 05:39:33 -0500
+Subject: [R-es] forest plot
+In-Reply-To: <2405e390-f82c-45d9-e387-c2a464917f86@urjc.es>
+References: <CANuuowMVPSK6UXMdJA4cDYmzp1DefjcFvDbn32NNoh=gm9rMyg@mail.gmail.com>
+ <2405e390-f82c-45d9-e387-c2a464917f86@urjc.es>
+Message-ID: <CANuuowPXWi5ATEmsYQ8SbyFpxMNdkiVJHWfufkkSFRTU-Cg8_A@mail.gmail.com>
+
+Gracias por su vliosa ayuda
+saludos
+José
+
+El 20/6/22, Marcelino de la Cruz Rot <marcelino.delacruz en urjc.es> escribió:
+> Hola Jose:
+>
+> Si miras la ayuda de metacont() verás que antes del argumento "studlab"
+> requiere otros seis argumentos adicionales
+> (n.e,mean.e,sd.e,n.c,mean.c,sd.c).
+>
+> Tú le estás suministrando sólo 4 y de ahí que se queje de que no le
+> suministras el 5º, "mean.c".
+>
+>
+> Un saludo,
+> Marcelino
+>
+> El 20/06/2022 a las 0:43, Jose Betancourt Bethencourt escribió:
+>> Estimados
+>> Intentaba hacer el gráfico de forest plot imitando los códigos de un
+>> libro, lo del libro sale bien (parte de arriba, lo mio (parte de abajo
+>> no sale y no veo porque, apreciaria su ayuda.
+>> Adjunto ambas bases de datos
+>>
+>>
+>>
+>>
+>>
+>> LA DEL LIBRO QUE FUNCIONA
+>>
+>> rm(list = ls())
+>>
+>> library(readr)
+>> data1 <- read_csv("000 EN DISEñO/00 Meta/LIBRO/dataset01.csv")
+>> View(data1)
+>>
+>>
+>> wd=("D:/Public/Documents/000 EN DISEñO/00 Meta/"LIBRO")
+>> # 1. Read in the data
+>> data1 <- read.csv("dataset01.csv", as.is=TRUE)
+>>
+>>   2. Print structure of R object data1
+>> str(data1)
+>> # 3. To view an R object, just type its name:
+>> data1
+>>
+>>   # 1. Load add-on package meta
+>>     library(meta)
+>>
+>>   # 2. Do meta-analysis
+>>     m <- metacont(Ne, Me, Se, Nc, Mc, Sc,
+>>                     studlab=paste(author, year),
+>>                     data=data1)
+>>
+>>       # 3. Produce forest plot
+>>     forest(m, xlab="Maximum % fall in FEV1")
+>>
+>>
+>> #=====================================================================
+>> HAGO ESTO CON UNA BASE DE DATOS MIA EN EXCEL Y NO ME FUNCIONA
+>>
+>> rm(list = ls())
+>>
+>> library(readxl)
+>> data1 <- read_excel("000 EN DISEñO/00 BIA/guia1.xlsx")
+>> View(data1)
+>>
+>> 2. Print structure of R object data1
+>> str(data1)
+>> # 3. To view an R object, just type its name:
+>> data1
+>> attach(data1)
+>> # 1. Load add-on package meta
+>> library(meta)
+>>
+>>
+>> # 2. Do meta-analysis
+>> m <- metacont(Fat,SD1, Sist, SD2,
+>>                studlab=paste(author, year),
+>>                data=data1)
+>> ##AQUI ME DICE
+>> Error: Provide either argument 'mean.c' or 'median.c'
+>>
+>>
+>> # 3. Produce forest plot
+>> forest(m, xlab="Maximum % fall in FEV1")
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Dr. Jose A. Betancourt Bethencourt
+Universidad de Ciencias Medicas Carlos j. Finlay
+
+

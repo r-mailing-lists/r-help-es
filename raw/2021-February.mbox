@@ -1,0 +1,3412 @@
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Wed Feb  3 07:18:06 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Wed, 3 Feb 2021 07:18:06 +0100
+Subject: [R-es] predicciones con XGBoost
+Message-ID: <CAF3uytW79+mseX7fNMPig6WELdvq3wo++RkamjAAZL6f+9XPxA@mail.gmail.com>
+
+Muy buenas, llevo un par de días tratando de familiarizarme con XGBoost
+para regresión. En todos los tutoriales y ejemplos que encuentro empiezan
+dividiendo los datos en train y test. Cuando utilizan xgb.cv, esto, para
+mi, no tiene mucho sentido porque la validación cruzada ya te da un valor
+realista de mse, pero, si lo hacen siempre será por alguna razón
+que desconozco. Supongo que por esa misma razón no te dan las predicciones
+obtenidas por CV sobre los datos, y eso es lo que yo busco. Me hacen falta
+para representarlos frente a  los datos observados y obtener R cuadrado,
+que es más intuitivo que el error y permite, además, comparar los
+resultados de problemas distintos.
+¿sabe alguien cómo obtener las predicciones obtenidas por CV sobre los
+datos? y de paso, si alguien me dice para que dividen los datos en train y
+test cuando después utilizan xgb.cv, pues también me vendría bien.
+Gracias, como siempre,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Wed Feb  3 07:48:26 2021
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Wed, 3 Feb 2021 07:48:26 +0100
+Subject: [R-es] predicciones con XGBoost
+In-Reply-To: <CAF3uytW79+mseX7fNMPig6WELdvq3wo++RkamjAAZL6f+9XPxA@mail.gmail.com>
+References: <CAF3uytW79+mseX7fNMPig6WELdvq3wo++RkamjAAZL6f+9XPxA@mail.gmail.com>
+Message-ID: <000201d6f9f8$92ea1bb0$b8be5310$@jccm.es>
+
+Nunca hay que usar datos vistos por el modelo para obtener una estimación
+realista de su exactitud. Aunque se haga la validación cruzada. En esto
+insisten mucho los que saben. Por ejemplo Yaser S. Abu-Mostafa en su libro
+"Learning From Data" (tiene un curso que sigue el libro en el M.I.T). Por
+eso, hay que hacer la validación cruzada con la parte de entrenamiento y,
+una vez finalizado el modelo, usar la parte no vista por el modelo (test)
+para calcular su acierto.
+Respecto al error en validación cruzada, no entiendo muy bien lo que buscas.
+Si quieres saber el error en CV, sólo tienes que predecir los datos de
+entrenamiento con el modelo obtenido en la CV. Si lo que quieres es saber el
+error de cada porción de datos usada en las particiones, no tengo ni idea,
+pero es algo muy fácil de programar...
+
+Un saludo,
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Manuel Mendoza
+Enviado el: miércoles, 3 de febrero de 2021 7:18
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] predicciones con XGBoost
+
+Muy buenas, llevo un par de días tratando de familiarizarme con XGBoost para
+regresión. En todos los tutoriales y ejemplos que encuentro empiezan
+dividiendo los datos en train y test. Cuando utilizan xgb.cv, esto, para mi,
+no tiene mucho sentido porque la validación cruzada ya te da un valor
+realista de mse, pero, si lo hacen siempre será por alguna razón que
+desconozco. Supongo que por esa misma razón no te dan las predicciones
+obtenidas por CV sobre los datos, y eso es lo que yo busco. Me hacen falta
+para representarlos frente a  los datos observados y obtener R cuadrado, que
+es más intuitivo que el error y permite, además, comparar los resultados de
+problemas distintos.
+¿sabe alguien cómo obtener las predicciones obtenidas por CV sobre los
+datos? y de paso, si alguien me dice para que dividen los datos en train y
+test cuando después utilizan xgb.cv, pues también me vendría bien.
+Gracias, como siempre,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Fri Feb  5 06:10:21 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Fri, 5 Feb 2021 06:10:21 +0100
+Subject: [R-es] =?utf-8?q?Obtener_una_df_a_partir_de_una_lista_=28o_algo_?=
+ =?utf-8?b?YXPDrSk=?=
+Message-ID: <CAF3uytXp5vFhfZ9DsSWf54TEPL+OY3JJv1KcxcZq3SM2743asw@mail.gmail.com>
+
+Buenos días, estoy tratando de implementar el código que veis abajo, de la
+documentación del paquete xgboost. Me desconcierta que al cargar las bases
+de datos aparezcan como listas. Cuando la llama directamente al aplicar la
+función xgboost (data = train$data) me desconcierta todavía más. Entiendo
+que se puede hacer así también, claro. Aunque no aparezca en el documento,
+pretendo componer la df para trabajar desde ella (tal y como acostumbro a
+hacer) pero, en mi infinita ignorancia, no lo consigo.
+He probado cosas como:
+df<-as.data.frame(train),
+df<-as.data.frame(train$data)
+y también con as.matrix, pero no funcionan.
+Si alguien me dice cómo hacerlo (y de paso, por qué) se lo agradecería
+mucho.
+
+library(xgboost)
+data(agaricus.train, package='xgboost')
+data(agaricus.test, package='xgboost')
+train <- agaricus.train
+test <- agaricus.test
+bst <- xgboost(data = train$data, label = train$label, max_depth = 2, eta =
+1, nrounds = 2, objective = "binary:logistic")
+
+Gracias, como siempre,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From cgb @end|ng |rom d@t@n@|yt|c@@com  Fri Feb  5 06:35:56 2021
+From: cgb @end|ng |rom d@t@n@|yt|c@@com (Carlos J. Gil Bellosta)
+Date: Fri, 5 Feb 2021 06:35:56 +0100
+Subject: [R-es] 
+	=?utf-8?q?Obtener_una_df_a_partir_de_una_lista_=28o_algo_?=
+	=?utf-8?b?YXPDrSk=?=
+In-Reply-To: <CAF3uytXp5vFhfZ9DsSWf54TEPL+OY3JJv1KcxcZq3SM2743asw@mail.gmail.com>
+References: <CAF3uytXp5vFhfZ9DsSWf54TEPL+OY3JJv1KcxcZq3SM2743asw@mail.gmail.com>
+Message-ID: <CADg83ecwXihx29rYE+T3dvwaM3RDyGC3M82J3=ueAzKdBt7mpg@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Por razones que no vienen al caso y a diferencia de muchos otros tipos de
+modelos tal como se implementan en R, xgboost admite como argumentos la X
+(data) y la Y (label) de tu problema por separado. Son dos objetos
+distintos. agaricus.train es una lista que contiene esos dos objetos (la X
+y la Y); de hecho, una lista es precisamente eso: una estructura que
+permite yuxtaponer otras.
+
+Los dos objetos son, el uno, la matriz agaricus.train$data ---puedes ver
+que se trata de una matriz "sparse" haciendo class(agaricus.train$data) o
+usar las funciones head, etc. para inspeccionarla--- y el otro es un vector
+de números (0 o 1), agaricus.train$label.
+
+Puedes convertir todo en un df tradicional haciendo algo así como
+
+datos <- data.frame(as.matrix(agaricus.train$data), label =
+agaricus.train$label)
+
+Dicho todo lo cual, creo que te vendría bien echarle un buen vistazo a los
+capítulos 2, 3 y 5 de esto <https://datanalytics.com/libro_r/> antes de
+meterte con XGBoost o sufrirás mucho.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El vie, 5 feb 2021 a las 6:11, Manuel Mendoza (<mmendoza en fulbrightmail.org>)
+escribió:
+
+> Buenos días, estoy tratando de implementar el código que veis abajo, de la
+> documentación del paquete xgboost. Me desconcierta que al cargar las bases
+> de datos aparezcan como listas. Cuando la llama directamente al aplicar la
+> función xgboost (data = train$data) me desconcierta todavía más. Entiendo
+> que se puede hacer así también, claro. Aunque no aparezca en el documento,
+> pretendo componer la df para trabajar desde ella (tal y como acostumbro a
+> hacer) pero, en mi infinita ignorancia, no lo consigo.
+> He probado cosas como:
+> df<-as.data.frame(train),
+> df<-as.data.frame(train$data)
+> y también con as.matrix, pero no funcionan.
+> Si alguien me dice cómo hacerlo (y de paso, por qué) se lo agradecería
+> mucho.
+>
+> library(xgboost)
+> data(agaricus.train, package='xgboost')
+> data(agaricus.test, package='xgboost')
+> train <- agaricus.train
+> test <- agaricus.test
+> bst <- xgboost(data = train$data, label = train$label, max_depth = 2, eta =
+> 1, nrounds = 2, objective = "binary:logistic")
+>
+> Gracias, como siempre,
+> Manuel
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Feb  5 09:33:58 2021
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 5 Feb 2021 09:33:58 +0100
+Subject: [R-es] 
+	=?utf-8?q?Obtener_una_df_a_partir_de_una_lista_=28o_algo_?=
+	=?utf-8?b?YXPDrSk=?=
+In-Reply-To: <CADg83ecwXihx29rYE+T3dvwaM3RDyGC3M82J3=ueAzKdBt7mpg@mail.gmail.com>
+References: <CAF3uytXp5vFhfZ9DsSWf54TEPL+OY3JJv1KcxcZq3SM2743asw@mail.gmail.com>
+ <CADg83ecwXihx29rYE+T3dvwaM3RDyGC3M82J3=ueAzKdBt7mpg@mail.gmail.com>
+Message-ID: <CAOKbq8gie+LJ1_=pHF7A=DOhnH69xG0tZiM4vHvjt4YgPvLioA@mail.gmail.com>
+
+Hola Manuel,
+
+Otra alternativa que se me ocurre es que veas el problema de otra forma.
+
+En vez de usar un caso del ejemplo de la función "xgboost()" en el que
+efectivamente las variables de train/test ya tienen una estructura lista
+para ser utilizados por xgboost, prueba a crear a partir de un data.frame
+las variables de train y test.
+
+Como referencia mira esto:
+
+   -
+   https://xgboost.readthedocs.io/en/latest/R-package/xgboostPresentation.html
+   - Read the part about "Basic Training using XGBoost" / "Parameter
+      variations"
+   - O este otro ejemplo más completo:
+   -
+      https://www.analyticsvidhya.com/blog/2016/01/xgboost-algorithm-easy-steps/
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El vie, 5 feb 2021 a las 6:36, Carlos J. Gil Bellosta (<cgb en datanalytics.com>)
+escribió:
+
+> Hola, ¿qué tal?
+>
+> Por razones que no vienen al caso y a diferencia de muchos otros tipos de
+> modelos tal como se implementan en R, xgboost admite como argumentos la X
+> (data) y la Y (label) de tu problema por separado. Son dos objetos
+> distintos. agaricus.train es una lista que contiene esos dos objetos (la X
+> y la Y); de hecho, una lista es precisamente eso: una estructura que
+> permite yuxtaponer otras.
+>
+> Los dos objetos son, el uno, la matriz agaricus.train$data ---puedes ver
+> que se trata de una matriz "sparse" haciendo class(agaricus.train$data) o
+> usar las funciones head, etc. para inspeccionarla--- y el otro es un vector
+> de números (0 o 1), agaricus.train$label.
+>
+> Puedes convertir todo en un df tradicional haciendo algo así como
+>
+> datos <- data.frame(as.matrix(agaricus.train$data), label =
+> agaricus.train$label)
+>
+> Dicho todo lo cual, creo que te vendría bien echarle un buen vistazo a los
+> capítulos 2, 3 y 5 de esto <https://datanalytics.com/libro_r/> antes de
+> meterte con XGBoost o sufrirás mucho.
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+>
+> El vie, 5 feb 2021 a las 6:11, Manuel Mendoza (<mmendoza en fulbrightmail.org
+> >)
+> escribió:
+>
+> > Buenos días, estoy tratando de implementar el código que veis abajo, de
+> la
+> > documentación del paquete xgboost. Me desconcierta que al cargar las
+> bases
+> > de datos aparezcan como listas. Cuando la llama directamente al aplicar
+> la
+> > función xgboost (data = train$data) me desconcierta todavía más. Entiendo
+> > que se puede hacer así también, claro. Aunque no aparezca en el
+> documento,
+> > pretendo componer la df para trabajar desde ella (tal y como acostumbro a
+> > hacer) pero, en mi infinita ignorancia, no lo consigo.
+> > He probado cosas como:
+> > df<-as.data.frame(train),
+> > df<-as.data.frame(train$data)
+> > y también con as.matrix, pero no funcionan.
+> > Si alguien me dice cómo hacerlo (y de paso, por qué) se lo agradecería
+> > mucho.
+> >
+> > library(xgboost)
+> > data(agaricus.train, package='xgboost')
+> > data(agaricus.test, package='xgboost')
+> > train <- agaricus.train
+> > test <- agaricus.test
+> > bst <- xgboost(data = train$data, label = train$label, max_depth = 2,
+> eta =
+> > 1, nrounds = 2, objective = "binary:logistic")
+> >
+> > Gracias, como siempre,
+> > Manuel
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Fri Feb  5 12:18:50 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Fri, 5 Feb 2021 12:18:50 +0100
+Subject: [R-es] 
+	=?utf-8?q?Obtener_una_df_a_partir_de_una_lista_=28o_algo_?=
+	=?utf-8?b?YXPDrSk=?=
+In-Reply-To: <CAOKbq8gie+LJ1_=pHF7A=DOhnH69xG0tZiM4vHvjt4YgPvLioA@mail.gmail.com>
+References: <CAF3uytXp5vFhfZ9DsSWf54TEPL+OY3JJv1KcxcZq3SM2743asw@mail.gmail.com>
+ <CADg83ecwXihx29rYE+T3dvwaM3RDyGC3M82J3=ueAzKdBt7mpg@mail.gmail.com>
+ <CAOKbq8gie+LJ1_=pHF7A=DOhnH69xG0tZiM4vHvjt4YgPvLioA@mail.gmail.com>
+Message-ID: <CAF3uytW4yqM0PYGZWgMSBvn0vT_z_cDNMvcF0z6WQJhi_SpyJw@mail.gmail.com>
+
+Gracias Carlos y Carlos J. con lo que me indicáis solucioné bien el
+problema.
+Un saludo,
+Manuel
+
+El vie, 5 feb 2021 a las 9:34, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola Manuel,
+>
+> Otra alternativa que se me ocurre es que veas el problema de otra forma.
+>
+> En vez de usar un caso del ejemplo de la función "xgboost()" en el que
+> efectivamente las variables de train/test ya tienen una estructura lista
+> para ser utilizados por xgboost, prueba a crear a partir de un data.frame
+> las variables de train y test.
+>
+> Como referencia mira esto:
+>
+>    -
+>    https://xgboost.readthedocs.io/en/latest/R-package/xgboostPresentation.html
+>    - Read the part about "Basic Training using XGBoost" / "Parameter
+>       variations"
+>    - O este otro ejemplo más completo:
+>    -
+>       https://www.analyticsvidhya.com/blog/2016/01/xgboost-algorithm-easy-steps/
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El vie, 5 feb 2021 a las 6:36, Carlos J. Gil Bellosta (<
+> cgb en datanalytics.com>) escribió:
+>
+>> Hola, ¿qué tal?
+>>
+>> Por razones que no vienen al caso y a diferencia de muchos otros tipos de
+>> modelos tal como se implementan en R, xgboost admite como argumentos la X
+>> (data) y la Y (label) de tu problema por separado. Son dos objetos
+>> distintos. agaricus.train es una lista que contiene esos dos objetos (la X
+>> y la Y); de hecho, una lista es precisamente eso: una estructura que
+>> permite yuxtaponer otras.
+>>
+>> Los dos objetos son, el uno, la matriz agaricus.train$data ---puedes ver
+>> que se trata de una matriz "sparse" haciendo class(agaricus.train$data) o
+>> usar las funciones head, etc. para inspeccionarla--- y el otro es un
+>> vector
+>> de números (0 o 1), agaricus.train$label.
+>>
+>> Puedes convertir todo en un df tradicional haciendo algo así como
+>>
+>> datos <- data.frame(as.matrix(agaricus.train$data), label =
+>> agaricus.train$label)
+>>
+>> Dicho todo lo cual, creo que te vendría bien echarle un buen vistazo a los
+>> capítulos 2, 3 y 5 de esto <https://datanalytics.com/libro_r/> antes de
+>> meterte con XGBoost o sufrirás mucho.
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>>
+>> El vie, 5 feb 2021 a las 6:11, Manuel Mendoza (<
+>> mmendoza en fulbrightmail.org>)
+>> escribió:
+>>
+>> > Buenos días, estoy tratando de implementar el código que veis abajo, de
+>> la
+>> > documentación del paquete xgboost. Me desconcierta que al cargar las
+>> bases
+>> > de datos aparezcan como listas. Cuando la llama directamente al aplicar
+>> la
+>> > función xgboost (data = train$data) me desconcierta todavía más.
+>> Entiendo
+>> > que se puede hacer así también, claro. Aunque no aparezca en el
+>> documento,
+>> > pretendo componer la df para trabajar desde ella (tal y como acostumbro
+>> a
+>> > hacer) pero, en mi infinita ignorancia, no lo consigo.
+>> > He probado cosas como:
+>> > df<-as.data.frame(train),
+>> > df<-as.data.frame(train$data)
+>> > y también con as.matrix, pero no funcionan.
+>> > Si alguien me dice cómo hacerlo (y de paso, por qué) se lo agradecería
+>> > mucho.
+>> >
+>> > library(xgboost)
+>> > data(agaricus.train, package='xgboost')
+>> > data(agaricus.test, package='xgboost')
+>> > train <- agaricus.train
+>> > test <- agaricus.test
+>> > bst <- xgboost(data = train$data, label = train$label, max_depth = 2,
+>> eta =
+>> > 1, nrounds = 2, objective = "binary:logistic")
+>> >
+>> > Gracias, como siempre,
+>> > Manuel
+>> >
+>> >         [[alternative HTML version deleted]]
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Sun Feb  7 14:45:21 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Sun, 7 Feb 2021 14:45:21 +0100
+Subject: [R-es] from scipy import stats
+Message-ID: <CAF3uytUZPfnzNWbHvwqx48OzpDOe4qbpKSj6=Q8zcfhT3nG+7A@mail.gmail.com>
+
+En la respuesta de la página:
+https://stats.stackexchange.com/questions/183984/how-to-use-xgboost-cv-with-hyperparameters-optimization
+empieza diciendo:
+
+from scipy import statsfrom xgboost import XGBClassifierfrom
+sklearn.model_selection import RandomizedSearchCV, KFoldfrom
+sklearn.metrics import f1_score
+
+No sé bien lo que es ni cómo se hace.
+
+¿alguien me lo podría decir?
+
+Gracias,
+
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From |vccre@po @end|ng |rom gm@||@com  Sun Feb  7 14:52:36 2021
+From: |vccre@po @end|ng |rom gm@||@com (Carlos A. Crespo)
+Date: Sun, 7 Feb 2021 10:52:36 -0300
+Subject: [R-es] from scipy import stats
+In-Reply-To: <CAF3uytUZPfnzNWbHvwqx48OzpDOe4qbpKSj6=Q8zcfhT3nG+7A@mail.gmail.com>
+References: <CAF3uytUZPfnzNWbHvwqx48OzpDOe4qbpKSj6=Q8zcfhT3nG+7A@mail.gmail.com>
+Message-ID: <CAL4JhgKbPAq9PskV8jkcqoPvFgdxAtZbhh9=3HLPBWZGqX79XA@mail.gmail.com>
+
+Hola Manuel;
+Lo que estás viendo es código en Python y por eso no sabés cómo hacerlo en
+R.
+¿Qué es lo que necesitas hacer?
+
+Saludos,
+
+El dom, 7 feb 2021 a las 10:46, Manuel Mendoza (<mmendoza en fulbrightmail.org>)
+escribió:
+
+> En la respuesta de la página:
+>
+> https://stats.stackexchange.com/questions/183984/how-to-use-xgboost-cv-with-hyperparameters-optimization
+> empieza diciendo:
+>
+> from scipy import statsfrom xgboost import XGBClassifierfrom
+> sklearn.model_selection import RandomizedSearchCV, KFoldfrom
+> sklearn.metrics import f1_score
+>
+> No sé bien lo que es ni cómo se hace.
+>
+> ¿alguien me lo podría decir?
+>
+> Gracias,
+>
+> Manuel
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Sun Feb  7 18:15:27 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Sun, 7 Feb 2021 18:15:27 +0100
+Subject: [R-es] from scipy import stats
+In-Reply-To: <CAL4JhgKbPAq9PskV8jkcqoPvFgdxAtZbhh9=3HLPBWZGqX79XA@mail.gmail.com>
+References: <CAF3uytUZPfnzNWbHvwqx48OzpDOe4qbpKSj6=Q8zcfhT3nG+7A@mail.gmail.com>
+ <CAL4JhgKbPAq9PskV8jkcqoPvFgdxAtZbhh9=3HLPBWZGqX79XA@mail.gmail.com>
+Message-ID: <CAF3uytWmRNrKkoF9Zqsk2aGKiQq1S_1rRpZpPJsQDGLSHhvfSQ@mail.gmail.com>
+
+Gracias Carlos, la verdad es que me extrañaban varias cosas del código que
+propone. Ahora entiendo.
+He conseguido aplicar un xgboost a un problema de regresión, optimizando
+incluso los hiperparámetros con xgb.cv y expand.grid. Ahora estoy
+intentando aplicarlo para clasificación binaria y multiclase.
+Carlos Ortega ya me mandó algunos ejemplos de aplicación de xgboost pero si
+tú, o algún otro, conoce otros, me serían también de ayuda.
+Un saludo,
+Manuel
+
+El dom, 7 feb 2021 a las 14:53, Carlos A. Crespo (<lvccrespo en gmail.com>)
+escribió:
+
+> Hola Manuel;
+> Lo que estás viendo es código en Python y por eso no sabés cómo hacerlo en
+> R.
+> ¿Qué es lo que necesitas hacer?
+>
+> Saludos,
+>
+> El dom, 7 feb 2021 a las 10:46, Manuel Mendoza (<
+> mmendoza en fulbrightmail.org>) escribió:
+>
+>> En la respuesta de la página:
+>>
+>> https://stats.stackexchange.com/questions/183984/how-to-use-xgboost-cv-with-hyperparameters-optimization
+>> empieza diciendo:
+>>
+>> from scipy import statsfrom xgboost import XGBClassifierfrom
+>> sklearn.model_selection import RandomizedSearchCV, KFoldfrom
+>> sklearn.metrics import f1_score
+>>
+>> No sé bien lo que es ni cómo se hace.
+>>
+>> ¿alguien me lo podría decir?
+>>
+>> Gracias,
+>>
+>> Manuel
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Feb  7 19:34:11 2021
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 7 Feb 2021 19:34:11 +0100
+Subject: [R-es] from scipy import stats
+In-Reply-To: <CAF3uytWmRNrKkoF9Zqsk2aGKiQq1S_1rRpZpPJsQDGLSHhvfSQ@mail.gmail.com>
+References: <CAF3uytUZPfnzNWbHvwqx48OzpDOe4qbpKSj6=Q8zcfhT3nG+7A@mail.gmail.com>
+ <CAL4JhgKbPAq9PskV8jkcqoPvFgdxAtZbhh9=3HLPBWZGqX79XA@mail.gmail.com>
+ <CAF3uytWmRNrKkoF9Zqsk2aGKiQq1S_1rRpZpPJsQDGLSHhvfSQ@mail.gmail.com>
+Message-ID: <CAOKbq8hWG9vaXRdWQU1dvrVjzODf5pRrvi45CD0Ho=eUb6PCwQ@mail.gmail.com>
+
+Hola Manuel,
+
+Sí, mira aquí unos ejemplos de XGBoost (en R) usando diferentes
+aproximaciones:
+
+
+   - https://www.shirin-glander.de/2018/11/ml_basics_gbm/
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El dom, 7 feb 2021 a las 18:16, Manuel Mendoza (<mmendoza en fulbrightmail.org>)
+escribió:
+
+> Gracias Carlos, la verdad es que me extrañaban varias cosas del código que
+> propone. Ahora entiendo.
+> He conseguido aplicar un xgboost a un problema de regresión, optimizando
+> incluso los hiperparámetros con xgb.cv y expand.grid. Ahora estoy
+> intentando aplicarlo para clasificación binaria y multiclase.
+> Carlos Ortega ya me mandó algunos ejemplos de aplicación de xgboost pero si
+> tú, o algún otro, conoce otros, me serían también de ayuda.
+> Un saludo,
+> Manuel
+>
+> El dom, 7 feb 2021 a las 14:53, Carlos A. Crespo (<lvccrespo en gmail.com>)
+> escribió:
+>
+> > Hola Manuel;
+> > Lo que estás viendo es código en Python y por eso no sabés cómo hacerlo
+> en
+> > R.
+> > ¿Qué es lo que necesitas hacer?
+> >
+> > Saludos,
+> >
+> > El dom, 7 feb 2021 a las 10:46, Manuel Mendoza (<
+> > mmendoza en fulbrightmail.org>) escribió:
+> >
+> >> En la respuesta de la página:
+> >>
+> >>
+> https://stats.stackexchange.com/questions/183984/how-to-use-xgboost-cv-with-hyperparameters-optimization
+> >> empieza diciendo:
+> >>
+> >> from scipy import statsfrom xgboost import XGBClassifierfrom
+> >> sklearn.model_selection import RandomizedSearchCV, KFoldfrom
+> >> sklearn.metrics import f1_score
+> >>
+> >> No sé bien lo que es ni cómo se hace.
+> >>
+> >> ¿alguien me lo podría decir?
+> >>
+> >> Gracias,
+> >>
+> >> Manuel
+> >>
+> >>         [[alternative HTML version deleted]]
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From rv@|dezr @end|ng |rom gm@||@com  Mon Feb 15 03:25:50 2021
+From: rv@|dezr @end|ng |rom gm@||@com (Rolando Valdez)
+Date: Sun, 14 Feb 2021 20:25:50 -0600
+Subject: [R-es] Generar variable con valores repetidos por id
+Message-ID: <CAFvJtoHxP5f=Z6qdsdyTybKg76PQimktcqC0iw_qO6wKARFMgA@mail.gmail.com>
+
+Estimada comunidad:
+
+Estoy intentando generar una variable con el valor promedio del índice de
+gini en un rango de 25 años para un conjunto de 38 países. Esto en un
+pdata.frame. Sin embargo, necesito que el valor promedio de cada país se
+repita 25 veces en cada uno de estos.
+
+He intentado con la función aggregate tal como sigue:
+
+> db$mgini <- aggregate(db$gini, by = list(db$id), FUN = mean, na.rm = TRUE)
+Error in `$<-.data.frame`(x, name, value) :
+  replacement has 38 rows, data has 950
+
+Con este último es que genera un valor para cada país.
+
+Después intenté con la función within, y al parecer sí obtengo el valor
+medio repetido 25 veces en cada país, no obstante, no logro incorporarlo en
+el pdata.frame.
+
+> within(db, {mgini = ave(gini, id)})
+
+¿Alguna sugerencia?
+
+Gracias de antemano.
+
+-- 
+Rol~
+
+	[[alternative HTML version deleted]]
+
+
+From |v@ngcorredorc @end|ng |rom gm@||@com  Mon Feb 15 05:03:06 2021
+From: |v@ngcorredorc @end|ng |rom gm@||@com (Ivan Corredor castillo)
+Date: Sun, 14 Feb 2021 23:03:06 -0500
+Subject: [R-es] Generar variable con valores repetidos por id
+In-Reply-To: <CAFvJtoHxP5f=Z6qdsdyTybKg76PQimktcqC0iw_qO6wKARFMgA@mail.gmail.com>
+References: <CAFvJtoHxP5f=Z6qdsdyTybKg76PQimktcqC0iw_qO6wKARFMgA@mail.gmail.com>
+Message-ID: <CAFvAa1zwnGURino-3dUH_mQBcWWzOBQ_sZnmegdtHDpc-vSTYg@mail.gmail.com>
+
+Buenos días,
+Puedes intentar colocando el índice de las filas para cada país 1:25 y el
+índice de la columna 1. Los valores que colocó son de ejemplo, tienes que
+buscar el índice de las filas y de las columnas para que le asignes los
+valores creados por la función.
+
+db[1:25, 1]<- within(db, {mgini = ave(gini, id)}
+
+El dom., 14 de febrero de 2021 9:26 p. m., Rolando Valdez <
+rvaldezr en gmail.com> escribió:
+
+> Estimada comunidad:
+>
+> Estoy intentando generar una variable con el valor promedio del índice de
+> gini en un rango de 25 años para un conjunto de 38 países. Esto en un
+> pdata.frame. Sin embargo, necesito que el valor promedio de cada país se
+> repita 25 veces en cada uno de estos.
+>
+> He intentado con la función aggregate tal como sigue:
+>
+> > db$mgini <- aggregate(db$gini, by = list(db$id), FUN = mean, na.rm =
+> TRUE)
+> Error in `$<-.data.frame`(x, name, value) :
+>   replacement has 38 rows, data has 950
+>
+> Con este último es que genera un valor para cada país.
+>
+> Después intenté con la función within, y al parecer sí obtengo el valor
+> medio repetido 25 veces en cada país, no obstante, no logro incorporarlo en
+> el pdata.frame.
+>
+> > within(db, {mgini = ave(gini, id)})
+>
+> ¿Alguna sugerencia?
+>
+> Gracias de antemano.
+>
+> --
+> Rol~
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From guerb@ch @end|ng |rom gm@||@com  Mon Feb 15 09:40:05 2021
+From: guerb@ch @end|ng |rom gm@||@com (Andrea Guerrero)
+Date: Mon, 15 Feb 2021 09:40:05 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+Message-ID: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+
+Buenos días,
+Llevo más de una semana estancada en un problema que no logro solucionar.
+Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+resolverlo. Ahora mismo estoy bloqueada con este asunto.
+
+Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+contiene los classifiers para poder hacer los análisis posteriores. El
+problema está en que, cuando aplico la función " datos_unidos <-*merge
+(datos, classifiers, by = "Id")* , el archivo creado me aparece como con *0
+observaciones*. Lo raro es que esta función me funciona con algunos
+archivos y con otros no. He probado en esta misma función poner los
+argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el archivo
+excel de los classifiers en un dataframe pero sin éxito.
+
+Por si sirve de algo, este es el procedimiento que he seguido:
+
+> library(geomorph)
+> tps <-readland.tps(file.choose("File.tps"), specID = c("ID"), readcurves
+= TRUE, warnmsg = T)
+> slides <- define.sliders(c(3:22))
+> gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+ProcD=FALSE, print.progress = TRUE)
+> gdf <- geomorph.data.frame(gpa)
+> gdf$coords
+> datos1 <-two.d.array(gdf$coords)
+> datos<-as.data.frame(datos1)
+*#Classifiers*
+> datos$Id<-rownames(datos)
+> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+
+Muchas gracias de antemano.
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Mon Feb 15 10:48:27 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Mon, 15 Feb 2021 10:48:27 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+Message-ID: <9428D800-3D4F-4CAC-AB9B-A2EF04AC26B8@gmail.com>
+
+Hola Andrea,
+
+No estoy seguro, pero posiblemente sea por el tipo de datos de las columnas a unir. Si compartes la salida que str(datos) y str(Classifiers_File) producen justo antes de llamar a merge podemos comprobarlo.
+
+Un saludo,
+Emilio
+
+> El 15 feb 2021, a las 9:40, Andrea Guerrero <guerbach en gmail.com> escribió:
+> 
+> Buenos días,
+> Llevo más de una semana estancada en un problema que no logro solucionar.
+> Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+> 
+> Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+> contiene los classifiers para poder hacer los análisis posteriores. El
+> problema está en que, cuando aplico la función " datos_unidos <-*merge
+> (datos, classifiers, by = "Id")* , el archivo creado me aparece como con *0
+> observaciones*. Lo raro es que esta función me funciona con algunos
+> archivos y con otros no. He probado en esta misma función poner los
+> argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el archivo
+> excel de los classifiers en un dataframe pero sin éxito.
+> 
+> Por si sirve de algo, este es el procedimiento que he seguido:
+> 
+>> library(geomorph)
+>> tps <-readland.tps(file.choose("File.tps"), specID = c("ID"), readcurves
+> = TRUE, warnmsg = T)
+>> slides <- define.sliders(c(3:22))
+>> gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+> ProcD=FALSE, print.progress = TRUE)
+>> gdf <- geomorph.data.frame(gpa)
+>> gdf$coords
+>> datos1 <-two.d.array(gdf$coords)
+>> datos<-as.data.frame(datos1)
+> *#Classifiers*
+>> datos$Id<-rownames(datos)
+>> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+> 
+> Muchas gracias de antemano.
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From guerb@ch @end|ng |rom gm@||@com  Mon Feb 15 11:39:59 2021
+From: guerb@ch @end|ng |rom gm@||@com (Andrea Guerrero)
+Date: Mon, 15 Feb 2021 11:39:59 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <9428D800-3D4F-4CAC-AB9B-A2EF04AC26B8@gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+ <9428D800-3D4F-4CAC-AB9B-A2EF04AC26B8@gmail.com>
+Message-ID: <CAK1Kkks6nL1GV7VvxZBWJg1wp2o3T0pvNG5f93pirLeaonK8mg@mail.gmail.com>
+
+Muchas gracias por responder tan rápido. Estoy muy agradecida.
+
+Envío en el adjunto un .txt con la salida de str(datos) y str
+(Classifiers_File). En cuanto al error, no me da ningún mensaje
+advirtiéndome del problema, simplemente no me hace el "merge". No obstante,
+adjunto también una captura de pantalla de como queda el archivo una vez
+que aplicado la función.
+
+Gracias de nuevo.
+
+El lun, 15 feb 2021 a las 10:48, Emilio L. Cano (<emilopezcano en gmail.com>)
+escribió:
+
+> Hola Andrea,
+>
+> No estoy seguro, pero posiblemente sea por el tipo de datos de las
+> columnas a unir. Si compartes la salida que str(datos) y
+> str(Classifiers_File) producen justo antes de llamar a merge podemos
+> comprobarlo.
+>
+> Un saludo,
+> Emilio
+>
+> > El 15 feb 2021, a las 9:40, Andrea Guerrero <guerbach en gmail.com>
+> escribió:
+> >
+> > Buenos días,
+> > Llevo más de una semana estancada en un problema que no logro solucionar.
+> > Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+> > resolverlo. Ahora mismo estoy bloqueada con este asunto.
+> >
+> > Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+> > contiene los classifiers para poder hacer los análisis posteriores. El
+> > problema está en que, cuando aplico la función " datos_unidos <-*merge
+> > (datos, classifiers, by = "Id")* , el archivo creado me aparece como con
+> *0
+> > observaciones*. Lo raro es que esta función me funciona con algunos
+> > archivos y con otros no. He probado en esta misma función poner los
+> > argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el
+> archivo
+> > excel de los classifiers en un dataframe pero sin éxito.
+> >
+> > Por si sirve de algo, este es el procedimiento que he seguido:
+> >
+> >> library(geomorph)
+> >> tps <-readland.tps(file.choose("File.tps"), specID = c("ID"), readcurves
+> > = TRUE, warnmsg = T)
+> >> slides <- define.sliders(c(3:22))
+> >> gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+> > ProcD=FALSE, print.progress = TRUE)
+> >> gdf <- geomorph.data.frame(gpa)
+> >> gdf$coords
+> >> datos1 <-two.d.array(gdf$coords)
+> >> datos<-as.data.frame(datos1)
+> > *#Classifiers*
+> >> datos$Id<-rownames(datos)
+> >> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+> >
+> > Muchas gracias de antemano.
+> >
+> >       [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210215/164074d3/attachment-0001.html>
+
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: Datos consola.txt
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210215/164074d3/attachment-0001.txt>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura de pantalla_merge0observaciones.JPG
+Type: image/jpeg
+Size: 56897 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210215/164074d3/attachment-0001.jpe>
+
+From em||opezc@no @end|ng |rom gm@||@com  Mon Feb 15 11:53:37 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Mon, 15 Feb 2021 11:53:37 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <CAK1Kkks6nL1GV7VvxZBWJg1wp2o3T0pvNG5f93pirLeaonK8mg@mail.gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+ <9428D800-3D4F-4CAC-AB9B-A2EF04AC26B8@gmail.com>
+ <CAK1Kkks6nL1GV7VvxZBWJg1wp2o3T0pvNG5f93pirLeaonK8mg@mail.gmail.com>
+Message-ID: <70EA6EEA-02DC-4560-8539-F71600233154@gmail.com>
+
+No hay de qué Andrea, encantado de ayudar.
+
+Las columnas Id son las dos tipo carácter y debería hacer los ?join?, pero puede que no lo haga porque Classifiers_File es un tibble y no un data.frame ?puro?. Prueba a forzarlo así:
+
+> datos_unidos<-merge(datos, as.data.frame(Classifiers_File), by = "Id")
+
+A ver si funciona. 
+
+Un saludo,
+Emilio
+
+> El 15 feb 2021, a las 11:39, Andrea Guerrero <guerbach en gmail.com> escribió:
+> 
+> Muchas gracias por responder tan rápido. Estoy muy agradecida. 
+> 
+> Envío en el adjunto un .txt con la salida de str(datos) y str (Classifiers_File). En cuanto al error, no me da ningún mensaje advirtiéndome del problema, simplemente no me hace el "merge". No obstante, adjunto también una captura de pantalla de como queda el archivo una vez que aplicado la función. 
+> 
+> Gracias de nuevo. 
+> 
+> El lun, 15 feb 2021 a las 10:48, Emilio L. Cano (<emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>) escribió:
+> Hola Andrea,
+> 
+> No estoy seguro, pero posiblemente sea por el tipo de datos de las columnas a unir. Si compartes la salida que str(datos) y str(Classifiers_File) producen justo antes de llamar a merge podemos comprobarlo.
+> 
+> Un saludo,
+> Emilio
+> 
+> > El 15 feb 2021, a las 9:40, Andrea Guerrero <guerbach en gmail.com <mailto:guerbach en gmail.com>> escribió:
+> > 
+> > Buenos días,
+> > Llevo más de una semana estancada en un problema que no logro solucionar.
+> > Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+> > resolverlo. Ahora mismo estoy bloqueada con este asunto.
+> > 
+> > Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+> > contiene los classifiers para poder hacer los análisis posteriores. El
+> > problema está en que, cuando aplico la función " datos_unidos <-*merge
+> > (datos, classifiers, by = "Id")* , el archivo creado me aparece como con *0
+> > observaciones*. Lo raro es que esta función me funciona con algunos
+> > archivos y con otros no. He probado en esta misma función poner los
+> > argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el archivo
+> > excel de los classifiers en un dataframe pero sin éxito.
+> > 
+> > Por si sirve de algo, este es el procedimiento que he seguido:
+> > 
+> >> library(geomorph)
+> >> tps <-readland.tps(file.choose("File.tps"), specID = c("ID"), readcurves
+> > = TRUE, warnmsg = T)
+> >> slides <- define.sliders(c(3:22))
+> >> gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+> > ProcD=FALSE, print.progress = TRUE)
+> >> gdf <- geomorph.data.frame(gpa)
+> >> gdf$coords
+> >> datos1 <-two.d.array(gdf$coords)
+> >> datos<-as.data.frame(datos1)
+> > *#Classifiers*
+> >> datos$Id<-rownames(datos)
+> >> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+> > 
+> > Muchas gracias de antemano.
+> > 
+> >       [[alternative HTML version deleted]]
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+> 
+> <Datos consola.txt><Captura de pantalla_merge0observaciones.JPG>
+
+
+	[[alternative HTML version deleted]]
+
+
+From p@|@zon @end|ng |rom um@e@  Mon Feb 15 12:04:09 2021
+From: p@|@zon @end|ng |rom um@e@ (=?UTF-8?Q?JA_Palaz=c3=b3n_Ferrando?=)
+Date: Mon, 15 Feb 2021 12:04:09 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <70EA6EEA-02DC-4560-8539-F71600233154@gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+ <9428D800-3D4F-4CAC-AB9B-A2EF04AC26B8@gmail.com>
+ <CAK1Kkks6nL1GV7VvxZBWJg1wp2o3T0pvNG5f93pirLeaonK8mg@mail.gmail.com>
+ <70EA6EEA-02DC-4560-8539-F71600233154@gmail.com>
+Message-ID: <a3c61aa4-9849-911c-5db4-bba691f6c01a@um.es>
+
+Hola:
+
+Por si es útil:
+
+Cuidado con la lectura de los ficheros con campos
+con textos (habitualmente los ID), se convierten en factores y
+no son útiles para merge.
+
+Seguimos
+
+El 15/2/21 a las 11:53, Emilio L. Cano escribió:
+> No hay de qué Andrea, encantado de ayudar.
+>
+> Las columnas Id son las dos tipo carácter y debería hacer los ?join?, pero puede que no lo haga porque Classifiers_File es un tibble y no un data.frame ?puro?. Prueba a forzarlo así:
+>
+>> datos_unidos<-merge(datos, as.data.frame(Classifiers_File), by = "Id")
+> A ver si funciona.
+>
+> Un saludo,
+> Emilio
+>
+>> El 15 feb 2021, a las 11:39, Andrea Guerrero <guerbach en gmail.com> escribió:
+>>
+>> Muchas gracias por responder tan rápido. Estoy muy agradecida.
+>>
+>> Envío en el adjunto un .txt con la salida de str(datos) y str (Classifiers_File). En cuanto al error, no me da ningún mensaje advirtiéndome del problema, simplemente no me hace el "merge". No obstante, adjunto también una captura de pantalla de como queda el archivo una vez que aplicado la función.
+>>
+>> Gracias de nuevo.
+>>
+>> El lun, 15 feb 2021 a las 10:48, Emilio L. Cano (<emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>) escribió:
+>> Hola Andrea,
+>>
+>> No estoy seguro, pero posiblemente sea por el tipo de datos de las columnas a unir. Si compartes la salida que str(datos) y str(Classifiers_File) producen justo antes de llamar a merge podemos comprobarlo.
+>>
+>> Un saludo,
+>> Emilio
+>>
+>>> El 15 feb 2021, a las 9:40, Andrea Guerrero <guerbach en gmail.com <mailto:guerbach en gmail.com>> escribió:
+>>>
+>>> Buenos días,
+>>> Llevo más de una semana estancada en un problema que no logro solucionar.
+>>> Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+>>> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+>>>
+>>> Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+>>> contiene los classifiers para poder hacer los análisis posteriores. El
+>>> problema está en que, cuando aplico la función " datos_unidos <-*merge
+>>> (datos, classifiers, by = "Id")* , el archivo creado me aparece como con *0
+>>> observaciones*. Lo raro es que esta función me funciona con algunos
+>>> archivos y con otros no. He probado en esta misma función poner los
+>>> argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el archivo
+>>> excel de los classifiers en un dataframe pero sin éxito.
+>>>
+>>> Por si sirve de algo, este es el procedimiento que he seguido:
+>>>
+>>>> library(geomorph)
+>>>> tps <-readland.tps(file.choose("File.tps"), specID = c("ID"), readcurves
+>>> = TRUE, warnmsg = T)
+>>>> slides <- define.sliders(c(3:22))
+>>>> gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+>>> ProcD=FALSE, print.progress = TRUE)
+>>>> gdf <- geomorph.data.frame(gpa)
+>>>> gdf$coords
+>>>> datos1 <-two.d.array(gdf$coords)
+>>>> datos<-as.data.frame(datos1)
+>>> *#Classifiers*
+>>>> datos$Id<-rownames(datos)
+>>>> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+>>> Muchas gracias de antemano.
+>>>
+>>>        [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>> <Datos consola.txt><Captura de pantalla_merge0observaciones.JPG>
+>
+> 	[[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+-- 
+____________________________________________________________
+José Antonio Palazón Ferrando
+Profesor Titular. Departamento de Ecología e Hidrología.
+Facultad de Biología. Universidad de Murcia.
+Campus Universitario de Espinardo
+30100 MURCIA-SPAIN
+Telf: +34 868 88 49 80
+Fax : +34 868 88 39 63
+Email: palazon en um.es
+
+
+	[[alternative HTML version deleted]]
+
+
+From guerb@ch @end|ng |rom gm@||@com  Mon Feb 15 16:01:29 2021
+From: guerb@ch @end|ng |rom gm@||@com (Andrea Guerrero)
+Date: Mon, 15 Feb 2021 16:01:29 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <a3c61aa4-9849-911c-5db4-bba691f6c01a@um.es>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+ <9428D800-3D4F-4CAC-AB9B-A2EF04AC26B8@gmail.com>
+ <CAK1Kkks6nL1GV7VvxZBWJg1wp2o3T0pvNG5f93pirLeaonK8mg@mail.gmail.com>
+ <70EA6EEA-02DC-4560-8539-F71600233154@gmail.com>
+ <a3c61aa4-9849-911c-5db4-bba691f6c01a@um.es>
+Message-ID: <CAK1KkkvZUwuS7x+AyfA67jv5TMAYnLZ8JxeMBkuBBvHTQvO4Jg@mail.gmail.com>
+
+Gracias por la ayuda. Tanto en el tps como en el archivo Excel la columna
+de los id's están como caracteres, así que supongo que, en este caso, no es
+parte del problema.
+
+El lun, 15 feb 2021 a las 12:06, JA Palazón Ferrando (<palazon en um.es>)
+escribió:
+
+> Hola:
+>
+> Por si es útil:
+>
+> Cuidado con la lectura de los ficheros con campos
+> con textos (habitualmente los ID), se convierten en factores y
+> no son útiles para merge.
+>
+> Seguimos
+>
+> El 15/2/21 a las 11:53, Emilio L. Cano escribió:
+> > No hay de qué Andrea, encantado de ayudar.
+> >
+> > Las columnas Id son las dos tipo carácter y debería hacer los ?join?,
+> pero puede que no lo haga porque Classifiers_File es un tibble y no un
+> data.frame ?puro?. Prueba a forzarlo así:
+> >
+> >> datos_unidos<-merge(datos, as.data.frame(Classifiers_File), by = "Id")
+> > A ver si funciona.
+> >
+> > Un saludo,
+> > Emilio
+> >
+> >> El 15 feb 2021, a las 11:39, Andrea Guerrero <guerbach en gmail.com>
+> escribió:
+> >>
+> >> Muchas gracias por responder tan rápido. Estoy muy agradecida.
+> >>
+> >> Envío en el adjunto un .txt con la salida de str(datos) y str
+> (Classifiers_File). En cuanto al error, no me da ningún mensaje
+> advirtiéndome del problema, simplemente no me hace el "merge". No obstante,
+> adjunto también una captura de pantalla de como queda el archivo una vez
+> que aplicado la función.
+> >>
+> >> Gracias de nuevo.
+> >>
+> >> El lun, 15 feb 2021 a las 10:48, Emilio L. Cano (<
+> emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>) escribió:
+> >> Hola Andrea,
+> >>
+> >> No estoy seguro, pero posiblemente sea por el tipo de datos de las
+> columnas a unir. Si compartes la salida que str(datos) y
+> str(Classifiers_File) producen justo antes de llamar a merge podemos
+> comprobarlo.
+> >>
+> >> Un saludo,
+> >> Emilio
+> >>
+> >>> El 15 feb 2021, a las 9:40, Andrea Guerrero <guerbach en gmail.com
+> <mailto:guerbach en gmail.com>> escribió:
+> >>>
+> >>> Buenos días,
+> >>> Llevo más de una semana estancada en un problema que no logro
+> solucionar.
+> >>> Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+> >>> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+> >>>
+> >>> Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+> >>> contiene los classifiers para poder hacer los análisis posteriores. El
+> >>> problema está en que, cuando aplico la función " datos_unidos <-*merge
+> >>> (datos, classifiers, by = "Id")* , el archivo creado me aparece como
+> con *0
+> >>> observaciones*. Lo raro es que esta función me funciona con algunos
+> >>> archivos y con otros no. He probado en esta misma función poner los
+> >>> argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el
+> archivo
+> >>> excel de los classifiers en un dataframe pero sin éxito.
+> >>>
+> >>> Por si sirve de algo, este es el procedimiento que he seguido:
+> >>>
+> >>>> library(geomorph)
+> >>>> tps <-readland.tps(file.choose("File.tps"), specID = c("ID"),
+> readcurves
+> >>> = TRUE, warnmsg = T)
+> >>>> slides <- define.sliders(c(3:22))
+> >>>> gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+> >>> ProcD=FALSE, print.progress = TRUE)
+> >>>> gdf <- geomorph.data.frame(gpa)
+> >>>> gdf$coords
+> >>>> datos1 <-two.d.array(gdf$coords)
+> >>>> datos<-as.data.frame(datos1)
+> >>> *#Classifiers*
+> >>>> datos$Id<-rownames(datos)
+> >>>> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+> >>> Muchas gracias de antemano.
+> >>>
+> >>>        [[alternative HTML version deleted]]
+> >>>
+> >>> _______________________________________________
+> >>> R-help-es mailing list
+> >>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es <
+> https://stat.ethz.ch/mailman/listinfo/r-help-es>
+> >> <Datos consola.txt><Captura de pantalla_merge0observaciones.JPG>
+> >
+> >       [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> --
+> ____________________________________________________________
+> José Antonio Palazón Ferrando
+> Profesor Titular. Departamento de Ecología e Hidrología.
+> Facultad de Biología. Universidad de Murcia.
+> Campus Universitario de Espinardo
+> 30100 MURCIA-SPAIN
+> Telf: +34 868 88 49 80
+> Fax : +34 868 88 39 63
+> Email: palazon en um.es
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Mon Feb 15 16:07:57 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Mon, 15 Feb 2021 16:07:57 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <CAK1KkkvZUwuS7x+AyfA67jv5TMAYnLZ8JxeMBkuBBvHTQvO4Jg@mail.gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+ <9428D800-3D4F-4CAC-AB9B-A2EF04AC26B8@gmail.com>
+ <CAK1Kkks6nL1GV7VvxZBWJg1wp2o3T0pvNG5f93pirLeaonK8mg@mail.gmail.com>
+ <70EA6EEA-02DC-4560-8539-F71600233154@gmail.com>
+ <a3c61aa4-9849-911c-5db4-bba691f6c01a@um.es>
+ <CAK1KkkvZUwuS7x+AyfA67jv5TMAYnLZ8JxeMBkuBBvHTQvO4Jg@mail.gmail.com>
+Message-ID: <08385F9B-DDFB-499B-968D-D7E919CFA8B6@gmail.com>
+
+A ver esto: a veces me ha pasado que al importar datos de excel los encabezados de columna tienen espacios en blanco al final, y forman parte del nombre. Por ejemplo, si los nombres son ?Id? e ?Id ?, no va a hacer el join. Ejecuta colnames(Classifiers_File) y colnames(datos) a ver si en alguno de los dos ?Id? no es exactamente ?Id?. 
+
+Un saludo,
+Emilio
+
+> El 15 feb 2021, a las 16:01, Andrea Guerrero <guerbach en gmail.com> escribió:
+> 
+> Gracias por la ayuda. Tanto en el tps como en el archivo Excel la columna
+> de los id's están como caracteres, así que supongo que, en este caso, no es
+> parte del problema.
+> 
+> El lun, 15 feb 2021 a las 12:06, JA Palazón Ferrando (<palazon en um.es>)
+> escribió:
+> 
+>> Hola:
+>> 
+>> Por si es útil:
+>> 
+>> Cuidado con la lectura de los ficheros con campos
+>> con textos (habitualmente los ID), se convierten en factores y
+>> no son útiles para merge.
+>> 
+>> Seguimos
+>> 
+>> El 15/2/21 a las 11:53, Emilio L. Cano escribió:
+>>> No hay de qué Andrea, encantado de ayudar.
+>>> 
+>>> Las columnas Id son las dos tipo carácter y debería hacer los ?join?,
+>> pero puede que no lo haga porque Classifiers_File es un tibble y no un
+>> data.frame ?puro?. Prueba a forzarlo así:
+>>> 
+>>>> datos_unidos<-merge(datos, as.data.frame(Classifiers_File), by = "Id")
+>>> A ver si funciona.
+>>> 
+>>> Un saludo,
+>>> Emilio
+>>> 
+>>>> El 15 feb 2021, a las 11:39, Andrea Guerrero <guerbach en gmail.com>
+>> escribió:
+>>>> 
+>>>> Muchas gracias por responder tan rápido. Estoy muy agradecida.
+>>>> 
+>>>> Envío en el adjunto un .txt con la salida de str(datos) y str
+>> (Classifiers_File). En cuanto al error, no me da ningún mensaje
+>> advirtiéndome del problema, simplemente no me hace el "merge". No obstante,
+>> adjunto también una captura de pantalla de como queda el archivo una vez
+>> que aplicado la función.
+>>>> 
+>>>> Gracias de nuevo.
+>>>> 
+>>>> El lun, 15 feb 2021 a las 10:48, Emilio L. Cano (<
+>> emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>) escribió:
+>>>> Hola Andrea,
+>>>> 
+>>>> No estoy seguro, pero posiblemente sea por el tipo de datos de las
+>> columnas a unir. Si compartes la salida que str(datos) y
+>> str(Classifiers_File) producen justo antes de llamar a merge podemos
+>> comprobarlo.
+>>>> 
+>>>> Un saludo,
+>>>> Emilio
+>>>> 
+>>>>> El 15 feb 2021, a las 9:40, Andrea Guerrero <guerbach en gmail.com
+>> <mailto:guerbach en gmail.com>> escribió:
+>>>>> 
+>>>>> Buenos días,
+>>>>> Llevo más de una semana estancada en un problema que no logro
+>> solucionar.
+>>>>> Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+>>>>> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+>>>>> 
+>>>>> Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+>>>>> contiene los classifiers para poder hacer los análisis posteriores. El
+>>>>> problema está en que, cuando aplico la función " datos_unidos <-*merge
+>>>>> (datos, classifiers, by = "Id")* , el archivo creado me aparece como
+>> con *0
+>>>>> observaciones*. Lo raro es que esta función me funciona con algunos
+>>>>> archivos y con otros no. He probado en esta misma función poner los
+>>>>> argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el
+>> archivo
+>>>>> excel de los classifiers en un dataframe pero sin éxito.
+>>>>> 
+>>>>> Por si sirve de algo, este es el procedimiento que he seguido:
+>>>>> 
+>>>>>> library(geomorph)
+>>>>>> tps <-readland.tps(file.choose("File.tps"), specID = c("ID"),
+>> readcurves
+>>>>> = TRUE, warnmsg = T)
+>>>>>> slides <- define.sliders(c(3:22))
+>>>>>> gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+>>>>> ProcD=FALSE, print.progress = TRUE)
+>>>>>> gdf <- geomorph.data.frame(gpa)
+>>>>>> gdf$coords
+>>>>>> datos1 <-two.d.array(gdf$coords)
+>>>>>> datos<-as.data.frame(datos1)
+>>>>> *#Classifiers*
+>>>>>> datos$Id<-rownames(datos)
+>>>>>> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+>>>>> Muchas gracias de antemano.
+>>>>> 
+>>>>>       [[alternative HTML version deleted]]
+>>>>> 
+>>>>> _______________________________________________
+>>>>> R-help-es mailing list
+>>>>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es <
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>>>> <Datos consola.txt><Captura de pantalla_merge0observaciones.JPG>
+>>> 
+>>>      [[alternative HTML version deleted]]
+>>> 
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> 
+>> --
+>> ____________________________________________________________
+>> José Antonio Palazón Ferrando
+>> Profesor Titular. Departamento de Ecología e Hidrología.
+>> Facultad de Biología. Universidad de Murcia.
+>> Campus Universitario de Espinardo
+>> 30100 MURCIA-SPAIN
+>> Telf: +34 868 88 49 80
+>> Fax : +34 868 88 39 63
+>> Email: palazon en um.es
+>> 
+>> 
+>>        [[alternative HTML version deleted]]
+>> 
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Mon Feb 15 16:36:19 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Mon, 15 Feb 2021 16:36:19 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <CAK1Kkks4JMmFV6bPhjyw8KgCH8tLgy-5SwkMNkTfmPNYZ3Wmvg@mail.gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+ <9428D800-3D4F-4CAC-AB9B-A2EF04AC26B8@gmail.com>
+ <CAK1Kkks6nL1GV7VvxZBWJg1wp2o3T0pvNG5f93pirLeaonK8mg@mail.gmail.com>
+ <70EA6EEA-02DC-4560-8539-F71600233154@gmail.com>
+ <a3c61aa4-9849-911c-5db4-bba691f6c01a@um.es>
+ <CAK1KkkvZUwuS7x+AyfA67jv5TMAYnLZ8JxeMBkuBBvHTQvO4Jg@mail.gmail.com>
+ <08385F9B-DDFB-499B-968D-D7E919CFA8B6@gmail.com>
+ <CAK1Kkks4JMmFV6bPhjyw8KgCH8tLgy-5SwkMNkTfmPNYZ3Wmvg@mail.gmail.com>
+Message-ID: <29400489-63D6-4B62-B619-A73FE27EFD71@gmail.com>
+
+Según decías en el primer mensaje, el merge no lo usabas con ?classifiers? sino con ?Classifiers_File?. Si los datos no son confidenciales puedes enviar los dos dataframes en un .RData e intento reproducir el error.
+
+>>>> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+
+
+> El 15 feb 2021, a las 16:30, Andrea Guerrero <guerbach en gmail.com> escribió:
+> 
+> Hola Emilio, 
+> gracias de nuevo por tu respuesta. He aplicado los colnames en el archivo de los classifiers y en el de datos y parece que no hay problemas de espacio en blanco al final. Este es el resultado que aparece: 
+> 
+> > colnames(classifiers)
+> [1] "Id"      "Sexo"    "Especie"
+> > colnames(datos)
+>  [1] "1.X"  "1.Y"  "2.X"  "2.Y"  "3.X"  "3.Y"  "4.X"  "4.Y"  "5.X"  "5.Y"  "6.X"  "6.Y"  "7.X"  "7.Y"  "8.X"  "8.Y" 
+> [17] "9.X"  "9.Y"  "10.X" "10.Y" "11.X" "11.Y" "12.X" "12.Y" "13.X" "13.Y" "14.X" "14.Y" "15.X" "15.Y" "16.X" "16.Y"
+> [33] "17.X" "17.Y" "18.X" "18.Y" "19.X" "19.Y" "20.X" "20.Y" "21.X" "21.Y" "22.X" "22.Y" "Id"  
+> 
+> No tengo ni idea de cual puede ser el problema. Muchísimas gracias por tu aportación.
+> 
+> Un saludo,
+> 
+> Andrea. 
+> 
+> El lun, 15 feb 2021 a las 16:08, Emilio L. Cano (<emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>) escribió:
+> A ver esto: a veces me ha pasado que al importar datos de excel los encabezados de columna tienen espacios en blanco al final, y forman parte del nombre. Por ejemplo, si los nombres son ?Id? e ?Id ?, no va a hacer el join. Ejecuta colnames(Classifiers_File) y colnames(datos) a ver si en alguno de los dos ?Id? no es exactamente ?Id?. 
+> 
+> Un saludo,
+> Emilio
+> 
+> > El 15 feb 2021, a las 16:01, Andrea Guerrero <guerbach en gmail.com <mailto:guerbach en gmail.com>> escribió:
+> > 
+> > Gracias por la ayuda. Tanto en el tps como en el archivo Excel la columna
+> > de los id's están como caracteres, así que supongo que, en este caso, no es
+> > parte del problema.
+> > 
+> > El lun, 15 feb 2021 a las 12:06, JA Palazón Ferrando (<palazon en um.es <mailto:palazon en um.es>>)
+> > escribió:
+> > 
+> >> Hola:
+> >> 
+> >> Por si es útil:
+> >> 
+> >> Cuidado con la lectura de los ficheros con campos
+> >> con textos (habitualmente los ID), se convierten en factores y
+> >> no son útiles para merge.
+> >> 
+> >> Seguimos
+> >> 
+> >> El 15/2/21 a las 11:53, Emilio L. Cano escribió:
+> >>> No hay de qué Andrea, encantado de ayudar.
+> >>> 
+> >>> Las columnas Id son las dos tipo carácter y debería hacer los ?join?,
+> >> pero puede que no lo haga porque Classifiers_File es un tibble y no un
+> >> data.frame ?puro?. Prueba a forzarlo así:
+> >>> 
+> >>>> datos_unidos<-merge(datos, as.data.frame(Classifiers_File), by = "Id")
+> >>> A ver si funciona.
+> >>> 
+> >>> Un saludo,
+> >>> Emilio
+> >>> 
+> >>>> El 15 feb 2021, a las 11:39, Andrea Guerrero <guerbach en gmail.com <mailto:guerbach en gmail.com>>
+> >> escribió:
+> >>>> 
+> >>>> Muchas gracias por responder tan rápido. Estoy muy agradecida.
+> >>>> 
+> >>>> Envío en el adjunto un .txt con la salida de str(datos) y str
+> >> (Classifiers_File). En cuanto al error, no me da ningún mensaje
+> >> advirtiéndome del problema, simplemente no me hace el "merge". No obstante,
+> >> adjunto también una captura de pantalla de como queda el archivo una vez
+> >> que aplicado la función.
+> >>>> 
+> >>>> Gracias de nuevo.
+> >>>> 
+> >>>> El lun, 15 feb 2021 a las 10:48, Emilio L. Cano (<
+> >> emilopezcano en gmail.com <mailto:emilopezcano en gmail.com> <mailto:emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>>) escribió:
+> >>>> Hola Andrea,
+> >>>> 
+> >>>> No estoy seguro, pero posiblemente sea por el tipo de datos de las
+> >> columnas a unir. Si compartes la salida que str(datos) y
+> >> str(Classifiers_File) producen justo antes de llamar a merge podemos
+> >> comprobarlo.
+> >>>> 
+> >>>> Un saludo,
+> >>>> Emilio
+> >>>> 
+> >>>>> El 15 feb 2021, a las 9:40, Andrea Guerrero <guerbach en gmail.com <mailto:guerbach en gmail.com>
+> >> <mailto:guerbach en gmail.com <mailto:guerbach en gmail.com>>> escribió:
+> >>>>> 
+> >>>>> Buenos días,
+> >>>>> Llevo más de una semana estancada en un problema que no logro
+> >> solucionar.
+> >>>>> Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+> >>>>> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+> >>>>> 
+> >>>>> Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+> >>>>> contiene los classifiers para poder hacer los análisis posteriores. El
+> >>>>> problema está en que, cuando aplico la función " datos_unidos <-*merge
+> >>>>> (datos, classifiers, by = "Id")* , el archivo creado me aparece como
+> >> con *0
+> >>>>> observaciones*. Lo raro es que esta función me funciona con algunos
+> >>>>> archivos y con otros no. He probado en esta misma función poner los
+> >>>>> argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el
+> >> archivo
+> >>>>> excel de los classifiers en un dataframe pero sin éxito.
+> >>>>> 
+> >>>>> Por si sirve de algo, este es el procedimiento que he seguido:
+> >>>>> 
+> >>>>>> library(geomorph)
+> >>>>>> tps <-readland.tps(file.choose("File.tps"), specID = c("ID"),
+> >> readcurves
+> >>>>> = TRUE, warnmsg = T)
+> >>>>>> slides <- define.sliders(c(3:22))
+> >>>>>> gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+> >>>>> ProcD=FALSE, print.progress = TRUE)
+> >>>>>> gdf <- geomorph.data.frame(gpa)
+> >>>>>> gdf$coords
+> >>>>>> datos1 <-two.d.array(gdf$coords)
+> >>>>>> datos<-as.data.frame(datos1)
+> >>>>> *#Classifiers*
+> >>>>>> datos$Id<-rownames(datos)
+> >>>>>> datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+> >>>>> Muchas gracias de antemano.
+> >>>>> 
+> >>>>>       [[alternative HTML version deleted]]
+> >>>>> 
+> >>>>> _______________________________________________
+> >>>>> R-help-es mailing list
+> >>>>> R-help-es en r-project.org <mailto:R-help-es en r-project.org> <mailto:R-help-es en r-project.org <mailto:R-help-es en r-project.org>>
+> >>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es> <
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>>
+> >>>> <Datos consola.txt><Captura de pantalla_merge0observaciones.JPG>
+> >>> 
+> >>>      [[alternative HTML version deleted]]
+> >>> 
+> >>> _______________________________________________
+> >>> R-help-es mailing list
+> >>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+> >> 
+> >> --
+> >> ____________________________________________________________
+> >> José Antonio Palazón Ferrando
+> >> Profesor Titular. Departamento de Ecología e Hidrología.
+> >> Facultad de Biología. Universidad de Murcia.
+> >> Campus Universitario de Espinardo
+> >> 30100 MURCIA-SPAIN
+> >> Telf: +34 868 88 49 80
+> >> Fax : +34 868 88 39 63
+> >> Email: palazon en um.es <mailto:palazon en um.es>
+> >> 
+> >> 
+> >>        [[alternative HTML version deleted]]
+> >> 
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+> >> 
+> > 
+> >       [[alternative HTML version deleted]]
+> > 
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From rv@|dezr @end|ng |rom gm@||@com  Mon Feb 15 16:59:21 2021
+From: rv@|dezr @end|ng |rom gm@||@com (Rolando Valdez)
+Date: Mon, 15 Feb 2021 09:59:21 -0600
+Subject: [R-es] Generar variable con valores repetidos por id
+In-Reply-To: <CAFvAa1zwnGURino-3dUH_mQBcWWzOBQ_sZnmegdtHDpc-vSTYg@mail.gmail.com>
+References: <CAFvJtoHxP5f=Z6qdsdyTybKg76PQimktcqC0iw_qO6wKARFMgA@mail.gmail.com>
+ <CAFvAa1zwnGURino-3dUH_mQBcWWzOBQ_sZnmegdtHDpc-vSTYg@mail.gmail.com>
+Message-ID: <CAFvJtoGpz_eLP1RvhBmSCFxUA+8GM709UyYQRNqLauM5zVf3Sg@mail.gmail.com>
+
+No funciona, solo genera el valor = 1 en las primeras 25 observaciones y
+NAs en el resto.
+
+El dom, 14 de feb. de 2021 a la(s) 22:03, Ivan Corredor castillo (
+ivangcorredorc en gmail.com) escribió:
+
+> Buenos días,
+> Puedes intentar colocando el índice de las filas para cada país 1:25 y el
+> índice de la columna 1. Los valores que colocó son de ejemplo, tienes que
+> buscar el índice de las filas y de las columnas para que le asignes los
+> valores creados por la función.
+>
+> db[1:25, 1]<- within(db, {mgini = ave(gini, id)}
+>
+> El dom., 14 de febrero de 2021 9:26 p. m., Rolando Valdez <
+> rvaldezr en gmail.com> escribió:
+>
+>> Estimada comunidad:
+>>
+>> Estoy intentando generar una variable con el valor promedio del índice de
+>> gini en un rango de 25 años para un conjunto de 38 países. Esto en un
+>> pdata.frame. Sin embargo, necesito que el valor promedio de cada país se
+>> repita 25 veces en cada uno de estos.
+>>
+>> He intentado con la función aggregate tal como sigue:
+>>
+>> > db$mgini <- aggregate(db$gini, by = list(db$id), FUN = mean, na.rm =
+>> TRUE)
+>> Error in `$<-.data.frame`(x, name, value) :
+>>   replacement has 38 rows, data has 950
+>>
+>> Con este último es que genera un valor para cada país.
+>>
+>> Después intenté con la función within, y al parecer sí obtengo el valor
+>> medio repetido 25 veces en cada país, no obstante, no logro incorporarlo
+>> en
+>> el pdata.frame.
+>>
+>> > within(db, {mgini = ave(gini, id)})
+>>
+>> ¿Alguna sugerencia?
+>>
+>> Gracias de antemano.
+>>
+>> --
+>> Rol~
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+-- 
+Rol~
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Mon Feb 15 22:40:50 2021
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Mon, 15 Feb 2021 22:40:50 +0100
+Subject: [R-es] Generar variable con valores repetidos por id
+In-Reply-To: <CAFvJtoGpz_eLP1RvhBmSCFxUA+8GM709UyYQRNqLauM5zVf3Sg@mail.gmail.com>
+References: <CAFvJtoHxP5f=Z6qdsdyTybKg76PQimktcqC0iw_qO6wKARFMgA@mail.gmail.com>
+ <CAFvAa1zwnGURino-3dUH_mQBcWWzOBQ_sZnmegdtHDpc-vSTYg@mail.gmail.com>
+ <CAFvJtoGpz_eLP1RvhBmSCFxUA+8GM709UyYQRNqLauM5zVf3Sg@mail.gmail.com>
+Message-ID: <CAOKbq8gp7LiVNBuwicqfD3up9N8XFNiF2z-2_gKvRs6DVvNgjQ@mail.gmail.com>
+
+Hola,
+
+Sí, mira un par de alternativas con un data.frame de ejemplo para simular
+el conjunto de datos equivalente al que tienes..
+
+#-------------------------
+library(dplyr)
+res_df <- my_df %>%
+  group_by(pais_id) %>%
+  mutate( gini_avg = mean(gini))
+head(res_df)
+tail(res_df)
+
+library(data.table)
+my_dt <- as.data.table(my_df)
+my_dt[ , gini_avg := mean(gini), pais_id]
+my_dt
+#-------------------------
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El lun, 15 feb 2021 a las 16:59, Rolando Valdez (<rvaldezr en gmail.com>)
+escribió:
+
+> No funciona, solo genera el valor = 1 en las primeras 25 observaciones y
+> NAs en el resto.
+>
+> El dom, 14 de feb. de 2021 a la(s) 22:03, Ivan Corredor castillo (
+> ivangcorredorc en gmail.com) escribió:
+>
+> > Buenos días,
+> > Puedes intentar colocando el índice de las filas para cada país 1:25 y el
+> > índice de la columna 1. Los valores que colocó son de ejemplo, tienes que
+> > buscar el índice de las filas y de las columnas para que le asignes los
+> > valores creados por la función.
+> >
+> > db[1:25, 1]<- within(db, {mgini = ave(gini, id)}
+> >
+> > El dom., 14 de febrero de 2021 9:26 p. m., Rolando Valdez <
+> > rvaldezr en gmail.com> escribió:
+> >
+> >> Estimada comunidad:
+> >>
+> >> Estoy intentando generar una variable con el valor promedio del índice
+> de
+> >> gini en un rango de 25 años para un conjunto de 38 países. Esto en un
+> >> pdata.frame. Sin embargo, necesito que el valor promedio de cada país se
+> >> repita 25 veces en cada uno de estos.
+> >>
+> >> He intentado con la función aggregate tal como sigue:
+> >>
+> >> > db$mgini <- aggregate(db$gini, by = list(db$id), FUN = mean, na.rm =
+> >> TRUE)
+> >> Error in `$<-.data.frame`(x, name, value) :
+> >>   replacement has 38 rows, data has 950
+> >>
+> >> Con este último es que genera un valor para cada país.
+> >>
+> >> Después intenté con la función within, y al parecer sí obtengo el valor
+> >> medio repetido 25 veces en cada país, no obstante, no logro incorporarlo
+> >> en
+> >> el pdata.frame.
+> >>
+> >> > within(db, {mgini = ave(gini, id)})
+> >>
+> >> ¿Alguna sugerencia?
+> >>
+> >> Gracias de antemano.
+> >>
+> >> --
+> >> Rol~
+> >>
+> >>         [[alternative HTML version deleted]]
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+>
+> --
+> Rol~
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Mon Feb 15 23:03:08 2021
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Mon, 15 Feb 2021 23:03:08 +0100
+Subject: [R-es] Generar variable con valores repetidos por id
+In-Reply-To: <CAOKbq8gp7LiVNBuwicqfD3up9N8XFNiF2z-2_gKvRs6DVvNgjQ@mail.gmail.com>
+References: <CAFvJtoHxP5f=Z6qdsdyTybKg76PQimktcqC0iw_qO6wKARFMgA@mail.gmail.com>
+ <CAFvAa1zwnGURino-3dUH_mQBcWWzOBQ_sZnmegdtHDpc-vSTYg@mail.gmail.com>
+ <CAFvJtoGpz_eLP1RvhBmSCFxUA+8GM709UyYQRNqLauM5zVf3Sg@mail.gmail.com>
+ <CAOKbq8gp7LiVNBuwicqfD3up9N8XFNiF2z-2_gKvRs6DVvNgjQ@mail.gmail.com>
+Message-ID: <CAOKbq8j1J3DfHevDWgaK+uYf-1Qx6u_Xrt8WoRVJ1eN7ODY9pw@mail.gmail.com>
+
+Vaya... no incluí la parte del data.frame... para que sea un ejemplo
+reproducible...
+
+#----------------
+
+
+
+*my_df <- data.frame(                      pais_id = rep(1:38, each = 25),
+                    gini = rnorm(25*38)                    )*
+
+library(dplyr)
+res_df <- my_df %>%
+  group_by(pais_id) %>%
+  mutate( gini_avg = mean(gini))
+head(res_df)
+tail(res_df)
+
+library(data.table)
+my_dt <- as.data.table(my_df)
+my_dt[ , gini_avg := mean(gini), pais_id]
+my_dt
+#-----------------
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El lun, 15 feb 2021 a las 22:40, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola,
+>
+> Sí, mira un par de alternativas con un data.frame de ejemplo para simular
+> el conjunto de datos equivalente al que tienes..
+>
+> #-------------------------
+> library(dplyr)
+> res_df <- my_df %>%
+>   group_by(pais_id) %>%
+>   mutate( gini_avg = mean(gini))
+> head(res_df)
+> tail(res_df)
+>
+> library(data.table)
+> my_dt <- as.data.table(my_df)
+> my_dt[ , gini_avg := mean(gini), pais_id]
+> my_dt
+> #-------------------------
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El lun, 15 feb 2021 a las 16:59, Rolando Valdez (<rvaldezr en gmail.com>)
+> escribió:
+>
+>> No funciona, solo genera el valor = 1 en las primeras 25 observaciones y
+>> NAs en el resto.
+>>
+>> El dom, 14 de feb. de 2021 a la(s) 22:03, Ivan Corredor castillo (
+>> ivangcorredorc en gmail.com) escribió:
+>>
+>> > Buenos días,
+>> > Puedes intentar colocando el índice de las filas para cada país 1:25 y
+>> el
+>> > índice de la columna 1. Los valores que colocó son de ejemplo, tienes
+>> que
+>> > buscar el índice de las filas y de las columnas para que le asignes los
+>> > valores creados por la función.
+>> >
+>> > db[1:25, 1]<- within(db, {mgini = ave(gini, id)}
+>> >
+>> > El dom., 14 de febrero de 2021 9:26 p. m., Rolando Valdez <
+>> > rvaldezr en gmail.com> escribió:
+>> >
+>> >> Estimada comunidad:
+>> >>
+>> >> Estoy intentando generar una variable con el valor promedio del índice
+>> de
+>> >> gini en un rango de 25 años para un conjunto de 38 países. Esto en un
+>> >> pdata.frame. Sin embargo, necesito que el valor promedio de cada país
+>> se
+>> >> repita 25 veces en cada uno de estos.
+>> >>
+>> >> He intentado con la función aggregate tal como sigue:
+>> >>
+>> >> > db$mgini <- aggregate(db$gini, by = list(db$id), FUN = mean, na.rm =
+>> >> TRUE)
+>> >> Error in `$<-.data.frame`(x, name, value) :
+>> >>   replacement has 38 rows, data has 950
+>> >>
+>> >> Con este último es que genera un valor para cada país.
+>> >>
+>> >> Después intenté con la función within, y al parecer sí obtengo el valor
+>> >> medio repetido 25 veces en cada país, no obstante, no logro
+>> incorporarlo
+>> >> en
+>> >> el pdata.frame.
+>> >>
+>> >> > within(db, {mgini = ave(gini, id)})
+>> >>
+>> >> ¿Alguna sugerencia?
+>> >>
+>> >> Gracias de antemano.
+>> >>
+>> >> --
+>> >> Rol~
+>> >>
+>> >>         [[alternative HTML version deleted]]
+>> >>
+>> >> _______________________________________________
+>> >> R-help-es mailing list
+>> >> R-help-es en r-project.org
+>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>
+>> >
+>>
+>> --
+>> Rol~
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From |v@ngcorredorc @end|ng |rom gm@||@com  Mon Feb 15 23:24:37 2021
+From: |v@ngcorredorc @end|ng |rom gm@||@com (Ivan Corredor castillo)
+Date: Mon, 15 Feb 2021 17:24:37 -0500
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+Message-ID: <CAFvAa1x8VwYiERaEk6uq2chd=khcRrXZUA=rd6CRAAfxcB+daw@mail.gmail.com>
+
+Buenas tardes, efectivamente el problema está en lo que dice emilio, los id
+son diferentes por eso no hay concidencias, si miras bien el id del
+Classifiers_file son distintos a los Id de datos, ya que estos terminan con
+un espacio al final. Envío pantallazo tomado de la foto que envás andrea,
+entonces debes corregir el id de dataframe  Classifiers_file probando con
+la siguiente función trim.
+
+trim ? Elimina espacios en blanco (u otros caracteres) del principio y
+final de una cadena
+[image: image.png]
+Espero te ayude.
+
+ATT:
+
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+Libre
+de virus. www.avast.com
+<https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+
+El lun, 15 feb 2021 a las 3:40, Andrea Guerrero (<guerbach en gmail.com>)
+escribió:
+
+> Buenos días,
+> Llevo más de una semana estancada en un problema que no logro solucionar.
+> Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+>
+> Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+> contiene los classifiers para poder hacer los análisis posteriores. El
+> problema está en que, cuando aplico la función " datos_unidos <-*merge
+> (datos, classifiers, by = "Id")* , el archivo creado me aparece como con *0
+> observaciones*. Lo raro es que esta función me funciona con algunos
+> archivos y con otros no. He probado en esta misma función poner los
+> argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el archivo
+> excel de los classifiers en un dataframe pero sin éxito.
+>
+> Por si sirve de algo, este es el procedimiento que he seguido:
+>
+> > library(geomorph)
+> > tps <-readland.tps(file.choose("File.tps"), specID = c("ID"), readcurves
+> = TRUE, warnmsg = T)
+> > slides <- define.sliders(c(3:22))
+> > gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+> ProcD=FALSE, print.progress = TRUE)
+> > gdf <- geomorph.data.frame(gpa)
+> > gdf$coords
+> > datos1 <-two.d.array(gdf$coords)
+> > datos<-as.data.frame(datos1)
+> *#Classifiers*
+> > datos$Id<-rownames(datos)
+> > datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+>
+> Muchas gracias de antemano.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Ivan Gabriel Corredor Castillo
+Economista
+Universidad del Tolima
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210215/05a94fbb/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 18397 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210215/05a94fbb/attachment-0001.png>
+
+From neo@r@m|ro @end|ng |rom gm@||@com  Tue Feb 16 01:03:02 2021
+From: neo@r@m|ro @end|ng |rom gm@||@com (Ramiro Guzman)
+Date: Mon, 15 Feb 2021 18:03:02 -0600
+Subject: [R-es] Exportar base se datos de r a excel
+Message-ID: <CAKWOSGhZQsBmUFMPdoPfAYjOXxkwbwXn18-bt+a7iMd6ETVHRQ@mail.gmail.com>
+
+Buenas tardes, tengo una base de datos en r que limpié para exportarla a
+excel, sin embargo, tengo variables que son de carácter "character" pero
+son números como por ejemplo: "002", por lo que r la lee bien, sin embargo
+al exportarla a excel en formato csv, excel le quita los ceros y la deja
+como "2" y es que es vital que permanezca como "002", es decir que necesito
+que excel la lea como caracter. Por otra parte, no puedo probar con guardar
+mi base como xlsx, ya que al intentarlo me sale la siguiente leyenda:
+"error in .jnew("org/apache/poi/xssf/usermodel/XSSFWorkbook"):
+java.lang.OutOfMemoryError:GC overhead limit exceeded"
+
+Si alguien me pudiera apoyar en solucionar mi problemática de favor
+
+	[[alternative HTML version deleted]]
+
+
+From cgb @end|ng |rom d@t@n@|yt|c@@com  Tue Feb 16 01:13:53 2021
+From: cgb @end|ng |rom d@t@n@|yt|c@@com (Carlos J. Gil Bellosta)
+Date: Tue, 16 Feb 2021 01:13:53 +0100
+Subject: [R-es] Exportar base se datos de r a excel
+In-Reply-To: <CAKWOSGhZQsBmUFMPdoPfAYjOXxkwbwXn18-bt+a7iMd6ETVHRQ@mail.gmail.com>
+References: <CAKWOSGhZQsBmUFMPdoPfAYjOXxkwbwXn18-bt+a7iMd6ETVHRQ@mail.gmail.com>
+Message-ID: <CADg83eduZaTFTu8AcV7ig60ND9A3eKHbZZXy5VvhjhoYbrixsw@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Si dices que son códigos del tipo "002" y que R los trata como números,
+entonces es que no los lee bien. Tendrás que forzar a R a leer "002" no
+como el número 2 sino como lo que dice en la fuente, es decir, "002" como
+caracter. Dependiendo de qué función de lectura uses para importar los
+datos, tendrás que usar una opción u otra para hacerlo. Lee la
+documentación de la que estés usando.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El mar, 16 feb 2021 a las 1:03, Ramiro Guzman (<neosramiro en gmail.com>)
+escribió:
+
+> Buenas tardes, tengo una base de datos en r que limpié para exportarla a
+> excel, sin embargo, tengo variables que son de carácter "character" pero
+> son números como por ejemplo: "002", por lo que r la lee bien, sin embargo
+> al exportarla a excel en formato csv, excel le quita los ceros y la deja
+> como "2" y es que es vital que permanezca como "002", es decir que necesito
+> que excel la lea como caracter. Por otra parte, no puedo probar con guardar
+> mi base como xlsx, ya que al intentarlo me sale la siguiente leyenda:
+> "error in .jnew("org/apache/poi/xssf/usermodel/XSSFWorkbook"):
+> java.lang.OutOfMemoryError:GC overhead limit exceeded"
+>
+> Si alguien me pudiera apoyar en solucionar mi problemática de favor
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From guerb@ch @end|ng |rom gm@||@com  Tue Feb 16 08:57:22 2021
+From: guerb@ch @end|ng |rom gm@||@com (Andrea Guerrero)
+Date: Tue, 16 Feb 2021 08:57:22 +0100
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <CAFvAa1x8VwYiERaEk6uq2chd=khcRrXZUA=rd6CRAAfxcB+daw@mail.gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+ <CAFvAa1x8VwYiERaEk6uq2chd=khcRrXZUA=rd6CRAAfxcB+daw@mail.gmail.com>
+Message-ID: <CAK1Kkksjm9--TqCnNguBNUTXmC2HpUTw3VtZAh5Asjt8a1oLoA@mail.gmail.com>
+
+Si, genial, efectivamente era problema del espacio final de los id's.
+Muchas gracias por vuestra ayuda, me habéis hecho un gran favor ayudándome
+a solucionarlo :).
+
+El lun, 15 feb 2021 a las 23:24, Ivan Corredor castillo (<
+ivangcorredorc en gmail.com>) escribió:
+
+> Buenas tardes, efectivamente el problema está en lo que dice emilio, los
+> id son diferentes por eso no hay concidencias, si miras bien el id del
+> Classifiers_file son distintos a los Id de datos, ya que estos terminan con
+> un espacio al final. Envío pantallazo tomado de la foto que envás andrea,
+> entonces debes corregir el id de dataframe  Classifiers_file probando con
+> la siguiente función trim.
+>
+> trim ? Elimina espacios en blanco (u otros caracteres) del principio y
+> final de una cadena
+> [image: image.png]
+> Espero te ayude.
+>
+> ATT:
+>
+>
+> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail> Libre
+> de virus. www.avast.com
+> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+> <#m_3936520827518934710_DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+>
+> El lun, 15 feb 2021 a las 3:40, Andrea Guerrero (<guerbach en gmail.com>)
+> escribió:
+>
+>> Buenos días,
+>> Llevo más de una semana estancada en un problema que no logro solucionar.
+>> Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+>> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+>>
+>> Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+>> contiene los classifiers para poder hacer los análisis posteriores. El
+>> problema está en que, cuando aplico la función " datos_unidos <-*merge
+>> (datos, classifiers, by = "Id")* , el archivo creado me aparece como con
+>> *0
+>> observaciones*. Lo raro es que esta función me funciona con algunos
+>> archivos y con otros no. He probado en esta misma función poner los
+>> argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el
+>> archivo
+>> excel de los classifiers en un dataframe pero sin éxito.
+>>
+>> Por si sirve de algo, este es el procedimiento que he seguido:
+>>
+>> > library(geomorph)
+>> > tps <-readland.tps(file.choose("File.tps"), specID = c("ID"), readcurves
+>> = TRUE, warnmsg = T)
+>> > slides <- define.sliders(c(3:22))
+>> > gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+>> ProcD=FALSE, print.progress = TRUE)
+>> > gdf <- geomorph.data.frame(gpa)
+>> > gdf$coords
+>> > datos1 <-two.d.array(gdf$coords)
+>> > datos<-as.data.frame(datos1)
+>> *#Classifiers*
+>> > datos$Id<-rownames(datos)
+>> > datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+>>
+>> Muchas gracias de antemano.
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Ivan Gabriel Corredor Castillo
+> Economista
+> Universidad del Tolima
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/34516b62/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 18397 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/34516b62/attachment-0001.png>
+
+From em||opezc@no @end|ng |rom gm@||@com  Tue Feb 16 09:25:05 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Tue, 16 Feb 2021 09:25:05 +0100
+Subject: [R-es] Exportar base se datos de r a excel
+In-Reply-To: <CAKWOSGhZQsBmUFMPdoPfAYjOXxkwbwXn18-bt+a7iMd6ETVHRQ@mail.gmail.com>
+References: <CAKWOSGhZQsBmUFMPdoPfAYjOXxkwbwXn18-bt+a7iMd6ETVHRQ@mail.gmail.com>
+Message-ID: <531C00EF-FA2F-41FB-B1A0-30A60FC2819E@gmail.com>
+
+Hola,
+
+Si quieres guardar como excel, te aconsejo que uses el paquete openxslx en vez de otros paquetes que usan java (por el error que mencionas, el que usas requiere Java). Por otra parte, comprueba que el CSV guarda ?002?, abriéndolo con un editor de texto, no con Excel directamente. Si el CSV guarda ?002? y Excel ?lee? 2, como te ha dicho Carlos revisa la documentación de write.csv (o la función que uses? para encerrar las columnas no numéricas entre comillas.
+
+Suerte,
+Emilio
+
+> El 16 feb 2021, a las 1:03, Ramiro Guzman <neosramiro en gmail.com> escribió:
+> 
+> Buenas tardes, tengo una base de datos en r que limpié para exportarla a
+> excel, sin embargo, tengo variables que son de carácter "character" pero
+> son números como por ejemplo: "002", por lo que r la lee bien, sin embargo
+> al exportarla a excel en formato csv, excel le quita los ceros y la deja
+> como "2" y es que es vital que permanezca como "002", es decir que necesito
+> que excel la lea como caracter. Por otra parte, no puedo probar con guardar
+> mi base como xlsx, ya que al intentarlo me sale la siguiente leyenda:
+> "error in .jnew("org/apache/poi/xssf/usermodel/XSSFWorkbook"):
+> java.lang.OutOfMemoryError:GC overhead limit exceeded"
+> 
+> Si alguien me pudiera apoyar en solucionar mi problemática de favor
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Tue Feb 16 10:41:55 2021
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Tue, 16 Feb 2021 10:41:55 +0100
+Subject: [R-es] Exportar base se datos de r a excel
+In-Reply-To: <531C00EF-FA2F-41FB-B1A0-30A60FC2819E@gmail.com>
+References: <CAKWOSGhZQsBmUFMPdoPfAYjOXxkwbwXn18-bt+a7iMd6ETVHRQ@mail.gmail.com>
+ <531C00EF-FA2F-41FB-B1A0-30A60FC2819E@gmail.com>
+Message-ID: <000001d70447$f69d1dc0$e3d75940$@jccm.es>
+
+Finalmente, si en tu archivo de texto el campo es alfanumérico ("002"), cuando lo abras desde Excel, asegúrate de indicarle en el proceso de importación que el campo en cuestión es de texto, no numérico.
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Emilio L. Cano
+Enviado el: martes, 16 de febrero de 2021 9:25
+Para: Ramiro Guzman <neosramiro en gmail.com>
+CC: l.graco--- via R-help-es <r-help-es en r-project.org>
+Asunto: Re: [R-es] Exportar base se datos de r a excel
+
+Hola,
+
+Si quieres guardar como excel, te aconsejo que uses el paquete openxslx en vez de otros paquetes que usan java (por el error que mencionas, el que usas requiere Java). Por otra parte, comprueba que el CSV guarda ?002?, abriéndolo con un editor de texto, no con Excel directamente. Si el CSV guarda ?002? y Excel ?lee? 2, como te ha dicho Carlos revisa la documentación de write.csv (o la función que uses? para encerrar las columnas no numéricas entre comillas.
+
+Suerte,
+Emilio
+
+> El 16 feb 2021, a las 1:03, Ramiro Guzman <neosramiro en gmail.com> escribió:
+> 
+> Buenas tardes, tengo una base de datos en r que limpié para exportarla 
+> a excel, sin embargo, tengo variables que son de carácter "character" 
+> pero son números como por ejemplo: "002", por lo que r la lee bien, 
+> sin embargo al exportarla a excel en formato csv, excel le quita los 
+> ceros y la deja como "2" y es que es vital que permanezca como "002", 
+> es decir que necesito que excel la lea como caracter. Por otra parte, 
+> no puedo probar con guardar mi base como xlsx, ya que al intentarlo me sale la siguiente leyenda:
+> "error in .jnew("org/apache/poi/xssf/usermodel/XSSFWorkbook"):
+> java.lang.OutOfMemoryError:GC overhead limit exceeded"
+> 
+> Si alguien me pudiera apoyar en solucionar mi problemática de favor
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From |v@ngcorredorc @end|ng |rom gm@||@com  Tue Feb 16 14:03:21 2021
+From: |v@ngcorredorc @end|ng |rom gm@||@com (Ivan Corredor castillo)
+Date: Tue, 16 Feb 2021 08:03:21 -0500
+Subject: [R-es] Problema con "merge" - 0 observaciones
+In-Reply-To: <CAK1Kkksjm9--TqCnNguBNUTXmC2HpUTw3VtZAh5Asjt8a1oLoA@mail.gmail.com>
+References: <CAK1KkktONrNKOEK4-e5bZbmoOJuwYRjSmp+Ok_knNKWpZRsepA@mail.gmail.com>
+ <CAFvAa1x8VwYiERaEk6uq2chd=khcRrXZUA=rd6CRAAfxcB+daw@mail.gmail.com>
+ <CAK1Kkksjm9--TqCnNguBNUTXmC2HpUTw3VtZAh5Asjt8a1oLoA@mail.gmail.com>
+Message-ID: <CAFvAa1xg_Do5x1V=Mzb422YGyqHjShhoWcdnsT109_VdCN8p4w@mail.gmail.com>
+
+Genial!
+
+El mar., 16 de febrero de 2021 2:57 a. m., Andrea Guerrero <
+guerbach en gmail.com> escribió:
+
+> Si, genial, efectivamente era problema del espacio final de los id's.
+> Muchas gracias por vuestra ayuda, me habéis hecho un gran favor ayudándome
+> a solucionarlo :).
+>
+> El lun, 15 feb 2021 a las 23:24, Ivan Corredor castillo (<
+> ivangcorredorc en gmail.com>) escribió:
+>
+>> Buenas tardes, efectivamente el problema está en lo que dice emilio, los
+>> id son diferentes por eso no hay concidencias, si miras bien el id del
+>> Classifiers_file son distintos a los Id de datos, ya que estos terminan con
+>> un espacio al final. Envío pantallazo tomado de la foto que envás andrea,
+>> entonces debes corregir el id de dataframe  Classifiers_file probando con
+>> la siguiente función trim.
+>>
+>> trim ? Elimina espacios en blanco (u otros caracteres) del principio y
+>> final de una cadena
+>> [image: image.png]
+>> Espero te ayude.
+>>
+>> ATT:
+>>
+>>
+>> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail> Libre
+>> de virus. www.avast.com
+>> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+>> <#m_-3888643752462213916_m_3936520827518934710_DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+>>
+>> El lun, 15 feb 2021 a las 3:40, Andrea Guerrero (<guerbach en gmail.com>)
+>> escribió:
+>>
+>>> Buenos días,
+>>> Llevo más de una semana estancada en un problema que no logro solucionar.
+>>> Agradecería muchísimo si alguien me pudiera echar una mano y ayudar a
+>>> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+>>>
+>>> Mi intención es hacer un merge de un dataframe (un tps) y un excel que
+>>> contiene los classifiers para poder hacer los análisis posteriores. El
+>>> problema está en que, cuando aplico la función " datos_unidos <-*merge
+>>> (datos, classifiers, by = "Id")* , el archivo creado me aparece como con
+>>> *0
+>>> observaciones*. Lo raro es que esta función me funciona con algunos
+>>> archivos y con otros no. He probado en esta misma función poner los
+>>> argumentos by.x= "Id" y by.y= "Id". También, he probado de pasar el
+>>> archivo
+>>> excel de los classifiers en un dataframe pero sin éxito.
+>>>
+>>> Por si sirve de algo, este es el procedimiento que he seguido:
+>>>
+>>> > library(geomorph)
+>>> > tps <-readland.tps(file.choose("File.tps"), specID = c("ID"),
+>>> readcurves
+>>> = TRUE, warnmsg = T)
+>>> > slides <- define.sliders(c(3:22))
+>>> > gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+>>> ProcD=FALSE, print.progress = TRUE)
+>>> > gdf <- geomorph.data.frame(gpa)
+>>> > gdf$coords
+>>> > datos1 <-two.d.array(gdf$coords)
+>>> > datos<-as.data.frame(datos1)
+>>> *#Classifiers*
+>>> > datos$Id<-rownames(datos)
+>>> > datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+>>>
+>>> Muchas gracias de antemano.
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>> --
+>> Ivan Gabriel Corredor Castillo
+>> Economista
+>> Universidad del Tolima
+>>
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/c21d9610/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 18397 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/c21d9610/attachment-0001.png>
+
+From mor@|e@ @end|ng |rom u@@e@  Tue Feb 16 14:29:43 2021
+From: mor@|e@ @end|ng |rom u@@e@ (MANUEL MORALES ORTIZ)
+Date: Tue, 16 Feb 2021 13:29:43 +0000
+Subject: [R-es] Problemas con beamer en RMarkdown
+In-Reply-To: <mailman.14326.2668.1613480958.1405.r-help-es@r-project.org>
+References: <mailman.14326.2668.1613480958.1405.r-help-es@r-project.org>
+Message-ID: <AM5PR01MB30108D4474BCAA756C21CF59AF879@AM5PR01MB3010.eurprd01.prod.exchangelabs.com>
+
+
+
+Hola, estoy utilizando beamer dentro de TMarkdown y no consigo cambiar el rótulo de 'Table' por el de 'Tabla'. En RMarkdown si lo consigo con la opción '\renewcommand{\tablename}{Tabla}', pero si el documento es en beamer no lo consigo. Tampoco consigo que en beamer me permita utilizar la opción de booktabs en la sintaxis de kable.  Alguien me puede dar alguna solución?. Adjunto fichero de ejemplo de beamer en R markdown.
+Saludos
+
+,
+
+
+
+
+________________________________
+
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/f18d4570/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Prueba.Rmd
+Type: application/octet-stream
+Size: 1780 bytes
+Desc: Prueba.Rmd
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/f18d4570/attachment.obj>
+
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: Tabla_Sexo.txt
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/f18d4570/attachment.txt>
+
+From @|v@rohv @end|ng |rom um@e@  Tue Feb 16 14:36:34 2021
+From: @|v@rohv @end|ng |rom um@e@ (=?UTF-8?Q?=c3=81lvaro_Hern=c3=a1ndez_Vicente?=)
+Date: Tue, 16 Feb 2021 14:36:34 +0100
+Subject: [R-es] Problemas con beamer en RMarkdown
+In-Reply-To: <AM5PR01MB30108D4474BCAA756C21CF59AF879@AM5PR01MB3010.eurprd01.prod.exchangelabs.com>
+References: <mailman.14326.2668.1613480958.1405.r-help-es@r-project.org>
+ <AM5PR01MB30108D4474BCAA756C21CF59AF879@AM5PR01MB3010.eurprd01.prod.exchangelabs.com>
+Message-ID: <8db79303-1a22-144b-aa32-5d2a42c10254@um.es>
+
+Solo cambia "header_includes" por "header-includes" (gui?n en lugar de 
+gui?n bajo).
+
+
+Con eso funciona sin problema.
+
+
+Un saludo,
+?lvaro
+
+
+El 16/2/21 a las 14:29, MANUEL MORALES ORTIZ escribi?:
+>
+>
+>> Hola, estoy utilizando beamer dentro de TMarkdown y no consigo 
+>> cambiar el r?tulo de 'Table' por el de 'Tabla'. En RMarkdown si lo 
+>> consigo con la opci?n '\renewcommand{\tablename}{Tabla}', pero si el 
+>> documento es en beamer no lo consigo. Tampoco consigo que en beamer 
+>> me permita utilizar la opci?n de booktabs en la sintaxis de kable.? 
+>> Alguien me puede dar alguna soluci?n?. Adjunto fichero de ejemplo de 
+>> beamer en R markdown.
+>> Saludos
+>
+> ,
+>
+>
+>
+>
+>
+> ------------------------------------------------------------------------
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+-- 
+?lvaro Hern?ndez Vicente
+Investigador predoctoral (FPU-UM)
+Grupo de Investigaci?n Cardiolog?a Cl?nica y Experimental
+Departamento de Medicina Interna
+Universidad de Murcia, Murcia, Spain
+
+Edificio LAIB/Departamental
+Campus de Ciencias de la Salud
+2? Planta. Despacho 2.57
+Avenida Buenavista, s/n
+30120, El Palmar, Murcia
+
+
+	[[alternative HTML version deleted]]
+
+
+From mor@|e@ @end|ng |rom u@@e@  Tue Feb 16 19:32:24 2021
+From: mor@|e@ @end|ng |rom u@@e@ (MANUEL MORALES ORTIZ)
+Date: Tue, 16 Feb 2021 18:32:24 +0000
+Subject: [R-es] Problemas con beamer en RMarkdown
+In-Reply-To: <mailman.14326.2668.1613480958.1405.r-help-es@r-project.org>
+References: <mailman.14326.2668.1613480958.1405.r-help-es@r-project.org>
+Message-ID: <AM5PR01MB3010762B712009FFAD1B1CB5AF879@AM5PR01MB3010.eurprd01.prod.exchangelabs.com>
+
+Muchas gracias!! No me hab?a dado cuenta del guion bajo.
+Saludos
+
+
+Manuel Morales Ortiz
+
+
+Profesor Titular Universidad
+
+
+?rea de Metodolog?a de las Ciencias del Comportamiento
+
+
+Tel?fono: +34 954 55 76 83
+
+
+Web: http://personal.us.es/morales/
+
+Solicitud de tutorias: https://calendly.com/manuelmorales
+[https://sic.us.es/sites/default/files/servicios/correo/Archivos/us_logo.jpg]
+www.us.es <http://www.us.es/>
+Por favor considere el medio ambiente antes de imprimir este correo electr?nico.
+-
+Este correo electr?nico y, en su caso, cualquier fichero anexo al mismo, contiene informaci?n de car?cter confidencial exclusivamente dirigida a su destinatario o destinatarios. Si no es Vd. el destinatario del mensaje, le ruego lo destruya sin hacer copia digital o f?sica, comunicando al emisor por esta misma v?a la recepci?n del presente mensaje. Gracias
+--
+
+
+
+
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de r-help-es-request en r-project.org <r-help-es-request en r-project.org>
+Enviado: martes, 16 de febrero de 2021 14:09
+Para: r-help-es en r-project.org <r-help-es en r-project.org>
+Asunto: Resumen de R-help-es, Vol 144, Env?o 12
+
+Env?e los mensajes para la lista R-help-es a
+        r-help-es en r-project.org
+
+Para subscribirse o anular su subscripci?n a trav?s de la WEB
+        https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+O por correo electr?nico, enviando un mensaje con el texto "help" en
+el asunto (subject) o en el cuerpo a:
+        r-help-es-request en r-project.org
+
+Puede contactar con el responsable de la lista escribiendo a:
+        r-help-es-owner en r-project.org
+
+Si responde a alg?n contenido de este mensaje, por favor, edite la
+linea del asunto (subject) para que el texto sea mas especifico que:
+"Re: Contents of R-help-es digest...". Adem?s, por favor, incluya en
+la respuesta s?lo aquellas partes del mensaje a las que est?
+respondiendo.
+
+
+Asuntos del d?a:
+
+   1. Re: Problema con "merge" - 0 observaciones
+      (Ivan Corredor castillo)
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Tue, 16 Feb 2021 08:03:21 -0500
+From: Ivan Corredor castillo <ivangcorredorc en gmail.com>
+To: Andrea Guerrero <guerbach en gmail.com>
+Cc: Lista R <r-help-es en r-project.org>
+Subject: Re: [R-es] Problema con "merge" - 0 observaciones
+Message-ID:
+        <CAFvAa1xg_Do5x1V=Mzb422YGyqHjShhoWcdnsT109_VdCN8p4w en mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+
+Genial!
+
+El mar., 16 de febrero de 2021 2:57 a. m., Andrea Guerrero <
+guerbach en gmail.com> escribi?:
+
+> Si, genial, efectivamente era problema del espacio final de los id's.
+> Muchas gracias por vuestra ayuda, me hab?is hecho un gran favor ayud?ndome
+> a solucionarlo :).
+>
+> El lun, 15 feb 2021 a las 23:24, Ivan Corredor castillo (<
+> ivangcorredorc en gmail.com>) escribi?:
+>
+>> Buenas tardes, efectivamente el problema est? en lo que dice emilio, los
+>> id son diferentes por eso no hay concidencias, si miras bien el id del
+>> Classifiers_file son distintos a los Id de datos, ya que estos terminan con
+>> un espacio al final. Env?o pantallazo tomado de la foto que env?s andrea,
+>> entonces debes corregir el id de dataframe  Classifiers_file probando con
+>> la siguiente funci?n trim.
+>>
+>> trim ? Elimina espacios en blanco (u otros caracteres) del principio y
+>> final de una cadena
+>> [image: image.png]
+>> Espero te ayude.
+>>
+>> ATT:
+>>
+>>
+>> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail> Libre
+>> de virus. www.avast.com<http://www.avast.com>
+>> <https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+>> <#m_-3888643752462213916_m_3936520827518934710_DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+>>
+>> El lun, 15 feb 2021 a las 3:40, Andrea Guerrero (<guerbach en gmail.com>)
+>> escribi?:
+>>
+>>> Buenos d?as,
+>>> Llevo m?s de una semana estancada en un problema que no logro solucionar.
+>>> Agradecer?a much?simo si alguien me pudiera echar una mano y ayudar a
+>>> resolverlo. Ahora mismo estoy bloqueada con este asunto.
+>>>
+>>> Mi intenci?n es hacer un merge de un dataframe (un tps) y un excel que
+>>> contiene los classifiers para poder hacer los an?lisis posteriores. El
+>>> problema est? en que, cuando aplico la funci?n " datos_unidos <-*merge
+>>> (datos, classifiers, by = "Id")* , el archivo creado me aparece como con
+>>> *0
+>>> observaciones*. Lo raro es que esta funci?n me funciona con algunos
+>>> archivos y con otros no. He probado en esta misma funci?n poner los
+>>> argumentos by.x= "Id" y by.y= "Id". Tambi?n, he probado de pasar el
+>>> archivo
+>>> excel de los classifiers en un dataframe pero sin ?xito.
+>>>
+>>> Por si sirve de algo, este es el procedimiento que he seguido:
+>>>
+>>> > library(geomorph)
+>>> > tps <-readland.tps(file.choose("File.tps"), specID = c("ID"),
+>>> readcurves
+>>> = TRUE, warnmsg = T)
+>>> > slides <- define.sliders(c(3:22))
+>>> > gpa <- gpagen(A=tps,curves = slides, PrinAxes = TRUE, Proj = TRUE,
+>>> ProcD=FALSE, print.progress = TRUE)
+>>> > gdf <- geomorph.data.frame(gpa)
+>>> > gdf$coords
+>>> > datos1 <-two.d.array(gdf$coords)
+>>> > datos<-as.data.frame(datos1)
+>>> *#Classifiers*
+>>> > datos$Id<-rownames(datos)
+>>> > datos_unidos<-merge(datos, Classifiers_File, by = "Id")
+>>>
+>>> Muchas gracias de antemano.
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>> --
+>> Ivan Gabriel Corredor Castillo
+>> Economista
+>> Universidad del Tolima
+>>
+>
+
+------------ pr?xima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/c21d9610/attachment.html>
+
+------------ pr?xima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 18397 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210216/c21d9610/attachment.png>
+
+
+------------------------------
+
+Subject: Pi? de p?gina del digest
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+------------------------------
+
+Fin de Resumen de R-help-es, Vol 144, Env?o 12
+**********************************************
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Wed Feb 17 12:13:22 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Wed, 17 Feb 2021 12:13:22 +0100
+Subject: [R-es] =?utf-8?b?Q8OzbW8gbGVlciAlPiUgeSBtdXRhdGU=?=
+Message-ID: <CAF3uytUOyoZkGCYo7X_Z+VvEg4qj5dY6mb1Z1n-OnjDHAabm-w@mail.gmail.com>
+
+¿Alguien podría leerme esto? Si además me lo pone sin  %>% y sin mutate, me
+hace un rey, pues llevo horas y no lo consigo.
+
+OOF_prediction <- data.frame(cv_model$pred) %>%
+  mutate(max_prob = max.col(., ties.method = "last"),
+         label = trainy + 1)
+
+Gracias mil,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From |h|d@|go @end|ng |rom jccm@e@  Wed Feb 17 12:27:44 2021
+From: |h|d@|go @end|ng |rom jccm@e@ (Isidro Hidalgo Arellano)
+Date: Wed, 17 Feb 2021 12:27:44 +0100
+Subject: [R-es] =?iso-8859-1?q?C=F3mo_leer_=25=3E=25_y_mutate?=
+In-Reply-To: <CAF3uytUOyoZkGCYo7X_Z+VvEg4qj5dY6mb1Z1n-OnjDHAabm-w@mail.gmail.com>
+References: <CAF3uytUOyoZkGCYo7X_Z+VvEg4qj5dY6mb1Z1n-OnjDHAabm-w@mail.gmail.com>
+Message-ID: <001001d7051f$e9616c00$bc244400$@jccm.es>
+
+Tienes que empollarte el paquete "tidyverse" para trabajar con pipes. Hay un
+libro donde puedes obtener información muy valiosa:
+https://r4ds.had.co.nz/index.html
+Si no quieres usar pipes instala "dplyr", y mírate la ayuda de la función
+mutate.
+Pero te recomiendo el uso de tidyverse. Cuando revisas código después de un
+tiempo, es mucho más fácil de leer...
+Un saludo.
+
+Isidro Hidalgo Arellano
+Observatorio del Mercado de Trabajo
+Consejería de Economía, Empresas y Empleo
+http://www.castillalamancha.es/
+
+
+-----Mensaje original-----
+De: R-help-es <r-help-es-bounces en r-project.org> En nombre de Manuel Mendoza
+Enviado el: miércoles, 17 de febrero de 2021 12:13
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] Cómo leer %>% y mutate
+
+¿Alguien podría leerme esto? Si además me lo pone sin  %>% y sin mutate, me
+hace un rey, pues llevo horas y no lo consigo.
+
+OOF_prediction <- data.frame(cv_model$pred) %>%
+  mutate(max_prob = max.col(., ties.method = "last"),
+         label = trainy + 1)
+
+Gracias mil,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Thu Feb 18 04:40:47 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Thu, 18 Feb 2021 04:40:47 +0100
+Subject: [R-es] =?utf-8?b?Q8OzbW8gbGVlciAlPiUgeSBtdXRhdGU=?=
+In-Reply-To: <CAOKbq8iAivDZ24XYmt74F5xFmhLtWUBLnfp7qo2OXM_Rb9hRvw@mail.gmail.com>
+References: <CAF3uytUOyoZkGCYo7X_Z+VvEg4qj5dY6mb1Z1n-OnjDHAabm-w@mail.gmail.com>
+ <CAOKbq8iAivDZ24XYmt74F5xFmhLtWUBLnfp7qo2OXM_Rb9hRvw@mail.gmail.com>
+Message-ID: <CAF3uytXcgFDejC6dZnNUJAXb81PYbwpom71ofT-mrG989Tw6hQ@mail.gmail.com>
+
+Gracias Carlos. Finalmente lo solucioné con la de abajo. *data *es la base
+de datos original.
+
+Esto:
+ OOF_prediction <- data.frame(cv_model$pred) %>%
+  mutate(max_prob = max.col(., ties.method = "last"),
+         label = trainy + 1)
+con:
+OOF_prediction = data.frame(cv_model$pred)  # predicción convertida en df
+colnames(OOF_prediction) = levels(as.factor(data$Clase)) # volver a poner
+el nombre
+OOF_prediction$pred <- colnames(OOF_prediction)[apply(OOF_prediction , 1,
+which.max)]
+data$pred<-as.factor(OOF_prediction $pred)
+
+De hecho, cuando os lo pregunté ya lo tenía. Pensaba que estaba mal porque
+con *confusionMatrix *me daba un valor de kappa distinto al que yo tenía
+calculado con kappa2. Finalmente lo sospeché, lo probé con otros resultados
+y ¡por fin!
+Mi duda, ahora, es por qué kappa da distinto con *confusionMatrix *y
+*kappa2*.
+Gracias nuevamente,
+Un saludo,
+Manuel
+
+
+El mié, 17 feb 2021 a las 21:54, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola Manuel,
+>
+> Lo que dice este código es esto:
+>
+>    - Selecciono el campo "pred" de cv_model y lo convierto en data.frame
+>    (tidyverse actúa sobre data.frames)
+>    - Crea una variable nueva (mutate) que es el valor de la columna nonde
+>    se produce el máximo (de "pred", el "." indica eso).
+>       - Y en mutate(), crea una segunda variable que la llama "label" que
+>       es el valor de "trainy + 1".
+>    - Y todo esto lo guardo en "OOB_prediction".
+>
+> Gracias,
+> Carlos.
+>
+> El mié, 17 feb 2021 a las 12:14, Manuel Mendoza (<
+> mmendoza en fulbrightmail.org>) escribió:
+>
+>> ¿Alguien podría leerme esto? Si además me lo pone sin  %>% y sin mutate,
+>> me
+>> hace un rey, pues llevo horas y no lo consigo.
+>>
+>> OOF_prediction <- data.frame(cv_model$pred) %>%
+>>   mutate(max_prob = max.col(., ties.method = "last"),
+>>          label = trainy + 1)
+>>
+>> Gracias mil,
+>> Manuel
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Thu Feb 18 05:15:26 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Thu, 18 Feb 2021 05:15:26 +0100
+Subject: [R-es] =?utf-8?q?=C2=BFpor_qu=C3=A9_kappa_da_distinto_con_confus?=
+	=?utf-8?q?ionMatrix_y__kappa2=3F?=
+Message-ID: <CAF3uytV+LTQ3dgXPzS29mr4KEiSxe+txfa4dH37xA-8YG=08uw@mail.gmail.com>
+
+Sabe alguien por qué kappa da distinto con *confusionMatrix *y  *kappa2*.
+Gracias,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From hor@c|o9573 @end|ng |rom gm@||@com  Fri Feb 19 13:12:21 2021
+From: hor@c|o9573 @end|ng |rom gm@||@com (Horacio)
+Date: Fri, 19 Feb 2021 09:12:21 -0300
+Subject: [R-es] =?utf-8?q?Canal_en_telegram_sobre_R_en_espa=C3=B1ol?=
+Message-ID: <CALV7ndh_AOb3AL2kQtCarejuGcnj=xk4edbvEw_ra0qrPegWFw@mail.gmail.com>
+
+Buenas, alguien conoce algún grupo en telegram sobre R en español? si
+es así pueden enviar el enlace para unirse... gracias...
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Fri Feb 19 16:28:00 2021
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric)
+Date: Fri, 19 Feb 2021 12:28:00 -0300
+Subject: [R-es] =?utf-8?q?acerca_de_c=C3=B3mo_se_calculan_los_PDP_para_un?=
+ =?utf-8?q?_random_forest_=2E=2E=2E?=
+Message-ID: <155cc860-c30b-6050-7ee0-84e56176ca7e@gmail.com>
+
+Hola chicos, cómo van ? espero q todos bien, aquí en Chile con 
+cuarentena muy prolongada por el covid, así es que mientras estoy 
+encerrado forzosamente trato de aprender algunas cosas nuevas. Estoy 
+dándole una mirada y jugando con R y algunos paquetes para machine 
+learning, he usado random forest para un caso real de estimación del 
+desarrollo de ciertas capacidades en los niños a partir de las 
+condiciones de crianza, como la calidad del hogar y algunas aptitudes de 
+la madre. Ahora estoy tratando de entender cómo funciona la idea de los 
+Partial Dependence Plots para explicar la influencia de un subconjunto 
+de predictores sobre la vble dependiente y estoy revisando el artículo 
+de Brandon M. Greenwell llamado pdp: An R Package for Constructing 
+Partial Dependence Plots (lo encuentran en este enlace 
+https://journal.r-project.org/archive/2017/RJ-2017-016/RJ-2017-016.pdf, 
+ya que es muy grande para adjuntarlo al correo) ... llegado a la 
+ecuación 2 quisiera saber cómo se lee/interpreta correctamente el 
+término después del primer signo = . Entiendo la idea general de los 
+PDP, pero quisiera una comprensión al detalle y he estado muchos años 
+lejos de la matemática ... "E" supongo que es la esperanza, y Ezc, 
+imagino es la esperanza de lo q está dentro del paréntesis cuadrado 
+calculada sobre el subconjunto zc ... luego, "f con el acento 
+circunflejo" es la función de predicción, y aquí viene mi mayor duda, 
+cómo se lee f(zs,zc) ? ... f(zc) es simple, no? pero cómo se interpreta 
+"f" con zs y zc dentro ? es el producto de f(zs) y f(zc) ? es la suma de 
+la función de predicción de ambos términos ? qué es ? ... luego el mismo 
+término aparece en la sumatoria de la ec. 3, así es q mejor tratar de 
+entenderlo, no ?
+
+Adjunto una imagen del texto donde aparecen la ecuación para seguir más 
+fácilmente mi preguntas ... muchas gracias por su ayuda.
+
+Eric.
+
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210219/01dc8b3e/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: ppndldgmcnlkghlg.png
+Type: image/png
+Size: 113670 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210219/01dc8b3e/attachment-0001.png>
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri Feb 19 16:28:33 2021
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 19 Feb 2021 16:28:33 +0100
+Subject: [R-es] =?utf-8?q?Canal_en_telegram_sobre_R_en_espa=C3=B1ol?=
+In-Reply-To: <CALV7ndh_AOb3AL2kQtCarejuGcnj=xk4edbvEw_ra0qrPegWFw@mail.gmail.com>
+References: <CALV7ndh_AOb3AL2kQtCarejuGcnj=xk4edbvEw_ra0qrPegWFw@mail.gmail.com>
+Message-ID: <D420F761-B2E4-487F-A3B7-CCB8AD7F86D7@gmail.com>
+
+Hola Horacio,
+
+En la asociación Comunidad R Hispano (r-es.org <http://r-es.org/>) tenemos un canal en Telegram donde difundimos nuestra actividad y también información general sobre R:
+
+R hispano
+Gestionado por la Comunidad de usuarios de R hispano, canal informativo sobre R: eventos, actualizaciones y contenido friki en general.
+https://t.me/rhispano <https://t.me/rhispano>
+
+No sé si es lo que buscas o más bien un canal abierto donde poder interactuar con los demás (es algo que no descartamos en el futuro).
+
+Un saludo
+Emilio
+
+
+> El 19 feb 2021, a las 13:12, Horacio <horacio9573 en gmail.com> escribió:
+> 
+> Buenas, alguien conoce algún grupo en telegram sobre R en español? si
+> es así pueden enviar el enlace para unirse... gracias...
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From d|ego@hern@ngomezherrero @end|ng |rom gm@||@com  Fri Feb 19 16:34:58 2021
+From: d|ego@hern@ngomezherrero @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Hernang=C3=B3mez_Herrero?=)
+Date: Fri, 19 Feb 2021 16:34:58 +0100
+Subject: [R-es] =?utf-8?q?Canal_en_telegram_sobre_R_en_espa=C3=B1ol?=
+In-Reply-To: <CALV7ndh_AOb3AL2kQtCarejuGcnj=xk4edbvEw_ra0qrPegWFw@mail.gmail.com>
+References: <CALV7ndh_AOb3AL2kQtCarejuGcnj=xk4edbvEw_ra0qrPegWFw@mail.gmail.com>
+Message-ID: <CAA-ibaz1tCvgGZuiLD6AJXBi_u2p3wqkLV25ciHu5Xn5euG=Cg@mail.gmail.com>
+
+Hola Horacio, este es el canal de R Hispano
+
+https://t.me/rhispano
+
+
+Adicionalmente, en Slack tienes el grupo de ROpenSpain;
+
+https://join.slack.com/t/ropenspain/shared_invite/zt-ky2e8y2u-frfWuDzHdy1jNLUVyjp0~Q
+
+
+El El vie, 19 feb 2021 a las 13:12, Horacio <horacio9573 en gmail.com>
+escribió:
+
+> Buenas, alguien conoce algún grupo en telegram sobre R en español? si
+> es así pueden enviar el enlace para unirse... gracias...
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+-- 
+
+
+
+Have a nice day!
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Sat Feb 20 15:15:09 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Sat, 20 Feb 2021 15:15:09 +0100
+Subject: [R-es] Random search of hyperparameters
+Message-ID: <CAF3uytVuLEf+KT1gARtT-OnBi9Gh6KVXP8n07pJMrXPnS+q8AQ@mail.gmail.com>
+
+¿Conoce alguien un método de optimización de parámetros al azar que no
+utilice caret? Algo parecido a grid search sería ideal.
+for-loops anidados serviría, aunque si no son pocos parámetros puede ser
+engorroso.
+Gracias,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Feb 20 19:08:04 2021
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 20 Feb 2021 19:08:04 +0100
+Subject: [R-es] Random search of hyperparameters
+In-Reply-To: <CAF3uytVuLEf+KT1gARtT-OnBi9Gh6KVXP8n07pJMrXPnS+q8AQ@mail.gmail.com>
+References: <CAF3uytVuLEf+KT1gARtT-OnBi9Gh6KVXP8n07pJMrXPnS+q8AQ@mail.gmail.com>
+Message-ID: <CAOKbq8gq3erck6e8ERbdk2wkxUQcy_mYBVXZ3BtpFR6PhZf=LA@mail.gmail.com>
+
+Hola Manuel,
+
+Mira aquí:
+
+   - https://bradleyboehmke.github.io/HOML/gbm.html
+
+En la sección 12.3.3, justo como hacer un grid search sobre un gbm "a
+pelo"...
+En secciones posteriores, tienes más ejemplos incluso sobre xgboost.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El sáb, 20 feb 2021 a las 15:16, Manuel Mendoza (<mmendoza en fulbrightmail.org>)
+escribió:
+
+> ¿Conoce alguien un método de optimización de parámetros al azar que no
+> utilice caret? Algo parecido a grid search sería ideal.
+> for-loops anidados serviría, aunque si no son pocos parámetros puede ser
+> engorroso.
+> Gracias,
+> Manuel
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Wed Feb 24 18:59:35 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Wed, 24 Feb 2021 18:59:35 +0100
+Subject: [R-es] Dos cuestiones relacionadas con rpart y printcp
+Message-ID: <CAF3uytUumd0Sif0aTpdyA9=QLgX0iMW0o22SUsUy6W_XvSCmyQ@mail.gmail.com>
+
+Muy buenas, tengo dos cuestiones relacionadas con  rpart para regresión y
+printcp.
+Entreno el algoritmo con  fitrp <- rpart(nspp ~ ., data=data, cp=0)
+y obtengo el error relativo, xerror, del mejor árbol con
+min(fitrp$cptable[,"xerror"]).
+Hasta ahí muy fácil.
+
+1. Para calcular mse, multiplico ese valor de xerror por el error del nodo
+raíz.
+¿es correcto?
+
+2. Necesito el % de varianza (R2) de la variable objetivo explicada por el
+mejor árbol, pero no está en ninguno de los objetos incluídos fitrp.
+En la documentación encontré que rsq.rpart(fitrp) te representa
+directamente la evolución de R2 tal y como se van añadiendo nuevas
+divisiones (también te representa la evolución de xerror, pero esa ya la
+tenía con plotcp(fitrp)).
+Mi pregunta es:
+¿cómo puedo obtener esa secuencia de valores de R2, cuyo máximo sería el R2
+que busco?
+Gracias, una vez más,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From t|p@n|u|@@| @end|ng |rom hotm@||@com  Thu Feb 25 18:41:58 2021
+From: t|p@n|u|@@| @end|ng |rom hotm@||@com (Luis Eduardo)
+Date: Thu, 25 Feb 2021 17:41:58 +0000
+Subject: [R-es] =?utf-8?q?Codificar_ecuaci=C3=B3n_no_lineal?=
+Message-ID: <BL0PR01MB48657B0EF3446B6F3D149DA5A39E9@BL0PR01MB4865.prod.exchangelabs.com>
+
+Hola a todos, ¿cómo puedo codificar correctamente esta ecuación en R?
+
+y <- ?i=3 ((1+sing(t-ti)) /2) *Bi*{1-exp[-ai*((t-ti) / ?ti) ^(mi+1)]}
+n=3
+donde para t> ti; sign(t-ti) = 1, de lo contrario; sign(t-ti) = - 1;
+limitar el parámetro (ai) entre 2,3 y 6,9;
+B1 + B2 + B3 = 1
+
+Cualquier ayuda es muy apreciada
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Thu Feb 25 21:00:06 2021
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Thu, 25 Feb 2021 21:00:06 +0100
+Subject: [R-es] Fwd: Dos cuestiones relacionadas con rpart y printcp
+In-Reply-To: <CAF3uytUumd0Sif0aTpdyA9=QLgX0iMW0o22SUsUy6W_XvSCmyQ@mail.gmail.com>
+References: <CAF3uytUumd0Sif0aTpdyA9=QLgX0iMW0o22SUsUy6W_XvSCmyQ@mail.gmail.com>
+Message-ID: <CAF3uytVJFXTgngZVF0g9REqORa83SdaobkJkdbL_V=PkZ2+58w@mail.gmail.com>
+
+---------- Forwarded message ---------
+De: Manuel Mendoza <mmendoza en fulbrightmail.org>
+Date: mié, 24 feb 2021 a las 18:59
+Subject: Dos cuestiones relacionadas con rpart y printcp
+To: Lista R <r-help-es en r-project.org>
+
+
+Muy buenas, tengo dos cuestiones relacionadas con  rpart para regresión y
+printcp.
+Entreno el algoritmo con  fitrp <- rpart(nspp ~ ., data=data, cp=0)
+y obtengo el error relativo, xerror, del mejor árbol con
+min(fitrp$cptable[,"xerror"]).
+Hasta ahí muy fácil.
+
+1. Para calcular mse, multiplico ese valor de xerror por el error del nodo
+raíz.
+¿es correcto?
+
+2. Necesito el % de varianza (R2) de la variable objetivo explicada por el
+mejor árbol, pero no está en ninguno de los objetos incluídos fitrp.
+En la documentación encontré que rsq.rpart(fitrp) te representa
+directamente la evolución de R2 tal y como se van añadiendo nuevas
+divisiones (también te representa la evolución de xerror, pero esa ya la
+tenía con plotcp(fitrp)).
+Mi pregunta es:
+¿cómo puedo obtener esa secuencia de valores de R2, cuyo máximo sería el R2
+que busco?
+Gracias, una vez más,
+Manuel
+
+	[[alternative HTML version deleted]]
+
+
+From kbo|@rond@u@rc|@ @end|ng |rom gm@||@com  Sun Feb 28 15:39:45 2021
+From: kbo|@rond@u@rc|@ @end|ng |rom gm@||@com (kendy Boisrond)
+Date: Sun, 28 Feb 2021 11:39:45 -0300
+Subject: [R-es] =?utf-8?q?HELP!!_Expansi=C3=B3n_de_variables_en_una_base_?=
+	=?utf-8?q?de_datos_con_ID_duplicados?=
+Message-ID: <CAEDZAqGNR5MQXZL7FtJebZS=ySCXfDJs_3WQs=UEu0sy8ogKCQ@mail.gmail.com>
+
+Hola Comunidad,
+
+Por favor necesito su ayuda:
+
+Se trata de una base, donde cada "ID" representa una vivienda única, pero
+por lo que puede haber más visitas en una misma vivienda, los "ID" están
+duplicados.
+La base visitas es de dimensión: 98692 x 52 (ID duplicados)
+y la base vivienda tendría una dimensión 29866 x 52 (ID únicos).
+
+A partir de la base "visitas", necesito sacar todos los "ID" únicos de la
+última visita en cada vivienda, y pude hacerlo con ese comando:
+
+Base1<- subset(Base_Visitas %>% group_by(enc_idr) %>% summarise(NRO_VISITA
+= max(NRO_VISITA)))
+dim(Base1)
+
+[1] 29866     2
+
+Sin embargo, necesito que me lo expande para todas las 52 variables para
+así realizar otro análisis... Llegué hasta aquí. ¿Me pueden ayudar a
+expandirla para todas las variables, por favor?
+Muchas gracias!!
+
+
+
+-- 
+*Kendy B.*
+
+	[[alternative HTML version deleted]]
+
+
+From cgb @end|ng |rom d@t@n@|yt|c@@com  Sun Feb 28 15:56:57 2021
+From: cgb @end|ng |rom d@t@n@|yt|c@@com (Carlos J. Gil Bellosta)
+Date: Sun, 28 Feb 2021 15:56:57 +0100
+Subject: [R-es] 
+	=?utf-8?q?HELP!!_Expansi=C3=B3n_de_variables_en_una_base_?=
+	=?utf-8?q?de_datos_con_ID_duplicados?=
+In-Reply-To: <CAEDZAqGNR5MQXZL7FtJebZS=ySCXfDJs_3WQs=UEu0sy8ogKCQ@mail.gmail.com>
+References: <CAEDZAqGNR5MQXZL7FtJebZS=ySCXfDJs_3WQs=UEu0sy8ogKCQ@mail.gmail.com>
+Message-ID: <CADg83ecgzaBomiyoQhcHkY46D3iYTCLCa9LrpS6AcnnujDZXEg@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+En seudocódigo:
+
+   - Aplicas rank sobre -NRO_VISITA por ID (usando group_by + mutate).
+   - Te quedas con el rank == 1.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www
+
+El dom, 28 feb 2021 a las 15:38, kendy Boisrond (<kboisrond.uarcis en gmail.com>)
+escribió:
+
+> Hola Comunidad,
+>
+> Por favor necesito su ayuda:
+>
+> Se trata de una base, donde cada "ID" representa una vivienda única, pero
+> por lo que puede haber más visitas en una misma vivienda, los "ID" están
+> duplicados.
+> La base visitas es de dimensión: 98692 x 52 (ID duplicados)
+> y la base vivienda tendría una dimensión 29866 x 52 (ID únicos).
+>
+> A partir de la base "visitas", necesito sacar todos los "ID" únicos de la
+> última visita en cada vivienda, y pude hacerlo con ese comando:
+>
+> Base1<- subset(Base_Visitas %>% group_by(enc_idr) %>% summarise(NRO_VISITA
+> = max(NRO_VISITA)))
+> dim(Base1)
+>
+> [1] 29866     2
+>
+> Sin embargo, necesito que me lo expande para todas las 52 variables para
+> así realizar otro análisis... Llegué hasta aquí. ¿Me pueden ayudar a
+> expandirla para todas las variables, por favor?
+> Muchas gracias!!
+>
+>
+>
+> --
+> *Kendy B.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Feb 28 18:22:00 2021
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 28 Feb 2021 18:22:00 +0100
+Subject: [R-es] 
+	=?utf-8?q?HELP!!_Expansi=C3=B3n_de_variables_en_una_base_?=
+	=?utf-8?q?de_datos_con_ID_duplicados?=
+In-Reply-To: <CAEDZAqGNR5MQXZL7FtJebZS=ySCXfDJs_3WQs=UEu0sy8ogKCQ@mail.gmail.com>
+References: <CAEDZAqGNR5MQXZL7FtJebZS=ySCXfDJs_3WQs=UEu0sy8ogKCQ@mail.gmail.com>
+Message-ID: <CAOKbq8gedXqgSV7BxfzztQkiqvwU0Z7WRLY7Q1rzcHssAkY6PA@mail.gmail.com>
+
+Hola,
+
+Otra alternativa es la siguiente usando data.table.
+En el ejemplo genero/incluyo un pequeño dataset para reproducir el caso...
+
+#------------------------------
+library(data.table)
+set.seed(10)
+DT <- data.table(
+  Id        = sample(1:10, 100, replace = TRUE),
+  Nro_visita= sample(1:10, 100, replace = TRUE),
+  X         = rnorm(100),
+  Y         = rnorm(100),
+  Z         = rnorm(100)
+)
+
+#--- Convertir tu data.frame a data.table
+# DT <- as.data.frame(tu_df)
+
+#--- Ordeno el data.table por ID y por nro_visita en orden decreciente.
+setorder(DT, Id, -Nro_visita)
+#--- Me quedo solo con el primer elemento de cada Id. Que es la última
+visita
+res_dt <- DT[ , .SD[1], by = Id]
+res_dt
+
+#------------------------
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El dom, 28 feb 2021 a las 15:38, kendy Boisrond (<kboisrond.uarcis en gmail.com>)
+escribió:
+
+> Hola Comunidad,
+>
+> Por favor necesito su ayuda:
+>
+> Se trata de una base, donde cada "ID" representa una vivienda única, pero
+> por lo que puede haber más visitas en una misma vivienda, los "ID" están
+> duplicados.
+> La base visitas es de dimensión: 98692 x 52 (ID duplicados)
+> y la base vivienda tendría una dimensión 29866 x 52 (ID únicos).
+>
+> A partir de la base "visitas", necesito sacar todos los "ID" únicos de la
+> última visita en cada vivienda, y pude hacerlo con ese comando:
+>
+> Base1<- subset(Base_Visitas %>% group_by(enc_idr) %>% summarise(NRO_VISITA
+> = max(NRO_VISITA)))
+> dim(Base1)
+>
+> [1] 29866     2
+>
+> Sin embargo, necesito que me lo expande para todas las 52 variables para
+> así realizar otro análisis... Llegué hasta aquí. ¿Me pueden ayudar a
+> expandirla para todas las variables, por favor?
+> Muchas gracias!!
+>
+>
+>
+> --
+> *Kendy B.*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+

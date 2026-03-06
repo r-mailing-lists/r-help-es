@@ -1,0 +1,519 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2021-04",
+  "messages": [
+    {
+      "id": "msg-90b029b2b45e",
+      "message_id": "<CAFvJtoFP5r+fnb7VUU+wT+quNO+1hMbS7HwGBdMqvUGh7MX3XA@mail.gmail.com>",
+      "from_name": "Rolando Valdez",
+      "from_email_hash": "7a287217fc9700f06a62a18adbe5a2f1b2e04f2022e1d4904912879252859b2f",
+      "date": "2021-04-05T15:34:19-05:00",
+      "subject": "[R-es] Reshape sobre una lista de data frames",
+      "subject_clean": "[R-es] Reshape sobre una lista de data frames",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimada Comunidad, espero que todo marche bien,\n\nEstoy intentando crear una base de datos en forma de panel, tengo problemas\ncon el Reshape.\n\nLa historia es que, descarguÃ© datos de 14 variables de 43 paÃ­ses para el\nperiodo 2004-2015. La informaciÃ³n la guardÃ© en un archivo de excel en donde\ncada libro corresponde a 1 variable, por lo tanto dentro de cada libro\ntengo un arreglo de 44 renglones (1 por cada paÃ­s) y 13 columnas (1 por\ncada aÃ±o).\n\nEl primer paso consistiÃ³ en importar cada uno de los 14 libros de excel y\ngenerar una lista con 14 dataframes lo cual ya estÃ¡. Ahora necesito pasar\ncada data frame de la lista de formato wide a long y no logro descifrar\ncÃ³mo ejecutar la instrucciÃ³n.\n\n> ## Importing data from Excel\n>\n> # Extracting the names of the sheets\n>\n> sheetnames <- excel_sheets(path = \"BrainDrainDB.xlsx\")\n>\n> # Reading sheets from the workbook\n>\n> list_sheets <- lapply(sheetnames, function(x) read_excel(path =\n\"BrainDrainDB.xlsx\", sheet = x))\n\n------- Hasta aquÃ­ todo bien ---------\n>\n> # Reshaping wide to long\n>\n> reshaping <- lapply(list_sheets, function(x) reshape(x, varying =\nlist_sheets[[1]][,2:13],\n+                                                   v.names = sheetnames,\n+                                                   timevar = \"yr\", idvar =\nc(\"Country\", \"yr\"),\n+                                                   times = 2004:2015,\ndirection = \"long\"))\n Error in reshapeLong(data, idvar = idvar, timevar = timevar, varying =\nvarying,  :\n  'varying' arguments must be the same length\n\nAgradezco de antemano cualquier sugerencia.\n\n-- \nRol~\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimada Comunidad, espero que todo marche bien,\n\nEstoy intentando crear una base de datos en forma de panel, tengo problemas\ncon el Reshape.\n\nLa historia es que, descarguÃ© datos de 14 variables de 4",
+      "thread_id": "thread-90b029b2b45e",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-9ebc29ae84b8",
+      "message_id": "<CAF3uytWv_Q-ZJmPK19UgQaEz7JhbSQDxztn40z5gFZ8Cygryfg@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2021-04-06T20:29:12+02:00",
+      "subject": "[R-es] error con grid.arrange",
+      "subject_clean": "[R-es] error con grid.arrange",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Muy buenas, trato de poner 5 ggplots juntos con  grid.arrange y me da este\nerror:\n\n> grid.arrange(pdpPL, pdpPs, pdpCl, pdpUr, pdpHP, nrow = 1)\n\nError in `$<-.data.frame`(`*tmp*`, \"wrapvp\", value = list(x = 0.5, y = 0.5,\n :\n  replacement has 17 rows, data has 30\n\n\nAlgunas pistas (todo igual para los 5 PDPs):\n\n> class(pdpPL)\n[1] \"data.frame\" \"partial\"\n\n> head(pdpPL)\n  PrimLand       yhat\n1     0.00 0.12917927\n2     0.02 0.17702830\n3     0.04 0.13464397\n4     0.06 0.15734838\n5     0.08 0.11623142\n6     0.10 0.05936711\n\n> str(pdpPL)\nClasses ?partial? and 'data.frame': 51 obs. of  2 variables:\n $ PrimLand: num  0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 ...\n $ yhat    : num  0.129 0.177 0.135 0.157 0.116 ...\n\nGracias,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muy buenas, trato de poner 5 ggplots juntos con  grid.arrange y me da este\nerror:\n\n> grid.arrange(pdpPL, pdpPs, pdpCl, pdpUr, pdpHP, nrow = 1)\n\nError in `$<-.data.frame`(`*tmp*`, \"wrapvp\", value = lis",
+      "thread_id": "thread-9ebc29ae84b8",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-595be71b6da0",
+      "message_id": "<CAF3uytUR-Pa9FYr4HwwBv2acF3n3bbXTgFj6pHCap2tx+=2Tiw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2021-04-07T06:09:42+02:00",
+      "subject": "[R-es] error con grid.arrange",
+      "subject_clean": "[R-es] error con grid.arrange",
+      "in_reply_to": "<CAKL8G3HYkJH_x5B4df6bvuADWb9=_cMv7Ouiw6btwBpxwMfGjg@mail.gmail.com>",
+      "references": [
+        "<CAF3uytWv_Q-ZJmPK19UgQaEz7JhbSQDxztn40z5gFZ8Cygryfg@mail.gmail.com>",
+        "<CAKL8G3HYkJH_x5B4df6bvuADWb9=_cMv7Ouiw6btwBpxwMfGjg@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Jorge, antes de consultaros estuve viendo varios ejemplos, tratando\nde seguirlos con detalle, pero no funcionaba. Sospecho que es porque los\nelementos no son simples df sino:\n [1] \"data.frame\" \"partial\".\n\nEl mar, 6 abr 2021 a las 20:52, Jorge I Velez (<jorgeivanvelez en gmail.com>)\nescribiÃ³:\n\n> Manuel,\n> QuizÃ¡s los ejemplos en\n> www.sthda.com/english/wiki/wiki.php?id_contents=7930 te ayuden.\n> Saludos,\n> Jorge.-\n>\n>\n> El El mar, 6 de abr. de 2021 a la(s) 1:30 p. m., Manuel Mendoza <\n> mmendoza en fulbrightmail.org> escribiÃ³:\n>\n>> Muy buenas, trato de poner 5 ggplots juntos con  grid.arrange y me da este\n>> error:\n>>\n>> > grid.arrange(pdpPL, pdpPs, pdpCl, pdpUr, pdpHP, nrow = 1)\n>>\n>> Error in `$<-.data.frame`(`*tmp*`, \"wrapvp\", value = list(x = 0.5, y =\n>> 0.5,\n>>  :\n>>   replacement has 17 rows, data has 30\n>>\n>>\n>> Algunas pistas (todo igual para los 5 PDPs):\n>>\n>> > class(pdpPL)\n>> [1] \"data.frame\" \"partial\"\n>>\n>> > head(pdpPL)\n>>   PrimLand       yhat\n>> 1     0.00 0.12917927\n>> 2     0.02 0.17702830\n>> 3     0.04 0.13464397\n>> 4     0.06 0.15734838\n>> 5     0.08 0.11623142\n>> 6     0.10 0.05936711\n>>\n>> > str(pdpPL)\n>> Classes ?partial? and 'data.frame': 51 obs. of  2 variables:\n>>  $ PrimLand: num  0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 ...\n>>  $ yhat    : num  0.129 0.177 0.135 0.157 0.116 ...\n>>\n>> Gracias,\n>> Manuel\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n> --\n> Sent from my phone. Please excuse my brevity and misspelling.\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Jorge, antes de consultaros estuve viendo varios ejemplos, tratando\nde seguirlos con detalle, pero no funcionaba. Sospecho que es porque los\nelementos no son simples df sino:\n [1] \"data.frame\"",
+      "thread_id": "thread-595be71b6da0",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-3881181cd544",
+      "message_id": "<CAF3uytWnudxEMf4MMNoZ0vwDX9Ptcipsex5hTRtEFNX=sEbhiw@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2021-04-14T21:03:39+02:00",
+      "subject": "[R-es] PDP con XgBoost",
+      "subject_clean": "[R-es] PDP con XgBoost",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas, Â¿alguien ha calculado alguna vez partial dependence plots con\nXgBoost? Yo lo he conseguido con el paquete PDP y clasificaciÃ³n binaria,\npero llevo horas intentÃ¡ndolo con regresiÃ³n y no hay forma. Apenas hay\nejemplos en la red, y utilizan caret o h2o, que de momento no me sirven.\nGracias,\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas, Â¿alguien ha calculado alguna vez partial dependence plots con\nXgBoost? Yo lo he conseguido con el paquete PDP y clasificaciÃ³n binaria,\npero llevo horas intentÃ¡ndolo con regresiÃ³n y no hay ",
+      "thread_id": "thread-3881181cd544",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-3e45b96ea3b1",
+      "message_id": "<CAF3uytWhhBcjYKbom4X2hzh2RYbf4qu0G97ro0GTaJ5F1DG5Fg@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2021-04-15T03:31:11+02:00",
+      "subject": "[R-es] PDP con XgBoost",
+      "subject_clean": "[R-es] PDP con XgBoost",
+      "in_reply_to": "<CAOKbq8j72t2Vu2knbvMRM7+wCk9Y808azcSsm9RFZk=W1FWbGg@mail.gmail.com>",
+      "references": [
+        "<CAF3uytWnudxEMf4MMNoZ0vwDX9Ptcipsex5hTRtEFNX=sEbhiw@mail.gmail.com>",
+        "<CAOKbq8j72t2Vu2knbvMRM7+wCk9Y808azcSsm9RFZk=W1FWbGg@mail.gmail.com>"
+      ],
+      "body_plain": "FantÃ¡stico Carlos. FuncionÃ³ a la primera con mis propios datos.\nMil gracias, una vez mÃ¡s.\nManuel\n\nEl miÃ©, 14 abr 2021 a las 21:51, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Hola Manuel,\n>\n> SÃ­, mira lo puedes hacer con DALEX.\n> En estos dos artÃ­culos, puedes ver el caso con \"ranger\", en modo regresiÃ³n\n> pero que es equivalente con \"xgboost\".\n>\n>\n>    -\n>    https://medium.com/responsibleml/basic-xai-with-dalex-part-1-introduction-e68f65fa2889\n>    -\n>    https://medium.com/responsibleml/basic-xai-with-dalex-part-3-partial-dependence-profile-caf8b2ad1c9d\n>\n> Saludos,\n> Carlos.\n>\n> El miÃ©, 14 abr 2021 a las 21:04, Manuel Mendoza (<\n> mmendoza en fulbrightmail.org>) escribiÃ³:\n>\n>> Buenas, Â¿alguien ha calculado alguna vez partial dependence plots con\n>> XgBoost? Yo lo he conseguido con el paquete PDP y clasificaciÃ³n binaria,\n>> pero llevo horas intentÃ¡ndolo con regresiÃ³n y no hay forma. Apenas hay\n>> ejemplos en la red, y utilizan caret o h2o, que de momento no me sirven.\n>> Gracias,\n>> Manuel\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "FantÃ¡stico Carlos. FuncionÃ³ a la primera con mis propios datos.\nMil gracias, una vez mÃ¡s.\nManuel\n\nEl miÃ©, 14 abr 2021 a las 21:51, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Hola ",
+      "thread_id": "thread-3e45b96ea3b1",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-33c54340ea8c",
+      "message_id": "<20210414215820.0869cb07@TheMatrix>",
+      "from_name": "Eric Concha",
+      "from_email_hash": "9592c049134ace3b88d587013cf973f4a2bdf83e2d50d581ff507e78f61f6805",
+      "date": "2021-04-14T21:58:20-04:00",
+      "subject": "[R-es] PDP con XgBoost",
+      "subject_clean": "[R-es] PDP con XgBoost",
+      "in_reply_to": "<CAF3uytWnudxEMf4MMNoZ0vwDX9Ptcipsex5hTRtEFNX=sEbhiw@mail.gmail.com>",
+      "references": [
+        "<CAF3uytWnudxEMf4MMNoZ0vwDX9Ptcipsex5hTRtEFNX=sEbhiw@mail.gmail.com>"
+      ],
+      "body_plain": "QuizÃ¡ te sirve asÃ­:\nSe calcula el pdp con la funciÃ³n partial() del paquete pdp,\nluego graficas con ggplot():\n\n# CALCULAR EL PDP\n bdst_edadagnospdp <- pdp::partial(dat.rfr, pred.var=\"edadagnos\")\n\n# CAMBIAR EL NOMBRE A LA COLUMNA DE DATOS CALCULADOS, PARA EL GRAFICO\n names(bdst_edadagnospdp)[2] <- \"bdst_pb\" \n\n# GRAFICAR LA CURVA CALCULADA POR PDP SOBRE EL SET DE DATOS PARA TESTING\n ggplot(dat.test, aes(edadagnos,bdst_pb)) +\n    geom_density_2d_filled(show.legend = FALSE) + geom_point(size=0.1,\n    col=\"white\") + ylim(-1,6) + xlim(8,13) +\n    geom_line(data=bdst_edadagnospdp, col=\"red\", size=1.5)\n\nla curva calculada con pdp se agrega sobre los datos para testing al\nfinal del ggplot, en la parte de geom_line(data=bdst_edadagnospdp,\ncol=\"red\", size=1.5)\n\npuedes mirar los detalles de la funcion pdp con ?pdp.\n\nOjalÃ¡ te sirva,\n\nSaludos !!\n\nEric.\n\n\n\n\nOn Wed, 14 Apr 2021 21:03:39 +0200\nManuel Mendoza <mmendoza en fulbrightmail.org> wrote:\n\n> Buenas, Â¿alguien ha calculado alguna vez partial dependence plots con\n> XgBoost? Yo lo he conseguido con el paquete PDP y clasificaciÃ³n\n> binaria, pero llevo horas intentÃ¡ndolo con regresiÃ³n y no hay forma.\n> Apenas hay ejemplos en la red, y utilizan caret o h2o, que de momento\n> no me sirven. Gracias,\n> Manuel\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "QuizÃ¡ te sirve asÃ­:\nSe calcula el pdp con la funciÃ³n partial() del paquete pdp,\nluego graficas con ggplot():\n\n# CALCULAR EL PDP\n bdst_edadagnospdp <- pdp::partial(dat.rfr, pred.var=\"edadagnos\")\n\n# ",
+      "thread_id": "thread-3881181cd544",
+      "thread_depth": 1,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-1959850b9fbb",
+      "message_id": "<CAF3uytWpf9zygC482kv+65tD4J5CrTpkRsCW4n2BV+YJMMS1Ag@mail.gmail.com>",
+      "from_name": "Manuel Mendoza",
+      "from_email_hash": "47c5f5f0e1ab63fd7a5656e4a8e523eb4365950f2d6e187c903b2a73ad1e9118",
+      "date": "2021-04-15T04:15:46+02:00",
+      "subject": "[R-es] PDP con XgBoost",
+      "subject_clean": "[R-es] PDP con XgBoost",
+      "in_reply_to": "<20210414215820.0869cb07@TheMatrix>",
+      "references": [
+        "<CAF3uytWnudxEMf4MMNoZ0vwDX9Ptcipsex5hTRtEFNX=sEbhiw@mail.gmail.com>",
+        "<20210414215820.0869cb07@TheMatrix>"
+      ],
+      "body_plain": "Gracias Eric (veo que tÃº tambiÃ©n trasnochas), asÃ­ es como lo hice con\nclasificaciÃ³n binaria y funcionÃ³. Con regresiÃ³n me da este error (entre\notros):\n\nError in if (object$params$objective %in% c(\"reg:linear\", \"reg:logistic\",\n : argumento tiene longitud cero\n\npero todo esto es bastante nuevo y apenas hay informaciÃ³n en la red.\n\nDe todas formas, con DALEX, que me aconsejÃ³ Carlos, es rÃ¡pido y sencillo.\nAdemÃ¡s, hace LIME y Shapley, que tambiÃ©n me interesan, por lo que me paso a\nDALEX.\n\nGracias, en cualquier caso,\nManuel\n\nEl jue, 15 abr 2021 a las 3:58, Eric Concha (<ericconchamunoz en gmail.com>)\nescribiÃ³:\n\n> QuizÃ¡ te sirve asÃ­:\n> Se calcula el pdp con la funciÃ³n partial() del paquete pdp,\n> luego graficas con ggplot():\n>\n> # CALCULAR EL PDP\n>  bdst_edadagnospdp <- pdp::partial(dat.rfr, pred.var=\"edadagnos\")\n>\n> # CAMBIAR EL NOMBRE A LA COLUMNA DE DATOS CALCULADOS, PARA EL GRAFICO\n>  names(bdst_edadagnospdp)[2] <- \"bdst_pb\"\n>\n> # GRAFICAR LA CURVA CALCULADA POR PDP SOBRE EL SET DE DATOS PARA TESTING\n>  ggplot(dat.test, aes(edadagnos,bdst_pb)) +\n>     geom_density_2d_filled(show.legend = FALSE) + geom_point(size=0.1,\n>     col=\"white\") + ylim(-1,6) + xlim(8,13) +\n>     geom_line(data=bdst_edadagnospdp, col=\"red\", size=1.5)\n>\n> la curva calculada con pdp se agrega sobre los datos para testing al\n> final del ggplot, en la parte de geom_line(data=bdst_edadagnospdp,\n> col=\"red\", size=1.5)\n>\n> puedes mirar los detalles de la funcion pdp con ?pdp.\n>\n> OjalÃ¡ te sirva,\n>\n> Saludos !!\n>\n> Eric.\n>\n>\n>\n>\n> On Wed, 14 Apr 2021 21:03:39 +0200\n> Manuel Mendoza <mmendoza en fulbrightmail.org> wrote:\n>\n> > Buenas, Â¿alguien ha calculado alguna vez partial dependence plots con\n> > XgBoost? Yo lo he conseguido con el paquete PDP y clasificaciÃ³n\n> > binaria, pero llevo horas intentÃ¡ndolo con regresiÃ³n y no hay forma.\n> > Apenas hay ejemplos en la red, y utilizan caret o h2o, que de momento\n> > no me sirven. Gracias,\n> > Manuel\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Eric (veo que tÃº tambiÃ©n trasnochas), asÃ­ es como lo hice con\nclasificaciÃ³n binaria y funcionÃ³. Con regresiÃ³n me da este error (entre\notros):\n\nError in if (object$params$objective %in% c",
+      "thread_id": "thread-3881181cd544",
+      "thread_depth": 2,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-af6953cc84bb",
+      "message_id": "<CAASO=wCPWzwiDm6ZKTN-65eP31oemOTkNExYsM5xhVUYN_DoLg@mail.gmail.com>",
+      "from_name": "Carlos Santos",
+      "from_email_hash": "2480aff28a6c285665bd1944d98f703064176144d1346c22c2c624f7c76044de",
+      "date": "2021-04-18T09:18:09+02:00",
+      "subject": "[R-es] Se puede ejecutar un programa en la nube?",
+      "subject_clean": "[R-es] Se puede ejecutar un programa en la nube?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola a todos,\n\nTengo problemas de memoria y espacio en mi PC cuando ejecutÃ³ un programa\nutilizando datasets medios y grandes de mÃ¡s de 40000 filas con mÃ¡s de 30\ncolumnas\n\nSabÃ©is si hay alguna manera de ejecutar mi programa en la nube para\nsolucionar dicho problema?\n\nGracias por vuestra ayuda\nCarlos Santos\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nTengo problemas de memoria y espacio en mi PC cuando ejecutÃ³ un programa\nutilizando datasets medios y grandes de mÃ¡s de 40000 filas con mÃ¡s de 30\ncolumnas\n\nSabÃ©is si hay alguna mane",
+      "thread_id": "thread-af6953cc84bb",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-82ae8958c8fd",
+      "message_id": "<CA+8ueybfSgO1wLT8UHDWGC_npWMQZH_OhKXva8ZsqOi-YvRZHw@mail.gmail.com>",
+      "from_name": "Juan Abasolo",
+      "from_email_hash": "20be713e36dff382d1fe3151ad684c005f02d119de762911f953e87f656e2d3e",
+      "date": "2021-04-18T09:47:59+02:00",
+      "subject": "[R-es] Se puede ejecutar un programa en la nube?",
+      "subject_clean": "[R-es] Se puede ejecutar un programa en la nube?",
+      "in_reply_to": "<CAASO=wCPWzwiDm6ZKTN-65eP31oemOTkNExYsM5xhVUYN_DoLg@mail.gmail.com>",
+      "references": [
+        "<CAASO=wCPWzwiDm6ZKTN-65eP31oemOTkNExYsM5xhVUYN_DoLg@mail.gmail.com>"
+      ],
+      "body_plain": "Hola, Carlos\nMientras gente que sabe de verdad contesta en la direcciÃ³n de tu pregunta,\nyo te epaso mi soluciÃ³n a medio camino:\n\nUsar Parallel, es para ejecutar en cada core de la computadora una parte\ndel proceso. SegÃºn quÃ© tipo de proceso tengÃ¡s que hacer, soluciona bastante.\n\nTenÃ­a que analizar y ordenar el anÃ¡lisis sintÃ¡ctico de wikipedia y en una\nnoche y una maÃ±ana entera no hubo manera. Con parallel me fui a hacer unos\ntramites y cuando volvÃ­ todo hecho.\n\nSuerte.\n\nJuan\n\nHau idatzi du Carlos Santos (carlossantos.csm en gmail.com) erabiltzaileak\n(2021 api. 18, ig. (09:18)):\n\n> Hola a todos,\n>\n> Tengo problemas de memoria y espacio en mi PC cuando ejecutÃ³ un programa\n> utilizando datasets medios y grandes de mÃ¡s de 40000 filas con mÃ¡s de 30\n> columnas\n>\n> SabÃ©is si hay alguna manera de ejecutar mi programa en la nube para\n> solucionar dicho problema?\n>\n> Gracias por vuestra ayuda\n> Carlos Santos\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nJuan Abasolo, PhD\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea\nUPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT       : (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype   : abasolo72\n\nTutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n[blo <https://juanabasolo.netlify.app/>][gak\n<http://bosgarrena.blogspot.com/>]\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, Carlos\nMientras gente que sabe de verdad contesta en la direcciÃ³n de tu pregunta,\nyo te epaso mi soluciÃ³n a medio camino:\n\nUsar Parallel, es para ejecutar en cada core de la computadora una pa",
+      "thread_id": "thread-af6953cc84bb",
+      "thread_depth": 1,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-92755fa949e7",
+      "message_id": "<CADdZEnO+hQJu6+Jx_K7J5PaLib5Q6Yg9uGsXt+uA_v-27VEyFA@mail.gmail.com>",
+      "from_name": "José Luis Cañadas",
+      "from_email_hash": "6c065068c49b3d683dca884ab71bd367440e6e326655b1b84638bff0b183952f",
+      "date": "2021-04-18T19:15:54+02:00",
+      "subject": "[R-es] Se puede ejecutar un programa en la nube?",
+      "subject_clean": "[R-es] Se puede ejecutar un programa en la nube?",
+      "in_reply_to": "<CA+8ueybfSgO1wLT8UHDWGC_npWMQZH_OhKXva8ZsqOi-YvRZHw@mail.gmail.com>",
+      "references": [
+        "<CAASO=wCPWzwiDm6ZKTN-65eP31oemOTkNExYsM5xhVUYN_DoLg@mail.gmail.com>",
+        "<CA+8ueybfSgO1wLT8UHDWGC_npWMQZH_OhKXva8ZsqOi-YvRZHw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola.\nNo sÃ© si quizÃ¡ con rstudio cloud (https://rstudio.cloud/)  o alquilar una\nec2 en aws . Ya hay amis preconfiguradas.\nhttps://www.louisaslett.com/RStudio_AMI/\n De todas formas no me parece excesivo 40000 filas y 30 variables, quizÃ¡\nalgÃºn amigo /compaÃ±ero te pueda dejar su mÃ¡quina o montar un rstudio server\nen su mÃ¡quina y darte acceso via web.\n\nEl dom, 18 abr 2021 a las 9:48, Juan Abasolo (<juan.abasolo en ehu.eus>)\nescribiÃ³:\n\n> Hola, Carlos\n> Mientras gente que sabe de verdad contesta en la direcciÃ³n de tu pregunta,\n> yo te epaso mi soluciÃ³n a medio camino:\n>\n> Usar Parallel, es para ejecutar en cada core de la computadora una parte\n> del proceso. SegÃºn quÃ© tipo de proceso tengÃ¡s que hacer, soluciona\n> bastante.\n>\n> TenÃ­a que analizar y ordenar el anÃ¡lisis sintÃ¡ctico de wikipedia y en una\n> noche y una maÃ±ana entera no hubo manera. Con parallel me fui a hacer unos\n> tramites y cuando volvÃ­ todo hecho.\n>\n> Suerte.\n>\n> Juan\n>\n> Hau idatzi du Carlos Santos (carlossantos.csm en gmail.com) erabiltzaileak\n> (2021 api. 18, ig. (09:18)):\n>\n> > Hola a todos,\n> >\n> > Tengo problemas de memoria y espacio en mi PC cuando ejecutÃ³ un programa\n> > utilizando datasets medios y grandes de mÃ¡s de 40000 filas con mÃ¡s de 30\n> > columnas\n> >\n> > SabÃ©is si hay alguna manera de ejecutar mi programa en la nube para\n> > solucionar dicho problema?\n> >\n> > Gracias por vuestra ayuda\n> > Carlos Santos\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n>\n>\n> --\n> Juan Abasolo, PhD\n>\n> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\n> Bilboko Hezkuntza Fakultatea\n> Euskal Herriko Unibertsitatea\n> UPV/EHU\n>\n> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)\n>\n> T       : (+34) 94 601 7567\n> Telegram: @JuanAbasolo\n> Skype   : abasolo72\n>\n> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n> [blo <https://juanabasolo.netlify.app/>][gak\n> <http://bosgarrena.blogspot.com/>]\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola.\nNo sÃ© si quizÃ¡ con rstudio cloud (https://rstudio.cloud/)  o alquilar una\nec2 en aws . Ya hay amis preconfiguradas.\nhttps://www.louisaslett.com/RStudio_AMI/\n De todas formas no me parece exces",
+      "thread_id": "thread-af6953cc84bb",
+      "thread_depth": 2,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-d48d258fa241",
+      "message_id": "<CAEgqsh-YZNJNn_Fi3Zdmf4U5uhAfYPd23yso_bLAL8Z=vGO=0A@mail.gmail.com>",
+      "from_name": "JALS",
+      "from_email_hash": "a69be1588cd43599d710f2ae4384ae7e44b59c2595aa34907f3397574e56f4bd",
+      "date": "2021-04-22T15:56:21-04:00",
+      "subject": "[R-es] Fechas",
+      "subject_clean": "[R-es] Fechas",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas Tardes, estoy reciÃ¨n iniciandome en R, y me encontrÃ© con este\nproblema al trabajar con fechas de  un archivo  excel.\n\n1. Para formatear la fecha en R ocupe strptime\n\n[image: image.png]\n\n2. pero al exportar el resultado a  un archivo excel, me cambia la hora,\ncomo ejemplo la imagen siguiente corresponde al registro 1Â¨\"2021-04-21\n14:46:00\"\n\n[image: image.png]\n\nAlguna recomendaciÃ³n o ayuda para trabajar con fechas.\n\nGracias,\n\nJacqueline.\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210422/cd0d852a/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 26674 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210422/cd0d852a/attachment-0002.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 2636 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210422/cd0d852a/attachment-0003.png>",
+      "body_snippet": "Buenas Tardes, estoy reciÃ¨n iniciandome en R, y me encontrÃ© con este\nproblema al trabajar con fechas de  un archivo  excel.\n\n1. Para formatear la fecha en R ocupe strptime\n\n[image: image.png]\n\n2. pe",
+      "thread_id": "thread-d48d258fa241",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-6c0aab59d948",
+      "message_id": "<CAHo_aEQKb7Ok8GsfZA9zP346CV6=a49KgM1KjwHHhZVT2u5-ag@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2021-04-22T19:00:30-03:00",
+      "subject": "[R-es] Fechas",
+      "subject_clean": "[R-es] Fechas",
+      "in_reply_to": "<CAEgqsh-YZNJNn_Fi3Zdmf4U5uhAfYPd23yso_bLAL8Z=vGO=0A@mail.gmail.com>",
+      "references": [
+        "<CAEgqsh-YZNJNn_Fi3Zdmf4U5uhAfYPd23yso_bLAL8Z=vGO=0A@mail.gmail.com>"
+      ],
+      "body_plain": "Estimada Jaqueline\n\nLa fecha y hora estarÃ­an correctas, por lo menos en apariencia, el problema\npuede ser UTC y no UTC, me refiero al pasar la hora UTC a la hora local,\nentre las 14 y las 18 horas estÃ¡ la diferencia horaria, por ejemplo +1, +5,\n-7, habrÃ­a que ver la configuraciÃ³n de horario en excel y la del sistema\noperativo, podrÃ­a haber una conversiÃ³n automÃ¡tica, a esto no lo se.\n\nJavier RubÃ©n Marcuzzi\n\nEl jue, 22 abr 2021 a las 16:56, JALS (<jaqueline.lillo en gmail.com>)\nescribiÃ³:\n\n> Buenas Tardes, estoy reciÃ¨n iniciandome en R, y me encontrÃ© con este\n> problema al trabajar con fechas de  un archivo  excel.\n>\n> 1. Para formatear la fecha en R ocupe strptime\n>\n> [image: image.png]\n>\n> 2. pero al exportar el resultado a  un archivo excel, me cambia la hora,\n> como ejemplo la imagen siguiente corresponde al registro 1Â¨\"2021-04-21\n> 14:46:00\"\n>\n> [image: image.png]\n>\n> Alguna recomendaciÃ³n o ayuda para trabajar con fechas.\n>\n> Gracias,\n>\n> Jacqueline.\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210422/d95c5ae7/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 26674 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210422/d95c5ae7/attachment-0002.png>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: image.png\nType: image/png\nSize: 2636 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210422/d95c5ae7/attachment-0003.png>",
+      "body_snippet": "Estimada Jaqueline\n\nLa fecha y hora estarÃ­an correctas, por lo menos en apariencia, el problema\npuede ser UTC y no UTC, me refiero al pasar la hora UTC a la hora local,\nentre las 14 y las 18 horas es",
+      "thread_id": "thread-d48d258fa241",
+      "thread_depth": 1,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-8752cb72da02",
+      "message_id": "<A47CE01B-5798-4ADC-85CC-4085AF14DDA5@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2021-04-23T08:30:34+02:00",
+      "subject": "[R-es] Fechas",
+      "subject_clean": "[R-es] Fechas",
+      "in_reply_to": "<CAEgqsh-YZNJNn_Fi3Zdmf4U5uhAfYPd23yso_bLAL8Z=vGO=0A@mail.gmail.com>",
+      "references": [
+        "<CAEgqsh-YZNJNn_Fi3Zdmf4U5uhAfYPd23yso_bLAL8Z=vGO=0A@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Jacqueline,\n\nHay un par de cuestiones que pueden afectar a la exportaciÃ³n:\n\n1) Â¿CÃ³mo exportas a Excel? Â¿Directamente? Â¿csv?\n2) Â¿CÃ³mo usas strptime? Creo que al guardar la zona horaria se guarda como hora universal (UTC), y por eso luego hace la conversiÃ³n.\n\nUna soluciÃ³n tal vez sea convertir la fecha a texto antes de exportar:\n\n> Sys.time()\n[1] \"2021-04-23 08:25:13 CEST\"\n\n> class(Sys.time())\n[1] \"POSIXct\" \"POSIXt\" \n\n> format(Sys.time(), \"%F %R\")\n[1] \"2021-04-23 08:25\"\n\n> class(format(Sys.time()))\n[1] \"character\"\n\nY luego al importar, es de esperar que lo haga como ?hora local?.\n\nEn cualquier caso, si trabajas mucho con fechas te aconsejo usar el paquete lubridate del tidyverse: \nhttps://lubridate.tidyverse.org <https://lubridate.tidyverse.org/> \n\nO el nuevo paquete que ha lanzado hace poco RStudio, clock: https://clock.r-lib.org/index.html <https://clock.r-lib.org/index.html>\n\nUn saludo,\n\nEmilio L. Cano\nhttp://emilio.lcano.com \n\n\n\n\n> El 22 abr 2021, a las 21:56, JALS <jaqueline.lillo en gmail.com> escribiÃ³:\n> \n> Buenas Tardes, estoy reciÃ¨n iniciandome en R, y me encontrÃ© con este problema al trabajar con fechas de  un archivo  excel.\n> \n> 1. Para formatear la fecha en R ocupe strptime \n> \n> <image.png>\n> \n> 2. pero al exportar el resultado a  un archivo excel, me cambia la hora, como ejemplo la imagen siguiente corresponde al registro 1Â¨\"2021-04-21 14:46:00\"\n> \n> <image.png>\n> \n> Alguna recomendaciÃ³n o ayuda para trabajar con fechas.\n> \n> Gracias,\n> \n> Jacqueline.\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Jacqueline,\n\nHay un par de cuestiones que pueden afectar a la exportaciÃ³n:\n\n1) Â¿CÃ³mo exportas a Excel? Â¿Directamente? Â¿csv?\n2) Â¿CÃ³mo usas strptime? Creo que al guardar la zona horaria se g",
+      "thread_id": "thread-d48d258fa241",
+      "thread_depth": 1,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-1a36e48884dc",
+      "message_id": "<CAPr+-cPbfqy59pRT6_8F_n1hOd6gQY+afor3azFdyc9fYyKpOA@mail.gmail.com>",
+      "from_name": "Antonio Rodriguez Andres",
+      "from_email_hash": "b9050258336ce93c197247f5f991277e75f93d1c9fcc93d5f0a20285dab617dd",
+      "date": "2021-04-23T09:15:13+02:00",
+      "subject": "[R-es] Guardar etiquetas de variables en R para exportarlo a Stata",
+      "subject_clean": "[R-es] Guardar etiquetas de variables en R para exportarlo a Stata",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as\n\nTengo un conjunto de datos con formato .dta, y los leo bien en R como\ndataframe, e incluso con las etiquetas. DespuÃ©s de transformar la lista de\ndatos a dataframe, los quiero volver a llevar a Stata, pero conservando las\netiquetas, pero al hacerlo, no se mantienen las etiquetas por columnas, hay\nalguna forma de hacer eso,\n\nEl cÃ³digo es este\n\nl = list.files(\n                pattern = \"dta\",\n                path = \"C:/Users/anton/OneDrive/Escritorio/Eglantina/Data/\",\n                full.names = TRUE\n     )\n\n\ndatafiles1 = lapply(fl, rio::import_list) uso el paquete rio\n\nnames(datafiles1) = tools::file_path_sans_ext(fl)\nstr(datafiles1)\n#Convertir lista en dataframes\n\ndf1 <- plyr::ldply(datafiles1, data.frame)\n\nhaven::write_dta(df1, \"mydata.dta\") # salvar el conjunto de datos en\nformato de Stata. dta\n\nHay alguna forma de mantener las etiquetas para cada variable?\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dÃ­as\n\nTengo un conjunto de datos con formato .dta, y los leo bien en R como\ndataframe, e incluso con las etiquetas. DespuÃ©s de transformar la lista de\ndatos a dataframe, los quiero volver a l",
+      "thread_id": "thread-1a36e48884dc",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-26227d8f20db",
+      "message_id": "<9350C341-4168-4115-9B74-728F25E17A15@gmail.com>",
+      "from_name": "XYGcom",
+      "from_email_hash": "62a2eb1a0070202b5f14652a1c5a85e0049d415d9ea0db1d17c1d6c737bbf998",
+      "date": "2021-04-23T11:48:08+02:00",
+      "subject": "[R-es] Abreviaturas meses en español",
+      "subject_clean": "[R-es] Abreviaturas meses en español",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as. Me preguntaba si hay algo similar a month.abb pero que ponga las abreviaturas de los meses en espaÃ±ol, seguro que es sencillo pero no acabo de encontrarlo.\n\nSaludos y gracias.\nJesÃºs",
+      "body_snippet": "Buenos dÃ­as. Me preguntaba si hay algo similar a month.abb pero que ponga las abreviaturas de los meses en espaÃ±ol, seguro que es sencillo pero no acabo de encontrarlo.\n\nSaludos y gracias.\nJesÃºs",
+      "thread_id": "thread-26227d8f20db",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-0bc98356dc21",
+      "message_id": "<1296053A-8BF5-444A-8CE9-85671477493B@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2021-04-23T13:28:03+02:00",
+      "subject": "[R-es] Abreviaturas meses en español",
+      "subject_clean": "[R-es] Abreviaturas meses en español",
+      "in_reply_to": "<9350C341-4168-4115-9B74-728F25E17A15@gmail.com>",
+      "references": [
+        "<9350C341-4168-4115-9B74-728F25E17A15@gmail.com>"
+      ],
+      "body_plain": "Hola,\n\nEn la propia ayuda de ?month.abb tienes una soluciÃ³n para obtenerlos en el idioma local del ordenador:\n\n> format(ISOdate(2000, 1:12, 1), \"%b\")\n [1] \"ene\" \"feb\" \"mar\" \"abr\" \"may\" \"jun\" \"jul\" \"ago\" \"sep\" \"oct\" \"nov\" \"dic\"\n\n\nBasta con que te lo guardes en un objeto (puedes hacerlo en tu .Rprofile para que que estÃ© siempre disponible):\nfmeses.ab <- format(ISOdate(2000, 1:12, 1), \"%b\")\n\nPara comprobar si tu configuraciÃ³n local es espaÃ±ol:\n\n> Sys.getlocale()\n[1] \"es_ES.UTF-8/es_ES.UTF-8/es_ES.UTF-8/C/es_ES.UTF-8/es_ES.UTF-8\"\n\n\nUn saludo,\n\nEmilio L. Cano\nhttp://emilio.lcano.com \n\n\n\n\n> El 23 abr 2021, a las 11:48, XYGcom <xygcom en gmail.com> escribiÃ³:\n> \n> Buenos dÃ­as. Me preguntaba si hay algo similar a month.abb pero que ponga las abreviaturas de los meses en espaÃ±ol, seguro que es sencillo pero no acabo de encontrarlo.\n> \n> Saludos y gracias.\n> JesÃºs\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEn la propia ayuda de ?month.abb tienes una soluciÃ³n para obtenerlos en el idioma local del ordenador:\n\n> format(ISOdate(2000, 1:12, 1), \"%b\")\n [1] \"ene\" \"feb\" \"mar\" \"abr\" \"may\" \"jun\" \"jul\" \"a",
+      "thread_id": "thread-26227d8f20db",
+      "thread_depth": 1,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-79ccc5d6809f",
+      "message_id": "<CAE5VbePKzAGGJ3gG==Skn8wPXz2aFgmYxdhszk6EkQakPv2vcA@mail.gmail.com>",
+      "from_name": "Raul Bartolo Gutiérrez",
+      "from_email_hash": "6deb1c37cece6d47a2a663fc2f397c08ee4665a9b2f3e52bba6797f430f7ad35",
+      "date": "2021-04-24T11:51:49-06:00",
+      "subject": "[R-es] gening archivo",
+      "subject_clean": "[R-es] gening archivo",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Alguien sabe como solucionar este problema?\nLuego de hacer esta corrida con estos datos no me permite seguir y sale en\nstrata\n\nError: Number of rows in data frame not equal to number of individuals in\nobject.\n\n-- \nRaÃºl Antonio Bartolo GutiÃ©rrez\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210424/bde0424c/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: polillagene_Strata.csv\nType: application/vnd.ms-excel\nSize: 504 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210424/bde0424c/attachment-0002.xlb>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: polillas_scrip.R\nType: application/octet-stream\nSize: 1511 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210424/bde0424c/attachment-0001.obj>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: polillas.csv\nType: application/vnd.ms-excel\nSize: 66481 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210424/bde0424c/attachment-0003.xlb>",
+      "body_snippet": "Alguien sabe como solucionar este problema?\nLuego de hacer esta corrida con estos datos no me permite seguir y sale en\nstrata\n\nError: Number of rows in data frame not equal to number of individuals in",
+      "thread_id": "thread-79ccc5d6809f",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-7e9c4ae8819c",
+      "message_id": "<CAOW2BzqORvsc4D4vzOW4a+OcdUHQQ0ttCdT=REZr8sCvi=pCdg@mail.gmail.com>",
+      "from_name": "Daniela Herrera Z",
+      "from_email_hash": "486d99490b2e7c4c57ddd2a2bb1b48c0d15b1ce71a09c0463c583b002373f3cb",
+      "date": "2021-04-24T16:35:54-05:00",
+      "subject": "[R-es] salir",
+      "subject_clean": "[R-es] salir",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "salir\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "salir\n\n\t[[alternative HTML version deleted]]",
+      "thread_id": "thread-7e9c4ae8819c",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-770828b56787",
+      "message_id": "<DM6PR05MB617070B1E7BD82D77FBE0DABC8449@DM6PR05MB6170.namprd05.prod.outlook.com>",
+      "from_name": "Notification Team",
+      "from_email_hash": "2f4b88e50fc3e5966f730f4e59d0e507bdeb50b4d4c4cb75767b5eb0cc074113",
+      "date": "2021-04-24T23:24:37Z",
+      "subject": "[R-es] Consulta",
+      "subject_clean": "[R-es] Consulta",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buen d?a grupo,\n\nAlguien sabe si existe un grupo similar a este, pero donde se pueda hacer preguntas sobre Python. Agradecer?a mucho cualquier direccionamiento. Muchas gracias.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buen d?a grupo,\n\nAlguien sabe si existe un grupo similar a este, pero donde se pueda hacer preguntas sobre Python. Agradecer?a mucho cualquier direccionamiento. Muchas gracias.\n\n\t[[alternative HTML ve",
+      "thread_id": "thread-770828b56787",
+      "thread_depth": 0,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-f8f32ef12716",
+      "message_id": "<CA+8ueybAWC6QLPCTaxeJ50chLZx7Y9Ysf92C=MxNVQgOBYykrA@mail.gmail.com>",
+      "from_name": "Juan Abasolo",
+      "from_email_hash": "20be713e36dff382d1fe3151ad684c005f02d119de762911f953e87f656e2d3e",
+      "date": "2021-04-25T17:47:30+02:00",
+      "subject": "[R-es] Consulta",
+      "subject_clean": "[R-es] Consulta",
+      "in_reply_to": "<DM6PR05MB617070B1E7BD82D77FBE0DABC8449@DM6PR05MB6170.namprd05.prod.outlook.com>",
+      "references": [
+        "<DM6PR05MB617070B1E7BD82D77FBE0DABC8449@DM6PR05MB6170.namprd05.prod.outlook.com>"
+      ],
+      "body_plain": "Buen domingo.\nMientras contesta la gente que sabe, te dirÃ­a que te fijaras en Telegram.\nHay quichicientos grupos de Python. En el buscador ponÃ©s Python y te\nempiezan a aparecer.\nDepuÃ©s te va a tocar encontrar alguno que vaya por el palo que vas vos, que\neso es todo un trabajo.\n\nY seguramente haya alguno de tu zona.\n\nJuan\n\nHau idatzi du Notification Team (alejandrodct en hotmail.com) erabiltzaileak\n(2021 api. 25, ig. (01:25)):\n\n> Buen dÃ­a grupo,\n>\n> Alguien sabe si existe un grupo similar a este, pero donde se pueda hacer\n> preguntas sobre Python. AgradecerÃ­a mucho cualquier direccionamiento.\n> Muchas gracias.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nJuan Abasolo, PhD\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea\nUPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT       : (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype   : abasolo72\n\nTutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n[blo <https://juanabasolo.netlify.app/>][gak\n<http://bosgarrena.blogspot.com/>]\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buen domingo.\nMientras contesta la gente que sabe, te dirÃ­a que te fijaras en Telegram.\nHay quichicientos grupos de Python. En el buscador ponÃ©s Python y te\nempiezan a aparecer.\nDepuÃ©s te va a toca",
+      "thread_id": "thread-770828b56787",
+      "thread_depth": 1,
+      "month": "2021-04"
+    },
+    {
+      "id": "msg-59da14c0d8a1",
+      "message_id": "<006301d73c2c$7aec8ef0$70c5acd0$@jccm.es>",
+      "from_name": "Isidro Hidalgo Arellano",
+      "from_email_hash": "0724e196ab2f30e611934ecd7dc684176bcc11dd0a1132c7992011a16f84412a",
+      "date": "2021-04-28T14:46:16+02:00",
+      "subject": "[R-es] Nuevo Grupo Local de R en Castilla-La Mancha",
+      "subject_clean": "[R-es] Nuevo Grupo Local de R en Castilla-La Mancha",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos d?as, eRReros:\n\nHemos creado un grupo local de R en Castilla-La Mancha al que hemos\nbautizado como ?R-Quixote?. Por ahora tenemos Estatutos, Acta Fundacional,\ncorreo electr?nico y un grupo de WhatsApp. Ya estamos en tr?mites de\nregistro de la asociaci?n, obtenci?n de CIF, etc. Y tenemos pensado hacer un\nseminario de un d?a a mediados de junio, con una serie de ponencias de los\nmiembros del Grupo como primera toma de contacto.\n\nNo tenemos cuotas, ni costes de ning?n tipo: nuestra intenci?n es reunirnos\nperi?dicamente, transferir conocimiento y estar en contacto, aunque por el\nmomento nos tengamos que conformar mayoritariamente con la pantalla?\n\nSi alguno est?is interesado en formar parte de esta aventura, nos encantar?a\ncontar con vosotros. No ten?is m?s que enviar un correo motivando vuestra\nsolicitud a gruporquixote en gmail.com <mailto:gruporquixote en gmail.com>  y os\nrecibiremos con los brazos abiertos.\n\nSaludos a todos\n\n \n\nIsidro Hidalgo Arellano\n\nSecretario de R-Quixote\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos d?as, eRReros:\n\nHemos creado un grupo local de R en Castilla-La Mancha al que hemos\nbautizado como ?R-Quixote?. Por ahora tenemos Estatutos, Acta Fundacional,\ncorreo electr?nico y un grupo de W",
+      "thread_id": "thread-59da14c0d8a1",
+      "thread_depth": 0,
+      "month": "2021-04"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-90b029b2b45e",
+      "subject": "[R-es] Reshape sobre una lista de data frames",
+      "message_count": 1,
+      "participants": [
+        "Rolando Valdez"
+      ],
+      "started": "2021-04-05T15:34:19-05:00",
+      "last_reply": "2021-04-05T15:34:19-05:00",
+      "root_message_id": "msg-90b029b2b45e"
+    },
+    {
+      "id": "thread-9ebc29ae84b8",
+      "subject": "[R-es] error con grid.arrange",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2021-04-06T20:29:12+02:00",
+      "last_reply": "2021-04-06T20:29:12+02:00",
+      "root_message_id": "msg-9ebc29ae84b8"
+    },
+    {
+      "id": "thread-595be71b6da0",
+      "subject": "[R-es] error con grid.arrange",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2021-04-07T06:09:42+02:00",
+      "last_reply": "2021-04-07T06:09:42+02:00",
+      "root_message_id": "msg-595be71b6da0"
+    },
+    {
+      "id": "thread-3881181cd544",
+      "subject": "[R-es] PDP con XgBoost",
+      "message_count": 3,
+      "participants": [
+        "Eric Concha",
+        "Manuel Mendoza"
+      ],
+      "started": "2021-04-14T21:03:39+02:00",
+      "last_reply": "2021-04-15T04:15:46+02:00",
+      "root_message_id": "msg-3881181cd544"
+    },
+    {
+      "id": "thread-3e45b96ea3b1",
+      "subject": "[R-es] PDP con XgBoost",
+      "message_count": 1,
+      "participants": [
+        "Manuel Mendoza"
+      ],
+      "started": "2021-04-15T03:31:11+02:00",
+      "last_reply": "2021-04-15T03:31:11+02:00",
+      "root_message_id": "msg-3e45b96ea3b1"
+    },
+    {
+      "id": "thread-af6953cc84bb",
+      "subject": "[R-es] Se puede ejecutar un programa en la nube?",
+      "message_count": 3,
+      "participants": [
+        "Carlos Santos",
+        "José Luis Cañadas",
+        "Juan Abasolo"
+      ],
+      "started": "2021-04-18T09:18:09+02:00",
+      "last_reply": "2021-04-18T19:15:54+02:00",
+      "root_message_id": "msg-af6953cc84bb"
+    },
+    {
+      "id": "thread-d48d258fa241",
+      "subject": "[R-es] Fechas",
+      "message_count": 3,
+      "participants": [
+        "Emilio L. Cano",
+        "JALS",
+        "Javier Marcuzzi"
+      ],
+      "started": "2021-04-22T15:56:21-04:00",
+      "last_reply": "2021-04-23T08:30:34+02:00",
+      "root_message_id": "msg-d48d258fa241"
+    },
+    {
+      "id": "thread-1a36e48884dc",
+      "subject": "[R-es] Guardar etiquetas de variables en R para exportarlo a Stata",
+      "message_count": 1,
+      "participants": [
+        "Antonio Rodriguez Andres"
+      ],
+      "started": "2021-04-23T09:15:13+02:00",
+      "last_reply": "2021-04-23T09:15:13+02:00",
+      "root_message_id": "msg-1a36e48884dc"
+    },
+    {
+      "id": "thread-26227d8f20db",
+      "subject": "[R-es] Abreviaturas meses en español",
+      "message_count": 2,
+      "participants": [
+        "Emilio L. Cano",
+        "XYGcom"
+      ],
+      "started": "2021-04-23T11:48:08+02:00",
+      "last_reply": "2021-04-23T13:28:03+02:00",
+      "root_message_id": "msg-26227d8f20db"
+    },
+    {
+      "id": "thread-79ccc5d6809f",
+      "subject": "[R-es] gening archivo",
+      "message_count": 1,
+      "participants": [
+        "Raul Bartolo Gutiérrez"
+      ],
+      "started": "2021-04-24T11:51:49-06:00",
+      "last_reply": "2021-04-24T11:51:49-06:00",
+      "root_message_id": "msg-79ccc5d6809f"
+    },
+    {
+      "id": "thread-7e9c4ae8819c",
+      "subject": "[R-es] salir",
+      "message_count": 1,
+      "participants": [
+        "Daniela Herrera Z"
+      ],
+      "started": "2021-04-24T16:35:54-05:00",
+      "last_reply": "2021-04-24T16:35:54-05:00",
+      "root_message_id": "msg-7e9c4ae8819c"
+    },
+    {
+      "id": "thread-770828b56787",
+      "subject": "[R-es] Consulta",
+      "message_count": 2,
+      "participants": [
+        "Juan Abasolo",
+        "Notification Team"
+      ],
+      "started": "2021-04-24T23:24:37+00:00",
+      "last_reply": "2021-04-25T17:47:30+02:00",
+      "root_message_id": "msg-770828b56787"
+    },
+    {
+      "id": "thread-59da14c0d8a1",
+      "subject": "[R-es] Nuevo Grupo Local de R en Castilla-La Mancha",
+      "message_count": 1,
+      "participants": [
+        "Isidro Hidalgo Arellano"
+      ],
+      "started": "2021-04-28T14:46:16+02:00",
+      "last_reply": "2021-04-28T14:46:16+02:00",
+      "root_message_id": "msg-59da14c0d8a1"
+    }
+  ]
+}

@@ -1,0 +1,646 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2019-07",
+  "messages": [
+    {
+      "id": "msg-7c95fbb8a426",
+      "message_id": "<1193964642.5281398.1562414872629@mail.yahoo.com>",
+      "from_name": "Fernando Sanchez",
+      "from_email_hash": "4492b8016c29ea36ebdbb3f8ebe68597d4ca5233f3704bb025204708c53c2a36",
+      "date": "2019-07-06T12:07:52Z",
+      "subject": "[R-es] comparar si dos matrices tienen las mimas columnas pero en diferente orden",
+      "subject_clean": "[R-es] comparar si dos matrices tienen las mimas columnas pero en diferente orden",
+      "in_reply_to": null,
+      "references": [
+        "<1193964642.5281398.1562414872629.ref@mail.yahoo.com>"
+      ],
+      "body_plain": "Hola a todos,\nEstoy buscando un mÃ©todo elegante (mas allÃ¡ de bucles FOR) que me permita saber si dos matrices nxn tienen las mismas columnas pero en diferente orden. Por ejemplo, creo las dos matrices siguientes:\nA<-sample(0:1,16,replace=TRUE)A<-matrix(A,nrow=4,ncol=4)B<-sample(0:1,16,replace=TRUE)B<-matrix(B,nrow=4,ncol=4)\n\ny ahora quiero saber si A y B tienen exactamente las mismas columnas pero en distinto orden. No me vale por filas, lo quiero por columnas Â¿Alguna idea?\nsaludos y muchas gracias,\n\nFernando\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\nEstoy buscando un mÃ©todo elegante (mas allÃ¡ de bucles FOR) que me permita saber si dos matrices nxn tienen las mismas columnas pero en diferente orden. Por ejemplo, creo las dos matric",
+      "thread_id": "thread-7c95fbb8a426",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-4cf17c9503f6",
+      "message_id": "<CAOaVix6ZHUDU2RZe6RX7Fa7JOG6PhAeFbFKWHxBqcv0jNKNe-w@mail.gmail.com>",
+      "from_name": "Alberto Carmona Bayonas",
+      "from_email_hash": "4a056b7f17581c9153f5b36c2455b517d506b74a0a5cb8d14b937fc85c262fda",
+      "date": "2019-07-07T11:10:13+02:00",
+      "subject": "[R-es] error estándar en un modelo AFT, a mano, en R",
+      "subject_clean": "[R-es] error estándar en un modelo AFT, a mano, en R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola, me gustarÃ­a aprender a obtener el error estÃ¡ndar de una predicciÃ³n de\nsupervivencia de un modelo AFT (pe., la probabilidad de supervivencia a un\naÃ±o), por el mÃ©todo delta.\nEsto se hace de forma trivial con la funciÃ³n survest del paquete rms, pero\na mÃ­ me gustarÃ­a saber reproducirlo a mano.\nSin embargo, cuando he tratado de calcular el mÃ©todo delta a mano obtengo\nuna cifra equivocada.\nÂ¿Alguien puede ayudarme?\nPara tratar de reproducir la estimaciÃ³n, incluyo un cÃ³digo de ejemplo:\n\nlibrary(survival)\nlibrary(rms)\ndata(lung)\nhead(lung)\n\nddist <- datadist(lung) options(datadist='ddist') lung$SurvObj <-\nwith(lung, Surv(time, status == 2))\nfit <- psm(SurvObj ~ rcs(age,3)+sex+ph.karno, dist=\"lognormal\", x=T , y=T ,\ndata=lung)\nnewdata <- expand.grid(age=70, sex=1, ph.karno=60) #\nsur<-survest(fit,newdata,times = 365)\nsur # obtengo un SE de 0.16.\n\n# tras ello intento reproducirlo a mano\nxb<-surlinear.predictors\nsurvival365<?1?pnorm((log(365)?xb)/fitscale)\npdf <- (dnorm((log(365)-xb)/fitscale))/(365?fitscale)\nx <- c(70,70,70,1,60) # son cinco tÃ©rminos por las splines\nse <- pdf %% t(x)%%vcov(fit) %% x %% pdf %>% sqrt\nse # obtengo 0.059, aproximadamente la mitad\nÂ¿Alguien sabe quÃ© estÃ¡ mal?\n\n\n--\nAlberto Carmona Bayonas\nServicio de HematologÃ­a y OncologÃ­a MÃ©dica\nHospital Universitario Morales Meseguer\nAvda. MarquÃ©s de los VÃ©lez, s/n. 30001-Murcia\nTelÃ©fono: 968-360900// 968-360969 (secretarÃ­a)\nFax: 968-360969\nMurcia. Spain.\n\nLa informaciÃ³n y los archivos adjuntos en esta transmisiÃ³n puede contener\ninformaciÃ³n confidencial o informaciÃ³n privilegiada y es para uso exclusivo\ndel destinatario destinados / s /. Si usted no es el destinatario, se le\nnotifica que cualquier divulgaciÃ³n, copia, distribuciÃ³n, o dependencia de\nlos contenidos de esta transmisiÃ³n estÃ¡ estrictamente prohibida. Por favor,\nnotifique al remitente y destruir este mensaje. E-mail comunicaciones no se\npuede garantizar que sea seguro o libre de errores, ya que la informaciÃ³n\npuede ser interceptada, corrompido, modificado, perdido, destruido, llegar\ntarde o incompleta, o contener virus. No aceptamos la responsabilidad por\ncualquiera de esas cuestiones o de sus consecuencias. Se han tomado todas\nlas precauciones razonables para asegurarse de que cualquier archivo\nadjunto a la direcciÃ³n de e-mail ha sido escaneado en busca de virus. Sin\nembargo, no podemos aceptar la responsabilidad por cualquier daÃ±o sufrido\ncomo resultado de los virus de software y asesorarÃ¡ que el desempeÃ±o de su\npropio virus escanea antes de abrir cualquier archivo adjunto.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, me gustarÃ­a aprender a obtener el error estÃ¡ndar de una predicciÃ³n de\nsupervivencia de un modelo AFT (pe., la probabilidad de supervivencia a un\naÃ±o), por el mÃ©todo delta.\nEsto se hace de f",
+      "thread_id": "thread-4cf17c9503f6",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-cd62e6d0fbdc",
+      "message_id": "<CA+8ueyYV4pmdF5bUQswQMR-dpZhkUKG7=B8g1BDGjt2iMrDH=A@mail.gmail.com>",
+      "from_name": "Juan Abasolo",
+      "from_email_hash": "20be713e36dff382d1fe3151ad684c005f02d119de762911f953e87f656e2d3e",
+      "date": "2019-07-09T00:06:59+02:00",
+      "subject": "[R-es] Salvar los plots a alta resolución la vez de incluirlos en documento",
+      "subject_clean": "[R-es] Salvar los plots a alta resolución la vez de incluirlos en documento",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas!\nSupongo que serÃ¡ fÃ¡cil, pero se me estÃ¡ haciendo difÃ­cil.\n\nTengo un documento Rmarkdown en RStudio en el que escribÃ­ lo que me\npidieron, que me lo piden en formato MS Word. Markdown lo saca\ndecentemente, pero me temo que no tan decente del todo las imÃ¡genes. Quiero\nque, ademÃ¡s de salir las imÃ¡genes incrustadas en los respectivos chunks,\ntambiÃ©n salve automÃ¡ticamente la imÃ¡gen en archivos a parte, para poder\npresentarlas aparte. Bue, eso Ãºltimo, un desastre.\n\n```{r fig.height=6, fig.retina=2}\nlik.A.tlk <- likert(df.encuesta, grouping = df.encuesta$grupo)\nplotx <- plot(lik.A.tlk)+\n  ggtitle(izenburuak[1])\nprint(plotx) # Este para que lo imprima en el documento\npng('01.png') # Este para que lo guarde\nprint(plotx)\ndev.off()\n```\n\nY haciendo eso genera el 01.png, re chiquitito y de mala calidad.\nSi le subo el tamaÃ±o con width =mucho, quedan todos los carÃ¡cteres\nchiquitos. Si subo el valor dpi con res = 300, sigue el dibujo chiquito\npero con una letra tan enorme que el plot ya no cabe.\n\nSeguramente haya alguna funciÃ³n u opciones bÃ¡sicas para torpes. Torpes como\nyo. Alguno me sabe guiar?\n\nGracias\n\n-- \nJuan Abasolo\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea\nUPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT: (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype: abasolo72\n\nTutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas!\nSupongo que serÃ¡ fÃ¡cil, pero se me estÃ¡ haciendo difÃ­cil.\n\nTengo un documento Rmarkdown en RStudio en el que escribÃ­ lo que me\npidieron, que me lo piden en formato MS Word. Markdown lo sa",
+      "thread_id": "thread-cd62e6d0fbdc",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-ed131cb86279",
+      "message_id": "<CAHo_aERcoZ3dtNXYAUcC2ytNkVYgFE9swnui1=M0FEu2S1VnQw@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2019-07-08T19:29:06-03:00",
+      "subject": "[R-es]  Salvar los plots a alta resolución la vez de incluirlos en documento",
+      "subject_clean": "[R-es]  Salvar los plots a alta resolución la vez de incluirlos en documento",
+      "in_reply_to": "<CA+8ueyYV4pmdF5bUQswQMR-dpZhkUKG7=B8g1BDGjt2iMrDH=A@mail.gmail.com>",
+      "references": [
+        "<CA+8ueyYV4pmdF5bUQswQMR-dpZhkUKG7=B8g1BDGjt2iMrDH=A@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Juan Abasolo\n\nDesde RStudio, al crear un documento Markdown, se encuentra la opciÃ³n de\nword, la de presentaciÃ³n, entre otras, por las dudas, intente crear un\narchivo de presentaciÃ³n y copie en este lo que preparÃ³ para word.\n\nLo que yo realicÃ© en una oportunidad, desde R salve todos los grÃ¡ficos a su\ncorrespondiente archivo png, muchos (mÃ¡s de 300), con estos me juntÃ© a\ncharlar con un colega que debÃ­a realizar la exposiciÃ³n en una capacitaciÃ³n\nde postgrado, y le preguntÃ©, Â¿cuÃ¡l quieres? LÃ³gicamente R demorÃ³ algo,\nsobraron archivos, pero evite el problema.\n\nJavier RubÃ©n Marcuzzi\n\nEl lun., 8 jul. 2019 a las 19:07, Juan Abasolo (<juan.abasolo en ehu.eus>)\nescribiÃ³:\n\n> Buenas!\n> Supongo que serÃ¡ fÃ¡cil, pero se me estÃ¡ haciendo difÃ­cil.\n>\n> Tengo un documento Rmarkdown en RStudio en el que escribÃ­ lo que me\n> pidieron, que me lo piden en formato MS Word. Markdown lo saca\n> decentemente, pero me temo que no tan decente del todo las imÃ¡genes. Quiero\n> que, ademÃ¡s de salir las imÃ¡genes incrustadas en los respectivos chunks,\n> tambiÃ©n salve automÃ¡ticamente la imÃ¡gen en archivos a parte, para poder\n> presentarlas aparte. Bue, eso Ãºltimo, un desastre.\n>\n> ```{r fig.height=6, fig.retina=2}\n> lik.A.tlk <- likert(df.encuesta, grouping = df.encuesta$grupo)\n> plotx <- plot(lik.A.tlk)+\n>   ggtitle(izenburuak[1])\n> print(plotx) # Este para que lo imprima en el documento\n> png('01.png') # Este para que lo guarde\n> print(plotx)\n> dev.off()\n> ```\n>\n> Y haciendo eso genera el 01.png, re chiquitito y de mala calidad.\n> Si le subo el tamaÃ±o con width =mucho, quedan todos los carÃ¡cteres\n> chiquitos. Si subo el valor dpi con res = 300, sigue el dibujo chiquito\n> pero con una letra tan enorme que el plot ya no cabe.\n>\n> Seguramente haya alguna funciÃ³n u opciones bÃ¡sicas para torpes. Torpes como\n> yo. Alguno me sabe guiar?\n>\n> Gracias\n>\n> --\n> Juan Abasolo\n>\n> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\n> Bilboko Hezkuntza Fakultatea\n> Euskal Herriko Unibertsitatea\n> UPV/EHU\n>\n> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)\n>\n> T: (+34) 94 601 7567\n> Telegram: @JuanAbasolo\n> Skype: abasolo72\n>\n> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado Juan Abasolo\n\nDesde RStudio, al crear un documento Markdown, se encuentra la opciÃ³n de\nword, la de presentaciÃ³n, entre otras, por las dudas, intente crear un\narchivo de presentaciÃ³n y copi",
+      "thread_id": "thread-cd62e6d0fbdc",
+      "thread_depth": 1,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-7e2371f27dcf",
+      "message_id": "<0D8ED8DA-7915-4C2F-81AC-F10CBBED8EDA@gva.es>",
+      "from_name": "JOSE MARTIN AREVALO",
+      "from_email_hash": "4c2bd4e8cbc1ebc16bf64ec6291d54c562cd56be004b93404ce22fd18f31f4d8",
+      "date": "2019-07-09T07:37:17+02:00",
+      "subject": "[R-es] Se puede exportar un modelo de predicción?",
+      "subject_clean": "[R-es] Se puede exportar un modelo de predicción?",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola a todos! A ver si me podÃ©is ayudar porque estoy bloqueado.\nHe creado a travÃ©s de R Commander un modelo de predicciÃ³n basado en una regresiÃ³n logÃ­stica binaria. Entonces, quiero probar este modelo con unos datos nuevos para ver cÃ³mo funciona realmente. Â¿CÃ³mo puedo exportar el modelo desde el archivo con los datos originales? Â¿CÃ³mo lo importo luego al entorno con los datos nuevos ? Igual es obvio, pero llevo dÃ¡ndole vueltas varios dÃ­as sin resultado.\n\nGracias, toda ayuda serÃ¡ bienvenida",
+      "body_snippet": "Hola a todos! A ver si me podÃ©is ayudar porque estoy bloqueado.\nHe creado a travÃ©s de R Commander un modelo de predicciÃ³n basado en una regresiÃ³n logÃ­stica binaria. Entonces, quiero probar este m",
+      "thread_id": "thread-7e2371f27dcf",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-0c47d4ebcecc",
+      "message_id": "<898a3815-6c35-08e1-6048-4fa59c09890b@urjc.es>",
+      "from_name": "Marcelino De La Cruz Rot",
+      "from_email_hash": "65c46abb4ca1a5f27552f6f219887e1db849802ef689daa85efcb102d34b2127",
+      "date": "2019-07-09T08:32:46Z",
+      "subject": "[R-es]  Se puede exportar un modelo de predicción?",
+      "subject_clean": "[R-es]  Se puede exportar un modelo de predicción?",
+      "in_reply_to": "<0D8ED8DA-7915-4C2F-81AC-F10CBBED8EDA@gva.es>",
+      "references": [
+        "<0D8ED8DA-7915-4C2F-81AC-F10CBBED8EDA@gva.es>"
+      ],
+      "body_plain": "Hola JosÃ©:\n\nDepende de lo que entiendas por \"exportar\". Por ejemplo, salvarlo en un \nworkspace individual que puedas cargar cuando te apetezca. En este caso, \no tendrÃ­as que hacer nada mÃ¡s que\n\nsave(\"modelo\", file=\"modelo.Rdata\")\n\n(si es que el modelo que has creado se llama \"modelo\"). Cada vez que \nquieras \"usar\" ese modelo puedes escribir en la consola de R:\n\nload(\"modelo.Rdata\").\n\nDe todas formas, puedes importar los datos nuevos en el entorno en el \nque tengas tu modelo, y emplearlo para predecir a partir de dichos \ndatos. Por ejemplo:\n\n\npredict(modelo, newdata=datos.nuevos)\n\no\n\npredict(modelo, newdata=datos.nuevos, type=\"response\")\n\nsiendo \"datos.nuevos\" la data.frame que tiene los datos nuevos (y en la \nque los nombres de las variables se corresponden exactamente con los de \nlos datos originales).\n\n\nEspero haberte ayudado\n\nMarcelino\n\n\n\nEl 09/07/2019 a las 7:37, JOSE MARTIN AREVALO escribiÃ³:\n> Hola a todos! A ver si me podÃ©is ayudar porque estoy bloqueado.\n> He creado a travÃ©s de R Commander un modelo de predicciÃ³n basado en una regresiÃ³n logÃ­stica binaria. Entonces, quiero probar este modelo con unos datos nuevos para ver cÃ³mo funciona realmente. Â¿CÃ³mo puedo exportar el modelo desde el archivo con los datos originales? Â¿CÃ³mo lo importo luego al entorno con los datos nuevos ? Igual es obvio, pero llevo dÃ¡ndole vueltas varios dÃ­as sin resultado.\n>\n> Gracias, toda ayuda serÃ¡ bienvenida\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> .\n>\n\n-- \nMarcelino de la Cruz Rot\nDepto. de BiologÃ­a y GeologÃ­a\nFÃ­sica y QuÃ­mica InorgÃ¡nica\nUniversidad Rey Juan Carlos\nMÃ³stoles EspaÃ±a",
+      "body_snippet": "Hola JosÃ©:\n\nDepende de lo que entiendas por \"exportar\". Por ejemplo, salvarlo en un \nworkspace individual que puedas cargar cuando te apetezca. En este caso, \no tendrÃ­as que hacer nada mÃ¡s que\n\nsav",
+      "thread_id": "thread-7e2371f27dcf",
+      "thread_depth": 1,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-0c1bb938347c",
+      "message_id": "<CA+8ueyZ4qU-OtAFYr65O2RL3UETQZpe2p8v1gbhan8L-XS+wSw@mail.gmail.com>",
+      "from_name": "Juan Abasolo",
+      "from_email_hash": "20be713e36dff382d1fe3151ad684c005f02d119de762911f953e87f656e2d3e",
+      "date": "2019-07-09T11:28:06+02:00",
+      "subject": "[R-es]  Salvar los plots a alta resolución la vez de incluirlos en documento",
+      "subject_clean": "[R-es]  Salvar los plots a alta resolución la vez de incluirlos en documento",
+      "in_reply_to": "<CAHo_aERcoZ3dtNXYAUcC2ytNkVYgFE9swnui1=M0FEu2S1VnQw@mail.gmail.com>",
+      "references": [
+        "<CA+8ueyYV4pmdF5bUQswQMR-dpZhkUKG7=B8g1BDGjt2iMrDH=A@mail.gmail.com>",
+        "<CAHo_aERcoZ3dtNXYAUcC2ytNkVYgFE9swnui1=M0FEu2S1VnQw@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias, Javier;\nMe costÃ³ encontrar la opciÃ³n, que es\nself_cantained: false\nY tambiÃ©n funciona en html de entre casa!\n\nMe acabo de enterar de que tendrÃ­a que presentarlos en TIFF. Hay algo mÃ¡s\nelegante (sin ser complicadÃ­simo) que transformar mi carpeta png a tiff?\n\n\nJuan\n\nHau idatzi du Javier Marcuzzi (javier.ruben.marcuzzi en gmail.com)\nerabiltzaileak (2019 uzt. 9, ar. (00:29)):\n\n> Estimado Juan Abasolo\n>\n> Desde RStudio, al crear un documento Markdown, se encuentra la opciÃ³n de\n> word, la de presentaciÃ³n, entre otras, por las dudas, intente crear un\n> archivo de presentaciÃ³n y copie en este lo que preparÃ³ para word.\n>\n> Lo que yo realicÃ© en una oportunidad, desde R salve todos los grÃ¡ficos a\n> su correspondiente archivo png, muchos (mÃ¡s de 300), con estos me juntÃ© a\n> charlar con un colega que debÃ­a realizar la exposiciÃ³n en una capacitaciÃ³n\n> de postgrado, y le preguntÃ©, Â¿cuÃ¡l quieres? LÃ³gicamente R demorÃ³ algo,\n> sobraron archivos, pero evite el problema.\n>\n> Javier RubÃ©n Marcuzzi\n>\n> El lun., 8 jul. 2019 a las 19:07, Juan Abasolo (<juan.abasolo en ehu.eus>)\n> escribiÃ³:\n>\n>> Buenas!\n>> Supongo que serÃ¡ fÃ¡cil, pero se me estÃ¡ haciendo difÃ­cil.\n>>\n>> Tengo un documento Rmarkdown en RStudio en el que escribÃ­ lo que me\n>> pidieron, que me lo piden en formato MS Word. Markdown lo saca\n>> decentemente, pero me temo que no tan decente del todo las imÃ¡genes.\n>> Quiero\n>> que, ademÃ¡s de salir las imÃ¡genes incrustadas en los respectivos chunks,\n>> tambiÃ©n salve automÃ¡ticamente la imÃ¡gen en archivos a parte, para poder\n>> presentarlas aparte. Bue, eso Ãºltimo, un desastre.\n>>\n>> ```{r fig.height=6, fig.retina=2}\n>> lik.A.tlk <- likert(df.encuesta, grouping = df.encuesta$grupo)\n>> plotx <- plot(lik.A.tlk)+\n>>   ggtitle(izenburuak[1])\n>> print(plotx) # Este para que lo imprima en el documento\n>> png('01.png') # Este para que lo guarde\n>> print(plotx)\n>> dev.off()\n>> ```\n>>\n>> Y haciendo eso genera el 01.png, re chiquitito y de mala calidad.\n>> Si le subo el tamaÃ±o con width =mucho, quedan todos los carÃ¡cteres\n>> chiquitos. Si subo el valor dpi con res = 300, sigue el dibujo chiquito\n>> pero con una letra tan enorme que el plot ya no cabe.\n>>\n>> Seguramente haya alguna funciÃ³n u opciones bÃ¡sicas para torpes. Torpes\n>> como\n>> yo. Alguno me sabe guiar?\n>>\n>> Gracias\n>>\n>> --\n>> Juan Abasolo\n>>\n>> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\n>> Bilboko Hezkuntza Fakultatea\n>> Euskal Herriko Unibertsitatea\n>> UPV/EHU\n>>\n>> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)\n>>\n>> T: (+34) 94 601 7567\n>> Telegram: @JuanAbasolo\n>> Skype: abasolo72\n>>\n>> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n\n-- \nJuan Abasolo\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea\nUPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT: (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype: abasolo72\n\nTutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias, Javier;\nMe costÃ³ encontrar la opciÃ³n, que es\nself_cantained: false\nY tambiÃ©n funciona en html de entre casa!\n\nMe acabo de enterar de que tendrÃ­a que presentarlos en TIFF. Hay algo mÃ¡s\nel",
+      "thread_id": "thread-cd62e6d0fbdc",
+      "thread_depth": 2,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-b6e61aa595a2",
+      "message_id": "<CAG+LCDV3YjU0LF=gj7YpyXWrkhmeRwGVthxYxOpyJkuNQALU-w@mail.gmail.com>",
+      "from_name": "Ceferino M. López Sández",
+      "from_email_hash": "6db2edee801c08dff9275a162046fe442a7aac47c5ed34ed5247b778df928001",
+      "date": "2019-07-09T12:48:05+02:00",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 125, Envío 3",
+      "subject_clean": "[R-es]  Resumen de R-help-es, Vol 125, Envío 3",
+      "in_reply_to": "<mailman.13440.7.1562666401.31557.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.13440.7.1562666401.31557.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Desde hace bastante tiempo suelo grabar los grÃ¡ficos como svg\nsvg('grafico.svg')\nserie\nde comandos\nque general el\ngrÃ¡fico\ndev.off()\n\ny asÃ­ luego los exporto desde Inkscape con la resoluciÃ³n y tamaÃ±o que\nquiera a tif o png o cualquier otro formato que me permita inkscape\n\nEl mar., 9 jul. 2019 a las 12:01, <r-help-es-request en r-project.org>\nescribiÃ³:\n\n> EnvÃ­e los mensajes para la lista R-help-es a\n>         r-help-es en r-project.org\n>\n> Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n>         https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n>         r-help-es-request en r-project.org\n>\n> Puede contactar con el responsable de la lista escribiendo a:\n>         r-help-es-owner en r-project.org\n>\n> Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> respondiendo.\n>\n>\n> Asuntos del dÃ­a:\n>\n>    1. Re:       Salvar los plots a alta resoluciÃ³n la vez de incluirlos\n>       en documento (Juan Abasolo)\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Tue, 9 Jul 2019 11:28:06 +0200\n> From: Juan Abasolo <juan.abasolo en ehu.eus>\n> To: Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>\n> Cc: R-help-es <r-help-es en r-project.org>\n> Subject: Re: [R-es]     Salvar los plots a alta resoluciÃ³n la vez de\n>         incluirlos en documento\n> Message-ID:\n>         <\n> CA+8ueyZ4qU-OtAFYr65O2RL3UETQZpe2p8v1gbhan8L-XS+wSw en mail.gmail.com>\n> Content-Type: text/plain; charset=\"utf-8\"\n>\n> Gracias, Javier;\n> Me costÃ³ encontrar la opciÃ³n, que es\n> self_cantained: false\n> Y tambiÃ©n funciona en html de entre casa!\n>\n> Me acabo de enterar de que tendrÃ­a que presentarlos en TIFF. Hay algo mÃ¡s\n> elegante (sin ser complicadÃ­simo) que transformar mi carpeta png a tiff?\n>\n>\n> Juan\n>\n> Hau idatzi du Javier Marcuzzi (javier.ruben.marcuzzi en gmail.com)\n> erabiltzaileak (2019 uzt. 9, ar. (00:29)):\n>\n> > Estimado Juan Abasolo\n> >\n> > Desde RStudio, al crear un documento Markdown, se encuentra la opciÃ³n de\n> > word, la de presentaciÃ³n, entre otras, por las dudas, intente crear un\n> > archivo de presentaciÃ³n y copie en este lo que preparÃ³ para word.\n> >\n> > Lo que yo realicÃ© en una oportunidad, desde R salve todos los grÃ¡ficos a\n> > su correspondiente archivo png, muchos (mÃ¡s de 300), con estos me juntÃ© a\n> > charlar con un colega que debÃ­a realizar la exposiciÃ³n en una\n> capacitaciÃ³n\n> > de postgrado, y le preguntÃ©, Â¿cuÃ¡l quieres? LÃ³gicamente R demorÃ³ algo,\n> > sobraron archivos, pero evite el problema.\n> >\n> > Javier RubÃ©n Marcuzzi\n> >\n> > El lun., 8 jul. 2019 a las 19:07, Juan Abasolo (<juan.abasolo en ehu.eus>)\n> > escribiÃ³:\n> >\n> >> Buenas!\n> >> Supongo que serÃ¡ fÃ¡cil, pero se me estÃ¡ haciendo difÃ­cil.\n> >>\n> >> Tengo un documento Rmarkdown en RStudio en el que escribÃ­ lo que me\n> >> pidieron, que me lo piden en formato MS Word. Markdown lo saca\n> >> decentemente, pero me temo que no tan decente del todo las imÃ¡genes.\n> >> Quiero\n> >> que, ademÃ¡s de salir las imÃ¡genes incrustadas en los respectivos chunks,\n> >> tambiÃ©n salve automÃ¡ticamente la imÃ¡gen en archivos a parte, para poder\n> >> presentarlas aparte. Bue, eso Ãºltimo, un desastre.\n> >>\n> >> ```{r fig.height=6, fig.retina=2}\n> >> lik.A.tlk <- likert(df.encuesta, grouping = df.encuesta$grupo)\n> >> plotx <- plot(lik.A.tlk)+\n> >>   ggtitle(izenburuak[1])\n> >> print(plotx) # Este para que lo imprima en el documento\n> >> png('01.png') # Este para que lo guarde\n> >> print(plotx)\n> >> dev.off()\n> >> ```\n> >>\n> >> Y haciendo eso genera el 01.png, re chiquitito y de mala calidad.\n> >> Si le subo el tamaÃ±o con width =mucho, quedan todos los carÃ¡cteres\n> >> chiquitos. Si subo el valor dpi con res = 300, sigue el dibujo chiquito\n> >> pero con una letra tan enorme que el plot ya no cabe.\n> >>\n> >> Seguramente haya alguna funciÃ³n u opciones bÃ¡sicas para torpes. Torpes\n> >> como\n> >> yo. Alguno me sabe guiar?\n> >>\n> >> Gracias\n> >>\n> >> --\n> >> Juan Abasolo\n> >>\n> >> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\n> >> Bilboko Hezkuntza Fakultatea\n> >> Euskal Herriko Unibertsitatea\n> >> UPV/EHU\n> >>\n> >> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)\n> >>\n> >> T: (+34) 94 601 7567\n> >> Telegram: @JuanAbasolo\n> >> Skype: abasolo72\n> >>\n> >> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n> >>\n> >>         [[alternative HTML version deleted]]\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es en r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >\n>\n> --\n> Juan Abasolo\n>\n> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\n> Bilboko Hezkuntza Fakultatea\n> Euskal Herriko Unibertsitatea\n> UPV/EHU\n>\n> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)\n>\n> T: (+34) 94 601 7567\n> Telegram: @JuanAbasolo\n> Skype: abasolo72\n>\n> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n>\n>         [[alternative HTML version deleted]]\n>\n>\n>\n>\n> ------------------------------\n>\n> Subject: PiÃ© de pÃ¡gina del digest\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> ------------------------------\n>\n> Fin de Resumen de R-help-es, Vol 125, EnvÃ­o 3\n> *********************************************\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Desde hace bastante tiempo suelo grabar los grÃ¡ficos como svg\nsvg('grafico.svg')\nserie\nde comandos\nque general el\ngrÃ¡fico\ndev.off()\n\ny asÃ­ luego los exporto desde Inkscape con la resoluciÃ³n y tama",
+      "thread_id": "thread-b6e61aa595a2",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-5321da3ae7f3",
+      "message_id": "<1562930453778.93035@sergas.es>",
+      "from_name": "miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es",
+      "from_email_hash": "3e7f48d203e35c3c83ba9900d8200246b42ac0399e548121b3efe8219cdc7437",
+      "date": "2019-07-12T11:20:53Z",
+      "subject": "[R-es] VI Xornada de Usuarios de R en Galicia (10/10/2019)",
+      "subject_clean": "[R-es] VI Xornada de Usuarios de R en Galicia (10/10/2019)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Por si es de vuestro inter?s...\n\n\nhttps://www.r-users.gal/\n\n\n\nPd.- Lanzado el \"call for papers\", el programa todav?a est? por determinar.\n\n\n\nUn saludo.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n?\n\n\n________________________________\n\nNota: A informaci?n contida nesta mensaxe e os seus posibles documentos adxuntos ? privada e confidencial e est? dirixida ?nicamente ? seu destinatario/a. Se vostede non ? o/a destinatario/a orixinal desta mensaxe, por favor elim?nea. A distribuci?n ou copia desta mensaxe non est? autorizada.\n\nNota: La informaci?n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y est? dirigida ?nicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elim?nelo. La distribuci?n o copia de este mensaje no est? autorizada.\n\nSee more languages: http://www.sergas.es/aviso-confidencialidad\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Por si es de vuestro inter?s...\n\n\nhttps://www.r-users.gal/\n\n\n\nPd.- Lanzado el \"call for papers\", el programa todav?a est? por determinar.\n\n\n\nUn saludo.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n?\n\n\n______________________________",
+      "thread_id": "thread-5321da3ae7f3",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-b37479f54aae",
+      "message_id": "<CAHo_aETW5Jj00ztrDh3gt4w2B2hVua2R+TmBRyczoGbqtX2m7Q@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2019-07-13T17:00:27-03:00",
+      "subject": "[R-es] Dudas",
+      "subject_clean": "[R-es] Dudas",
+      "in_reply_to": "<CAHyCE8Gn_w6iHnufL0xQhJEzEL-6BhbO3uJuVzb2R-ArS8pu1g@mail.gmail.com>",
+      "references": [
+        "<CAHyCE8Gn_w6iHnufL0xQhJEzEL-6BhbO3uJuVzb2R-ArS8pu1g@mail.gmail.com>"
+      ],
+      "body_plain": "Estimados\n\nRecordando el hilo de esta conversaciÃ³n, hoy recibÃ­ un correo, se trata de\nhttps://www.graalvm.org/docs/ , bÃ¡sicamente Oracle que es Java realiza algo\npara R, en otras palabras, otra forma de trabajar donde los que manejan el\nlenguaje java proponen algo distinto con y para R, no serÃ­a el R normal, es\nuno tocado por oracle como el RServer tocado por Microsoft.\n\nJavier Marcuzzi\n\nEl lun., 24 jun. 2019 a las 18:00, Alicia N. Torriente Martinez (<\nalyary9800 en gmail.com>) escribiÃ³:\n\n> Buenas, tengo la misma duda que otra persona que escribiÃ³ hace unos aÃ±os,\n> especÃ­ficamente el 20 de mayo de 2015. Estoy creando un proyecto en Java\n> vinculado con R, estoy utilizando Rserve pero me resulta imposible invocar\n> las funciones que tengo en un fichero .R. El cÃ³digo que utiliza estas\n> funciones simplemente no funciona, no imprime nada. Si pudieran ayudarme\n> estarÃ­a muy agradecida. Espero su respuesta. Saludos.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nRecordando el hilo de esta conversaciÃ³n, hoy recibÃ­ un correo, se trata de\nhttps://www.graalvm.org/docs/ , bÃ¡sicamente Oracle que es Java realiza algo\npara R, en otras palabras, otra for",
+      "thread_id": "thread-b37479f54aae",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-7daa545a59c7",
+      "message_id": "<20190718101842.280414d5@debian-dde>",
+      "from_name": "Griera-yandex",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2019-07-18T10:18:42+02:00",
+      "subject": "[R-es] Gráfico tiempos de supervivencia",
+      "subject_clean": "[R-es] Gráfico tiempos de supervivencia",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenos dÃ­as a todos:\n\nAlguien me puede ayudar a hacer (si se puede) con unos datos similares a:\n\nset.seed(20)\nDATOS <- data.frame (\n      ID      = c (1:10)\n    , TIEMPO  = sample(1:40, 10, replace=F)\n    , DEF     = sample(0:1, 10, replace=T)\n                    );DATOS\n\nun grÃ¡fico que muestre los tiempos de supervivencia similar a:\nhttps://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n\nLo he intentado con la funciÃ³n followup.plot del paquete\n\"epiDisplay\" (https://cran.r-project.org/web/packages/epiDisplay/index.html),\npero no encuentro la forma.\n\nMuchas gracias y saludos.",
+      "body_snippet": "Buenos dÃ­as a todos:\n\nAlguien me puede ayudar a hacer (si se puede) con unos datos similares a:\n\nset.seed(20)\nDATOS <- data.frame (\n      ID      = c (1:10)\n    , TIEMPO  = sample(1:40, 10, replace=F",
+      "thread_id": "thread-7daa545a59c7",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-e10db479d722",
+      "message_id": "<590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>",
+      "from_name": "PEDRO CONCEJERO CEREZO",
+      "from_email_hash": "f36a1ef830c1a2279c4b056b5bbf3aa5eb754387999c72ef71a614711bda5ca0",
+      "date": "2019-07-18T10:28:37Z",
+      "subject": "[R-es] Gráfico tiempos de supervivencia",
+      "subject_clean": "[R-es] Gráfico tiempos de supervivencia",
+      "in_reply_to": "<mailman.13444.11.1563444002.43692.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.13444.11.1563444002.43692.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Hola, te vale esto? Es forma estandar de representar graficos supervivencia\n\nBasado en esto:\n\nhttps://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/\n\nset.seed(20)\n\nDATOS <- data.frame (\n  ID      = c (1:10)\n  , TIEMPO  = sample(1:40, 10, replace=F)\n  , DEF     = sample(0:1, 10, replace=T)\n)\n\nDATOS\n\nlibrary(survival)\n\nDATOS$DEF <- as.numeric(DATOS$DEF)\nDATOS$TIEMPO <- as.numeric(DATOS$TIEMPO)\n\ns <- Surv(DATOS$TIEMPO, DATOS$DEF)\nhead(s)\n\n## Kaplan-Meier estimator.\nkm <- survfit(s ~ 1,\n              data = DATOS,\n              conf.type = \"log-log\")\n\n## Show object\nkm\n\nsummary(km)\n\nplot(km)\n\n# Instala las librerÃ­as necesarias:\nlibrary(ranger)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(ggfortify)\n\nautoplot(km)\n\n\nEl 18/07/2019 a las 12:00, r-help-es-request en r-project.org<mailto:r-help-es-request en r-project.org> escribiÃ³:\n\nEnvÃ­e los mensajes para la lista R-help-es a\n        r-help-es en r-project.org<mailto:r-help-es en r-project.org>\n\nPara subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n        https://stat.ethz.ch/mailman/listinfo/r-help-es\n\nO por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\nel asunto (subject) o en el cuerpo a:\n        r-help-es-request en r-project.org<mailto:r-help-es-request en r-project.org>\n\nPuede contactar con el responsable de la lista escribiendo a:\n        r-help-es-owner en r-project.org<mailto:r-help-es-owner en r-project.org>\n\nSi responde a algÃºn contenido de este mensaje, por favor, edite la\nlinea del asunto (subject) para que el texto sea mas especifico que:\n\"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\nla respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\nrespondiendo.\n\n\nAsuntos del dÃ­a:\n\n   1. GrÃ¡fico tiempos de supervivencia (Griera-yandex)\n\n----------------------------------------------------------------------\n\nMessage: 1\nDate: Thu, 18 Jul 2019 10:18:42 +0200\nFrom: Griera-yandex <griera en yandex.com><mailto:griera en yandex.com>\nTo: Lista R <r-help-es en r-project.org><mailto:r-help-es en r-project.org>\nSubject: [R-es] GrÃ¡fico tiempos de supervivencia\nMessage-ID: <20190718101842.280414d5 en debian-dde>\nContent-Type: text/plain; charset=\"utf-8\"\n\nBuenos dÃ­as a todos:\n\nAlguien me puede ayudar a hacer (si se puede) con unos datos similares a:\n\nset.seed(20)\nDATOS <- data.frame (\n      ID      = c (1:10)\n    , TIEMPO  = sample(1:40, 10, replace=F)\n    , DEF     = sample(0:1, 10, replace=T)\n                    );DATOS\n\nun grÃ¡fico que muestre los tiempos de supervivencia similar a:\nhttps://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n\nLo he intentado con la funciÃ³n followup.plot del paquete\n\"epiDisplay\" (https://cran.r-project.org/web/packages/epiDisplay/index.html),\npero no encuentro la forma.\n\nMuchas gracias y saludos.\n\n\n\n\n------------------------------\n\nSubject: PiÃ© de pÃ¡gina del digest\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org<mailto:R-help-es en r-project.org>\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n------------------------------\n\nFin de Resumen de R-help-es, Vol 125, EnvÃ­o 7\n*********************************************\n\n\n--\nPedro Concejero\nTelefÃ³nica CDO - 4th Platform - Internal Use Cases\nE-mail: pedro.concejerocerezo en telefonica.com<mailto:pedro.concejerocerezo en telefonica.com>\nskype: pedro.concejero\ntwitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>\nlinkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>\neRReRo feliz, me puedes encontrar en gRupo R madRid <http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>\n\n________________________________\n\nEste mensaje y sus adjuntos se dirigen exclusivamente a su destinatario, puede contener informaciÃ³n privilegiada o confidencial y es para uso exclusivo de la persona o entidad de destino. Si no es usted. el destinatario indicado, queda notificado de que la lectura, utilizaciÃ³n, divulgaciÃ³n y/o copia sin autorizaciÃ³n puede estar prohibida en virtud de la legislaciÃ³n vigente. Si ha recibido este mensaje por error, le rogamos que nos lo comunique inmediatamente por esta misma vÃ­a y proceda a su destrucciÃ³n.\n\nThe information contained in this transmission is privileged and confidential information intended only for the use of the individual or entity named above. If the reader of this message is not the intended recipient, you are hereby notified that any dissemination, distribution or copying of this communication is strictly prohibited. If you have received this transmission in error, do not read it. Please immediately reply to the sender that you have received this communication in error and then delete it.\n\nEsta mensagem e seus anexos se dirigem exclusivamente ao seu destinatÃ¡rio, pode conter informaÃ§Ã£o privilegiada ou confidencial e Ã© para uso exclusivo da pessoa ou entidade de destino. Se nÃ£o Ã© vossa senhoria o destinatÃ¡rio indicado, fica notificado de que a leitura, utilizaÃ§Ã£o, divulgaÃ§Ã£o e/ou cÃ³pia sem autorizaÃ§Ã£o pode estar proibida em virtude da legislaÃ§Ã£o vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos o comunique imediatamente por esta mesma via e proceda a sua destruiÃ§Ã£o\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, te vale esto? Es forma estandar de representar graficos supervivencia\n\nBasado en esto:\n\nhttps://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/\n\nset.seed(20)\n\nDATOS <- data.frame (\n  ID ",
+      "thread_id": "thread-e10db479d722",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-3bb40a4dd8bc",
+      "message_id": "<20190718130517.4d5a9143@debian-dde>",
+      "from_name": "Griera-yandex",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2019-07-18T13:05:17+02:00",
+      "subject": "[R-es] Gráfico tiempos de supervivencia",
+      "subject_clean": "[R-es] Gráfico tiempos de supervivencia",
+      "in_reply_to": "<590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>",
+      "references": [
+        "<mailman.13444.11.1563444002.43692.r-help-es@r-project.org>",
+        "<590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>"
+      ],
+      "body_plain": "Hola Pedro:\n\nGracias por la ayuda. No conocÃ­a esta manera mÃ¡s elegante de mostrar las curvas de Kaplan-Meier. Te la compro.\n\nEn realidad querÃ­a mostrar un grÃ¡fico con la longitud de les tiempos de seguimiento y al final un sÃ­mbolo para indicar el estado. Seria un grÃ¡fico similar a:\n\nhttps://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n\nPero no encuentro la manera de hacerlo. Igual no se puede.\n\nMuchas gracias y saludos.\n\nOn Thu, 18 Jul 2019 10:28:37 +0000\nPEDRO CONCEJERO CEREZO <pedro.concejerocerezo en telefonica.com> wrote:\n\n> Hola, te vale esto? Es forma estandar de representar graficos supervivencia\n> \n> Basado en esto:\n> \n> https://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/\n> \n> set.seed(20)\n> \n> DATOS <- data.frame (\n>   ID      = c (1:10)\n>   , TIEMPO  = sample(1:40, 10, replace=F)\n>   , DEF     = sample(0:1, 10, replace=T)\n> )\n> \n> DATOS\n> \n> library(survival)\n> \n> DATOS$DEF <- as.numeric(DATOS$DEF)\n> DATOS$TIEMPO <- as.numeric(DATOS$TIEMPO)\n> \n> s <- Surv(DATOS$TIEMPO, DATOS$DEF)\n> head(s)\n> \n> ## Kaplan-Meier estimator.\n> km <- survfit(s ~ 1,\n>               data = DATOS,\n>               conf.type = \"log-log\")\n> \n> ## Show object\n> km\n> \n> summary(km)\n> \n> plot(km)\n> \n> # Instala las librerÃ­as necesarias:\n> library(ranger)\n> library(ggplot2)\n> library(dplyr)\n> library(ggfortify)\n> \n> autoplot(km)\n> \n> \n> El 18/07/2019 a las 12:00, r-help-es-request en r-project.org<mailto:r-help-es-request en r-project.org> escribiÃ³:\n> \n> EnvÃ­e los mensajes para la lista R-help-es a\n>         r-help-es en r-project.org<mailto:r-help-es en r-project.org>\n> \n> Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n>         https://stat.ethz.ch/mailman/listinfo/r-help-es\n> \n> O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n>         r-help-es-request en r-project.org<mailto:r-help-es-request en r-project.org>\n> \n> Puede contactar con el responsable de la lista escribiendo a:\n>         r-help-es-owner en r-project.org<mailto:r-help-es-owner en r-project.org>\n> \n> Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> respondiendo.\n> \n> \n> Asuntos del dÃ­a:\n> \n>    1. GrÃ¡fico tiempos de supervivencia (Griera-yandex)\n> \n> ----------------------------------------------------------------------\n> \n> Message: 1\n> Date: Thu, 18 Jul 2019 10:18:42 +0200\n> From: Griera-yandex <griera en yandex.com><mailto:griera en yandex.com>\n> To: Lista R <r-help-es en r-project.org><mailto:r-help-es en r-project.org>\n> Subject: [R-es] GrÃ¡fico tiempos de supervivencia\n> Message-ID: <20190718101842.280414d5 en debian-dde>\n> Content-Type: text/plain; charset=\"utf-8\"\n> \n> Buenos dÃ­as a todos:\n> \n> Alguien me puede ayudar a hacer (si se puede) con unos datos similares a:\n> \n> set.seed(20)\n> DATOS <- data.frame (\n>       ID      = c (1:10)\n>     , TIEMPO  = sample(1:40, 10, replace=F)\n>     , DEF     = sample(0:1, 10, replace=T)\n>                     );DATOS\n> \n> un grÃ¡fico que muestre los tiempos de supervivencia similar a:\n> https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n> \n> Lo he intentado con la funciÃ³n followup.plot del paquete\n> \"epiDisplay\" (https://cran.r-project.org/web/packages/epiDisplay/index.html),\n> pero no encuentro la forma.\n> \n> Muchas gracias y saludos.\n> \n> \n> \n> \n> ------------------------------\n> \n> Subject: PiÃ© de pÃ¡gina del digest\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org<mailto:R-help-es en r-project.org>\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> \n> \n> ------------------------------\n> \n> Fin de Resumen de R-help-es, Vol 125, EnvÃ­o 7\n> *********************************************\n> \n> \n> --\n> Pedro Concejero\n> TelefÃ³nica CDO - 4th Platform - Internal Use Cases\n> E-mail: pedro.concejerocerezo en telefonica.com<mailto:pedro.concejerocerezo en telefonica.com>\n> skype: pedro.concejero\n> twitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>\n> linkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>\n> eRReRo feliz, me puedes encontrar en gRupo R madRid <http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>\n> \n> ________________________________\n> \n> Este mensaje y sus adjuntos se dirigen exclusivamente a su destinatario, puede contener informaciÃ³n privilegiada o confidencial y es para uso exclusivo de la persona o entidad de destino. Si no es usted. el destinatario indicado, queda notificado de que la lectura, utilizaciÃ³n, divulgaciÃ³n y/o copia sin autorizaciÃ³n puede estar prohibida en virtud de la legislaciÃ³n vigente. Si ha recibido este mensaje por error, le rogamos que nos lo comunique inmediatamente por esta misma vÃ­a y proceda a su destrucciÃ³n.\n> \n> The information contained in this transmission is privileged and confidential information intended only for the use of the individual or entity named above. If the reader of this message is not the intended recipient, you are hereby notified that any dissemination, distribution or copying of this communication is strictly prohibited. If you have received this transmission in error, do not read it. Please immediately reply to the sender that you have received this communication in error and then delete it.\n> \n> Esta mensagem e seus anexos se dirigem exclusivamente ao seu destinatÃ¡rio, pode conter informaÃ§Ã£o privilegiada ou confidencial e Ã© para uso exclusivo da pessoa ou entidade de destino. Se nÃ£o Ã© vossa senhoria o destinatÃ¡rio indicado, fica notificado de que a leitura, utilizaÃ§Ã£o, divulgaÃ§Ã£o e/ou cÃ³pia sem autorizaÃ§Ã£o pode estar proibida em virtude da legislaÃ§Ã£o vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos o comunique imediatamente por esta mesma via e proceda a sua destruiÃ§Ã£o\n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es",
+      "body_snippet": "Hola Pedro:\n\nGracias por la ayuda. No conocÃ­a esta manera mÃ¡s elegante de mostrar las curvas de Kaplan-Meier. Te la compro.\n\nEn realidad querÃ­a mostrar un grÃ¡fico con la longitud de les tiempos de",
+      "thread_id": "thread-e10db479d722",
+      "thread_depth": 1,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-d8cdfde37595",
+      "message_id": "<1563448571675.1440@sergas.es>",
+      "from_name": "miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es",
+      "from_email_hash": "3e7f48d203e35c3c83ba9900d8200246b42ac0399e548121b3efe8219cdc7437",
+      "date": "2019-07-18T11:16:11Z",
+      "subject": "[R-es] EpiLinux en DistroTest",
+      "subject_clean": "[R-es] EpiLinux en DistroTest",
+      "in_reply_to": "<590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>",
+      "references": [
+        "<mailman.13444.11.1563444002.43692.r-help-es@r-project.org>",
+        "<590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>"
+      ],
+      "body_plain": "Hola.\n\nYa se puede utilizar EpiLinux desde DistroTest.\n\nhttps://distrotest.net/EpiLinux/5.0\n\nPara los que no lo sepÃ¡is, EpiLinux es una distribuciÃ³n de linux especializada en software de bioestadÃ­stica y epidemiologÃ­a y viene con R + RCommander + RStudio instalados.\nEs una oportunidad de poder \"trastear\" con R (y linux) sin instalar ni \"romper\" nada, directamente desde un navegador.\n\nMÃ¡s info: https://www.sergas.es/Saude-publica/Epilinux?idioma=es\n\n\nUn Saludo,\n--\nMiguel Ãngel RodrÃ­guez MuÃ­Ã±os\nCoordinador del Proyecto EpiLinux\nDirecciÃ³n Xeral de SaÃºde PÃºblica\nConsellerÃ­a de Sanidade\nXunta de Galicia\nhttp://dxsp.sergas.es\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n________________________________\n\nNota: A informaciÃ³n contida nesta mensaxe e os seus posibles documentos adxuntos Ã© privada e confidencial e estÃ¡ dirixida Ãºnicamente Ã³ seu destinatario/a. Se vostede non Ã© o/a destinatario/a orixinal desta mensaxe, por favor elimÃ­nea. A distribuciÃ³n ou copia desta mensaxe non estÃ¡ autorizada.\n\nNota: La informaciÃ³n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y estÃ¡ dirigida Ãºnicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimÃ­nelo. La distribuciÃ³n o copia de este mensaje no estÃ¡ autorizada.\n\nSee more languages: http://www.sergas.es/aviso-confidencialidad",
+      "body_snippet": "Hola.\n\nYa se puede utilizar EpiLinux desde DistroTest.\n\nhttps://distrotest.net/EpiLinux/5.0\n\nPara los que no lo sepÃ¡is, EpiLinux es una distribuciÃ³n de linux especializada en software de bioestadÃ­s",
+      "thread_id": "thread-e10db479d722",
+      "thread_depth": 1,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-353f9c621606",
+      "message_id": "<CAOKbq8gGLs9fgL-JaBQncWHBGAbvJhnH=f8PH9cLc+GvFpJUeQ@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2019-07-18T14:21:24+02:00",
+      "subject": "[R-es] Gráfico tiempos de supervivencia",
+      "subject_clean": "[R-es] Gráfico tiempos de supervivencia",
+      "in_reply_to": "<20190718130517.4d5a9143@debian-dde>",
+      "references": [
+        "<mailman.13444.11.1563444002.43692.r-help-es@r-project.org>",
+        "<590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>",
+        "<20190718130517.4d5a9143@debian-dde>"
+      ],
+      "body_plain": "Hola,\n\nSÃ­, lo puedes hacer de esta forma...\n\n#-----------------\nset.seed(20)\nDATOS <- data.frame (\n    ID      = c (1:10)\n  , TIEMPO  = sample(1:40, 10, replace=F)\n  , DEF     = as.factor(sample(c(0,1), 10, replace=T))\n)\n\nlibrary(ggplot2)\n\n  ggplot( data = DATOS ) +\n   geom_point( aes(x = TIEMPO, y = ID , shape = DEF, color = DEF), size = 5\n) +\n   geom_segment( aes( x = 0, y = ID,  xend = TIEMPO, yend = ID ) ) +\n    guides(colour = FALSE) +\n    labs(shape = 'LEGEND') +\n    scale_y_discrete() +\n   theme_minimal()\n#-----------------\n\nE incluso puedes reproducirlo usando fuentes parecidas a la de los comics\ncon el paquete \"xkcd\".\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\nEl jue., 18 jul. 2019 a las 13:05, Griera-yandex (<griera en yandex.com>)\nescribiÃ³:\n\n> Hola Pedro:\n>\n> Gracias por la ayuda. No conocÃ­a esta manera mÃ¡s elegante de mostrar las\n> curvas de Kaplan-Meier. Te la compro.\n>\n> En realidad querÃ­a mostrar un grÃ¡fico con la longitud de les tiempos de\n> seguimiento y al final un sÃ­mbolo para indicar el estado. Seria un grÃ¡fico\n> similar a:\n>\n> https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n>\n> Pero no encuentro la manera de hacerlo. Igual no se puede.\n>\n> Muchas gracias y saludos.\n>\n> On Thu, 18 Jul 2019 10:28:37 +0000\n> PEDRO CONCEJERO CEREZO <pedro.concejerocerezo en telefonica.com> wrote:\n>\n> > Hola, te vale esto? Es forma estandar de representar graficos\n> supervivencia\n> >\n> > Basado en esto:\n> >\n> > https://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/\n> >\n> > set.seed(20)\n> >\n> > DATOS <- data.frame (\n> >   ID      = c (1:10)\n> >   , TIEMPO  = sample(1:40, 10, replace=F)\n> >   , DEF     = sample(0:1, 10, replace=T)\n> > )\n> >\n> > DATOS\n> >\n> > library(survival)\n> >\n> > DATOS$DEF <- as.numeric(DATOS$DEF)\n> > DATOS$TIEMPO <- as.numeric(DATOS$TIEMPO)\n> >\n> > s <- Surv(DATOS$TIEMPO, DATOS$DEF)\n> > head(s)\n> >\n> > ## Kaplan-Meier estimator.\n> > km <- survfit(s ~ 1,\n> >               data = DATOS,\n> >               conf.type = \"log-log\")\n> >\n> > ## Show object\n> > km\n> >\n> > summary(km)\n> >\n> > plot(km)\n> >\n> > # Instala las librerÃ­as necesarias:\n> > library(ranger)\n> > library(ggplot2)\n> > library(dplyr)\n> > library(ggfortify)\n> >\n> > autoplot(km)\n> >\n> >\n> > El 18/07/2019 a las 12:00, r-help-es-request en r-project.org<mailto:\n> r-help-es-request en r-project.org> escribiÃ³:\n> >\n> > EnvÃ­e los mensajes para la lista R-help-es a\n> >         r-help-es en r-project.org<mailto:r-help-es en r-project.org>\n> >\n> > Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n> >         https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> > O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> > el asunto (subject) o en el cuerpo a:\n> >         r-help-es-request en r-project.org<mailto:\n> r-help-es-request en r-project.org>\n> >\n> > Puede contactar con el responsable de la lista escribiendo a:\n> >         r-help-es-owner en r-project.org<mailto:\n> r-help-es-owner en r-project.org>\n> >\n> > Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> > linea del asunto (subject) para que el texto sea mas especifico que:\n> > \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> > la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> > respondiendo.\n> >\n> >\n> > Asuntos del dÃ­a:\n> >\n> >    1. GrÃ¡fico tiempos de supervivencia (Griera-yandex)\n> >\n> > ----------------------------------------------------------------------\n> >\n> > Message: 1\n> > Date: Thu, 18 Jul 2019 10:18:42 +0200\n> > From: Griera-yandex <griera en yandex.com><mailto:griera en yandex.com>\n> > To: Lista R <r-help-es en r-project.org><mailto:r-help-es en r-project.org>\n> > Subject: [R-es] GrÃ¡fico tiempos de supervivencia\n> > Message-ID: <20190718101842.280414d5 en debian-dde>\n> > Content-Type: text/plain; charset=\"utf-8\"\n> >\n> > Buenos dÃ­as a todos:\n> >\n> > Alguien me puede ayudar a hacer (si se puede) con unos datos similares a:\n> >\n> > set.seed(20)\n> > DATOS <- data.frame (\n> >       ID      = c (1:10)\n> >     , TIEMPO  = sample(1:40, 10, replace=F)\n> >     , DEF     = sample(0:1, 10, replace=T)\n> >                     );DATOS\n> >\n> > un grÃ¡fico que muestre los tiempos de supervivencia similar a:\n> > https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n> >\n> > Lo he intentado con la funciÃ³n followup.plot del paquete\n> > \"epiDisplay\" (\n> https://cran.r-project.org/web/packages/epiDisplay/index.html),\n> > pero no encuentro la forma.\n> >\n> > Muchas gracias y saludos.\n> >\n> >\n> >\n> >\n> > ------------------------------\n> >\n> > Subject: PiÃ© de pÃ¡gina del digest\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org<mailto:R-help-es en r-project.org>\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n> > ------------------------------\n> >\n> > Fin de Resumen de R-help-es, Vol 125, EnvÃ­o 7\n> > *********************************************\n> >\n> >\n> > --\n> > Pedro Concejero\n> > TelefÃ³nica CDO - 4th Platform - Internal Use Cases\n> > E-mail: pedro.concejerocerezo en telefonica.com<mailto:\n> pedro.concejerocerezo en telefonica.com>\n> > skype: pedro.concejero\n> > twitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>\n> > linkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>\n> > eRReRo feliz, me puedes encontrar en gRupo R madRid <\n> http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>\n> >\n> > ________________________________\n> >\n> > Este mensaje y sus adjuntos se dirigen exclusivamente a su destinatario,\n> puede contener informaciÃ³n privilegiada o confidencial y es para uso\n> exclusivo de la persona o entidad de destino. Si no es usted. el\n> destinatario indicado, queda notificado de que la lectura, utilizaciÃ³n,\n> divulgaciÃ³n y/o copia sin autorizaciÃ³n puede estar prohibida en virtud de\n> la legislaciÃ³n vigente. Si ha recibido este mensaje por error, le rogamos\n> que nos lo comunique inmediatamente por esta misma vÃ­a y proceda a su\n> destrucciÃ³n.\n> >\n> > The information contained in this transmission is privileged and\n> confidential information intended only for the use of the individual or\n> entity named above. If the reader of this message is not the intended\n> recipient, you are hereby notified that any dissemination, distribution or\n> copying of this communication is strictly prohibited. If you have received\n> this transmission in error, do not read it. Please immediately reply to the\n> sender that you have received this communication in error and then delete\n> it.\n> >\n> > Esta mensagem e seus anexos se dirigem exclusivamente ao seu\n> destinatÃ¡rio, pode conter informaÃ§Ã£o privilegiada ou confidencial e Ã© para\n> uso exclusivo da pessoa ou entidade de destino. Se nÃ£o Ã© vossa senhoria o\n> destinatÃ¡rio indicado, fica notificado de que a leitura, utilizaÃ§Ã£o,\n> divulgaÃ§Ã£o e/ou cÃ³pia sem autorizaÃ§Ã£o pode estar proibida em virtude da\n> legislaÃ§Ã£o vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos\n> o comunique imediatamente por esta mesma via e proceda a sua destruiÃ§Ã£o\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSÃ­, lo puedes hacer de esta forma...\n\n#-----------------\nset.seed(20)\nDATOS <- data.frame (\n    ID      = c (1:10)\n  , TIEMPO  = sample(1:40, 10, replace=F)\n  , DEF     = as.factor(sample(c(0,",
+      "thread_id": "thread-e10db479d722",
+      "thread_depth": 2,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-a24657f5adc0",
+      "message_id": "<CACEaGhM2N7e990FYOuyW=sBfAc+yYj62LMCAvo4Mkb8Ne_p1ag@mail.gmail.com>",
+      "from_name": "patricio fuenmayor",
+      "from_email_hash": "59b445396ac723c905e0d4234add3713852acb63455a0cf9f26748b90720a213",
+      "date": "2019-07-18T07:58:21-05:00",
+      "subject": "[R-es] predict multinomial model con nnet",
+      "subject_clean": "[R-es] predict multinomial model con nnet",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola todos\nCuando realizo las predicciones del modelo multinomial con el paquete nnet,\nestas cambian cada vez que lo ejecuto ... saben por quÃ© pasa esto ??\n\nGracias por la ayuda.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola todos\nCuando realizo las predicciones del modelo multinomial con el paquete nnet,\nestas cambian cada vez que lo ejecuto ... saben por quÃ© pasa esto ??\n\nGracias por la ayuda.\n\n\t[[alternative HTML",
+      "thread_id": "thread-a24657f5adc0",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-fbb4a7d22b8d",
+      "message_id": "<CAOKbq8jitoquKX6N2KLKDfUvcD80k34g_6_0p9PxusCxqUyrhA@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2019-07-18T15:07:16+02:00",
+      "subject": "[R-es] predict multinomial model con nnet",
+      "subject_clean": "[R-es] predict multinomial model con nnet",
+      "in_reply_to": "<CACEaGhM2N7e990FYOuyW=sBfAc+yYj62LMCAvo4Mkb8Ne_p1ag@mail.gmail.com>",
+      "references": [
+        "<CACEaGhM2N7e990FYOuyW=sBfAc+yYj62LMCAvo4Mkb8Ne_p1ag@mail.gmail.com>"
+      ],
+      "body_plain": "Por la semilla.\n\nCada vez que inicias la red, los pesos comienzan con unos valores\naleatorios.\nSi fijas la semilla, de ejecuciÃ³n en ejecuciÃ³n no debieras de ver variaciÃ³n.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl jue., 18 jul. 2019 a las 14:58, patricio fuenmayor (<\npatricio.fuenmayor en gmail.com>) escribiÃ³:\n\n> Hola todos\n> Cuando realizo las predicciones del modelo multinomial con el paquete nnet,\n> estas cambian cada vez que lo ejecuto ... saben por quÃ© pasa esto ??\n>\n> Gracias por la ayuda.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Por la semilla.\n\nCada vez que inicias la red, los pesos comienzan con unos valores\naleatorios.\nSi fijas la semilla, de ejecuciÃ³n en ejecuciÃ³n no debieras de ver variaciÃ³n.\n\nSaludos,\nCarlos Ortega\nw",
+      "thread_id": "thread-a24657f5adc0",
+      "thread_depth": 1,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-5743139e8ddf",
+      "message_id": "<20190718164034.35e588a7@debian-dde>",
+      "from_name": "Griera-yandex",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2019-07-18T16:40:34+02:00",
+      "subject": "[R-es] Gráfico tiempos de supervivencia",
+      "subject_clean": "[R-es] Gráfico tiempos de supervivencia",
+      "in_reply_to": "<CAOKbq8gGLs9fgL-JaBQncWHBGAbvJhnH=f8PH9cLc+GvFpJUeQ@mail.gmail.com>",
+      "references": [
+        "<mailman.13444.11.1563444002.43692.r-help-es@r-project.org>",
+        "<590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>",
+        "<20190718130517.4d5a9143@debian-dde>",
+        "<CAOKbq8gGLs9fgL-JaBQncWHBGAbvJhnH=f8PH9cLc+GvFpJUeQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Carlos:\n\nComo siempre, perfecta esta soluciÃ³n! Es lo que necesitaba.\n\nMuchas gracias por esta ayuda y por el tiempo dedicado.\n\nSaludos\n\nOn Thu, 18 Jul 2019 14:21:24 +0200\nCarlos Ortega <cof en qualityexcellence.es> wrote:\n\n> Hola,\n> \n> SÃ­, lo puedes hacer de esta forma...\n> \n> #-----------------\n> set.seed(20)\n> DATOS <- data.frame (\n>     ID      = c (1:10)\n>   , TIEMPO  = sample(1:40, 10, replace=F)\n>   , DEF     = as.factor(sample(c(0,1), 10, replace=T))\n> )\n> \n> library(ggplot2)\n> \n>   ggplot( data = DATOS ) +\n>    geom_point( aes(x = TIEMPO, y = ID , shape = DEF, color = DEF), size = 5\n> ) +\n>    geom_segment( aes( x = 0, y = ID,  xend = TIEMPO, yend = ID ) ) +\n>     guides(colour = FALSE) +\n>     labs(shape = 'LEGEND') +\n>     scale_y_discrete() +\n>    theme_minimal()\n> #-----------------\n> \n> E incluso puedes reproducirlo usando fuentes parecidas a la de los comics\n> con el paquete \"xkcd\".\n> \n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n> \n> \n> \n> El jue., 18 jul. 2019 a las 13:05, Griera-yandex (<griera en yandex.com>)\n> escribiÃ³:\n> \n> > Hola Pedro:\n> >\n> > Gracias por la ayuda. No conocÃ­a esta manera mÃ¡s elegante de mostrar las\n> > curvas de Kaplan-Meier. Te la compro.\n> >\n> > En realidad querÃ­a mostrar un grÃ¡fico con la longitud de les tiempos de\n> > seguimiento y al final un sÃ­mbolo para indicar el estado. Seria un grÃ¡fico\n> > similar a:\n> >\n> > https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n> >\n> > Pero no encuentro la manera de hacerlo. Igual no se puede.\n> >\n> > Muchas gracias y saludos.\n> >\n> > On Thu, 18 Jul 2019 10:28:37 +0000\n> > PEDRO CONCEJERO CEREZO <pedro.concejerocerezo en telefonica.com> wrote:\n> >\n> > > Hola, te vale esto? Es forma estandar de representar graficos\n> > supervivencia\n> > >\n> > > Basado en esto:\n> > >\n> > > https://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/\n> > >\n> > > set.seed(20)\n> > >\n> > > DATOS <- data.frame (\n> > >   ID      = c (1:10)\n> > >   , TIEMPO  = sample(1:40, 10, replace=F)\n> > >   , DEF     = sample(0:1, 10, replace=T)\n> > > )\n> > >\n> > > DATOS\n> > >\n> > > library(survival)\n> > >\n> > > DATOS$DEF <- as.numeric(DATOS$DEF)\n> > > DATOS$TIEMPO <- as.numeric(DATOS$TIEMPO)\n> > >\n> > > s <- Surv(DATOS$TIEMPO, DATOS$DEF)\n> > > head(s)\n> > >\n> > > ## Kaplan-Meier estimator.\n> > > km <- survfit(s ~ 1,\n> > >               data = DATOS,\n> > >               conf.type = \"log-log\")\n> > >\n> > > ## Show object\n> > > km\n> > >\n> > > summary(km)\n> > >\n> > > plot(km)\n> > >\n> > > # Instala las librerÃ­as necesarias:\n> > > library(ranger)\n> > > library(ggplot2)\n> > > library(dplyr)\n> > > library(ggfortify)\n> > >\n> > > autoplot(km)\n> > >\n> > >\n> > > El 18/07/2019 a las 12:00, r-help-es-request en r-project.org<mailto:\n> > r-help-es-request en r-project.org> escribiÃ³:\n> > >\n> > > EnvÃ­e los mensajes para la lista R-help-es a\n> > >         r-help-es en r-project.org<mailto:r-help-es en r-project.org>\n> > >\n> > > Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n> > >         https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n> > > O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> > > el asunto (subject) o en el cuerpo a:\n> > >         r-help-es-request en r-project.org<mailto:\n> > r-help-es-request en r-project.org>\n> > >\n> > > Puede contactar con el responsable de la lista escribiendo a:\n> > >         r-help-es-owner en r-project.org<mailto:\n> > r-help-es-owner en r-project.org>\n> > >\n> > > Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> > > linea del asunto (subject) para que el texto sea mas especifico que:\n> > > \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> > > la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> > > respondiendo.\n> > >\n> > >\n> > > Asuntos del dÃ­a:\n> > >\n> > >    1. GrÃ¡fico tiempos de supervivencia (Griera-yandex)\n> > >\n> > > ----------------------------------------------------------------------\n> > >\n> > > Message: 1\n> > > Date: Thu, 18 Jul 2019 10:18:42 +0200\n> > > From: Griera-yandex <griera en yandex.com><mailto:griera en yandex.com>\n> > > To: Lista R <r-help-es en r-project.org><mailto:r-help-es en r-project.org>\n> > > Subject: [R-es] GrÃ¡fico tiempos de supervivencia\n> > > Message-ID: <20190718101842.280414d5 en debian-dde>\n> > > Content-Type: text/plain; charset=\"utf-8\"\n> > >\n> > > Buenos dÃ­as a todos:\n> > >\n> > > Alguien me puede ayudar a hacer (si se puede) con unos datos similares a:\n> > >\n> > > set.seed(20)\n> > > DATOS <- data.frame (\n> > >       ID      = c (1:10)\n> > >     , TIEMPO  = sample(1:40, 10, replace=F)\n> > >     , DEF     = sample(0:1, 10, replace=T)\n> > >                     );DATOS\n> > >\n> > > un grÃ¡fico que muestre los tiempos de supervivencia similar a:\n> > > https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n> > >\n> > > Lo he intentado con la funciÃ³n followup.plot del paquete\n> > > \"epiDisplay\" (\n> > https://cran.r-project.org/web/packages/epiDisplay/index.html),\n> > > pero no encuentro la forma.\n> > >\n> > > Muchas gracias y saludos.\n> > >\n> > >\n> > >\n> > >\n> > > ------------------------------\n> > >\n> > > Subject: PiÃ© de pÃ¡gina del digest\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org<mailto:R-help-es en r-project.org>\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n> > >\n> > > ------------------------------\n> > >\n> > > Fin de Resumen de R-help-es, Vol 125, EnvÃ­o 7\n> > > *********************************************\n> > >\n> > >\n> > > --\n> > > Pedro Concejero\n> > > TelefÃ³nica CDO - 4th Platform - Internal Use Cases\n> > > E-mail: pedro.concejerocerezo en telefonica.com<mailto:\n> > pedro.concejerocerezo en telefonica.com>\n> > > skype: pedro.concejero\n> > > twitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>\n> > > linkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>\n> > > eRReRo feliz, me puedes encontrar en gRupo R madRid <\n> > http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>\n> > >\n> > > ________________________________\n> > >\n> > > Este mensaje y sus adjuntos se dirigen exclusivamente a su destinatario,\n> > puede contener informaciÃ³n privilegiada o confidencial y es para uso\n> > exclusivo de la persona o entidad de destino. Si no es usted. el\n> > destinatario indicado, queda notificado de que la lectura, utilizaciÃ³n,\n> > divulgaciÃ³n y/o copia sin autorizaciÃ³n puede estar prohibida en virtud de\n> > la legislaciÃ³n vigente. Si ha recibido este mensaje por error, le rogamos\n> > que nos lo comunique inmediatamente por esta misma vÃ­a y proceda a su\n> > destrucciÃ³n.\n> > >\n> > > The information contained in this transmission is privileged and\n> > confidential information intended only for the use of the individual or\n> > entity named above. If the reader of this message is not the intended\n> > recipient, you are hereby notified that any dissemination, distribution or\n> > copying of this communication is strictly prohibited. If you have received\n> > this transmission in error, do not read it. Please immediately reply to the\n> > sender that you have received this communication in error and then delete\n> > it.\n> > >\n> > > Esta mensagem e seus anexos se dirigem exclusivamente ao seu\n> > destinatÃ¡rio, pode conter informaÃ§Ã£o privilegiada ou confidencial e Ã© para\n> > uso exclusivo da pessoa ou entidade de destino. Se nÃ£o Ã© vossa senhoria o\n> > destinatÃ¡rio indicado, fica notificado de que a leitura, utilizaÃ§Ã£o,\n> > divulgaÃ§Ã£o e/ou cÃ³pia sem autorizaÃ§Ã£o pode estar proibida em virtude da\n> > legislaÃ§Ã£o vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos\n> > o comunique imediatamente por esta mesma via e proceda a sua destruiÃ§Ã£o\n> > >\n> > >       [[alternative HTML version deleted]]\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> \n> \n> -- \n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es",
+      "body_snippet": "Hola Carlos:\n\nComo siempre, perfecta esta soluciÃ³n! Es lo que necesitaba.\n\nMuchas gracias por esta ayuda y por el tiempo dedicado.\n\nSaludos\n\nOn Thu, 18 Jul 2019 14:21:24 +0200\nCarlos Ortega <cof en q",
+      "thread_id": "thread-e10db479d722",
+      "thread_depth": 3,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-0f6d7fcd989a",
+      "message_id": "<CACEaGhPuHRxs6phf31B+SeouCYbDtBH=-g1zOKoagXWqGtP0hg@mail.gmail.com>",
+      "from_name": "patricio fuenmayor",
+      "from_email_hash": "59b445396ac723c905e0d4234add3713852acb63455a0cf9f26748b90720a213",
+      "date": "2019-07-18T10:34:11-05:00",
+      "subject": "[R-es] predict multinomial model con nnet",
+      "subject_clean": "[R-es] predict multinomial model con nnet",
+      "in_reply_to": "<CAOKbq8jitoquKX6N2KLKDfUvcD80k34g_6_0p9PxusCxqUyrhA@mail.gmail.com>",
+      "references": [
+        "<CACEaGhM2N7e990FYOuyW=sBfAc+yYj62LMCAvo4Mkb8Ne_p1ag@mail.gmail.com>",
+        "<CAOKbq8jitoquKX6N2KLKDfUvcD80k34g_6_0p9PxusCxqUyrhA@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Carlos por responder.\nTe comento que si tengo fija la semilla.\nEntenderÃ­a yo que eso variarÃ­a en la estimaciÃ³n, pero en la predicciÃ³n\ndeberÃ­a tomar los resultados del modelo y aplicar los coeficientes. Lo\nextraÃ±o es que si ejecuto varias veces solo las predicciones ... estas\ntienen variaciones.\n\np1 <- data.table(predict(multinom.fit,newdata=train,\"class\"),1)\np2 <- data.table(predict(multinom.fit,newdata=train,\"class\"),2)\np3 <- data.table(predict(multinom.fit,newdata=train,\"class\"),3)\np4 <- data.table(predict(multinom.fit,newdata=train,\"class\"),4)\np5 <- data.table(predict(multinom.fit,newdata=train,\"class\"),5)\np6 <- data.table(predict(multinom.fit,newdata=train,\"class\"),6)\np7 <- data.table(predict(multinom.fit,newdata=train,\"class\"),7)\n\np <- rbindlist(list(p1,p2,p3,p4,p5,p6,p7))\ndcast(p,V1~V2)\nUsing 'V2' as value column. Use 'value.var' to override\nAggregate function missing, defaulting to 'length'\n      V1   1   2   3   4   5   6   7\n1:  ALTO 773 785 772 785 786 783 772\n2:  BAJO 551 533 537 539 532 555 551\n3: MEDIO 512 518 527 512 518 498 513\n>\n\nEs extraÃ±o, voy a leer un poco mas como funciona la funciÃ³n predict, para\nentender que pasa\nGracias por la ayuda.\n\n\n\n\n\n\nEl jue., 18 jul. 2019 a las 8:09, Carlos Ortega (<cof en qualityexcellence.es>)\nescribiÃ³:\n\n> Por la semilla.\n>\n> Cada vez que inicias la red, los pesos comienzan con unos valores\n> aleatorios.\n> Si fijas la semilla, de ejecuciÃ³n en ejecuciÃ³n no debieras de ver\n> variaciÃ³n.\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El jue., 18 jul. 2019 a las 14:58, patricio fuenmayor (<\n> patricio.fuenmayor en gmail.com>) escribiÃ³:\n>\n>> Hola todos\n>> Cuando realizo las predicciones del modelo multinomial con el paquete\n>> nnet,\n>> estas cambian cada vez que lo ejecuto ... saben por quÃ© pasa esto ??\n>>\n>> Gracias por la ayuda.\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Carlos por responder.\nTe comento que si tengo fija la semilla.\nEntenderÃ­a yo que eso variarÃ­a en la estimaciÃ³n, pero en la predicciÃ³n\ndeberÃ­a tomar los resultados del modelo y aplicar los",
+      "thread_id": "thread-a24657f5adc0",
+      "thread_depth": 2,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-b1a68f0b3109",
+      "message_id": "<20190719150318.3c0c458e@debian-dde>",
+      "from_name": "Griera",
+      "from_email_hash": "ecde5bfedfb88e8ea09036143789defc45ed8c13c200561a795ddd955a5f36d3",
+      "date": "2019-07-19T15:03:18+02:00",
+      "subject": "[R-es] Gráfico tiempos de supervivencia",
+      "subject_clean": "[R-es] Gráfico tiempos de supervivencia",
+      "in_reply_to": "<CAOKbq8gGLs9fgL-JaBQncWHBGAbvJhnH=f8PH9cLc+GvFpJUeQ@mail.gmail.com>",
+      "references": [
+        "<mailman.13444.11.1563444002.43692.r-help-es@r-project.org>",
+        "<590bdd0f-eae8-e525-f7a5-061643d25227@telefonica.com>",
+        "<20190718130517.4d5a9143@debian-dde>",
+        "<CAOKbq8gGLs9fgL-JaBQncWHBGAbvJhnH=f8PH9cLc+GvFpJUeQ@mail.gmail.com>"
+      ],
+      "body_plain": "Hola: \n\nPor si a alguien le interesa para un curso, aquÃ­ coloco la versiÃ³n\ndefinitiva de los dos grÃ¡ficos que querÃ­a hacer (uno en escala del tiempo del calendario y la otra el tiempo de seguimiento) realizados gracias a la ayuda\nde Carlos Ortega.\n\nMuchas gracias y saludos.\n\n# CÃ³digo ----------------------------------------------------\nset.seed(20)\n# TIEMPO_2 = sample(1:40, 10, replace=F)\nXTIEMPO_2 = c(38, 2, 34, 29, 30, 3, 14, 8, 18, 31) # Per fe el grÃ fic amb t=0\nset.seed(30)\nXTIEMPO_0 = sample(1:40, 10, replace=F)\nXTIEMPO_F = XTIEMPO_0 + XTIEMPO_2\nset.seed(20)\n# XDEF     = as.factor(sample(c(0,1), 10, replace=T))\nXDEF = as.factor(sample(c(\"Mort\", \"Viu\"), 10, replace=T))\n\nDATOS <- data.frame (\n\t  ID         = c (1:10)\n\t, TIEMPO_0 = XTIEMPO_0\n\t, TIEMPO_F = XTIEMPO_F\n\t, TIEMPO_2 = XTIEMPO_2 # Per fe el grÃ fic amb t=0\n\t, DEF      = XDEF\n)\n\nlibrary(ggplot2)\n\n## GrÃ fic amb temps calendari\nggplot( data = DATOS ) +\n  geom_point( aes(x = TIEMPO_F, y = ID , shape = DEF), size = 5 ) +\n  geom_segment( aes( x = TIEMPO_0, y = ID,   xend = TIEMPO_F, yend = ID ) ) +\n  scale_shape_manual (values = c(4, 16))  +\n  xlim (0, 70) +\n  xlab (\"Data (temps del calendari)\") +\n  ylab (\"Persones\") +\n   guides(colour = FALSE) +\n   labs(shape = ' ', values = c(4, 16)) +\n   scale_y_discrete() +\n  theme_classic() +\n  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())\n## Modificat \nstr (DATOS)\nggplot( data = DATOS ) +\n  geom_point( aes(x = TIEMPO_2, y = ID , shape = DEF), size = 5 ) +\n  scale_shape_manual (values = c(4, 16))  +\n  geom_segment( aes( x = 0, y = ID,   xend = TIEMPO_2, yend = ID ) ) +\n  xlim (0, 70) +\n  xlab (\"Temps de seguiment\") +\n  ylab (\"Persones\") +\n   guides(colour = FALSE) +\n   labs(shape = ' ', values = c(4, 16)) +\n   scale_y_discrete() +\n  theme_classic()\n\n# CÃ³digo ----------------------------------------------------\n\n\nOn Thu, 18 Jul 2019 14:21:24 +0200\nCarlos Ortega <cof en qualityexcellence.es> wrote:\n\n> Hola,\n> \n> SÃ­, lo puedes hacer de esta forma...\n> \n> #-----------------\n> set.seed(20)\n> DATOS <- data.frame (\n>     ID      = c (1:10)\n>   , TIEMPO  = sample(1:40, 10, replace=F)\n>   , DEF     = as.factor(sample(c(0,1), 10, replace=T))\n> )\n> \n> library(ggplot2)\n> \n>   ggplot( data = DATOS ) +\n>    geom_point( aes(x = TIEMPO, y = ID , shape = DEF, color = DEF), size = 5\n> ) +\n>    geom_segment( aes( x = 0, y = ID,  xend = TIEMPO, yend = ID ) ) +\n>     guides(colour = FALSE) +\n>     labs(shape = 'LEGEND') +\n>     scale_y_discrete() +\n>    theme_minimal()\n> #-----------------\n> \n> E incluso puedes reproducirlo usando fuentes parecidas a la de los comics\n> con el paquete \"xkcd\".\n> \n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n> \n> \n> \n> El jue., 18 jul. 2019 a las 13:05, Griera-yandex (<griera en yandex.com>)\n> escribiÃ³:\n> \n> > Hola Pedro:\n> >\n> > Gracias por la ayuda. No conocÃ­a esta manera mÃ¡s elegante de mostrar las\n> > curvas de Kaplan-Meier. Te la compro.\n> >\n> > En realidad querÃ­a mostrar un grÃ¡fico con la longitud de les tiempos de\n> > seguimiento y al final un sÃ­mbolo para indicar el estado. Seria un grÃ¡fico\n> > similar a:\n> >\n> > https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n> >\n> > Pero no encuentro la manera de hacerlo. Igual no se puede.\n> >\n> > Muchas gracias y saludos.\n> >\n> > On Thu, 18 Jul 2019 10:28:37 +0000\n> > PEDRO CONCEJERO CEREZO <pedro.concejerocerezo en telefonica.com> wrote:\n> >\n> > > Hola, te vale esto? Es forma estandar de representar graficos\n> > supervivencia\n> > >\n> > > Basado en esto:\n> > >\n> > > https://rviews.rstudio.com/2017/09/25/survival-analysis-with-r/\n> > >\n> > > set.seed(20)\n> > >\n> > > DATOS <- data.frame (\n> > >   ID      = c (1:10)\n> > >   , TIEMPO  = sample(1:40, 10, replace=F)\n> > >   , DEF     = sample(0:1, 10, replace=T)\n> > > )\n> > >\n> > > DATOS\n> > >\n> > > library(survival)\n> > >\n> > > DATOS$DEF <- as.numeric(DATOS$DEF)\n> > > DATOS$TIEMPO <- as.numeric(DATOS$TIEMPO)\n> > >\n> > > s <- Surv(DATOS$TIEMPO, DATOS$DEF)\n> > > head(s)\n> > >\n> > > ## Kaplan-Meier estimator.\n> > > km <- survfit(s ~ 1,\n> > >               data = DATOS,\n> > >               conf.type = \"log-log\")\n> > >\n> > > ## Show object\n> > > km\n> > >\n> > > summary(km)\n> > >\n> > > plot(km)\n> > >\n> > > # Instala las librerÃ­as necesarias:\n> > > library(ranger)\n> > > library(ggplot2)\n> > > library(dplyr)\n> > > library(ggfortify)\n> > >\n> > > autoplot(km)\n> > >\n> > >\n> > > El 18/07/2019 a las 12:00, r-help-es-request en r-project.org<mailto:\n> > r-help-es-request en r-project.org> escribiÃ³:\n> > >\n> > > EnvÃ­e los mensajes para la lista R-help-es a\n> > >         r-help-es en r-project.org<mailto:r-help-es en r-project.org>\n> > >\n> > > Para subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n> > >         https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n> > > O por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\n> > > el asunto (subject) o en el cuerpo a:\n> > >         r-help-es-request en r-project.org<mailto:\n> > r-help-es-request en r-project.org>\n> > >\n> > > Puede contactar con el responsable de la lista escribiendo a:\n> > >         r-help-es-owner en r-project.org<mailto:\n> > r-help-es-owner en r-project.org>\n> > >\n> > > Si responde a algÃºn contenido de este mensaje, por favor, edite la\n> > > linea del asunto (subject) para que el texto sea mas especifico que:\n> > > \"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\n> > > la respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\n> > > respondiendo.\n> > >\n> > >\n> > > Asuntos del dÃ­a:\n> > >\n> > >    1. GrÃ¡fico tiempos de supervivencia (Griera-yandex)\n> > >\n> > > ----------------------------------------------------------------------\n> > >\n> > > Message: 1\n> > > Date: Thu, 18 Jul 2019 10:18:42 +0200\n> > > From: Griera-yandex <griera en yandex.com><mailto:griera en yandex.com>\n> > > To: Lista R <r-help-es en r-project.org><mailto:r-help-es en r-project.org>\n> > > Subject: [R-es] GrÃ¡fico tiempos de supervivencia\n> > > Message-ID: <20190718101842.280414d5 en debian-dde>\n> > > Content-Type: text/plain; charset=\"utf-8\"\n> > >\n> > > Buenos dÃ­as a todos:\n> > >\n> > > Alguien me puede ayudar a hacer (si se puede) con unos datos similares a:\n> > >\n> > > set.seed(20)\n> > > DATOS <- data.frame (\n> > >       ID      = c (1:10)\n> > >     , TIEMPO  = sample(1:40, 10, replace=F)\n> > >     , DEF     = sample(0:1, 10, replace=T)\n> > >                     );DATOS\n> > >\n> > > un grÃ¡fico que muestre los tiempos de supervivencia similar a:\n> > > https://miro.medium.com/max/700/1*yHhG4TVcAAi29Ln88t0_5Q.png\n> > >\n> > > Lo he intentado con la funciÃ³n followup.plot del paquete\n> > > \"epiDisplay\" (\n> > https://cran.r-project.org/web/packages/epiDisplay/index.html),\n> > > pero no encuentro la forma.\n> > >\n> > > Muchas gracias y saludos.\n> > >\n> > >\n> > >\n> > >\n> > > ------------------------------\n> > >\n> > > Subject: PiÃ© de pÃ¡gina del digest\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org<mailto:R-help-es en r-project.org>\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n> > >\n> > > ------------------------------\n> > >\n> > > Fin de Resumen de R-help-es, Vol 125, EnvÃ­o 7\n> > > *********************************************\n> > >\n> > >\n> > > --\n> > > Pedro Concejero\n> > > TelefÃ³nica CDO - 4th Platform - Internal Use Cases\n> > > E-mail: pedro.concejerocerezo en telefonica.com<mailto:\n> > pedro.concejerocerezo en telefonica.com>\n> > > skype: pedro.concejero\n> > > twitter @ConcejeroPedro<https://twitter.com/ConcejeroPedro>\n> > > linkedin pedroconcejero<http://www.linkedin.com/in/pedroconcejero/es>\n> > > eRReRo feliz, me puedes encontrar en gRupo R madRid <\n> > http://madrid.r-es.org/?s=concejero&searchsubmit.x=21&searchsubmit.y=13>\n> > >\n> > > ________________________________\n> > >\n> > > Este mensaje y sus adjuntos se dirigen exclusivamente a su destinatario,\n> > puede contener informaciÃ³n privilegiada o confidencial y es para uso\n> > exclusivo de la persona o entidad de destino. Si no es usted. el\n> > destinatario indicado, queda notificado de que la lectura, utilizaciÃ³n,\n> > divulgaciÃ³n y/o copia sin autorizaciÃ³n puede estar prohibida en virtud de\n> > la legislaciÃ³n vigente. Si ha recibido este mensaje por error, le rogamos\n> > que nos lo comunique inmediatamente por esta misma vÃ­a y proceda a su\n> > destrucciÃ³n.\n> > >\n> > > The information contained in this transmission is privileged and\n> > confidential information intended only for the use of the individual or\n> > entity named above. If the reader of this message is not the intended\n> > recipient, you are hereby notified that any dissemination, distribution or\n> > copying of this communication is strictly prohibited. If you have received\n> > this transmission in error, do not read it. Please immediately reply to the\n> > sender that you have received this communication in error and then delete\n> > it.\n> > >\n> > > Esta mensagem e seus anexos se dirigem exclusivamente ao seu\n> > destinatÃ¡rio, pode conter informaÃ§Ã£o privilegiada ou confidencial e Ã© para\n> > uso exclusivo da pessoa ou entidade de destino. Se nÃ£o Ã© vossa senhoria o\n> > destinatÃ¡rio indicado, fica notificado de que a leitura, utilizaÃ§Ã£o,\n> > divulgaÃ§Ã£o e/ou cÃ³pia sem autorizaÃ§Ã£o pode estar proibida em virtude da\n> > legislaÃ§Ã£o vigente. Se recebeu esta mensagem por erro, rogamos-lhe que nos\n> > o comunique imediatamente por esta mesma via e proceda a sua destruiÃ§Ã£o\n> > >\n> > >       [[alternative HTML version deleted]]\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es en r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> \n> \n> -- \n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es",
+      "body_snippet": "Hola: \n\nPor si a alguien le interesa para un curso, aquÃ­ coloco la versiÃ³n\ndefinitiva de los dos grÃ¡ficos que querÃ­a hacer (uno en escala del tiempo del calendario y la otra el tiempo de seguimien",
+      "thread_id": "thread-e10db479d722",
+      "thread_depth": 3,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-16e71fc10cf0",
+      "message_id": "<C3D66712-2353-46BD-B3AD-90839C06C65F@gmail.com>",
+      "from_name": "Emilio L. Cano",
+      "from_email_hash": "0543e9f77409e061d237bf5535cb59ffdbbbcd52804978b7ed6bae5ea463ef3a",
+      "date": "2019-07-22T12:10:50+02:00",
+      "subject": "[R-es] Anuncio XI Jornadas de Usuarios de R",
+      "subject_clean": "[R-es] Anuncio XI Jornadas de Usuarios de R",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados/as usuarios/as de R,\n\nEnvÃ­o este anuncio al foro de ayuda por si no os llega por otros canales (ruego me disculpÃ©is si lo considerÃ¡is spam). Por favor, dadle difusiÃ³n entre las personas que puedan estar interesadas.\n\nUn saludo,\nEmilio L. Cano\nPresidente AsociaciÃ³n \"Comunidad R-Hispano?\n\n\n\nLa Comunidad R Hispano (http://r-es.org <http://r-es.org/>) organiza sus jornadas anuales en la ciudad de Madrid del 14 al 16 de noviembre de 2019. El objetivo de las jornadas es proporcionar un punto de encuentro a los usuarios de R, fomentar la colaboraciÃ³n entre ellos en un ambiente multidisciplinar, divulgar el conocimiento del lenguaje y sus posibilidades y promover el uso de R. \n\nLas jornadas mantienen un equilibrio acadÃ©mico-prÃ¡ctico, combinando ponencias al uso de congresos cientÃ­ficos, con talleres prÃ¡cticos y sesiones de corte mÃ¡s empresarial. En esta ocasiÃ³n, ademÃ¡s, contamos con la colaboraciÃ³n de la empresa Repsol, en cuyas instalaciones se llevarÃ¡n a cabo algunas actividades previas al programa habitual de las jornadas, que se desarrollarÃ¡ en la UNED, Campus de Moncloa. TambiÃ©n contamos con el apoyo institucional de la Sociedad de EstadÃ­stica e InvestigaciÃ³n Operativa (SEIO).\n\nInvitamos tanto a la comunidad cientÃ­fica como al sector pÃºblico y mundo empresarial a participar en estas jornadas que esperamos continÃºen el Ã©xito de las diez ediciones anteriores. Nos llena de satisfacciÃ³n confirmar la asistencia de ponentes invitados de prestigio internacional como Max Kuhn (R Studio), Jo-Fai Chow (H2O) y Bernd Bischl (mlr). El programa contarÃ¡ ademÃ¡s con sesiones paralelas, talleres prÃ¡cticos y mesas redondas. Las cuotas de inscripciÃ³n son prÃ¡cticamente simbÃ³licas, e incluyen las comidas y cafÃ©s. Tanto la inscripciÃ³n como el envÃ­o de propuestas estÃ¡n abiertos, consulta la web de las jornadas para conocer las fechas importantes y todos los detalles: http://r-es.org/XIjuR/ <http://r-es.org/XIjuR/> (el envÃ­o de propuestas se va a ampliar hasta el 15 de septiembre).\n\nEsperando contar con tu participaciÃ³n, recibe un saludo,\nLos comitÃ©s organizador y de programa de las XI Jornadas de Usuarios de R.\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados/as usuarios/as de R,\n\nEnvÃ­o este anuncio al foro de ayuda por si no os llega por otros canales (ruego me disculpÃ©is si lo considerÃ¡is spam). Por favor, dadle difusiÃ³n entre las personas ",
+      "thread_id": "thread-16e71fc10cf0",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-7823f667d03f",
+      "message_id": "<CAOqbN7q=iErRdbb520dkw9nhej=_akyj9+Rsy77-n2GsZ3f88w@mail.gmail.com>",
+      "from_name": "Daniel García Abiétar",
+      "from_email_hash": "c4d497a3f62e12ab6b0cf8da8e5f086fe5ff31faf62d54d040876a67202b5274",
+      "date": "2019-07-28T18:13:18+02:00",
+      "subject": "[R-es] Creación de vector con una secuencia de números enteros.",
+      "subject_clean": "[R-es] Creación de vector con una secuencia de números enteros.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Buenas.\n\nSoy un chaval novato en el uso de R. Ando haciendo un curso online, y he\nllegado a una parte en la que me he atascado. La instrucciÃ³n es la\nsiguiente:\n\ncrea una variable llamada\n| 'mi_vector' que contenga un vector con los nÃºmeros enteros del 11 al\n30. Recuerda\n| que puedes usar el operador secuencia ':'\n\nA lo cual yo he introducido el siguiente comando:\n\n'mi_vector' <- vector(\"numeric\", length = 11:30)\n\nPero me da el siguiente error:\n\nError in vector(\"numeric\", 11:30) : invalid 'length' argument\n\nÂ¿Alguien podrÃ­a echarme una mano para resolver por quÃ© me sucede esto?\nÂ¿DÃ³nde estÃ¡ mi error?\n\nMuchas gracias, un saludo.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas.\n\nSoy un chaval novato en el uso de R. Ando haciendo un curso online, y he\nllegado a una parte en la que me he atascado. La instrucciÃ³n es la\nsiguiente:\n\ncrea una variable llamada\n| 'mi_vector",
+      "thread_id": "thread-7823f667d03f",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-77e0d39c485e",
+      "message_id": "<DBBPR04MB6090B611251801CB18C587CECCC20@DBBPR04MB6090.eurprd04.prod.outlook.com>",
+      "from_name": "Jesús Para Fernández",
+      "from_email_hash": "12a2f225a60e962134d1461d4a1e9a84af171644e1208630916f861fa96cc477",
+      "date": "2019-07-28T16:17:13Z",
+      "subject": "[R-es]  Creación de vector con una secuencia de números enteros.",
+      "subject_clean": "[R-es]  Creación de vector con una secuencia de números enteros.",
+      "in_reply_to": "<CAOqbN7q=iErRdbb520dkw9nhej=_akyj9+Rsy77-n2GsZ3f88w@mail.gmail.com>",
+      "references": [
+        "<CAOqbN7q=iErRdbb520dkw9nhej=_akyj9+Rsy77-n2GsZ3f88w@mail.gmail.com>"
+      ],
+      "body_plain": "Mas f?cil que todo eso\n\nmi_vector <- c(11:30)\n\nc es lo que crea el vector y para crear una secuencia usas :\n\nObtener Outlook para Android<https://aka.ms/ghei36>\n\n________________________________\nFrom: R-help-es <r-help-es-bounces en r-project.org> on behalf of Daniel Garc?a Abi?tar <daniabietar en gmail.com>\nSent: Sunday, July 28, 2019 6:13:18 PM\nTo: r-help-es en r-project.org <r-help-es en r-project.org>\nSubject: [R-es] Creaci?n de vector con una secuencia de n?meros enteros.\n\nBuenas.\n\nSoy un chaval novato en el uso de R. Ando haciendo un curso online, y he\nllegado a una parte en la que me he atascado. La instrucci?n es la\nsiguiente:\n\ncrea una variable llamada\n| 'mi_vector' que contenga un vector con los n?meros enteros del 11 al\n30. Recuerda\n| que puedes usar el operador secuencia ':'\n\nA lo cual yo he introducido el siguiente comando:\n\n'mi_vector' <- vector(\"numeric\", length = 11:30)\n\nPero me da el siguiente error:\n\nError in vector(\"numeric\", 11:30) : invalid 'length' argument\n\n?Alguien podr?a echarme una mano para resolver por qu? me sucede esto?\n?D?nde est? mi error?\n\nMuchas gracias, un saludo.\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Mas f?cil que todo eso\n\nmi_vector <- c(11:30)\n\nc es lo que crea el vector y para crear una secuencia usas :\n\nObtener Outlook para Android<https://aka.ms/ghei36>\n\n________________________________\nFrom:",
+      "thread_id": "thread-7823f667d03f",
+      "thread_depth": 1,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-eb721678b61b",
+      "message_id": "<CAKL8G3G0OzmgnrPMpYvycMvkSEkz+Epo1Pf39TdWR8qN9X6-YA@mail.gmail.com>",
+      "from_name": "Jorge I Velez",
+      "from_email_hash": "874dca51563da807a88f095f0afa53c85d1ee3dc475fa731dd1d5c0887e5ea41",
+      "date": "2019-07-28T12:13:47-05:00",
+      "subject": "[R-es]  Creación de vector con una secuencia de números enteros.",
+      "subject_clean": "[R-es]  Creación de vector con una secuencia de números enteros.",
+      "in_reply_to": "<DBBPR04MB6090B611251801CB18C587CECCC20@DBBPR04MB6090.eurprd04.prod.outlook.com>",
+      "references": [
+        "<CAOqbN7q=iErRdbb520dkw9nhej=_akyj9+Rsy77-n2GsZ3f88w@mail.gmail.com>",
+        "<DBBPR04MB6090B611251801CB18C587CECCC20@DBBPR04MB6090.eurprd04.prod.outlook.com>"
+      ],
+      "body_plain": "Basta con\n\nmi_vector <- 11:30\n\nSi requieres algo mas general, entonces\n\n?seq\n\nes lo que buscas.\n\nSaludos,\nJorge.-\n\nEl El dom, 28 de jul. de 2019 a las 11:17 a. m., JesÃºs Para FernÃ¡ndez <\nj.para.fernandez en hotmail.com> escribiÃ³:\n\n> Mas fÃ¡cil que todo eso\n>\n> mi_vector <- c(11:30)\n>\n> c es lo que crea el vector y para crear una secuencia usas :\n>\n> Obtener Outlook para Android<https://aka.ms/ghei36>\n>\n> ________________________________\n> From: R-help-es <r-help-es-bounces en r-project.org> on behalf of Daniel\n> GarcÃ­a AbiÃ©tar <daniabietar en gmail.com>\n> Sent: Sunday, July 28, 2019 6:13:18 PM\n> To: r-help-es en r-project.org <r-help-es en r-project.org>\n> Subject: [R-es] CreaciÃ³n de vector con una secuencia de nÃºmeros enteros.\n>\n> Buenas.\n>\n> Soy un chaval novato en el uso de R. Ando haciendo un curso online, y he\n> llegado a una parte en la que me he atascado. La instrucciÃ³n es la\n> siguiente:\n>\n> crea una variable llamada\n> | 'mi_vector' que contenga un vector con los nÃºmeros enteros del 11 al\n> 30. Recuerda\n> | que puedes usar el operador secuencia ':'\n>\n> A lo cual yo he introducido el siguiente comando:\n>\n> 'mi_vector' <- vector(\"numeric\", length = 11:30)\n>\n> Pero me da el siguiente error:\n>\n> Error in vector(\"numeric\", 11:30) : invalid 'length' argument\n>\n> Â¿Alguien podrÃ­a echarme una mano para resolver por quÃ© me sucede esto?\n> Â¿DÃ³nde estÃ¡ mi error?\n>\n> Muchas gracias, un saludo.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n-- \nSent from my phone. Please excuse my brevity and misspelling.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Basta con\n\nmi_vector <- 11:30\n\nSi requieres algo mas general, entonces\n\n?seq\n\nes lo que buscas.\n\nSaludos,\nJorge.-\n\nEl El dom, 28 de jul. de 2019 a las 11:17 a. m., JesÃºs Para FernÃ¡ndez <\nj.para.fern",
+      "thread_id": "thread-7823f667d03f",
+      "thread_depth": 2,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-e25464166405",
+      "message_id": "<CAHo_aEQj7dSf5GqOyjWiM7Gfrm6sA5arQrSmsxUq13a0LjBLJQ@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2019-07-30T19:38:39-03:00",
+      "subject": "[R-es]  Creación de vector con una secuencia de números enteros.",
+      "subject_clean": "[R-es]  Creación de vector con una secuencia de números enteros.",
+      "in_reply_to": "<CAKL8G3G0OzmgnrPMpYvycMvkSEkz+Epo1Pf39TdWR8qN9X6-YA@mail.gmail.com>",
+      "references": [
+        "<CAOqbN7q=iErRdbb520dkw9nhej=_akyj9+Rsy77-n2GsZ3f88w@mail.gmail.com>",
+        "<DBBPR04MB6090B611251801CB18C587CECCC20@DBBPR04MB6090.eurprd04.prod.outlook.com>",
+        "<CAKL8G3G0OzmgnrPMpYvycMvkSEkz+Epo1Pf39TdWR8qN9X6-YA@mail.gmail.com>"
+      ],
+      "body_plain": "Estimado Daniel GarcÃ­a AbiÃ©tar\n\nLa documentaciÃ³n en este caso puede ser confusa, mis compaÃ±eros ya dieron\nla soluciÃ³n, pero aporto el siguiente cÃ³digo para que copie y pegue en R,\nposiblemente si mira los resultados se darÃ¡ cuenta.\n\nx <- c(1, 2, 3)\nx\ntypeof(x)\nlength(x)\nx <- c(1, 2.2, TRUE, \"hola\")\nx\ntypeof(x)\nlength(x)\n\nJavier RubÃ©n Marcuzzi\n\nEl dom., 28 jul. 2019 a las 14:14, Jorge I Velez (<jorgeivanvelez en gmail.com>)\nescribiÃ³:\n\n> Basta con\n>\n> mi_vector <- 11:30\n>\n> Si requieres algo mas general, entonces\n>\n> ?seq\n>\n> es lo que buscas.\n>\n> Saludos,\n> Jorge.-\n>\n> El El dom, 28 de jul. de 2019 a las 11:17 a. m., JesÃºs Para FernÃ¡ndez <\n> j.para.fernandez en hotmail.com> escribiÃ³:\n>\n> > Mas fÃ¡cil que todo eso\n> >\n> > mi_vector <- c(11:30)\n> >\n> > c es lo que crea el vector y para crear una secuencia usas :\n> >\n> > Obtener Outlook para Android<https://aka.ms/ghei36>\n> >\n> > ________________________________\n> > From: R-help-es <r-help-es-bounces en r-project.org> on behalf of Daniel\n> > GarcÃ­a AbiÃ©tar <daniabietar en gmail.com>\n> > Sent: Sunday, July 28, 2019 6:13:18 PM\n> > To: r-help-es en r-project.org <r-help-es en r-project.org>\n> > Subject: [R-es] CreaciÃ³n de vector con una secuencia de nÃºmeros enteros.\n> >\n> > Buenas.\n> >\n> > Soy un chaval novato en el uso de R. Ando haciendo un curso online, y he\n> > llegado a una parte en la que me he atascado. La instrucciÃ³n es la\n> > siguiente:\n> >\n> > crea una variable llamada\n> > | 'mi_vector' que contenga un vector con los nÃºmeros enteros del 11 al\n> > 30. Recuerda\n> > | que puedes usar el operador secuencia ':'\n> >\n> > A lo cual yo he introducido el siguiente comando:\n> >\n> > 'mi_vector' <- vector(\"numeric\", length = 11:30)\n> >\n> > Pero me da el siguiente error:\n> >\n> > Error in vector(\"numeric\", 11:30) : invalid 'length' argument\n> >\n> > Â¿Alguien podrÃ­a echarme una mano para resolver por quÃ© me sucede esto?\n> > Â¿DÃ³nde estÃ¡ mi error?\n> >\n> > Muchas gracias, un saludo.\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >         [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> --\n> Sent from my phone. Please excuse my brevity and misspelling.\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimado Daniel GarcÃ­a AbiÃ©tar\n\nLa documentaciÃ³n en este caso puede ser confusa, mis compaÃ±eros ya dieron\nla soluciÃ³n, pero aporto el siguiente cÃ³digo para que copie y pegue en R,\nposiblemente s",
+      "thread_id": "thread-7823f667d03f",
+      "thread_depth": 3,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-b8a8e155acea",
+      "message_id": "<CAHo_aESXrsGenSMwweVp7eTWvRSjXYk1f7h+mELQzEigjskjnw@mail.gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2019-07-31T10:49:54-03:00",
+      "subject": "[R-es] administradores",
+      "subject_clean": "[R-es] administradores",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados Administradores\n\nPueden verificar si la siguiente direcciÃ³n de correo estÃ¡ en la lista?\n\njbetancourt en iscmc.cmw.sld.cu\n\nMe escribiÃ³ el dÃ­a de hoy comentando que no recibe respuesta y en mi correo\nno veo mensajes nuevos al respecto.\n\nDesde ya muchas gracias.\n\nJavier RubÃ©n Marcuzzi\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados Administradores\n\nPueden verificar si la siguiente direcciÃ³n de correo estÃ¡ en la lista?\n\njbetancourt en iscmc.cmw.sld.cu\n\nMe escribiÃ³ el dÃ­a de hoy comentando que no recibe respuesta y e",
+      "thread_id": "thread-b8a8e155acea",
+      "thread_depth": 0,
+      "month": "2019-07"
+    },
+    {
+      "id": "msg-41752a141f11",
+      "message_id": "<1564582179260.43907@sergas.es>",
+      "from_name": "miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es",
+      "from_email_hash": "3e7f48d203e35c3c83ba9900d8200246b42ac0399e548121b3efe8219cdc7437",
+      "date": "2019-07-31T14:09:39Z",
+      "subject": "[R-es] administradores",
+      "subject_clean": "[R-es] administradores",
+      "in_reply_to": "<CAHo_aESXrsGenSMwweVp7eTWvRSjXYk1f7h+mELQzEigjskjnw@mail.gmail.com>",
+      "references": [
+        "<CAHo_aESXrsGenSMwweVp7eTWvRSjXYk1f7h+mELQzEigjskjnw@mail.gmail.com>"
+      ],
+      "body_plain": "Hola Javier.\n\nTe respondo por privado.\n\nUn saludo.\n\n\n________________________________________\nDe: R-help-es <r-help-es-bounces en r-project.org> en nombre de Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>\nEnviado: miÃ©rcoles, 31 de julio de 2019 15:49\nPara: r-help-es; Dr. JosÃ© A Betancourt Bethencourt\nAsunto: [R-es] administradores\n\nEstimados Administradores\n\nPueden verificar si la siguiente direcciÃ³n de correo estÃ¡ en la lista?\n\njbetancourt en iscmc.cmw.sld.cu\n\nMe escribiÃ³ el dÃ­a de hoy comentando que no recibe respuesta y en mi correo\nno veo mensajes nuevos al respecto.\n\nDesde ya muchas gracias.\n\nJavier RubÃ©n Marcuzzi\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n________________________________\n\nNota: A informaciÃ³n contida nesta mensaxe e os seus posibles documentos adxuntos Ã© privada e confidencial e estÃ¡ dirixida Ãºnicamente Ã³ seu destinatario/a. Se vostede non Ã© o/a destinatario/a orixinal desta mensaxe, por favor elimÃ­nea. A distribuciÃ³n ou copia desta mensaxe non estÃ¡ autorizada.\n\nNota: La informaciÃ³n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y estÃ¡ dirigida Ãºnicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimÃ­nelo. La distribuciÃ³n o copia de este mensaje no estÃ¡ autorizada.\n\nSee more languages: http://www.sergas.es/aviso-confidencialidad",
+      "body_snippet": "Hola Javier.\n\nTe respondo por privado.\n\nUn saludo.\n\n\n________________________________________\nDe: R-help-es <r-help-es-bounces en r-project.org> en nombre de Javier Marcuzzi <javier.ruben.marcuzzi en ",
+      "thread_id": "thread-b8a8e155acea",
+      "thread_depth": 1,
+      "month": "2019-07"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-7c95fbb8a426",
+      "subject": "[R-es] comparar si dos matrices tienen las mimas columnas pero en diferente orden",
+      "message_count": 1,
+      "participants": [
+        "Fernando Sanchez"
+      ],
+      "started": "2019-07-06T12:07:52+00:00",
+      "last_reply": "2019-07-06T12:07:52+00:00",
+      "root_message_id": "msg-7c95fbb8a426"
+    },
+    {
+      "id": "thread-4cf17c9503f6",
+      "subject": "[R-es] error estándar en un modelo AFT, a mano, en R",
+      "message_count": 1,
+      "participants": [
+        "Alberto Carmona Bayonas"
+      ],
+      "started": "2019-07-07T11:10:13+02:00",
+      "last_reply": "2019-07-07T11:10:13+02:00",
+      "root_message_id": "msg-4cf17c9503f6"
+    },
+    {
+      "id": "thread-cd62e6d0fbdc",
+      "subject": "[R-es] Salvar los plots a alta resolución la vez de incluirlos en documento",
+      "message_count": 3,
+      "participants": [
+        "Javier Marcuzzi",
+        "Juan Abasolo"
+      ],
+      "started": "2019-07-09T00:06:59+02:00",
+      "last_reply": "2019-07-09T11:28:06+02:00",
+      "root_message_id": "msg-cd62e6d0fbdc"
+    },
+    {
+      "id": "thread-7e2371f27dcf",
+      "subject": "[R-es] Se puede exportar un modelo de predicción?",
+      "message_count": 2,
+      "participants": [
+        "JOSE MARTIN AREVALO",
+        "Marcelino De La Cruz Rot"
+      ],
+      "started": "2019-07-09T07:37:17+02:00",
+      "last_reply": "2019-07-09T08:32:46+00:00",
+      "root_message_id": "msg-7e2371f27dcf"
+    },
+    {
+      "id": "thread-b6e61aa595a2",
+      "subject": "[R-es]  Resumen de R-help-es, Vol 125, Envío 3",
+      "message_count": 1,
+      "participants": [
+        "Ceferino M. López Sández"
+      ],
+      "started": "2019-07-09T12:48:05+02:00",
+      "last_reply": "2019-07-09T12:48:05+02:00",
+      "root_message_id": "msg-b6e61aa595a2"
+    },
+    {
+      "id": "thread-5321da3ae7f3",
+      "subject": "[R-es] VI Xornada de Usuarios de R en Galicia (10/10/2019)",
+      "message_count": 1,
+      "participants": [
+        "miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es"
+      ],
+      "started": "2019-07-12T11:20:53+00:00",
+      "last_reply": "2019-07-12T11:20:53+00:00",
+      "root_message_id": "msg-5321da3ae7f3"
+    },
+    {
+      "id": "thread-b37479f54aae",
+      "subject": "[R-es] Dudas",
+      "message_count": 1,
+      "participants": [
+        "Javier Marcuzzi"
+      ],
+      "started": "2019-07-13T17:00:27-03:00",
+      "last_reply": "2019-07-13T17:00:27-03:00",
+      "root_message_id": "msg-b37479f54aae"
+    },
+    {
+      "id": "thread-a24657f5adc0",
+      "subject": "[R-es] predict multinomial model con nnet",
+      "message_count": 3,
+      "participants": [
+        "Carlos Ortega",
+        "patricio fuenmayor"
+      ],
+      "started": "2019-07-18T07:58:21-05:00",
+      "last_reply": "2019-07-18T10:34:11-05:00",
+      "root_message_id": "msg-a24657f5adc0"
+    },
+    {
+      "id": "thread-7daa545a59c7",
+      "subject": "[R-es] Gráfico tiempos de supervivencia",
+      "message_count": 1,
+      "participants": [
+        "Griera-yandex"
+      ],
+      "started": "2019-07-18T10:18:42+02:00",
+      "last_reply": "2019-07-18T10:18:42+02:00",
+      "root_message_id": "msg-7daa545a59c7"
+    },
+    {
+      "id": "thread-e10db479d722",
+      "subject": "[R-es] Gráfico tiempos de supervivencia",
+      "message_count": 6,
+      "participants": [
+        "Carlos Ortega",
+        "Griera",
+        "Griera-yandex",
+        "PEDRO CONCEJERO CEREZO",
+        "miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es"
+      ],
+      "started": "2019-07-18T10:28:37+00:00",
+      "last_reply": "2019-07-19T15:03:18+02:00",
+      "root_message_id": "msg-e10db479d722"
+    },
+    {
+      "id": "thread-16e71fc10cf0",
+      "subject": "[R-es] Anuncio XI Jornadas de Usuarios de R",
+      "message_count": 1,
+      "participants": [
+        "Emilio L. Cano"
+      ],
+      "started": "2019-07-22T12:10:50+02:00",
+      "last_reply": "2019-07-22T12:10:50+02:00",
+      "root_message_id": "msg-16e71fc10cf0"
+    },
+    {
+      "id": "thread-7823f667d03f",
+      "subject": "[R-es] Creación de vector con una secuencia de números enteros.",
+      "message_count": 4,
+      "participants": [
+        "Daniel García Abiétar",
+        "Javier Marcuzzi",
+        "Jesús Para Fernández",
+        "Jorge I Velez"
+      ],
+      "started": "2019-07-28T18:13:18+02:00",
+      "last_reply": "2019-07-30T19:38:39-03:00",
+      "root_message_id": "msg-7823f667d03f"
+    },
+    {
+      "id": "thread-b8a8e155acea",
+      "subject": "[R-es] administradores",
+      "message_count": 2,
+      "participants": [
+        "Javier Marcuzzi",
+        "miguei@@@gei@rodriguez@mui@os m@iii@g oii serg@s@es"
+      ],
+      "started": "2019-07-31T10:49:54-03:00",
+      "last_reply": "2019-07-31T14:09:39+00:00",
+      "root_message_id": "msg-b8a8e155acea"
+    }
+  ]
+}

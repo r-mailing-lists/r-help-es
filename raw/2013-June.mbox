@@ -1,0 +1,5691 @@
+From mao20100 en gmail.com  Sun Jun  2 22:00:01 2013
+From: mao20100 en gmail.com (=?ISO-8859-1?Q?Mauricio_Sant=EDs_Ch=E1vez?=)
+Date: Sun, 2 Jun 2013 15:00:01 -0500
+Subject: [R-es] =?iso-8859-1?q?HELP=3A_Ayuda_URGENTE_CON_MODELO_ARMA_EN_R_?=
+	=?iso-8859-1?q?y_Autocorrelaci=F3n=2E?=
+In-Reply-To: <CALEyF_mQ3yLD3UD7MD9=-KFtH39O8oZ6k5L8=fkcnTpA9CKkuQ@mail.gmail.com>
+References: <CALEyF_mQ3yLD3UD7MD9=-KFtH39O8oZ6k5L8=fkcnTpA9CKkuQ@mail.gmail.com>
+Message-ID: <CALEyF_nDhVz70wzQ0ckTPRWrjK6+uZT-2QWtKf8ijPVGb+=Q4g@mail.gmail.com>
+
+> Cordial saludos a tod en s.
+>
+> Estoy leyendo un tema y tengo la siguiente necesidad.
+>
+> Los contacto para pedirles MUY ENCARECIDAMENTE ME AYUDEN con la
+> explicación DE CÓMO HACER EL MODELO ARMA en R DE UNA SEÑAL CUALQUIERA para
+> obtener de ella el modelo matemático fraccional aproximado, esto para
+> obtener el PSD de la señal (Power Density Spectrum).
+>
+> La teoría de esto la vi en el libro de Spectral of SIgnals de Moses -
+> Stoica, cap 3 Y 4.
+>
+> *En el PDF que adjunto he encontrado los pasos para obtener el modelo
+> ARMA. (Página 51 - 54)*
+>
+>
+> También les pido que me orienten en cómo obtener la autocorrelación de un
+> vector en R.
+>
+>
+> LES AGRADECERÉ ENORMEMENTE QUE ME COLABOREN.
+>
+>
+> Atentamente,
+>
+>
+> Mauricio.
+>
+>
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130602/98ba6d20/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: CONSULTA__ARMA.pdf
+Type: application/pdf
+Size: 124174 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130602/98ba6d20/attachment-0001.pdf>
+
+From lobo en mucharuina.com  Sun Jun  2 22:10:38 2013
+From: lobo en mucharuina.com (=?ISO-8859-15?Q?Rub=E9n_G=F3mez_Antol=ED?=)
+Date: Sun, 02 Jun 2013 22:10:38 +0200
+Subject: [R-es] =?iso-8859-15?q?Conversi=F3n_de_objeto_temporal_=28TS=29_a?=
+ =?iso-8859-15?q?_matriz_=28o_data=2Eframe=29?=
+Message-ID: <51ABA6BE.5090203@mucharuina.com>
+
+Hola a todos:
+
+La pregunta ha quedado clara en el asunto, pero: ¿existe alguna función 
+que convierta un objeto temporal (TS) a matriz o data.frame?
+
+En algunos cálculos que estoy haciendo me viene bien convertir un objeto 
+temporal a matriz para poder hacer cálculos parciales por meses o años 
+(aplicando apply en la matriz) pero no he encontrado ninguna función que 
+haga la conversión.
+
+He «fabricado» una para el caso de frecuencia de datos mensual pero se 
+me ha dado el caso de un objeto con frecuencia anual y ya me he empeñado 
+en hacer la función «de carácter general» y... la cosa se complica bastante.
+
+Si alguien conoce algo estupendo, en caso contrario seguiré con mi función.
+
+Gracias por vuestra atención y por las posibles respuestas.
+
+Salud y Revolución.
+
+Lobo.
+
+Pd: Por si alguien esta interesado, a continuación pongo el código para 
+la conversión de una serie mensual.
+
+ts.a.matriz<-function(x) {
+   # Función que convierte un objeto temporal (TS)
+   # en una matriz. Añade NA a los meses que faltan.
+   if ( !is.ts(x) )
+     stop("x tiene que ser un objeto temporal")
+
+   require(TSA)
+   tiempo<-time(x)
+   #meses<-season(x)
+   x.matriz<-matrix(c(
+     #c(rep(NA,which(meses[1] == levels(meses))-1)),
+     c(rep(NA,
+       (tiempo[1]-floor(tiempo[1]))*12-1
+       )
+     ),
+     x,
+     #c(
+     #  rep(NA,
+     #	 (12- which(meses[length(meses)] == levels(meses)))
+     #  )
+     #)
+     c(rep(NA,(12-
+       (tiempo[length(tiempo)]-floor(tiempo[length(tiempo)]))*12
+       ))
+     )
+     ),
+     byrow=T,ncol=12,
+     dimnames=list(
+       c(floor(tiempo[1]):floor(tiempo[length(tiempo)])),
+       c(format(ISOdate(2013,1:12,1),"%b"))
+     )
+   )
+   return(x.matriz)
+}
+
+Pd2: Por cierto, ¿hay alguna forma de que ISOdate ponga la primera letra 
+de los nombres de los meses en mayúscula?
+-- 
+Libertad es poder elegir en cualquier momento. Ahora yo elijo GNU/Linux,
+para no atar mis manos con las cadenas del soft propietario.
+Porque la libertad no es tu derecho, es tu responsabilidad.
+http://www.mucharuina.com
+---------
+Desde El Ejido, en Almería, usuario registrado Linux #294013
+http://www.counter.li.org
+
+
+From lobo en mucharuina.com  Sun Jun  2 22:40:17 2013
+From: lobo en mucharuina.com (=?ISO-8859-1?Q?Rub=E9n_G=F3mez_Antol=ED?=)
+Date: Sun, 02 Jun 2013 22:40:17 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?HELP=3A_Ayuda_URGENTE_CON_MODELO_ARMA_EN_R_?=
+ =?iso-8859-1?q?y_Autocorrelaci=F3n=2E?=
+In-Reply-To: <CALEyF_nDhVz70wzQ0ckTPRWrjK6+uZT-2QWtKf8ijPVGb+=Q4g@mail.gmail.com>
+References: <CALEyF_mQ3yLD3UD7MD9=-KFtH39O8oZ6k5L8=fkcnTpA9CKkuQ@mail.gmail.com>
+	<CALEyF_nDhVz70wzQ0ckTPRWrjK6+uZT-2QWtKf8ijPVGb+=Q4g@mail.gmail.com>
+Message-ID: <51ABADB1.2060300@mucharuina.com>
+
+Hola:
+
+El 02/06/13 22:00, Mauricio Santís Chávez escribió:
+>
+>     Cordial saludos a tod en s.
+>
+>     Estoy leyendo un tema y tengo la siguiente necesidad.
+>
+>     Los contacto para pedirles MUY ENCARECIDAMENTE ME AYUDEN con la
+>     explicación DE CÓMO HACER EL MODELO ARMA en R DE UNA SEÑAL
+>     CUALQUIERA para obtener de ella el modelo matemático fraccional
+>     aproximado, esto para obtener el PSD de la señal (Power Density
+>     Spectrum).
+>
+
+[...]
+
+Una simple búsqueda por la red:
+
+https://startpage.com/do/search?query=%22r%22+%22arma%22+model&language=english
+
+me ha llevado hasta estas dos entradas:
+
+http://a-little-book-of-r-for-time-series.readthedocs.org/en/latest/src/timeseries.html
+
+http://www.r-bloggers.com/arma-models-for-trading/
+
+que yo diría que te sirven bastante bien.
+
+>     También les pido que me orienten en cómo obtener la autocorrelación
+>     de un vector en R.
+
+?acf
+
+>
+>     LES AGRADECERÉ ENORMEMENTE QUE ME COLABOREN.
+
+El uso de las mayúsculas en los correos esta muy mal visto, tanto como 
+reclamar urgencia en una lista de voluntarios.
+
+>     Atentamente,
+>
+>
+>     Mauricio.
+
+Salud y Revolución.
+
+Lobo.
+-- 
+Libertad es poder elegir en cualquier momento. Ahora yo elijo GNU/Linux,
+para no atar mis manos con las cadenas del soft propietario.
+Porque la libertad no es tu derecho, es tu responsabilidad.
+http://www.mucharuina.com
+---------
+Desde El Ejido, en Almería, usuario registrado Linux #294013
+http://www.counter.li.org
+
+
+From javier.ruben.marcuzzi en gmail.com  Mon Jun  3 00:51:46 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Sun, 2 Jun 2013 19:51:46 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Conversi=F3n_de_objeto_temporal_=28TS=29_a_?=
+	=?iso-8859-1?q?matriz_=28o_data=2Eframe=29?=
+In-Reply-To: <51ABA6BE.5090203@mucharuina.com>
+References: <51ABA6BE.5090203@mucharuina.com>
+Message-ID: <762B9AC6BB984AC6984E61D21537F639@JavierMarcuzzi>
+
+Estimado Rubén Gómez Antolí
+
+En mi caso en particular al trabajar con fechas, me encontré con 
+inconvenientes, algunos de ellos fueron mejorados en R, hoy estoy 
+desactualizado, pero creo que en el siguiente lugar 
+http://cran.r-project.org/web/views/TimeSeries.html hay referencia 
+actualizada, esperando que en esta encuentre lo que necesite lo saludo muy 
+atentamente.
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: Rubén Gómez Antolí
+Sent: Sunday, June 02, 2013 5:10 PM
+To: r-help-es
+Subject: [R-es] Conversión de objeto temporal (TS) a matriz (o data.frame)
+
+Hola a todos:
+
+La pregunta ha quedado clara en el asunto, pero: ¿existe alguna función
+que convierta un objeto temporal (TS) a matriz o data.frame?
+
+En algunos cálculos que estoy haciendo me viene bien convertir un objeto
+temporal a matriz para poder hacer cálculos parciales por meses o años
+(aplicando apply en la matriz) pero no he encontrado ninguna función que
+haga la conversión.
+
+He «fabricado» una para el caso de frecuencia de datos mensual pero se
+me ha dado el caso de un objeto con frecuencia anual y ya me he empeñado
+en hacer la función «de carácter general» y... la cosa se complica bastante.
+
+Si alguien conoce algo estupendo, en caso contrario seguiré con mi función.
+
+Gracias por vuestra atención y por las posibles respuestas.
+
+Salud y Revolución.
+
+Lobo.
+
+Pd: Por si alguien esta interesado, a continuación pongo el código para
+la conversión de una serie mensual.
+
+ts.a.matriz<-function(x) {
+   # Función que convierte un objeto temporal (TS)
+   # en una matriz. Añade NA a los meses que faltan.
+   if ( !is.ts(x) )
+     stop("x tiene que ser un objeto temporal")
+
+   require(TSA)
+   tiempo<-time(x)
+   #meses<-season(x)
+   x.matriz<-matrix(c(
+     #c(rep(NA,which(meses[1] == levels(meses))-1)),
+     c(rep(NA,
+       (tiempo[1]-floor(tiempo[1]))*12-1
+       )
+     ),
+     x,
+     #c(
+     #  rep(NA,
+     # (12- which(meses[length(meses)] == levels(meses)))
+     #  )
+     #)
+     c(rep(NA,(12-
+       (tiempo[length(tiempo)]-floor(tiempo[length(tiempo)]))*12
+       ))
+     )
+     ),
+     byrow=T,ncol=12,
+     dimnames=list(
+       c(floor(tiempo[1]):floor(tiempo[length(tiempo)])),
+       c(format(ISOdate(2013,1:12,1),"%b"))
+     )
+   )
+   return(x.matriz)
+}
+
+Pd2: Por cierto, ¿hay alguna forma de que ISOdate ponga la primera letra
+de los nombres de los meses en mayúscula?
+-- 
+Libertad es poder elegir en cualquier momento. Ahora yo elijo GNU/Linux,
+para no atar mis manos con las cadenas del soft propietario.
+Porque la libertad no es tu derecho, es tu responsabilidad.
+http://www.mucharuina.com
+---------
+Desde El Ejido, en Almería, usuario registrado Linux #294013
+http://www.counter.li.org
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From oscar.perpinan en gmail.com  Mon Jun  3 01:23:39 2013
+From: oscar.perpinan en gmail.com (Oscar =?utf-8?B?UGVycGnDscOhbg==?= Lamigueiro)
+Date: Mon, 03 Jun 2013 01:23:39 +0200
+Subject: [R-es]
+ =?utf-8?q?Conversi=C3=B3n_de_objeto_temporal_=28TS=29_a_ma?=
+ =?utf-8?q?triz_=28o_data=2Eframe=29?=
+In-Reply-To: <762B9AC6BB984AC6984E61D21537F639@JavierMarcuzzi>
+References: <51ABA6BE.5090203@mucharuina.com>,
+	<762B9AC6BB984AC6984E61D21537F639@JavierMarcuzzi>
+Message-ID: <877gichzb8.fsf@gmail.com>
+
+
+Hola,
+
+Si no te entiendo mal, necesitas la conversión a matriz como paso
+intermedio para agregar por meses (o cualquier unidad temporal). Si es
+así, te aconsejo que uses el paquete zoo y el método aggregate para la
+clase zoo.
+
+Por ejemplo:
+
+library(zoo)
+dats <- data.frame(date=seq(as.Date('2012-01-01'), by='day', length=3*365),
+                        A=rnorm(3*365), B=rnorm(3*365), C=rnorm(3*365))
+
+z <- zoo(dats[,-1], dats$date)
+
+Zyearmon <- aggregate(z, by=as.yearmon)
+
+month <- function(x) as.numeric(format(x, "%m"))
+year <- function(x) as.numeric(format(x, "%Y"))
+
+Zmon <- aggregate(z, by=month)
+Zyear <- aggregate(z, by=year)
+
+Saludos.
+
+Oscar
+
+> -----Original Message----- 
+> From: Rubén Gómez Antolí
+> Sent: Sunday, June 02, 2013 5:10 PM
+> To: r-help-es
+> Subject: [R-es] Conversión de objeto temporal (TS) a matriz (o data.frame)
+>
+> Hola a todos:
+>
+> La pregunta ha quedado clara en el asunto, pero: ¿existe alguna función
+> que convierta un objeto temporal (TS) a matriz o data.frame?
+>
+> En algunos cálculos que estoy haciendo me viene bien convertir un objeto
+> temporal a matriz para poder hacer cálculos parciales por meses o años
+> (aplicando apply en la matriz) pero no he encontrado ninguna función que
+> haga la conversión.
+>
+> He «fabricado» una para el caso de frecuencia de datos mensual pero se
+> me ha dado el caso de un objeto con frecuencia anual y ya me he empeñado
+> en hacer la función «de carácter general» y... la cosa se complica bastante.
+>
+> Si alguien conoce algo estupendo, en caso contrario seguiré con mi función.
+>
+> Gracias por vuestra atención y por las posibles respuestas.
+>
+> Salud y Revolución.
+>
+> Lobo.
+>
+> Pd: Por si alguien esta interesado, a continuación pongo el código para
+> la conversión de una serie mensual.
+>
+> ts.a.matriz<-function(x) {
+>    # Función que convierte un objeto temporal (TS)
+>    # en una matriz. Añade NA a los meses que faltan.
+>    if ( !is.ts(x) )
+>      stop("x tiene que ser un objeto temporal")
+>
+>    require(TSA)
+>    tiempo<-time(x)
+>    #meses<-season(x)
+>    x.matriz<-matrix(c(
+>      #c(rep(NA,which(meses[1] == levels(meses))-1)),
+>      c(rep(NA,
+>        (tiempo[1]-floor(tiempo[1]))*12-1
+>        )
+>      ),
+>      x,
+>      #c(
+>      #  rep(NA,
+>      # (12- which(meses[length(meses)] == levels(meses)))
+>      #  )
+>      #)
+>      c(rep(NA,(12-
+>        (tiempo[length(tiempo)]-floor(tiempo[length(tiempo)]))*12
+>        ))
+>      )
+>      ),
+>      byrow=T,ncol=12,
+>      dimnames=list(
+>        c(floor(tiempo[1]):floor(tiempo[length(tiempo)])),
+>        c(format(ISOdate(2013,1:12,1),"%b"))
+>      )
+>    )
+>    return(x.matriz)
+> }
+>
+> Pd2: Por cierto, ¿hay alguna forma de que ISOdate ponga la primera letra
+> de los nombres de los meses en mayúscula?
+
+
+-- 
+Oscar Perpiñán Lamigueiro
+Grupo de Sistemas Fotovoltaicos (IES-UPM)
+Dpto. Ingeniería Eléctrica (EUITI-UPM)
+URL: http://procomun.wordpress.com
+Twitter: @oscarperpinan
+
+
+From nalhu26 en gmail.com  Mon Jun  3 01:29:06 2013
+From: nalhu26 en gmail.com (Gaby nieves)
+Date: Sun, 2 Jun 2013 18:59:06 -0430
+Subject: [R-es] Como hacer el promedio de la suma de varias filas
+Message-ID: <CAJYjEGEbpBNVeoCZRJRJs8g9OWbwuFKXMkMw_Kn=vEkn0AaAXg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130602/f1855eb4/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Mon Jun  3 01:33:09 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Mon, 3 Jun 2013 09:33:09 +1000
+Subject: [R-es] Como hacer el promedio de la suma de varias filas
+In-Reply-To: <CAJYjEGEbpBNVeoCZRJRJs8g9OWbwuFKXMkMw_Kn=vEkn0AaAXg@mail.gmail.com>
+References: <CAJYjEGEbpBNVeoCZRJRJs8g9OWbwuFKXMkMw_Kn=vEkn0AaAXg@mail.gmail.com>
+Message-ID: <7615603370023962697@unknownmsgid>
+
+?aggregate
+?tapply
+?ave
+
+son algunas de las opciones disponibles.  --JIV
+
+Sent from my phone. Please excuse my brevity and misspelling.
+
+On Jun 3, 2013, at 9:29 AM, Gaby nieves <nalhu26 en gmail.com> wrote:
+
+> Hola a todos, queria saber si existe un comando que me permita sumar filas
+> agrupandolas o algo asi y luego sacarle el promedio a eso.
+>
+> Tengo una matriz de datos con varias escuelas, cada escuela tiene distintos
+> salones de clases, algunas 2 otras tres etc, y cada salon de clases tiene
+> un numero de alumnos, lo que quiero es calcular el promedio de alumnos por
+> escuela, y el promedio de salones por escuela, no puedo hacer tantos
+> subsets porque los datos son muy grandes y creo que no terminaria nunca.
+> Agradezco su ayuda es urgente!
+>
+>    [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cof en qualityexcellence.es  Mon Jun  3 10:25:00 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 3 Jun 2013 10:25:00 +0200
+Subject: [R-es] =?iso-8859-1?q?Pr=F3xima_reuni=F3n_del_=22Grupo_de_Usuario?=
+	=?iso-8859-1?q?s_de_R_de_Madrid=22=2E=2E=2E=28abierta_agenda=29=2E?=
+	=?iso-8859-1?q?=2E=2E?=
+Message-ID: <CAOKbq8gmT6fUU++hnKpJe2jDQjWuXKnZWjXPCV_s-6PSGDU7BA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130603/cffa4b1d/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Mon Jun  3 12:00:48 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Mon, 3 Jun 2013 20:00:48 +1000
+Subject: [R-es]
+	=?iso-8859-1?q?HELP=3A_Ayuda_URGENTE_CON_MODELO_ARMA_EN_R_?=
+	=?iso-8859-1?q?y_Autocorrelaci=F3n=2E?=
+In-Reply-To: <CALEyF_nDhVz70wzQ0ckTPRWrjK6+uZT-2QWtKf8ijPVGb+=Q4g@mail.gmail.com>
+References: <CALEyF_mQ3yLD3UD7MD9=-KFtH39O8oZ6k5L8=fkcnTpA9CKkuQ@mail.gmail.com>
+	<CALEyF_nDhVz70wzQ0ckTPRWrjK6+uZT-2QWtKf8ijPVGb+=Q4g@mail.gmail.com>
+Message-ID: <CAKL8G3G4QAyFHKyNYADn2p2P8Ra3NMzuZjUho+1pDr=6DWVH9Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130603/2a01b4a8/attachment.pl>
+
+From Guillermo.Vinue en uv.es  Mon Jun  3 13:19:47 2013
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Mon, 3 Jun 2013 13:19:47 +0200 (CEST)
+Subject: [R-es] Barplot
+Message-ID: <8423178566vivigui@uv.es>
+
+Hola,
+
+Estoy tratando de hacer un diagrama de barras que en principio no parece
+muy difícil pero que no me sale. 
+
+Mi matriz es del siguiente tipo:
+
+          [86,90[ [90,94[ [94,98[ [98,102[
+[78,82[       1       2       1        1
+[78,82[       5       0       0        0
+[82,86[       0       1       0        2
+[82,86[       0       3       0        0
+
+Y quisiera representar para [78,82[ dos barras juntas y en cada una de
+ellas que la barra se divida según el valor para cada uno de los
+intervalos [86,90[ [90,94[ [94,98[ [98,102[. Del mismo modo, para
+[82,86[. Pero que las dos barras correspondientes a [78,82[ y [82,86[
+salgan separadas.
+
+Os adjunto un gráfico parecido a lo que quisiera que saliera, pero las
+dos barras primeras deberían salir juntas y con sólo la etiqueta [78,82[
+y las dos siguientes barras juntas con la etiqueta [82,86[ pero con una
+separación entre la barra segunda y la tercera.
+
+He probado con barplot poniendo beside=TRUE pero no me sale. ¿Alguien me
+podría sugerir algo?. Os adjunto el archivo de datos de ejemplo. El
+código básico que he utilizado es:
+
+color <- c("steelblue1", "orange", "khaki3", "springgreen4")
+mat <- read.table("matriz.txt",header=FALSE)
+mat <- as.matrix(mat)
+barplot(t(mat), col = color, cex.names = 0.75) 
+
+Muchas gracias de antemano.
+
+Saludos,
+
+Guillermo
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: matriz.txt
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130603/69a5964d/attachment.txt>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: ejemplo.pdf
+Type: application/pdf
+Size: 4342 bytes
+Desc: 
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130603/69a5964d/attachment.pdf>
+
+From Guillermo.Vinue en uv.es  Mon Jun  3 15:07:02 2013
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Mon, 3 Jun 2013 15:07:02 +0200 (CEST)
+Subject: [R-es] Barplot
+In-Reply-To: <8423178566vivigui@uv.es>
+References: <8423178566vivigui@uv.es>
+Message-ID: <9497673626vivigui@uv.es>
+
+Hola,
+
+Ya he podido conseguirlo. Simplemente con space=c(1,0) en barplot, salen
+las barras como quería.
+
+Gracias.
+
+Saludos,
+
+Guillermo
+
+> Hola,
+> 
+> Estoy tratando de hacer un diagrama de barras que en principio no parece
+> muy difícil pero que no me sale. 
+> 
+> Mi matriz es del siguiente tipo:
+> 
+>           [86,90[ [90,94[ [94,98[ [98,102[
+> [78,82[       1       2       1        1
+> [78,82[       5       0       0        0
+> [82,86[       0       1       0        2
+> [82,86[       0       3       0        0
+> 
+> Y quisiera representar para [78,82[ dos barras juntas y en cada una de
+> ellas que la barra se divida según el valor para cada uno de los
+> intervalos [86,90[ [90,94[ [94,98[ [98,102[. Del mismo modo, para
+> [82,86[. Pero que las dos barras correspondientes a [78,82[ y [82,86[
+> salgan separadas.
+> 
+> Os adjunto un gráfico parecido a lo que quisiera que saliera, pero las
+> dos barras primeras deberían salir juntas y con sólo la etiqueta [78,82[
+> y las dos siguientes barras juntas con la etiqueta [82,86[ pero con una
+> separación entre la barra segunda y la tercera.
+> 
+> He probado con barplot poniendo beside=TRUE pero no me sale. ¿Alguien me
+> podría sugerir algo?. Os adjunto el archivo de datos de ejemplo. El
+> código básico que he utilizado es:
+> 
+> color <- c("steelblue1", "orange", "khaki3", "springgreen4")
+> mat <- read.table("matriz.txt",header=FALSE)
+> mat <- as.matrix(mat)
+> barplot(t(mat), col = color, cex.names = 0.75) 
+> 
+> Muchas gracias de antemano.
+> 
+> Saludos,
+> 
+> Guillermo
+> 
+
+
+From patricio.fuenmayor en outlook.com  Mon Jun  3 18:14:55 2013
+From: patricio.fuenmayor en outlook.com (Patricio Fuenmayor Viteri)
+Date: Mon, 3 Jun 2013 11:14:55 -0500
+Subject: [R-es] =?iso-8859-1?q?gr=E1fica_densidades?=
+Message-ID: <BAY170-W7370E64B2169EEF970B4CB999D0@phx.gbl>
+
+hola todosnecesito hacer un gráfica de este tipo, alguna idea ???
+gracias
+Patricio F. 		 	   		  
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130603/f3fc33e3/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: densidad.jpg
+Type: image/jpeg
+Size: 35213 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130603/f3fc33e3/attachment-0001.jpg>
+
+From cof en qualityexcellence.es  Mon Jun  3 21:13:23 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 3 Jun 2013 21:13:23 +0200
+Subject: [R-es] =?iso-8859-1?q?gr=E1fica_densidades?=
+In-Reply-To: <BAY170-W7370E64B2169EEF970B4CB999D0@phx.gbl>
+References: <BAY170-W7370E64B2169EEF970B4CB999D0@phx.gbl>
+Message-ID: <CAOKbq8hxhJcE7qwG7W4c8u3a4_09EYOpe_TZFKPaR7JkT56-xw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130603/ec7374b0/attachment.pl>
+
+From cof en qualityexcellence.es  Mon Jun  3 23:22:02 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 3 Jun 2013 23:22:02 +0200
+Subject: [R-es] =?iso-8859-1?q?gr=E1fica_densidades?=
+In-Reply-To: <CAOKbq8hxhJcE7qwG7W4c8u3a4_09EYOpe_TZFKPaR7JkT56-xw@mail.gmail.com>
+References: <BAY170-W7370E64B2169EEF970B4CB999D0@phx.gbl>
+	<CAOKbq8hxhJcE7qwG7W4c8u3a4_09EYOpe_TZFKPaR7JkT56-xw@mail.gmail.com>
+Message-ID: <CAOKbq8hRFo4cHPzuufNPJsJWNRJcTpbSO29LhtRK3rWCzqUpxg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130603/7f5f48ca/attachment.pl>
+
+From lobo en mucharuina.com  Tue Jun  4 02:35:19 2013
+From: lobo en mucharuina.com (=?UTF-8?B?UnViw6luIEfDs21leiBBbnRvbMOt?=)
+Date: Tue, 04 Jun 2013 02:35:19 +0200
+Subject: [R-es]
+ =?utf-8?q?Conversi=C3=B3n_de_objeto_temporal_=28TS=29_a_ma?=
+ =?utf-8?q?triz_=28o_data=2Eframe=29?=
+In-Reply-To: <877gichzb8.fsf@gmail.com>
+References: <51ABA6BE.5090203@mucharuina.com>,
+	<762B9AC6BB984AC6984E61D21537F639@JavierMarcuzzi>
+	<877gichzb8.fsf@gmail.com>
+Message-ID: <51AD3647.5060904@mucharuina.com>
+
+Hola:
+
+Ante todo, gracias por las respuestas.
+
+El 03/06/13 01:23, Oscar Perpiñán Lamigueiro escribió:
+>
+> Hola,
+>
+> Si no te entiendo mal, necesitas la conversión a matriz como paso
+> intermedio para agregar por meses (o cualquier unidad temporal).
+
+¡Hum! No estoy seguro de que agregar sea lo que quiero hacer.
+
+> Si es
+> así, te aconsejo que uses el paquete zoo y el método aggregate para la
+> clase zoo.
+>
+> Por ejemplo:
+>
+> library(zoo)
+> dats <- data.frame(date=seq(as.Date('2012-01-01'), by='day', length=3*365),
+>                          A=rnorm(3*365), B=rnorm(3*365), C=rnorm(3*365))
+>
+> z <- zoo(dats[,-1], dats$date)
+>
+> Zyearmon <- aggregate(z, by=as.yearmon)
+>
+> month <- function(x) as.numeric(format(x, "%m"))
+> year <- function(x) as.numeric(format(x, "%Y"))
+>
+> Zmon <- aggregate(z, by=month)
+> Zyear <- aggregate(z, by=year)
+
+Posiblemente sea por desconocimiento de la clase zoo pero... no veo el 
+camino para realizar las distintas operaciones que estoy realizando, por 
+ejemplo:
+
+# Creación de la matriz de salida.
+   matriz.salida<-data.frame(
+     ndatos= apply(x.matriz,2,function(x) length(which(!is.na(x)))),
+     vminimo= formatC(
+       apply(x.matriz,2,function(x) min(x,na.rm=T)),
+       dig=2,format="f"),
+     vmax=formatC(
+       apply(x.matriz,2,function(x) max(x,na.rm=T)),
+       dig=2,format="f"),
+     media=formatC(
+       apply(x.matriz,2,function(x) mean(x,na.rm=T)),
+       dig=2,format="f"),
+     mediana=formatC(
+       apply(x.matriz,2,function(x) median(x,na.rm=T)),
+       dig=2,format="f"),
+     desvtip=formatC(
+       apply(x.matriz,2,function(x) sd(x,na.rm=T)),
+       dig=2,format="f"),
+     varianza=formatC(
+       apply(x.matriz,2,function(x) var(x,na.rm=T)),
+       dig=2,format="f"),
+     shapiro.valor=formatC(
+       aux.shapiro[1,],dig=4,format="f"),
+     shapiro.valp=formatC(
+       aux.shapiro[2,],dig=4,format="f")
+     )
+
+Siendo x.matriz un objeto TS convertido a matriz. Aux.shapiro la calculo 
+así:
+
+# Prueba de Shapiro y Wilk
+   aux.shapiro<-matrix(unlist(apply(x.matriz,2,function(x)
+     shapiro.test(x)[1:2])),
+     ncol=12,nrow=2)
+
+¡Ah, vale!:
+
+aggregate(z,by=month,FUN=shapiro.test)
+
+(Aunque esto me fuerza a tirar a la basura la función que había 
+construido -con mi buen rato que me había llevado- y hacerla de nuevo)
+
+Última pregunta, con un objeto ts es muy fácil llevarlo a un documento 
+como una tabla: xtable(objeto.ts), ¿y con un objeto zoo? (Estoy buscando 
+y nada)
+
+Y otra, ¿convertir objetos ts a zoo y viceversa? Estoy probando con 
+as.ts() y agua también, pongo unos datos de ejemplo que los que has 
+puesto son en exceso numerosos:
+
+lere<-data.frame(date=seq(as.Date("2013-01-01"),by="month",length=3*12),A=rnorm(3*12))
+lara<-zoo(lere[,-1],lere$date)
+as.ts(lara)
+
+El resultado no es ni remotamente parecido a lo que debería salir.
+
+> Saludos.
+>
+> Oscar
+
+Gracias por todo.
+
+Salud y Revolución.
+
+Lobo.
+
+Pd: Acabo de encontrar como resolver el tema de xtable:
+
+xtable(aggregate(lara,as.yearmon))
+
+Lo curioso es que xtable convierte el nombre de los meses del perfecto 
+español en que lo muestra aggregate a la lengua de la pérfida Albión. 
+Habrá que pelear con eso.
+-- 
+Libertad es poder elegir en cualquier momento. Ahora yo elijo GNU/Linux,
+para no atar mis manos con las cadenas del soft propietario.
+Porque la libertad no es tu derecho, es tu responsabilidad.
+http://www.mucharuina.com
+---------
+Desde El Ejido, en Almería, usuario registrado Linux #294013
+http://www.counter.li.org
+
+
+From belen.cillero en larioja.org  Tue Jun  4 11:29:10 2013
+From: belen.cillero en larioja.org (=?UTF-8?B?QmVsw6luIENpbGxlcm8gSmltw6luZXo=?=)
+Date: Tue, 4 Jun 2013 11:29:10 +0200
+Subject: [R-es] =?utf-8?q?funci=C3=B3n_recode?=
+Message-ID: <51ADCF86.7280.00B9.3@larioja.org>
+
+Buenos días
+No sé qué es lo que estoy haciendo mal al aplicar la función recode.
+Escribo:
+
+personas_LR2 <-recode(personas_LR$edad, '0:15="Menores de 16 años"; 16:44="Entre 16 y 44 años"; 45:64="Entre 45 y 64 años";>=65"65 y más años";', as.factor.result=TRUE)
+
+y me da el siguiente error:
+
+Error en parse(text = strsplit(term, "=")[[1]][1]) :
+  <text>:1:1: inesperado '>'
+1: >
+   ^
+
+Muchas gracias
+BB
+
+
+[cid:PGUPAFSACCIC.IMAGE_16.jpg]
+________________________________
+
+GOBIERNO DE LA RIOJA
+AVISO LEGAL: La información contenida en este mensaje es confidencial y está destinada a ser leída sólo por la persona a la que va dirigida. Si Ud. no es el destinatario señalado le informamos que está prohibida, y puede ser ilegal, cualquier divulgación o reproducción de este mensaje.
+Antes de imprimir este e-mail piense bien si es necesario hacerlo.
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/98d46585/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: no disponible
+Type: image/jpg
+Size: 15662 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/98d46585/attachment-0001.jpg>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue Jun  4 11:44:42 2013
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 4 Jun 2013 11:44:42 +0200
+Subject: [R-es] =?utf-8?q?funci=C3=B3n_recode?=
+In-Reply-To: <51ADCF86.7280.00B9.3@larioja.org>
+References: <51ADCF86.7280.00B9.3@larioja.org>
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943772506FCC88C@ASSCCEVS02.sergas.local>
+
+Hola Belén.
+Entiendo que usas el ?recode? del paquete car? (no el del epicalc)
+NO sería así la sintaxis?
+personas_LR2 <-recode(personas_LR$edad, '0:15="Menores de 16 años"; 16:44="Entre 16 y 44 años"; 45:64="Entre 45 y 64 años";65:hi="65 y más años";', as.factor.result=TRUE)
+
+Un Saludo,
+_____________________________
+Miguel Ángel Rodríguez Muíños
+Dirección Xeral de Innovación e Xestión da Saúde Pública
+Consellería de Sanidade
+Xunta de Galicia
+
+http://dxsp.sergas.es
+
+
+
+
+
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Belén Cillero Jiménez
+Enviado el: martes, 04 de junio de 2013 11:29
+Para: r-help-es en r-project.org
+Asunto: [R-es] función recode
+
+Buenos días
+No sé qué es lo que estoy haciendo mal al aplicar la función recode.
+Escribo:
+
+personas_LR2 <-recode(personas_LR$edad, '0:15="Menores de 16 años"; 16:44="Entre 16 y 44 años"; 45:64="Entre 45 y 64 años";>=65"65 y más años";', as.factor.result=TRUE)
+
+y me da el siguiente error:
+
+Error en parse(text = strsplit(term, "=")[[1]][1]) :
+  <text>:1:1: inesperado '>'
+1: >
+   ^
+
+Muchas gracias
+BB
+
+
+[cid:image001.jpg en 01CE6118.E732AB50]
+________________________________
+
+GOBIERNO DE LA RIOJA
+AVISO LEGAL: La información contenida en este mensaje es confidencial y está destinada a ser leída sólo por la persona a la que va dirigida. Si Ud. no es el destinatario señalado le informamos que está prohibida, y puede ser ilegal, cualquier divulgación o reproducción de este mensaje.
+Antes de imprimir este e-mail piense bien si es necesario hacerlo.
+
+________________________________
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/179ad5f2/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 15662 bytes
+Desc: image001.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/179ad5f2/attachment-0001.jpg>
+
+From cof en qualityexcellence.es  Tue Jun  4 11:49:48 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 4 Jun 2013 11:49:48 +0200
+Subject: [R-es] =?iso-8859-1?q?funci=F3n_recode?=
+In-Reply-To: <51ADCF86.7280.00B9.3@larioja.org>
+References: <51ADCF86.7280.00B9.3@larioja.org>
+Message-ID: <CAOKbq8jLaXGFdMd8qSY=a8d+uYO8Rcb7Q-RVm6ee3u7k5bqvsw@mail.gmail.com>
+
+Hola,
+
+¿Puedes pasar el conjunto con el que trabajas o copy&paste una pequeña
+parte?...
+De todas formas, ¿no hay aquí un error?:
+
+ntre 45 y 64 años";>=65"65 y más años";
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 4 de junio de 2013 11:29, Belén Cillero Jiménez <
+belen.cillero en larioja.org> escribió:
+
+>  Buenos días
+> No sé qué es lo que estoy haciendo mal al aplicar la función recode.
+> Escribo:
+>
+>
+> personas_LR2 <-recode(personas_LR$edad, '0:15="Menores de 16 años";
+> 16:44="Entre 16 y 44 años"; 45:64="Entre 45 y 64 años";>=65"65 y más
+> años";', as.factor.result=TRUE)
+>
+>
+>
+> y me da el siguiente error:
+>
+>
+>
+> Error en parse(text = strsplit(term, "=")[[1]][1]) :
+>
+>   <text>:1:1: inesperado '>'
+>
+> 1: >
+>
+>    ^
+>
+>
+>
+> Muchas gracias
+>
+> BB
+>
+>
+>
+>
+>
+> ------------------------------
+>
+> GOBIERNO DE LA RIOJA
+> AVISO LEGAL: La información contenida en este mensaje es confidencial y
+> está destinada a ser leída sólo por la persona a la que va dirigida. Si Ud.
+> no es el destinatario señalado le informamos que está prohibida, y puede
+> ser ilegal, cualquier divulgación o reproducción de este mensaje.
+> Antes de imprimir este e-mail piense bien si es necesario hacerlo.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/70a7beb6/attachment.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: no disponible
+Type: image/jpg
+Size: 15662 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/70a7beb6/attachment.jpg>
+
+From jorgeivanvelez en gmail.com  Tue Jun  4 11:55:42 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Tue, 4 Jun 2013 19:55:42 +1000
+Subject: [R-es] =?iso-8859-1?q?funci=F3n_recode?=
+In-Reply-To: <51ADCF86.7280.00B9.3@larioja.org>
+References: <51ADCF86.7280.00B9.3@larioja.org>
+Message-ID: <CAKL8G3Fe4T4_hsh_htamD_WwfiQprqg3WqCTBa9xgUhErAKUHg@mail.gmail.com>
+
+Hola Belén,
+
+La sintaxis de recode en "car" puede ser, a veces, algo confusa.  Por qué
+no intentar con cut() en "base"?  El siguiente es un ejemplo:
+
+set.seed(123)
+x <- c(rpois(500, 35), rpois(100, 10), rpois(50, 60))
+xcut <- cut(x, breaks = c(0, 15, 44, 64, Inf), labels = c('Menores de 16
+años', 'Entre 16 y 44 años', 'Entre 45 y 64 años', '65 y más años'))
+table(xcut)
+
+Saludos,
+Jorge.-
+
+
+
+2013/6/4 Belén Cillero Jiménez <belen.cillero en larioja.org>
+
+>  Buenos días
+> No sé qué es lo que estoy haciendo mal al aplicar la función recode.
+> Escribo:
+>
+>
+> personas_LR2 <-recode(personas_LR$edad, '0:15="Menores de 16 años";
+> 16:44="Entre 16 y 44 años"; 45:64="Entre 45 y 64 años";>=65"65 y más
+> años";', as.factor.result=TRUE)
+>
+>
+>
+> y me da el siguiente error:
+>
+>
+>
+> Error en parse(text = strsplit(term, "=")[[1]][1]) :
+>
+>   <text>:1:1: inesperado '>'
+>
+> 1: >
+>
+>    ^
+>
+>
+>
+> Muchas gracias
+>
+> BB
+>
+>
+>
+>
+>
+> ------------------------------
+>
+> GOBIERNO DE LA RIOJA
+> AVISO LEGAL: La información contenida en este mensaje es confidencial y
+> está destinada a ser leída sólo por la persona a la que va dirigida. Si Ud.
+> no es el destinatario señalado le informamos que está prohibida, y puede
+> ser ilegal, cualquier divulgación o reproducción de este mensaje.
+> Antes de imprimir este e-mail piense bien si es necesario hacerlo.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/ef9c16ac/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: no disponible
+Type: image/jpg
+Size: 15662 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/ef9c16ac/attachment-0001.jpg>
+
+From cof en qualityexcellence.es  Tue Jun  4 12:21:23 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 4 Jun 2013 12:21:23 +0200
+Subject: [R-es] =?iso-8859-1?q?funci=F3n_recode?=
+In-Reply-To: <51ADCF86.7280.00B9.3@larioja.org>
+References: <51ADCF86.7280.00B9.3@larioja.org>
+Message-ID: <CAOKbq8j46xoSsFPfze-sKxXLKc3MGHXak30-DNms4N9=PV4jsg@mail.gmail.com>
+
+Hola Belén,
+
+Te lo acabo de comentar por correo offline, el error viene de la forma en
+la que has codificado el factor ">=65".
+La forma de hacerlo sería así *65:hi="Más de 65 años"*.
+
+Mira este ejemplo:
+
+x<-rep(1:3,3)
+> x
+[1] 1 2 3 1 2 3 1 2 3
+> Recode(x, "2:hi='Mayor que dos'")
+[1] "1"             "Mayor que dos" "Mayor que dos" "1"
+[5] "Mayor que dos" "Mayor que dos" "1"             "Mayor que dos"
+[9] "Mayor que dos"
+> Recode(x, ">=2'Mayor que dos'")
+Error en parse(text = strsplit(term, "=")[[1]][1]) :
+  <text>:1:1: inesperado '>'
+1: >
+   ^
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 4 de junio de 2013 11:29, Belén Cillero Jiménez <
+belen.cillero en larioja.org> escribió:
+
+>  Buenos días
+> No sé qué es lo que estoy haciendo mal al aplicar la función recode.
+> Escribo:
+>
+>
+> personas_LR2 <-recode(personas_LR$edad, '0:15="Menores de 16 años";
+> 16:44="Entre 16 y 44 años"; 45:64="Entre 45 y 64 años";>=65"65 y más
+> años";', as.factor.result=TRUE)
+>
+>
+>
+> y me da el siguiente error:
+>
+>
+>
+> Error en parse(text = strsplit(term, "=")[[1]][1]) :
+>
+>   <text>:1:1: inesperado '>'
+>
+> 1: >
+>
+>    ^
+>
+>
+>
+> Muchas gracias
+>
+> BB
+>
+>
+>
+>
+>
+> ------------------------------
+>
+> GOBIERNO DE LA RIOJA
+> AVISO LEGAL: La información contenida en este mensaje es confidencial y
+> está destinada a ser leída sólo por la persona a la que va dirigida. Si Ud.
+> no es el destinatario señalado le informamos que está prohibida, y puede
+> ser ilegal, cualquier divulgación o reproducción de este mensaje.
+> Antes de imprimir este e-mail piense bien si es necesario hacerlo.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/46a09b61/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: no disponible
+Type: image/jpg
+Size: 15662 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/46a09b61/attachment-0001.jpg>
+
+From cgb en datanalytics.com  Tue Jun  4 15:23:08 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 4 Jun 2013 15:23:08 +0200
+Subject: [R-es] =?iso-8859-1?q?gr=E1fica_densidades?=
+In-Reply-To: <BAY170-W7370E64B2169EEF970B4CB999D0@phx.gbl>
+References: <BAY170-W7370E64B2169EEF970B4CB999D0@phx.gbl>
+Message-ID: <CADg83eeEih2zz3kWSdb_9HpLDGd2aiXC3qgoRHh1CM59Z56_sg@mail.gmail.com>
+
+Matlab hace ese tipo de gráficos. Y no sé hasta qué punto son o no
+buenos para representar el fenómeno subyacente.
+
+Yo me decantaría por una alternativa al estilo de
+
+http://www.bankofengland.co.uk/publications/PublishingImages/inflationreport/cpimktmay13large.gif
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 3 de junio de 2013 18:14, Patricio Fuenmayor Viteri
+<patricio.fuenmayor en outlook.com> escribió:
+> hola todos
+> necesito hacer un gráfica de este tipo, alguna idea ???
+>
+> gracias
+>
+> Patricio F.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From cof en qualityexcellence.es  Tue Jun  4 15:43:27 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 4 Jun 2013 15:43:27 +0200
+Subject: [R-es] =?iso-8859-1?q?gr=E1fica_densidades?=
+In-Reply-To: <CADg83eeEih2zz3kWSdb_9HpLDGd2aiXC3qgoRHh1CM59Z56_sg@mail.gmail.com>
+References: <BAY170-W7370E64B2169EEF970B4CB999D0@phx.gbl>
+	<CADg83eeEih2zz3kWSdb_9HpLDGd2aiXC3qgoRHh1CM59Z56_sg@mail.gmail.com>
+Message-ID: <CAOKbq8i9Yk6Q+JUYd2SD6uks62o714K24KTypzpjQSwZB4zFaw@mail.gmail.com>
+
+Sí, el propio Hadley Wikham, pone también en duda la utilidad de este tipo
+de gráficos (ver la referencia de StackOverflow) y propone en su lugar el
+uso de los gráficos en facetas en el que en cada faceta se representaría
+una distribución.
+
+Pero vaya, ahora ya R también cuenta con esta posibilidad de gráfico
+(después del código faltaba el gráfico):
+
+[image: Imágenes integradas 2]
+
+
+
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 4 de junio de 2013 15:23, Carlos J. Gil Bellosta
+<cgb en datanalytics.com>escribió:
+
+> Matlab hace ese tipo de gráficos. Y no sé hasta qué punto son o no
+> buenos para representar el fenómeno subyacente.
+>
+> Yo me decantaría por una alternativa al estilo de
+>
+>
+> http://www.bankofengland.co.uk/publications/PublishingImages/inflationreport/cpimktmay13large.gif
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+>
+> El día 3 de junio de 2013 18:14, Patricio Fuenmayor Viteri
+> <patricio.fuenmayor en outlook.com> escribió:
+> > hola todos
+> > necesito hacer un gráfica de este tipo, alguna idea ???
+> >
+> > gracias
+> >
+> > Patricio F.
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/9fd19007/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: no disponible
+Type: image/png
+Size: 20786 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130604/9fd19007/attachment-0001.png>
+
+From oscar.perpinan en gmail.com  Tue Jun  4 17:48:22 2013
+From: oscar.perpinan en gmail.com (Oscar =?utf-8?B?UGVycGnDscOhbg==?= Lamigueiro)
+Date: Tue, 04 Jun 2013 17:48:22 +0200
+Subject: [R-es]
+ =?utf-8?q?Conversi=C3=B3n_de_objeto_temporal_=28TS=29_a_ma?=
+ =?utf-8?q?triz_=28o_data=2Eframe=29?=
+In-Reply-To: <51AD3647.5060904@mucharuina.com>
+References: <51ABA6BE.5090203@mucharuina.com>, <877gichzb8.fsf@gmail.com>,
+	<51AD3647.5060904@mucharuina.com>
+Message-ID: <8761xtg9mh.fsf@gmail.com>
+
+
+> Última pregunta, con un objeto ts es muy fácil llevarlo a un documento 
+> como una tabla: xtable(objeto.ts), ¿y con un objeto zoo? (Estoy buscando 
+> y nada)
+>
+> Y otra, ¿convertir objetos ts a zoo y viceversa? Estoy probando con 
+> as.ts() y agua también, pongo unos datos de ejemplo que los que has 
+> puesto son en exceso numerosos:
+
+Hola,
+
+En mi opinión, zoo cuenta con una documentación excelente. Si te decides
+a utilizarlo (algo que te recomiendo) te serán útiles sus vignettes,
+especialmente la Quick Reference, la "Reading Data" y, por supuesto, las
+FAQs. 
+
+Saludos.
+
+Oscar.
+
+-- 
+Oscar Perpiñán Lamigueiro
+Grupo de Sistemas Fotovoltaicos (IES-UPM)
+Dpto. Ingeniería Eléctrica (EUITI-UPM)
+URL: http://procomun.wordpress.com
+Twitter: @oscarperpinan
+
+
+From amaurandi en um.es  Thu Jun  6 12:49:13 2013
+From: amaurandi en um.es (amaurandi)
+Date: Thu, 06 Jun 2013 12:49:13 +0200
+Subject: [R-es] agrandar (estirar..) el eje de las ordenas
+Message-ID: <51B06929.5080203@um.es>
+
+Quisiera agrandar el eje de ordenadas en un diagrama de lineas.. para  
+que haya más  espacio entre punto y punto y "se noten mejor las 
+diferencias"...
+¿alguna sugerencia?
+
+-- 
+Antonio Maurandi
+
+
+From cof en qualityexcellence.es  Thu Jun  6 13:51:36 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 6 Jun 2013 13:51:36 +0200
+Subject: [R-es] agrandar (estirar..) el eje de las ordenas
+In-Reply-To: <51B06929.5080203@um.es>
+References: <51B06929.5080203@um.es>
+Message-ID: <CAOKbq8i37Gx4h9fUgVif3wBQ949Wa5L6gpmFOM9V9wHfHx=AZQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130606/0acbdaf0/attachment.pl>
+
+From amaurandi en um.es  Thu Jun  6 16:28:47 2013
+From: amaurandi en um.es (amaurandi)
+Date: Thu, 06 Jun 2013 16:28:47 +0200
+Subject: [R-es] agrandar (estirar..) el eje de las ordenas
+In-Reply-To: <51B06929.5080203@um.es>
+References: <51B06929.5080203@um.es>
+Message-ID: <51B09C9F.6020202@um.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130606/bc6f7231/attachment.pl>
+
+From Guillermo.Vinue en uv.es  Thu Jun  6 16:43:35 2013
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Thu, 6 Jun 2013 16:43:35 +0200 (CEST)
+Subject: [R-es] Pregunta sobre paquetes portables
+Message-ID: <6999531889vivigui@uv.es>
+
+Hola,
+
+Estoy creando un paquete de R que incluye código C++. Lo he instalado
+tanto en Linux (Fedora) como en Windows y todo funciona correctamente.
+El código C++ lo cargo desde el NAMESPACE utilizando useDynLib.
+
+Así que ahora estoy revisándolo por última vez antes de someterlo al
+CRAN. Lo que pasa es que he leído en 
+
+http://cran.r-project.org/doc/manuals/R-exts.html#Writing-portable-packages 
+
+lo siguiente:
+
+?It is not portable to call compiled code in R or other packages via
+Internal, .C, .Fortran, .Call or .External, since such interfaces are
+subject to change without notice and will probably result in your code
+terminating the R process?.
+
+Sin embargo, la función del paquete que quiero someter llama al código
+C++ mediante .Call.
+
+¿Significa esto que no puedo someter el paquete al CRAN porque la
+portabilidad del paquete no está asegurada?. De todos modos, ¿alguien
+sabe cómo podría llamar al código C++ para que el paquete fuese seguro
+portable?.
+
+He escrito también a la lista de R-devel por si me comentaran algo,
+en cuyo caso, mandaría un correo a nuestra lista con la información, por
+si a alguien le puede servir.
+
+Muchas gracias de antemano.
+
+Saludos,
+
+Guillermo
+
+
+From cgb en datanalytics.com  Thu Jun  6 17:04:51 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 6 Jun 2013 17:04:51 +0200
+Subject: [R-es] Pregunta sobre paquetes portables
+In-Reply-To: <6999531889vivigui@uv.es>
+References: <6999531889vivigui@uv.es>
+Message-ID: <CADg83edn=u8yE772pB1ZEGk1uzU=vvJ+q1KbVaJHuu2bGA-SBA@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Creo que ese comentario no se refiere al código compilado de tu
+paquete sino a código compilado por otros que quieras usar en tu
+paquete. Pero igual me equivoco.
+
+No obstante, en el código de rpart (rpart.R) hay una llamada a C_rpart
+(en C) usando .Call. Y se trata de un paquete mantenido por el prof.
+Ripley, que ejerce de cancerbero en CRAN.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 6 de junio de 2013 16:43,  <Guillermo.Vinue en uv.es> escribió:
+> Hola,
+>
+> Estoy creando un paquete de R que incluye código C++. Lo he instalado
+> tanto en Linux (Fedora) como en Windows y todo funciona correctamente.
+> El código C++ lo cargo desde el NAMESPACE utilizando useDynLib.
+>
+> Así que ahora estoy revisándolo por última vez antes de someterlo al
+> CRAN. Lo que pasa es que he leído en
+>
+> http://cran.r-project.org/doc/manuals/R-exts.html#Writing-portable-packages
+>
+> lo siguiente:
+>
+> ?It is not portable to call compiled code in R or other packages via
+> Internal, .C, .Fortran, .Call or .External, since such interfaces are
+> subject to change without notice and will probably result in your code
+> terminating the R process?.
+>
+> Sin embargo, la función del paquete que quiero someter llama al código
+> C++ mediante .Call.
+>
+> ¿Significa esto que no puedo someter el paquete al CRAN porque la
+> portabilidad del paquete no está asegurada?. De todos modos, ¿alguien
+> sabe cómo podría llamar al código C++ para que el paquete fuese seguro
+> portable?.
+>
+> He escrito también a la lista de R-devel por si me comentaran algo,
+> en cuyo caso, mandaría un correo a nuestra lista con la información, por
+> si a alguien le puede servir.
+>
+> Muchas gracias de antemano.
+>
+> Saludos,
+>
+> Guillermo
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cof en qualityexcellence.es  Thu Jun  6 17:05:10 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 6 Jun 2013 17:05:10 +0200
+Subject: [R-es] agrandar (estirar..) el eje de las ordenas
+In-Reply-To: <51B09C9F.6020202@um.es>
+References: <51B06929.5080203@um.es>
+	<51B09C9F.6020202@um.es>
+Message-ID: <CAOKbq8gHxbMcv0VfQAHTjugjiHcM59PC=z8MO1F+yxEM_gdKYw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130606/94ab5b92/attachment.pl>
+
+From Guillermo.Vinue en uv.es  Fri Jun  7 09:19:07 2013
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Fri, 7 Jun 2013 09:19:07 +0200 (CEST)
+Subject: [R-es] Pregunta sobre paquetes portables
+In-Reply-To: <CADg83edn=u8yE772pB1ZEGk1uzU=vvJ+q1KbVaJHuu2bGA-SBA@mail.gmail.com>
+References: <CADg83edn=u8yE772pB1ZEGk1uzU=vvJ+q1KbVaJHuu2bGA-SBA@mail.gmail.com>
+Message-ID: <6322299579vivigui@uv.es>
+
+Hola Carlos,
+
+Muchas gracias por tu respuesta.
+
+Pues sí, le he estado echando un ojo al paquete rpart y como dices, sí
+que usa la función .Call y tratándose del profesor Ripley tiene que ser
+lo que tú dices.
+
+De momento en la lista R-devel no me han contestado.
+
+Saludos,
+
+Guillermo
+
+> Hola, ¿qué tal?
+> 
+> Creo que ese comentario no se refiere al código compilado de tu
+> paquete sino a código compilado por otros que quieras usar en tu
+> paquete. Pero igual me equivoco.
+> 
+> No obstante, en el código de rpart (rpart.R) hay una llamada a C_rpart
+> (en C) usando .Call. Y se trata de un paquete mantenido por el prof.
+> Ripley, que ejerce de cancerbero en CRAN.
+> 
+> Un saludo,
+> 
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+> 
+> El día 6 de junio de 2013 16:43,  <Guillermo.Vinue en uv.es> escribió:
+> > Hola,
+> >
+> > Estoy creando un paquete de R que incluye código C++. Lo he instalado
+> > tanto en Linux (Fedora) como en Windows y todo funciona correctamente.
+> > El código C++ lo cargo desde el NAMESPACE utilizando useDynLib.
+> >
+> > Así que ahora estoy revisándolo por última vez antes de someterlo al
+> > CRAN. Lo que pasa es que he leído en
+> >
+> >
+http://cran.r-project.org/doc/manuals/R-exts.html#Writing-portable-packages
+> >
+> > lo siguiente:
+> >
+> > ?It is not portable to call compiled code in R or other packages via
+> > Internal, .C, .Fortran, .Call or .External, since such interfaces are
+> > subject to change without notice and will probably result in your code
+> > terminating the R process?.
+> >
+> > Sin embargo, la función del paquete que quiero someter llama al código
+> > C++ mediante .Call.
+> >
+> > ¿Significa esto que no puedo someter el paquete al CRAN porque la
+> > portabilidad del paquete no está asegurada?. De todos modos, ¿alguien
+> > sabe cómo podría llamar al código C++ para que el paquete fuese seguro
+> > portable?.
+> >
+> > He escrito también a la lista de R-devel por si me comentaran algo,
+> > en cuyo caso, mandaría un correo a nuestra lista con la información, por
+> > si a alguien le puede servir.
+> >
+> > Muchas gracias de antemano.
+> >
+> > Saludos,
+> >
+> > Guillermo
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+
+
+From Guillermo.Vinue en uv.es  Fri Jun  7 09:43:33 2013
+From: Guillermo.Vinue en uv.es (Guillermo.Vinue en uv.es)
+Date: Fri, 7 Jun 2013 09:43:33 +0200 (CEST)
+Subject: [R-es] Pregunta sobre paquetes portables
+In-Reply-To: <CADg83edn=u8yE772pB1ZEGk1uzU=vvJ+q1KbVaJHuu2bGA-SBA@mail.gmail.com>
+References: <CADg83edn=u8yE772pB1ZEGk1uzU=vvJ+q1KbVaJHuu2bGA-SBA@mail.gmail.com>
+Message-ID: <9436357564vivigui@uv.es>
+
+Hola,
+
+Me han contestado muy amablemente también desde la lista R-devel y en
+resumen me dicen lo que ya ha comentado Carlos: que el comentario que
+leí se refiere sólo a código C de otros paquetes o de la propia
+estructura interna de R.
+
+Por lo tanto, sí que es posible utilizar la función .Call para llamar a
+código C de tu propio paquete, pero no se recomienda utilizarla para
+llamar a código C de otros paquetes o del propio R.
+
+Saludos,
+
+Guillermo
+
+> Hola, ¿qué tal?
+> 
+> Creo que ese comentario no se refiere al código compilado de tu
+> paquete sino a código compilado por otros que quieras usar en tu
+> paquete. Pero igual me equivoco.
+> 
+> No obstante, en el código de rpart (rpart.R) hay una llamada a C_rpart
+> (en C) usando .Call. Y se trata de un paquete mantenido por el prof.
+> Ripley, que ejerce de cancerbero en CRAN.
+> 
+> Un saludo,
+> 
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+> 
+> El día 6 de junio de 2013 16:43,  <Guillermo.Vinue en uv.es> escribió:
+> > Hola,
+> >
+> > Estoy creando un paquete de R que incluye código C++. Lo he instalado
+> > tanto en Linux (Fedora) como en Windows y todo funciona correctamente.
+> > El código C++ lo cargo desde el NAMESPACE utilizando useDynLib.
+> >
+> > Así que ahora estoy revisándolo por última vez antes de someterlo al
+> > CRAN. Lo que pasa es que he leído en
+> >
+> >
+http://cran.r-project.org/doc/manuals/R-exts.html#Writing-portable-packages
+> >
+> > lo siguiente:
+> >
+> > ?It is not portable to call compiled code in R or other packages via
+> > Internal, .C, .Fortran, .Call or .External, since such interfaces are
+> > subject to change without notice and will probably result in your code
+> > terminating the R process?.
+> >
+> > Sin embargo, la función del paquete que quiero someter llama al código
+> > C++ mediante .Call.
+> >
+> > ¿Significa esto que no puedo someter el paquete al CRAN porque la
+> > portabilidad del paquete no está asegurada?. De todos modos, ¿alguien
+> > sabe cómo podría llamar al código C++ para que el paquete fuese seguro
+> > portable?.
+> >
+> > He escrito también a la lista de R-devel por si me comentaran algo,
+> > en cuyo caso, mandaría un correo a nuestra lista con la información, por
+> > si a alguien le puede servir.
+> >
+> > Muchas gracias de antemano.
+> >
+> > Saludos,
+> >
+> > Guillermo
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+
+
+From ramoslautarom en gmail.com  Sun Jun  9 02:51:27 2013
+From: ramoslautarom en gmail.com (Lautaro Ramos)
+Date: Sat, 8 Jun 2013 21:51:27 -0300
+Subject: [R-es] =?iso-8859-1?q?Preparaci=F3n_de_datos?=
+Message-ID: <CAAPFOOBCx6z8KV07-2_cEf=2berwf8zvRSagGPV8cVF4Z5NtPQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130608/19fa5dc3/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Sun Jun  9 07:15:11 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Sun, 9 Jun 2013 02:15:11 -0300
+Subject: [R-es] =?iso-8859-1?q?Preparaci=F3n_de_datos?=
+In-Reply-To: <CAAPFOOBCx6z8KV07-2_cEf=2berwf8zvRSagGPV8cVF4Z5NtPQ@mail.gmail.com>
+References: <CAAPFOOBCx6z8KV07-2_cEf=2berwf8zvRSagGPV8cVF4Z5NtPQ@mail.gmail.com>
+Message-ID: <0F73FFE46C254DDE93CD2C3F5324DEBE@JavierMarcuzzi>
+
+Estimado Lautaro
+
+Su problema no es sobre R, es sobre su comprensión, en esta lista se 
+responden problemas que tienen que ser resueltos con R, en lo referido al 
+lenguaje R y la variedad de oportunidades que este entorno de trabajo nos 
+da, a distintas estrategias computacionales.
+
+Usted comprenderá que esta lista no tiene como objetivo resolver problemas 
+universitarios, para eso están los profesores, sin embargo no pretendo 
+desalentar su consulta, yo aprendí muchísimo por el aporte de esta lista.
+
+En su caso yo intentaría agrupar los títulos por categorías, pero eso ya es 
+su habilidad, resolverlo en esta lista de correos va en contra de su 
+aprendizaje, y eso no es bueno para usted, como tampoco es bueno para la 
+lista el sustituir las consultas que deben realizarse dentro del claustro.
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: Lautaro Ramos
+Sent: Saturday, June 08, 2013 9:51 PM
+To: R-help-es
+Subject: [R-es] Preparación de datos
+
+Hola, ¿como están?
+
+        Me encuentro haciendo un trabajo de Explotación de Información para
+la facultad y tengo un inconveniente a la hora de preparar los datos para
+poder operar con ellos.
+        Tengo un atributo "Titulo Secundario" que cuenta con 139 valores
+diferentes (al final les dejo algunos de estos valores con la cantidad de
+ocurrencias de cada uno) y lo que quiero hacer es reducir esa cantidad lo
+mayor posible, para dejar por ejemplo, no mas de 20 categorías. ¿Me pueden
+dar una mano con esto?
+
+
+Mil gracias,
+Saludos.
+
+
+BACHILLER 292
+TÉCNICO ELECTROMECANICO 100
+TÉCNICO 88
+POLIMODAL DE ECONOMIA Y GESTION Dto.1171/02 - 2292/02  77
+POLIMODAL CON ORIENTACION EN CIENCIAS NATURALES  50
+TÉCNICO MECANICO  43
+TÉCNICO EN ADMINISTRACION DE EMPRESAS  36
+POLIMODAL HUMANIDADES Y CIENCIAS SOCIALES  32
+POLIMODAL DE PRODUCCION, BIENES Y SERVICIOS 31
+BACHILLER MERCANTIL 29
+HUMANIDADES Y CIENCIAS SOCIALES 21
+BACHILLER BIOLOGICO 20
+- 17
+PERITO MERCANTIL 15
+TÉCNICO MECANICO ELECTRICISTA  14
+TECNICO ELECTRICISTA CON ORIENTACION ELECTRONICA  13
+
+BACHILLER CON ORIENTACION EN ECONOMIA Y GESTION DE LAS ORG. 12
+MAESTRO MAYOR DE OBRA 12
+BACHILLER CON ORIENTACION EN ECONOMIA Y ADMINISTRACION  10
+BACHILLER NACIONAL 10
+OTROS 10
+BACHILLER CON ORIENTACION CONTABLE 9
+BACHILLER EN CIENCIAS FÍSICO-MATEMATICA 9
+PRODUCCIÓN DE BIENES Y SERVICIOS  9
+TECNICO EN ELECTRONICA 9
+TÉCNICO ELECTRICISTA C/OR. EN ELECTRONICA INDUSTR.  8
+TÉCNICO SUPERIOR EN ELECTROMECANICA (7 AÑOS) 8
+BACHILLER EN LETRAS 7
+BACHILLER ORIENTACION CIENTIFICA - OPCION INGENIERIA 7
+POLIMODAL DE CIENCIAS EXACTAS  7
+POLIMODAL TEORIA Y GESTION DE LA ORGANIZACION  7
+EDUCACION POLIMODAL EN ECONOMIA Y GESTION DE LAS ORGANIZACIONES-INFORMATICA 
+6
+BACHILLER COMERCIAL 5
+BACHILLER EN CIENCIAS BIOLÓGICAS  5
+PERITO MERCANTIL O BACH. COMERCIAL 5
+BACHILLERATO  4
+
+
+-- 
+*[:Lautaro]*
+
+[[alternative HTML version deleted]]
+
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cof en qualityexcellence.es  Sun Jun  9 09:35:08 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sun, 9 Jun 2013 09:35:08 +0200
+Subject: [R-es] =?iso-8859-1?q?Preparaci=F3n_de_datos?=
+In-Reply-To: <CAAPFOOBCx6z8KV07-2_cEf=2berwf8zvRSagGPV8cVF4Z5NtPQ@mail.gmail.com>
+References: <CAAPFOOBCx6z8KV07-2_cEf=2berwf8zvRSagGPV8cVF4Z5NtPQ@mail.gmail.com>
+Message-ID: <CAOKbq8jJPZFjdd7y_xLq2LdV8FPz_LQubd7xP9ZvpL6=mQYM5A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130609/a470f255/attachment.pl>
+
+From canadasreche en gmail.com  Sun Jun  9 09:58:30 2013
+From: canadasreche en gmail.com (=?ISO-8859-1?Q?Jose_Luis_Ca=F1adas?=)
+Date: Sun, 09 Jun 2013 09:58:30 +0200
+Subject: [R-es] =?iso-8859-1?q?Preparaci=F3n_de_datos?=
+In-Reply-To: <CAAPFOOBCx6z8KV07-2_cEf=2berwf8zvRSagGPV8cVF4Z5NtPQ@mail.gmail.com>
+References: <CAAPFOOBCx6z8KV07-2_cEf=2berwf8zvRSagGPV8cVF4Z5NtPQ@mail.gmail.com>
+Message-ID: <51B435A6.9060306@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130609/c50db623/attachment.pl>
+
+From fernandsanche en yahoo.es  Sun Jun  9 21:37:45 2013
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Sun, 9 Jun 2013 20:37:45 +0100 (BST)
+Subject: [R-es] =?iso-8859-1?q?Problemas_con_una_funci=F3n=3A_no_devuelve_?=
+	=?iso-8859-1?q?lo_que_quiero?=
+Message-ID: <1370806665.12963.YahooMailNeo@web172504.mail.ir2.yahoo.com>
+
+Hola a todos, me estoy volviendo loco con la siguiente
+función:
+
+preguntar<- function (matriz_respuestas_interna)
+{
+    cat("\n","¿Acertaste la respuesta (NO:0
+SI:1)?","\n")
+        y<-scan(n=1)
+    matriz_respuestas_interna<-cbind(matriz_respuestas_interna,y)
+}
+
+Resulta que yo he definido la siguiente variable
+
+matriz_respuestas<-1
+
+Y querría que al hacer:
+
+preguntar(matriz_respuestas)
+
+
+Añadiera a la matriz de respuesta un 1 o un 0 en función de
+si se ha acertado o fallado. Sinembargo, no me devuelve nada y al volver ver
+el contenido de matriz_respuestas vuelve a salir 1.
+
+¿Alguien me puede ayudar?
+
+Saludos,
+
+Fernando
+
+
+From evapcastro en yahoo.es  Sun Jun  9 22:06:40 2013
+From: evapcastro en yahoo.es (Eva Prieto Castro)
+Date: Sun, 9 Jun 2013 21:06:40 +0100 (BST)
+Subject: [R-es]
+ =?iso-8859-1?q?Problemas_con_una_funci=F3n=3A_no_devuelve_?=
+ =?iso-8859-1?q?lo_que_quiero?=
+In-Reply-To: <1370806665.12963.YahooMailNeo@web172504.mail.ir2.yahoo.com>
+Message-ID: <1370808400.7251.YahooMailClassic@web171501.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130609/998e4089/attachment.pl>
+
+From fernandsanche en yahoo.es  Mon Jun 10 20:05:40 2013
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Mon, 10 Jun 2013 19:05:40 +0100 (BST)
+Subject: [R-es] =?iso-8859-1?q?=BFAlg=FAn_paquete_mejor_que_R-Tcl/Tk=3F?=
+Message-ID: <1370887540.66149.YahooMailNeo@web172502.mail.ir2.yahoo.com>
+
+Hola a todos, he estado haciendo pruebas con la librería Tcl/Tk. Me gustaría saber si existe alguna que sea más estética para generar ventanas y obtener información del usuario de manera interactiva.
+
+Un saludo y muchas gracias,
+Fernando
+
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Mon Jun 10 20:29:24 2013
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Mon, 10 Jun 2013 20:29:24 +0200
+Subject: [R-es] =?iso-8859-1?q?=BFAlg=FAn_paquete_mejor_que_R-Tcl/Tk=3F?=
+In-Reply-To: <1370887540.66149.YahooMailNeo@web172502.mail.ir2.yahoo.com>
+References: <1370887540.66149.YahooMailNeo@web172502.mail.ir2.yahoo.com>
+Message-ID: <0A5B869BDC0A7445B15F9A4A537943772505D55E9E@ASSCCEVS02.sergas.local>
+
+Hola Fernando.
+
+Te recomiendo que le eches un ojo a gWidgets
+
+Un Saludo,
+Miguel.
+
+
+
+________________________________________
+De: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] En nombre de Fernando Sanchez [fernandsanche en yahoo.es]
+Enviado el: lunes, 10 de junio de 2013 20:05
+Para: r-help-es en r-project.org
+Asunto: [R-es] ¿Algún paquete mejor que R-Tcl/Tk?
+
+Hola a todos, he estado haciendo pruebas con la librería Tcl/Tk. Me gustaría saber si existe alguna que sea más estética para generar ventanas y obtener información del usuario de manera interactiva.
+
+Un saludo y muchas gracias,
+Fernando
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From evapcastro en yahoo.es  Mon Jun 10 20:49:49 2013
+From: evapcastro en yahoo.es (Eva Prieto Castro)
+Date: Mon, 10 Jun 2013 19:49:49 +0100 (BST)
+Subject: [R-es] =?iso-8859-1?q?=BFAlg=FAn_paquete_mejor_que_R-Tcl/Tk=3F?=
+In-Reply-To: <1370887540.66149.YahooMailNeo@web172502.mail.ir2.yahoo.com>
+Message-ID: <1370890189.3314.YahooMailClassic@web171505.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130610/fd835ae4/attachment.pl>
+
+From matutetote en hotmail.com  Tue Jun 11 09:26:07 2013
+From: matutetote en hotmail.com (Matias Ledesma)
+Date: Tue, 11 Jun 2013 07:26:07 +0000
+Subject: [R-es] calculo de poder estadistico en glm
+Message-ID: <BAY147-W30AC495F29AB11048ADC56D9850@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130611/cd789136/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Tue Jun 11 10:40:03 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Tue, 11 Jun 2013 18:40:03 +1000
+Subject: [R-es] calculo de poder estadistico en glm
+In-Reply-To: <BAY147-W30AC495F29AB11048ADC56D9850@phx.gbl>
+References: <BAY147-W30AC495F29AB11048ADC56D9850@phx.gbl>
+Message-ID: <CAKL8G3FNV+W5MKWGa=4F07tKmD3tx0Mf9wDRicrNvMN1Fx65Jg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130611/a46fab68/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Tue Jun 11 16:08:34 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Wed, 12 Jun 2013 00:08:34 +1000
+Subject: [R-es] calculo de poder estadistico en glm
+Message-ID: <CAKL8G3HwKRaQyFwpR1bs=DkzKUPban7guhgFe9CikBdJNy7iKg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130612/3e0772d5/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Tue Jun 11 17:37:33 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Tue, 11 Jun 2013 12:37:33 -0300
+Subject: [R-es] calculo de poder estadistico en glm
+In-Reply-To: <CAKL8G3HwKRaQyFwpR1bs=DkzKUPban7guhgFe9CikBdJNy7iKg@mail.gmail.com>
+References: <CAKL8G3HwKRaQyFwpR1bs=DkzKUPban7guhgFe9CikBdJNy7iKg@mail.gmail.com>
+Message-ID: <9FC36FBFD42640209E79DB2E9D0EA387@JavierMarcuzzi>
+
+Estimado Matías Ledesma
+
+Leí en la lista lo que usted desea realizar, en la misma expresa:
+
+La idea del estudio es mostrar un valor medio con un intervalo de confianza 
+por estación de la frecuencia de malformaciones por individuo.
+
+Creo que se expreso en forma incorrecta, yo no se cuál es su estudio, yo no 
+soy estadístico, soy veterinario, pero lo que usted expresa en su idea, 
+aunque en términos computacionales (la computadora calcula cualquier cosa) 
+pueda calcularse en términos biológicos es sin importancia. Me refiero 
+específicamente a malformaciones por individuo, hay animales que pueden 
+tener más de una malformación (creo que se refiere a congénito), pero son 
+muchos más los que solo tienen una patología del desarrollo, y más aún los 
+que carecen de estas.
+
+Puede ser que la referencias de R sobre epidemiología aporten algo a lo que 
+usted necesita, trabajar por poblaciones y no por individuo. Tenga en cuenta 
+que en el caso de haber más de una patología, puede ser que estén 
+relacionadas desde la patología o no, si bien usted habla de malformaciones 
+en embriones, ¿en que estado embrionario y clasificación?, porque puede ser 
+que utilicen el término malformación como clasificación y no como congénito 
+(patológico), aunque este desarrollo embrionario es congénito porque se 
+desarrolla luego de la fecundación, y en esos casos sería oportuno definir 
+correctamente en términos médicos referidos a la etapa embrionaria antes de 
+procesar en R y tener que regresar para corregir algo.
+
+Usted nombra que hay varios factores, por ejemplo si hay contaminación tenga 
+en cuenta la idiosincrasia, es decir, no todos tienen porqué responder de la 
+misma manera, usted dice por individuo, yo preferiría que piense en 
+poblaciones y en ese caso R podría aportar a la ciencia, aunque sería bueno 
+estudiar por individuo pero es "complicado".
+
+
+Javier Marcuzzi
+
+
+-----Original Message----- 
+From: Jorge I Velez
+Sent: Tuesday, June 11, 2013 11:08 AM
+To: Matias Ledesma
+Cc: R-help-es
+Subject: Re: [R-es] calculo de poder estadistico en glm
+
+Estimado Matias,
+
+Reenvio a la lista.  Es tarde aqui y hay que descansar.  Quizas alguien en
+otra parte del mundo pueda darte una mano.  En unas horas te envio mi
+opinion.
+
+Saludos,
+Jorge.-
+
+
+2013/6/11 Matias Ledesma <>
+
+>  Hola Jorge,
+>
+> Muchas gracias por las referencias, ya consegui el libro asi que me voy
+> aponer a leerlo aver si encuentro una solucion.
+>
+> La data que estoy analizando es parte de un programa de monitoreo anual
+> donde se ve los efectos de la contaminacion marina mediante la utilizacion
+> de un crustaceo como bioindicador.
+>
+> La variable a analizar es la malformacion de embryones en este individuo y
+> las variables independientes son año, estacion, cantidad total de 
+> embryones
+> por individuo y estadio en que se encuentra el embryon.
+>
+> Hay gran variabilidad en la data debido a que las malformaciones dependen
+> de muchos factores, ademas el numero de individuos por estacion varia 
+> mucho
+> al igual que el numero de embryones. Por esta razon se utiliza la
+> frequencia. La idea del estudio es mostrar un valor medio con un intervalo
+> de confinza por estacion de la frequencia de malformaciones por individo.
+>
+> El tamaño de efecto que busco es de 80 % con una siginficancia de 5%
+>
+> En cuanto a lo del model, estoy entre dos opciones. La razon por la cual
+> pensee en un modelo negativo binomial es por que la data tiene gran
+> varianza (overdispers), la otra solucion que me han recomendado es
+> transformrar  (boxcox) la variable dependiente y luego aplicar glm con una
+> funcion normal y link= log.
+>
+> Mi pregunta hacerca de la funcion offset era si para este caso en el cual
+> la variable independiente es una fraccion es valido. En mixed
+> effects models and extension in R (pag. 240) hay un caso similar en el que
+> se utilizan el numero de ind por volumen (
+> L0<-glm(ind~offset(LVol)+fStation,family=poisson,data=Lice). Pero no estoy
+> seguro de que sea lo mismo dado que lo mio es una freq?
+>
+> Saludos,
+> Matias
+>
+>
+>
+> ------------------------------
+> From: jorgeivanvelez en gmail.com
+> Date: Tue, 11 Jun 2013 18:40:03 +1000
+> Subject: Re: [R-es] calculo de poder estadistico en glm
+> To: matutetote en hotmail.com
+> CC: r-help-es en r-project.org
+>
+>
+> Hola Matias,
+>
+> Que tipo de GLM estas usando?  Cuantas variables explicativas?  Que tamaño
+> de efecto te interesa detectar?
+>
+> Una forma de realizar el analisis de potencia es via simulacion.  Dale una
+> mirada a
+> http://r.789695.n4.nabble.com/a-priori-power-analysis-for-glm-family-poisson-td4659163.htmly 
+> en especial a la referencia que alli aparece.  El paquete asypow tambien
+> puede servirte.
+>
+> En cuanto a tu 2a pregunta, en mi opinion, lo que necesitas es un modelo
+> logistico, no un modelo binomial negativo. En
+> http://ww2.coastal.edu/kingw/statistics/R-tutorials/logistic.html hay un
+> ejemplo parecido a lo que planteas.
+>
+> Saludos,
+> Jorge.-
+>
+>
+> 2013/6/11 Matias Ledesma <matutetote en hotmail.com>
+>
+> Hola,
+>
+> Estoy tratando de calcular el poder estadistico de un GLM en R, programas
+> estadisticos como SPSS lo puede calcular pero no eh encotrado nada sobre 
+> R.
+> Alguien tiene alguna idea o sabe de literatura donde pueda encontrar 
+> ayuda?
+>
+> Luego tengo otra pregunta mas bien teorica sobre la funcion offset
+> utilizada en negative poisson, por lo que eh entendido esta funcion
+> posibilita trabajar con fracciones a pesar de que la distribucion poisson
+> solo sea para enteros positivos. Mi duda es si esto es realmente asi, lo
+> que eh leido a sido en internet. Eh buscado en libros como Zuur 2007 y
+> Hilbe 2007 sin encontrar nada.
+>
+> modelA1F<-glm.nb(Tot.dameggs~STATN+YEAR+offset(log(FECUND)))
+>
+> freq=(Tot.dameggs/FECUND)
+>
+> Tot.dameggs= cantidad de huevos dañados por individuo
+> FECUND=cantidad total de huevos por individuo
+> STATN= estacion
+> YEAR= año
+>
+> Muchas gracias,
+> Matias
+>
+>
+>
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+
+[[alternative HTML version deleted]]
+
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From fernandsanche en yahoo.es  Tue Jun 11 17:49:25 2013
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Tue, 11 Jun 2013 16:49:25 +0100 (BST)
+Subject: [R-es] =?iso-8859-1?q?_=BFAlg=FAn_paquete_mejor_que_R-Tcl/Tk=3F?=
+In-Reply-To: <1370931611.24008.YahooMailNeo@web172504.mail.ir2.yahoo.com>
+References: <1370900099.60928.YahooMailNeo@web172501.mail.ir2.yahoo.com>
+	<1370931611.24008.YahooMailNeo@web172504.mail.ir2.yahoo.com>
+Message-ID: <1370965765.5263.YahooMailNeo@web172503.mail.ir2.yahoo.com>
+
+
+
+Hola, gracias a Eva y Miguel Angel por sus respuestas. He estado probando gWidgets un rato y me ha gustado, pero lo que me ha dejado impresionado es SHINY: http://rstudio.github.io/shiny/tutorial/#welcome paquete de RStudio que crea Webs interactivas.
+
+saludos,
+
+Fernando
+
+
+
+
+------------------------------------------------------------------------------
+Hola, Fernando:
+
+A ver si este url te sirve de algo:
+
+http://uce.uniovi.es/CURSOICE/Informese1.html
+
+Ahí se referencian otras alternativas.
+
+Saludos.
+Eva
+
+--- El lun, 10/6/13, Fernando Sanchez <f
+
+.org>
+Fecha: lunes, 10 de junio, 2013 20:05
+Hola a todos, he estado haciendo pruebas con la librería Tcl/Tk. Me gustaría saber si existe alguna que sea más estética para generar ventanas y obtener información del usuario de manera interactiva.
+
+Un saludo y muchas gracias,
+Fernando
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From sin_respuesta en r-es.org  Tue Jun 11 19:12:48 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Tue, 11 Jun 2013 21:12:48 +0400 (MSK)
+Subject: [R-es] =?utf-8?q?Nuevo_=C3=ADtem_de_la_agenda?=
+Message-ID: <mo8ntc.nuk1ek@r-es.org>
+
+useR! 2013 en Albacete
+---
+
+Desde hace unos días ya es oficial:
+
+
+
+The R User Conference 2013: ¡en Albacete!
+
+
+
+{img src="http://www.datanalytics.com/wp-uploads/2012/06/user2013.png"}
+
+
+
+Cuenta en twitter: https://twitter.com/#!/useR_2013
+
+Desde:	Miércoles 10 de Julio, 2013 00:00:00 CEST
+a:		Viernes 12 de Julio, 2013 23:59:59 CEST
+
+Visualiza el ítem de la agenda en:
+http://r-es.org/tiki-calendar_edit_item.php?viewcalitemId=11&calIds[]=1
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From sin_respuesta en r-es.org  Tue Jun 11 19:13:07 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Tue, 11 Jun 2013 21:13:07 +0400 (MSK)
+Subject: [R-es] =?utf-8?q?Nuevo_=C3=ADtem_de_la_agenda?=
+Message-ID: <mo8ntv.k6gaky@r-es.org>
+
+useR! 2013 en Albacete
+---
+
+Desde hace unos días ya es oficial:
+
+
+
+The R User Conference 2013: ¡en Albacete!
+
+
+
+{img src="http://www.datanalytics.com/wp-uploads/2012/06/user2013.png"}
+
+
+
+Cuenta en twitter: https://twitter.com/#!/useR_2013
+
+Desde:	Martes 09 de Julio, 2013 00:00:00 CEST
+a:		Viernes 12 de Julio, 2013 23:59:59 CEST
+
+Visualiza el ítem de la agenda en:
+http://r-es.org/tiki-calendar_edit_item.php?viewcalitemId=11&calIds[]=1
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From matutetote en hotmail.com  Wed Jun 12 11:41:16 2013
+From: matutetote en hotmail.com (Matias Ledesma)
+Date: Wed, 12 Jun 2013 09:41:16 +0000
+Subject: [R-es] calculo de poder estadistico en glm
+In-Reply-To: <BAY147-W55F2140FE9FCFEDF6C07A7D9860@phx.gbl>
+References: <CAKL8G3HwKRaQyFwpR1bs=DkzKUPban7guhgFe9CikBdJNy7iKg@mail.gmail.com>,
+	<9FC36FBFD42640209E79DB2E9D0EA387@JavierMarcuzzi>,
+	<BAY147-W55F2140FE9FCFEDF6C07A7D9860@phx.gbl>
+Message-ID: <BAY147-W3102622C359B9769378579D9860@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130612/d888a008/attachment.pl>
+
+From matutetote en hotmail.com  Wed Jun 12 13:04:31 2013
+From: matutetote en hotmail.com (Matias Ledesma)
+Date: Wed, 12 Jun 2013 11:04:31 +0000
+Subject: [R-es] calculo de poder estadistico en glm
+In-Reply-To: <51B84B14.3010105@gmail.com>
+References: <CAKL8G3HwKRaQyFwpR1bs=DkzKUPban7guhgFe9CikBdJNy7iKg@mail.gmail.com>,
+	<9FC36FBFD42640209E79DB2E9D0EA387@JavierMarcuzzi>,
+	<BAY147-W55F2140FE9FCFEDF6C07A7D9860@phx.gbl>
+	<BAY147-W3102622C359B9769378579D9860@phx.gbl>,
+	<51B84B14.3010105@gmail.com>
+Message-ID: <BAY147-W620DA73B2E2D87327CC9C2D9860@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130612/29311788/attachment.pl>
+
+From rv.tec en zoho.com  Wed Jun 12 13:26:10 2013
+From: rv.tec en zoho.com (Roberto)
+Date: Wed, 12 Jun 2013 13:26:10 +0200
+Subject: [R-es] Importar datos Statgraphics.
+Message-ID: <51B85AD1.4070901@zoho.com>
+
+Hola, es la primera lista en la que participo, espero no meter mucho la 
+pata y aprender rápido, se ruega comprensión.
+
+Simplemente me gustaría saber la forma de importar datos desde un 
+archivo ".sf3' de Statgraphics.
+
+Creo que ese es un programa bastante difundido, pero no lo tengo y en 
+principio no quiero tenerlo porque no es libre.
+
+Pero encuentro referencias a todo (piInfo, Minitab, S-PLUS, SAS, SPSS, 
+Stata, Systat, Octave, csv, excel...) menos a Statgraphics.
+
+Bueno, pues se admiten sugerencias y gracias por vuestro tiempo.
+Un saludo.
+Rob.
+
+PD: De todas formas, para evitar malos pensamientos y pérdidas de 
+tiempo... aviso que creo que he hecho mis deberes en casa antes de 
+preguntar:
+
+  * He mirado las FAQS (http://cran.r-project.org/faqs.html).
+  * He mirado ?R Data Import/Export? (R-data) is a guide to importing
+    and exporting data to and from R.?
+  * He mirado las mailings list principales
+    (http://www.r-project.org/mail.html), concretamente:
+      o http://stat.ethz.ch/mailman/listinfo
+      o http://cran.r-project.org/search.html
+  * He buscado en el wiki (http://rwiki.sciviews.org/doku.php)
+  * He usado help.search(), RSitesearch() y similares con diversos
+    términos de búsqueda.
+  * También he intentado seguir otras indicaciones del "Do your homework
+    before posting" en http://www.r-project.org/posting-guide.html.
+  * He usado google...
+  * He buscado en la lista hispana: http://r-es.org/forums.
+
+Todo ello sin resultados (excepto el de haber gastado más de dos horas), 
+o con resultados que no tienen nada que ver con lo que busco.
+
+
+From cof en qualityexcellence.es  Wed Jun 12 14:59:06 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 12 Jun 2013 14:59:06 +0200
+Subject: [R-es] Importar datos Statgraphics.
+In-Reply-To: <51B85AD1.4070901@zoho.com>
+References: <51B85AD1.4070901@zoho.com>
+Message-ID: <CAOKbq8jQK2jGdo-zGB_f+gsFvnd0b2HsOiQgX=SY0OmntcosdQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130612/b38fc1a3/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Wed Jun 12 15:15:27 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Wed, 12 Jun 2013 10:15:27 -0300
+Subject: [R-es] calculo de poder estadistico en glm
+In-Reply-To: <BAY147-W55F2140FE9FCFEDF6C07A7D9860@phx.gbl>
+References: <CAKL8G3HwKRaQyFwpR1bs=DkzKUPban7guhgFe9CikBdJNy7iKg@mail.gmail.com>,
+	<9FC36FBFD42640209E79DB2E9D0EA387@JavierMarcuzzi>
+	<BAY147-W55F2140FE9FCFEDF6C07A7D9860@phx.gbl>
+Message-ID: <415B74D1E1EC473ABB971486D8A29E7B@JavierMarcuzzi>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130612/0269127f/attachment.pl>
+
+From rv.tec en zoho.com  Wed Jun 12 19:49:05 2013
+From: rv.tec en zoho.com (rv.tec)
+Date: Wed, 12 Jun 2013 19:49:05 +0200
+Subject: [R-es] Importar datos Statgraphics.
+In-Reply-To: <CAOKbq8jQK2jGdo-zGB_f+gsFvnd0b2HsOiQgX=SY0OmntcosdQ@mail.gmail.com>
+References: <51B85AD1.4070901@zoho.com>
+	<CAOKbq8jQK2jGdo-zGB_f+gsFvnd0b2HsOiQgX=SY0OmntcosdQ@mail.gmail.com>
+Message-ID: <33850709.29943.1371059406474.JavaMail.sas@[172.29.244.248]>
+
+Espero estar usando la forma correcta de responder...
+Primero que nada muchas gracias por la respuesta y el interés.
+Al respecto hago dos consideraciones:
+1.-Es relativamente fácil tener acceso a StatGraphics, pues existen versiones de evaluación de 30 días.
+2.-Tal y como decía en mi consulta acerca de StatGraphics:
+>no lo tengo y en principio no quiero tenerlo porque no es libre
+
+He optado por R precisamente por su licencia de uso y la filosofía de la misma. Por la libertad de uso que proporciona y las distintas implicaciones que ello conlleva (y para evitar las que conlleva el uso de software privativo que, desde luego, no son sólo las económicas o de coste monetario).
+.
+Me resisto a creer que no existe un plugin o extensión de R (o una aplicación de terceros, pero que también sea libre, claro) que pueda realizar la conversión de los datos del fichero .sf3 al formato de R.
+
+No digo que TIENE que existir, pero me cuesta creer que no existe y que no tengo más remedio que recurrir a instalar StatGraphics, exportar los datos y desinstalarlo.
+
+Sin duda se podría entrar en un debate interminable sobre la eficacia de las soluciones vs. su elegancia o 'compatibilidad con el software libre', o sobre la practicidad vs. la ética, en general planteamientos que pueden caer más en lo filosófico que en lo técnico.
+
+Pero igual este no es el foro adecuado y quizás sea mejor dejar el tema en el ámbito técnico.
+Por eso sigo estando MUY interesado en saber cómo importar datos de STATGRAPHICS DESDE R, es decir, sin pasar por StatGrapichs.
+
+Gracias sinceras de nuevo por el interés.
+Quedo a la espera, a ver si surge alguna otra idea.
+Un saludo.
+Rob.
+
+---- Activado Wed, 12 Jun 2013 14:59:06 +0200 Carlos Ortega<cof en qualityexcellence.es> escribió ---- 
+
+
+ > Hola, 
+ > 
+ > A lo mejor la solución pasa por ver si Statgraphics puede exportar su fichero a otro formato de cualquiera de los que R sí que puede leer.
+ > No sé si además del fichero, tienes acceso a Statgraphics....
+ >  
+ > 
+ > Saludos,
+ > Carlos Ortega
+ > www.qualityexcellence.es
+ > 
+ > 
+ > 
+ > 
+ > 
+ >  El 12 de junio de 2013 13:26, Roberto escribió:
+ >  Hola, es la primera lista en la que participo, espero no meter mucho la pata y aprender rápido, se ruega comprensión.
+ >  
+ >  Simplemente me gustaría saber la forma de importar datos desde un archivo ".sf3' de Statgraphics.
+ >  
+ >  Creo que ese es un programa bastante difundido, pero no lo tengo y en principio no quiero tenerlo porque no es libre.
+ >  
+ >  Pero encuentro referencias a todo (piInfo, Minitab, S-PLUS, SAS, SPSS, Stata, Systat, Octave, csv, excel...) menos a Statgraphics.
+ >  
+ >  Bueno, pues se admiten sugerencias y gracias por vuestro tiempo.
+ >  Un saludo.
+ >  Rob.
+ >  
+ >  PD: De todas formas, para evitar malos pensamientos y pérdidas de tiempo... aviso que creo que he hecho mis deberes en casa antes de preguntar:
+ >  
+ >   * He mirado las FAQS (http://cran.r-project.org/faqs.html).
+ >   * He mirado ?R Data Import/Export? (R-data) is a guide to importing
+ >     and exporting data to and from R.?
+ >   * He mirado las mailings list principales
+ >     (http://www.r-project.org/mail.html), concretamente:
+ >       o http://stat.ethz.ch/mailman/listinfo
+ >       o http://cran.r-project.org/search.html
+ >   * He buscado en el wiki (http://rwiki.sciviews.org/doku.php)
+ >   * He usado help.search(), RSitesearch() y similares con diversos
+ >     términos de búsqueda.
+ >   * También he intentado seguir otras indicaciones del "Do your homework
+ >     before posting" en http://www.r-project.org/posting-guide.html.
+ >   * He usado google...
+ >   * He buscado en la lista hispana: http://r-es.org/forums.
+ >  
+ >  Todo ello sin resultados (excepto el de haber gastado más de dos horas), o con resultados que no tienen nada que ver con lo que busco.
+ >  
+ >  _______________________________________________
+ >  R-help-es mailing list
+ >  R-help-es en r-project.org
+ >  https://stat.ethz.ch/mailman/listinfo/r-help-es
+ >  
+ > 
+ > 
+ > 
+ > 
+ > -- 
+ > Saludos,
+ >  Carlos Ortega
+ >  www.qualityexcellence.es 
+ >  
+
+
+From matutetote en hotmail.com  Wed Jun 12 09:24:13 2013
+From: matutetote en hotmail.com (Matias Ledesma)
+Date: Wed, 12 Jun 2013 07:24:13 +0000
+Subject: [R-es] calculo de poder estadistico en glm
+In-Reply-To: <9FC36FBFD42640209E79DB2E9D0EA387@JavierMarcuzzi>
+References: <CAKL8G3HwKRaQyFwpR1bs=DkzKUPban7guhgFe9CikBdJNy7iKg@mail.gmail.com>,
+	<9FC36FBFD42640209E79DB2E9D0EA387@JavierMarcuzzi>
+Message-ID: <BAY147-W55F2140FE9FCFEDF6C07A7D9860@phx.gbl>
+
+Estimado Javier,
+ 
+Gracias por tus comentarios.
+ 
+Si, puede ser que me haya expresado en forma incorrecta. Mi idea fue tratar de ser lo mas conciso posible y limitarme al problema estadistico que tengo, por lo cual obvie mucha informacion.
+La data proviene de un monitoreo que se hace en el Mar Baltico anulamente hace mas de 20 años, debido a que la poblacion a decendido drasticamente en los ultimos años no se puede seguir utilizando el mismo procedimiento el cual se basaba en x numero de replicas por estacion del cual se extraia un valor medio. 
+A lo que me referia con valor medio y intervalo de confianza es por que lo que se busca es tener un valor el cual pueda ser comparable. Si tengo un valor unico es muy dificil compararlo con otras estaciones y sacar conclusions. 
+Llevamos ya un tiempo con este dilema de individuo o poblacion.
+Adjunto un articulo donde explica un poco mas lo de las malformaciones por si te interesa.
+ 
+Lo de epidemiologia es un paquete de R?
+ 
+Saludos,
+Matias
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+> From: javier.ruben.marcuzzi en gmail.com
+> To: jorgeivanvelez en gmail.com; matutetote en hotmail.com
+> CC: r-help-es en r-project.org
+> Subject: Re: [R-es] calculo de poder estadistico en glm
+> Date: Tue, 11 Jun 2013 12:37:33 -0300
+> 
+> Estimado Matías Ledesma
+> 
+> Leí en la lista lo que usted desea realizar, en la misma expresa:
+> 
+> La idea del estudio es mostrar un valor medio con un intervalo de confianza 
+> por estación de la frecuencia de malformaciones por individuo.
+> 
+> Creo que se expreso en forma incorrecta, yo no se cuál es su estudio, yo no 
+> soy estadístico, soy veterinario, pero lo que usted expresa en su idea, 
+> aunque en términos computacionales (la computadora calcula cualquier cosa) 
+> pueda calcularse en términos biológicos es sin importancia. Me refiero 
+> específicamente a malformaciones por individuo, hay animales que pueden 
+> tener más de una malformación (creo que se refiere a congénito), pero son 
+> muchos más los que solo tienen una patología del desarrollo, y más aún los 
+> que carecen de estas.
+> 
+> Puede ser que la referencias de R sobre epidemiología aporten algo a lo que 
+> usted necesita, trabajar por poblaciones y no por individuo. Tenga en cuenta 
+> que en el caso de haber más de una patología, puede ser que estén 
+> relacionadas desde la patología o no, si bien usted habla de malformaciones 
+> en embriones, ¿en que estado embrionario y clasificación?, porque puede ser 
+> que utilicen el término malformación como clasificación y no como congénito 
+> (patológico), aunque este desarrollo embrionario es congénito porque se 
+> desarrolla luego de la fecundación, y en esos casos sería oportuno definir 
+> correctamente en términos médicos referidos a la etapa embrionaria antes de 
+> procesar en R y tener que regresar para corregir algo.
+> 
+> Usted nombra que hay varios factores, por ejemplo si hay contaminación tenga 
+> en cuenta la idiosincrasia, es decir, no todos tienen porqué responder de la 
+> misma manera, usted dice por individuo, yo preferiría que piense en 
+> poblaciones y en ese caso R podría aportar a la ciencia, aunque sería bueno 
+> estudiar por individuo pero es "complicado".
+> 
+> 
+> Javier Marcuzzi
+> 
+> 
+> -----Original Message----- 
+> From: Jorge I Velez
+> Sent: Tuesday, June 11, 2013 11:08 AM
+> To: Matias Ledesma
+> Cc: R-help-es
+> Subject: Re: [R-es] calculo de poder estadistico en glm
+> 
+> Estimado Matias,
+> 
+> Reenvio a la lista.  Es tarde aqui y hay que descansar.  Quizas alguien en
+> otra parte del mundo pueda darte una mano.  En unas horas te envio mi
+> opinion.
+> 
+> Saludos,
+> Jorge.-
+> 
+> 
+> 2013/6/11 Matias Ledesma <>
+> 
+> >  Hola Jorge,
+> >
+> > Muchas gracias por las referencias, ya consegui el libro asi que me voy
+> > aponer a leerlo aver si encuentro una solucion.
+> >
+> > La data que estoy analizando es parte de un programa de monitoreo anual
+> > donde se ve los efectos de la contaminacion marina mediante la utilizacion
+> > de un crustaceo como bioindicador.
+> >
+> > La variable a analizar es la malformacion de embryones en este individuo y
+> > las variables independientes son año, estacion, cantidad total de 
+> > embryones
+> > por individuo y estadio en que se encuentra el embryon.
+> >
+> > Hay gran variabilidad en la data debido a que las malformaciones dependen
+> > de muchos factores, ademas el numero de individuos por estacion varia 
+> > mucho
+> > al igual que el numero de embryones. Por esta razon se utiliza la
+> > frequencia. La idea del estudio es mostrar un valor medio con un intervalo
+> > de confinza por estacion de la frequencia de malformaciones por individo.
+> >
+> > El tamaño de efecto que busco es de 80 % con una siginficancia de 5%
+> >
+> > En cuanto a lo del model, estoy entre dos opciones. La razon por la cual
+> > pensee en un modelo negativo binomial es por que la data tiene gran
+> > varianza (overdispers), la otra solucion que me han recomendado es
+> > transformrar  (boxcox) la variable dependiente y luego aplicar glm con una
+> > funcion normal y link= log.
+> >
+> > Mi pregunta hacerca de la funcion offset era si para este caso en el cual
+> > la variable independiente es una fraccion es valido. En mixed
+> > effects models and extension in R (pag. 240) hay un caso similar en el que
+> > se utilizan el numero de ind por volumen (
+> > L0<-glm(ind~offset(LVol)+fStation,family=poisson,data=Lice). Pero no estoy
+> > seguro de que sea lo mismo dado que lo mio es una freq?
+> >
+> > Saludos,
+> > Matias
+> >
+> >
+> >
+> > ------------------------------
+> > From: jorgeivanvelez en gmail.com
+> > Date: Tue, 11 Jun 2013 18:40:03 +1000
+> > Subject: Re: [R-es] calculo de poder estadistico en glm
+> > To: matutetote en hotmail.com
+> > CC: r-help-es en r-project.org
+> >
+> >
+> > Hola Matias,
+> >
+> > Que tipo de GLM estas usando?  Cuantas variables explicativas?  Que tamaño
+> > de efecto te interesa detectar?
+> >
+> > Una forma de realizar el analisis de potencia es via simulacion.  Dale una
+> > mirada a
+> > http://r.789695.n4.nabble.com/a-priori-power-analysis-for-glm-family-poisson-td4659163.htmly 
+> > en especial a la referencia que alli aparece.  El paquete asypow tambien
+> > puede servirte.
+> >
+> > En cuanto a tu 2a pregunta, en mi opinion, lo que necesitas es un modelo
+> > logistico, no un modelo binomial negativo. En
+> > http://ww2.coastal.edu/kingw/statistics/R-tutorials/logistic.html hay un
+> > ejemplo parecido a lo que planteas.
+> >
+> > Saludos,
+> > Jorge.-
+> >
+> >
+> > 2013/6/11 Matias Ledesma <matutetote en hotmail.com>
+> >
+> > Hola,
+> >
+> > Estoy tratando de calcular el poder estadistico de un GLM en R, programas
+> > estadisticos como SPSS lo puede calcular pero no eh encotrado nada sobre 
+> > R.
+> > Alguien tiene alguna idea o sabe de literatura donde pueda encontrar 
+> > ayuda?
+> >
+> > Luego tengo otra pregunta mas bien teorica sobre la funcion offset
+> > utilizada en negative poisson, por lo que eh entendido esta funcion
+> > posibilita trabajar con fracciones a pesar de que la distribucion poisson
+> > solo sea para enteros positivos. Mi duda es si esto es realmente asi, lo
+> > que eh leido a sido en internet. Eh buscado en libros como Zuur 2007 y
+> > Hilbe 2007 sin encontrar nada.
+> >
+> > modelA1F<-glm.nb(Tot.dameggs~STATN+YEAR+offset(log(FECUND)))
+> >
+> > freq=(Tot.dameggs/FECUND)
+> >
+> > Tot.dameggs= cantidad de huevos dañados por individuo
+> > FECUND=cantidad total de huevos por individuo
+> > STATN= estacion
+> > YEAR= año
+> >
+> > Muchas gracias,
+> > Matias
+> >
+> >
+> >
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> >
+> >
+> 
+> [[alternative HTML version deleted]]
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es 
+> 
+ 		 	   		  
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130612/ac3ec808/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: ICES_Embryo aberration 2008.pdf
+Type: application/pdf
+Size: 696147 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130612/ac3ec808/attachment-0001.pdf>
+
+From canadasreche en gmail.com  Thu Jun 13 11:26:51 2013
+From: canadasreche en gmail.com (=?UTF-8?B?Sm9zw6kgTHVpcyBDYcOxYWRhcyBSZWNoZQ==?=)
+Date: Thu, 13 Jun 2013 11:26:51 +0200
+Subject: [R-es] =?utf-8?q?fecha_primera_versi=C3=B3n_de_R?=
+Message-ID: <51B9905B.3040606@gmail.com>
+
+Hola.
+
+
+¿Alguien sabría decirme de qué fecha es la primera versión de R?
+
+Leyendo R-intro pone que se deriva del lenguaje S escrito en 1990 por 
+Bill Venables y David M. Smith, pero no sé si fue también en 1990 cuando 
+nació R.
+
+
+Saludos.
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Thu Jun 13 11:42:57 2013
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Thu, 13 Jun 2013 11:42:57 +0200
+Subject: [R-es] =?iso-8859-1?q?fecha_primera_versi=F3n_de_R?=
+In-Reply-To: <51B9905B.3040606@gmail.com>
+References: <51B9905B.3040606@gmail.com>
+Message-ID: <0A5B869BDC0A7445B15F9A4A53794377250736B3F8@ASSCCEVS02.sergas.local>
+
+Hola José Luis.
+
+La versión 1.0 de R salió en Febrero del 2000, aunque la referencia más antigua que conozco es la versión 0.49 y data del 23 de Abril de 1997.
+http://cran.es.r-project.org/src/base/R-0/
+
+A ver si alguien se puede remontar algo más atrás....
+
+
+Un Saludo,
+_____________________________
+Miguel Ángel Rodríguez Muíños
+Dirección Xeral de Innovación e Xestión da Saúde Pública
+Consellería de Sanidade
+Xunta de Galicia
+http://dxsp.sergas.es
+
+
+
+
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de José Luis Cañadas Reche
+Enviado el: jueves, 13 de junio de 2013 11:27
+Para: R-es CRAN
+Asunto: [R-es] fecha primera versión de R
+
+Hola.
+
+
+¿Alguien sabría decirme de qué fecha es la primera versión de R?
+
+Leyendo R-intro pone que se deriva del lenguaje S escrito en 1990 por Bill Venables y David M. Smith, pero no sé si fue también en 1990 cuando nació R.
+
+
+Saludos.
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From jorgeivanvelez en gmail.com  Thu Jun 13 11:47:18 2013
+From: jorgeivanvelez en gmail.com (Jorge I Velez)
+Date: Thu, 13 Jun 2013 19:47:18 +1000
+Subject: [R-es] =?iso-8859-1?q?fecha_primera_versi=F3n_de_R?=
+In-Reply-To: <51B9905B.3040606@gmail.com>
+References: <51B9905B.3040606@gmail.com>
+Message-ID: <CAKL8G3F7N2KVEoAGOxG_6dUo560RDncw5s3MiZLiWEcciw5Uqg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/7b38f89e/attachment.pl>
+
+From canadasreche en gmail.com  Thu Jun 13 11:49:23 2013
+From: canadasreche en gmail.com (=?ISO-8859-1?Q?Jos=E9_Luis_Ca=F1adas_Reche?=)
+Date: Thu, 13 Jun 2013 11:49:23 +0200
+Subject: [R-es] =?iso-8859-1?q?fecha_primera_versi=F3n_de_R?=
+In-Reply-To: <CAKL8G3F7N2KVEoAGOxG_6dUo560RDncw5s3MiZLiWEcciw5Uqg@mail.gmail.com>
+References: <51B9905B.3040606@gmail.com>
+	<CAKL8G3F7N2KVEoAGOxG_6dUo560RDncw5s3MiZLiWEcciw5Uqg@mail.gmail.com>
+Message-ID: <51B995A3.1060000@gmail.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/90fcf7dd/attachment.html>
+
+From cof en qualityexcellence.es  Thu Jun 13 14:46:44 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 13 Jun 2013 14:46:44 +0200
+Subject: [R-es] Encuesta sobre las reuniones del "Grupo Usuarios de R -
+	Madrid"...
+Message-ID: <CAOKbq8iz_NPJR8szvxbLH4Gk7c1djBSkdVJ+rvrDBQ7JBFX0vw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/ab708635/attachment.pl>
+
+From cgb en datanalytics.com  Thu Jun 13 15:12:21 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 13 Jun 2013 15:12:21 +0200
+Subject: [R-es] =?iso-8859-1?q?fecha_primera_versi=F3n_de_R?=
+In-Reply-To: <51B995A3.1060000@gmail.com>
+References: <51B9905B.3040606@gmail.com>
+	<CAKL8G3F7N2KVEoAGOxG_6dUo560RDncw5s3MiZLiWEcciw5Uqg@mail.gmail.com>
+	<51B995A3.1060000@gmail.com>
+Message-ID: <CADg83eeYwZ4o_1Ja2oK3HLbAKW_o3chw-QfdAFscfutBRJrp+w@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Richard A. Becker tiene un artículo, A Brief History of S, que habla
+de la protohistoria de S y en el que se lee "S grew up in 1975-1976 in
+the statistics research departments at Bell Laboratories". Y le sigue
+la pista a S hasta el 93.
+
+R es una reimplementación de S. Ross Ihaka habla de sus primeros días en
+
+http://www.stat.auckland.ac.nz/~ihaka/downloads/Interface98.pdf
+
+Ahí dice:
+
+"The initial work on R by Robert Gentleman and I produced what looked
+like a potentially useful piece of software and we began preparing it
+for use in our teaching laboratory. We were heartened enough by our
+progress to place some binary copies of R at Statlib and make a small
+announcement on the s?news mailing list in August of 1993."
+
+Me pregunto... ¿existirá todavía un archivo de esa lista? ¿Correrán
+esos binarios en alguna máquina? ¿Algún aficionado a la
+"paleoinformática" en la lista?
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 13 de junio de 2013 11:49, José Luis Cañadas Reche
+<canadasreche en gmail.com> escribió:
+> ok. Gracias.
+> El 13/06/13 11:47, Jorge I Velez escribió:
+>
+> Febrero de 1997:  http://cran.r-project.org/src/base/R-0/    --JIV
+>
+>
+> 2013/6/13 José Luis Cañadas Reche <canadasreche en gmail.com>
+>>
+>> Hola.
+>>
+>>
+>> ¿Alguien sabría decirme de qué fecha es la primera versión de R?
+>>
+>> Leyendo R-intro pone que se deriva del lenguaje S escrito en 1990 por Bill
+>> Venables y David M. Smith, pero no sé si fue también en 1990 cuando nació R.
+>>
+>>
+>> Saludos.
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From gilbellosta en gmail.com  Thu Jun 13 18:35:41 2013
+From: gilbellosta en gmail.com (Carlos J. Gil Bellosta )
+Date: Thu, 13 Jun 2013 18:35:41 +0200
+Subject: [R-es] =?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+Message-ID: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Tengo un df relativamente chiquito:
+
+> dim(loans)
+[1] 15172    22
+> object.size(loans)
+7488144 bytes
+
+Sin embargo,
+
+empresas <- split(loans, loans$number_id)
+length(empresas)
+#8748
+
+object.size(empresas)
+# 50643907728 bytes
+
+Es decir, el objeto resultante de partir un df de 15000 filas en 8700
+dfs ocupa 5GB.
+
+¿Alguna idea de por qué ocurre esto?
+
+(Uso R 3.0.1 en un Xubuntu 12.04 de 64 bits).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+From cof en qualityexcellence.es  Thu Jun 13 20:04:19 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 13 Jun 2013 20:04:19 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+Message-ID: <CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/4a425e19/attachment.pl>
+
+From marcelino.delacruz en upm.es  Thu Jun 13 20:23:13 2013
+From: marcelino.delacruz en upm.es (Marcelino de la Cruz)
+Date: Thu, 13 Jun 2013 20:23:13 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+ =?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+	<CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+Message-ID: <51BA0E11.2080408@upm.es>
+
+Y el tamaño también depende de la estructura que tenga la data.frame 
+(numero de filas y columnas):
+
+ > object.size(data.frame(matrix(1,nc=10,nr=10)))
+2984 bytes
+
+ > object.size(data.frame(matrix(1,nc=2,nr=50)))
+1576 bytes
+
+ > object.size(data.frame(matrix(1,nc=50,nr=2)))
+6568 bytes
+
+
+(cosa que no pasa con las matrices):
+
+ > object.size((matrix(1,nc=10,nr=10)))
+1000 bytes
+ > object.size((matrix(1,nc=50,nr=2)))
+1000 bytes
+ > object.size((matrix(1,nc=2,nr=50)))
+1000 bytes
+ >
+
+
+
+Así que al partir una data.frame irás "acumulando" bytes extra, y cuanto 
+más pequeños sean los "trozos", mayor será el tamaño:
+
+ > object.size(data.frame(matrix(1,nc=5,nr=5)))*4
+5376 bytes
+ > object.size(data.frame(matrix(1,nc=2,nr=2)))*25
+20200 bytes
+
+
+Saludos,
+
+Marcelino
+
+
+
+El 13/06/2013 20:04, Carlos Ortega escribió:
+> Hola,
+>
+> Si este comportamiento se ve con cualquier data.frame que luego conviertas
+> a lista:
+>
+>>
+>>
+>> v <- 1:10
+>> w <- split(v, 1:2)
+>> w
+> $`1`
+> [1] 1 3 5 7 9
+>
+> $`2`
+> [1]  2  4  6  8 10
+>
+>> object.size(v)
+> 88 bytes
+>> object.size(w)
+> 464 bytes
+>> object.size(w[[1]])
+> 72 bytes
+>
+> Y he encontrado una explicación que entiendo parcialmente está aquí:
+>
+>
+> http://stackoverflow.com/questions/15848590/confusing-size-of-objects-in-r/15850414#15850414
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El 13 de junio de 2013 18:35, Carlos J. Gil Bellosta
+> <gilbellosta en gmail.com>escribió:
+>
+>> Hola, ¿qué tal?
+>>
+>> Tengo un df relativamente chiquito:
+>>
+>>> dim(loans)
+>> [1] 15172    22
+>>> object.size(loans)
+>> 7488144 bytes
+>>
+>> Sin embargo,
+>>
+>> empresas <- split(loans, loans$number_id)
+>> length(empresas)
+>> #8748
+>>
+>> object.size(empresas)
+>> # 50643907728 bytes
+>>
+>> Es decir, el objeto resultante de partir un df de 15000 filas en 8700
+>> dfs ocupa 5GB.
+>>
+>> ¿Alguna idea de por qué ocurre esto?
+>>
+>> (Uso R 3.0.1 en un Xubuntu 12.04 de 64 bits).
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From canadasreche en gmail.com  Thu Jun 13 20:31:43 2013
+From: canadasreche en gmail.com (=?windows-1252?Q?Jose_Luis_Ca=F1adas?=)
+Date: Thu, 13 Jun 2013 20:31:43 +0200
+Subject: [R-es] =?windows-1252?q?fecha_primera_versi=F3n_de_R?=
+In-Reply-To: <CADg83eeYwZ4o_1Ja2oK3HLbAKW_o3chw-QfdAFscfutBRJrp+w@mail.gmail.com>
+References: <51B9905B.3040606@gmail.com>
+	<CAKL8G3F7N2KVEoAGOxG_6dUo560RDncw5s3MiZLiWEcciw5Uqg@mail.gmail.com>
+	<51B995A3.1060000@gmail.com>
+	<CADg83eeYwZ4o_1Ja2oK3HLbAKW_o3chw-QfdAFscfutBRJrp+w@mail.gmail.com>
+Message-ID: <51BA100F.6050606@gmail.com>
+
+Muy interesante. Gracias Carlos.
+  Estaba indagando en los orígenes, más que nada como referencia en un 
+documento, pero dan ganas de probar la R 0.49.
+
+Creo que la primera que instalé fue R 1.2.0, en un curso que dieron en 
+la universidad allá por el 2000.  ¿y vosotros?
+
+
+Saludos
+
+
+
+
+
+El 13/06/13 15:12, Carlos J. Gil Bellosta escribió:
+> Hola, ¿qué tal?
+>
+> Richard A. Becker tiene un artículo, A Brief History of S, que habla
+> de la protohistoria de S y en el que se lee "S grew up in 1975-1976 in
+> the statistics research departments at Bell Laboratories". Y le sigue
+> la pista a S hasta el 93.
+>
+> R es una reimplementación de S. Ross Ihaka habla de sus primeros días en
+>
+> http://www.stat.auckland.ac.nz/~ihaka/downloads/Interface98.pdf
+>
+> Ahí dice:
+>
+> "The initial work on R by Robert Gentleman and I produced what looked
+> like a potentially useful piece of software and we began preparing it
+> for use in our teaching laboratory. We were heartened enough by our
+> progress to place some binary copies of R at Statlib and make a small
+> announcement on the s?news mailing list in August of 1993."
+>
+> Me pregunto... ¿existirá todavía un archivo de esa lista? ¿Correrán
+> esos binarios en alguna máquina? ¿Algún aficionado a la
+> "paleoinformática" en la lista?
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> El día 13 de junio de 2013 11:49, José Luis Cañadas Reche
+> <canadasreche en gmail.com> escribió:
+>> ok. Gracias.
+>> El 13/06/13 11:47, Jorge I Velez escribió:
+>>
+>> Febrero de 1997:  http://cran.r-project.org/src/base/R-0/    --JIV
+>>
+>>
+>> 2013/6/13 José Luis Cañadas Reche <canadasreche en gmail.com>
+>>> Hola.
+>>>
+>>>
+>>> ¿Alguien sabría decirme de qué fecha es la primera versión de R?
+>>>
+>>> Leyendo R-intro pone que se deriva del lenguaje S escrito en 1990 por Bill
+>>> Venables y David M. Smith, pero no sé si fue también en 1990 cuando nació R.
+>>>
+>>>
+>>> Saludos.
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+
+
+From canadasreche en gmail.com  Thu Jun 13 20:42:24 2013
+From: canadasreche en gmail.com (=?ISO-8859-1?Q?Jose_Luis_Ca=F1adas?=)
+Date: Thu, 13 Jun 2013 20:42:24 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+ =?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+	<CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+Message-ID: <51BA1290.3040403@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/ae0719b2/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Thu Jun 13 20:54:42 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Thu, 13 Jun 2013 15:54:42 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <51BA1290.3040403@gmail.com>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com><CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+	<51BA1290.3040403@gmail.com>
+Message-ID: <32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi>
+
+Estimados
+
+¿que pasa con opciones como bigdata o semejantes? Tendría que probar, leer, 
+etc., pero puede ser que algún algoritmo distinto solucione esos problemas. 
+Recuerdo una presentación que creo que la realizó alguno de la lista donde 
+utilizaba millones de datos, eran de aeropuertos, tráfico aéreo, algo de eso 
+había leído en una oportunidad.
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: Jose Luis Cañadas
+Sent: Thursday, June 13, 2013 3:42 PM
+To: r-help-es en r-project.org
+Subject: Re: [R-es] ¿Alguna explicación para este fenómeno? (Relativo al uso 
+de memoria)
+
+Interesante... y preocupante.
+No propuso alguien, no hace mucho, reescribir R desde el principio por
+este tipo de cosas?
+El 13/06/13 20:04, Carlos Ortega escribió:
+> Hola,
+>
+> Si este comportamiento se ve con cualquier data.frame que luego conviertas
+> a lista:
+>
+>>
+>> v <- 1:10
+>> w <- split(v, 1:2)
+>> w
+> $`1`
+> [1] 1 3 5 7 9
+>
+> $`2`
+> [1]  2  4  6  8 10
+>
+>> object.size(v)
+> 88 bytes
+>> object.size(w)
+> 464 bytes
+>> object.size(w[[1]])
+> 72 bytes
+>
+> Y he encontrado una explicación que entiendo parcialmente está aquí:
+>
+>
+> http://stackoverflow.com/questions/15848590/confusing-size-of-objects-in-r/15850414#15850414
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El 13 de junio de 2013 18:35, Carlos J. Gil Bellosta
+> <gilbellosta en gmail.com>escribió:
+>
+>> Hola, ¿qué tal?
+>>
+>> Tengo un df relativamente chiquito:
+>>
+>>> dim(loans)
+>> [1] 15172    22
+>>> object.size(loans)
+>> 7488144 bytes
+>>
+>> Sin embargo,
+>>
+>> empresas <- split(loans, loans$number_id)
+>> length(empresas)
+>> #8748
+>>
+>> object.size(empresas)
+>> # 50643907728 bytes
+>>
+>> Es decir, el objeto resultante de partir un df de 15000 filas en 8700
+>> dfs ocupa 5GB.
+>>
+>> ¿Alguna idea de por qué ocurre esto?
+>>
+>> (Uso R 3.0.1 en un Xubuntu 12.04 de 64 bits).
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+[[alternative HTML version deleted]]
+
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cof en qualityexcellence.es  Thu Jun 13 20:59:53 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 13 Jun 2013 20:59:53 +0200
+Subject: [R-es] =?iso-8859-1?q?fecha_primera_versi=F3n_de_R?=
+In-Reply-To: <51BA100F.6050606@gmail.com>
+References: <51B9905B.3040606@gmail.com>
+	<CAKL8G3F7N2KVEoAGOxG_6dUo560RDncw5s3MiZLiWEcciw5Uqg@mail.gmail.com>
+	<51B995A3.1060000@gmail.com>
+	<CADg83eeYwZ4o_1Ja2oK3HLbAKW_o3chw-QfdAFscfutBRJrp+w@mail.gmail.com>
+	<51BA100F.6050606@gmail.com>
+Message-ID: <CAOKbq8gJmRqeHQ3KrJu_TBET04jsGToZjQNvkP+zpfLyWmeX-A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/53bd80ef/attachment.pl>
+
+From javier.ruben.marcuzzi en gmail.com  Thu Jun 13 21:14:15 2013
+From: javier.ruben.marcuzzi en gmail.com (=?UTF-8?Q?Marcuzzi=2C_Javier_Rub=C3=A9n?=)
+Date: Thu, 13 Jun 2013 16:14:15 -0300
+Subject: [R-es] =?utf-8?q?fecha_primera_versi=C3=B3n_de_R?=
+In-Reply-To: <CAOKbq8gJmRqeHQ3KrJu_TBET04jsGToZjQNvkP+zpfLyWmeX-A@mail.gmail.com>
+References: <51B9905B.3040606@gmail.com><CAKL8G3F7N2KVEoAGOxG_6dUo560RDncw5s3MiZLiWEcciw5Uqg@mail.gmail.com><51B995A3.1060000@gmail.com><CADg83eeYwZ4o_1Ja2oK3HLbAKW_o3chw-QfdAFscfutBRJrp+w@mail.gmail.com><51BA100F.6050606@gmail.com>
+	<CAOKbq8gJmRqeHQ3KrJu_TBET04jsGToZjQNvkP+zpfLyWmeX-A@mail.gmail.com>
+Message-ID: <8940C180F3A0493C87EF22BA3D985A67@JavierMarcuzzi>
+
+Hola
+
+En la primer lista hay archivos desde el año 1997
+
+https://stat.ethz.ch/pipermail/r-announce/
+
+En el siguiente listado de listas, r-core está cerrado para sus usuarios, 
+pero por ahí debe estar el origen de R
+
+https://stat.ethz.ch/mailman/listinfo
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: Carlos Ortega
+Sent: Thursday, June 13, 2013 3:59 PM
+To: Jose Luis Cañadas
+Cc: R-es CRAN
+Subject: Re: [R-es] fecha primera versión de R
+
+Hola,
+
+Yo creo que probé de las primeras versiones de R, aunque todavía tenía
+ciertas dudas sobre su futuro porque por aquel entonces ya usaba S-Plus en
+el trabajo y no veía mucha necesidad de usar algo menos potente (trabajaba
+en ATT y tuvimos visitas del grupo de Bell-Labs de Bill Cleveland, nos
+hicieron unos desarrollos sobre Splus para unos temas de producción
+bastante alucinantes - de esto tengo algún documento...).
+
+Creo que en casa todavía tengo por ahí tanto alguna de esas versiones de R
+anteriores a la 1.0.0 y la versión para Windows de S-Plus.
+Con esto de las copias en la red de los correos, se puede consultar alguna
+evidencia de haber participado ya en la lista de R-Help allá por el 2000...
+
+Por aquel entonces estaba trabajando en Singapur y tenía una cuenta que se
+llamaba "loschinorris" (cosas de la edad):
+
+http://grokbase.com/t/r/r-help/003ebdgcw6/r-trellis-splus-equivalent-in-a-future-r
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El 13 de junio de 2013 20:31, Jose Luis Cañadas
+<canadasreche en gmail.com>escribió:
+
+> Muy interesante. Gracias Carlos.
+>  Estaba indagando en los orígenes, más que nada como referencia en un
+> documento, pero dan ganas de probar la R 0.49.
+>
+> Creo que la primera que instalé fue R 1.2.0, en un curso que dieron en la
+> universidad allá por el 2000.  ¿y vosotros?
+>
+>
+> Saludos
+>
+>
+>
+>
+>
+> El 13/06/13 15:12, Carlos J. Gil Bellosta escribió:
+>
+>  Hola, ¿qué tal?
+>>
+>> Richard A. Becker tiene un artículo, A Brief History of S, que habla
+>> de la protohistoria de S y en el que se lee "S grew up in 1975-1976 in
+>> the statistics research departments at Bell Laboratories". Y le sigue
+>> la pista a S hasta el 93.
+>>
+>> R es una reimplementación de S. Ross Ihaka habla de sus primeros días en
+>>
+>> http://www.stat.auckland.ac.**nz/~ihaka/downloads/**Interface98.pdf<http://www.stat.auckland.ac.nz/~ihaka/downloads/Interface98.pdf>
+>>
+>> Ahí dice:
+>>
+>> "The initial work on R by Robert Gentleman and I produced what looked
+>> like a potentially useful piece of software and we began preparing it
+>> for use in our teaching laboratory. We were heartened enough by our
+>> progress to place some binary copies of R at Statlib and make a small
+>> announcement on the s?news mailing list in August of 1993."
+>>
+>> Me pregunto... ¿existirá todavía un archivo de esa lista? ¿Correrán
+>> esos binarios en alguna máquina? ¿Algún aficionado a la
+>> "paleoinformática" en la lista?
+>>
+>> Un saludo,
+>>
+>> Carlos J. Gil Bellosta
+>> http://www.datanalytics.com
+>>
+>> El día 13 de junio de 2013 11:49, José Luis Cañadas Reche
+>> <canadasreche en gmail.com> escribió:
+>>
+>>> ok. Gracias.
+>>> El 13/06/13 11:47, Jorge I Velez escribió:
+>>>
+>>> Febrero de 1997: 
+>>> http://cran.r-project.org/src/**base/R-0/<http://cran.r-project.org/src/base/R-0/> 
+>>>    --JIV
+>>>
+>>>
+>>> 2013/6/13 José Luis Cañadas Reche <canadasreche en gmail.com>
+>>>
+>>>> Hola.
+>>>>
+>>>>
+>>>> ¿Alguien sabría decirme de qué fecha es la primera versión de R?
+>>>>
+>>>> Leyendo R-intro pone que se deriva del lenguaje S escrito en 1990 por
+>>>> Bill
+>>>> Venables y David M. Smith, pero no sé si fue también en 1990 cuando
+>>>> nació R.
+>>>>
+>>>>
+>>>> Saludos.
+>>>>
+>>>> ______________________________**_________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>>>>
+>>>
+>>>
+>>>
+>>> ______________________________**_________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>>>
+>>>
+> ______________________________**_________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>
+
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+[[alternative HTML version deleted]]
+
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cgb en datanalytics.com  Thu Jun 13 21:26:05 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 13 Jun 2013 21:26:05 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+	<CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+	<51BA1290.3040403@gmail.com>
+	<32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi>
+Message-ID: <CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Al final he descubierto el motivo del problema. Cierto que esperaba
+cierto nivel de _overhead_, pero nunca tantísimo. Por mucho _overhead_
+que haya, no se pasa de 7MB a 5GB.
+
+El problema era que (a pesar de mi opción stringsAsFactors = F) los
+niveles de los factores se copiaban íntegros en cada una de las
+columnas de tipo factor de cada una de las tablas resultantes. Aunque
+no se usasen.
+
+He convertido los factores a caracter, he vuelto a trocear el df
+resultante y el resultado ha sido:
+
+> object.size(empresas)
+33052680 bytes
+> object.size(loans)
+3813944 bytes
+
+Es decir, con _overhead_ el tamaño del objeto resultante ha crecido en
+un orden de magnitud (asumible), no en tres o cuatro (no asumible).
+
+¿Seré yo el único al que los dichosos factores le han hecho perder
+horas y horas de trabajo?
+
+Salud,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 13 de junio de 2013 20:54, Marcuzzi, Javier Rubén
+<javier.ruben.marcuzzi en gmail.com> escribió:
+> Estimados
+>
+> ¿que pasa con opciones como bigdata o semejantes? Tendría que probar, leer,
+> etc., pero puede ser que algún algoritmo distinto solucione esos problemas.
+> Recuerdo una presentación que creo que la realizó alguno de la lista donde
+> utilizaba millones de datos, eran de aeropuertos, tráfico aéreo, algo de eso
+> había leído en una oportunidad.
+>
+> Javier Marcuzzi
+>
+> -----Original Message----- From: Jose Luis Cañadas
+> Sent: Thursday, June 13, 2013 3:42 PM
+> To: r-help-es en r-project.org
+> Subject: Re: [R-es] ¿Alguna explicación para este fenómeno? (Relativo al uso
+> de memoria)
+>
+>
+> Interesante... y preocupante.
+> No propuso alguien, no hace mucho, reescribir R desde el principio por
+> este tipo de cosas?
+> El 13/06/13 20:04, Carlos Ortega escribió:
+>>
+>> Hola,
+>>
+>> Si este comportamiento se ve con cualquier data.frame que luego conviertas
+>> a lista:
+>>
+>>>
+>>> v <- 1:10
+>>> w <- split(v, 1:2)
+>>> w
+>>
+>> $`1`
+>> [1] 1 3 5 7 9
+>>
+>> $`2`
+>> [1]  2  4  6  8 10
+>>
+>>> object.size(v)
+>>
+>> 88 bytes
+>>>
+>>> object.size(w)
+>>
+>> 464 bytes
+>>>
+>>> object.size(w[[1]])
+>>
+>> 72 bytes
+>>
+>> Y he encontrado una explicación que entiendo parcialmente está aquí:
+>>
+>>
+>>
+>> http://stackoverflow.com/questions/15848590/confusing-size-of-objects-in-r/15850414#15850414
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>
+>> El 13 de junio de 2013 18:35, Carlos J. Gil Bellosta
+>> <gilbellosta en gmail.com>escribió:
+>>
+>>> Hola, ¿qué tal?
+>>>
+>>> Tengo un df relativamente chiquito:
+>>>
+>>>> dim(loans)
+>>>
+>>> [1] 15172    22
+>>>>
+>>>> object.size(loans)
+>>>
+>>> 7488144 bytes
+>>>
+>>> Sin embargo,
+>>>
+>>> empresas <- split(loans, loans$number_id)
+>>> length(empresas)
+>>> #8748
+>>>
+>>> object.size(empresas)
+>>> # 50643907728 bytes
+>>>
+>>> Es decir, el objeto resultante de partir un df de 15000 filas en 8700
+>>> dfs ocupa 5GB.
+>>>
+>>> ¿Alguna idea de por qué ocurre esto?
+>>>
+>>> (Uso R 3.0.1 en un Xubuntu 12.04 de 64 bits).
+>>>
+>>> Un saludo,
+>>>
+>>> Carlos J. Gil Bellosta
+>>> http://www.datanalytics.com
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+> [[alternative HTML version deleted]]
+>
+>
+>
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Jun 13 21:45:56 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Thu, 13 Jun 2013 16:45:56 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com><CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com><51BA1290.3040403@gmail.com><32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi>
+	<CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com>
+Message-ID: <69621EBD46E3430AB808E3319AE73CBD@JavierMarcuzzi>
+
+Estimado Carlos
+
+Sobre:
+¿Seré yo el único al que los dichosos factores le han hecho perder
+horas y horas de trabajo?
+
+Si usted supiese en mi caso las cosas fáciles que me hacen perder tiempo.
+
+¿Hay alguna herramienta que verifique lo que realiza el código?
+
+Yo no soy programador pero vi en visualstudio o en netbeans, algunas formas 
+donde colocando puntos en ciertas partes del código es posible visualizar 
+como se va procesando, con información útil en el procesamiento técnico a un 
+nivel informático que escapa a la mayoría, pero que existe.
+
+Javier
+
+-----Original Message----- 
+From: Carlos J. Gil Bellosta
+Sent: Thursday, June 13, 2013 4:26 PM
+To: Marcuzzi, Javier Rubén
+Cc: Jose Luis Cañadas ; r-help-es
+Subject: Re: [R-es] ¿Alguna explicación para este fenómeno? (Relativo al uso 
+de memoria)
+
+Hola, ¿qué tal?
+
+Al final he descubierto el motivo del problema. Cierto que esperaba
+cierto nivel de _overhead_, pero nunca tantísimo. Por mucho _overhead_
+que haya, no se pasa de 7MB a 5GB.
+
+El problema era que (a pesar de mi opción stringsAsFactors = F) los
+niveles de los factores se copiaban íntegros en cada una de las
+columnas de tipo factor de cada una de las tablas resultantes. Aunque
+no se usasen.
+
+He convertido los factores a caracter, he vuelto a trocear el df
+resultante y el resultado ha sido:
+
+> object.size(empresas)
+33052680 bytes
+> object.size(loans)
+3813944 bytes
+
+Es decir, con _overhead_ el tamaño del objeto resultante ha crecido en
+un orden de magnitud (asumible), no en tres o cuatro (no asumible).
+
+¿Seré yo el único al que los dichosos factores le han hecho perder
+horas y horas de trabajo?
+
+Salud,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 13 de junio de 2013 20:54, Marcuzzi, Javier Rubén
+<javier.ruben.marcuzzi en gmail.com> escribió:
+> Estimados
+>
+> ¿que pasa con opciones como bigdata o semejantes? Tendría que probar, 
+> leer,
+> etc., pero puede ser que algún algoritmo distinto solucione esos 
+> problemas.
+> Recuerdo una presentación que creo que la realizó alguno de la lista donde
+> utilizaba millones de datos, eran de aeropuertos, tráfico aéreo, algo de 
+> eso
+> había leído en una oportunidad.
+>
+> Javier Marcuzzi
+>
+> -----Original Message----- From: Jose Luis Cañadas
+> Sent: Thursday, June 13, 2013 3:42 PM
+> To: r-help-es en r-project.org
+> Subject: Re: [R-es] ¿Alguna explicación para este fenómeno? (Relativo al 
+> uso
+> de memoria)
+>
+>
+> Interesante... y preocupante.
+> No propuso alguien, no hace mucho, reescribir R desde el principio por
+> este tipo de cosas?
+> El 13/06/13 20:04, Carlos Ortega escribió:
+>>
+>> Hola,
+>>
+>> Si este comportamiento se ve con cualquier data.frame que luego 
+>> conviertas
+>> a lista:
+>>
+>>>
+>>> v <- 1:10
+>>> w <- split(v, 1:2)
+>>> w
+>>
+>> $`1`
+>> [1] 1 3 5 7 9
+>>
+>> $`2`
+>> [1]  2  4  6  8 10
+>>
+>>> object.size(v)
+>>
+>> 88 bytes
+>>>
+>>> object.size(w)
+>>
+>> 464 bytes
+>>>
+>>> object.size(w[[1]])
+>>
+>> 72 bytes
+>>
+>> Y he encontrado una explicación que entiendo parcialmente está aquí:
+>>
+>>
+>>
+>> http://stackoverflow.com/questions/15848590/confusing-size-of-objects-in-r/15850414#15850414
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>
+>> El 13 de junio de 2013 18:35, Carlos J. Gil Bellosta
+>> <gilbellosta en gmail.com>escribió:
+>>
+>>> Hola, ¿qué tal?
+>>>
+>>> Tengo un df relativamente chiquito:
+>>>
+>>>> dim(loans)
+>>>
+>>> [1] 15172    22
+>>>>
+>>>> object.size(loans)
+>>>
+>>> 7488144 bytes
+>>>
+>>> Sin embargo,
+>>>
+>>> empresas <- split(loans, loans$number_id)
+>>> length(empresas)
+>>> #8748
+>>>
+>>> object.size(empresas)
+>>> # 50643907728 bytes
+>>>
+>>> Es decir, el objeto resultante de partir un df de 15000 filas en 8700
+>>> dfs ocupa 5GB.
+>>>
+>>> ¿Alguna idea de por qué ocurre esto?
+>>>
+>>> (Uso R 3.0.1 en un Xubuntu 12.04 de 64 bits).
+>>>
+>>> Un saludo,
+>>>
+>>> Carlos J. Gil Bellosta
+>>> http://www.datanalytics.com
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>
+> [[alternative HTML version deleted]]
+>
+>
+>
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From cof en qualityexcellence.es  Thu Jun 13 22:22:39 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 13 Jun 2013 22:22:39 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <69621EBD46E3430AB808E3319AE73CBD@JavierMarcuzzi>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+	<CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+	<51BA1290.3040403@gmail.com>
+	<32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi>
+	<CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com>
+	<69621EBD46E3430AB808E3319AE73CBD@JavierMarcuzzi>
+Message-ID: <CAOKbq8g7k0ZDwd+BJeV3QRFzJYObf7Hg40Xv_-naO1azMtoJ4g@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/a054b44f/attachment.pl>
+
+From sin_respuesta en r-es.org  Thu Jun 13 22:51:06 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Fri, 14 Jun 2013 00:51:06 +0400 (MSK)
+Subject: [R-es] =?utf-8?q?Nueva_publicaci=C3=B3n_en_blog_en_r-es=2Eorg?=
+Message-ID: <mocn96.pze4gy@r-es.org>
+
+Nueva publicación en blog: Ofertas de trabajo, "La ONU busca contratar jóvenes estadísticos españoles - 2013", por Emilio en 13/06/13 22:51h
+
+Ver el blog en:
+http://r-es.org/tiki-view_blog_post.php?blogId=2&postId=70
+
+Si no desea recibir estas notificaciones siga este enlace:
+http://r-es.org/tiki-user_watches.php?id=5
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From javier.ruben.marcuzzi en gmail.com  Thu Jun 13 22:55:34 2013
+From: javier.ruben.marcuzzi en gmail.com (=?utf-8?Q?Marcuzzi=2C_Javier_Rub=C3=A9n?=)
+Date: Thu, 13 Jun 2013 17:55:34 -0300
+Subject: [R-es] =?utf-8?q?=C2=BFAlguna_explicaci=C3=B3n_para_este_fen?=
+	=?utf-8?q?=C3=B3meno=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <CAOKbq8g7k0ZDwd+BJeV3QRFzJYObf7Hg40Xv_-naO1azMtoJ4g@mail.gmail.com>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com><CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com><51BA1290.3040403@gmail.com><32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi><CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com><69621EBD46E3430AB808E3319AE73CBD@JavierMarcuzzi>
+	<CAOKbq8g7k0ZDwd+BJeV3QRFzJYObf7Hg40Xv_-naO1azMtoJ4g@mail.gmail.com>
+Message-ID: <5537C72C878D422F80CC3EAE6A2B18A0@JavierMarcuzzi>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/8223ad6d/attachment.pl>
+
+From cgb en datanalytics.com  Thu Jun 13 23:04:28 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 13 Jun 2013 23:04:28 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <69621EBD46E3430AB808E3319AE73CBD@JavierMarcuzzi>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+	<CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+	<51BA1290.3040403@gmail.com>
+	<32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi>
+	<CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com>
+	<69621EBD46E3430AB808E3319AE73CBD@JavierMarcuzzi>
+Message-ID: <CADg83edF=_+yZgr3z+BEbBmMDS3kirXXSdeEru_YyjpEUkjZ7A@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Lo que quieres es un "debugger visual" (como el de muchos IDEs,
+incluyendo Netbeans y Eclipse) para R, como el de Revolution,
+
+http://www.youtube.com/watch?feature=player_embedded&v=7shLKEINM9A#!
+
+Pues sí, efectivamente, existe, pero solo con la versión de
+Revolutions de R. Y verás también que está basado en el "debugger"
+tradicional de R, que permite ejecutar código línea a línea.
+
+Personalmente, no veo que la parte visual aporte mucho: soy más rápido
+tecleando que moviendo el ratón.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 13 de junio de 2013 21:45, Marcuzzi, Javier Rubén
+<javier.ruben.marcuzzi en gmail.com> escribió:
+> Estimado Carlos
+>
+> Sobre:
+>
+> ¿Seré yo el único al que los dichosos factores le han hecho perder
+> horas y horas de trabajo?
+>
+> Si usted supiese en mi caso las cosas fáciles que me hacen perder tiempo.
+>
+> ¿Hay alguna herramienta que verifique lo que realiza el código?
+>
+> Yo no soy programador pero vi en visualstudio o en netbeans, algunas formas
+> donde colocando puntos en ciertas partes del código es posible visualizar
+> como se va procesando, con información útil en el procesamiento técnico a un
+> nivel informático que escapa a la mayoría, pero que existe.
+>
+> Javier
+>
+> -----Original Message----- From: Carlos J. Gil Bellosta
+> Sent: Thursday, June 13, 2013 4:26 PM
+> To: Marcuzzi, Javier Rubén
+> Cc: Jose Luis Cañadas ; r-help-es
+>
+> Subject: Re: [R-es] ¿Alguna explicación para este fenómeno? (Relativo al uso
+> de memoria)
+>
+> Hola, ¿qué tal?
+>
+> Al final he descubierto el motivo del problema. Cierto que esperaba
+> cierto nivel de _overhead_, pero nunca tantísimo. Por mucho _overhead_
+> que haya, no se pasa de 7MB a 5GB.
+>
+> El problema era que (a pesar de mi opción stringsAsFactors = F) los
+> niveles de los factores se copiaban íntegros en cada una de las
+> columnas de tipo factor de cada una de las tablas resultantes. Aunque
+> no se usasen.
+>
+> He convertido los factores a caracter, he vuelto a trocear el df
+> resultante y el resultado ha sido:
+>
+>> object.size(empresas)
+>
+> 33052680 bytes
+>>
+>> object.size(loans)
+>
+> 3813944 bytes
+>
+> Es decir, con _overhead_ el tamaño del objeto resultante ha crecido en
+> un orden de magnitud (asumible), no en tres o cuatro (no asumible).
+>
+> ¿Seré yo el único al que los dichosos factores le han hecho perder
+> horas y horas de trabajo?
+>
+> Salud,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+>
+> El día 13 de junio de 2013 20:54, Marcuzzi, Javier Rubén
+> <javier.ruben.marcuzzi en gmail.com> escribió:
+>>
+>> Estimados
+>>
+>> ¿que pasa con opciones como bigdata o semejantes? Tendría que probar,
+>> leer,
+>> etc., pero puede ser que algún algoritmo distinto solucione esos
+>> problemas.
+>> Recuerdo una presentación que creo que la realizó alguno de la lista donde
+>> utilizaba millones de datos, eran de aeropuertos, tráfico aéreo, algo de
+>> eso
+>> había leído en una oportunidad.
+>>
+>> Javier Marcuzzi
+>>
+>> -----Original Message----- From: Jose Luis Cañadas
+>> Sent: Thursday, June 13, 2013 3:42 PM
+>> To: r-help-es en r-project.org
+>> Subject: Re: [R-es] ¿Alguna explicación para este fenómeno? (Relativo al
+>> uso
+>> de memoria)
+>>
+>>
+>> Interesante... y preocupante.
+>> No propuso alguien, no hace mucho, reescribir R desde el principio por
+>> este tipo de cosas?
+>> El 13/06/13 20:04, Carlos Ortega escribió:
+>>>
+>>>
+>>> Hola,
+>>>
+>>> Si este comportamiento se ve con cualquier data.frame que luego
+>>> conviertas
+>>> a lista:
+>>>
+>>>>
+>>>> v <- 1:10
+>>>> w <- split(v, 1:2)
+>>>> w
+>>>
+>>>
+>>> $`1`
+>>> [1] 1 3 5 7 9
+>>>
+>>> $`2`
+>>> [1]  2  4  6  8 10
+>>>
+>>>> object.size(v)
+>>>
+>>>
+>>> 88 bytes
+>>>>
+>>>>
+>>>> object.size(w)
+>>>
+>>>
+>>> 464 bytes
+>>>>
+>>>>
+>>>> object.size(w[[1]])
+>>>
+>>>
+>>> 72 bytes
+>>>
+>>> Y he encontrado una explicación que entiendo parcialmente está aquí:
+>>>
+>>>
+>>>
+>>>
+>>> http://stackoverflow.com/questions/15848590/confusing-size-of-objects-in-r/15850414#15850414
+>>>
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>>
+>>> El 13 de junio de 2013 18:35, Carlos J. Gil Bellosta
+>>> <gilbellosta en gmail.com>escribió:
+>>>
+>>>> Hola, ¿qué tal?
+>>>>
+>>>> Tengo un df relativamente chiquito:
+>>>>
+>>>>> dim(loans)
+>>>>
+>>>>
+>>>> [1] 15172    22
+>>>>>
+>>>>>
+>>>>> object.size(loans)
+>>>>
+>>>>
+>>>> 7488144 bytes
+>>>>
+>>>> Sin embargo,
+>>>>
+>>>> empresas <- split(loans, loans$number_id)
+>>>> length(empresas)
+>>>> #8748
+>>>>
+>>>> object.size(empresas)
+>>>> # 50643907728 bytes
+>>>>
+>>>> Es decir, el objeto resultante de partir un df de 15000 filas en 8700
+>>>> dfs ocupa 5GB.
+>>>>
+>>>> ¿Alguna idea de por qué ocurre esto?
+>>>>
+>>>> (Uso R 3.0.1 en un Xubuntu 12.04 de 64 bits).
+>>>>
+>>>> Un saludo,
+>>>>
+>>>> Carlos J. Gil Bellosta
+>>>> http://www.datanalytics.com
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>>>
+>>>
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>>
+>>
+>> [[alternative HTML version deleted]]
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From cof en qualityexcellence.es  Thu Jun 13 23:16:41 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 13 Jun 2013 23:16:41 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <CADg83edF=_+yZgr3z+BEbBmMDS3kirXXSdeEru_YyjpEUkjZ7A@mail.gmail.com>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+	<CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+	<51BA1290.3040403@gmail.com>
+	<32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi>
+	<CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com>
+	<69621EBD46E3430AB808E3319AE73CBD@JavierMarcuzzi>
+	<CADg83edF=_+yZgr3z+BEbBmMDS3kirXXSdeEru_YyjpEUkjZ7A@mail.gmail.com>
+Message-ID: <CAOKbq8i9UUVDKRm52erXh+sHKYxPYcWZkboGwBy9dfh=x4R5vw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130613/730de248/attachment.pl>
+
+From aalonso en rcumariacristina.com  Fri Jun 14 10:36:35 2013
+From: aalonso en rcumariacristina.com (=?iso-8859-1?Q?AGUST=CDN_ALONSO_RODR=CDGUEZ?=)
+Date: Fri, 14 Jun 2013 10:36:35 +0200
+Subject: [R-es] Cambio de formato
+Message-ID: <000001ce68da$47f21610$d7d64230$@com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130614/c31bcab5/attachment.pl>
+
+From sin_respuesta en r-es.org  Fri Jun 14 10:38:50 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Fri, 14 Jun 2013 12:38:50 +0400 (MSK)
+Subject: [R-es] =?utf-8?q?Nueva_publicaci=C3=B3n_en_blog_en_r-es=2Eorg?=
+Message-ID: <modk0q.5od9vh@r-es.org>
+
+Nueva publicación en blog: Ofertas de trabajo, "Empresa busca junior de estadística", por Emilio en 14/06/13 10:38h
+
+Ver el blog en:
+http://r-es.org/tiki-view_blog_post.php?blogId=2&postId=71
+
+Si no desea recibir estas notificaciones siga este enlace:
+http://r-es.org/tiki-user_watches.php?id=5
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From cof en qualityexcellence.es  Fri Jun 14 11:17:17 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 14 Jun 2013 11:17:17 +0200
+Subject: [R-es] Cambio de formato
+In-Reply-To: <000001ce68da$47f21610$d7d64230$@com>
+References: <000001ce68da$47f21610$d7d64230$@com>
+Message-ID: <CAOKbq8hFB5EyzkjRJcaP-7MfbmpnRL5TP3x+x1skVWDcabiLeQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130614/dc85248e/attachment.pl>
+
+From onunez en unex.es  Fri Jun 14 11:38:28 2013
+From: onunez en unex.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Fri, 14 Jun 2013 11:38:28 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+ =?iso-8859-1?q?o=3F_=28Relativo_al_uso_de_memoria=29?=
+In-Reply-To: <CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com>
+References: <CADg83eca7vPdjf-TrfK85PoADpYOMgmUHxgA8joa+aVDqfKAfA@mail.gmail.com>
+	<CAOKbq8jj=EswqbFibK_9K2Rn5KSeQMeDr5+z4vFEG2Dk-5Gb0g@mail.gmail.com>
+	<51BA1290.3040403@gmail.com>
+	<32485F3926AF493AB3794C29C4EA4D31@JavierMarcuzzi>
+	<CADg83efwwbQsU1J0j69fx2Eyz=+k4sAM4_F5RZ0CXvTZk7MG9Q@mail.gmail.com>
+Message-ID: <EB78D6C4-DA98-431C-9CE3-DC13DB6414A7@unex.es>
+
+Carlos,
+
+que sepas que sufrí también el mismo problema hace unos meses,
+esperando durante horas cálculos que se podían llevar en unos pocos  
+minutos.
+Tardé también en percatarme del origen del problema y adopté la misma  
+solución.
+Un saludo. Olivier
+
+
+
+El 13/06/2013, a las 21:26, Carlos J. Gil Bellosta escribió:
+
+> Hola, ¿qué tal?
+>
+> Al final he descubierto el motivo del problema. Cierto que esperaba
+> cierto nivel de _overhead_, pero nunca tantísimo. Por mucho _overhead_
+> que haya, no se pasa de 7MB a 5GB.
+>
+> El problema era que (a pesar de mi opción stringsAsFactors = F) los
+> niveles de los factores se copiaban íntegros en cada una de las
+> columnas de tipo factor de cada una de las tablas resultantes. Aunque
+> no se usasen.
+>
+> He convertido los factores a caracter, he vuelto a trocear el df
+> resultante y el resultado ha sido:
+>
+>> object.size(empresas)
+> 33052680 bytes
+>> object.size(loans)
+> 3813944 bytes
+>
+> Es decir, con _overhead_ el tamaño del objeto resultante ha crecido en
+> un orden de magnitud (asumible), no en tres o cuatro (no asumible).
+>
+> ¿Seré yo el único al que los dichosos factores le han hecho perder
+> horas y horas de trabajo?
+>
+> Salud,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+>
+> El día 13 de junio de 2013 20:54, Marcuzzi, Javier Rubén
+> <javier.ruben.marcuzzi en gmail.com> escribió:
+>> Estimados
+>>
+>> ¿que pasa con opciones como bigdata o semejantes? Tendría que  
+>> probar, leer,
+>> etc., pero puede ser que algún algoritmo distinto solucione esos  
+>> problemas.
+>> Recuerdo una presentación que creo que la realizó alguno de la  
+>> lista donde
+>> utilizaba millones de datos, eran de aeropuertos, tráfico aéreo,  
+>> algo de eso
+>> había leído en una oportunidad.
+>>
+>> Javier Marcuzzi
+>>
+>> -----Original Message----- From: Jose Luis Cañadas
+>> Sent: Thursday, June 13, 2013 3:42 PM
+>> To: r-help-es en r-project.org
+>> Subject: Re: [R-es] ¿Alguna explicación para este fenómeno?  
+>> (Relativo al uso
+>> de memoria)
+>>
+>>
+>> Interesante... y preocupante.
+>> No propuso alguien, no hace mucho, reescribir R desde el principio  
+>> por
+>> este tipo de cosas?
+>> El 13/06/13 20:04, Carlos Ortega escribió:
+>>>
+>>> Hola,
+>>>
+>>> Si este comportamiento se ve con cualquier data.frame que luego  
+>>> conviertas
+>>> a lista:
+>>>
+>>>>
+>>>> v <- 1:10
+>>>> w <- split(v, 1:2)
+>>>> w
+>>>
+>>> $`1`
+>>> [1] 1 3 5 7 9
+>>>
+>>> $`2`
+>>> [1]  2  4  6  8 10
+>>>
+>>>> object.size(v)
+>>>
+>>> 88 bytes
+>>>>
+>>>> object.size(w)
+>>>
+>>> 464 bytes
+>>>>
+>>>> object.size(w[[1]])
+>>>
+>>> 72 bytes
+>>>
+>>> Y he encontrado una explicación que entiendo parcialmente está aquí:
+>>>
+>>>
+>>>
+>>> http://stackoverflow.com/questions/15848590/confusing-size-of- 
+>>> objects-in-r/15850414#15850414
+>>>
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>>
+>>> El 13 de junio de 2013 18:35, Carlos J. Gil Bellosta
+>>> <gilbellosta en gmail.com>escribió:
+>>>
+>>>> Hola, ¿qué tal?
+>>>>
+>>>> Tengo un df relativamente chiquito:
+>>>>
+>>>>> dim(loans)
+>>>>
+>>>> [1] 15172    22
+>>>>>
+>>>>> object.size(loans)
+>>>>
+>>>> 7488144 bytes
+>>>>
+>>>> Sin embargo,
+>>>>
+>>>> empresas <- split(loans, loans$number_id)
+>>>> length(empresas)
+>>>> #8748
+>>>>
+>>>> object.size(empresas)
+>>>> # 50643907728 bytes
+>>>>
+>>>> Es decir, el objeto resultante de partir un df de 15000 filas en  
+>>>> 8700
+>>>> dfs ocupa 5GB.
+>>>>
+>>>> ¿Alguna idea de por qué ocurre esto?
+>>>>
+>>>> (Uso R 3.0.1 en un Xubuntu 12.04 de 64 bits).
+>>>>
+>>>> Un saludo,
+>>>>
+>>>> Carlos J. Gil Bellosta
+>>>> http://www.datanalytics.com
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>>>
+>>>
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>>
+>> [[alternative HTML version deleted]]
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From evapcastro en yahoo.es  Fri Jun 14 23:00:03 2013
+From: evapcastro en yahoo.es (Eva Prieto Castro)
+Date: Fri, 14 Jun 2013 22:00:03 +0100 (BST)
+Subject: [R-es] Argumento &quot;Puntos suspensivos&quot;
+Message-ID: <1371243603.5722.YahooMailBasic@web171503.mail.ir2.yahoo.com>
+
+Hola a tod en s:
+
+Tengo una función del tipo
+
+f &lt;- function(...) {
+   
+  args &lt;- list(...)
+   
+  # validaciones
+}
+
+En la cual debo realizar una validación diferente para cada argumento que se pase, y no consigo identificar los nombres de los argumentos con names(args).
+
+¿Alguna idea o sugerencia acerca de cómo realizar este tipo de validaciones?.
+
+
+Gracias.
+
+
+Salud!
+
+Eva
+
+
+From evapcastro en yahoo.es  Fri Jun 14 23:13:25 2013
+From: evapcastro en yahoo.es (Eva Prieto Castro)
+Date: Fri, 14 Jun 2013 22:13:25 +0100 (BST)
+Subject: [R-es] Argumento "Puntos suspensivos"
+In-Reply-To: <1371243603.5722.YahooMailBasic@web171503.mail.ir2.yahoo.com>
+References: <1371243603.5722.YahooMailBasic@web171503.mail.ir2.yahoo.com>
+Message-ID: <1371244405.16685.YahooMailNeo@web171501.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130614/8e600be1/attachment.pl>
+
+From evapcastro en yahoo.es  Fri Jun 14 23:53:42 2013
+From: evapcastro en yahoo.es (Eva Prieto Castro)
+Date: Fri, 14 Jun 2013 22:53:42 +0100 (BST)
+Subject: [R-es] Argumento "Puntos suspensivos"
+In-Reply-To: <1371244405.16685.YahooMailNeo@web171501.mail.ir2.yahoo.com>
+References: <1371243603.5722.YahooMailBasic@web171503.mail.ir2.yahoo.com>
+	<1371244405.16685.YahooMailNeo@web171501.mail.ir2.yahoo.com>
+Message-ID: <1371246822.50586.YahooMailNeo@web171501.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130614/58bc9aba/attachment.pl>
+
+From francisco.mauro en upm.es  Sun Jun 16 00:36:25 2013
+From: francisco.mauro en upm.es (=?iso-8859-1?Q?Francisco_Mauro_Guti=E9rrez?=)
+Date: Sun, 16 Jun 2013 00:36:25 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=BFAlguna_explicaci=F3n_para_este_fen=F3men?=
+	=?iso-8859-1?q?o=3F_=28Relativo_al_uso?=
+In-Reply-To: <mailman.23.1371204008.8333.r-help-es@r-project.org>
+References: <mailman.23.1371204008.8333.r-help-es@r-project.org>
+Message-ID: <00c901ce6a18$c57806a0$506813e0$@mauro@upm.es>
+
+
+Hola todos
+
+He estado unos días fuera y no he visto que se cocía en la lista. He visto
+que Carlos Ortega hacía una referencia al uso de StatET y su visual
+debugger, pero creo que no me he enterado bien sobre quien planteaba la duda
+y por donde venia el problema. Por el asunto parece que todo ha venido por
+el tema del uso de memoria con los factores etc (cosa que parece que está
+arreglada). 
+
+Si era algo específico sobre el debugger simplemente decir que con el
+debugger hasta el año pasado la cosa no funcionaba muy bien. El año pasado
+cambie de versión y estuve probándolo. Solo hice una pequeña prueba para ver
+cómo funcionaba (Y lo hacía) y la verdad no he vuelto a usarlo. Como
+entorno, StatET creo que está muy bien y han sacado modificaciones hace bien
+poquito, que aun no he probado pero que parece que están muy bien. Sí que es
+verdad que con StatET hay que ser ordenado al instalar todo pero con eso
+suele bastar. Aunque bueno, una vez lo instalé en un OpenSuse (yo no uso
+Linux casi nunca también lo digo) y me dio bastantes problemas problema con
+el java. Sea como sea una vez que lo has puesto todo a funcionar va bastante
+bien.
+
+Respecto al visual debbuger:
+
+En su momento consulté esto :
+
+http://lists.r-forge.r-project.org/pipermail/statet-user/2011-November/00109
+8.html
+
+Espero que sea de utilidad
+
+
+Hola,
+
+Como hay gente que ha integrado R dentro de Eclipse (StatET) parece que
+también es posible poder disfrutar de un "visual debugger" a través de este
+plug-in de Eclipse:
+
+Más detalles aqui:
+
+http://www.walware.de/goto/statet
+Visual Debugger for R
+
+   - Simple management of breakpoints with automatic update in R; no
+   changes in R script required.
+   - Clearly presented call stack (Debug View) with direct access to:
+   - Variables of the selected frame and
+   - Source code and instruction pointer (R Editor), if available.
+   - Stepping through the source code.
+
+
+En una reunión reciente del "Grupo de Usuarios de R de Madrid", Francisco
+Mauro, hizo parte de su demostración utilizando este entorno. Quizás él
+pueda confirmar todo esto con más nivel de detalle.
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+From sin_respuesta en r-es.org  Sun Jun 16 11:32:19 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Sun, 16 Jun 2013 13:32:19 +0400 (MSK)
+Subject: [R-es] =?utf-8?q?Nuevo_=C3=ADtem_de_la_agenda?=
+Message-ID: <mohbtv.kpynvd@r-es.org>
+
+Reunión RugBcn
+---
+
+El próximo jueves 20 nos reunimos el grupo de usuarios de Barcelona ((http://rugbcn.wordpress.com/|RugBcn)) de 19 a 21 h en el local ?Can Pinyons?, en la calle Joan Blanques entre la calle Encarnació y Congost (metro Joanic, L4). Hablarán Miguel Alba sobre ?Predicciones con R utilizando árboles de decisión? y Andreu Vall del data.table.
+
+
+
+La reunión, como siempre, es abierta a todo el mundo. Así que si tenéis curiosidad o interés pasaros por allí, que seréis bienvenidos!
+
+
+
+Aleix Ruiz de Villa, RugBcn
+
+Desde:	Jueves 20 de Junio, 2013 19:00:00 CEST
+a:		Jueves 20 de Junio, 2013 21:00:00 CEST
+
+Visualiza el ítem de la agenda en:
+http://r-es.org/tiki-calendar_edit_item.php?viewcalitemId=21&calIds[]=1
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From sin_respuesta en r-es.org  Tue Jun 18 00:23:38 2013
+From: sin_respuesta en r-es.org (sin_respuesta en r-es.org)
+Date: Tue, 18 Jun 2013 02:23:38 +0400 (MSK)
+Subject: [R-es] =?utf-8?q?Nueva_publicaci=C3=B3n_en_blog_en_r-es=2Eorg?=
+Message-ID: <mok67e.3g9y73@r-es.org>
+
+Nueva publicación en blog: Ofertas de trabajo, "Booking.com busca data scientist en Amsterdam", por joscani en 18/06/13 00:23h
+
+Ver el blog en:
+http://r-es.org/tiki-view_blog_post.php?blogId=2&postId=72
+
+Si no desea recibir estas notificaciones siga este enlace:
+http://r-es.org/tiki-user_watches.php?id=5
+
+---
+
+Comunidad R Hispano
+
+http://www.r-es.org
+
+
+From jdalcaraz en gmail.com  Tue Jun 18 10:06:28 2013
+From: jdalcaraz en gmail.com (=?ISO-8859-1?Q?Juan_Diego_Alcaraz=2DHern=E1ndez?=)
+Date: Tue, 18 Jun 2013 10:06:28 +0200
+Subject: [R-es] offset en bucle
+Message-ID: <CAKmfRKOZPSMLCy3Sm8NTfeJumD2yUBJcmYwxu-Eg=4KFfUtr1A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130618/ed0313c0/attachment.pl>
+
+From evapcastro en yahoo.es  Tue Jun 18 18:43:59 2013
+From: evapcastro en yahoo.es (Eva Prieto Castro)
+Date: Tue, 18 Jun 2013 17:43:59 +0100 (BST)
+Subject: [R-es] Barra de progreso
+Message-ID: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130618/eeb923cc/attachment.pl>
+
+From daniel319 en gmail.com  Tue Jun 18 19:20:55 2013
+From: daniel319 en gmail.com (daniel)
+Date: Tue, 18 Jun 2013 14:20:55 -0300
+Subject: [R-es] Barra de progreso
+In-Reply-To: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+References: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+Message-ID: <CAPfrkh=f3gEwAGMs2FanStx26664xTPcPFeKJQ4XtbOBp9vh5A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130618/1de9876e/attachment.pl>
+
+From jdalcaraz en gmail.com  Tue Jun 18 22:19:26 2013
+From: jdalcaraz en gmail.com (=?ISO-8859-1?Q?Juan_Diego_Alcaraz=2DHern=E1ndez?=)
+Date: Tue, 18 Jun 2013 22:19:26 +0200
+Subject: [R-es] Fwd: offset en bucle
+In-Reply-To: <CAKmfRKOZPSMLCy3Sm8NTfeJumD2yUBJcmYwxu-Eg=4KFfUtr1A@mail.gmail.com>
+References: <CAKmfRKOZPSMLCy3Sm8NTfeJumD2yUBJcmYwxu-Eg=4KFfUtr1A@mail.gmail.com>
+Message-ID: <CAKmfRKPVQTKmtx3oPvOxyg-58b6kAZisxO4iqyGEVikqz2+EBg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130618/4969f534/attachment.pl>
+
+From evapcastro en yahoo.es  Wed Jun 19 22:06:50 2013
+From: evapcastro en yahoo.es (Eva Prieto Castro)
+Date: Wed, 19 Jun 2013 21:06:50 +0100 (BST)
+Subject: [R-es] Barra de progreso
+In-Reply-To: <CAPfrkh=f3gEwAGMs2FanStx26664xTPcPFeKJQ4XtbOBp9vh5A@mail.gmail.com>
+References: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+	<CAPfrkh=f3gEwAGMs2FanStx26664xTPcPFeKJQ4XtbOBp9vh5A@mail.gmail.com>
+Message-ID: <1371672410.57454.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130619/aaa655c6/attachment.pl>
+
+From cof en qualityexcellence.es  Wed Jun 19 22:42:40 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Wed, 19 Jun 2013 22:42:40 +0200
+Subject: [R-es] Barra de progreso
+In-Reply-To: <1371672410.57454.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+References: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+	<CAPfrkh=f3gEwAGMs2FanStx26664xTPcPFeKJQ4XtbOBp9vh5A@mail.gmail.com>
+	<1371672410.57454.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+Message-ID: <CAOKbq8gwCfSzZfOWAM5YU9zhFT6=4bmv8bUP5ERJvbyAikjF+w@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130619/bc4aa847/attachment.pl>
+
+From dirienzo.julio en gmail.com  Thu Jun 20 04:15:51 2013
+From: dirienzo.julio en gmail.com (Julio Alejandro Di Rienzo)
+Date: Wed, 19 Jun 2013 22:15:51 -0400
+Subject: [R-es] Barra de progreso
+In-Reply-To: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+References: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+Message-ID: <CABC_0C3bDCauWmNwO5c35v8=HwqQCgLkibJd2nhOqZwpDu0uvQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130619/8790c914/attachment.pl>
+
+From cgb en datanalytics.com  Thu Jun 20 13:13:40 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Thu, 20 Jun 2013 13:13:40 +0200
+Subject: [R-es] Fwd: offset en bucle
+In-Reply-To: <CAKmfRKPVQTKmtx3oPvOxyg-58b6kAZisxO4iqyGEVikqz2+EBg@mail.gmail.com>
+References: <CAKmfRKOZPSMLCy3Sm8NTfeJumD2yUBJcmYwxu-Eg=4KFfUtr1A@mail.gmail.com>
+	<CAKmfRKPVQTKmtx3oPvOxyg-58b6kAZisxO4iqyGEVikqz2+EBg@mail.gmail.com>
+Message-ID: <CADg83ecs5wCpcvC6moO5x6EryPZss0YoKNFONr_rqsuYO3GKiw@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Pues entiendo que tendrás que abundar en la expresión
+
+as.formula(paste("DYO",sep=" ~
+",paste(as.matrix(VarCombS)[i,1:NVar],sep="",collapse=" + ")))
+
+para componer usando paste() una fórmula que al final incluya la
+coletilla " + offset( log( ARE )) ".
+
+Si no entiendo mal, es todo lo que necesitas.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 18 de junio de 2013 22:19, Juan Diego Alcaraz-Hernández
+<jdalcaraz en gmail.com> escribió:
+> Amigos de la erre.
+>
+> He creado mi primer bucle con for para entrenar unos modelos con GAM. La
+> respuesta es quasipoisson porque estoy trabajando con densidades de peces.
+> Sin embargo, tengo un problema, no se muy bien como añadir el offset a la
+> formula siguiente cuando creo el bucle.
+>
+> GAM.A1 <-gam ((DYO)~s(DMA,k=4)+ s(WOD,k=4)+s(CIN,k=4)+s(DRA,k=4)+s(DBR,k=4)
+> +offset(log(ARE)),family=quasipoisson(link =
+> "log"),data=as.data.frame(cbind(DYO,Conjunto)))
+>
+> Os escribo el codigo del bucle:
+>
+> for(i in (1:nrow(VarCombS))){
+>   Formula <- as.formula(paste("DYO",sep=" ~
+> ",paste(as.matrix(VarCombS)[i,1:NVar],sep="",collapse=" + "))) ### Cómo
+> introduzco el offset??
+>   GAM <- gam(Formula,family=quasipoisson(link =
+> "log"),data=as.data.frame(cbind(DYO,Conjunto)))
+>   Summ <- summary(GAM)
+>   Var.p.values <- Summ$s.table[,"p-value"]
+>   MaxSignif <-c(MaxSignif,max(Var.p.values))
+>   Significance <- all(Var.p.values<0.1)  ### Especificar el p values que
+> queremos dentro del modelo
+>   GlobalSignificance <- c(GlobalSignificance,Significance)
+>   RSquare <- c(RSquare,Summ$r.sq)
+> }
+>
+> Si teneis alguna sugerencia os estaría muy agradecido
+>
+> --
+> *Juan Diego Alcaraz Hernández
+> *
+> **
+>
+> *http://juandiegoalcaraz.wordpress.com/*
+> *
+> Institut d'Investigació per a la Gestió Integrada de Zones Costaneres (IGIC)
+> Universitat Politècnica de València
+> C/ Paranimf, 1
+> 46730 Grau de Gandia (València)
+> Tlf: (+34) 963.877.007 (ext: 43040)
+> <http://juandiegoalcaraz.wordpress.com/>***
+> ·´¯`·.¸¸..><((((º>.·´¯`·.¸¸.·´¯`·.¸><((((º>`·.¸¸.·´¯`·.¸
+>  <º))))><`·.¸¸.·´¯`·.¸.<º))))><.¸. , . .·´¯`·.. <º))))><¸.·
+>
+>
+>
+>
+> --
+> *Juan Diego Alcaraz Hernández
+> *
+> **
+>
+> *http://juandiegoalcaraz.wordpress.com/*
+> *
+> Institut d'Investigació per a la Gestió Integrada de Zones Costaneres (IGIC)
+> Universitat Politècnica de València
+> C/ Paranimf, 1
+> 46730 Grau de Gandia (València)
+> Tlf: (+34) 963.877.007 (ext: 43040)
+> <http://juandiegoalcaraz.wordpress.com/>***
+> ·´¯`·.¸¸..><((((º>.·´¯`·.¸¸.·´¯`·.¸><((((º>`·.¸¸.·´¯`·.¸
+> <º))))><`·.¸¸.·´¯`·.¸.<º))))><.¸. , . .·´¯`·.. <º))))><¸.·
+>
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From evapcastro en yahoo.es  Thu Jun 20 23:04:59 2013
+From: evapcastro en yahoo.es (Eva Prieto Castro)
+Date: Thu, 20 Jun 2013 22:04:59 +0100 (BST)
+Subject: [R-es] Barra de progreso
+In-Reply-To: <CAOKbq8gwCfSzZfOWAM5YU9zhFT6=4bmv8bUP5ERJvbyAikjF+w@mail.gmail.com>
+References: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+	<CAPfrkh=f3gEwAGMs2FanStx26664xTPcPFeKJQ4XtbOBp9vh5A@mail.gmail.com>
+	<1371672410.57454.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+	<CAOKbq8gwCfSzZfOWAM5YU9zhFT6=4bmv8bUP5ERJvbyAikjF+w@mail.gmail.com>
+Message-ID: <1371762299.97181.YahooMailNeo@web171504.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130620/dce60986/attachment.pl>
+
+From cof en qualityexcellence.es  Thu Jun 20 23:08:32 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Thu, 20 Jun 2013 23:08:32 +0200
+Subject: [R-es] Barra de progreso
+In-Reply-To: <1371762299.97181.YahooMailNeo@web171504.mail.ir2.yahoo.com>
+References: <1371573839.54713.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+	<CAPfrkh=f3gEwAGMs2FanStx26664xTPcPFeKJQ4XtbOBp9vh5A@mail.gmail.com>
+	<1371672410.57454.YahooMailNeo@web171505.mail.ir2.yahoo.com>
+	<CAOKbq8gwCfSzZfOWAM5YU9zhFT6=4bmv8bUP5ERJvbyAikjF+w@mail.gmail.com>
+	<1371762299.97181.YahooMailNeo@web171504.mail.ir2.yahoo.com>
+Message-ID: <CAOKbq8iTfFrmi_ztk2pHPXQe+Mz-MFy7hLj+tx=nv31F09a8jw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130620/4f195dc7/attachment.pl>
+
+From pepeceb en yahoo.es  Fri Jun 21 10:45:46 2013
+From: pepeceb en yahoo.es (pepeceb)
+Date: Fri, 21 Jun 2013 09:45:46 +0100 (BST)
+Subject: [R-es] Abrir Png
+In-Reply-To: <CAOKbq8ih+w+6MwU3MLwdPm=k+-q3MG8H_96kLAX79eNTrbW4_A@mail.gmail.com>
+References: <501BFAB1.4070507@unex.es>
+	<CALCOUqu9ARfLFHcv_BhscyFvbfCM2BeyN=O_6TegMdGRCTCLAw@mail.gmail.com>
+	<CAOKbq8ih+w+6MwU3MLwdPm=k+-q3MG8H_96kLAX79eNTrbW4_A@mail.gmail.com>
+Message-ID: <1371804346.30512.YahooMailNeo@web172603.mail.ir2.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130621/c4670a06/attachment.pl>
+
+From cgb en datanalytics.com  Fri Jun 21 10:52:07 2013
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Fri, 21 Jun 2013 10:52:07 +0200
+Subject: [R-es] Abrir Png
+In-Reply-To: <1371804346.30512.YahooMailNeo@web172603.mail.ir2.yahoo.com>
+References: <501BFAB1.4070507@unex.es>
+	<CALCOUqu9ARfLFHcv_BhscyFvbfCM2BeyN=O_6TegMdGRCTCLAw@mail.gmail.com>
+	<CAOKbq8ih+w+6MwU3MLwdPm=k+-q3MG8H_96kLAX79eNTrbW4_A@mail.gmail.com>
+	<1371804346.30512.YahooMailNeo@web172603.mail.ir2.yahoo.com>
+Message-ID: <CADg83ee7SXrQEPdBfxU7ODyGNnUAbHDUmm_jKbYsYH7mUpE5BA@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+En la ayuda de readPNG aparece un ejemplo de cómo representar
+gráficamente un objeto leído de un fichero .png que te puede servir de
+ayuda.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 21 de junio de 2013 10:45, pepeceb <pepeceb en yahoo.es> escribió:
+> Hola a todos,
+> tengo un gráfico de un mapa guardado en formato png. Mi intención es abrirlo dentro de R para intentar manipularlo luego. El caso es que soy incapaz
+> de abrilo. He probado con read.png, pero me sale un churro en el dispositivo gráfico, no se ve absolutamente nada..
+> Esto es lo que he intentado
+> library(png)
+> icesmap<-readPNG("Mapa_Ices.png")
+> plot (icesmap)
+>
+>
+> A lo mejor debería probar  en otro formato??
+>
+> Un saludo
+> Pepeceb
+>         [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From cof en qualityexcellence.es  Mon Jun 24 09:29:14 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 24 Jun 2013 09:29:14 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=28*Videos_Disponibles*=29_=2E=2E=2E_Hoy_re?=
+	=?iso-8859-1?q?uni=F3n_del_=22Grupo_de_Usuarios_de_R_de_Madrid=22?=
+	=?iso-8859-1?q?=2E=2E=2E=2E?=
+Message-ID: <CAOKbq8jU5+JKp_vjjFEO9-RtE+c5XSi5FY21t82Qz-4an3nXvA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130624/23ec0772/attachment.pl>
+
+From jayusor en gmail.com  Mon Jun 24 09:35:03 2013
+From: jayusor en gmail.com (Jorge Ayuso Rejas)
+Date: Mon, 24 Jun 2013 09:35:03 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=28*Videos_Disponibles*=29_=2E=2E=2E_Hoy_re?=
+	=?iso-8859-1?q?uni=F3n_del_=22Grupo_de_Usuarios_de_R_de_Madrid=22?=
+	=?iso-8859-1?q?=2E=2E=2E=2E?=
+In-Reply-To: <CAOKbq8jU5+JKp_vjjFEO9-RtE+c5XSi5FY21t82Qz-4an3nXvA@mail.gmail.com>
+References: <CAOKbq8jU5+JKp_vjjFEO9-RtE+c5XSi5FY21t82Qz-4an3nXvA@mail.gmail.com>
+Message-ID: <CAKkLSFMQ4YsgJRgsbiOS12iKxwVq90ofqHbwGgkRosQX3MUYvQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130624/e19183a8/attachment.pl>
+
+From cof en qualityexcellence.es  Mon Jun 24 09:47:51 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 24 Jun 2013 09:47:51 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=28*Videos_Disponibles*=29_=2E=2E=2E_Hoy_re?=
+	=?iso-8859-1?q?uni=F3n_del_=22Grupo_de_Usuarios_de_R_de_Madrid=22?=
+	=?iso-8859-1?q?=2E=2E=2E=2E?=
+In-Reply-To: <CAKkLSFMQ4YsgJRgsbiOS12iKxwVq90ofqHbwGgkRosQX3MUYvQ@mail.gmail.com>
+References: <CAOKbq8jU5+JKp_vjjFEO9-RtE+c5XSi5FY21t82Qz-4an3nXvA@mail.gmail.com>
+	<CAKkLSFMQ4YsgJRgsbiOS12iKxwVq90ofqHbwGgkRosQX3MUYvQ@mail.gmail.com>
+Message-ID: <CAOKbq8gq-yr5bBgvs=CTE2Lksy+Vzug=_ceVZksEyd-JOm1hnQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130624/3ae1769f/attachment.pl>
+
+From javier.villacampa.gonzalez en gmail.com  Mon Jun 24 12:42:22 2013
+From: javier.villacampa.gonzalez en gmail.com (=?ISO-8859-1?Q?Javier_Villacampa_Gonz=E1lez?=)
+Date: Mon, 24 Jun 2013 12:42:22 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Hoy_reuni=F3n_del_=22Grupo_de_Usuarios_de_R?=
+	=?iso-8859-1?q?_de_Madrid=22?=
+Message-ID: <CAOZ+RxF+xdhdx58BF9uFQKZw_bd6FHrJJ3syOf6124dXgbw0Tw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130624/25dae279/attachment.pl>
+
+From cof en qualityexcellence.es  Mon Jun 24 13:26:06 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Mon, 24 Jun 2013 13:26:06 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Hoy_reuni=F3n_del_=22Grupo_de_Usuarios_de_R?=
+	=?iso-8859-1?q?_de_Madrid=22?=
+In-Reply-To: <CAOZ+RxF+xdhdx58BF9uFQKZw_bd6FHrJJ3syOf6124dXgbw0Tw@mail.gmail.com>
+References: <CAOZ+RxF+xdhdx58BF9uFQKZw_bd6FHrJJ3syOf6124dXgbw0Tw@mail.gmail.com>
+Message-ID: <CAOKbq8gTJ+r76Voqvmo-_zyDgjhgX5feyYq3sbZGB7fdHt_eMA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130624/c6e1e827/attachment.pl>
+
+From ericconchamunoz en gmail.com  Mon Jun 24 21:10:52 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Mon, 24 Jun 2013 15:10:52 -0400
+Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+Message-ID: <51C899BC.6040509@gmail.com>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Estimada comunidad, tengo que hacer un grafico con 4 paneles (4 graficos
+pegados juntos) y sobre este tengo que dibujar 4 rectas ajustadas a los
+datos de cada panel. Intente hacerlo con lattice usando el siguiente
+codigo :
+
+library(lattice)
+library(latticeExtra)
+
+			
+xYplot(Cbind(mf[,3],mf[,5],mf[,6])~dia|factor(sol),data=mf,xlab="Time
+(days)",ylab="Unsaturation index", method="bars",
+keys="lines",layout=c(4,1),abline=list(list(a=4.532e-04,b=-2.138e-05),list(a=7.137e-05,b=2.699e-05),list(a=3.627e-04,b=2.552e-05),list(a=6.251e-04,
+b=4.938e-05)))
+
+y obtengo el grafico que adjunto, el que no responde a mi necesidad pues
+debo dibujar una recta en cada panel.
+
+Alguna idea de como hacerlo ?
+
+Adjunto los datos para que prueben si lo desean.
+
+Muchas gracias por vuestro tiempo,
+
+Eric.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJRyJm0AAoJEDoUMoeY1RuM9OIH/0u0H4iZ1aKlWb09TPKFEMNz
+DZ6fyI6w0Bl5mwavAP/DLlPf4IIikhOR7d0nn/fWGRXOJdPDw34LDWJa/BxPf1CY
+1tP5TfDAIfaNX9xIaaOuqJgztL1uA7+FDb0LGZY4MkCv/nhIW9NPbSz8M+u+VZw+
+KI+J/Gcymm/uHEH9T/dvb4ihQQ17Lg8xmDIRUYiVtxG9eaCqZaBnosxsH5oLC7oF
+/9aZBC09VnhtpSMtMk3jGMWtCKVHwt7rYrRzgNNVXb2xtl+Kq5ti7mgQ9WQfaGE9
+ATEgKxJzBZFf66FEdXuXra99lXfCN1/qBqqMvD6cw0B02C0MR+3mhzgbG3cDhys=
+=S8jM
+-----END PGP SIGNATURE-----
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: unindex_tiempo_conajustes.png
+Type: image/png
+Size: 33931 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130624/c506ea28/attachment-0001.png>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: unindex_tiempo_conajustes.csv
+Type: text/csv
+Size: 1857 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130624/c506ea28/attachment-0001.bin>
+
+From javier.ruben.marcuzzi en gmail.com  Mon Jun 24 21:31:12 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Mon, 24 Jun 2013 16:31:12 -0300
+Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+In-Reply-To: <51C899BC.6040509@gmail.com>
+References: <51C899BC.6040509@gmail.com>
+Message-ID: <7D4AAA3938914524803C523107B44B1A@JavierMarcuzzi>
+
+Estimado Eric
+
+¿Podrías dibujar a mano las líneas que necesitas? Creo que facilita la 
+comprensión de lo que necesitas (por lo menos a mí).
+
+Javier Marcuzzi
+
+
+-----Original Message----- 
+From: neo
+Sent: Monday, June 24, 2013 4:10 PM
+To: Lista R
+Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Estimada comunidad, tengo que hacer un grafico con 4 paneles (4 graficos
+pegados juntos) y sobre este tengo que dibujar 4 rectas ajustadas a los
+datos de cada panel. Intente hacerlo con lattice usando el siguiente
+codigo :
+
+library(lattice)
+library(latticeExtra)
+
+
+xYplot(Cbind(mf[,3],mf[,5],mf[,6])~dia|factor(sol),data=mf,xlab="Time
+(days)",ylab="Unsaturation index", method="bars",
+keys="lines",layout=c(4,1),abline=list(list(a=4.532e-04,b=-2.138e-05),list(a=7.137e-05,b=2.699e-05),list(a=3.627e-04,b=2.552e-05),list(a=6.251e-04,
+b=4.938e-05)))
+
+y obtengo el grafico que adjunto, el que no responde a mi necesidad pues
+debo dibujar una recta en cada panel.
+
+Alguna idea de como hacerlo ?
+
+Adjunto los datos para que prueben si lo desean.
+
+Muchas gracias por vuestro tiempo,
+
+Eric.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJRyJm0AAoJEDoUMoeY1RuM9OIH/0u0H4iZ1aKlWb09TPKFEMNz
+DZ6fyI6w0Bl5mwavAP/DLlPf4IIikhOR7d0nn/fWGRXOJdPDw34LDWJa/BxPf1CY
+1tP5TfDAIfaNX9xIaaOuqJgztL1uA7+FDb0LGZY4MkCv/nhIW9NPbSz8M+u+VZw+
+KI+J/Gcymm/uHEH9T/dvb4ihQQ17Lg8xmDIRUYiVtxG9eaCqZaBnosxsH5oLC7oF
+/9aZBC09VnhtpSMtMk3jGMWtCKVHwt7rYrRzgNNVXb2xtl+Kq5ti7mgQ9WQfaGE9
+ATEgKxJzBZFf66FEdXuXra99lXfCN1/qBqqMvD6cw0B02C0MR+3mhzgbG3cDhys=
+=S8jM
+-----END PGP SIGNATURE-----
+
+
+
+
+
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From ericconchamunoz en gmail.com  Mon Jun 24 21:49:25 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Mon, 24 Jun 2013 15:49:25 -0400
+Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+In-Reply-To: <7D4AAA3938914524803C523107B44B1A@JavierMarcuzzi>
+References: <51C899BC.6040509@gmail.com>
+	<7D4AAA3938914524803C523107B44B1A@JavierMarcuzzi>
+Message-ID: <51C8A2C5.2010501@gmail.com>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Estimado Javier, adjunto el grafico retocado con GIMP, borre las lineas
+que sobran en cada panel. Obviamente, no es la idea hacerlo de este
+modo, sino con R, pues quiero cambiar el color de la recta y hacer
+varios otros graficos, cuya edicion manual requeriria mucho tiempo.
+
+Espero entiendas mejor mi explicacion ahora. Cada una de esas rectas es
+un ajuste lineal de los datos de cada panel, y deberia sobreponerlas a
+los datos, una en cada panel, el que le corresponde, pero me salen todas
+en todos los paneles.
+
+Saludos, Eric.
+
+
+
+
+
+
+On 06/24/2013 03:31 PM, Marcuzzi, Javier Rubén wrote:
+> Estimado Eric
+> 
+> ¿Podrías dibujar a mano las líneas que necesitas? Creo que facilita la
+> comprensión de lo que necesitas (por lo menos a mí).
+> 
+> Javier Marcuzzi
+> 
+> 
+> -----Original Message----- From: neo
+> Sent: Monday, June 24, 2013 4:10 PM
+> To: Lista R
+> Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+> 
+> Estimada comunidad, tengo que hacer un grafico con 4 paneles (4 graficos
+> pegados juntos) y sobre este tengo que dibujar 4 rectas ajustadas a los
+> datos de cada panel. Intente hacerlo con lattice usando el siguiente
+> codigo :
+> 
+> library(lattice)
+> library(latticeExtra)
+> 
+> 
+> xYplot(Cbind(mf[,3],mf[,5],mf[,6])~dia|factor(sol),data=mf,xlab="Time
+> (days)",ylab="Unsaturation index", method="bars",
+> keys="lines",layout=c(4,1),abline=list(list(a=4.532e-04,b=-2.138e-05),list(a=7.137e-05,b=2.699e-05),list(a=3.627e-04,b=2.552e-05),list(a=6.251e-04,
+> 
+> b=4.938e-05)))
+> 
+> y obtengo el grafico que adjunto, el que no responde a mi necesidad pues
+> debo dibujar una recta en cada panel.
+> 
+> Alguna idea de como hacerlo ?
+> 
+> Adjunto los datos para que prueben si lo desean.
+> 
+> Muchas gracias por vuestro tiempo,
+> 
+> Eric.
+> 
+> 
+> 
+> 
+> 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJRyKK4AAoJEDoUMoeY1RuMWTwH/RHP+73XmKkoltthwdm/YVn1
+njA3YZYVJsbHqrB8bxXhPLbZWo1MkFnd+yKoEFwLgiDzyef7dwG4JjY6FNAE+dl1
+HvAAtW5LvNPVy3cuqy9goKV57GMA6T5UOd74VwGfQQiLScnn5JEwck/SjSuv4hU4
+p3j0UGzA/zktIsWkYZfLuFZKKIBVUKHm9/jUshwdwkGjVc1MlBcYb36vNROr74hy
+RsHGI10F2HSSIoOAs6XKDbs6zscKzUBqPjWl5Xb/rjBWQwGcon2RQ6o8ZXfbVblz
+7sPvxbbU1ZcbsaGJUk+JWXW1sH8O9KgS6t8XV26v0E6oMz+kl198xw61n8HwK9w=
+=k9Pk
+-----END PGP SIGNATURE-----
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: unindex_tiempo_conajustes.png
+Type: image/png
+Size: 27508 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130624/63310b75/attachment-0001.png>
+
+From javier.ruben.marcuzzi en gmail.com  Mon Jun 24 22:01:59 2013
+From: javier.ruben.marcuzzi en gmail.com (=?iso-8859-1?Q?Marcuzzi=2C_Javier_Rub=E9n?=)
+Date: Mon, 24 Jun 2013 17:01:59 -0300
+Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+In-Reply-To: <51C8A2C5.2010501@gmail.com>
+References: <51C899BC.6040509@gmail.com>
+	<7D4AAA3938914524803C523107B44B1A@JavierMarcuzzi>
+	<51C8A2C5.2010501@gmail.com>
+Message-ID: <90FC157B55FA46E5B0F8D51157F08B2E@JavierMarcuzzi>
+
+Eric
+
+En http://www.inside-r.org/packages/cran/latticeExtra/docs/panel.lmlineq 
+utilizan una diferencia, panel.ablineq en lugar de abline.
+
+¿funcionará con ese cambio?
+
+Javier Marcuzzi
+
+-----Original Message----- 
+From: neo
+Sent: Monday, June 24, 2013 4:49 PM
+To: "Marcuzzi, Javier Rubén" ; Lista R
+Subject: Re: [R-es] Dibujar rectas sobre varios un grafico multipanel
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Estimado Javier, adjunto el grafico retocado con GIMP, borre las lineas
+que sobran en cada panel. Obviamente, no es la idea hacerlo de este
+modo, sino con R, pues quiero cambiar el color de la recta y hacer
+varios otros graficos, cuya edicion manual requeriria mucho tiempo.
+
+Espero entiendas mejor mi explicacion ahora. Cada una de esas rectas es
+un ajuste lineal de los datos de cada panel, y deberia sobreponerlas a
+los datos, una en cada panel, el que le corresponde, pero me salen todas
+en todos los paneles.
+
+Saludos, Eric.
+
+
+
+
+
+
+On 06/24/2013 03:31 PM, Marcuzzi, Javier Rubén wrote:
+> Estimado Eric
+>
+> ¿Podrías dibujar a mano las líneas que necesitas? Creo que facilita la
+> comprensión de lo que necesitas (por lo menos a mí).
+>
+> Javier Marcuzzi
+>
+>
+> -----Original Message----- From: neo
+> Sent: Monday, June 24, 2013 4:10 PM
+> To: Lista R
+> Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+>
+> Estimada comunidad, tengo que hacer un grafico con 4 paneles (4 graficos
+> pegados juntos) y sobre este tengo que dibujar 4 rectas ajustadas a los
+> datos de cada panel. Intente hacerlo con lattice usando el siguiente
+> codigo :
+>
+> library(lattice)
+> library(latticeExtra)
+>
+>
+> xYplot(Cbind(mf[,3],mf[,5],mf[,6])~dia|factor(sol),data=mf,xlab="Time
+> (days)",ylab="Unsaturation index", method="bars",
+> keys="lines",layout=c(4,1),abline=list(list(a=4.532e-04,b=-2.138e-05),list(a=7.137e-05,b=2.699e-05),list(a=3.627e-04,b=2.552e-05),list(a=6.251e-04,
+>
+> b=4.938e-05)))
+>
+> y obtengo el grafico que adjunto, el que no responde a mi necesidad pues
+> debo dibujar una recta en cada panel.
+>
+> Alguna idea de como hacerlo ?
+>
+> Adjunto los datos para que prueben si lo desean.
+>
+> Muchas gracias por vuestro tiempo,
+>
+> Eric.
+>
+>
+>
+>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJRyKK4AAoJEDoUMoeY1RuMWTwH/RHP+73XmKkoltthwdm/YVn1
+njA3YZYVJsbHqrB8bxXhPLbZWo1MkFnd+yKoEFwLgiDzyef7dwG4JjY6FNAE+dl1
+HvAAtW5LvNPVy3cuqy9goKV57GMA6T5UOd74VwGfQQiLScnn5JEwck/SjSuv4hU4
+p3j0UGzA/zktIsWkYZfLuFZKKIBVUKHm9/jUshwdwkGjVc1MlBcYb36vNROr74hy
+RsHGI10F2HSSIoOAs6XKDbs6zscKzUBqPjWl5Xb/rjBWQwGcon2RQ6o8ZXfbVblz
+7sPvxbbU1ZcbsaGJUk+JWXW1sH8O9KgS6t8XV26v0E6oMz+kl198xw61n8HwK9w=
+=k9Pk
+-----END PGP SIGNATURE-----
+
+
+From ericconchamunoz en gmail.com  Mon Jun 24 22:08:11 2013
+From: ericconchamunoz en gmail.com (neo)
+Date: Mon, 24 Jun 2013 16:08:11 -0400
+Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+In-Reply-To: <90FC157B55FA46E5B0F8D51157F08B2E@JavierMarcuzzi>
+References: <51C899BC.6040509@gmail.com>
+	<7D4AAA3938914524803C523107B44B1A@JavierMarcuzzi>
+	<51C8A2C5.2010501@gmail.com>
+	<90FC157B55FA46E5B0F8D51157F08B2E@JavierMarcuzzi>
+Message-ID: <51C8A72B.9020308@gmail.com>
+
+Gracias, voy a probar :)
+
+Slds, eric.
+
+
+
+
+On 06/24/2013 04:01 PM, Marcuzzi, Javier Rubén wrote:
+> Eric
+> 
+> En http://www.inside-r.org/packages/cran/latticeExtra/docs/panel.lmlineq
+> utilizan una diferencia, panel.ablineq en lugar de abline.
+> 
+> ¿funcionará con ese cambio?
+> 
+> Javier Marcuzzi
+> 
+> -----Original Message----- From: neo
+> Sent: Monday, June 24, 2013 4:49 PM
+> To: "Marcuzzi, Javier Rubén" ; Lista R
+> Subject: Re: [R-es] Dibujar rectas sobre varios un grafico multipanel
+> 
+> Estimado Javier, adjunto el grafico retocado con GIMP, borre las lineas
+> que sobran en cada panel. Obviamente, no es la idea hacerlo de este
+> modo, sino con R, pues quiero cambiar el color de la recta y hacer
+> varios otros graficos, cuya edicion manual requeriria mucho tiempo.
+> 
+> Espero entiendas mejor mi explicacion ahora. Cada una de esas rectas es
+> un ajuste lineal de los datos de cada panel, y deberia sobreponerlas a
+> los datos, una en cada panel, el que le corresponde, pero me salen todas
+> en todos los paneles.
+> 
+> Saludos, Eric.
+> 
+> 
+> 
+> 
+> 
+> 
+> On 06/24/2013 03:31 PM, Marcuzzi, Javier Rubén wrote:
+>> Estimado Eric
+> 
+>> ¿Podrías dibujar a mano las líneas que necesitas? Creo que facilita la
+>> comprensión de lo que necesitas (por lo menos a mí).
+> 
+>> Javier Marcuzzi
+> 
+> 
+>> -----Original Message----- From: neo
+>> Sent: Monday, June 24, 2013 4:10 PM
+>> To: Lista R
+>> Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+> 
+>> Estimada comunidad, tengo que hacer un grafico con 4 paneles (4 graficos
+>> pegados juntos) y sobre este tengo que dibujar 4 rectas ajustadas a los
+>> datos de cada panel. Intente hacerlo con lattice usando el siguiente
+>> codigo :
+> 
+>> library(lattice)
+>> library(latticeExtra)
+> 
+> 
+>> xYplot(Cbind(mf[,3],mf[,5],mf[,6])~dia|factor(sol),data=mf,xlab="Time
+>> (days)",ylab="Unsaturation index", method="bars",
+>> keys="lines",layout=c(4,1),abline=list(list(a=4.532e-04,b=-2.138e-05),list(a=7.137e-05,b=2.699e-05),list(a=3.627e-04,b=2.552e-05),list(a=6.251e-04,
+> 
+> 
+>> b=4.938e-05)))
+> 
+>> y obtengo el grafico que adjunto, el que no responde a mi necesidad pues
+>> debo dibujar una recta en cada panel.
+> 
+>> Alguna idea de como hacerlo ?
+> 
+>> Adjunto los datos para que prueben si lo desean.
+> 
+>> Muchas gracias por vuestro tiempo,
+> 
+>> Eric.
+> 
+> 
+> 
+> 
+> 
+> 
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+>
+
+
+From oscar.perpinan en gmail.com  Tue Jun 25 14:21:31 2013
+From: oscar.perpinan en gmail.com (=?ISO-8859-1?Q?Oscar_Perpi=F1an?=)
+Date: Tue, 25 Jun 2013 14:21:31 +0200
+Subject: [R-es] Dibujar rectas sobre varios un grafico multipanel
+In-Reply-To: <51C899BC.6040509@gmail.com>
+References: <51C899BC.6040509@gmail.com>
+Message-ID: <CAMLL7b=qYYtpAYghv9g_BwBAw80WP0uV_N9Qnm7vo3av8TF+8Q@mail.gmail.com>
+
+Hola,
+
+Prueba esto:
+
+xyplot(mean ~ dia|sol, data = dats,
+       type=c('p', 'r'), layout=c(4, 1),
+       ylim=extendrange(c(min(dats$ll), max(dats$ul))),
+       ll = dats$ll, ul = dats$ul,
+       panel=function(x, y, subscripts, ll, ul, ...) {
+           panel.segments(as.numeric(x), ll[subscripts],
+                          as.numeric(x), ul[subscripts], ...)
+           panel.xyplot(x, y, ...)
+       })
+
+Otra opción es latticeExtra::segplots pero no es fácil añadir las
+líneas de regresión.
+
+Saludos.
+
+Oscar.
+Oscar Perpiñán Lamigueiro
+Grupo de Sistemas Fotovoltaicos (IES-UPM)
+Dpto. Ingeniería Eléctrica (EUITI-UPM)
+URL: http://procomun.wordpress.com
+Twitter: @oscarperpinan
+
+
+El día 24 de junio de 2013 21:10, neo <ericconchamunoz en gmail.com> escribió:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Estimada comunidad, tengo que hacer un grafico con 4 paneles (4 graficos
+> pegados juntos) y sobre este tengo que dibujar 4 rectas ajustadas a los
+> datos de cada panel. Intente hacerlo con lattice usando el siguiente
+> codigo :
+>
+> library(lattice)
+> library(latticeExtra)
+>
+>
+> xYplot(Cbind(mf[,3],mf[,5],mf[,6])~dia|factor(sol),data=mf,xlab="Time
+> (days)",ylab="Unsaturation index", method="bars",
+> keys="lines",layout=c(4,1),abline=list(list(a=4.532e-04,b=-2.138e-05),list(a=7.137e-05,b=2.699e-05),list(a=3.627e-04,b=2.552e-05),list(a=6.251e-04,
+> b=4.938e-05)))
+>
+> y obtengo el grafico que adjunto, el que no responde a mi necesidad pues
+> debo dibujar una recta en cada panel.
+>
+> Alguna idea de como hacerlo ?
+>
+> Adjunto los datos para que prueben si lo desean.
+>
+> Muchas gracias por vuestro tiempo,
+>
+> Eric.
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+>
+> iQEcBAEBAgAGBQJRyJm0AAoJEDoUMoeY1RuM9OIH/0u0H4iZ1aKlWb09TPKFEMNz
+> DZ6fyI6w0Bl5mwavAP/DLlPf4IIikhOR7d0nn/fWGRXOJdPDw34LDWJa/BxPf1CY
+> 1tP5TfDAIfaNX9xIaaOuqJgztL1uA7+FDb0LGZY4MkCv/nhIW9NPbSz8M+u+VZw+
+> KI+J/Gcymm/uHEH9T/dvb4ihQQ17Lg8xmDIRUYiVtxG9eaCqZaBnosxsH5oLC7oF
+> /9aZBC09VnhtpSMtMk3jGMWtCKVHwt7rYrRzgNNVXb2xtl+Kq5ti7mgQ9WQfaGE9
+> ATEgKxJzBZFf66FEdXuXra99lXfCN1/qBqqMvD6cw0B02C0MR+3mhzgbG3cDhys=
+> =S8jM
+> -----END PGP SIGNATURE-----
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From cof en qualityexcellence.es  Tue Jun 25 21:48:36 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Tue, 25 Jun 2013 21:48:36 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?=28*Videos_Disponibles*=29_=2E=2E=2E_Hoy_re?=
+	=?iso-8859-1?q?uni=F3n_del_=22Grupo_de_Usuarios_de_R_de_Madrid=22?=
+	=?iso-8859-1?q?=2E=2E=2E=2E?=
+In-Reply-To: <CAOKbq8gq-yr5bBgvs=CTE2Lksy+Vzug=_ceVZksEyd-JOm1hnQ@mail.gmail.com>
+References: <CAOKbq8jU5+JKp_vjjFEO9-RtE+c5XSi5FY21t82Qz-4an3nXvA@mail.gmail.com>
+	<CAKkLSFMQ4YsgJRgsbiOS12iKxwVq90ofqHbwGgkRosQX3MUYvQ@mail.gmail.com>
+	<CAOKbq8gq-yr5bBgvs=CTE2Lksy+Vzug=_ceVZksEyd-JOm1hnQ@mail.gmail.com>
+Message-ID: <CAOKbq8irad_mjL-N5QTNxqV_5-5f3NyVqTO5Gf0o2D6SSnwXhA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130625/066b960c/attachment.pl>
+
+From pedroc en tid.es  Wed Jun 26 16:13:53 2013
+From: pedroc en tid.es (Pedro Concejero Cerezo)
+Date: Wed, 26 Jun 2013 16:13:53 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_52=2C_Env=EDo_3?=
+	=?iso-8859-1?q?3?=
+In-Reply-To: <mailman.19.1372240806.631.r-help-es@r-project.org>
+References: <mailman.19.1372240806.631.r-help-es@r-project.org>
+Message-ID: <51CAF721.3010201@tid.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130626/820d21d0/attachment.pl>
+
+From canadasreche en gmail.com  Wed Jun 26 19:39:15 2013
+From: canadasreche en gmail.com (=?ISO-8859-1?Q?Jose_Luis_Ca=F1adas?=)
+Date: Wed, 26 Jun 2013 19:39:15 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_52=2C_Env=EDo_3?=
+ =?iso-8859-1?q?3?=
+In-Reply-To: <51CAF721.3010201@tid.es>
+References: <mailman.19.1372240806.631.r-help-es@r-project.org>
+	<51CAF721.3010201@tid.es>
+Message-ID: <51CB2743.60309@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130626/a145a6df/attachment.pl>
+
+From canadasreche en gmail.com  Fri Jun 28 11:40:58 2013
+From: canadasreche en gmail.com (=?UTF-8?B?Sm9zw6kgTHVpcyBDYcOxYWRhcyBSZWNoZQ==?=)
+Date: Fri, 28 Jun 2013 11:40:58 +0200
+Subject: [R-es] quitar tildes
+Message-ID: <51CD5A2A.1010905@gmail.com>
+
+Hola.
+
+Ahora mismo no caigo en cómo quitar las tildes de un texto. He probado con
+
+v1 = sub("([[:punct:]])","",v1)
+
+pero no funciona.
+
+¿ideas?
+
+Gracias
+
+
+From jayusor en gmail.com  Fri Jun 28 11:47:26 2013
+From: jayusor en gmail.com (Jorge Ayuso Rejas)
+Date: Fri, 28 Jun 2013 11:47:26 +0200
+Subject: [R-es] quitar tildes
+In-Reply-To: <51CD5A2A.1010905@gmail.com>
+References: <51CD5A2A.1010905@gmail.com>
+Message-ID: <CAKkLSFNEs9vaoLmxj4baV1QvycwoWK9fb=n+Pepcft1W56gDsQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130628/4dd6f68b/attachment.pl>
+
+From franciscoj.viciana en juntadeandalucia.es  Fri Jun 28 11:58:28 2013
+From: franciscoj.viciana en juntadeandalucia.es (Francisco Viciana)
+Date: Fri, 28 Jun 2013 11:58:28 +0200
+Subject: [R-es] quitar tildes
+In-Reply-To: <51CD5A2A.1010905@gmail.com>
+References: <51CD5A2A.1010905@gmail.com>
+Message-ID: <51CD5E44.80308@juntadeandalucia.es>
+
+Te sirve esto ?:
+
+  chartr('áéíóúñ','aeioun', 'cañón')
+
+El 28/06/2013 11:40, José Luis Cañadas Reche escribió:
+> Hola.
+>
+> Ahora mismo no caigo en cómo quitar las tildes de un texto. He probado 
+> con
+>
+> v1 = sub("([[:punct:]])","",v1)
+>
+> pero no funciona.
+>
+> ¿ideas?
+>
+> Gracias
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
++--------------------------------------------------------------
+| Francisco J. Viciana Fernández
+| Coordinador del Registro de Población
+| Servicio de Estadísticas Demográficas y Sociales
+| Instituto de Estadística y Cartografía de Andalucía
+| Leonardo Da Vinci, nº 21. Isla de La Cartuja.
+| 41071 SEVILLA.
+| franciscoj.viciana en juntadeandalucia.es
+| Tlf.: +(34) 95 503 38 21
++--------------------------------------------------------------
+
+
+From canadasreche en gmail.com  Fri Jun 28 12:06:41 2013
+From: canadasreche en gmail.com (=?ISO-8859-1?Q?Jos=E9_Luis_Ca=F1adas_Reche?=)
+Date: Fri, 28 Jun 2013 12:06:41 +0200
+Subject: [R-es] quitar tildes
+In-Reply-To: <51CD5E44.80308@juntadeandalucia.es>
+References: <51CD5A2A.1010905@gmail.com> <51CD5E44.80308@juntadeandalucia.es>
+Message-ID: <51CD6031.9090609@gmail.com>
+
+Hola.
+
+Gracias.
+Tanto la solución de Jorge con
+
+iconv(variable_texto, to="ASCII//TRANSLIT")
+
+como la de Francisco
+
+chartr('áéíóúñ','aeioun',variable_texto)
+
+
+me sirven..
+
+
+From patricio.fuenmayor en outlook.com  Fri Jun 28 16:59:00 2013
+From: patricio.fuenmayor en outlook.com (Patricio Fuenmayor Viteri)
+Date: Fri, 28 Jun 2013 09:59:00 -0500
+Subject: [R-es] =?iso-8859-1?q?comparaci=F3n_entre_cadena_de_caracteres?=
+Message-ID: <BAY170-W73C0F215C40ABBC751D0B799760@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130628/9ba427cf/attachment.pl>
+
+From cof en qualityexcellence.es  Fri Jun 28 17:19:11 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 28 Jun 2013 17:19:11 +0200
+Subject: [R-es] =?iso-8859-1?q?comparaci=F3n_entre_cadena_de_caracteres?=
+In-Reply-To: <BAY170-W73C0F215C40ABBC751D0B799760@phx.gbl>
+References: <BAY170-W73C0F215C40ABBC751D0B799760@phx.gbl>
+Message-ID: <CAOKbq8gMngZuJ_rVn=y_8ry3JK9yJZF3zqdX=GYcwPj7X+20Pg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130628/661f37a4/attachment.pl>
+
+From cof en qualityexcellence.es  Fri Jun 28 22:33:09 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Fri, 28 Jun 2013 22:33:09 +0200
+Subject: [R-es] R en tu navegador...
+Message-ID: <CAOKbq8jPd3C8nROuE3jNaELJPcLZbfKhnNccHtawX40HfcKgXA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130628/f46d91f5/attachment.pl>
+
+From mpc.931 en gmail.com  Sat Jun 29 21:17:53 2013
+From: mpc.931 en gmail.com (P.)
+Date: Sat, 29 Jun 2013 21:17:53 +0200
+Subject: [R-es] R en tu navegador
+Message-ID: <CA++3SQ2Kqo9Sz0zaqjncVO35SCCEyZUeqx5RvwoOR68nG2roxw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130629/0d9549c7/attachment.pl>
+
+From cof en qualityexcellence.es  Sat Jun 29 22:14:25 2013
+From: cof en qualityexcellence.es (Carlos Ortega)
+Date: Sat, 29 Jun 2013 22:14:25 +0200
+Subject: [R-es] R en tu navegador
+In-Reply-To: <CA++3SQ2Kqo9Sz0zaqjncVO35SCCEyZUeqx5RvwoOR68nG2roxw@mail.gmail.com>
+References: <CA++3SQ2Kqo9Sz0zaqjncVO35SCCEyZUeqx5RvwoOR68nG2roxw@mail.gmail.com>
+Message-ID: <CAOKbq8ggFgOtAnQGxWHdscE9L7JGeGPQFaCzFqaiQkTq32LGxw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130629/4937d493/attachment.pl>
+
+From rod99hare en gmail.com  Sun Jun 30 22:57:11 2013
+From: rod99hare en gmail.com (=?ISO-8859-1?Q?Rodrigo_L=F3pez_Correa?=)
+Date: Sun, 30 Jun 2013 17:57:11 -0300
+Subject: [R-es] EFECTO ANIDADO ALEATORIO SOBRE FIJO
+Message-ID: <CALo3Vdeo7E=NGbgjuTFU54vyQ1JPWJzD93TJyXB24FMu=zMXFg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20130630/015cdb51/attachment.pl>
+

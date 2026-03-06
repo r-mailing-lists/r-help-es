@@ -1,0 +1,3953 @@
+From argel.gastelum en gmail.com  Fri Apr  1 20:50:01 2011
+From: argel.gastelum en gmail.com (=?ISO-8859-1?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Fri, 01 Apr 2011 12:50:01 -0600
+Subject: [R-es] =?iso-8859-1?q?Predicci=F3n_de_valor_m=E1ximo_en_superfici?=
+ =?iso-8859-1?q?e_de_respuesta=2C_con_paquete_rsm?=
+Message-ID: <4D961E59.3040400@gmail.com>
+
+     Hola compañeros de la lista. Estoy aprendiendo a usar el paquete 
+"rsm" para superficies de respuesta. Siguiendo este ejemplo todo va 
+bien, hasta que trato de obtener el valor máximo predicho para la 
+variable de respuesta en los valores de x1 y x2 estimados.
+
+-------------------------------------------------------------
+library("rsm")
+ChemReact
+CR <- coded.data(ChemReact, x1 ~ (Time - 85)/5, x2 ~ (Temp - 175)/5)
+CR
+# Realizando un ajuste de segundo orden:
+CR.rsm2 <- rsm(Yield ~ Block + SO(x1, x2), data = CR)
+CR.rsm2
+summary(CR.rsm2)
+# Graficando:
+contour(CR.rsm2, ~ x1 + x2, at = summary(CR.rsm2)$canonical$xs, image = 
+TRUE, img.col = terrain.colors(50))
+xs <- canonical(CR.rsm2)$xs
+points (xs[1], xs[2], pch=2, col="red")
+points(CR[1:7,], col="black", pch=19)
+points(CR[8:14,], col="blue", pch=19)
+#Esta última línea da un error:
+predict(CR.rsm2, 
+newdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],x2=summary(CR.rsm2)$canonical$xs[2]))
+--------------------------------------------------------------
+
+La última línea me arroja el siguiente error:
+
+Error en eval(expr, envir, enclos) : objeto 'Block' no encontrado
+
+     De antemano agradezco la ayuda.
+
+     Saludos.
+
+--
+     Argel.
+
+
+From jorgeivanvelez en gmail.com  Fri Apr  1 21:07:03 2011
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 1 Apr 2011 15:07:03 -0400
+Subject: [R-es]
+	=?iso-8859-1?q?Predicci=F3n_de_valor_m=E1ximo_en_superfici?=
+	=?iso-8859-1?q?e_de_respuesta=2C_con_paquete_rsm?=
+In-Reply-To: <4D961E59.3040400@gmail.com>
+References: <4D961E59.3040400@gmail.com>
+Message-ID: <AANLkTinyBEi9Uuj47ogXRym-33Q_cnpkr9eYeCvM1KJL@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/23a0f73f/attachment.pl>
+
+From luciano.selzer en gmail.com  Fri Apr  1 21:07:32 2011
+From: luciano.selzer en gmail.com (Luciano Selzer)
+Date: Fri, 1 Apr 2011 16:07:32 -0300
+Subject: [R-es]
+	=?iso-8859-1?q?Predicci=F3n_de_valor_m=E1ximo_en_superfici?=
+	=?iso-8859-1?q?e_de_respuesta=2C_con_paquete_rsm?=
+In-Reply-To: <4D961E59.3040400@gmail.com>
+References: <4D961E59.3040400@gmail.com>
+Message-ID: <AANLkTi=ssceBtG_NqHmYYDm6ZuO58UE-SNcs6DW7FBG2@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/8b7f2b96/attachment.pl>
+
+From cgb en datanalytics.com  Fri Apr  1 21:07:59 2011
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Fri, 1 Apr 2011 21:07:59 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Predicci=F3n_de_valor_m=E1ximo_en_superfici?=
+	=?iso-8859-1?q?e_de_respuesta=2C_con_paquete_rsm?=
+In-Reply-To: <4D961E59.3040400@gmail.com>
+References: <4D961E59.3040400@gmail.com>
+Message-ID: <AANLkTikr-gBagStdTDJC7ff1LAxMi+27SBdjkAQNipAP@mail.gmail.com>
+
+Pues... ¡añádelo!
+
+> predict(CR.rsm2, newdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],Block = "B1",x2=summary(CR.rsm2)$canonical$xs[2]))
+     x1
+84.3656
+> predict(CR.rsm2, newdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],Block = "B2",x2=summary(CR.rsm2)$canonical$xs[2]))
+      x1
+79.90808
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 1 de abril de 2011 20:50, Argel Gastélum Arellánez
+<argel.gastelum en gmail.com> escribió:
+>    Hola compañeros de la lista. Estoy aprendiendo a usar el paquete "rsm"
+> para superficies de respuesta. Siguiendo este ejemplo todo va bien, hasta
+> que trato de obtener el valor máximo predicho para la variable de respuesta
+> en los valores de x1 y x2 estimados.
+>
+> -------------------------------------------------------------
+> library("rsm")
+> ChemReact
+> CR <- coded.data(ChemReact, x1 ~ (Time - 85)/5, x2 ~ (Temp - 175)/5)
+> CR
+> # Realizando un ajuste de segundo orden:
+> CR.rsm2 <- rsm(Yield ~ Block + SO(x1, x2), data = CR)
+> CR.rsm2
+> summary(CR.rsm2)
+> # Graficando:
+> contour(CR.rsm2, ~ x1 + x2, at = summary(CR.rsm2)$canonical$xs, image =
+> TRUE, img.col = terrain.colors(50))
+> xs <- canonical(CR.rsm2)$xs
+> points (xs[1], xs[2], pch=2, col="red")
+> points(CR[1:7,], col="black", pch=19)
+> points(CR[8:14,], col="blue", pch=19)
+> #Esta última línea da un error:
+> predict(CR.rsm2,
+> newdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],x2=summary(CR.rsm2)$canonical$xs[2]))
+> --------------------------------------------------------------
+>
+> La última línea me arroja el siguiente error:
+>
+> Error en eval(expr, envir, enclos) : objeto 'Block' no encontrado
+>
+>    De antemano agradezco la ayuda.
+>
+>    Saludos.
+>
+> --
+>    Argel.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From mspinola10 en gmail.com  Fri Apr  1 21:19:38 2011
+From: mspinola10 en gmail.com (=?ISO-8859-1?Q?Manuel_Sp=EDnola?=)
+Date: Fri, 1 Apr 2011 13:19:38 -0600
+Subject: [R-es] Leer archivo txt con espacios en blancos
+In-Reply-To: <AANLkTikJsf0isHVwW8DW+FvTtj-1SqcT4a8MOA5jWaVq@mail.gmail.com>
+References: <AANLkTikJsf0isHVwW8DW+FvTtj-1SqcT4a8MOA5jWaVq@mail.gmail.com>
+Message-ID: <AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/ce903611/attachment.pl>
+
+From argel.gastelum en gmail.com  Fri Apr  1 22:29:43 2011
+From: argel.gastelum en gmail.com (=?ISO-8859-1?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Fri, 01 Apr 2011 14:29:43 -0600
+Subject: [R-es]
+ =?iso-8859-1?q?Predicci=F3n_de_valor_m=E1ximo_en_superfici?=
+ =?iso-8859-1?q?e_de_respuesta=2C_con_paquete_rsm?=
+In-Reply-To: <AANLkTinyBEi9Uuj47ogXRym-33Q_cnpkr9eYeCvM1KJL@mail.gmail.com>
+References: <4D961E59.3040400@gmail.com>
+	<AANLkTinyBEi9Uuj47ogXRym-33Q_cnpkr9eYeCvM1KJL@mail.gmail.com>
+Message-ID: <4D9635B7.6090509@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/8f400199/attachment.pl>
+
+From argel.gastelum en gmail.com  Fri Apr  1 23:04:01 2011
+From: argel.gastelum en gmail.com (=?ISO-8859-1?Q?Argel_Gast=E9lum_Arell=E1nez?=)
+Date: Fri, 01 Apr 2011 15:04:01 -0600
+Subject: [R-es]
+ =?iso-8859-1?q?Predicci=F3n_de_valor_m=E1ximo_en_superfici?=
+ =?iso-8859-1?q?e_de_respuesta=2C_con_paquete_rsm?=
+In-Reply-To: <AANLkTin9+puw16R_aEuG-J0annVPi-wbvCJGQ+iykMPm@mail.gmail.com>
+References: <4D961E59.3040400@gmail.com>
+	<AANLkTinyBEi9Uuj47ogXRym-33Q_cnpkr9eYeCvM1KJL@mail.gmail.com>
+	<4D962F2D.5040700@gmail.com>
+	<AANLkTin9+puw16R_aEuG-J0annVPi-wbvCJGQ+iykMPm@mail.gmail.com>
+Message-ID: <4D963DC1.6010204@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/32f74b80/attachment.pl>
+
+From coforfe en gmail.com  Sat Apr  2 00:57:30 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sat, 2 Apr 2011 00:57:30 +0200
+Subject: [R-es] Leer archivo txt con espacios en blancos
+In-Reply-To: <AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>
+References: <AANLkTikJsf0isHVwW8DW+FvTtj-1SqcT4a8MOA5jWaVq@mail.gmail.com>
+	<AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>
+Message-ID: <AANLkTin64iVn5oZD1s7NUJ8suttWG6suk-6XD_VWzup3@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/57909d85/attachment.pl>
+
+From paula.altamar1 en gmail.com  Sat Apr  2 01:00:52 2011
+From: paula.altamar1 en gmail.com (Paula Altamar)
+Date: Fri, 1 Apr 2011 18:00:52 -0500
+Subject: [R-es] Separador de miles
+Message-ID: <AANLkTinLPzuuyEzA4EMzURwZzT0kEaMPAgAVQreerwdb@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/383a02f0/attachment.pl>
+
+From luciano.selzer en gmail.com  Sat Apr  2 01:21:02 2011
+From: luciano.selzer en gmail.com (Luciano Selzer)
+Date: Fri, 1 Apr 2011 20:21:02 -0300
+Subject: [R-es] Separador de miles
+In-Reply-To: <AANLkTinLPzuuyEzA4EMzURwZzT0kEaMPAgAVQreerwdb@mail.gmail.com>
+References: <AANLkTinLPzuuyEzA4EMzURwZzT0kEaMPAgAVQreerwdb@mail.gmail.com>
+Message-ID: <AANLkTimKeVtDNW5DzNBrU=J3FBbciAjm_iQD3H0xEiAn@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/cd0570f0/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sat Apr  2 02:12:52 2011
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Fri, 1 Apr 2011 20:12:52 -0400
+Subject: [R-es] Leer archivo txt con espacios en blancos
+In-Reply-To: <AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>
+References: <AANLkTikJsf0isHVwW8DW+FvTtj-1SqcT4a8MOA5jWaVq@mail.gmail.com>
+	<AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>
+Message-ID: <AANLkTikJEhjk6A-LH4-23HP+ebWH0jMVK+ZKRQX-xOuK@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/9b8f88f2/attachment.pl>
+
+From fernandsanche en yahoo.es  Sat Apr  2 11:39:46 2011
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Sat, 2 Apr 2011 10:39:46 +0100 (BST)
+Subject: [R-es] Significado de un mensaje de error
+Message-ID: <532333.57532.qm@web28213.mail.ukl.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/2383ccf7/attachment.pl>
+
+From mspinola10 en gmail.com  Sat Apr  2 13:12:59 2011
+From: mspinola10 en gmail.com (=?ISO-8859-1?Q?Manuel_Sp=EDnola?=)
+Date: Sat, 02 Apr 2011 05:12:59 -0600
+Subject: [R-es] Leer archivo txt con espacios en blancos
+In-Reply-To: <AANLkTikJEhjk6A-LH4-23HP+ebWH0jMVK+ZKRQX-xOuK@mail.gmail.com>
+References: <AANLkTikJsf0isHVwW8DW+FvTtj-1SqcT4a8MOA5jWaVq@mail.gmail.com>
+	<AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>
+	<AANLkTikJEhjk6A-LH4-23HP+ebWH0jMVK+ZKRQX-xOuK@mail.gmail.com>
+Message-ID: <4D9704BB.4030408@gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/2dab1f00/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Sat Apr  2 17:29:40 2011
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Sat, 2 Apr 2011 11:29:40 -0400
+Subject: [R-es] Significado de un mensaje de error
+In-Reply-To: <532333.57532.qm@web28213.mail.ukl.yahoo.com>
+References: <532333.57532.qm@web28213.mail.ukl.yahoo.com>
+Message-ID: <AANLkTinmJpzqu4_F884WnOdeAJ+6Zw7q6n1mR6E7FLE0@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/765cfbca/attachment.pl>
+
+From coforfe en gmail.com  Sat Apr  2 23:23:38 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sat, 2 Apr 2011 23:23:38 +0200
+Subject: [R-es] Significado de un mensaje de error
+In-Reply-To: <532333.57532.qm@web28213.mail.ukl.yahoo.com>
+References: <532333.57532.qm@web28213.mail.ukl.yahoo.com>
+Message-ID: <BANLkTi=E8nmzVTU6aZtYvJPkQjPYK-TzOA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/fb746e99/attachment.pl>
+
+From fernandsanche en yahoo.es  Sun Apr  3 14:28:57 2011
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Sun, 3 Apr 2011 13:28:57 +0100 (BST)
+Subject: [R-es] Significado de un mensaje de error
+Message-ID: <90477.20699.qm@web28206.mail.ukl.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/a514e42a/attachment.pl>
+
+From coforfe en gmail.com  Sun Apr  3 21:04:56 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sun, 3 Apr 2011 21:04:56 +0200
+Subject: [R-es] Significado de un mensaje de error
+In-Reply-To: <90477.20699.qm@web28206.mail.ukl.yahoo.com>
+References: <90477.20699.qm@web28206.mail.ukl.yahoo.com>
+Message-ID: <BANLkTimQUAAqrvWYQzvZhPJzUTpwNo08bg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/fc1b3184/attachment.pl>
+
+From coforfe en gmail.com  Sun Apr  3 21:17:42 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sun, 3 Apr 2011 21:17:42 +0200
+Subject: [R-es] Separador de miles
+In-Reply-To: <AANLkTinLPzuuyEzA4EMzURwZzT0kEaMPAgAVQreerwdb@mail.gmail.com>
+References: <AANLkTinLPzuuyEzA4EMzURwZzT0kEaMPAgAVQreerwdb@mail.gmail.com>
+Message-ID: <BANLkTingse+7aH-vLYsg-2hdux+SNLMCbQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/c82d7809/attachment.pl>
+
+From cgb en datanalytics.com  Mon Apr  4 16:48:24 2011
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 4 Apr 2011 16:48:24 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en la
+	EOI, Madrid
+Message-ID: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+
+En nombre de los comités científico y organizador de las III Jornadas
+de usuarios de R, me complace anunciar en esta lista que:
+
+1) Se celebrarán los días 17 y 18 de noviembre en la Escuela de
+Organización Industrial (http://www.eoi.es), en Madrid
+2) Que ya está abierto el plazo para inscribirse y participar
+3) Que la información relevante puede consultarse en www.usar.org.es
+
+La inscripción y la asistencia es libre y gratuita. No obstante,
+queremos solicitar a los miembros de la comunidad de usuarios de R
+ayuda para conseguir financiación que permita que las jornadas sean un
+éxito. Si alguien sabe de empresas o instituciones que pudieran estar
+interesadas en patrocinar o subvencionar las  jornadas o algunas
+actividades concretas dentro de ellas (como por ejemplo, financiar las
+dietas de ponentes), que no dude en ponerse en contacto con la
+organización a través del correo organizacion en usar.org.es.
+
+Un cordial saludo,
+
+Carlos J. Gil Bellosta
+Comité Organizador
+III Jornadas de Usuarios de R
+
+
+From coforfe en gmail.com  Mon Apr  4 17:40:21 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Mon, 4 Apr 2011 17:40:21 +0200
+Subject: [R-es] Significado de un mensaje de error
+In-Reply-To: <276889.99443.qm@web28216.mail.ukl.yahoo.com>
+References: <276889.99443.qm@web28216.mail.ukl.yahoo.com>
+Message-ID: <BANLkTinw+9xSj4c943DkBQrK8BjgbsdkVA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110404/016c2f68/attachment.pl>
+
+From advilmu en doctor.upv.es  Wed Apr  6 11:44:01 2011
+From: advilmu en doctor.upv.es (Adriana Villa Murillo)
+Date: Wed,  6 Apr 2011 11:44:01 +0200
+Subject: [R-es] Problemas con Rgraphviz
+Message-ID: <1302083041.4d9c35e15ff36@webmail.upv.es>
+
+
+Hola a todos..!!
+
+Necesito trabajar con el package classGraph, entiendo que dicho package requiere
+como previo a Rgraphviz. Pues bien, al tratar de cargarlo aparece el siguiente
+mensaje de error:
+
+Error : .onLoad failed in loadNamespace() for 'Rgraphviz', details:
+  call: value[[3L]](cond)
+  error: unable to load shared object
+'C:/ARCHIV~1/R/R-212~1.2/library/Rgraphviz/libs/i386/Rgraphviz.dll':
+  LoadLibrary failure:  No se puede encontrar el módulo especificado.
+
+
+  Check that (1) graphviz is installed on your system; (2) the
+  installed version of graphviz matches '2.20.3'; this is the version
+  used to build this Rgraphviz package; (3) graphviz is accessible to
+  R, e.g., the path to the graphviz 'bin' directory is in the system
+  'PATH' variable.  See additional instructions in the 'README' file of
+  the Rgraphviz 'source' distribution, available at
+
+  http://bioconductor.org/packages/release/bioc/html/Rgraphviz.html
+
+  Ask further questions on the Bioconductor mailing list
+
+  http://bioconductor.org/docs/mailList.html
+
+Sabeis a que se refiere esto?
+
+Asi mismo, si mirais el package classGraph, aparece como Depends e Imports los
+mismos packages, sabeis porque?
+
+De antemano gracias!!
+
+
+From oscar.perpinan en upm.es  Wed Apr  6 12:10:04 2011
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Wed, 6 Apr 2011 12:10:04 +0200
+Subject: [R-es] Problemas con Rgraphviz
+In-Reply-To: <1302083041.4d9c35e15ff36@webmail.upv.es>
+References: <1302083041.4d9c35e15ff36@webmail.upv.es>
+Message-ID: <20110406121004.75b3adec@OPL-EUITI>
+
+Hola,
+
+Según lo entiendo del mensaje de error que recibes, te falta instalar el
+programa "graphviz". En este hilo de Bioconductor hablan sobre lo mismo:
+https://stat.ethz.ch/pipermail/bioconductor/2008-June/022838.html
+
+Sobre "depends" e "imports", el "Writing R Extensions" dice
+claramente: "Packages declared in the ?Depends? field should not also
+be in the ?Imports? field" (http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file).
+No se porqué el autor de este paquete lo ha hecho así... 
+
+Saludos.
+
+Oscar.
+
+-------------------
+Oscar Perpiñán Lamigueiro
+Dpto. Ingeniería Eléctrica
+EUITI-UPM
+
+http://procomun.wordpress.com
+
+-----------------------------------------
+>
+>Hola a todos..!!
+>
+>Necesito trabajar con el package classGraph, entiendo que dicho
+>package requiere como previo a Rgraphviz. Pues bien, al tratar de
+>cargarlo aparece el siguiente mensaje de error:
+>
+>Error : .onLoad failed in loadNamespace() for 'Rgraphviz', details:
+>  call: value[[3L]](cond)
+>  error: unable to load shared object
+>'C:/ARCHIV~1/R/R-212~1.2/library/Rgraphviz/libs/i386/Rgraphviz.dll':
+>  LoadLibrary failure:  No se puede encontrar el módulo especificado.
+>
+>
+>  Check that (1) graphviz is installed on your system; (2) the
+>  installed version of graphviz matches '2.20.3'; this is the version
+>  used to build this Rgraphviz package; (3) graphviz is accessible to
+>  R, e.g., the path to the graphviz 'bin' directory is in the system
+>  'PATH' variable.  See additional instructions in the 'README' file of
+>  the Rgraphviz 'source' distribution, available at
+>
+>  http://bioconductor.org/packages/release/bioc/html/Rgraphviz.html
+>
+>  Ask further questions on the Bioconductor mailing list
+>
+>  http://bioconductor.org/docs/mailList.html
+>
+>Sabeis a que se refiere esto?
+>
+>Asi mismo, si mirais el package classGraph, aparece como Depends e
+>Imports los mismos packages, sabeis porque?
+>
+>De antemano gracias!!
+>
+>_______________________________________________
+>R-help-es mailing list
+>R-help-es en r-project.org
+>https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From canadasreche en gmail.com  Wed Apr  6 13:06:32 2011
+From: canadasreche en gmail.com (=?ISO-8859-1?Q?Jos=E9_Luis_Ca=F1adas?=)
+Date: Wed, 06 Apr 2011 13:06:32 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+Message-ID: <4D9C4938.2030209@gmail.com>
+
+Al hilo de las jornadas de usuarios. ¿En algún sitio están disponibles 
+las comunicaciones de las dos primeras jornadas?
+
+Saludos
+
+El 04/04/11 16:48, Carlos J. Gil Bellosta escribió:
+> En nombre de los comités científico y organizador de las III Jornadas
+> de usuarios de R, me complace anunciar en esta lista que:
+>
+> 1) Se celebrarán los días 17 y 18 de noviembre en la Escuela de
+> Organización Industrial (http://www.eoi.es), en Madrid
+> 2) Que ya está abierto el plazo para inscribirse y participar
+> 3) Que la información relevante puede consultarse en www.usar.org.es
+>
+> La inscripción y la asistencia es libre y gratuita. No obstante,
+> queremos solicitar a los miembros de la comunidad de usuarios de R
+> ayuda para conseguir financiación que permita que las jornadas sean un
+> éxito. Si alguien sabe de empresas o instituciones que pudieran estar
+> interesadas en patrocinar o subvencionar las  jornadas o algunas
+> actividades concretas dentro de ellas (como por ejemplo, financiar las
+> dietas de ponentes), que no dude en ponerse en contacto con la
+> organización a través del correo organizacion en usar.org.es.
+>
+> Un cordial saludo,
+>
+> Carlos J. Gil Bellosta
+> Comité Organizador
+> III Jornadas de Usuarios de R
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From luxorvrg en hotmail.com  Wed Apr  6 13:07:54 2011
+From: luxorvrg en hotmail.com (=?iso-8859-1?B?Vu1jdG9yIFJvZHLtZ3VleiBHYWxpYW5v?=)
+Date: Wed, 6 Apr 2011 11:07:54 +0000
+Subject: [R-es] configurar limite de memoria RAM para obtener maximo
+ rendimiento con windows 7
+Message-ID: <BLU141-W361B0F6DCAC1567CDEA40BD0A50@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110406/44d25208/attachment.pl>
+
+From coforfe en gmail.com  Wed Apr  6 13:13:46 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Wed, 6 Apr 2011 13:13:46 +0200
+Subject: [R-es] configurar limite de memoria RAM para obtener maximo
+ rendimiento con windows 7
+In-Reply-To: <BLU141-W361B0F6DCAC1567CDEA40BD0A50@phx.gbl>
+References: <BLU141-W361B0F6DCAC1567CDEA40BD0A50@phx.gbl>
+Message-ID: <BANLkTi=OnuJPq86ZxGoJfHKO7jSemzyJVQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110406/4324603d/attachment.pl>
+
+From xaviblas en gmail.com  Wed Apr  6 13:29:25 2011
+From: xaviblas en gmail.com (Xavi de Blas)
+Date: Wed, 6 Apr 2011 13:29:25 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+Message-ID: <BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+
+Enhorabuena por la iniciativa y por tener ya montada la página web,
+calendario...
+
+Nos veremos allí
+
+Saludos
+
+
+2011/4/4 Carlos J. Gil Bellosta <cgb en datanalytics.com>:
+> En nombre de los comités científico y organizador de las III Jornadas
+> de usuarios de R, me complace anunciar en esta lista que:
+>
+> 1) Se celebrarán los días 17 y 18 de noviembre en la Escuela de
+> Organización Industrial (http://www.eoi.es), en Madrid
+> 2) Que ya está abierto el plazo para inscribirse y participar
+> 3) Que la información relevante puede consultarse en www.usar.org.es
+>
+> La inscripción y la asistencia es libre y gratuita. No obstante,
+> queremos solicitar a los miembros de la comunidad de usuarios de R
+> ayuda para conseguir financiación que permita que las jornadas sean un
+> éxito. Si alguien sabe de empresas o instituciones que pudieran estar
+> interesadas en patrocinar o subvencionar las  jornadas o algunas
+> actividades concretas dentro de ellas (como por ejemplo, financiar las
+> dietas de ponentes), que no dude en ponerse en contacto con la
+> organización a través del correo organizacion en usar.org.es.
+>
+> Un cordial saludo,
+>
+> Carlos J. Gil Bellosta
+> Comité Organizador
+> III Jornadas de Usuarios de R
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From coforfe en gmail.com  Thu Apr  7 00:29:24 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Thu, 7 Apr 2011 00:29:24 +0200
+Subject: [R-es] Problemas con Rgraphviz
+In-Reply-To: <1302083041.4d9c35e15ff36@webmail.upv.es>
+References: <1302083041.4d9c35e15ff36@webmail.upv.es>
+Message-ID: <BANLkTikTxjMjhj1FzpLZ8X7_6ko7v4YOgQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/ccd31424/attachment.pl>
+
+From leonardo.hernandez en etecsa.cu  Thu Apr  7 16:58:35 2011
+From: leonardo.hernandez en etecsa.cu (=?ISO-8859-1?Q?Leonardo_Hern=E1ndez_P=E9rez?=)
+Date: Thu, 07 Apr 2011 10:58:35 -0400
+Subject: [R-es] Varias preguntas
+In-Reply-To: <BANLkTikTxjMjhj1FzpLZ8X7_6ko7v4YOgQ@mail.gmail.com>
+References: <1302083041.4d9c35e15ff36@webmail.upv.es>
+	<BANLkTikTxjMjhj1FzpLZ8X7_6ko7v4YOgQ@mail.gmail.com>
+Message-ID: <4D9DD11B.7070403@etecsa.cu>
+
+
+Hola amigos:
+
+Necesito implementar un sistema de control de acceso utilizando DTMF, 
+pero necesito saber si puedo hacerlo en R sobre LINUX por ello les hago 
+estas tres preguntas:
+
+R puede adquirir una señal de audio mediante el micrófono?
+Está implementado en R la detección de DTMF?
+Puedo trabajar desde R los puertos series o paralelo?
+Puedo hacer en R una aplicación independiente (Standalone applications)
+
+Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he implementado en 
+matlab (Windows) y cuando lo corrí sobre linux no trabajó porque Matlab 
+para Linux no tiene el Toolbox de adquisición de datos.
+
+Un abrazo a todos
+
+Leonardo
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/3a9ec6fc/attachment.pl>
+
+From krcabrer en une.net.co  Thu Apr  7 16:23:32 2011
+From: krcabrer en une.net.co (KENNETH R CABRERA)
+Date: Thu, 07 Apr 2011 09:23:32 -0500
+Subject: [R-es] Varias preguntas
+In-Reply-To: <4D9DD11B.7070403@etecsa.cu>
+References: <1302083041.4d9c35e15ff36@webmail.upv.es>
+	<BANLkTikTxjMjhj1FzpLZ8X7_6ko7v4YOgQ@mail.gmail.com>
+	<4D9DD11B.7070403@etecsa.cu>
+Message-ID: <fb66c52d3b01.4d9d8294@une.net.co>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/fa81c287/attachment.pl>
+
+From leonardo.hernandez en etecsa.cu  Fri Apr  8 16:32:51 2011
+From: leonardo.hernandez en etecsa.cu (=?ISO-8859-1?Q?Leonardo_Hern=E1ndez_P=E9rez?=)
+Date: Fri, 08 Apr 2011 10:32:51 -0400
+Subject: [R-es] Varias preguntas
+In-Reply-To: <fb66c52d3b01.4d9d8294@une.net.co>
+References: <1302083041.4d9c35e15ff36@webmail.upv.es>
+	<BANLkTikTxjMjhj1FzpLZ8X7_6ko7v4YOgQ@mail.gmail.com>
+	<4D9DD11B.7070403@etecsa.cu> <fb66c52d3b01.4d9d8294@une.net.co>
+Message-ID: <4D9F1C93.1040509@etecsa.cu>
+
+Gracias Kenneth, me han sido muy útiles tus respuestas
+
+Abrazos a todos
+
+Leonardo
+
+
+El 07/04/11 10:23, KENNETH R CABRERA escribió:
+> Respetado Leonardo:
+>
+> Algunas ideas para responder tus preguntas.
+> >
+> > Hola amigos:
+> >
+> > Necesito implementar un sistema de control de acceso utilizando
+> > DTMF, pero necesito saber si puedo hacerlo en R sobre LINUX por
+> > ello les hago estas tres preguntas:
+> >
+> > R puede adquirir una señal de audio mediante el micrófono?
+> Parece que el paquete "audio" sólo está para windows.
+> > Está implementado en R la detección de DTMF?
+> No la he visto.
+> > Puedo trabajar desde R los puertos series o paralelo?
+> Sería todo mediante linux (programación en C)
+> > Puedo hacer en R una aplicación independiente (Standalone
+> > applications)
+> No, hasta ahora no.
+> > Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he
+> > implementado en matlab (Windows) y cuando lo corrí sobre linux
+> > no trabajó porque Matlab para Linux no tiene el Toolbox de
+> > adquisición de datos.
+> La idea sería que R hiciera interfaz con alguna aplicación en linux
+> que tomara los datos y los grabara y luego el script del R (en ejecución
+> BATCH para hacer un pseudo "standalone") procesara la información
+> obtenida.
+>
+> Feliz día.
+> >
+> > Un abrazo a todos
+> >
+> > Leonardo> ---
+> > This message was processed by Kaspersky Mail Gateway
+> > 5.6.28/RELEASE running at host imx3.etecsa.cu
+> > Visit our web-site: <http://www.kaspersky.com>,
+> > <http://www.viruslist.com>> 
+> _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> ---
+> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx2.etecsa.cu
+> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110408/6a11bc9a/attachment.html>
+------------ próxima parte ------------
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110408/6a11bc9a/attachment.pl>
+
+From gellusco en gmail.com  Sat Apr  9 04:13:37 2011
+From: gellusco en gmail.com (genaro llusco)
+Date: Sat, 9 Apr 2011 04:13:37 +0200
+Subject: [R-es] entrada de datos
+Message-ID: <BANLkTin_B1vFS2bb-MrLpdjPVV_TtXyhCg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/8f93eee4/attachment.pl>
+
+From fernandsanche en yahoo.es  Sat Apr  9 15:45:33 2011
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Sat, 9 Apr 2011 14:45:33 +0100 (BST)
+Subject: [R-es] grafico
+Message-ID: <61826.25725.qm@web28207.mail.ukl.yahoo.com>
+
+Hola a todos,
+
+a<-c(1,2,3,4,5)
+b<-c(1.3,2.4,5,6,8)
+etiquetas<-c("etiq1","etiq2","etiq3","etiq4","etiq5")
+c<-rbind(a,b)
+
+Me gustaría hacer un gráfico en el que se represente en el eje Y las series a y 
+b que están unidas en c y en el eje X las etiquetas ¿cómo se podría hacer? 
+Espero haberme explicado. Sería el equivalente a la figura de Excel que os 
+adjunto.
+
+saludos,
+
+Fernando
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/fa9eff0c/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Doc1.pdf
+Type: application/x-download
+Size: 51300 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/fa9eff0c/attachment-0001.bin>
+
+From onunez en iberstat.es  Sat Apr  9 18:06:31 2011
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Sat, 9 Apr 2011 18:06:31 +0200
+Subject: [R-es] grafico
+In-Reply-To: <61826.25725.qm@web28207.mail.ukl.yahoo.com>
+References: <61826.25725.qm@web28207.mail.ukl.yahoo.com>
+Message-ID: <44FA4153-C2BF-4EBC-A126-77D66E8AC495@iberstat.es>
+
+Fernando,
+
+no es lo más conciso, pero creo que lo siguiente te funcionará:
+
+a<-c(1,2,3,4,5)
+b<-c(1.3,2.4,5,6,8)
+etiquetas<-c("etiq1","etiq2","etiq3","etiq4","etiq5")
+c<-rbind(a,b)
+
+x=data.frame(Serie1=a,Serie2=b)
+series=ts(x)
+plot(series,plot.type="single",col=c(4,2),xaxt="n")
+axis(1, at=1:5,labels = etiquetas)
+legend(x="topleft",legend=c("Serie 1","Serie 2"),col=c(4,2),lty=c(1,1))
+
+En todo caso y para sacar partido de R,  sería adecuado que tus  
+etiquetas fuesen fechas.
+Un saludo. Olivier
+
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 09/04/2011, a las 15:45, Fernando Sanchez escribió:
+
+> Hola a todos,
+>
+> a<-c(1,2,3,4,5)
+> b<-c(1.3,2.4,5,6,8)
+> etiquetas<-c("etiq1","etiq2","etiq3","etiq4","etiq5")
+> c<-rbind(a,b)
+>
+> Me gustaría hacer un gráfico en el que se represente en el eje Y  
+> las series a y b que están unidas en c y en el eje X las etiquetas  
+> ¿cómo se podría hacer? Espero haberme explicado. Sería el  
+> equivalente a la figura de Excel que os adjunto.
+>
+> saludos,
+>
+> Fernando
+> <Doc1.pdf>_______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From fernandsanche en yahoo.es  Sat Apr  9 18:48:49 2011
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Sat, 9 Apr 2011 17:48:49 +0100 (BST)
+Subject: [R-es] grafico
+Message-ID: <329421.99086.qm@web28211.mail.ukl.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/248ed6a9/attachment.pl>
+
+From coforfe en gmail.com  Sat Apr  9 22:40:55 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sat, 9 Apr 2011 22:40:55 +0200
+Subject: [R-es] entrada de datos
+In-Reply-To: <BANLkTin_B1vFS2bb-MrLpdjPVV_TtXyhCg@mail.gmail.com>
+References: <BANLkTin_B1vFS2bb-MrLpdjPVV_TtXyhCg@mail.gmail.com>
+Message-ID: <BANLkTi=60fx5WK_i_CNaRqx9xp4Q7OfTEA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/c75dbda6/attachment.pl>
+
+From carlos.perez en uam.es  Sun Apr 10 12:01:10 2011
+From: carlos.perez en uam.es (carlos.perez en uam.es)
+Date: Sun, 10 Apr 2011 12:01:10 +0200
+Subject: [R-es] grafico
+In-Reply-To: <mailman.2816.1302356750.4559.r-help-es@r-project.org>
+References: <mailman.2816.1302356750.4559.r-help-es@r-project.org>
+Message-ID: <20110410120110.182748cz5vczdbsw@webmail.uam.es>
+
+Hola fernando,
+
+No he podido ver el gráfico de excel, así que no se si esto es  
+exactamente lo que querrías:
+
+barplot(c,beside=T,names.arg=etiquetas)
+
+Saludos
+
+
+From fernandsanche en yahoo.es  Sun Apr 10 12:28:58 2011
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Sun, 10 Apr 2011 11:28:58 +0100 (BST)
+Subject: [R-es] grafico
+Message-ID: <122267.73246.qm@web28207.mail.ukl.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/0842bfc1/attachment.pl>
+
+From oscar.perpinan en upm.es  Sun Apr 10 18:00:43 2011
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Sun, 10 Apr 2011 18:00:43 +0200
+Subject: [R-es] grafico
+In-Reply-To: <61826.25725.qm@web28207.mail.ukl.yahoo.com>
+References: <61826.25725.qm@web28207.mail.ukl.yahoo.com>
+Message-ID: <20110410180043.666ba8f2@upm.es>
+
+Hola,
+
+A ver si te sirve esto:
+
+library(lattice)
+DF <- data.frame(a=a, b=b, etiq=etiquetas)
+xyplot(a+b~etiq, data=DF, 
+	type=c('l', 'g'), 
+	xlab='Etiquetas', ylab=NULL, 
+	auto.key=list(space='right'))
+
+Saludos
+
+Oscar.
+
+-------------
+Oscar Perpiñán Lamigueiro
+Dpto. de Ingeniería Eléctrica
+EUITI-UPM
+
+http://procomun.wordpress.com
+---------------------------------------
+En Sat, 9 Apr 2011 14:45:33 +0100 (BST)
+Fernando Sanchez <fernandsanche en yahoo.es> escribió:
+
+> Hola a todos,
+> 
+> a<-c(1,2,3,4,5)
+> b<-c(1.3,2.4,5,6,8)
+> etiquetas<-c("etiq1","etiq2","etiq3","etiq4","etiq5")
+> c<-rbind(a,b)
+> 
+> Me gustaría hacer un gráfico en el que se represente en el eje Y las series a y 
+> b que están unidas en c y en el eje X las etiquetas ¿cómo se podría hacer? 
+> Espero haberme explicado. Sería el equivalente a la figura de Excel que os 
+> adjunto.
+> 
+> saludos,
+> 
+> Fernando
+> 
+
+
+From fernandsanche en yahoo.es  Sun Apr 10 18:08:57 2011
+From: fernandsanche en yahoo.es (Fernando Sanchez)
+Date: Sun, 10 Apr 2011 17:08:57 +0100 (BST)
+Subject: [R-es] grafico
+Message-ID: <80551.6973.qm@web28202.mail.ukl.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/7c0af91d/attachment.pl>
+
+From yhdelgado en uci.cu  Mon Apr 11 03:15:44 2011
+From: yhdelgado en uci.cu (Ing. Yusniel Hidalgo Delgado)
+Date: Sun, 10 Apr 2011 21:15:44 -0400 (CDT)
+Subject: [R-es] R en la web
+In-Reply-To: <103586309.6567551302484248250.JavaMail.root@ucimail3.uci.cu>
+Message-ID: <920716861.6568801302484544460.JavaMail.root@ucimail3.uci.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/cf6634e1/attachment.pl>
+
+From cgb en datanalytics.com  Mon Apr 11 03:22:03 2011
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 11 Apr 2011 03:22:03 +0200
+Subject: [R-es] R en la web
+In-Reply-To: <920716861.6568801302484544460.JavaMail.root@ucimail3.uci.cu>
+References: <103586309.6567551302484248250.JavaMail.root@ucimail3.uci.cu>
+	<920716861.6568801302484544460.JavaMail.root@ucimail3.uci.cu>
+Message-ID: <BANLkTik+BxaS=9ddQviNC=6GGF3Owi_cOg@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Sí, es posible y hay varias opciones. De entre ellas, la que más me
+gusta personalmente es usando Rapache (búscalo en Google). Otros
+tienen otras preferencias.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 11 de abril de 2011 03:15, Ing. Yusniel Hidalgo Delgado
+<yhdelgado en uci.cu> escribió:
+> Saludos colegas. Soy nuevo en R y me gustaría saber si es posible embeber código HTML en funciones R para hacer interfaces web. Es decir, lo que quiero hacer es una aplicación web que utilice R para el procesamiento estadístico de los datos y que me los grafique en la web. ¿Es posible hacer esto? . Saludos.
+>
+> --
+>
+> --------------------------------------------------------------------------------------------
+> Ing. Yusniel Hidalgo Delgado
+> Participe en COMPUMAT 2011 http://www.mfc.uclv.edu.cu/scmc
+> Participe en INFO 2012 http://www.congreso-info.cu
+> University of Informatic Sciences
+> --------------------------------------------------------------------------------------------
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From yhdelgado en uci.cu  Mon Apr 11 03:32:11 2011
+From: yhdelgado en uci.cu (Ing. Yusniel Hidalgo Delgado)
+Date: Sun, 10 Apr 2011 21:32:11 -0400 (CDT)
+Subject: [R-es] R en la web
+In-Reply-To: <966688432.6571561302485147336.JavaMail.root@ucimail3.uci.cu>
+Message-ID: <152342879.6573391302485531202.JavaMail.root@ucimail3.uci.cu>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/9d7e0a3f/attachment.pl>
+
+From xavier.depedro en ub.edu  Mon Apr 11 08:58:51 2011
+From: xavier.depedro en ub.edu (Xavier de Pedro)
+Date: Mon, 11 Apr 2011 08:58:51 +0200
+Subject: [R-es] R en la web
+In-Reply-To: <BANLkTik+BxaS=9ddQviNC=6GGF3Owi_cOg@mail.gmail.com>
+References: <103586309.6567551302484248250.JavaMail.root@ucimail3.uci.cu>
+	<920716861.6568801302484544460.JavaMail.root@ucimail3.uci.cu>
+	<BANLkTik+BxaS=9ddQviNC=6GGF3Owi_cOg@mail.gmail.com>
+Message-ID: <4DA2A6AB.40402@ub.edu>
+
+Hola Yusniel:
+
+Una de las "otras preferencias" és usar algun software como 'Mediawiki', 
+o 'Tiki Wiki CMS Groupware' para toda la gestión web (más allá de un 
+simple html hecho más o menos a mano), y allí decidir donde poner 
+ejecutar trozos de R (texto  o gráficos) para que salgan mostrados en 
+medio del informe (o publicacion el el blog) que quieras, etc.
+
+En las últimas jornadas ( http://r-es.pangea.org/II+Jornadas ) hubo una 
+presentación sobre Tiki + PluginR, y hasta que esté disponible el libro 
+de actas/comunicaciones, etc. (están en ello, tengo entendido), puedes 
+leer un poco sobre el proceso aquí:
+
+http://doc.tiki.org/PluginR
+
+Saludos
+
+Xavi
+
+On 11/04/11 03:22, Carlos J. Gil Bellosta wrote:
+> Hola, ¿qué tal?
+>
+> Sí, es posible y hay varias opciones. De entre ellas, la que más me
+> gusta personalmente es usando Rapache (búscalo en Google). Otros
+> tienen otras preferencias.
+>
+> Un saludo,
+>
+> Carlos J. Gil Bellosta
+> http://www.datanalytics.com
+>
+> El día 11 de abril de 2011 03:15, Ing. Yusniel Hidalgo Delgado
+> <yhdelgado en uci.cu>  escribió:
+>> Saludos colegas. Soy nuevo en R y me gustaría saber si es posible embeber código HTML en funciones R para hacer interfaces web. Es decir, lo que quiero hacer es una aplicación web que utilice R para el procesamiento estadístico de los datos y que me los grafique en la web. ¿Es posible hacer esto? . Saludos.
+>>
+>> --
+>>
+>> --------------------------------------------------------------------------------------------
+>> Ing. Yusniel Hidalgo Delgado
+>> Participe en COMPUMAT 2011 http://www.mfc.uclv.edu.cu/scmc
+>> Participe en INFO 2012 http://www.congreso-info.cu
+>> University of Informatic Sciences
+>> --------------------------------------------------------------------------------------------
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Mon Apr 11 09:39:24 2011
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Mon, 11 Apr 2011 09:39:24 +0200
+Subject: [R-es] entrada de datos
+In-Reply-To: <BANLkTin_B1vFS2bb-MrLpdjPVV_TtXyhCg@mail.gmail.com>
+References: <BANLkTin_B1vFS2bb-MrLpdjPVV_TtXyhCg@mail.gmail.com>
+Message-ID: <0A5B869BDC0A7445B15F9A4A5379437719CEB0B273@ASSCCEVS02.sergas.local>
+
+Hola Genaro:
+
+Igual te sirve el package Deducer.
+http://ifellows.ucsd.edu/pmwiki/index.php?n=Main.TheDataViewer
+
+
+Un Saludo,
+Miguel.
+
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de genaro llusco
+Enviado el: sábado, 09 de abril de 2011 4:14
+Para: r-help-es en r-project.org
+Asunto: [R-es] entrada de datos
+
+Saludos
+
+mi consulta es en R existe algun paquete que realiza la entrada de datos despues de la encuesta, equivalente a data entry en SPSS?
+favor como se podria trabajar esto.?
+
+--
+atte.genaro llusco
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From amaurandi en um.es  Mon Apr 11 10:53:56 2011
+From: amaurandi en um.es (=?ISO-8859-1?Q?Antonio_Maurandi_L=F3pez?=)
+Date: Mon, 11 Apr 2011 10:53:56 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+Message-ID: <4DA2C1A4.50205@um.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110411/75e12fee/attachment.pl>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Mon Apr 11 13:32:57 2011
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Mon, 11 Apr 2011 13:32:57 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <4DA2C1A4.50205@um.es>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+	<4DA2C1A4.50205@um.es>
+Message-ID: <0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>
+
+Yo manifiesto mi intención de asistir!
+Y animo a tod en s a que hagan lo mismo.
+
+... Seguramente habrá gente que nos cuente cosas que no sabemos (y que nos resultarán de utilidad)... también hay planificados talleres MUY interesantes y tendremos una oportunidad excelente de "socializar" con personas que entienden de qué hablamos cuando decimos CRAN, Bioconductor, packages, sweave, .. Además de tener la oportunidad de mostrar en qué estamos trabajando.... Ya sea presentando una comunicación oral o un póster.. O simplemente asistir como oyentes, que no es poco!!!!!
+
+Los que hemos tenido la oportunidad de estar en alguna de las anteriores Jornadas os podemos asegurar que vale la pena (aunque sólo sea por "ponernos" caras a los emails de esta lista y compartir una charla -y un "refresco"-).
+:-)'
+
+Venga, nos vemos en Madrid en Noviembre?
+
+Un Saludo,
+Miguel.
+
+
+
+
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Antonio Maurandi López
+Enviado el: lunes, 11 de abril de 2011 10:54
+Para: r-help-es en r-project.org
+Asunto: Re: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en la EOI, Madrid
+
+enhorabuena igualmente!.
+
+y un detalle,
+seria interesante, digo yo,  que para estas jornadas la gente manifestase su intención de asistir al evento en este foro, de modo que se crearan más expectativas y se levanten ánimos.
+
+Un saludo.
+
+(aún es pronto pero que se tenga ahí presente).
+
+
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From cgb en datanalytics.com  Mon Apr 11 17:15:48 2011
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Mon, 11 Apr 2011 17:15:48 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+	<4DA2C1A4.50205@um.es>
+	<0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>
+Message-ID: <BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+A la vista del número de inscritos, yo creo que más que de entusiasmo,
+los interesados en asistir a las jornadas deberían adquirir un cierto
+sentido de urgencia. Al ritmo que vamos, igual hay que comenzar a
+contar butacas en el salón de actos de la EOI y ver cuándo colgamos el
+cartel de completo.
+
+Así que el que quiera asistir debería seguir mi consejo y no posponer
+su inscripción a través del formulario
+
+http://usar.org.es/inscripcion.php
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+El día 11 de abril de 2011 13:32,
+<miguel.angel.rodriguez.muinos en sergas.es> escribió:
+> Yo manifiesto mi intención de asistir!
+> Y animo a tod en s a que hagan lo mismo.
+>
+> ... Seguramente habrá gente que nos cuente cosas que no sabemos (y que nos resultarán de utilidad)... también hay planificados talleres MUY interesantes y tendremos una oportunidad excelente de "socializar" con personas que entienden de qué hablamos cuando decimos CRAN, Bioconductor, packages, sweave, .. Además de tener la oportunidad de mostrar en qué estamos trabajando.... Ya sea presentando una comunicación oral o un póster.. O simplemente asistir como oyentes, que no es poco!!!!!
+>
+> Los que hemos tenido la oportunidad de estar en alguna de las anteriores Jornadas os podemos asegurar que vale la pena (aunque sólo sea por "ponernos" caras a los emails de esta lista y compartir una charla -y un "refresco"-).
+> :-)'
+>
+> Venga, nos vemos en Madrid en Noviembre?
+>
+> Un Saludo,
+> Miguel.
+>
+>
+>
+>
+>
+>
+>
+> -----Mensaje original-----
+> De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Antonio Maurandi López
+> Enviado el: lunes, 11 de abril de 2011 10:54
+> Para: r-help-es en r-project.org
+> Asunto: Re: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en la EOI, Madrid
+>
+> enhorabuena igualmente!.
+>
+> y un detalle,
+> seria interesante, digo yo,  que para estas jornadas la gente manifestase su intención de asistir al evento en este foro, de modo que se crearan más expectativas y se levanten ánimos.
+>
+> Un saludo.
+>
+> (aún es pronto pero que se tenga ahí presente).
+>
+>
+>
+>
+> Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+>
+> Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+>
+> See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From guivivi en alumni.uv.es  Tue Apr 12 10:03:00 2011
+From: guivivi en alumni.uv.es (guivivi en alumni.uv.es)
+Date: Tue, 12 Apr 2011 10:03:00 +0200 (CEST)
+Subject: [R-es] Letra Delta
+Message-ID: <5787377865guivivi@alumni.uv.es>
+
+Buenos días a todos,
+
+No he tenido problemas a la hora de escribir letras griegas en un plot y
+guardar éste en un pdf hasta que he intentado escribir la letra Delta
+para indicar una tasa de cambio o variación.
+
+Como vereis en el pdf que os adjunto, el cual he generado simplemente con:
+
+www <- "http://www.massey.ac.nz/~pscowper/ts/global.dat"
+
+global <- scan(www)
+
+global <- ts(global, st = c(1856, 1), end = c(2005, 12), fr = 12)
+
+global.breve <- window(global, start = c(1970, 1))
+pdf("item2_ses3.pdf", useDingbats = F)
+
+
+plot(diff(global.breve), xlim = c(1970, 2005), col = "steelblue1", 
+xlab = "Periodo (mes)", ylab = "Diferencia entre temperaturas
+diferenciada", 
+main = expression(paste("Serie diferenciada ", Delta, y[t])), sub =
+"Serie desde 1970")
+dev.off()
+
+la letra Delta se me ha convertido en el símbolo del conjunto vacío y
+también me ocurre esto en el pdf que genero con Sweave.
+
+¿Por qué ocurre esto?, ¿tiene que ver con la codificación?.
+
+Muchas gracias por la ayuda.
+
+Un saludo,
+
+Guillermo 
+
+
+From guivivi en alumni.uv.es  Tue Apr 12 10:07:58 2011
+From: guivivi en alumni.uv.es (guivivi en alumni.uv.es)
+Date: Tue, 12 Apr 2011 10:07:58 +0200 (CEST)
+Subject: [R-es] Letra Delta
+Message-ID: <2657769459guivivi@alumni.uv.es>
+
+Perdón, no he adjuntado el pdf
+
+> Buenos días a todos,
+> 
+> No he tenido problemas a la hora de escribir letras griegas en un plot y
+> guardar éste en un pdf hasta que he intentado escribir la letra Delta
+> para indicar una tasa de cambio o variación.
+> 
+> Como vereis en el pdf que os adjunto, el cual he generado simplemente con:
+> 
+> www <- "http://www.massey.ac.nz/~pscowper/ts/global.dat"
+> 
+> global <- scan(www)
+> 
+> global <- ts(global, st = c(1856, 1), end = c(2005, 12), fr = 12)
+> 
+> global.breve <- window(global, start = c(1970, 1))
+> pdf("item2_ses3.pdf", useDingbats = F)
+> 
+> 
+> plot(diff(global.breve), xlim = c(1970, 2005), col = "steelblue1", 
+> xlab = "Periodo (mes)", ylab = "Diferencia entre temperaturas
+> diferenciada", 
+> main = expression(paste("Serie diferenciada ", Delta, y[t])), sub =
+> "Serie desde 1970")
+> dev.off()
+> 
+> la letra Delta se me ha convertido en el símbolo del conjunto vacío y
+> también me ocurre esto en el pdf que genero con Sweave.
+> 
+> ¿Por qué ocurre esto?, ¿tiene que ver con la codificación?.
+> 
+> Muchas gracias por la ayuda.
+> 
+> Un saludo,
+> 
+> Guillermo 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: item2_ses3.pdf
+Type: application/pdf
+Size: 13146 bytes
+Desc: 
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/cf487630/attachment-0001.pdf>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue Apr 12 10:12:30 2011
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 12 Apr 2011 10:12:30 +0200
+Subject: [R-es] Letra Delta
+In-Reply-To: <2657769459guivivi@alumni.uv.es>
+References: <2657769459guivivi@alumni.uv.es>
+Message-ID: <0A5B869BDC0A7445B15F9A4A5379437719CEB0BCAE@ASSCCEVS02.sergas.local>
+
+Yo lo veo bien.
+
+
+
+-----Mensaje original-----
+De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de guivivi en alumni.uv.es
+Enviado el: martes, 12 de abril de 2011 10:08
+Para: r-help-es en r-project.org
+Asunto: Re: [R-es] Letra Delta
+
+Perdón, no he adjuntado el pdf
+
+> Buenos días a todos,
+>
+> No he tenido problemas a la hora de escribir letras griegas en un plot
+> y guardar éste en un pdf hasta que he intentado escribir la letra
+> Delta para indicar una tasa de cambio o variación.
+>
+> Como vereis en el pdf que os adjunto, el cual he generado simplemente con:
+>
+> www <- "http://www.massey.ac.nz/~pscowper/ts/global.dat"
+>
+> global <- scan(www)
+>
+> global <- ts(global, st = c(1856, 1), end = c(2005, 12), fr = 12)
+>
+> global.breve <- window(global, start = c(1970, 1))
+> pdf("item2_ses3.pdf", useDingbats = F)
+>
+>
+> plot(diff(global.breve), xlim = c(1970, 2005), col = "steelblue1",
+> xlab = "Periodo (mes)", ylab = "Diferencia entre temperaturas
+> diferenciada", main = expression(paste("Serie diferenciada ", Delta,
+> y[t])), sub = "Serie desde 1970")
+> dev.off()
+>
+> la letra Delta se me ha convertido en el símbolo del conjunto vacío y
+> también me ocurre esto en el pdf que genero con Sweave.
+>
+> ¿Por qué ocurre esto?, ¿tiene que ver con la codificación?.
+>
+> Muchas gracias por la ayuda.
+>
+> Un saludo,
+>
+> Guillermo
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: prueba_pdf.jpg
+Type: image/jpeg
+Size: 109727 bytes
+Desc: prueba_pdf.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/194a8588/attachment-0001.jpg>
+
+From guivivi en alumni.uv.es  Tue Apr 12 11:01:38 2011
+From: guivivi en alumni.uv.es (guivivi en alumni.uv.es)
+Date: Tue, 12 Apr 2011 11:01:38 +0200 (CEST)
+Subject: [R-es] Letra Delta
+Message-ID: <9291336936guivivi@alumni.uv.es>
+
+Hola Miguel Ángel, gracias por tu respuesta.
+
+Adjunto el .Rnw y el pdf generado a partir de él para mostrar que no me
+sale bien la letra Delta.
+
+Trabajo con la versión 2.12 de R en Fedora.
+
+1> sessionInfo()
+R version 2.12.2 (2011-02-25)
+Platform: x86_64-redhat-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=es_ES.utf8       LC_NUMERIC=C             
+ [3] LC_TIME=es_ES.utf8        LC_COLLATE=es_ES.utf8    
+ [5] LC_MONETARY=C             LC_MESSAGES=es_ES.utf8   
+ [7] LC_PAPER=es_ES.utf8       LC_NAME=C                
+ [9] LC_ADDRESS=C              LC_TELEPHONE=C           
+[11] LC_MEASUREMENT=es_ES.utf8 LC_IDENTIFICATION=C      
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets 
+[6] methods   base
+
+¿Alguien ha tenido un problema similar?.
+
+Un saludo,
+
+Guillermo
+
+> Yo lo veo bien.
+> 
+> 
+> 
+> -----Mensaje original-----
+> De: r-help-es-bounces en r-project.org
+[mailto:r-help-es-bounces en r-project.org] En nombre de guivivi en alumni.uv.es
+> Enviado el: martes, 12 de abril de 2011 10:08
+> Para: r-help-es en r-project.org
+> Asunto: Re: [R-es] Letra Delta
+> 
+> Perdón, no he adjuntado el pdf
+> 
+> > Buenos días a todos,
+> >
+> > No he tenido problemas a la hora de escribir letras griegas en un plot
+> > y guardar éste en un pdf hasta que he intentado escribir la letra
+> > Delta para indicar una tasa de cambio o variación.
+> >
+> > Como vereis en el pdf que os adjunto, el cual he generado
+simplemente con:
+> >
+> > www <- "http://www.massey.ac.nz/~pscowper/ts/global.dat"
+> >
+> > global <- scan(www)
+> >
+> > global <- ts(global, st = c(1856, 1), end = c(2005, 12), fr = 12)
+> >
+> > global.breve <- window(global, start = c(1970, 1))
+> > pdf("item2_ses3.pdf", useDingbats = F)
+> >
+> >
+> > plot(diff(global.breve), xlim = c(1970, 2005), col = "steelblue1",
+> > xlab = "Periodo (mes)", ylab = "Diferencia entre temperaturas
+> > diferenciada", main = expression(paste("Serie diferenciada ", Delta,
+> > y[t])), sub = "Serie desde 1970")
+> > dev.off()
+> >
+> > la letra Delta se me ha convertido en el símbolo del conjunto vacío y
+> > también me ocurre esto en el pdf que genero con Sweave.
+> >
+> > ¿Por qué ocurre esto?, ¿tiene que ver con la codificación?.
+> >
+> > Muchas gracias por la ayuda.
+> >
+> > Un saludo,
+> >
+> > Guillermo
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> >
+> 
+> 
+> Nota: A información contida nesta mensaxe e os seus posibles
+documentos adxuntos é privada e confidencial e está dirixida únicamente
+ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta
+mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non
+está autorizada.
+> 
+> Nota: La información contenida en este mensaje y sus posibles
+documentos adjuntos es privada y confidencial y está dirigida únicamente
+a su destinatario/a. Si usted no es el/la destinatario/a original de
+este mensaje, por favor elimínelo. La distribución o copia de este
+mensaje no está autorizada.
+> 
+> See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+> 
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Letra_Delta.Rnw
+Type: application/octet-stream
+Size: 1501 bytes
+Desc: 
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/9f5cdba1/attachment-0001.obj>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Letra_Delta.pdf
+Type: application/pdf
+Size: 32840 bytes
+Desc: 
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/9f5cdba1/attachment-0001.pdf>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue Apr 12 11:07:00 2011
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 12 Apr 2011 11:07:00 +0200
+Subject: [R-es] Letra Delta
+In-Reply-To: <9291336936guivivi@alumni.uv.es>
+References: <9291336936guivivi@alumni.uv.es>
+Message-ID: <0A5B869BDC0A7445B15F9A4A5379437719CEB0BDDE@ASSCCEVS02.sergas.local>
+
+Hola Guillermo.
+
+Yo sigo viéndolo bien en el PDF que adjuntas.
+¿? ¿? ¿?
+
+Un Saludo,
+Miguel.
+
+
+
+-----Mensaje original-----
+De: guivivi en alumni.uv.es [mailto:guivivi en alumni.uv.es]
+Enviado el: martes, 12 de abril de 2011 11:02
+Para: Rodríguez Muíños, Miguel Ángel; r-help-es en r-project.org
+Asunto: RE: [R-es] Letra Delta
+
+Hola Miguel Ángel, gracias por tu respuesta.
+
+Adjunto el .Rnw y el pdf generado a partir de él para mostrar que no me sale bien la letra Delta.
+
+Trabajo con la versión 2.12 de R en Fedora.
+
+1> sessionInfo()
+R version 2.12.2 (2011-02-25)
+Platform: x86_64-redhat-linux-gnu (64-bit)
+
+locale:
+ [1] LC_CTYPE=es_ES.utf8       LC_NUMERIC=C
+ [3] LC_TIME=es_ES.utf8        LC_COLLATE=es_ES.utf8
+ [5] LC_MONETARY=C             LC_MESSAGES=es_ES.utf8
+ [7] LC_PAPER=es_ES.utf8       LC_NAME=C
+ [9] LC_ADDRESS=C              LC_TELEPHONE=C
+[11] LC_MEASUREMENT=es_ES.utf8 LC_IDENTIFICATION=C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets
+[6] methods   base
+
+¿Alguien ha tenido un problema similar?.
+
+Un saludo,
+
+Guillermo
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Letra_Delta.jpg
+Type: image/jpeg
+Size: 145852 bytes
+Desc: Letra_Delta.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/eeef79a5/attachment-0001.jpg>
+
+From canadasreche en gmail.com  Tue Apr 12 11:07:53 2011
+From: canadasreche en gmail.com (=?ISO-8859-1?Q?Jos=E9_Luis_Ca=F1adas?=)
+Date: Tue, 12 Apr 2011 11:07:53 +0200
+Subject: [R-es] Letra Delta
+In-Reply-To: <9291336936guivivi@alumni.uv.es>
+References: <9291336936guivivi@alumni.uv.es>
+Message-ID: <4DA41669.9030602@gmail.com>
+
+Pues yo también lo veo bien. Puede ser que te falte instalar alguna 
+tipografía y por eso en tu sistema no se te ve. Te adjunto captura de 
+pantalla con las tipografías que me dice que tiene el pdf
+
+El 12/04/11 11:01, guivivi en alumni.uv.es escribió:
+> Hola Miguel Ángel, gracias por tu respuesta.
+>
+> Adjunto el .Rnw y el pdf generado a partir de él para mostrar que no me
+> sale bien la letra Delta.
+>
+> Trabajo con la versión 2.12 de R en Fedora.
+>
+> 1>  sessionInfo()
+> R version 2.12.2 (2011-02-25)
+> Platform: x86_64-redhat-linux-gnu (64-bit)
+>
+> locale:
+>   [1] LC_CTYPE=es_ES.utf8       LC_NUMERIC=C
+>   [3] LC_TIME=es_ES.utf8        LC_COLLATE=es_ES.utf8
+>   [5] LC_MONETARY=C             LC_MESSAGES=es_ES.utf8
+>   [7] LC_PAPER=es_ES.utf8       LC_NAME=C
+>   [9] LC_ADDRESS=C              LC_TELEPHONE=C
+> [11] LC_MEASUREMENT=es_ES.utf8 LC_IDENTIFICATION=C
+>
+> attached base packages:
+> [1] stats     graphics  grDevices utils     datasets
+> [6] methods   base
+>
+> ¿Alguien ha tenido un problema similar?.
+>
+> Un saludo,
+>
+> Guillermo
+>
+>> Yo lo veo bien.
+>>
+>>
+>>
+>> -----Mensaje original-----
+>> De: r-help-es-bounces en r-project.org
+> [mailto:r-help-es-bounces en r-project.org] En nombre de guivivi en alumni.uv.es
+>> Enviado el: martes, 12 de abril de 2011 10:08
+>> Para: r-help-es en r-project.org
+>> Asunto: Re: [R-es] Letra Delta
+>>
+>> Perdón, no he adjuntado el pdf
+>>
+>>> Buenos días a todos,
+>>>
+>>> No he tenido problemas a la hora de escribir letras griegas en un plot
+>>> y guardar éste en un pdf hasta que he intentado escribir la letra
+>>> Delta para indicar una tasa de cambio o variación.
+>>>
+>>> Como vereis en el pdf que os adjunto, el cual he generado
+> simplemente con:
+>>> www<- "http://www.massey.ac.nz/~pscowper/ts/global.dat"
+>>>
+>>> global<- scan(www)
+>>>
+>>> global<- ts(global, st = c(1856, 1), end = c(2005, 12), fr = 12)
+>>>
+>>> global.breve<- window(global, start = c(1970, 1))
+>>> pdf("item2_ses3.pdf", useDingbats = F)
+>>>
+>>>
+>>> plot(diff(global.breve), xlim = c(1970, 2005), col = "steelblue1",
+>>> xlab = "Periodo (mes)", ylab = "Diferencia entre temperaturas
+>>> diferenciada", main = expression(paste("Serie diferenciada ", Delta,
+>>> y[t])), sub = "Serie desde 1970")
+>>> dev.off()
+>>>
+>>> la letra Delta se me ha convertido en el símbolo del conjunto vacío y
+>>> también me ocurre esto en el pdf que genero con Sweave.
+>>>
+>>> ¿Por qué ocurre esto?, ¿tiene que ver con la codificación?.
+>>>
+>>> Muchas gracias por la ayuda.
+>>>
+>>> Un saludo,
+>>>
+>>> Guillermo
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>>
+>>
+>> Nota: A información contida nesta mensaxe e os seus posibles
+> documentos adxuntos é privada e confidencial e está dirixida únicamente
+> ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta
+> mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non
+> está autorizada.
+>> Nota: La información contenida en este mensaje y sus posibles
+> documentos adjuntos es privada y confidencial y está dirigida únicamente
+> a su destinatario/a. Si usted no es el/la destinatario/a original de
+> este mensaje, por favor elimínelo. La distribución o copia de este
+> mensaje no está autorizada.
+>> See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+>>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/261e2993/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: tipografias.png
+Type: image/png
+Size: 91634 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/261e2993/attachment-0001.png>
+
+From grserrano en ccee.ucm.es  Tue Apr 12 11:30:31 2011
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Tue, 12 Apr 2011 11:30:31 +0200
+Subject: [R-es] Letra Delta
+In-Reply-To: <2657769459guivivi@alumni.uv.es>
+References: <2657769459guivivi@alumni.uv.es>
+Message-ID: <BANLkTinyDUrt2wTrQu0e3-7-bZ88MtfFag@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/e226015c/attachment.pl>
+
+From guivivi en alumni.uv.es  Tue Apr 12 12:44:00 2011
+From: guivivi en alumni.uv.es (guivivi en alumni.uv.es)
+Date: Tue, 12 Apr 2011 12:44:00 +0200 (CEST)
+Subject: [R-es] Letra Delta (Resuelto)
+Message-ID: <4554763157guivivi@alumni.uv.es>
+
+Hola,
+
+He instalado las tipografías que me faltaban, pero tampoco he podido
+obtener la letra Delta, así que pienso que es un problema del driver de pdf.
+
+Como solución alternativa, he guardado el plot como png y así sí que me
+sale bien el pdf que genero con Sweave.
+
+Para salir del paso, me sirve, pero me apunto en mi lista de cosas
+pendientes qué ocurre al guardarlo como pdf.
+
+Muchas gracias a todos,
+
+Un saludo,
+
+Guillermo
+
+> Buenos días a todos,
+> 
+> No he tenido problemas a la hora de escribir letras griegas en un plot y
+> guardar éste en un pdf hasta que he intentado escribir la letra Delta
+> para indicar una tasa de cambio o variación.
+> 
+> Como vereis en el pdf que os adjunto, el cual he generado simplemente con:
+> 
+> www <- "http://www.massey.ac.nz/~pscowper/ts/global.dat"
+> 
+> global <- scan(www)
+> 
+> global <- ts(global, st = c(1856, 1), end = c(2005, 12), fr = 12)
+> 
+> global.breve <- window(global, start = c(1970, 1))
+> pdf("item2_ses3.pdf", useDingbats = F)
+> 
+> 
+> plot(diff(global.breve), xlim = c(1970, 2005), col = "steelblue1", 
+> xlab = "Periodo (mes)", ylab = "Diferencia entre temperaturas
+> diferenciada", 
+> main = expression(paste("Serie diferenciada ", Delta, y[t])), sub =
+> "Serie desde 1970")
+> dev.off()
+> 
+> la letra Delta se me ha convertido en el símbolo del conjunto vacío y
+> también me ocurre esto en el pdf que genero con Sweave.
+> 
+> ¿Por qué ocurre esto?, ¿tiene que ver con la codificación?.
+> 
+> Muchas gracias por la ayuda.
+> 
+> Un saludo,
+> 
+> Guillermo 
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+> 
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Letra_Delta.pdf
+Type: application/pdf
+Size: 72675 bytes
+Desc: 
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/c9060dd7/attachment-0001.pdf>
+
+From paco en ceam.es  Tue Apr 12 15:30:39 2011
+From: paco en ceam.es (Paco Pastor)
+Date: Tue, 12 Apr 2011 15:30:39 +0200
+Subject: [R-es] =?utf-8?q?An=C3=A1lisis_de_una_serie_temporal_diaria?=
+In-Reply-To: <20110306114748.2b900fd8@upm.es>
+References: <4D70CED8.4020008@ceam.es> <20110306114748.2b900fd8@upm.es>
+Message-ID: <4DA453FF.8090301@ceam.es>
+
+Hola a todos
+
+Aunque parezca mentira sigo enzarzado con esto de las series diarias. 
+Además de hallar una regresión lineal simple quiero utilizar stl o 
+decompose para encontrar la estacionalidad y la tendencia de una serie 
+diaria de temperatura pero no hay manera. En la creación del objeto ts 
+(desde uno zoo) de la serie diaria creo que estoy haciendo algo mal ya 
+que no obtengo resultados. El motivo de querer untilizar stl es que ya 
+lo había empleado para una serie de datos mensuales.
+
+Si intento leer directamente como ts
+
+temperatura=read.csv("tmax.dat",header=F,sep=",")
+
+fecha=as.Date(temperatura[,1],"%d/%m/%Y")
+
+temp=temperatura[order(fecha),]
+
+media=rowMeans(temp[2:length(temp)], na.rm=TRUE)
+
+temp=cbind(temp,media)
+
+tsdata=ts(temp$media,freq=7,start=c(1968,1))
+
+a=decompose(tsdata)
+
+plot(a)
+
+
+se obtiene la gráfica que os adjunto y que creo que no es correcta. Mi 
+duda es si al poner freq=t lo que estoy buscando es la componente 
+estacional en base periodos semanales. Tengo claro que para datos 
+mensuales la frecuencia es 12 ¿pero cual es para datos diarios de 40 
+años? ¿365? En la ayuda de ts dice que para una serie de datos diarios 
+con periodo natural semanal freq=7. Pero yo no quiero analizar una serie 
+de datos semanales sino diarios, no tengo muy claro lo que estoy haciendo.
+
+Si primero creo un objeto zoo
+
+library(zoo)
+
+temperatura=read.csv("tmax.dat",header=F,sep=",")
+
+fecha=as.Date(temperatura[,1],"%d/%m/%Y")
+
+temp=temperatura[order(fecha),]
+
+media=rowMeans(temp[2:length(temp)], na.rm=TRUE)
+
+zoodata=zoo(temp$media,fecha)
+
+zz=as.ts(zoodata,frequency=7,start=c(1968,1))     # los datos comienzan el 1 de enero de 1968
+
+decompose(zz)
+
+Error in decompose(zz) : time series has no or less than 2 periods
+
+
+Entonces aparece el "famoso" error de que la serie no es periódica.
+
+Estoy ya un poco desesperado, ¿existe alguna posibilidad por esta 
+vía?¿hay otras funciones que puedan analizar los datos?¿alguien tiene un 
+ejemplo que pueda adaptar a mis datos? No siendo muy ducho en 
+estadística quería (necesitaba) solamente algún tipo de análisis 
+relativamente simple o no muy elaborado, algo que me dé una idea de la 
+evolución de los datos.
+
+Gracias de nuevo a todos
+
+Paco
+
+-----------
+
+Francisco Pastor
+Meteorology department, Instituto Universitario CEAM-UMH
+http://www.ceam.es
+-----------
+mail: paco en ceam.es
+skype: paco.pastor.guzman
+Researcher ID: http://www.researcherid.com/rid/B-8331-2008
+Cosis profile: http://www.cosis.net/profile/francisco.pastor
+-----------
+Parque Tecnologico, C/ Charles R. Darwin, 14
+46980 PATERNA (Valencia), Spain
+Tlf. 96 131 82 27 - Fax. 96 131 81 90
+
+
+---------------------------------------------------------------------
+Este mensaje y los ficheros anexos son confidenciales. Los mismos contienen información reservada de la empresa que no puede ser difundida. Si usted ha recibido este correo por error, tenga la amabilidad de eliminarlo de su sistema y avisar al remitente mediante reenvío a su dirección electrónica; no deberá copiar el mensaje ni divulgar su contenido a ninguna persona.
+
+Su dirección de correo electrónico junto a sus datos personales forman parte de un fichero titularidad de la Fundación de la Comunidad Valenciana Centro de Estudios Ambientales del Mediterráneo - CEAM, con CIF: G-46957213, cuya finalidad es la de mantener el contacto con Ud. De acuerdo con la Ley Orgánica 15/1999, usted puede ejercitar sus derechos de acceso, rectificación, cancelación y, en su caso, oposición enviando una solicitud por escrito, acompañada de una fotocopia de su DNI dirigida a: Fundación de la Comunidad Valenciana Centro de Estudios Ambientales del Mediterráneo - CEAM. C/ Charles R. Darwin, 14. Parque Tecnológico.46980 PATERNA (Valencia).
+
+This message and the attached files are confidential. They contain reserved information belonging to our centre and are not to be broadcast. If you have received this email by mistake, please delete it from your system and alert the sender by returning it to his/her email address. You must not copy or divulge the contents of the message to anyone.
+
+Your email address and personal data are included in a file belonging to the Fundación de la Comunidad Valenciana Centro de Estudios Ambientales del Mediterráneo - CEAM, con CIF: G-46957213. The purpose of this file is to allow us to keep in contact with you. In accordance with Organic Law 15/1999, you are permitted to access, rectify, cancel or oppose the contents of this file by submitting a written request, accompanied by a photocopy of your DNI, to: Fundación de la Comunidad Valenciana Centro de Estudios Ambientales del Mediterráneo - CEAM. C/ Charles R. Darwin, 14. Parque Tecnológico.46980 PATERNA (Valencia).
+
+
+
+
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: plot_decompose_tsdata.png
+Type: image/png
+Size: 56362 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/c1fff41d/attachment-0001.png>
+
+From mspinola10 en gmail.com  Tue Apr 12 15:59:51 2011
+From: mspinola10 en gmail.com (=?ISO-8859-1?Q?Manuel_Sp=EDnola?=)
+Date: Tue, 12 Apr 2011 07:59:51 -0600
+Subject: [R-es] Modelo para datos de conteos
+Message-ID: <BANLkTin3Xibq7JefqcDVSv5mt3zSmj-x0Q@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/00bae50e/attachment.pl>
+
+From auberth64 en yahoo.es  Tue Apr 12 17:44:32 2011
+From: auberth64 en yahoo.es (Auberth Hurtado)
+Date: Tue, 12 Apr 2011 10:44:32 -0500
+Subject: [R-es] =?iso-8859-1?q?Cargar_lista_de_variables_en_funci=F3n?=
+Message-ID: <002601cbf928$8507f390$8f17dab0$@yahoo.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/f4ff466d/attachment.pl>
+
+From cgb en datanalytics.com  Tue Apr 12 18:10:18 2011
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 12 Apr 2011 18:10:18 +0200
+Subject: [R-es] =?iso-8859-1?q?Cargar_lista_de_variables_en_funci=F3n?=
+In-Reply-To: <002601cbf928$8507f390$8f17dab0$@yahoo.es>
+References: <002601cbf928$8507f390$8f17dab0$@yahoo.es>
+Message-ID: <BANLkTikF64YO_pRa7aVPKQo-tMSXCpbmCw@mail.gmail.com>
+
+Deberías escribir
+
+Variables = c("id", "age", "los")
+
+en la llamada a la función. De otra manera R piensa que id es una
+variable (que no está definida y de ahí el error).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+El día 12 de abril de 2011 17:44, Auberth Hurtado <auberth64 en yahoo.es> escribió:
+> Hola compañeros,
+>
+>
+>
+> Soy nuevo y me disculparan si la pregunta es muy básica. Quiero crear una
+> función que me permita recibir variables que pueden ser 2, 3 o más,  la idea
+> es llamar esta función e indicarle la ruta y el nombre de las variables para
+> luego realizar algún análisis. Mi idea es la siguiente:
+>
+>
+>
+> library(foreign)
+>
+> FDatos <- function(Ruta,Nombre,Variables){
+>
+>  Datos  <- read.spss(paste(Ruta,"/",Nombre,sep=""),to.data.frame=TRUE)
+>
+>  Var01 <- subset(Datos,select=Variables)
+>
+> }
+>
+>
+>
+> ### PARÁMETROS A MODIFICAR ###
+>
+> Analis <- FDatos (
+>
+> Ruta = "C:/Archivos de programa/IBM/SPSS/Statistics/19/Samples/English",
+>
+> Nombre = "adl.sav",
+>
+> Variables = c(id,age,los)
+>
+> )
+>
+>
+>
+> Pero al ejecutarlo me sale: ?Error en eval(expr, envir, enclos) : objeto
+> 'id' no encontrado?. Alguna sugerencia?
+>
+>
+>
+> Gracias,
+>
+>
+>
+> Eduardo Hurtado.
+>
+>
+>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From auberth64 en yahoo.es  Tue Apr 12 19:57:48 2011
+From: auberth64 en yahoo.es (Auberth Hurtado)
+Date: Tue, 12 Apr 2011 12:57:48 -0500
+Subject: [R-es]
+	=?iso-8859-1?q?Cargar_lista_de_variables_en_funci=F3n_=28O?=
+	=?iso-8859-1?q?tra_duda=29?=
+Message-ID: <009b01cbf93b$2317cc60$69476520$@yahoo.es>
+
+Hola nuevamente,
+
+ Ahora me sucede que cuando intento filtrar no me funciona, ¿cómo le indico
+que lo encerrado entre comillas es un texto y no una variable?, ejemplo:
+
+ 
+library(foreign)
+FDatos <- function(Ruta,Nombre,Variables,Filtro){
+  Datos  <- read.spss(paste(Ruta,"/",Nombre,sep=""),to.data.frame=TRUE)
+  Var01 <- subset(Datos,Filtro,select=Variables)
+}
+
+### PARÁMETROS A MODIFICAR ###
+Analis <- FDatos (
+Ruta = "C:/Archivos de programa/IBM/SPSS/Statistics/19/Samples/English",
+Nombre = "adl.sav",   
+Variables = c("id","age","los"),
+Filtro = "group" == "Treatment"	#CÓMO DEBO DECIRLE QUE "group" ES LA
+VARIABLE Y "Treatment" ES EL NIVEL DE ESE FACTOR.
+)
+
+
+Nuevamente gracias,
+
+ 
+Eduardo Hurtado.
+
+
+From cpfuenmayor en hotmail.com  Tue Apr 12 20:27:59 2011
+From: cpfuenmayor en hotmail.com (Patricio Fuenmayor Viteri)
+Date: Tue, 12 Apr 2011 18:27:59 +0000
+Subject: [R-es]
+ =?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_26=2C_Env=EDo_2?=
+ =?iso-8859-1?q?1?=
+Message-ID: <COL121-W19F3BE38D33CFB8096E6DCACAB0@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/18762d7f/attachment.pl>
+
+From cgb en datanalytics.com  Tue Apr 12 20:58:34 2011
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Tue, 12 Apr 2011 20:58:34 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Cargar_lista_de_variables_en_funci=F3n_=28O?=
+	=?iso-8859-1?q?tra_duda=29?=
+In-Reply-To: <009b01cbf93b$2317cc60$69476520$@yahoo.es>
+References: <009b01cbf93b$2317cc60$69476520$@yahoo.es>
+Message-ID: <BANLkTinDmUxPBZujpTYrAo3tnWptqNoxwg@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+Se puede hacer, pero es recomendable --sobre todo si, como dices, eres
+novato en R-- seguir un camino distinto. Algo así como
+
+FDatos <- function(Ruta,Nombre,Variables,FiltroVar, FiltroVal){
+ Datos  <- read.spss(paste(Ruta,"/",Nombre,sep=""),to.data.frame=TRUE)
+ Var01 <- subset(Datos, select=Variables)
+  return( Var01[  Datos[["FiltroVar"]] == FiltroVal, ] )
+}
+
+A la función le pasarías "group" como FiltroVar y "Treatment" como FiltroVal.
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+El día 12 de abril de 2011 19:57, Auberth Hurtado <auberth64 en yahoo.es> escribió:
+> Hola nuevamente,
+>
+>  Ahora me sucede que cuando intento filtrar no me funciona, ¿cómo le indico
+> que lo encerrado entre comillas es un texto y no una variable?, ejemplo:
+>
+>
+> library(foreign)
+> FDatos <- function(Ruta,Nombre,Variables,Filtro){
+>  Datos  <- read.spss(paste(Ruta,"/",Nombre,sep=""),to.data.frame=TRUE)
+>  Var01 <- subset(Datos,Filtro,select=Variables)
+> }
+>
+> ### PARÁMETROS A MODIFICAR ###
+> Analis <- FDatos (
+> Ruta = "C:/Archivos de programa/IBM/SPSS/Statistics/19/Samples/English",
+> Nombre = "adl.sav",
+> Variables = c("id","age","los"),
+> Filtro = "group" == "Treatment" #CÓMO DEBO DECIRLE QUE "group" ES LA
+> VARIABLE Y "Treatment" ES EL NIVEL DE ESE FACTOR.
+> )
+>
+>
+> Nuevamente gracias,
+>
+>
+> Eduardo Hurtado.
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+From ajsaez en ujaen.es  Wed Apr 13 07:05:28 2011
+From: ajsaez en ujaen.es (=?ISO-8859-1?Q?Antonio_Jos=E9_S=E1ez_Castillo?=)
+Date: Wed, 13 Apr 2011 07:05:28 +0200
+Subject: [R-es]
+ =?iso-8859-1?q?Modelo_para_datos_de_conteos_=28Manuel_Sp?=
+ =?iso-8859-1?q?=EDnola=29?=
+In-Reply-To: <mailman.3303.1302634724.4559.r-help-es@r-project.org>
+References: <mailman.3303.1302634724.4559.r-help-es@r-project.org>
+Message-ID: <4DA52F18.2010602@ujaen.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/8a04b009/attachment.pl>
+
+From amaurandi en um.es  Wed Apr 13 11:18:49 2011
+From: amaurandi en um.es (=?ISO-8859-1?Q?Antonio_Maurandi_L=F3pez?=)
+Date: Wed, 13 Apr 2011 11:18:49 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>	<4DA2C1A4.50205@um.es>	<0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>
+	<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>
+Message-ID: <4DA56A79.2050608@um.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/8eb07a1b/attachment.pl>
+
+From xaviblas en gmail.com  Wed Apr 13 11:56:37 2011
+From: xaviblas en gmail.com (Xavi de Blas)
+Date: Wed, 13 Apr 2011 11:56:37 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <4DA56A79.2050608@um.es>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+	<4DA2C1A4.50205@um.es>
+	<0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>
+	<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>
+	<4DA56A79.2050608@um.es>
+Message-ID: <BANLkTimRqHfq=0a4bZK0NZhbZt7Mr1o2dA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/c468575d/attachment.pl>
+
+From grserrano en ccee.ucm.es  Wed Apr 13 13:19:01 2011
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Wed, 13 Apr 2011 13:19:01 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <4DA56A79.2050608@um.es>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+	<4DA2C1A4.50205@um.es>
+	<0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>
+	<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>
+	<4DA56A79.2050608@um.es>
+Message-ID: <BANLkTinpQxyNT40Sjr1ZzyYc_POJOoE7wg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/cdf438d5/attachment.pl>
+
+From amaurandi en um.es  Wed Apr 13 14:43:57 2011
+From: amaurandi en um.es (=?ISO-8859-1?Q?Antonio_Maurandi_L=F3pez?=)
+Date: Wed, 13 Apr 2011 14:43:57 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <BANLkTinpQxyNT40Sjr1ZzyYc_POJOoE7wg@mail.gmail.com>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>	<4DA2C1A4.50205@um.es>	<0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>	<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>	<4DA56A79.2050608@um.es>
+	<BANLkTinpQxyNT40Sjr1ZzyYc_POJOoE7wg@mail.gmail.com>
+Message-ID: <4DA59A8D.8000607@um.es>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/c184a828/attachment.pl>
+
+From mspinola10 en gmail.com  Wed Apr 13 16:13:07 2011
+From: mspinola10 en gmail.com (=?ISO-8859-1?Q?Manuel_Sp=EDnola?=)
+Date: Wed, 13 Apr 2011 08:13:07 -0600
+Subject: [R-es]
+	=?iso-8859-1?q?Modelo_para_datos_de_conteos_=28Manuel_Sp?=
+	=?iso-8859-1?q?=EDnola=29?=
+In-Reply-To: <4DA52F18.2010602@ujaen.es>
+References: <mailman.3303.1302634724.4559.r-help-es@r-project.org>
+	<4DA52F18.2010602@ujaen.es>
+Message-ID: <BANLkTinCnrsQ0340Z9w7r8JWTrgVFJJ3BQ@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/0e2a12d3/attachment.pl>
+
+From cgb en datanalytics.com  Wed Apr 13 19:30:31 2011
+From: cgb en datanalytics.com (Carlos J. Gil Bellosta )
+Date: Wed, 13 Apr 2011 19:30:31 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <4DA59A8D.8000607@um.es>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+	<4DA2C1A4.50205@um.es>
+	<0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>
+	<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>
+	<4DA56A79.2050608@um.es>
+	<BANLkTinpQxyNT40Sjr1ZzyYc_POJOoE7wg@mail.gmail.com>
+	<4DA59A8D.8000607@um.es>
+Message-ID: <BANLkTi=YQ3+VCRprGTjSm+xbEOmzFc=Z0g@mail.gmail.com>
+
+Hola, ¿qué tal?
+
+El comité organizador está discutiendo bastante activamente estos días
+los aspectos pecuniarios de las Jornadas. Nos enfrentamos a un pequeño
+problema técnico: qué organización y qué cuenta bancaria utilizar para
+recoger los fondos con que cubrir los gastos asociados a las Jornadas.
+Está en vías de solución.
+
+En cuanto al origen de los fondos, hay dos iniciativas en marcha:
+
+1) Solicitar ayuda de empresas, fundaciones e instituciones. De
+momento, contamos con una subvención de Revolution Analytics (de ahí
+la presencia de su logo en la página de las jornadas) y estamos a la
+espera de confirmación de otras. Tampoco quiero dejar pasar la
+oportunidad de preguntar aquí en la lista si alguien conoce empresas o
+instituciones potencialmente interesadas en participar o subvencionar
+las jornadas para que podamos realizar una solicitud.
+
+2) Pedir a los asistentes una aportación voluntaria que ayude a
+sufragar los gastos. Esta iniciativa está pendiente de que resolvamos
+los detalles últimos acerca de cómo tramitarla.
+
+Si al final hay tanto ánimo para colaborar pecuniariamente en las
+jornadas como en asistir... igual hay reparto de diviendos al final
+(broma rigurosa).
+
+Un saludo,
+
+Carlos J. Gil Bellosta
+http://www.datanalytics.com
+
+
+
+
+El día 13 de abril de 2011 14:43, Antonio Maurandi López
+<amaurandi en um.es> escribió:
+> yo no lo veo mal, tb es cierto que Madrid es más barato para todos pues
+> mucha gente no se tendrá que desplazar.
+>
+> Lo de la cena comunal lo veo muy bien, pq con una birra o un par de
+> vinos se habla de sw libre mucho mejor (y de estadística no te digo),
+> además yo creo que es algo que se echo en falta en las últimas jornadas.
+>
+> Si la organización no puede abordar lo de la cena quizás podemos abrir
+> un proyecto paralelo....
+>
+>
+>
+>
+> El 13/04/11 13:19, Gregorio R. Serrano escribió:
+>> cubrir gastos. Eso sí, habría que decirlo cuanto antes en l
+>
+> --
+> Antonio Maurandi López
+> Serv. Cálculo Científico. Apoyo Estadístico.
+> Servicio de Apoyo a la Investigación (SAI)
+> Vicerrectorado de Investigación.
+> Universidad de Murcia
+>
+> Edif. CAID. Campus de Espinardo.
+> 30100 Murcia
+> @. amaurandi en um.es
+> T. 868 88 7315 F. 868 88 7302
+> www.um.es/sai www.um.es/ae
+>
+>
+>        [[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+From jorgeivanvelez en gmail.com  Wed Apr 13 22:23:07 2011
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 13 Apr 2011 16:23:07 -0400
+Subject: [R-es] Numeros en formato Ax10^{-B}
+Message-ID: <BANLkTin+HTj2KCSP_p7b3B9DFdO3+ude_w@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/ee956943/attachment.pl>
+
+From onunez en iberstat.es  Wed Apr 13 22:37:22 2011
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Wed, 13 Apr 2011 22:37:22 +0200
+Subject: [R-es] Numeros en formato Ax10^{-B}
+In-Reply-To: <BANLkTin+HTj2KCSP_p7b3B9DFdO3+ude_w@mail.gmail.com>
+References: <BANLkTin+HTj2KCSP_p7b3B9DFdO3+ude_w@mail.gmail.com>
+Message-ID: <384093F3-1D3D-435E-87E0-1AD62D91FD40@iberstat.es>
+
+Igual, lo siguiente te vale:
+
+ > foo<-function(x) { y=format(x, digits=2,scientific = TRUE); sub 
+("e","x10",y)}
+ > foo(x)
+  [1] "1.7x10-04" "7.6x10-04" "1.3x10-04" "2.9x10-04" "5.6x10-04"  
+"7.8x10-04" "7.8x10-04" "1.4x10-04" "3.2x10-04" "8.5x10-05"
+
+Un saludo. Olivier
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 13/04/2011, a las 22:23, Jorge Ivan Velez escribió:
+
+> Hola a todos,
+>
+> Tengo un vector con valores en _P_
+>
+> x <- c(0.0001709122, 0.0007623474, 0.0001319547, 0.0002868035,
+> 0.0005602669,
+> 0.0007825347, 0.0007822033, 0.0001444821, 0.000324731, 8.4686e-05)
+> x
+>
+> Y me gustaria cambiar un poco el formato.  Conoce alguien alguna  
+> function
+> "foo" tal que foo(x) produzca
+>
+> "1.7x10(-4)"  "7.62x10(-4)"  "1.3x10(-4)" ..... "8.46x10(-5)"
+>
+> ?
+>
+> Muchas gracias,
+>       Jorge Ivan Velez
+
+
+From jorgeivanvelez en gmail.com  Wed Apr 13 22:40:40 2011
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Wed, 13 Apr 2011 16:40:40 -0400
+Subject: [R-es] Numeros en formato Ax10^{-B}
+In-Reply-To: <384093F3-1D3D-435E-87E0-1AD62D91FD40@iberstat.es>
+References: <BANLkTin+HTj2KCSP_p7b3B9DFdO3+ude_w@mail.gmail.com>
+	<384093F3-1D3D-435E-87E0-1AD62D91FD40@iberstat.es>
+Message-ID: <BANLkTikjnEWZ_Ohq0unY-p+cSMYPfH4cnA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/4dd10987/attachment.pl>
+
+From coforfe en gmail.com  Wed Apr 13 23:24:27 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Wed, 13 Apr 2011 23:24:27 +0200
+Subject: [R-es] Numeros en formato Ax10^{-B}
+In-Reply-To: <BANLkTikjnEWZ_Ohq0unY-p+cSMYPfH4cnA@mail.gmail.com>
+References: <BANLkTin+HTj2KCSP_p7b3B9DFdO3+ude_w@mail.gmail.com>
+	<384093F3-1D3D-435E-87E0-1AD62D91FD40@iberstat.es>
+	<BANLkTikjnEWZ_Ohq0unY-p+cSMYPfH4cnA@mail.gmail.com>
+Message-ID: <BANLkTin8pPhy2jsXR-A5sKVgBVv4yAsv+w@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/7454f591/attachment.pl>
+
+From oscar.perpinan en upm.es  Thu Apr 14 10:09:24 2011
+From: oscar.perpinan en upm.es (Oscar =?UTF-8?B?UGVycGnDsWFu?= Lamigueiro)
+Date: Thu, 14 Apr 2011 10:09:24 +0200
+Subject: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en
+ la EOI, Madrid
+In-Reply-To: <4DA59A8D.8000607@um.es>
+References: <BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>
+	<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>
+	<4DA2C1A4.50205@um.es>
+	<0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>
+	<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>
+	<4DA56A79.2050608@um.es>
+	<BANLkTinpQxyNT40Sjr1ZzyYc_POJOoE7wg@mail.gmail.com>
+	<4DA59A8D.8000607@um.es>
+Message-ID: <20110414100924.2562a233@OPL-EUITI>
+
+Hola,
+
+Fijaos que en el programa (http://www.usar.org.es/programa.php) ya
+hemos incluido la cena. Será el jueves a las 21'30, y por eso la
+jornada del viernes empieza algo más tarde :-).
+
+Según vayamos avanzando en la organización de esta cena (lugar, precio
+por comensal, etc.) iremos informando de los detalles. No obstante,
+cualquier ayuda será muy bienvenida.
+
+Saludos.
+
+Oscar.
+
+
+-------------------
+Oscar Perpiñán Lamigueiro
+Dpto. Ingenierí­a Eléctrica
+EUITI-UPM
+
+http://procomun.wordpress.com
+
+-----------------------------------------
+>yo no lo veo mal, tb es cierto que Madrid es más barato para todos
+>pues mucha gente no se tendrá que desplazar.
+>
+>Lo de la cena comunal lo veo muy bien, pq con una birra o un par de 
+>vinos se habla de sw libre mucho mejor (y de estadística no te digo),
+>además yo creo que es algo que se echo en falta en las últimas
+>jornadas.
+>
+>Si la organización no puede abordar lo de la cena quizás podemos abrir 
+>un proyecto paralelo....
+>
+>
+>
+>
+>El 13/04/11 13:19, Gregorio R. Serrano escribió:
+>> cubrir gastos. Eso sí, habría que decirlo cuanto antes en l
+>
+>-- 
+>Antonio Maurandi López
+>Serv. Cálculo Científico. Apoyo Estadístico.
+>Servicio de Apoyo a la Investigación (SAI)
+>Vicerrectorado de Investigación.
+>Universidad de Murcia
+>
+>Edif. CAID. Campus de Espinardo.
+>30100 Murcia
+>@. amaurandi en um.es
+>T. 868 88 7315 F. 868 88 7302
+>www.um.es/sai www.um.es/ae
+>
+>
+>	[[alternative HTML version deleted]]
+>
+
+
+From angelacadenaramirez en gmail.com  Sat Apr 16 18:45:45 2011
+From: angelacadenaramirez en gmail.com (Angela Cadena)
+Date: Sat, 16 Apr 2011 11:45:45 -0500
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_26=2C_Env=EDo_2?=
+	=?iso-8859-1?q?5?=
+In-Reply-To: <mailman.19.1302775206.10653.r-help-es@r-project.org>
+References: <mailman.19.1302775206.10653.r-help-es@r-project.org>
+Message-ID: <BANLkTiny7rRrmyanbHQdLrGkApd=hLa7mQ@mail.gmail.com>
+
+hola!
+
+podrian ayudarme con esto:
+
+
+Genere 1000 muestras aleatorias de tamaño  n=10 de una población
+normal con media
+=2,5 y desviación  0,16. Con cada una de las muestras construya un
+intervalo de
+confianza al 95% para la media y para la varianza. Cuente que
+porcentaje de los 1000
+intervalos atrapan la verdadera media y la verdadera varianza poblacional
+respectivamente. Comente los resultados encontrados.
+
+he hecho esto
+
+promedio=0
+varianza=0
+ for(i in 1:1000)
+ {
+ y<-rnorm(10, 2.5, 0.16)
+ promedio[i]=mean(y)
+ varianza[i]=var(y)
+ }
+promedio
+varianza
+#para generar 1000 prom y 1000 varianzas para la muestra de n=10,
+mu=2.5 y dev=0.16
+
+intmedia=c(promedio)		#intmedia =iintervalo de confianza para la media
+t.test(intmedia, conf.level=0.95)
+
+        One Sample t-test
+
+data:  intmedia
+t = 1575.343, df = 999, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 2.494522 2.500744
+sample estimates:
+mean of x
+ 2.497633
+
+# el intervalo de conf para la media seria ( 2.494522 , 2.500744 )
+
+
+ ¿para la varianza seria igual?
+ ¿como hago para contar los intervalos que atrapan las verderas medias
+y las verdaderas varianzas?
+
+soy novata en esto, por favor ayudenme!
+
+El 14/04/11, r-help-es-request en r-project.org
+<r-help-es-request en r-project.org> escribió:
+> Envíe los mensajes para la lista R-help-es a
+> 	r-help-es en r-project.org
+>
+> Para subscribirse o anular su subscripción a través de la WEB
+> 	https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+> O por correo electrónico, enviando un mensaje con el texto "help" en
+> el asunto (subject) o en el cuerpo a:
+> 	r-help-es-request en r-project.org
+>
+> Puede contactar con el responsable de la lista escribiendo a:
+> 	r-help-es-owner en r-project.org
+>
+> Si responde a algún contenido de este mensaje, por favor, edite la
+> linea del asunto (subject) para que el texto sea mas especifico que:
+> "Re: Contents of R-help-es digest...". Además, por favor, incluya en
+> la respuesta sólo aquellas partes del mensaje a las que está
+> respondiendo.
+>
+>
+> Asuntos del día:
+>
+>    1. Re: Numeros en formato Ax10^{-B} (Jorge Ivan Velez)
+>    2. Re: Numeros en formato Ax10^{-B} (Carlos Ortega)
+>    3. Re: III Jornadas de usuarios de R: 17 y 18 de noviembre en la
+>       EOI, Madrid (Oscar Perpiñan Lamigueiro)
+>
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Wed, 13 Apr 2011 16:40:40 -0400
+> From: Jorge Ivan Velez <jorgeivanvelez en gmail.com>
+> To: Olivier Nuñez <onunez en iberstat.es>
+> Cc: r-help-es en r-project.org
+> Subject: Re: [R-es] Numeros en formato Ax10^{-B}
+> Message-ID: <BANLkTikjnEWZ_Ohq0unY-p+cSMYPfH4cnA en mail.gmail.com>
+> Content-Type: text/plain
+>
+> Ah ha!   Muchas gracias Olivier.  Creo que es hora de ir por mas cafe ;-)
+>
+> Un saludo,
+> Jorge
+>
+>
+> 2011/4/13 Olivier Nuñez <>
+>
+>> Igual, lo siguiente te vale:
+>>
+>> > foo<-function(x) { y=format(x, digits=2,scientific = TRUE);
+>> sub("e","x10",y)}
+>> > foo(x)
+>>  [1] "1.7x10-04" "7.6x10-04" "1.3x10-04" "2.9x10-04" "5.6x10-04"
+>> "7.8x10-04" "7.8x10-04" "1.4x10-04" "3.2x10-04" "8.5x10-05"
+>>
+>> Un saludo. Olivier
+>> -- ____________________________________
+>>
+>> Olivier G. Nuñez
+>> Email: onunez en iberstat.es
+>> Tel : +34 663 03 69 09
+>> Web: http://www.iberstat.es
+>>
+>> ____________________________________
+>>
+>>
+>>
+>>
+>> El 13/04/2011, a las 22:23, Jorge Ivan Velez escribió:
+>>
+>>
+>>  Hola a todos,
+>>>
+>>> Tengo un vector con valores en _P_
+>>>
+>>> x <- c(0.0001709122, 0.0007623474, 0.0001319547, 0.0002868035,
+>>> 0.0005602669,
+>>> 0.0007825347, 0.0007822033, 0.0001444821, 0.000324731, 8.4686e-05)
+>>> x
+>>>
+>>> Y me gustaria cambiar un poco el formato.  Conoce alguien alguna function
+>>> "foo" tal que foo(x) produzca
+>>>
+>>> "1.7x10(-4)"  "7.62x10(-4)"  "1.3x10(-4)" ..... "8.46x10(-5)"
+>>>
+>>> ?
+>>>
+>>> Muchas gracias,
+>>>      Jorge Ivan Velez
+>>>
+>>
+>>
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+>
+> ------------------------------
+>
+> Message: 2
+> Date: Wed, 13 Apr 2011 23:24:27 +0200
+> From: Carlos Ortega <coforfe en gmail.com>
+> To: Jorge Ivan Velez <jorgeivanvelez en gmail.com>
+> Cc: r-help-es en r-project.org
+> Subject: Re: [R-es] Numeros en formato Ax10^{-B}
+> Message-ID: <BANLkTin8pPhy2jsXR-A5sKVgBVv4yAsv+w en mail.gmail.com>
+> Content-Type: text/plain
+>
+> Hola,
+>
+> Por si ayuda también...
+>
+> foo<-function(x) {
+>   y<-formatC(x,format="e", digits=2)
+>   z<-as.character(y)
+>   v<-gsub("e","x10(",z)
+>   w<-paste(v,")",sep="")
+>   return(w)
+> }
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+>
+>
+> 2011/4/13 Jorge Ivan Velez <jorgeivanvelez en gmail.com>
+>
+>> Ah ha!   Muchas gracias Olivier.  Creo que es hora de ir por mas cafe ;-)
+>>
+>> Un saludo,
+>> Jorge
+>>
+>>
+>> 2011/4/13 Olivier Nuñez <>
+>>
+>> > Igual, lo siguiente te vale:
+>> >
+>> > > foo<-function(x) { y=format(x, digits=2,scientific = TRUE);
+>> > sub("e","x10",y)}
+>> > > foo(x)
+>> >  [1] "1.7x10-04" "7.6x10-04" "1.3x10-04" "2.9x10-04" "5.6x10-04"
+>> > "7.8x10-04" "7.8x10-04" "1.4x10-04" "3.2x10-04" "8.5x10-05"
+>> >
+>> > Un saludo. Olivier
+>> > -- ____________________________________
+>> >
+>> > Olivier G. Nuñez
+>> > Email: onunez en iberstat.es
+>> > Tel : +34 663 03 69 09
+>> > Web: http://www.iberstat.es
+>> >
+>> > ____________________________________
+>> >
+>> >
+>> >
+>> >
+>> > El 13/04/2011, a las 22:23, Jorge Ivan Velez escribió:
+>> >
+>> >
+>> >  Hola a todos,
+>> >>
+>> >> Tengo un vector con valores en _P_
+>> >>
+>> >> x <- c(0.0001709122, 0.0007623474, 0.0001319547, 0.0002868035,
+>> >> 0.0005602669,
+>> >> 0.0007825347, 0.0007822033, 0.0001444821, 0.000324731, 8.4686e-05)
+>> >> x
+>> >>
+>> >> Y me gustaria cambiar un poco el formato.  Conoce alguien alguna
+>> function
+>> >> "foo" tal que foo(x) produzca
+>> >>
+>> >> "1.7x10(-4)"  "7.62x10(-4)"  "1.3x10(-4)" ..... "8.46x10(-5)"
+>> >>
+>> >> ?
+>> >>
+>> >> Muchas gracias,
+>> >>      Jorge Ivan Velez
+>> >>
+>> >
+>> >
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+>
+> ------------------------------
+>
+> Message: 3
+> Date: Thu, 14 Apr 2011 10:09:24 +0200
+> From: Oscar Perpiñan Lamigueiro <oscar.perpinan en upm.es>
+> To: Antonio Maurandi López <amaurandi en um.es>
+> Cc: r-help-es en r-project.org
+> Subject: Re: [R-es] III Jornadas de usuarios de R: 17 y 18 de
+> 	noviembre en la EOI, Madrid
+> Message-ID: <20110414100924.2562a233 en OPL-EUITI>
+> Content-Type: text/plain; charset=UTF-8
+>
+> Hola,
+>
+> Fijaos que en el programa (http://www.usar.org.es/programa.php) ya
+> hemos incluido la cena. Será el jueves a las 21'30, y por eso la
+> jornada del viernes empieza algo más tarde :-).
+>
+> Según vayamos avanzando en la organización de esta cena (lugar, precio
+> por comensal, etc.) iremos informando de los detalles. No obstante,
+> cualquier ayuda será muy bienvenida.
+>
+> Saludos.
+>
+> Oscar.
+>
+>
+> -------------------
+> Oscar Perpiñán Lamigueiro
+> Dpto. Ingenierí­a Eléctrica
+> EUITI-UPM
+>
+> http://procomun.wordpress.com
+>
+> -----------------------------------------
+>>yo no lo veo mal, tb es cierto que Madrid es más barato para todos
+>>pues mucha gente no se tendrá que desplazar.
+>>
+>>Lo de la cena comunal lo veo muy bien, pq con una birra o un par de
+>>vinos se habla de sw libre mucho mejor (y de estadística no te digo),
+>>además yo creo que es algo que se echo en falta en las últimas
+>>jornadas.
+>>
+>>Si la organización no puede abordar lo de la cena quizás podemos abrir
+>>un proyecto paralelo....
+>>
+>>
+>>
+>>
+>>El 13/04/11 13:19, Gregorio R. Serrano escribió:
+>>> cubrir gastos. Eso sí, habría que decirlo cuanto antes en l
+>>
+>>--
+>>Antonio Maurandi López
+>>Serv. Cálculo Científico. Apoyo Estadístico.
+>>Servicio de Apoyo a la Investigación (SAI)
+>>Vicerrectorado de Investigación.
+>>Universidad de Murcia
+>>
+>>Edif. CAID. Campus de Espinardo.
+>>30100 Murcia
+>>@. amaurandi en um.es
+>>T. 868 88 7315 F. 868 88 7302
+>>www.um.es/sai www.um.es/ae
+>>
+>>
+>>	[[alternative HTML version deleted]]
+>>
+>
+>
+>
+> ------------------------------
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> Fin de Resumen de R-help-es, Vol 26, Envío 25
+> *********************************************
+>
+
+
+From angelacadenaramirez en gmail.com  Sat Apr 16 19:17:15 2011
+From: angelacadenaramirez en gmail.com (Angela Cadena)
+Date: Sat, 16 Apr 2011 12:17:15 -0500
+Subject: [R-es] AYUDA POR FAVOR
+Message-ID: <BANLkTi=EbrxvZzg5q_rWWLxgv+rra95cHA@mail.gmail.com>
+
+hola!
+
+podrian ayudarme con esto:
+
+
+Genere 1000 muestras aleatorias de tamaño  n=10 de una población
+normal con media
+ =2,5 y desviación  0,16. Con cada una de las muestras construya un
+intervalo de
+confianza al 95% para la media y para la varianza. Cuente que
+porcentaje de los 1000
+intervalos atrapan la verdadera media y la verdadera varianza poblacional
+respectivamente. Comente los resultados encontrados.
+
+he hecho esto
+
+promedio=0
+varianza=0
+ for(i in 1:1000)
+ {
+ y<-rnorm(10, 2.5, 0.16)
+ promedio[i]=mean(y)
+ varianza[i]=var(y)
+ }
+promedio
+varianza
+#para generar 1000 prom y 1000 varianzas para la muestra de n=10,
+mu=2.5 y dev=0.16
+
+intmedia=c(promedio)            #intmedia =iintervalo de confianza para la media
+t.test(intmedia, conf.level=0.95)
+
+       One Sample t-test
+
+data:  intmedia
+t = 1575.343, df = 999, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 2.494522 2.500744
+sample estimates:
+mean of x
+ 2.497633
+
+# el intervalo de conf para la media seria ( 2.494522 , 2.500744 )
+
+
+ ¿para la varianza seria igual?
+ ¿como hago para contar los intervalos que atrapan las verderas medias
+y las verdaderas varianzas?
+
+soy novata en esto, por favor ayudenme!
+
+
+From coforfe en gmail.com  Sat Apr 16 20:11:22 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sat, 16 Apr 2011 20:11:22 +0200
+Subject: [R-es] AYUDA POR FAVOR
+In-Reply-To: <BANLkTi=EbrxvZzg5q_rWWLxgv+rra95cHA@mail.gmail.com>
+References: <BANLkTi=EbrxvZzg5q_rWWLxgv+rra95cHA@mail.gmail.com>
+Message-ID: <BANLkTik4Wn2hXAGbedO9=ZZv=Ofp_oFaJw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110416/7a142dc9/attachment.pl>
+
+From rroa en azti.es  Sat Apr 16 22:09:48 2011
+From: rroa en azti.es (=?iso-8859-1?Q?Rub=E9n_Roa?=)
+Date: Sat, 16 Apr 2011 22:09:48 +0200
+Subject: [R-es] AYUDA POR FAVOR
+References: <BANLkTi=EbrxvZzg5q_rWWLxgv+rra95cHA@mail.gmail.com>
+Message-ID: <5CD78996B8F8844D963C875D3159B94A01112124@dsrcorreo>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110416/8ce81136/attachment.pl>
+
+From pcdelcampon en gmail.com  Mon Apr 18 16:44:46 2011
+From: pcdelcampon en gmail.com (=?ISO-8859-1?Q?Pedro_C=E9sar_Del_Campo_Neira?=)
+Date: Mon, 18 Apr 2011 09:44:46 -0500
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_26=2C_Env=EDo_8?=
+In-Reply-To: <mailman.17.1302256806.26923.r-help-es@r-project.org>
+References: <mailman.17.1302256806.26923.r-help-es@r-project.org>
+Message-ID: <BANLkTim=knM2+vQTHUMw068Ci_XxAEei6A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110418/ee915cc8/attachment.pl>
+
+From coforfe en gmail.com  Mon Apr 18 17:07:11 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Mon, 18 Apr 2011 17:07:11 +0200
+Subject: [R-es]
+	=?iso-8859-1?q?Resumen_de_R-help-es=2C_Vol_26=2C_Env=EDo_8?=
+In-Reply-To: <BANLkTim=knM2+vQTHUMw068Ci_XxAEei6A@mail.gmail.com>
+References: <mailman.17.1302256806.26923.r-help-es@r-project.org>
+	<BANLkTim=knM2+vQTHUMw068Ci_XxAEei6A@mail.gmail.com>
+Message-ID: <BANLkTinW2f2OxBfKXFEVAG=dMzdJPGUtmw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110418/e95e4de9/attachment.pl>
+
+From cesar_terrer_moreno en hotmail.com  Tue Apr 19 18:05:31 2011
+From: cesar_terrer_moreno en hotmail.com (cesar terrer moreno)
+Date: Tue, 19 Apr 2011 18:05:31 +0200
+Subject: [R-es] =?iso-8859-1?q?gr=E1fica_elipses?=
+In-Reply-To: <SNT131-w137A7428A699BD8F88E995BB900@phx.gbl>
+References: <SNT131-w137A7428A699BD8F88E995BB900@phx.gbl>
+Message-ID: <SNT131-w37FE813E068BE4FD3BF27DBB900@phx.gbl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hola muy buenas:
+
+Necesito saber como obtener un gráfico de elipses como el de la imagen adjunta. Los datos de partida son llas desviaciones estandar de temperatura media y precipitación de varios espacios naturales (identificados con un número cada uno). Le agradecería mucho que me indicara si conoce con que función de R podría obtener resultados similares.
+
+Muchísimas gracias de antemano.
+
+Un fuerte saludo: César Terrer
+ 		 	   		  
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110419/ab141ce1/attachment-0001.html>
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: elipses.jpg
+Type: image/jpeg
+Size: 801067 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110419/ab141ce1/attachment-0001.jpg>
+
+From r.user.spain en gmail.com  Wed Apr 20 09:53:14 2011
+From: r.user.spain en gmail.com (Usuario R)
+Date: Wed, 20 Apr 2011 09:53:14 +0200
+Subject: [R-es] 400 usuarios!
+Message-ID: <BANLkTikBztoVWhmPTBJ90LCqOfQsUNWt3w@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/7d67042c/attachment.pl>
+
+From guivivi en alumni.uv.es  Wed Apr 20 10:56:17 2011
+From: guivivi en alumni.uv.es (guivivi en alumni.uv.es)
+Date: Wed, 20 Apr 2011 10:56:17 +0200 (CEST)
+Subject: [R-es] (Fwd) Re:  gr=?ISO-8859-1?Q?=E1?=fica_elipses
+Message-ID: <7723778466guivivi@alumni.uv.es>
+
+Hola César,
+
+Hace unos días yo también estaba interesado en dibujar un par de elipses
+con R y buceando por Internet, encontré el pdf que adjunto, no sé si
+esto te sirve de ayuda, pero por si acaso te lo mando.
+
+Un saludo,
+
+Guillermo
+
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> Hola muy buenas:
+> 
+> Necesito saber como obtener un gráfico de elipses como el de la imagen
+adjunta. Los datos de partida son llas desviaciones estandar de
+temperatura media y precipitación de varios espacios naturales
+(identificados con un número cada uno). Le agradecería mucho que me
+indicara si conoce con que función de R podría obtener resultados similares.
+> 
+> Muchísimas gracias de antemano.
+> 
+> Un fuerte saludo: César Terrer
+>  		 	   		  
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: DrawingEllipsesinR.pdf
+Type: application/pdf
+Size: 60228 bytes
+Desc: 
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/f0481fbc/attachment-0001.pdf>
+
+From cesar_terrer_moreno en hotmail.com  Wed Apr 20 12:10:07 2011
+From: cesar_terrer_moreno en hotmail.com (cesar terrer moreno)
+Date: Wed, 20 Apr 2011 12:10:07 +0200
+Subject: [R-es] =?iso-8859-1?q?=28Fwd=29_Re=3A__gr=E1fica=5Felipses?=
+In-Reply-To: <7723778466guivivi@alumni.uv.es>
+References: <7723778466guivivi@alumni.uv.es>
+Message-ID: <SNT131-w338AF3164966E8FE1C4DAEBB930@phx.gbl>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/5de9570f/attachment.pl>
+
+From onunez en iberstat.es  Wed Apr 20 13:34:17 2011
+From: onunez en iberstat.es (=?ISO-8859-1?Q?Olivier_Nu=F1ez?=)
+Date: Wed, 20 Apr 2011 13:34:17 +0200
+Subject: [R-es] =?iso-8859-1?q?=28Fwd=29_Re=3A__gr=E1fica=5Felipses?=
+In-Reply-To: <SNT131-w338AF3164966E8FE1C4DAEBB930@phx.gbl>
+References: <7723778466guivivi@alumni.uv.es>
+	<SNT131-w338AF3164966E8FE1C4DAEBB930@phx.gbl>
+Message-ID: <D045C3E6-E1CD-4E11-8B2E-580F5078443A@iberstat.es>
+
+Aquí, una pequeña ilustración con la función ellipse() del paquete "car"
+
+require(car)
+x=c(5,2,3);y=c(2,4,3) #coord. centros
+centros=matrix(c(x,y),3,2)
+desv.x=c(.5,.8,.3);desv.y=c(.2,.4,.5) #desviaciones
+desv=matrix(c(desv.x,desv.y),3,2)
+escala=1
+plot(centros,type="n",xlab="Temperatura",ylab="Precipitaciones",xlim=c 
+(1,6),ylim=c(1,6))
+for(i in 1:3) ellipse(centros[i,], diag(desv[i,]),  
+escala,col="grey",center.pch=(48+i),center.cex=2)
+
+Un saludo. Olivier
+--  
+____________________________________
+
+Olivier G. Nuñez
+Email: onunez en iberstat.es
+Tel : +34 663 03 69 09
+Web: http://www.iberstat.es
+
+____________________________________
+
+
+
+
+El 20/04/2011, a las 12:10, cesar terrer moreno escribió:
+
+>
+>> Hola Guillermo, muchas gracias por la respuesta.
+>> Yo necesito dibujar las elipses a partir del centro de la elipse, que
+> sería la temperatura y precipitaciones media, y de los ejes de la
+> elipse, que serían las desviaciones estandar de temperatura y
+> precipitación.
+>> Parece que la función ellipse que viene en el pdf que me has  
+>> pasado me
+> puede ayudar a conseguir lo que necesito, pero no me reconoce esta  
+> orden
+> "ellipse" ("could not find function ellipse"). ¿Pertenece a alguna  
+> libreria?
+
+
+From jbustosmelo en yahoo.es  Thu Apr 21 02:33:21 2011
+From: jbustosmelo en yahoo.es (Jose Bustos Melo)
+Date: Thu, 21 Apr 2011 01:33:21 +0100 (BST)
+Subject: [R-es] Super indices en R
+In-Reply-To: <mailman.21.1303207205.22796.r-help-es@r-project.org>
+Message-ID: <586078.40709.qm@web26508.mail.ukl.yahoo.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/a8a80eab/attachment.pl>
+
+From jorgeivanvelez en gmail.com  Thu Apr 21 07:52:10 2011
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Thu, 21 Apr 2011 01:52:10 -0400
+Subject: [R-es] Super indices en R
+In-Reply-To: <586078.40709.qm@web26508.mail.ukl.yahoo.com>
+References: <mailman.21.1303207205.22796.r-help-es@r-project.org>
+	<586078.40709.qm@web26508.mail.ukl.yahoo.com>
+Message-ID: <BANLkTikCm08gAP5Zyryn+AkbYwjeZ1sSsA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/e1bb06bb/attachment.pl>
+
+From luciano.selzer en gmail.com  Thu Apr 21 15:18:18 2011
+From: luciano.selzer en gmail.com (Luciano Selzer)
+Date: Thu, 21 Apr 2011 10:18:18 -0300
+Subject: [R-es] Super indices en R
+In-Reply-To: <586078.40709.qm@web26508.mail.ukl.yahoo.com>
+References: <mailman.21.1303207205.22796.r-help-es@r-project.org>
+	<586078.40709.qm@web26508.mail.ukl.yahoo.com>
+Message-ID: <BANLkTinaPn8-5Ji-4gN8cvP7zj9M3oyYgw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/3806b89c/attachment.pl>
+
+From coforfe en gmail.com  Sun Apr 24 14:07:22 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Sun, 24 Apr 2011 14:07:22 +0200
+Subject: [R-es] =?iso-8859-1?q?gr=E1fica_elipses?=
+In-Reply-To: <SNT131-w37FE813E068BE4FD3BF27DBB900@phx.gbl>
+References: <SNT131-w137A7428A699BD8F88E995BB900@phx.gbl>
+	<SNT131-w37FE813E068BE4FD3BF27DBB900@phx.gbl>
+Message-ID: <BANLkTinxETUs7iQ96ODZMmmctTxi1-VUxg@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110424/590c8e71/attachment.pl>
+
+From javi.martinez.lopez en gmail.com  Tue Apr 26 21:47:58 2011
+From: javi.martinez.lopez en gmail.com (Javier Martinez)
+Date: Tue, 26 Apr 2011 21:47:58 +0200
+Subject: [R-es] Correlaciones parciales
+Message-ID: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>
+
+Muy buenas,
+
+quiero calcular correlaciones de Pearson entre dos variables (a,b)
+teniendo en cuenta una tercera (c). Para ello estoy usando una función
+llamada "pcor.test" (http://www.yilab.gatech.edu/pcor.html), que en
+realidad no está en ningún paquete de R, que yo sepa. ¿Alguien conoce
+una función similar en alguna librería de R? Por otro lado, para ver
+si me cuadraban los resultados, he hecho una regresión lineal entre
+las variables "a" y "c" y luego he hecho otra regresión entre los
+residuos del modelo resultante y la variable "b". Creo que esto sería
+más o menos lo mismo que hacer la correlación parcial entre a y b
+tendiendo en cuenta c, y de hecho los resultados son similares, pero
+en el caso de la regresión el valor de P no sale significativo. ¿Sería
+válido este método? Me interesa también representar gráficamente la
+correlación parcial, por eso he usado también este otro método.
+
+Cualquier ayuda es bienvenida y agradecida.
+
+Saludos,
+
+Javier
+
+
+From jorgeivanvelez en gmail.com  Tue Apr 26 22:09:27 2011
+From: jorgeivanvelez en gmail.com (Jorge Ivan Velez)
+Date: Tue, 26 Apr 2011 16:09:27 -0400
+Subject: [R-es] Correlaciones parciales
+In-Reply-To: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>
+References: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>
+Message-ID: <BANLkTimvmWW1JUB6qBWo5L_keS08OdfGuw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110426/c5e34193/attachment.pl>
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue Apr 26 22:30:04 2011
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 26 Apr 2011 22:30:04 +0200
+Subject: [R-es] Correlaciones parciales
+In-Reply-To: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>
+References: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>
+Message-ID: <0A5B869BDC0A7445B15F9A4A5379437719CEB7CBCB@ASSCCEVS02.sergas.local>
+
+Hola Javier.
+
+Prueba con la función cor.test() del paquete "stats".
+
+Un Saludo,
+Miguel.
+
+
+
+
+________________________________________
+De: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] En nombre de Javier Martinez [javi.martinez.lopez en gmail.com]
+Enviado el: martes, 26 de abril de 2011 21:47
+Para: r-help-es
+Asunto: [R-es] Correlaciones parciales
+
+Muy buenas,
+
+quiero calcular correlaciones de Pearson entre dos variables (a,b)
+teniendo en cuenta una tercera (c). Para ello estoy usando una función
+llamada "pcor.test" (http://www.yilab.gatech.edu/pcor.html), que en
+realidad no está en ningún paquete de R, que yo sepa. ¿Alguien conoce
+una función similar en alguna librería de R? Por otro lado, para ver
+si me cuadraban los resultados, he hecho una regresión lineal entre
+las variables "a" y "c" y luego he hecho otra regresión entre los
+residuos del modelo resultante y la variable "b". Creo que esto sería
+más o menos lo mismo que hacer la correlación parcial entre a y b
+tendiendo en cuenta c, y de hecho los resultados son similares, pero
+en el caso de la regresión el valor de P no sale significativo. ¿Sería
+válido este método? Me interesa también representar gráficamente la
+correlación parcial, por eso he usado también este otro método.
+
+Cualquier ayuda es bienvenida y agradecida.
+
+Saludos,
+
+Javier
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From miguel.angel.rodriguez.muinos en sergas.es  Tue Apr 26 22:52:14 2011
+From: miguel.angel.rodriguez.muinos en sergas.es (miguel.angel.rodriguez.muinos en sergas.es)
+Date: Tue, 26 Apr 2011 22:52:14 +0200
+Subject: [R-es] Correlaciones parciales
+In-Reply-To: <0A5B869BDC0A7445B15F9A4A5379437719CEB7CBCB@ASSCCEVS02.sergas.local>
+References: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>,
+	<0A5B869BDC0A7445B15F9A4A5379437719CEB7CBCB@ASSCCEVS02.sergas.local>
+Message-ID: <0A5B869BDC0A7445B15F9A4A5379437719CEB7CBCC@ASSCCEVS02.sergas.local>
+
+Ups, olvídalo... no es esto lo que buscas!!!
+Sorry.
+
+
+________________________________________
+De: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] En nombre de Rodríguez Muíños, Miguel Ángel
+Enviado el: martes, 26 de abril de 2011 22:30
+Para: javi.martinez.lopez en gmail.com; r-help-es en r-project.org
+Asunto: Re: [R-es] Correlaciones parciales
+
+Hola Javier.
+
+Prueba con la función cor.test() del paquete "stats".
+
+Un Saludo,
+Miguel.
+
+
+
+
+________________________________________
+De: r-help-es-bounces en r-project.org [r-help-es-bounces en r-project.org] En nombre de Javier Martinez [javi.martinez.lopez en gmail.com]
+Enviado el: martes, 26 de abril de 2011 21:47
+Para: r-help-es
+Asunto: [R-es] Correlaciones parciales
+
+Muy buenas,
+
+quiero calcular correlaciones de Pearson entre dos variables (a,b)
+teniendo en cuenta una tercera (c). Para ello estoy usando una función
+llamada "pcor.test" (http://www.yilab.gatech.edu/pcor.html), que en
+realidad no está en ningún paquete de R, que yo sepa. ¿Alguien conoce
+una función similar en alguna librería de R? Por otro lado, para ver
+si me cuadraban los resultados, he hecho una regresión lineal entre
+las variables "a" y "c" y luego he hecho otra regresión entre los
+residuos del modelo resultante y la variable "b". Creo que esto sería
+más o menos lo mismo que hacer la correlación parcial entre a y b
+tendiendo en cuenta c, y de hecho los resultados son similares, pero
+en el caso de la regresión el valor de P no sale significativo. ¿Sería
+válido este método? Me interesa también representar gráficamente la
+correlación parcial, por eso he usado también este otro método.
+
+Cualquier ayuda es bienvenida y agradecida.
+
+Saludos,
+
+Javier
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.
+
+Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.
+
+See more languages: http://www.sergas.es/aviso_confidencialidad.htm
+
+
+From javi.martinez.lopez en gmail.com  Wed Apr 27 10:56:17 2011
+From: javi.martinez.lopez en gmail.com (Javier Martinez)
+Date: Wed, 27 Apr 2011 10:56:17 +0200
+Subject: [R-es] Correlaciones parciales
+In-Reply-To: <BANLkTimvmWW1JUB6qBWo5L_keS08OdfGuw@mail.gmail.com>
+References: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>
+	<BANLkTimvmWW1JUB6qBWo5L_keS08OdfGuw@mail.gmail.com>
+Message-ID: <BANLkTi=eorNM-hwbhkVPNgeJQ7jc6phhVw@mail.gmail.com>
+
+He probado partial.cor() y no sé por qué pero me da un error del tipo:
+
+"sistema es computacionalmente singular: número de condición recíproco = 0"
+
+No entiendo bien qué hace esa función.
+
+Gracias a ambos.
+
+Saludos,
+
+Javier
+
+2011/4/26 Jorge Ivan Velez <jorgeivanvelez en gmail.com>:
+> Hola Javier,
+> John Fox tiene esta funcionalidad integrada en Rmcdr. Quizas
+> https://stat.ethz.ch/pipermail/r-help/2009-March/193523.html pueda servirte
+> para lo que necesitas.
+> Seria interesante comparar los resultados que obtienes utilizando la funcion
+> pcor.test() y con partial.cor()
+> Saludos,
+> Jorge Ivan Velez
+>
+> 2011/4/26 Javier Martinez <>
+>>
+>> Muy buenas,
+>>
+>> quiero calcular correlaciones de Pearson entre dos variables (a,b)
+>> teniendo en cuenta una tercera (c). Para ello estoy usando una función
+>> llamada "pcor.test" (http://www.yilab.gatech.edu/pcor.html), que en
+>> realidad no está en ningún paquete de R, que yo sepa. ¿Alguien conoce
+>> una función similar en alguna librería de R? Por otro lado, para ver
+>> si me cuadraban los resultados, he hecho una regresión lineal entre
+>> las variables "a" y "c" y luego he hecho otra regresión entre los
+>> residuos del modelo resultante y la variable "b". Creo que esto sería
+>> más o menos lo mismo que hacer la correlación parcial entre a y b
+>> tendiendo en cuenta c, y de hecho los resultados son similares, pero
+>> en el caso de la regresión el valor de P no sale significativo. ¿Sería
+>> válido este método? Me interesa también representar gráficamente la
+>> correlación parcial, por eso he usado también este otro método.
+>>
+>> Cualquier ayuda es bienvenida y agradecida.
+>>
+>> Saludos,
+>>
+>> Javier
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+
+
+
+-- 
+http://oikos.inf.um.es
+
+
+From trujillo en unex.es  Wed Apr 27 13:21:19 2011
+From: trujillo en unex.es (=?ISO-8859-1?Q?Jos=E9_Trujillo_Carmona?=)
+Date: Wed, 27 Apr 2011 13:21:19 +0200
+Subject: [R-es] Correlaciones parciales
+In-Reply-To: <BANLkTimvmWW1JUB6qBWo5L_keS08OdfGuw@mail.gmail.com>
+References: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>
+	<BANLkTimvmWW1JUB6qBWo5L_keS08OdfGuw@mail.gmail.com>
+Message-ID: <4DB7FC2F.2010109@unex.es>
+
+Bueno, a la correlación parcial del paquete Rcmdr se accede mediante menús:
+
+library(Rcmdr)
+data(iris)
+Estadísticos -> Resúmenes -> Matriz de correlaciones ...
+
+Pero el problema de Javier creo que no es el coeficiente en sí, sino el
+p-valor. La función de John Fox no incluye el p-valor, pero en realidad
+no lo necesita ya que está disponible por otra vía. El coeficiente de
+correlación parcial es la forma adimensional de coeficiente de regresión
+múltiple. Si desea el p-valor de r(XY.VZ...) es el mismo que el p-valor
+del coeficiente de regresión múltiple a1 en: X = a0 + a1 Y + a2 V + a3 Z
++ ... o el coeficiente de regresión múltple b1 en Y = b0 + b1 X + b2 V +
+b3 Z + ...
+
+Además el coeficiente de correlación parcial entre X e Y puede ser
+hallado a partir de los coeficientes de regresión a1 o b1 mediante la
+fórmula (Zar, Bioestatistical Analysis y muchos otros): r(XY.VZ...)=
+raíz(t^2 /(t^2 + nu) )  Donde t es la t de Student de a1 o de b1 y nu
+son los grados de libertad residuales de la regresión multiple.
+
+Precisamente el problema de Javier, al utilizar los residuos de la
+regresión, probablemente tiene que ver con el desajuste de los grados de
+libertad, ya que las t de Student de los coeficientes de correlación
+parcial no tienen los mismos grados de libertad que los coeficientes de
+correlación simples.
+
+Como ejemplo:
+
+> RegModel.1 <- lm(Sepal.Width~Sepal.Length+Petal.Length+Petal.Width, 
+data=iris)
+> RegModel.2 <- lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, 
+data=iris)
+> summary(RegModel.1)
+...   ...   ...
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)
+(Intercept)   1.04309    0.27058   3.855 0.000173 ***
+Sepal.Length  0.60707    0.06217   9.765  < 2e-16 ***
+...   ...   ...
+
+> summary(RegModel.2)
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)
+(Intercept)   1.85600    0.25078   7.401 9.85e-12 ***
+Sepal.Width   0.65084    0.06665   9.765  < 2e-16 ***
+
+La t de Student es 9.765 en ambos casos (a1 y b1 son lo mismo pero con
+diferentes unidades físicas) y por tanto el coeficiente de correlación
+parcial es:
+
+> (9.765^2/(9.765^2+146))^0.5
+[1] 0.6285559
+
+El p-valor lógicamente es el mismo tanto para las t's como para r
+parcial. Utilizando la función de John Fox:
+
+> partial.cor(iris[,c("Petal.Length","Petal.Width","Sepal.Length",  
+"Sepal.Width")], use="complete.obs")
+
+Petal.Length Petal.Width Sepal.Length Sepal.Width
+Petal.Length    0.0000000   0.8707698    0.7190656  -0.6152919
+Petal.Width     0.8707698   0.0000000   -0.3396174   0.3526260
+Sepal.Length    0.7190656  -0.3396174    0.0000000   0.6285707
+Sepal.Width    -0.6152919   0.3526260    0.6285707   0.0000000
+
+Da lógicamente casi el mismo resultado: 0.6285707 La pequeña diferencia
+se la achaco a no haber tomado 9.765 con más decimales.
+
+De modo que el problema del p-valor de Javier lo tiene resuelto mediante
+la regresión múltiple.
+
+Saludos.
+
+
+
+
+Jorge Ivan Velez escribió:
+> Hola Javier,
+>
+> John Fox tiene esta funcionalidad integrada en Rmcdr. Quizas
+> https://stat.ethz.ch/pipermail/r-help/2009-March/193523.html pueda servirte
+> para lo que necesitas.
+>
+> Seria interesante comparar los resultados que obtienes utilizando la funcion
+> pcor.test() y con partial.cor()
+>
+> Saludos,
+> Jorge Ivan Velez
+>
+>
+> 2011/4/26 Javier Martinez <>
+>
+>   
+>> Muy buenas,
+>>
+>> quiero calcular correlaciones de Pearson entre dos variables (a,b)
+>> teniendo en cuenta una tercera (c). Para ello estoy usando una función
+>> llamada "pcor.test" (http://www.yilab.gatech.edu/pcor.html), que en
+>> realidad no está en ningún paquete de R, que yo sepa. ¿Alguien conoce
+>> una función similar en alguna librería de R? Por otro lado, para ver
+>> si me cuadraban los resultados, he hecho una regresión lineal entre
+>> las variables "a" y "c" y luego he hecho otra regresión entre los
+>> residuos del modelo resultante y la variable "b". Creo que esto sería
+>> más o menos lo mismo que hacer la correlación parcial entre a y b
+>> tendiendo en cuenta c, y de hecho los resultados son similares, pero
+>> en el caso de la regresión el valor de P no sale significativo. ¿Sería
+>> válido este método? Me interesa también representar gráficamente la
+>> correlación parcial, por eso he usado también este otro método.
+>>
+>> Cualquier ayuda es bienvenida y agradecida.
+>>
+>> Saludos,
+>>
+>> Javier
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>     
+>
+> 	[[alternative HTML version deleted]]
+>
+>   
+> ------------------------------------------------------------------------
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>   
+
+-- 
+_____---^---_____
+
+Univ. de Extremadura
+Dept. Matemáticas.
+Despacho B29
+Tf: + 34 924 289 300
+Ext. 86823
+
+
+From trujillo en unex.es  Wed Apr 27 14:08:28 2011
+From: trujillo en unex.es (=?ISO-8859-1?Q?Jos=E9_Trujillo_Carmona?=)
+Date: Wed, 27 Apr 2011 14:08:28 +0200
+Subject: [R-es] Correlaciones parciales
+In-Reply-To: <BANLkTi=eorNM-hwbhkVPNgeJQ7jc6phhVw@mail.gmail.com>
+References: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>	<BANLkTimvmWW1JUB6qBWo5L_keS08OdfGuw@mail.gmail.com>
+	<BANLkTi=eorNM-hwbhkVPNgeJQ7jc6phhVw@mail.gmail.com>
+Message-ID: <4DB8073C.70106@unex.es>
+
+¿Podrías escribir las sentencia completa?
+
+"computacionalmente singular" hace pensar en que la matriz de varianza y
+covarianzas sea singular.
+
+Entre otras posibilidades de error en la sintaxis, lo pregunta más obvia
+es ¿alguna de las variables es combinación lineal de otras?
+
+Saludos.
+
+
+Javier Martinez escribió:
+> He probado partial.cor() y no sé por qué pero me da un error del tipo:
+>
+> "sistema es computacionalmente singular: número de condición recíproco = 0"
+>
+> No entiendo bien qué hace esa función.
+>
+> Gracias a ambos.
+>
+> Saludos,
+>
+> Javier
+>
+> 2011/4/26 Jorge Ivan Velez <jorgeivanvelez en gmail.com>:
+>   
+>> Hola Javier,
+>> John Fox tiene esta funcionalidad integrada en Rmcdr. Quizas
+>> https://stat.ethz.ch/pipermail/r-help/2009-March/193523.html pueda servirte
+>> para lo que necesitas.
+>> Seria interesante comparar los resultados que obtienes utilizando la funcion
+>> pcor.test() y con partial.cor()
+>> Saludos,
+>> Jorge Ivan Velez
+>>
+>> 2011/4/26 Javier Martinez <>
+>>     
+>>> Muy buenas,
+>>>
+>>> quiero calcular correlaciones de Pearson entre dos variables (a,b)
+>>> teniendo en cuenta una tercera (c). Para ello estoy usando una función
+>>> llamada "pcor.test" (http://www.yilab.gatech.edu/pcor.html), que en
+>>> realidad no está en ningún paquete de R, que yo sepa. ¿Alguien conoce
+>>> una función similar en alguna librería de R? Por otro lado, para ver
+>>> si me cuadraban los resultados, he hecho una regresión lineal entre
+>>> las variables "a" y "c" y luego he hecho otra regresión entre los
+>>> residuos del modelo resultante y la variable "b". Creo que esto sería
+>>> más o menos lo mismo que hacer la correlación parcial entre a y b
+>>> tendiendo en cuenta c, y de hecho los resultados son similares, pero
+>>> en el caso de la regresión el valor de P no sale significativo. ¿Sería
+>>> válido este método? Me interesa también representar gráficamente la
+>>> correlación parcial, por eso he usado también este otro método.
+>>>
+>>> Cualquier ayuda es bienvenida y agradecida.
+>>>
+>>> Saludos,
+>>>
+>>> Javier
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>       
+>>     
+>
+>
+>
+>   
+
+-- 
+_____---^---_____
+
+Univ. de Extremadura
+Dept. Matemáticas.
+Despacho B29
+Tf: + 34 924 289 300
+Ext. 86823
+
+
+From javi.martinez.lopez en gmail.com  Wed Apr 27 19:13:13 2011
+From: javi.martinez.lopez en gmail.com (Javier Martinez)
+Date: Wed, 27 Apr 2011 19:13:13 +0200
+Subject: [R-es] Correlaciones parciales
+In-Reply-To: <4DB7FC2F.2010109@unex.es>
+References: <BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>
+	<BANLkTimvmWW1JUB6qBWo5L_keS08OdfGuw@mail.gmail.com>
+	<4DB7FC2F.2010109@unex.es>
+Message-ID: <BANLkTin0j2UkNkJoEXd+5gMCmT+Ohuhn9A@mail.gmail.com>
+
+Muchas gracias por la aclaración sobre la P y cómo usar la función en
+R commander. Ninguna variable es combinación lineal de otras. Son
+porcentajes de usos de suelo en relación a la frecuencia de aparición
+de una especie. El caso es que no había visto la función en el menú y
+la había ejecutado mal en modo comando, porque ahora sí sale bien. En
+cualquier caso el valor de la P en la regresión múltiple para la
+variable que quería testar no es significativo, así que supongo que no
+me valen los resultados de la función pcor.test que mencionaba al
+principio (da el mismo valor de r que la función de Fox pero una P
+significativa). Lo que sí he visto y no conocía es la función
+"avPlots" del paquete "car" para hacer gráficas de regresiones
+parciales con cada variable independiente de un modelo de regresión
+múltiple.
+
+Saludos,
+
+Javier
+
+2011/4/27 José Trujillo Carmona <trujillo en unex.es>:
+> Bueno, a la correlación parcial del paquete Rcmdr se accede mediante menús:
+>
+> library(Rcmdr)
+> data(iris)
+> Estadísticos -> Resúmenes -> Matriz de correlaciones ...
+>
+> Pero el problema de Javier creo que no es el coeficiente en sí, sino el
+> p-valor. La función de John Fox no incluye el p-valor, pero en realidad
+> no lo necesita ya que está disponible por otra vía. El coeficiente de
+> correlación parcial es la forma adimensional de coeficiente de regresión
+> múltiple. Si desea el p-valor de r(XY.VZ...) es el mismo que el p-valor
+> del coeficiente de regresión múltiple a1 en: X = a0 + a1 Y + a2 V + a3 Z
+> + ... o el coeficiente de regresión múltple b1 en Y = b0 + b1 X + b2 V +
+> b3 Z + ...
+>
+> Además el coeficiente de correlación parcial entre X e Y puede ser
+> hallado a partir de los coeficientes de regresión a1 o b1 mediante la
+> fórmula (Zar, Bioestatistical Analysis y muchos otros): r(XY.VZ...)=
+> raíz(t^2 /(t^2 + nu) )  Donde t es la t de Student de a1 o de b1 y nu
+> son los grados de libertad residuales de la regresión multiple.
+>
+> Precisamente el problema de Javier, al utilizar los residuos de la
+> regresión, probablemente tiene que ver con el desajuste de los grados de
+> libertad, ya que las t de Student de los coeficientes de correlación
+> parcial no tienen los mismos grados de libertad que los coeficientes de
+> correlación simples.
+>
+> Como ejemplo:
+>
+>> RegModel.1 <- lm(Sepal.Width~Sepal.Length+Petal.Length+Petal.Width,
+>
+> data=iris)
+>>
+>> RegModel.2 <- lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width,
+>
+> data=iris)
+>>
+>> summary(RegModel.1)
+>
+> ...   ...   ...
+> Coefficients:
+>            Estimate Std. Error t value Pr(>|t|)
+> (Intercept)   1.04309    0.27058   3.855 0.000173 ***
+> Sepal.Length  0.60707    0.06217   9.765  < 2e-16 ***
+> ...   ...   ...
+>
+>> summary(RegModel.2)
+>
+> Coefficients:
+>            Estimate Std. Error t value Pr(>|t|)
+> (Intercept)   1.85600    0.25078   7.401 9.85e-12 ***
+> Sepal.Width   0.65084    0.06665   9.765  < 2e-16 ***
+>
+> La t de Student es 9.765 en ambos casos (a1 y b1 son lo mismo pero con
+> diferentes unidades físicas) y por tanto el coeficiente de correlación
+> parcial es:
+>
+>> (9.765^2/(9.765^2+146))^0.5
+>
+> [1] 0.6285559
+>
+> El p-valor lógicamente es el mismo tanto para las t's como para r
+> parcial. Utilizando la función de John Fox:
+>
+>> partial.cor(iris[,c("Petal.Length","Petal.Width","Sepal.Length",
+>
+> "Sepal.Width")], use="complete.obs")
+>
+> Petal.Length Petal.Width Sepal.Length Sepal.Width
+> Petal.Length    0.0000000   0.8707698    0.7190656  -0.6152919
+> Petal.Width     0.8707698   0.0000000   -0.3396174   0.3526260
+> Sepal.Length    0.7190656  -0.3396174    0.0000000   0.6285707
+> Sepal.Width    -0.6152919   0.3526260    0.6285707   0.0000000
+>
+> Da lógicamente casi el mismo resultado: 0.6285707 La pequeña diferencia
+> se la achaco a no haber tomado 9.765 con más decimales.
+>
+> De modo que el problema del p-valor de Javier lo tiene resuelto mediante
+> la regresión múltiple.
+>
+> Saludos.
+>
+>
+>
+>
+> Jorge Ivan Velez escribió:
+>>
+>> Hola Javier,
+>>
+>> John Fox tiene esta funcionalidad integrada en Rmcdr. Quizas
+>> https://stat.ethz.ch/pipermail/r-help/2009-March/193523.html pueda
+>> servirte
+>> para lo que necesitas.
+>>
+>> Seria interesante comparar los resultados que obtienes utilizando la
+>> funcion
+>> pcor.test() y con partial.cor()
+>>
+>> Saludos,
+>> Jorge Ivan Velez
+>>
+>>
+>> 2011/4/26 Javier Martinez <>
+>>
+>>
+>>>
+>>> Muy buenas,
+>>>
+>>> quiero calcular correlaciones de Pearson entre dos variables (a,b)
+>>> teniendo en cuenta una tercera (c). Para ello estoy usando una función
+>>> llamada "pcor.test" (http://www.yilab.gatech.edu/pcor.html), que en
+>>> realidad no está en ningún paquete de R, que yo sepa. ¿Alguien conoce
+>>> una función similar en alguna librería de R? Por otro lado, para ver
+>>> si me cuadraban los resultados, he hecho una regresión lineal entre
+>>> las variables "a" y "c" y luego he hecho otra regresión entre los
+>>> residuos del modelo resultante y la variable "b". Creo que esto sería
+>>> más o menos lo mismo que hacer la correlación parcial entre a y b
+>>> tendiendo en cuenta c, y de hecho los resultados son similares, pero
+>>> en el caso de la regresión el valor de P no sale significativo. ¿Sería
+>>> válido este método? Me interesa también representar gráficamente la
+>>> correlación parcial, por eso he usado también este otro método.
+>>>
+>>> Cualquier ayuda es bienvenida y agradecida.
+>>>
+>>> Saludos,
+>>>
+>>> Javier
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>>
+>>
+>>        [[alternative HTML version deleted]]
+>>
+>>  ------------------------------------------------------------------------
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+> --
+> _____---^---_____
+>
+> Univ. de Extremadura
+> Dept. Matemáticas.
+> Despacho B29
+> Tf: + 34 924 289 300
+> Ext. 86823
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+
+-- 
+http://oikos.inf.um.es
+
+
+From impachecog en gmail.com  Thu Apr 28 14:17:33 2011
+From: impachecog en gmail.com (Ivonne Pacheco)
+Date: Thu, 28 Apr 2011 14:17:33 +0200
+Subject: [R-es] Prueba Kruskal Wallis
+Message-ID: <BANLkTi=xiUDmAw2hdXrBx=nY=pC+eXLAkw@mail.gmail.com>
+
+Hola a tod en s,
+
+Estoy realizando pruebas de Kruskal Wallis en un conjunto de datos. La
+duda con la que me encuentro ahora es que la base que tengo
+corresponde a una muestra y por lo tanto cada registro cuenta con su
+correspondiente factor de elevación (o factor de expansión).
+Realizando pruebas con SPSS encuentro que los rangos medios para cada
+grupo cambian si lo pondero por el factor o no(al igual que el
+estadístico y un poco el p-valor) y dado que me interesa realizar las
+comparaciones múltiples paso a R para realizarlas.
+
+Dentro de las ayudas que he consultado no veo que pueda utilizarse un
+factor de elevación en la prueba KW (supongo que entraría en terreno
+de observaciones repetidas y por lo tanto debería hacerse la
+asignación del rango medio, etc o simplemente no tiene sentido). Creo
+(no estoy completamente segura) que los resultados de la prueba
+deberían cambiar si ponderara o no la muestra.
+En resumen,
+
+1. ¿Existe algún paquete que considere la prueba incluyendo un factor
+de elevación?
+2. ¿Cómo podría simular la repetición de cada registro tantas veces se
+indique en el factor? (Para verificar que efectivamente la prueba da o
+no lo mismo...)
+
+Un saludo,
+
+-- 
+****  Ivonne Pacheco ****
+
+
+From coforfe en gmail.com  Thu Apr 28 14:20:50 2011
+From: coforfe en gmail.com (Carlos Ortega)
+Date: Thu, 28 Apr 2011 14:20:50 +0200
+Subject: [R-es] Prueba Kruskal Wallis
+In-Reply-To: <BANLkTi=xiUDmAw2hdXrBx=nY=pC+eXLAkw@mail.gmail.com>
+References: <BANLkTi=xiUDmAw2hdXrBx=nY=pC+eXLAkw@mail.gmail.com>
+Message-ID: <BANLkTimwGR3LogmaDB7dwnY2TF8syxz+-A@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110428/1d9a09f6/attachment.pl>
+
+From ricardobordah en yahoo.es  Sat Apr 30 05:41:19 2011
+From: ricardobordah en yahoo.es (Ricardo Borda)
+Date: Fri, 29 Apr 2011 22:41:19 -0500
+Subject: [R-es] Interrogante
+Message-ID: <BANLkTins6KhHz-R=pxiynu1MCJj6nGFJGw@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110429/fe4a86d4/attachment.pl>
+
+From grserrano en ccee.ucm.es  Sat Apr 30 13:30:00 2011
+From: grserrano en ccee.ucm.es (Gregorio R. Serrano)
+Date: Sat, 30 Apr 2011 13:30:00 +0200
+Subject: [R-es] Interrogante
+In-Reply-To: <BANLkTins6KhHz-R=pxiynu1MCJj6nGFJGw@mail.gmail.com>
+References: <BANLkTins6KhHz-R=pxiynu1MCJj6nGFJGw@mail.gmail.com>
+Message-ID: <BANLkTik=Dp2t-Q1KZjCS8JqrNX_rx00PhA@mail.gmail.com>
+
+An embedded and charset-unspecified text was scrubbed...
+Name: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110430/493676fd/attachment.pl>
+

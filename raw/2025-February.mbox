@@ -1,0 +1,350 @@
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sun Feb  2 15:09:03 2025
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sun, 2 Feb 2025 11:09:03 -0300
+Subject: [R-es] Error in while (diff > 1e-08)
+Message-ID: <96AF79C5-1D78-4EC1-B07E-6D6925E56515@gmail.com>
+
+Estimados
+
+Copio y pego un código, del cuál al ejecutar podrán reproducir el error.
+
+La primer parte es una función, cuándo a mano coloco números próximos al resultado no hay problema, pero claro, ¿si no tengo ni idea del resultado que deseo calcular?
+
+Entonces genero 22 valores, como así también dos versiones para w (donde una de estas es todo 1)
+
+Hasta ahí no hay problema, pueden correr el código que comparto.
+
+El problema es al correr el código, en distinto número de interacciones aparece el error:
+#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed
+
+Pero en la descripción de la función este error no está, y comienza a andar hasta varios ciclos donde aparece y corta.
+
+¿Alguna idea? Gracias 
+
+Javier Marcuzzi
+
+## Given the MME, iteratively solve for the solutions by Jocobi Over Relaxation.
+
+## Arguments
+## LHS: left hand side of MME
+## RHS: right hand side of MME
+## inits: a vecotr of initial values for the solutions
+## w: a vector of relaxation factor
+## disp: a logical value. If true, show the solutions at each iteration
+
+## Note: When 'w' is all one, usual Jacobi method will be performed.
+jor <-
+  function(LHS, RHS, inits, w, disp) {
+    D <- diag(diag(LHS))
+    R <- LHS
+    diag(R) <- 0
+    w <- diag(w)
+    Dinv <- solve(D) %*% w
+    x <- matrix(inits)
+    I <- diag(1, dim(w)[1])
+
+    diff <- 1
+    i <- 0
+    while (diff > 10E-9) {
+      i <- i + 1
+      newx <- (I - w) %*% x + Dinv %*% (RHS - R %*% x)
+      if (disp == TRUE) {
+        cat("\n")
+        cat("iteration ", i, "\n")
+        print(x)
+      }
+      diff <- (sum((newx - x)^2)) / sum(newx^2)
+      x <- newx
+    }
+
+    cat("\n")
+    cat("Final solutions after", i, "th iteration")
+    return(x)
+  }
+
+
+# genero 22 números aleatorios
+aleatorios <- sample(0:1,
+  size = 22,
+  replace = TRUE, prob = NULL
+)
+inits <- aleatorios
+
+w <- c(rep(0.8, 22))
+w1 <- c(rep(1, 22))
+
+# -----------------------------------------
+# primer prueba - uso w
+jor(LHS, RHS, inits, w, disp = TRUE)
+#iteration  1010
+#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed
+
+
+# -----------------------------------------
+# segunda prueba - uso w1
+# iteration  499
+#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed 
+jor(LHS, RHS, inits, w1, disp = TRUE)
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sun Feb  2 16:17:54 2025
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sun, 2 Feb 2025 12:17:54 -0300
+Subject: [R-es] =?utf-8?q?C=C3=B3digo_reproducible_Error_in_while_=28diff?=
+ =?utf-8?q?_=3E_1e-08=29_=7B_=3A_missing_value_where_TRUE/FALSE_needed?=
+Message-ID: <B55C5BDA-A30D-4641-A748-F84B63441A08@gmail.com>
+
+Estimados
+
+Hace unos minutos envié una consulta, pero el código para reproducir el error estaba sin los datos, yo los tenía en memoria y no me di cuenta, ahora envío el el código con los datos, la función y la pregunta, todo reproducible.
+
+Pregunta original : Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed
+
+Gracias Javier Marcuzzi
+
+## Given the MME, iteratively solve for the solutions by Jocobi Over Relaxation.
+
+## Arguments
+## LHS: left hand side of MME
+## RHS: right hand side of MME
+## inits: a vecotr of initial values for the solutions
+## w: a vector of relaxation factor
+## disp: a logical value. If true, show the solutions at each iteration
+
+## Note: When 'w' is all one, usual Jacobi method will be performed.
+jor <-
+  function(LHS, RHS, inits, w, disp) {
+    D <- diag(diag(LHS))
+    R <- LHS
+    diag(R) <- 0
+    w <- diag(w)
+    Dinv <- solve(D) %*% w
+    x <- matrix(inits)
+    I <- diag(1, dim(w)[1])
+
+    diff <- 1
+    i <- 0
+    while (diff > 10E-9) {
+      i <- i + 1
+      newx <- (I - w) %*% x + Dinv %*% (RHS - R %*% x)
+      if (disp == TRUE) {
+        cat("\n")
+        cat("iteration ", i, "\n")
+        print(x)
+      }
+      diff <- (sum((newx - x)^2)) / sum(newx^2)
+      x <- newx
+    }
+
+    cat("\n")
+    cat("Final solutions after", i, "th iteration")
+    return(x)
+  }
+
+# datos
+datosLHS <- c(
+    3, 0, 0, 0, 3, 0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.000000, 0.000000, 0.000000, 1.000000, 1.000000, 0.000000, 1.000000, 0.000000,
+    0, 2, 0, 0, 2, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 1.000000,
+    0, 0, 3, 0, 0, 3, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 1.000000, 1.000000, 0.000000,
+    0, 0, 0, 2, 0, 2, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 1.000000,
+    3, 2, 0, 0, 5, 0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.000000, 0.000000, 0.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000,
+    0, 0, 3, 2, 0, 5, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.000000, 0.000000, 0.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000,
+    0, 0, 0, 0, 0, 0, 3.5, 0.7, 0.0, -1.4, 0.7, -1.4, 0.7, -1.4, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,
+    0, 0, 0, 0, 0, 0, 0.7, 2.8, 0.7, -1.4, -1.4, 0.0, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,
+    0, 0, 0, 0, 0, 0, 0.0, 0.7, 2.8, 0.7, -1.4, 0.0, -1.4, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,
+    1, 0, 1, 0, 1, 1, -1.4, -1.4, 0.7, 5.5, 0.0, 0.0, -1.4, 0.0, 0.000000, 0.000000, 0.000000, 2.000000, 0.000000, 0.000000, 0.000000, 0.000000,
+    1, 0, 0, 1, 1, 1, 0.7, -1.4, -1.4, 0.0, 5.5, -1.4, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 2.000000, 0.000000, 0.000000, 0.000000,
+    0, 1, 1, 0, 1, 1, -1.4, 0.0, 0.0, 0.0, -1.4, 4.8, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 2.000000, 0.000000, 0.000000,
+    1, 0, 1, 0, 1, 1, 0.7, 0.0, -1.4, -1.4, 0.0, 0.0, 5.5, -1.4, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 2.000000, 0.000000,
+    0, 1, 0, 1, 1, 1, -1.4, 0.0, 0.0, 0.0, 0.0, 0.0, -1.4, 4.8, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 2.000000,
+    0, 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.333333, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,
+    0, 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.000000, 2.333333, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,
+    0, 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.000000, 0.000000, 2.333333, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,
+    1, 0, 1, 0, 1, 1, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 4.333333, 0.000000, 0.000000, 0.000000, 0.000000,
+    1, 0, 0, 1, 1, 1, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 4.333333, 0.000000, 0.000000, 0.000000,
+    0, 1, 1, 0, 1, 1, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 4.333333, 0.000000, 0.000000,
+    1, 0, 1, 0, 1, 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 4.333333, 0.000000,
+    0, 1, 0, 1, 1, 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 4.333333
+)
+LHS <- matrix(data = datosLHS, nrow = 22, ncol = 22) 
+LHS
+
+datosRHS <- c(531, 445, 720, 500, 976, 1220, 0, 0, 0, 481, 350, 350, 430, 585, 0, 0, 0, 481, 350, 350, 430, 585)
+RHS <- matrix(data = datosRHS, nrow = 22, ncol = 1)
+RHS
+
+# genero 22 números aleatorios
+aleatorios <- sample(0:1,
+  size = 22,
+  replace = TRUE, prob = NULL
+)
+inits <- aleatorios
+
+w <- c(rep(0.8, 22))
+w1 <- c(rep(1, 22))
+
+# -----------------------------------------
+# primer prueba - uso w
+jor(LHS, RHS, inits, w, disp = TRUE)
+#iteration  1010
+#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed
+
+
+# -----------------------------------------
+# segunda prueba - uso w1
+# iteration  499
+#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed 
+jor(LHS, RHS, inits, w1, disp = TRUE)
+	[[alternative HTML version deleted]]
+
+
+From r-uc@ @end|ng |rom uc@@e@  Sun Feb  2 17:07:10 2025
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Sun, 02 Feb 2025 17:07:10 +0100
+Subject: [R-es] Error in while (diff > 1e-08)
+In-Reply-To: <96AF79C5-1D78-4EC1-B07E-6D6925E56515@gmail.com>
+References: <96AF79C5-1D78-4EC1-B07E-6D6925E56515@gmail.com>
+Message-ID: <dabbe4ffe2e8dbceab15e7259a04d3f011b7b408.camel@uca.es>
+
+Buenas, Javier:
+
+No he ejecutado el código, pero alguna vez he tenido un problema similar, los motivos que conozco pueden ser dos:
+1. diff no es un número debido a que es, por ejemplo, un vector.
+2. diff es NaN o NA, en estos casos diff > 1e-08 da NA que no se puede convertir a lógico. Si diff es NA ni siquiera diff == diff es true.
+
+Una opción es usar testar si diff es NA con la función is.na y actuar en consecuencia, o bien, usar isTRUE(diff > 1e-08) que devolverá TRUE
+si la comparación se puede hacer y se verifica la desigualdas y FALSE en cualquier otro caso.
+
+Un saludo.
+
+El dom, 02-02-2025 a las 11:09 -0300, Javier Marcuzzi escribió:
+> Estimados
+> 
+> Copio y pego un código, del cuál al ejecutar podrán reproducir el error.
+> 
+> La primer parte es una función, cuándo a mano coloco números próximos al resultado no hay problema, pero claro, ¿si no tengo ni idea del
+> resultado que deseo calcular?
+> 
+> Entonces genero 22 valores, como así también dos versiones para w (donde una de estas es todo 1)
+> 
+> Hasta ahí no hay problema, pueden correr el código que comparto.
+> 
+> El problema es al correr el código, en distinto número de interacciones aparece el error:
+> #Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed
+> 
+> Pero en la descripción de la función este error no está, y comienza a andar hasta varios ciclos donde aparece y corta.
+> 
+> ¿Alguna idea? Gracias 
+> 
+> Javier Marcuzzi
+> 
+> ## Given the MME, iteratively solve for the solutions by Jocobi Over Relaxation.
+> 
+> ## Arguments
+> ## LHS: left hand side of MME
+> ## RHS: right hand side of MME
+> ## inits: a vecotr of initial values for the solutions
+> ## w: a vector of relaxation factor
+> ## disp: a logical value. If true, show the solutions at each iteration
+> 
+> ## Note: When 'w' is all one, usual Jacobi method will be performed.
+> jor <-
+>   function(LHS, RHS, inits, w, disp) {
+>     D <- diag(diag(LHS))
+>     R <- LHS
+>     diag(R) <- 0
+>     w <- diag(w)
+>     Dinv <- solve(D) %*% w
+>     x <- matrix(inits)
+>     I <- diag(1, dim(w)[1])
+> 
+>     diff <- 1
+>     i <- 0
+>     while (diff > 10E-9) {
+>       i <- i + 1
+>       newx <- (I - w) %*% x + Dinv %*% (RHS - R %*% x)
+>       if (disp == TRUE) {
+>         cat("\n")
+>         cat("iteration ", i, "\n")
+>         print(x)
+>       }
+>       diff <- (sum((newx - x)^2)) / sum(newx^2)
+>       x <- newx
+>     }
+> 
+>     cat("\n")
+>     cat("Final solutions after", i, "th iteration")
+>     return(x)
+>   }
+> 
+> 
+> # genero 22 números aleatorios
+> aleatorios <- sample(0:1,
+>   size = 22,
+>   replace = TRUE, prob = NULL
+> )
+> inits <- aleatorios
+> 
+> w <- c(rep(0.8, 22))
+> w1 <- c(rep(1, 22))
+> 
+> # -----------------------------------------
+> # primer prueba - uso w
+> jor(LHS, RHS, inits, w, disp = TRUE)
+> #iteration  1010
+> #Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed
+> 
+> 
+> # -----------------------------------------
+> # segunda prueba - uso w1
+> # iteration  499
+> #Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed 
+> jor(LHS, RHS, inits, w1, disp = TRUE)
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!TOZaT--0zH_nd14RlIt-Go-icTdS7d8Ekckz3eeBdfAm2mnDhKfXJqFM4SOAf-ZcTVxaMM3nTJVCTK8sMnOVx4E$
+>  
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Feb 16 11:12:42 2025
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 16 Feb 2025 11:12:42 +0100
+Subject: [R-es] =?utf-8?q?94_-_Reuni=C3=B3n_Grupo_de_R_-_Madrid=3A_Jueves?=
+	=?utf-8?q?_27_de_febrero_de_2025?=
+Message-ID: <CAOKbq8hCefAAoCpEnjZJoEbjEUuO+nW76+k9+OO_7HwSDN622Q@mail.gmail.com>
+
+Hola,
+
+¿Qué tal?
+
+El próximo *jueves* (27 de febrero), volvemos con una nueva reunión del
+"Grupo de R de Madrid".
+
+Esta vez contamos con Toby Dylan Hocking (Profesor Université de
+Sherbrooke) que nos dará detalles de "data.table". De cómo usarlo de forma
+avanzada, de cómo contribuir a su mantenimiento, etc.
+
+El detalle de la agenda lo podéis encontrar aquí:
+
+   -
+   https://www.meetup.com/es-ES/grupo-de-usuarios-de-r-de-madrid/events/306199926/?eventorigin=group_upcoming_events
+
+Este evento será tanto presencial como online (Zoom) y será en* inglés*.
+
+Os esperamos!.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+

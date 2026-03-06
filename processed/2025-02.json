@@ -1,0 +1,109 @@
+{
+  "list": "r-help-es",
+  "description": "",
+  "month": "2025-02",
+  "messages": [
+    {
+      "id": "msg-aa616bd08d80",
+      "message_id": "<96AF79C5-1D78-4EC1-B07E-6D6925E56515@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2025-02-02T11:09:03-03:00",
+      "subject": "[R-es] Error in while (diff > 1e-08)",
+      "subject_clean": "[R-es] Error in while (diff > 1e-08)",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados\n\nCopio y pego un cÃ³digo, del cuÃ¡l al ejecutar podrÃ¡n reproducir el error.\n\nLa primer parte es una funciÃ³n, cuÃ¡ndo a mano coloco nÃºmeros prÃ³ximos al resultado no hay problema, pero claro, Â¿si no tengo ni idea del resultado que deseo calcular?\n\nEntonces genero 22 valores, como asÃ­ tambiÃ©n dos versiones para w (donde una de estas es todo 1)\n\nHasta ahÃ­ no hay problema, pueden correr el cÃ³digo que comparto.\n\nEl problema es al correr el cÃ³digo, en distinto nÃºmero de interacciones aparece el error:\n#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed\n\nPero en la descripciÃ³n de la funciÃ³n este error no estÃ¡, y comienza a andar hasta varios ciclos donde aparece y corta.\n\nÂ¿Alguna idea? Gracias \n\nJavier Marcuzzi\n\n## Given the MME, iteratively solve for the solutions by Jocobi Over Relaxation.\n\n## Arguments\n## LHS: left hand side of MME\n## RHS: right hand side of MME\n## inits: a vecotr of initial values for the solutions\n## w: a vector of relaxation factor\n## disp: a logical value. If true, show the solutions at each iteration\n\n## Note: When 'w' is all one, usual Jacobi method will be performed.\njor <-\n  function(LHS, RHS, inits, w, disp) {\n    D <- diag(diag(LHS))\n    R <- LHS\n    diag(R) <- 0\n    w <- diag(w)\n    Dinv <- solve(D) %*% w\n    x <- matrix(inits)\n    I <- diag(1, dim(w)[1])\n\n    diff <- 1\n    i <- 0\n    while (diff > 10E-9) {\n      i <- i + 1\n      newx <- (I - w) %*% x + Dinv %*% (RHS - R %*% x)\n      if (disp == TRUE) {\n        cat(\"\\n\")\n        cat(\"iteration \", i, \"\\n\")\n        print(x)\n      }\n      diff <- (sum((newx - x)^2)) / sum(newx^2)\n      x <- newx\n    }\n\n    cat(\"\\n\")\n    cat(\"Final solutions after\", i, \"th iteration\")\n    return(x)\n  }\n\n\n# genero 22 nÃºmeros aleatorios\naleatorios <- sample(0:1,\n  size = 22,\n  replace = TRUE, prob = NULL\n)\ninits <- aleatorios\n\nw <- c(rep(0.8, 22))\nw1 <- c(rep(1, 22))\n\n# -----------------------------------------\n# primer prueba - uso w\njor(LHS, RHS, inits, w, disp = TRUE)\n#iteration  1010\n#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed\n\n\n# -----------------------------------------\n# segunda prueba - uso w1\n# iteration  499\n#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed \njor(LHS, RHS, inits, w1, disp = TRUE)\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nCopio y pego un cÃ³digo, del cuÃ¡l al ejecutar podrÃ¡n reproducir el error.\n\nLa primer parte es una funciÃ³n, cuÃ¡ndo a mano coloco nÃºmeros prÃ³ximos al resultado no hay problema, pero cla",
+      "thread_id": "thread-aa616bd08d80",
+      "thread_depth": 0,
+      "month": "2025-02"
+    },
+    {
+      "id": "msg-3afaf431b718",
+      "message_id": "<B55C5BDA-A30D-4641-A748-F84B63441A08@gmail.com>",
+      "from_name": "Javier Marcuzzi",
+      "from_email_hash": "6c4026ed22879afa5d788a7b65825a04a0469bfa3f6db70acfd7f2ee41555e8b",
+      "date": "2025-02-02T12:17:54-03:00",
+      "subject": "[R-es] Código reproducible Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed",
+      "subject_clean": "[R-es] Código reproducible Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Estimados\n\nHace unos minutos enviÃ© una consulta, pero el cÃ³digo para reproducir el error estaba sin los datos, yo los tenÃ­a en memoria y no me di cuenta, ahora envÃ­o el el cÃ³digo con los datos, la funciÃ³n y la pregunta, todo reproducible.\n\nPregunta original : Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed\n\nGracias Javier Marcuzzi\n\n## Given the MME, iteratively solve for the solutions by Jocobi Over Relaxation.\n\n## Arguments\n## LHS: left hand side of MME\n## RHS: right hand side of MME\n## inits: a vecotr of initial values for the solutions\n## w: a vector of relaxation factor\n## disp: a logical value. If true, show the solutions at each iteration\n\n## Note: When 'w' is all one, usual Jacobi method will be performed.\njor <-\n  function(LHS, RHS, inits, w, disp) {\n    D <- diag(diag(LHS))\n    R <- LHS\n    diag(R) <- 0\n    w <- diag(w)\n    Dinv <- solve(D) %*% w\n    x <- matrix(inits)\n    I <- diag(1, dim(w)[1])\n\n    diff <- 1\n    i <- 0\n    while (diff > 10E-9) {\n      i <- i + 1\n      newx <- (I - w) %*% x + Dinv %*% (RHS - R %*% x)\n      if (disp == TRUE) {\n        cat(\"\\n\")\n        cat(\"iteration \", i, \"\\n\")\n        print(x)\n      }\n      diff <- (sum((newx - x)^2)) / sum(newx^2)\n      x <- newx\n    }\n\n    cat(\"\\n\")\n    cat(\"Final solutions after\", i, \"th iteration\")\n    return(x)\n  }\n\n# datos\ndatosLHS <- c(\n    3, 0, 0, 0, 3, 0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.000000, 0.000000, 0.000000, 1.000000, 1.000000, 0.000000, 1.000000, 0.000000,\n    0, 2, 0, 0, 2, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 1.000000,\n    0, 0, 3, 0, 0, 3, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 1.000000, 1.000000, 0.000000,\n    0, 0, 0, 2, 0, 2, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 1.000000,\n    3, 2, 0, 0, 5, 0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.000000, 0.000000, 0.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000,\n    0, 0, 3, 2, 0, 5, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.000000, 0.000000, 0.000000, 1.000000, 1.000000, 1.000000, 1.000000, 1.000000,\n    0, 0, 0, 0, 0, 0, 3.5, 0.7, 0.0, -1.4, 0.7, -1.4, 0.7, -1.4, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,\n    0, 0, 0, 0, 0, 0, 0.7, 2.8, 0.7, -1.4, -1.4, 0.0, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,\n    0, 0, 0, 0, 0, 0, 0.0, 0.7, 2.8, 0.7, -1.4, 0.0, -1.4, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,\n    1, 0, 1, 0, 1, 1, -1.4, -1.4, 0.7, 5.5, 0.0, 0.0, -1.4, 0.0, 0.000000, 0.000000, 0.000000, 2.000000, 0.000000, 0.000000, 0.000000, 0.000000,\n    1, 0, 0, 1, 1, 1, 0.7, -1.4, -1.4, 0.0, 5.5, -1.4, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 2.000000, 0.000000, 0.000000, 0.000000,\n    0, 1, 1, 0, 1, 1, -1.4, 0.0, 0.0, 0.0, -1.4, 4.8, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 2.000000, 0.000000, 0.000000,\n    1, 0, 1, 0, 1, 1, 0.7, 0.0, -1.4, -1.4, 0.0, 0.0, 5.5, -1.4, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 2.000000, 0.000000,\n    0, 1, 0, 1, 1, 1, -1.4, 0.0, 0.0, 0.0, 0.0, 0.0, -1.4, 4.8, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 2.000000,\n    0, 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.333333, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,\n    0, 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.000000, 2.333333, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,\n    0, 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.000000, 0.000000, 2.333333, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000,\n    1, 0, 1, 0, 1, 1, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 4.333333, 0.000000, 0.000000, 0.000000, 0.000000,\n    1, 0, 0, 1, 1, 1, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 4.333333, 0.000000, 0.000000, 0.000000,\n    0, 1, 1, 0, 1, 1, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 4.333333, 0.000000, 0.000000,\n    1, 0, 1, 0, 1, 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 4.333333, 0.000000,\n    0, 1, 0, 1, 1, 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000, 4.333333\n)\nLHS <- matrix(data = datosLHS, nrow = 22, ncol = 22) \nLHS\n\ndatosRHS <- c(531, 445, 720, 500, 976, 1220, 0, 0, 0, 481, 350, 350, 430, 585, 0, 0, 0, 481, 350, 350, 430, 585)\nRHS <- matrix(data = datosRHS, nrow = 22, ncol = 1)\nRHS\n\n# genero 22 nÃºmeros aleatorios\naleatorios <- sample(0:1,\n  size = 22,\n  replace = TRUE, prob = NULL\n)\ninits <- aleatorios\n\nw <- c(rep(0.8, 22))\nw1 <- c(rep(1, 22))\n\n# -----------------------------------------\n# primer prueba - uso w\njor(LHS, RHS, inits, w, disp = TRUE)\n#iteration  1010\n#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed\n\n\n# -----------------------------------------\n# segunda prueba - uso w1\n# iteration  499\n#Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed \njor(LHS, RHS, inits, w1, disp = TRUE)\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados\n\nHace unos minutos enviÃ© una consulta, pero el cÃ³digo para reproducir el error estaba sin los datos, yo los tenÃ­a en memoria y no me di cuenta, ahora envÃ­o el el cÃ³digo con los datos, l",
+      "thread_id": "thread-3afaf431b718",
+      "thread_depth": 0,
+      "month": "2025-02"
+    },
+    {
+      "id": "msg-0e268f900624",
+      "message_id": "<dabbe4ffe2e8dbceab15e7259a04d3f011b7b408.camel@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2025-02-02T17:07:10+01:00",
+      "subject": "[R-es] Error in while (diff > 1e-08)",
+      "subject_clean": "[R-es] Error in while (diff > 1e-08)",
+      "in_reply_to": "<96AF79C5-1D78-4EC1-B07E-6D6925E56515@gmail.com>",
+      "references": [
+        "<96AF79C5-1D78-4EC1-B07E-6D6925E56515@gmail.com>"
+      ],
+      "body_plain": "Buenas, Javier:\n\nNo he ejecutado el cÃ³digo, pero alguna vez he tenido un problema similar, los motivos que conozco pueden ser dos:\n1. diff no es un nÃºmero debido a que es, por ejemplo, un vector.\n2. diff es NaN o NA, en estos casos diff > 1e-08 da NA que no se puede convertir a lÃ³gico. Si diff es NA ni siquiera diff == diff es true.\n\nUna opciÃ³n es usar testar si diff es NA con la funciÃ³n is.na y actuar en consecuencia, o bien, usar isTRUE(diff > 1e-08) que devolverÃ¡ TRUE\nsi la comparaciÃ³n se puede hacer y se verifica la desigualdas y FALSE en cualquier otro caso.\n\nUn saludo.\n\nEl dom, 02-02-2025 a las 11:09 -0300, Javier Marcuzzi escribiÃ³:\n> Estimados\n> \n> Copio y pego un cÃ³digo, del cuÃ¡l al ejecutar podrÃ¡n reproducir el error.\n> \n> La primer parte es una funciÃ³n, cuÃ¡ndo a mano coloco nÃºmeros prÃ³ximos al resultado no hay problema, pero claro, Â¿si no tengo ni idea del\n> resultado que deseo calcular?\n> \n> Entonces genero 22 valores, como asÃ­ tambiÃ©n dos versiones para w (donde una de estas es todo 1)\n> \n> Hasta ahÃ­ no hay problema, pueden correr el cÃ³digo que comparto.\n> \n> El problema es al correr el cÃ³digo, en distinto nÃºmero de interacciones aparece el error:\n> #Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed\n> \n> Pero en la descripciÃ³n de la funciÃ³n este error no estÃ¡, y comienza a andar hasta varios ciclos donde aparece y corta.\n> \n> Â¿Alguna idea? Gracias \n> \n> Javier Marcuzzi\n> \n> ## Given the MME, iteratively solve for the solutions by Jocobi Over Relaxation.\n> \n> ## Arguments\n> ## LHS: left hand side of MME\n> ## RHS: right hand side of MME\n> ## inits: a vecotr of initial values for the solutions\n> ## w: a vector of relaxation factor\n> ## disp: a logical value. If true, show the solutions at each iteration\n> \n> ## Note: When 'w' is all one, usual Jacobi method will be performed.\n> jor <-\n> Â  function(LHS, RHS, inits, w, disp) {\n> Â Â Â  D <- diag(diag(LHS))\n> Â Â Â  R <- LHS\n> Â Â Â  diag(R) <- 0\n> Â Â Â  w <- diag(w)\n> Â Â Â  Dinv <- solve(D) %*% w\n> Â Â Â  x <- matrix(inits)\n> Â Â Â  I <- diag(1, dim(w)[1])\n> \n> Â Â Â  diff <- 1\n> Â Â Â  i <- 0\n> Â Â Â  while (diff > 10E-9) {\n> Â Â Â Â Â  i <- i + 1\n> Â Â Â Â Â  newx <- (I - w) %*% x + Dinv %*% (RHS - R %*% x)\n> Â Â Â Â Â  if (disp == TRUE) {\n> Â Â Â Â Â Â Â  cat(\"\\n\")\n> Â Â Â Â Â Â Â  cat(\"iteration \", i, \"\\n\")\n> Â Â Â Â Â Â Â  print(x)\n> Â Â Â Â Â  }\n> Â Â Â Â Â  diff <- (sum((newx - x)^2)) / sum(newx^2)\n> Â Â Â Â Â  x <- newx\n> Â Â Â  }\n> \n> Â Â Â  cat(\"\\n\")\n> Â Â Â  cat(\"Final solutions after\", i, \"th iteration\")\n> Â Â Â  return(x)\n> Â  }\n> \n> \n> # genero 22 nÃºmeros aleatorios\n> aleatorios <- sample(0:1,\n> Â  size = 22,\n> Â  replace = TRUE, prob = NULL\n> )\n> inits <- aleatorios\n> \n> w <- c(rep(0.8, 22))\n> w1 <- c(rep(1, 22))\n> \n> # -----------------------------------------\n> # primer prueba - uso w\n> jor(LHS, RHS, inits, w, disp = TRUE)\n> #iterationÂ  1010\n> #Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed\n> \n> \n> # -----------------------------------------\n> # segunda prueba - uso w1\n> # iterationÂ  499\n> #Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed \n> jor(LHS, RHS, inits, w1, disp = TRUE)\n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!TOZaT--0zH_nd14RlIt-Go-icTdS7d8Ekckz3eeBdfAm2mnDhKfXJqFM4SOAf-ZcTVxaMM3nTJVCTK8sMnOVx4E$\n>",
+      "body_snippet": "Buenas, Javier:\n\nNo he ejecutado el cÃ³digo, pero alguna vez he tenido un problema similar, los motivos que conozco pueden ser dos:\n1. diff no es un nÃºmero debido a que es, por ejemplo, un vector.\n2.",
+      "thread_id": "thread-aa616bd08d80",
+      "thread_depth": 1,
+      "month": "2025-02"
+    },
+    {
+      "id": "msg-b732a2ae2025",
+      "message_id": "<CAOKbq8hCefAAoCpEnjZJoEbjEUuO+nW76+k9+OO_7HwSDN622Q@mail.gmail.com>",
+      "from_name": "Carlos Ortega",
+      "from_email_hash": "25458e9b7e5917180ef59b6f9f863343029dcb0723e31ca38714b1524b31e5f9",
+      "date": "2025-02-16T11:12:42+01:00",
+      "subject": "[R-es] 94 - Reunión Grupo de R - Madrid: Jueves 27 de febrero de 2025",
+      "subject_clean": "[R-es] 94 - Reunión Grupo de R - Madrid: Jueves 27 de febrero de 2025",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola,\n\nÂ¿QuÃ© tal?\n\nEl prÃ³ximo *jueves* (27 de febrero), volvemos con una nueva reuniÃ³n del\n\"Grupo de R de Madrid\".\n\nEsta vez contamos con Toby Dylan Hocking (Profesor UniversitÃ© de\nSherbrooke) que nos darÃ¡ detalles de \"data.table\". De cÃ³mo usarlo de forma\navanzada, de cÃ³mo contribuir a su mantenimiento, etc.\n\nEl detalle de la agenda lo podÃ©is encontrar aquÃ­:\n\n   -\n   https://www.meetup.com/es-ES/grupo-de-usuarios-de-r-de-madrid/events/306199926/?eventorigin=group_upcoming_events\n\nEste evento serÃ¡ tanto presencial como online (Zoom) y serÃ¡ en* inglÃ©s*.\n\nOs esperamos!.\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nÂ¿QuÃ© tal?\n\nEl prÃ³ximo *jueves* (27 de febrero), volvemos con una nueva reuniÃ³n del\n\"Grupo de R de Madrid\".\n\nEsta vez contamos con Toby Dylan Hocking (Profesor UniversitÃ© de\nSherbrooke) que",
+      "thread_id": "thread-b732a2ae2025",
+      "thread_depth": 0,
+      "month": "2025-02"
+    }
+  ],
+  "threads": [
+    {
+      "id": "thread-aa616bd08d80",
+      "subject": "[R-es] Error in while (diff > 1e-08)",
+      "message_count": 2,
+      "participants": [
+        "Javier Marcuzzi",
+        "Proyecto R-UCA"
+      ],
+      "started": "2025-02-02T11:09:03-03:00",
+      "last_reply": "2025-02-02T17:07:10+01:00",
+      "root_message_id": "msg-aa616bd08d80"
+    },
+    {
+      "id": "thread-3afaf431b718",
+      "subject": "[R-es] Código reproducible Error in while (diff > 1e-08) { : missing value where TRUE/FALSE needed",
+      "message_count": 1,
+      "participants": [
+        "Javier Marcuzzi"
+      ],
+      "started": "2025-02-02T12:17:54-03:00",
+      "last_reply": "2025-02-02T12:17:54-03:00",
+      "root_message_id": "msg-3afaf431b718"
+    },
+    {
+      "id": "thread-b732a2ae2025",
+      "subject": "[R-es] 94 - Reunión Grupo de R - Madrid: Jueves 27 de febrero de 2025",
+      "message_count": 1,
+      "participants": [
+        "Carlos Ortega"
+      ],
+      "started": "2025-02-16T11:12:42+01:00",
+      "last_reply": "2025-02-16T11:12:42+01:00",
+      "root_message_id": "msg-b732a2ae2025"
+    }
+  ]
+}

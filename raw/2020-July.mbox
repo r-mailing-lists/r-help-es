@@ -1,0 +1,3878 @@
+From eg@ren@e21 @end|ng |rom gm@||@com  Wed Jul  1 09:33:41 2020
+From: eg@ren@e21 @end|ng |rom gm@||@com (David Aguinaga)
+Date: Wed, 1 Jul 2020 09:33:41 +0200
+Subject: [R-es] Pregunta (ref. rmarkdown)
+Message-ID: <CAL4cLYfuCbvznfiULNViOu4PyDzc9uDUM7L6BSUZ7XxG+a84ug@mail.gmail.com>
+
+Buenas tardes,
+
+Tengo un problema en el momento de dar click a *Knit *para generar un
+documento *rmarkdown*.
+
+Los pasos que he seguido son:
+
+1. Cargar una tabla excel en *rmarkdown *siguiendo estos pasos:
+
+a) File --> Import dataset --> Import excel
+b) Copiar y pegar el comando en el chunk :
+
+library(readxl)
+MV <- read_excel("MV.xlsx")
+View(MV)
+
+2. Sin embargo, cuando le doy a *Knit *para generar el documento en html me
+aparece este mensaje
+
+
+processing file: Repartiment.Rmd
+Error in parse_block(g[-1], g[1], params.src) : duplicate label 'setup'
+Calls: <Anonymous> ... process_file -> split_file -> lapply -> FUN ->
+parse_block
+Ejecución interrumpida
+
+¿Por qué no se genera el documento si he copiado-pegado el comando?
+
+Gracias
+David Aguinaga Abad
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Wed Jul  1 09:44:54 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Wed, 1 Jul 2020 09:44:54 +0200
+Subject: [R-es] Pregunta (ref. rmarkdown)
+In-Reply-To: <CAL4cLYfuCbvznfiULNViOu4PyDzc9uDUM7L6BSUZ7XxG+a84ug@mail.gmail.com>
+References: <CAL4cLYfuCbvznfiULNViOu4PyDzc9uDUM7L6BSUZ7XxG+a84ug@mail.gmail.com>
+Message-ID: <D2C79994-35F2-44AE-9943-E57D57B4AE54@gmail.com>
+
+Hola David, 
+
+El mensaje de error indica el problema: las etiquetas de los chunks tienen que ser únicas (lo que hay después de la r en el encabezado del chunk) Si has copiado y pegado un chunk, cámbiale el identificador.
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 1 jul 2020, a las 9:33, David Aguinaga <egarense21 en gmail.com> escribió:
+> 
+> Buenas tardes,
+> 
+> Tengo un problema en el momento de dar click a *Knit *para generar un
+> documento *rmarkdown*.
+> 
+> Los pasos que he seguido son:
+> 
+> 1. Cargar una tabla excel en *rmarkdown *siguiendo estos pasos:
+> 
+> a) File --> Import dataset --> Import excel
+> b) Copiar y pegar el comando en el chunk :
+> 
+> library(readxl)
+> MV <- read_excel("MV.xlsx")
+> View(MV)
+> 
+> 2. Sin embargo, cuando le doy a *Knit *para generar el documento en html me
+> aparece este mensaje
+> 
+> 
+> processing file: Repartiment.Rmd
+> Error in parse_block(g[-1], g[1], params.src) : duplicate label 'setup'
+> Calls: <Anonymous> ... process_file -> split_file -> lapply -> FUN ->
+> parse_block
+> Ejecución interrumpida
+> 
+> ¿Por qué no se genera el documento si he copiado-pegado el comando?
+> 
+> Gracias
+> David Aguinaga Abad
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From @ndre@h|r|goyen @end|ng |rom gm@||@com  Sat Jul  4 18:00:01 2020
+From: @ndre@h|r|goyen @end|ng |rom gm@||@com (=?UTF-8?Q?Andr=C3=A9s_Hirigoyen?=)
+Date: Sat, 4 Jul 2020 13:00:01 -0300
+Subject: [R-es] Sumar valores dentro de una clase
+Message-ID: <CAOaTypWHtq=PegP_Uyr8z+gZL=2vXQvi16GOGk6p0SP=M=RVzg@mail.gmail.com>
+
+Buenas mi duda es cómo sumar los valores de una variable dentro de una
+clase ya creada.
+Por ejemplo:
+
+#Creo el dataset que voy a completar, primero la secuencia con la q hare
+las clases:
+cl<-round(seq(0,max(data$h),0.5),2)
+#  Mi data frame con las clases
+df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])
+#  Creo la columna "Largo" con la cantidad de observaciones que están entre
+el mínimo y el máximo de cada clase ( [i])
+for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+h<=df$max.h[i]))
+Ahora, mi duda es cómo sumar el valor de esas observaciones para crear una
+nueva variable por clase.
+Espero se entienda, desde ya muchas gracias
+
+-- 
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSc) *
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Jul  4 21:59:30 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 4 Jul 2020 21:59:30 +0200
+Subject: [R-es] Sumar valores dentro de una clase
+In-Reply-To: <CAOaTypWHtq=PegP_Uyr8z+gZL=2vXQvi16GOGk6p0SP=M=RVzg@mail.gmail.com>
+References: <CAOaTypWHtq=PegP_Uyr8z+gZL=2vXQvi16GOGk6p0SP=M=RVzg@mail.gmail.com>
+Message-ID: <CAOKbq8gsCGCZ0VGJWDKTyOsPL==-+-3=+FGEfkmwSBgfPyhwEQ@mail.gmail.com>
+
+Hola,
+
+Si pudieras compartir un subconjunto de datos con el que se pudiera
+entender mejor tu código...
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El sáb., 4 jul. 2020 a las 18:00, Andrés Hirigoyen (<
+andreshirigoyen en gmail.com>) escribió:
+
+> Buenas mi duda es cómo sumar los valores de una variable dentro de una
+> clase ya creada.
+> Por ejemplo:
+>
+> #Creo el dataset que voy a completar, primero la secuencia con la q hare
+> las clases:
+> cl<-round(seq(0,max(data$h),0.5),2)
+> #  Mi data frame con las clases
+> df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])
+> #  Creo la columna "Largo" con la cantidad de observaciones que están entre
+> el mínimo y el máximo de cada clase ( [i])
+> for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+> h<=df$max.h[i]))
+> Ahora, mi duda es cómo sumar el valor de esas observaciones para crear una
+> nueva variable por clase.
+> Espero se entienda, desde ya muchas gracias
+>
+> --
+> *Andrés Hirigoyen*
+> * Prof. Ciencias Biológicas*
+> *Ing. Agr. Forestal (MSc) *
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From @ndre@h|r|goyen @end|ng |rom gm@||@com  Sat Jul  4 22:29:49 2020
+From: @ndre@h|r|goyen @end|ng |rom gm@||@com (=?UTF-8?Q?Andr=C3=A9s_Hirigoyen?=)
+Date: Sat, 4 Jul 2020 17:29:49 -0300
+Subject: [R-es] Sumar valores dentro de una clase
+In-Reply-To: <CAOKbq8gsCGCZ0VGJWDKTyOsPL==-+-3=+FGEfkmwSBgfPyhwEQ@mail.gmail.com>
+References: <CAOaTypWHtq=PegP_Uyr8z+gZL=2vXQvi16GOGk6p0SP=M=RVzg@mail.gmail.com>
+ <CAOKbq8gsCGCZ0VGJWDKTyOsPL==-+-3=+FGEfkmwSBgfPyhwEQ@mail.gmail.com>
+Message-ID: <CAOaTypX-tTXusjieVVxk-k=Fze4kHk87wZrgVR=UJBcRAyvtQQ@mail.gmail.com>
+
+Va ejemplo:
+
+data <- Ejemplo_List
+cl<-round(seq(0,max(data$h),10),2) # seq para clases
+df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])  # Data frame con las
+clases
+df$class<-paste(df$min.h,df$max.h,sep="-") # Armo las Clases
+df$Largo <-NA # Variable nueva
+  #  Completo la columna "Largo" con la cantidad de observaciones que están
+entre el mínimo y el máximo de cada clase ( [i])
+for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+h<=df$max.h[i]))
+## Objetivo es crear la variable Total que es la suma de ID de cada
+observación perteneciente a cada clase
+  df$Total <-NA
+Muchas gracias
+
+El sáb., 4 de jul. de 2020 a la(s) 16:59, Carlos Ortega (
+cof en qualityexcellence.es) escribió:
+
+> Hola,
+>
+> Si pudieras compartir un subconjunto de datos con el que se pudiera
+> entender mejor tu código...
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+> El sáb., 4 jul. 2020 a las 18:00, Andrés Hirigoyen (<
+> andreshirigoyen en gmail.com>) escribió:
+>
+>> Buenas mi duda es cómo sumar los valores de una variable dentro de una
+>> clase ya creada.
+>> Por ejemplo:
+>>
+>> #Creo el dataset que voy a completar, primero la secuencia con la q hare
+>> las clases:
+>> cl<-round(seq(0,max(data$h),0.5),2)
+>> #  Mi data frame con las clases
+>> df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])
+>> #  Creo la columna "Largo" con la cantidad de observaciones que están
+>> entre
+>> el mínimo y el máximo de cada clase ( [i])
+>> for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+>> h<=df$max.h[i]))
+>> Ahora, mi duda es cómo sumar el valor de esas observaciones para crear una
+>> nueva variable por clase.
+>> Espero se entienda, desde ya muchas gracias
+>>
+>> --
+>> *Andrés Hirigoyen*
+>> * Prof. Ciencias Biológicas*
+>> *Ing. Agr. Forestal (MSc) *
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+*Andrés Hirigoyen*
+* Prof. Ciencias Biológicas*
+*Ing. Agr. Forestal (MSc) *
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200704/d5e808de/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Ejemplo_List.csv
+Type: application/vnd.ms-excel
+Size: 894 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200704/d5e808de/attachment.xlb>
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Jul  4 23:25:56 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 4 Jul 2020 23:25:56 +0200
+Subject: [R-es] Sumar valores dentro de una clase
+In-Reply-To: <CAOaTypX-tTXusjieVVxk-k=Fze4kHk87wZrgVR=UJBcRAyvtQQ@mail.gmail.com>
+References: <CAOaTypWHtq=PegP_Uyr8z+gZL=2vXQvi16GOGk6p0SP=M=RVzg@mail.gmail.com>
+ <CAOKbq8gsCGCZ0VGJWDKTyOsPL==-+-3=+FGEfkmwSBgfPyhwEQ@mail.gmail.com>
+ <CAOaTypX-tTXusjieVVxk-k=Fze4kHk87wZrgVR=UJBcRAyvtQQ@mail.gmail.com>
+Message-ID: <CAOKbq8jcobopVpFt45B-KhsG-+7R+tFC5gMk=mco-Edw2cpwjg@mail.gmail.com>
+
+Hola,
+
+¿Son tres columnas?...
+Solo tienen nombre dos...¿?
+
+       h    ID
+ 1: 18,2 20556
+ 2: 18,5 20556
+ 3: 20,9 20556
+ 4: 19,2 20665
+
+Y lo que quieres al final ¿es sumar el valor de ID de cada clase?
+
+Gracias,
+Carlos Ortega.
+
+
+El sáb., 4 jul. 2020 a las 22:30, Andrés Hirigoyen (<
+andreshirigoyen en gmail.com>) escribió:
+
+> Va ejemplo:
+>
+> data <- Ejemplo_List
+> cl<-round(seq(0,max(data$h),10),2) # seq para clases
+> df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])  # Data frame con las
+> clases
+> df$class<-paste(df$min.h,df$max.h,sep="-") # Armo las Clases
+> df$Largo <-NA # Variable nueva
+>   #  Completo la columna "Largo" con la cantidad de observaciones que
+> están entre el mínimo y el máximo de cada clase ( [i])
+> for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+> h<=df$max.h[i]))
+> ## Objetivo es crear la variable Total que es la suma de ID de cada
+> observación perteneciente a cada clase
+>   df$Total <-NA
+> Muchas gracias
+>
+> El sáb., 4 de jul. de 2020 a la(s) 16:59, Carlos Ortega (
+> cof en qualityexcellence.es) escribió:
+>
+>> Hola,
+>>
+>> Si pudieras compartir un subconjunto de datos con el que se pudiera
+>> entender mejor tu código...
+>>
+>> Gracias,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>>
+>> El sáb., 4 jul. 2020 a las 18:00, Andrés Hirigoyen (<
+>> andreshirigoyen en gmail.com>) escribió:
+>>
+>>> Buenas mi duda es cómo sumar los valores de una variable dentro de una
+>>> clase ya creada.
+>>> Por ejemplo:
+>>>
+>>> #Creo el dataset que voy a completar, primero la secuencia con la q hare
+>>> las clases:
+>>> cl<-round(seq(0,max(data$h),0.5),2)
+>>> #  Mi data frame con las clases
+>>> df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])
+>>> #  Creo la columna "Largo" con la cantidad de observaciones que están
+>>> entre
+>>> el mínimo y el máximo de cada clase ( [i])
+>>> for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+>>> h<=df$max.h[i]))
+>>> Ahora, mi duda es cómo sumar el valor de esas observaciones para crear
+>>> una
+>>> nueva variable por clase.
+>>> Espero se entienda, desde ya muchas gracias
+>>>
+>>> --
+>>> *Andrés Hirigoyen*
+>>> * Prof. Ciencias Biológicas*
+>>> *Ing. Agr. Forestal (MSc) *
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>
+>
+> --
+> *Andrés Hirigoyen*
+> * Prof. Ciencias Biológicas*
+> *Ing. Agr. Forestal (MSc) *
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From @ndre@h|r|goyen @end|ng |rom gm@||@com  Sat Jul  4 23:39:56 2020
+From: @ndre@h|r|goyen @end|ng |rom gm@||@com (=?UTF-8?Q?Andr=C3=A9s_Hirigoyen?=)
+Date: Sat, 4 Jul 2020 18:39:56 -0300
+Subject: [R-es] Sumar valores dentro de una clase
+In-Reply-To: <CAOKbq8jcobopVpFt45B-KhsG-+7R+tFC5gMk=mco-Edw2cpwjg@mail.gmail.com>
+References: <CAOaTypWHtq=PegP_Uyr8z+gZL=2vXQvi16GOGk6p0SP=M=RVzg@mail.gmail.com>
+ <CAOKbq8gsCGCZ0VGJWDKTyOsPL==-+-3=+FGEfkmwSBgfPyhwEQ@mail.gmail.com>
+ <CAOaTypX-tTXusjieVVxk-k=Fze4kHk87wZrgVR=UJBcRAyvtQQ@mail.gmail.com>
+ <CAOKbq8jcobopVpFt45B-KhsG-+7R+tFC5gMk=mco-Edw2cpwjg@mail.gmail.com>
+Message-ID: <CAOaTypXsh3+HReLJWeow+E=vQoS2nO36xspV=0_vJcfuXuOmFQ@mail.gmail.com>
+
+De los datos de partida creo un nuevo data set donde las filas son rangos
+de h (Clase). Las variables de ese nuevo set son: Largo, que corresponde al
+conteo de observaciones que caen en cada Clase, y Total que es la suma de
+los valores de ID de las observaciones de casa clase.  Por ejemplo para la
+primer Clase que va de 17 a 19 tengo 2 observaciones y la suma de ID es
+4400, para la.segunda Clase tengo 3 observaciones y la suma de ID es 8744
+
+Clase; Largo; Total
+17-19; 2; 4400
+19-20;3; 8744
+
+El sáb., 4 de julio de 2020 18:26, Carlos Ortega <cof en qualityexcellence.es>
+escribió:
+
+> Hola,
+>
+> ¿Son tres columnas?...
+> Solo tienen nombre dos...¿?
+>
+>        h    ID
+>  1: 18,2 20556
+>  2: 18,5 20556
+>  3: 20,9 20556
+>  4: 19,2 20665
+>
+> Y lo que quieres al final ¿es sumar el valor de ID de cada clase?
+>
+> Gracias,
+> Carlos Ortega.
+>
+>
+> El sáb., 4 jul. 2020 a las 22:30, Andrés Hirigoyen (<
+> andreshirigoyen en gmail.com>) escribió:
+>
+>> Va ejemplo:
+>>
+>> data <- Ejemplo_List
+>> cl<-round(seq(0,max(data$h),10),2) # seq para clases
+>> df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])  # Data frame con las
+>> clases
+>> df$class<-paste(df$min.h,df$max.h,sep="-") # Armo las Clases
+>> df$Largo <-NA # Variable nueva
+>>   #  Completo la columna "Largo" con la cantidad de observaciones que
+>> están entre el mínimo y el máximo de cada clase ( [i])
+>> for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+>> h<=df$max.h[i]))
+>> ## Objetivo es crear la variable Total que es la suma de ID de cada
+>> observación perteneciente a cada clase
+>>   df$Total <-NA
+>> Muchas gracias
+>>
+>> El sáb., 4 de jul. de 2020 a la(s) 16:59, Carlos Ortega (
+>> cof en qualityexcellence.es) escribió:
+>>
+>>> Hola,
+>>>
+>>> Si pudieras compartir un subconjunto de datos con el que se pudiera
+>>> entender mejor tu código...
+>>>
+>>> Gracias,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>>
+>>> El sáb., 4 jul. 2020 a las 18:00, Andrés Hirigoyen (<
+>>> andreshirigoyen en gmail.com>) escribió:
+>>>
+>>>> Buenas mi duda es cómo sumar los valores de una variable dentro de una
+>>>> clase ya creada.
+>>>> Por ejemplo:
+>>>>
+>>>> #Creo el dataset que voy a completar, primero la secuencia con la q hare
+>>>> las clases:
+>>>> cl<-round(seq(0,max(data$h),0.5),2)
+>>>> #  Mi data frame con las clases
+>>>> df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])
+>>>> #  Creo la columna "Largo" con la cantidad de observaciones que están
+>>>> entre
+>>>> el mínimo y el máximo de cada clase ( [i])
+>>>> for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+>>>> h<=df$max.h[i]))
+>>>> Ahora, mi duda es cómo sumar el valor de esas observaciones para crear
+>>>> una
+>>>> nueva variable por clase.
+>>>> Espero se entienda, desde ya muchas gracias
+>>>>
+>>>> --
+>>>> *Andrés Hirigoyen*
+>>>> * Prof. Ciencias Biológicas*
+>>>> *Ing. Agr. Forestal (MSc) *
+>>>>
+>>>>         [[alternative HTML version deleted]]
+>>>>
+>>>> _______________________________________________
+>>>> R-help-es mailing list
+>>>> R-help-es en r-project.org
+>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>>
+>>>
+>>>
+>>> --
+>>> Saludos,
+>>> Carlos Ortega
+>>> www.qualityexcellence.es
+>>>
+>>
+>>
+>> --
+>> *Andrés Hirigoyen*
+>> * Prof. Ciencias Biológicas*
+>> *Ing. Agr. Forestal (MSc) *
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sun Jul  5 02:08:00 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sat, 4 Jul 2020 21:08:00 -0300
+Subject: [R-es] Sumar valores dentro de una clase
+In-Reply-To: <CAOaTypXsh3+HReLJWeow+E=vQoS2nO36xspV=0_vJcfuXuOmFQ@mail.gmail.com>
+References: <CAOaTypWHtq=PegP_Uyr8z+gZL=2vXQvi16GOGk6p0SP=M=RVzg@mail.gmail.com>
+ <CAOKbq8gsCGCZ0VGJWDKTyOsPL==-+-3=+FGEfkmwSBgfPyhwEQ@mail.gmail.com>
+ <CAOaTypX-tTXusjieVVxk-k=Fze4kHk87wZrgVR=UJBcRAyvtQQ@mail.gmail.com>
+ <CAOKbq8jcobopVpFt45B-KhsG-+7R+tFC5gMk=mco-Edw2cpwjg@mail.gmail.com>
+ <CAOaTypXsh3+HReLJWeow+E=vQoS2nO36xspV=0_vJcfuXuOmFQ@mail.gmail.com>
+Message-ID: <CAHo_aEQJV09iw6SOsAq630ZVD8ME1OvpoGyzz4bCF6SHVSMYMA@mail.gmail.com>
+
+Estimado Andés Hirigoyen
+
+¿Puedes escribir todo desde cero? En mi caso no pude duplicar ni una línea
+de su código, será configuración, incomprensión de mi parte. No lo se.
+Tampoco logro interpretar que desea, la clase como clase estadística (alto,
+rugoso, liso, bajo), o clase como colocar algo dentro de una clase como en
+la programación orientada a objetos y luego acceder a este valor desde otro
+lugar de R. En lo personal no me gusta tratar a R como lenguaje orientado a
+objetos, aunque hay algunos que dicen que lo es, y otra documentación donde
+dice que lo hace como si fuera. De cualquier forma me resulta mucho más
+limpio manipular lo menos posible los datos desde R, aunque esto es el
+mayor trabajo.
+
+Si usted puede enviar un código que pueda duplicar en mi computadora, sobre
+este podría intentar ayudarlo.
+
+Javier Rubén Marcuzzi
+
+El sáb., 4 jul. 2020 a las 18:39, Andrés Hirigoyen (<
+andreshirigoyen en gmail.com>) escribió:
+
+> De los datos de partida creo un nuevo data set donde las filas son rangos
+> de h (Clase). Las variables de ese nuevo set son: Largo, que corresponde al
+> conteo de observaciones que caen en cada Clase, y Total que es la suma de
+> los valores de ID de las observaciones de casa clase.  Por ejemplo para la
+> primer Clase que va de 17 a 19 tengo 2 observaciones y la suma de ID es
+> 4400, para la.segunda Clase tengo 3 observaciones y la suma de ID es 8744
+>
+> Clase; Largo; Total
+> 17-19; 2; 4400
+> 19-20;3; 8744
+>
+> El sáb., 4 de julio de 2020 18:26, Carlos Ortega <cof en qualityexcellence.es
+> >
+> escribió:
+>
+> > Hola,
+> >
+> > ¿Son tres columnas?...
+> > Solo tienen nombre dos...¿?
+> >
+> >        h    ID
+> >  1: 18,2 20556
+> >  2: 18,5 20556
+> >  3: 20,9 20556
+> >  4: 19,2 20665
+> >
+> > Y lo que quieres al final ¿es sumar el valor de ID de cada clase?
+> >
+> > Gracias,
+> > Carlos Ortega.
+> >
+> >
+> > El sáb., 4 jul. 2020 a las 22:30, Andrés Hirigoyen (<
+> > andreshirigoyen en gmail.com>) escribió:
+> >
+> >> Va ejemplo:
+> >>
+> >> data <- Ejemplo_List
+> >> cl<-round(seq(0,max(data$h),10),2) # seq para clases
+> >> df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])  # Data frame con las
+> >> clases
+> >> df$class<-paste(df$min.h,df$max.h,sep="-") # Armo las Clases
+> >> df$Largo <-NA # Variable nueva
+> >>   #  Completo la columna "Largo" con la cantidad de observaciones que
+> >> están entre el mínimo y el máximo de cada clase ( [i])
+> >> for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+> >> h<=df$max.h[i]))
+> >> ## Objetivo es crear la variable Total que es la suma de ID de cada
+> >> observación perteneciente a cada clase
+> >>   df$Total <-NA
+> >> Muchas gracias
+> >>
+> >> El sáb., 4 de jul. de 2020 a la(s) 16:59, Carlos Ortega (
+> >> cof en qualityexcellence.es) escribió:
+> >>
+> >>> Hola,
+> >>>
+> >>> Si pudieras compartir un subconjunto de datos con el que se pudiera
+> >>> entender mejor tu código...
+> >>>
+> >>> Gracias,
+> >>> Carlos Ortega
+> >>> www.qualityexcellence.es
+> >>>
+> >>>
+> >>> El sáb., 4 jul. 2020 a las 18:00, Andrés Hirigoyen (<
+> >>> andreshirigoyen en gmail.com>) escribió:
+> >>>
+> >>>> Buenas mi duda es cómo sumar los valores de una variable dentro de una
+> >>>> clase ya creada.
+> >>>> Por ejemplo:
+> >>>>
+> >>>> #Creo el dataset que voy a completar, primero la secuencia con la q
+> hare
+> >>>> las clases:
+> >>>> cl<-round(seq(0,max(data$h),0.5),2)
+> >>>> #  Mi data frame con las clases
+> >>>> df<-data.frame(min.h=cl[-length(cl)],max.h=cl[-1])
+> >>>> #  Creo la columna "Largo" con la cantidad de observaciones que están
+> >>>> entre
+> >>>> el mínimo y el máximo de cada clase ( [i])
+> >>>> for (i in 1:nrow(df)) df$Largo[i]<-nrow(subset(data, h>df$min.h[i] &
+> >>>> h<=df$max.h[i]))
+> >>>> Ahora, mi duda es cómo sumar el valor de esas observaciones para crear
+> >>>> una
+> >>>> nueva variable por clase.
+> >>>> Espero se entienda, desde ya muchas gracias
+> >>>>
+> >>>> --
+> >>>> *Andrés Hirigoyen*
+> >>>> * Prof. Ciencias Biológicas*
+> >>>> *Ing. Agr. Forestal (MSc) *
+> >>>>
+> >>>>         [[alternative HTML version deleted]]
+> >>>>
+> >>>> _______________________________________________
+> >>>> R-help-es mailing list
+> >>>> R-help-es en r-project.org
+> >>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>>>
+> >>>
+> >>>
+> >>> --
+> >>> Saludos,
+> >>> Carlos Ortega
+> >>> www.qualityexcellence.es
+> >>>
+> >>
+> >>
+> >> --
+> >> *Andrés Hirigoyen*
+> >> * Prof. Ciencias Biológicas*
+> >> *Ing. Agr. Forestal (MSc) *
+> >>
+> >
+> >
+> > --
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From jb@ut|@t@ @end|ng |rom ne|ker@eu@  Fri Jul 10 12:25:16 2020
+From: jb@ut|@t@ @end|ng |rom ne|ker@eu@ (Juan Bautista)
+Date: Fri, 10 Jul 2020 10:25:16 +0000
+Subject: [R-es] problemas con el comando "twoway.plots"
+Message-ID: <67fc6a9962534ea59e4ad16d5ef9019d@EJWP1147.elkarlan.euskadi.eus>
+
+
+Hola a todos.
+Estoy intentando con la última versión de "R" usar el comando "twoway.plots ()"
+No me funciona y siempre me aparece el siguiente error:
+
+> twoway.plots (SINTOMAS, PRODUCTO, DOSIS, COL = c("#A9E2FF", "#0080FF"))
+Error in plot.window(...) : se necesitan valores finitos de 'xlim'
+Además: Warning messages:
+1: In xy.coords(x, y, xlabel, ylabel, log) : NAs introducidos por coerción
+2: In min(x) : ningún argumento finito para min; retornando Inf
+3: In max(x) : ningun argumento finito para max; retornando -Inf
+
+Esta misma orden en el mismo editor cuando la usaba en otras versiones anteriores de "R" siempre ha funcionado.
+Alguien me puede ayudar a interpretar el mensaje de error o si en la nueva versión de "R" tengo que instalar algún paquete que antes no hacia falta??
+Gracias. Un saludo.
+Juan Bautista Relloso Barrio
+Coordinador de equipos e infraestructuras \ Técnico del departamento de producción vegetal
+jbautista en neiker.eus<mailto:jbautista en neiker.eus>  - 688 62 98 14
+www.neiker.eus<http://www.neiker.eus/>             [cid:image001.png en 01D639B0.4AF49AA0] <https://www.linkedin.com/company/neiker/>  [cid:image002.png en 01D639B0.4AF49AA0] <https://twitter.com/neiker_BRTA> [cid:image003.png en 01D639B0.4AF49AA0] <https://www.facebook.com/neikerBRTA>  [cid:image004.png en 01D639B0.4AF49AA0] <https://www.youtube.com/user/neikertec>
+[cid:image005.png en 01D639B0.4AF49AA0]
+PRIBATUTASUN POLITIKA<https://neiker.eus/eu/pribatutasun-politika/> | POLÍTICA DE PRIVACIDAD<https://neiker.eus/es/politica-privacidad/> | LEGAL NOTICE<https://neiker.eus/en/privacy-policy/>
+[cid:19E3FEBFC8DA614E8D1A7A6FD4C1836C en elkarlan.euskadi.eus]
+[cid:image014.png en 01D392B1.A4AF1280]
+Este correo electrónico contiene información privada que puede estar legalmente protegida, parcial o totalmente. Es sólo para uso del destinatario al que está dirigido. Si ha recibido este mensaje por error, le rogamos que lo notifique al remitente del email y que además borre de su sistema el mensaje así como todas sus copias, incluyendo las posibles copias del mismo en su disco duro, y se abstenga de usar, revelar, distribuir a terceros, imprimir o copiar ninguna de las partes de este mensaje.
+
+Mezu elektroniko honek informazio pribatua du, partzialki edo osorik legez babestuta egon daitekeena. Bidali nahi zaion hartzaileak erabiltzeko bakarrik da. Mezu hau hutsegite baten ondorioz jaso baduzu, mesedez, mezuaren igorleari jakinaraztea eta mezua eta horren kopia guztiak ezabatzea eskatzen dizugu, disko gogorrean izan ditzakezunak barne. Eta, orobat, ez erabili mezu honen zatirik, ez eta erakutsi, beste pertsona batzuei banatu, inprimatu edo berridatzi ere.
+This e-mail contains private information that can be legally protected, partially or completely. It is intended only for use by the recipient to whom it is addressed. If you receive this e-mail in error, please notify the sender and then delete it from your system, including any copies in your hard disk, without forwarding, printing or copying any part of the e-mail.
+Centro de Arkaute-ko Zentroa
+Campus Agroalimentario de Arkaute - E-01080 Vitoria-Gasteiz (Araba) Tel: (+34) 945 121 313 / Fax: (+34) 945 281 422
+Centro de Derio-ko Zentroa
+Bizkaiko Parke Teknologikoa, 812.L. - E-48160-Derio (Bizkaia) Tel: (+34) 944 034 300 / Fax: (+34) 944 034 310
+[facebook]<http://www.facebook.com/pages/NEIKER-Tecnalia/131992493534220>[twitter]<http://twitter.com/#%21/neikertecnalia>[linkedin]<http://www.youtube.com/user/neikertec>[youtube]<http://es.linkedin.com/in/neikertecnalia>
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.gif
+Type: image/gif
+Size: 2051 bytes
+Desc: image001.gif
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0001.gif>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image002.png
+Type: image/png
+Size: 587 bytes
+Desc: image002.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0006.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image003.png
+Type: image/png
+Size: 649 bytes
+Desc: image003.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0007.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image004.png
+Type: image/png
+Size: 550 bytes
+Desc: image004.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0008.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image005.png
+Type: image/png
+Size: 742 bytes
+Desc: image005.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0009.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image006.png
+Type: image/png
+Size: 10810 bytes
+Desc: image006.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0010.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image007.jpg
+Type: image/jpeg
+Size: 23844 bytes
+Desc: image007.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0005.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image008.png
+Type: image/png
+Size: 28608 bytes
+Desc: image008.png
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0011.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image009.jpg
+Type: image/jpeg
+Size: 771 bytes
+Desc: image009.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0006.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image010.jpg
+Type: image/jpeg
+Size: 751 bytes
+Desc: image010.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0007.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image011.jpg
+Type: image/jpeg
+Size: 793 bytes
+Desc: image011.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0008.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image012.jpg
+Type: image/jpeg
+Size: 869 bytes
+Desc: image012.jpg
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/e6e0286c/attachment-0009.jpg>
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Jul 10 14:45:16 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 10 Jul 2020 14:45:16 +0200
+Subject: [R-es] problemas con el comando "twoway.plots"
+In-Reply-To: <67fc6a9962534ea59e4ad16d5ef9019d@EJWP1147.elkarlan.euskadi.eus>
+References: <67fc6a9962534ea59e4ad16d5ef9019d@EJWP1147.elkarlan.euskadi.eus>
+Message-ID: <CAOKbq8hJ5JvQPFf2fS_6M8UCUW9K99d81EvEUoMGkdBgtSGgOA@mail.gmail.com>
+
+Hola,
+
+No sé si usas el paquete PASWR2 o PASWR para usar esa función.
+Ninguno de los dos paquetes se han actualizado recientemente (uno es del
+2012 y otro del 2016).
+Y me cuesta creer que R-4.0 haya introducido un cambio tan grande como para
+que no funcionen estas funciones.
+
+Al menos los ejemplos de los dos paquetes, de esa función, no generan
+ningún error.
+
+¿Has comprobado que en tus datos tienes todo en orden.
+Por el error, tiene pinta de que alguno de los valores no fuese un valor
+numérico o hubiera un missing.
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+
+El vie., 10 jul. 2020 a las 12:25, Juan Bautista (<jbautista en neiker.eus>)
+escribió:
+
+> Hola a todos.
+>
+> Estoy intentando con la última versión de ?R? usar el comando
+> ?twoway.plots ()?
+>
+> No me funciona y siempre me aparece el siguiente error:
+>
+>
+>
+> > twoway.plots (SINTOMAS, PRODUCTO, DOSIS, COL = c("#A9E2FF", "#0080FF"))
+>
+> Error in plot.window(...) : se necesitan valores finitos de 'xlim'
+>
+> Además: Warning messages:
+>
+> 1: In xy.coords(x, y, xlabel, ylabel, log) : NAs introducidos por coerción
+>
+> 2: In min(x) : ningún argumento finito para min; retornando Inf
+>
+> 3: In max(x) : ningun argumento finito para max; retornando -Inf
+>
+>
+>
+> Esta misma orden en el mismo editor cuando la usaba en otras versiones
+> anteriores de ?R? siempre ha funcionado.
+>
+> Alguien me puede ayudar a interpretar el mensaje de error o si en la nueva
+> versión de ?R? tengo que instalar algún paquete que antes no hacia falta??
+>
+> Gracias. Un saludo.
+>
+> *Juan Bautista Relloso Barrio*
+> Coordinador de equipos e infraestructuras \ Técnico del departamento de
+> producción vegetal
+> *jbautista en neiker.eus <jbautista en neiker.eus>**  - 688 62 98 14*
+>
+> *www.neiker.eus* <http://www.neiker.eus/>             *[image:
+> cid:image001.png en 01D639B0.4AF49AA0]*
+> <https://www.linkedin.com/company/neiker/> *[image:
+> cid:image002.png en 01D639B0.4AF49AA0]* <https://twitter.com/neiker_BRTA>*[image:
+> cid:image003.png en 01D639B0.4AF49AA0]* <https://www.facebook.com/neikerBRTA>
+>  *[image: cid:image004.png en 01D639B0.4AF49AA0]*
+> <https://www.youtube.com/user/neikertec>
+>
+> *[image: cid:image005.png en 01D639B0.4AF49AA0]*
+>
+> PRIBATUTASUN POLITIKA <https://neiker.eus/eu/pribatutasun-politika/> | POLÍTICA
+> DE PRIVACIDAD <https://neiker.eus/es/politica-privacidad/> | LEGAL NOTICE
+> <https://neiker.eus/en/privacy-policy/>
+>
+> [image: cid:19E3FEBFC8DA614E8D1A7A6FD4C1836C en elkarlan.euskadi.eus]
+>
+> [image: cid:image014.png en 01D392B1.A4AF1280]
+>
+> Este correo electrónico contiene información privada que puede estar
+> legalmente protegida, parcial o totalmente. Es sólo para uso del
+> destinatario al que está dirigido. Si ha recibido este mensaje por error,
+> le rogamos que lo notifique al remitente del email y que además borre de su
+> sistema el mensaje así como todas sus copias, incluyendo las posibles
+> copias del mismo en su disco duro, y se abstenga de usar, revelar,
+> distribuir a terceros, imprimir o copiar ninguna de las partes de este
+> mensaje.
+>
+>
+>
+> Mezu elektroniko honek informazio pribatua du, partzialki edo osorik legez
+> babestuta egon daitekeena. Bidali nahi zaion hartzaileak erabiltzeko
+> bakarrik da. Mezu hau hutsegite baten ondorioz jaso baduzu, mesedez,
+> mezuaren igorleari jakinaraztea eta mezua eta horren kopia guztiak
+> ezabatzea eskatzen dizugu, disko gogorrean izan ditzakezunak barne. Eta,
+> orobat, ez erabili mezu honen zatirik, ez eta erakutsi, beste pertsona
+> batzuei banatu, inprimatu edo berridatzi ere.
+>
+> This e-mail contains private information that can be legally protected,
+> partially or completely. It is intended only for use by the recipient to
+> whom it is addressed. If you receive this e-mail in error, please notify
+> the sender and then delete it from your system, including any copies in
+> your hard disk, without forwarding, printing or copying any part of the
+> e-mail.
+>
+> *Centro de Arkaute-ko Zentroa*
+> Campus Agroalimentario de Arkaute - E-01080 Vitoria-Gasteiz (Araba) Tel:
+> (+34) 945 121 313 / Fax: (+34) 945 281 422
+>
+> *Centro de Derio-ko Zentroa*
+> Bizkaiko Parke Teknologikoa, 812.L. - E-48160-Derio (Bizkaia) Tel: (+34)
+> 944 034 300 / Fax: (+34) 944 034 310
+>
+> [image: facebook]
+> <http://www.facebook.com/pages/NEIKER-Tecnalia/131992493534220>[image:
+> twitter] <http://twitter.com/#%21/neikertecnalia>[image: linkedin]
+> <http://www.youtube.com/user/neikertec>[image: youtube]
+> <http://es.linkedin.com/in/neikertecnalia>
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.gif
+Type: image/gif
+Size: 2051 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0001.gif>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image002.png
+Type: image/png
+Size: 587 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0006.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image003.png
+Type: image/png
+Size: 649 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0007.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image004.png
+Type: image/png
+Size: 550 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0008.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image005.png
+Type: image/png
+Size: 742 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0009.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image006.png
+Type: image/png
+Size: 10810 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0010.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image007.jpg
+Type: image/jpeg
+Size: 23844 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0005.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image008.png
+Type: image/png
+Size: 28608 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0011.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image009.jpg
+Type: image/jpeg
+Size: 771 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0006.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image010.jpg
+Type: image/jpeg
+Size: 751 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0007.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image011.jpg
+Type: image/jpeg
+Size: 793 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0008.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image012.jpg
+Type: image/jpeg
+Size: 869 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/2959a031/attachment-0009.jpg>
+
+From @n@koh@ncort@d@ @end|ng |rom y@hoo@com@@r  Fri Jul 10 18:30:30 2020
+From: @n@koh@ncort@d@ @end|ng |rom y@hoo@com@@r (Ana Kohan Cortada)
+Date: Fri, 10 Jul 2020 16:30:30 +0000 (UTC)
+Subject: [R-es] problemas con el comando "twoway.plots"
+In-Reply-To: <67fc6a9962534ea59e4ad16d5ef9019d@EJWP1147.elkarlan.euskadi.eus>
+References: <67fc6a9962534ea59e4ad16d5ef9019d@EJWP1147.elkarlan.euskadi.eus>
+Message-ID: <837476542.4446338.1594398631009@mail.yahoo.com>
+
+Buenas, soy novata en R, estoy comenzando con RCmdr y quisiera saber si pudieran ayudarme dándome algunas pistas para bajar los paquetes que se necesitan para activar muchas de las funciones que aparecen en la pestaña de Análisis y empezar a aplicar algunos análisis.
+Yo sé que tal vez se dediquen sólo a trabajar con R (pero yo recién descubro esta interfase del RCmdr y me resulta más amigable, soy psicóloga y hago psicometría)
+Desde ya, muchísimas gracias desde Argentina!!!!! 
+Dra. Ana Kohan Cortada     CIIPME-CONICET
+       155 0441827
+
+ 
+
+    El viernes, 10 de julio de 2020 07:25:50 a. m. GMT-3, Juan Bautista <jbautista en neiker.eus> escribió:  
+ 
+  <!--#yiv4236319119 _filtered {} _filtered {} _filtered {} _filtered {}#yiv4236319119 #yiv4236319119 p.yiv4236319119MsoNormal, #yiv4236319119 li.yiv4236319119MsoNormal, #yiv4236319119 div.yiv4236319119MsoNormal {margin:0cm;margin-bottom:.0001pt;font-size:12.0pt;font-family:"Verdana", "sans-serif";color:black;}#yiv4236319119 h1 {margin-top:24.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;margin-bottom:.0001pt;font-size:16.0pt;font-family:"Verdana", "sans-serif";color:black;}#yiv4236319119 h2 {margin-top:10.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;margin-bottom:.0001pt;font-size:14.0pt;font-family:"Verdana", "sans-serif";color:black;font-weight:normal;}#yiv4236319119 h3 {margin-top:10.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;margin-bottom:.0001pt;font-size:13.0pt;font-family:"Verdana", "sans-serif";color:black;font-weight:normal;}#yiv4236319119 h4 {margin-top:10.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;margin-bottom:.0001pt;font-size:14.0pt;font-family:"Verdana", "sans-serif";color:black;font-weight:normal;}#yiv4236319119 h5 {margin-top:10.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;margin-bottom:.0001pt;font-size:13.0pt;font-family:"Verdana", "sans-serif";color:black;font-weight:normal;}#yiv4236319119 h6 {margin-top:10.0pt;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;margin-bottom:.0001pt;font-size:11.0pt;font-family:"Verdana", "sans-serif";color:black;font-weight:normal;}#yiv4236319119 a:link, #yiv4236319119 span.yiv4236319119MsoHyperlink {color:#983738;text-decoration:underline;}#yiv4236319119 a:visited, #yiv4236319119 span.yiv4236319119MsoHyperlinkFollowed {color:#703637;text-decoration:underline;}#yiv4236319119 p.yiv4236319119MsoAcetate, #yiv4236319119 li.yiv4236319119MsoAcetate, #yiv4236319119 div.yiv4236319119MsoAcetate {margin:0cm;margin-bottom:.0001pt;font-size:8.0pt;font-family:"Tahoma", "sans-serif";color:black;}#yiv4236319119 span.yiv4236319119EstiloCorreo17 {font-family:"Calibri", "sans-serif";color:windowtext;}#yiv4236319119 span.yiv4236319119Ttulo1Car {font-family:"Verdana", "sans-serif";color:black;font-weight:bold;}#yiv4236319119 span.yiv4236319119Ttulo2Car {font-family:"Verdana", "sans-serif";color:black;}#yiv4236319119 span.yiv4236319119Ttulo3Car {font-family:"Verdana", "sans-serif";color:black;}#yiv4236319119 span.yiv4236319119Ttulo4Car {font-family:"Verdana", "sans-serif";color:black;}#yiv4236319119 span.yiv4236319119Ttulo5Car {font-family:"Verdana", "sans-serif";color:black;}#yiv4236319119 span.yiv4236319119Ttulo6Car {font-family:"Verdana", "sans-serif";color:black;}#yiv4236319119 span.yiv4236319119TextodegloboCar {font-family:"Tahoma", "sans-serif";color:black;}#yiv4236319119 .yiv4236319119MsoChpDefault {font-family:"Calibri", "sans-serif";} _filtered {}#yiv4236319119 div.yiv4236319119WordSection1 {}-->
+Hola a todos.
+ 
+Estoy intentando con la última versión de ?R? usar el comando ?twoway.plots ()?
+ 
+No me funciona y siempre me aparece el siguiente error:
+ 
+  
+ 
+> twoway.plots (SINTOMAS, PRODUCTO, DOSIS, COL = c("#A9E2FF", "#0080FF"))
+ 
+Error in plot.window(...) : se necesitan valores finitos de 'xlim'
+ 
+Además: Warning messages:
+ 
+1: In xy.coords(x, y, xlabel, ylabel, log) : NAs introducidos por coerción
+ 
+2: In min(x) : ningún argumento finito para min; retornando Inf
+ 
+3: In max(x) : ningun argumento finito para max; retornando -Inf
+ 
+  
+ 
+Esta misma orden en el mismo editor cuando la usaba en otras versiones anteriores de ?R? siempre ha funcionado.
+ 
+Alguien me puede ayudar a interpretar el mensaje de error o si en la nueva versión de ?R? tengo que instalar algún paquete que antes no hacia falta??
+ 
+Gracias. Un saludo.
+ 
+Juan Bautista Relloso Barrio
+Coordinador de equipos e infraestructuras \ Técnico del departamento de producción vegetal
+jbautista en neiker.eus  - 688 62 98 14
+ 
+www.neiker.eus               
+ 
+
+ 
+PRIBATUTASUN POLITIKA |POLÍTICA DE PRIVACIDAD |LEGAL NOTICE
+ 
+
+ 
+
+ 
+Este correo electrónico contiene información privada que puede estar legalmente protegida, parcial o totalmente. Es sólo para uso del destinatario al que está dirigido. Si ha recibido este mensaje por error, le rogamos que lo notifique al remitente del email y que además borre de su sistema el mensaje así como todas sus copias, incluyendo las posibles copias del mismo en su disco duro, y se abstenga de usar, revelar, distribuir a terceros, imprimir o copiar ninguna de las partes de este mensaje.
+ 
+  
+ 
+Mezu elektroniko honek informazio pribatua du, partzialki edo osorik legez babestuta egon daitekeena. Bidali nahi zaion hartzaileak erabiltzeko bakarrik da. Mezu hau hutsegite baten ondorioz jaso baduzu, mesedez, mezuaren igorleari jakinaraztea eta mezua eta horren kopia guztiak ezabatzea eskatzen dizugu, disko gogorrean izan ditzakezunak barne. Eta, orobat, ez erabili mezu honen zatirik, ez eta erakutsi, beste pertsona batzuei banatu, inprimatu edo berridatzi ere. 
+ 
+This e-mail contains private information that can be legally protected, partially or completely. It is intended only for use by the recipient to whom it is addressed. If you receive this e-mail in error, please notify the sender and then delete it from your system, including any copies in your hard disk, without forwarding, printing or copying any part of the e-mail.
+ 
+Centro de Arkaute-ko Zentroa
+Campus Agroalimentario de Arkaute - E-01080 Vitoria-Gasteiz (Araba) Tel: (+34) 945 121 313 / Fax: (+34) 945 281 422
+ 
+Centro de Derio-ko Zentroa
+Bizkaiko Parke Teknologikoa, 812.L. - E-48160-Derio (Bizkaia) Tel: (+34) 944 034 300 / Fax: (+34) 944 034 310
+ 
+
+ 
+  
+ _______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es  
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image003.png
+Type: image/png
+Size: 649 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0006.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image012.jpg
+Type: image/jpeg
+Size: 869 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0005.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image004.png
+Type: image/png
+Size: 550 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0007.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.gif
+Type: image/gif
+Size: 2051 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0001.gif>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image002.png
+Type: image/png
+Size: 587 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0008.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image007.jpg
+Type: image/jpeg
+Size: 23844 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0006.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image008.png
+Type: image/png
+Size: 28608 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0009.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image009.jpg
+Type: image/jpeg
+Size: 771 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0007.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image005.png
+Type: image/png
+Size: 742 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0010.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image010.jpg
+Type: image/jpeg
+Size: 751 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0008.jpg>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image006.png
+Type: image/png
+Size: 10810 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0011.png>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image011.jpg
+Type: image/jpeg
+Size: 793 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200710/08ef7b38/attachment-0009.jpg>
+
+From ruthm@der@@ @end|ng |rom hotm@||@com  Sun Jul 12 06:14:52 2020
+From: ruthm@der@@ @end|ng |rom hotm@||@com (RUTH LIZZETH MADERA SANDOVAL)
+Date: Sun, 12 Jul 2020 04:14:52 +0000
+Subject: [R-es] No se inicia R-studio
+Message-ID: <BL0PR02MB65002081BBB53D2FCB21B837B9630@BL0PR02MB6500.namprd02.prod.outlook.com>
+
+Al instalar el R funciona, pero el r-Studio al abrirlo despu?s de la instalaci?n no se inicia y se queda cargando al final aparece que tardo mucho y no hay conexi?n.
+
+Gracias por la ayuda
+
+Saludos cordiales
+Ruth Madera Sandoval
+
+	[[alternative HTML version deleted]]
+
+
+From ruthm@der@s m@iii@g oii hotm@ii@com  Sun Jul 12 16:16:55 2020
+From: ruthm@der@s m@iii@g oii hotm@ii@com (=?iso-8859-1?q?ruthm=40der=40s_m=40iii=40g_oii_hotm=40ii=40com?=)
+Date: Sun, 12 Jul 2020 09:16:55 -0500
+Subject: [R-es] No se inicia R-studio
+In-Reply-To: <BL0PR02MB65002081BBB53D2FCB21B837B9630@BL0PR02MB6500.namprd02.prod.outlook.com>
+Message-ID: <BL0PR02MB6500B67A60164F708E6D6915B9630@BL0PR02MB6500.namprd02.prod.outlook.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200712/abd92be9/attachment.html>
+
+From c@@r@y@@ @end|ng |rom hotm@||@com  Sun Jul 12 16:23:33 2020
+From: c@@r@y@@ @end|ng |rom hotm@||@com (Salvador Castillo Raya)
+Date: Sun, 12 Jul 2020 14:23:33 +0000
+Subject: [R-es] No se inicia R-studio
+In-Reply-To: <BL0PR02MB6500B67A60164F708E6D6915B9630@BL0PR02MB6500.namprd02.prod.outlook.com>
+References: <BL0PR02MB65002081BBB53D2FCB21B837B9630@BL0PR02MB6500.namprd02.prod.outlook.com>,
+ <BL0PR02MB6500B67A60164F708E6D6915B9630@BL0PR02MB6500.namprd02.prod.outlook.com>
+Message-ID: <AM6PR01MB4517B4491A5316861EAA7D88C6630@AM6PR01MB4517.eurprd01.prod.exchangelabs.com>
+
+Hola Ruth,
+
+Siguiendo paso a paso este tutorial no deberías tener problema.
+
+https://youtu.be/rxsE3Uc_bnU
+
+Saludos,
+Salva
+
+Obtener Outlook para Android<https://aka.ms/ghei36>
+
+________________________________
+From: R-help-es <r-help-es-bounces en r-project.org> on behalf of ruthmaderas en hotmail.com <ruthmaderas en hotmail.com>
+Sent: Sunday, July 12, 2020 4:16:55 PM
+To: r-help-es en r-project.org <r-help-es en r-project.org>
+Subject: Re: [R-es] No se inicia R-studio
+
+Sí fui muy ambigua, He intentando en la 3.6 y 4.0.2 para Windows, es la primera vez que lo instalo y si tengo acceso a R fuerta de rstudio. Los instale bajando los paquetes de datos de la página. r.proyect y siguiendo instrucciones del instalador.
+
+Estoy empezando con curso para principiantes y pues aún no se nada más porque no paso de la primera lección que es instalar los programas :(
+
+El 11 jul. 2020 11:14 p. m., RUTH LIZZETH MADERA SANDOVAL <ruthmaderas en hotmail.com> escribió:
+
+Al instalar el R funciona, pero el r-Studio al abrirlo despu?s de la instalaci?n no se inicia y se queda cargando al final aparece que tardo mucho y no hay conexi?n.
+
+Gracias por la ayuda
+
+Saludos cordiales
+Ruth Madera Sandoval
+
+[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From dep@@o @end|ng |rom gm@||@com  Sun Jul 12 16:59:28 2020
+From: dep@@o @end|ng |rom gm@||@com (depaso)
+Date: Sun, 12 Jul 2020 16:59:28 +0200
+Subject: [R-es] agrupar observaciones de una columna
+Message-ID: <CACZjutJCaY6hAO2X6kwkVyWbMXMS9VYdMThfiatvcZLq7G8ybA@mail.gmail.com>
+
+Hola!
+
+Estoy empezando con R y tengo que analizar una base de datos sobre COVID.
+
+Una de las columnas recoge si los casos son de hombres o de mujeres y no sé
+cómo transformarlo en una columna que solo sume los casos totales,
+independientemente de si son hombres o mujeres (pero sí me interesa
+diferenciarlos por día y municipio, como ya aparecen).
+
+Adjunto pantallazo para hacer más comprensible mi duda, que afecta a la
+columna *SexeDescripcio*.
+
+Muchas gracias y un saludo!
+
+-- 
+ànnia
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200712/17da94c7/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Captura de Pantalla 2020-07-12 a les 16.48.48.png
+Type: image/png
+Size: 114840 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200712/17da94c7/attachment-0001.png>
+
+From @n@koh@ncort@d@ @end|ng |rom y@hoo@com@@r  Sun Jul 12 17:18:12 2020
+From: @n@koh@ncort@d@ @end|ng |rom y@hoo@com@@r (Ana Kohan Cortada)
+Date: Sun, 12 Jul 2020 15:18:12 +0000 (UTC)
+Subject: [R-es] pedido de ayuda
+References: <1616088917.425022.1594567092317.ref@mail.yahoo.com>
+Message-ID: <1616088917.425022.1594567092317@mail.yahoo.com>
+
+Hace días escribí......creo que se perdió mi mensaje, voy de nuevo con mi pedido de ayuda...
+Buenas, soy novata en R, estoy comenzando con RCmdr y quisiera saber si pudieran ayudarme dándome algunas pistas para bajar los paquetes que se necesitan para activar muchas de las funciones que aparecen en la pestaña de Análisis y empezar a aplicar algunos análisis.
+Yo sé que tal vez se dediquen sólo a trabajar con R (pero yo recién descubro esta interfase del RCmdr y me resulta más amigable, soy psicóloga y hago psicometría)
+Desde ya, muchísimas muchas gracias desde Argentina!!!!! 
+
+Dra. Ana Kohan Cortada     CIIPME-CONICET
+       155 0441827
+
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Sun Jul 12 17:28:49 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Sun, 12 Jul 2020 17:28:49 +0200
+Subject: [R-es] pedido de ayuda
+In-Reply-To: <1616088917.425022.1594567092317@mail.yahoo.com>
+References: <1616088917.425022.1594567092317.ref@mail.yahoo.com>
+ <1616088917.425022.1594567092317@mail.yahoo.com>
+Message-ID: <C8E00206-BFF9-43C2-89DA-8ED3F77B4D2B@gmail.com>
+
+Estimada Ana,
+
+Su mensaje es demasiado general para que podamos ayudarle en la lista (al menos yo no me veo capaz de darle una respuesta). Yo no uso R Commander pero intento darle algunas pistas.
+
+Le recomiendo en español el material de la Universidad de Cádiz. Tienen un paquete que al parecer lo instala todo:
+
+http://knuth.uca.es/R/doku.php?id=instalacion_de_r_y_rcmdr:r-uca <http://knuth.uca.es/R/doku.php?id=instalacion_de_r_y_rcmdr:r-uca>
+
+También este libro completo, disponible para descarga:
+http://sestio.uca.es/repos/ebrcmdr/pdf/13marzo/ebrcmdr.pdf <http://sestio.uca.es/repos/ebrcmdr/pdf/13marzo/ebrcmdr.pdf>
+
+En inglés puede consultar la web del autor (John Fox) dedicada a R Commander:
+https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/ <https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/>
+Donde encontrará un manual: https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/Getting-Started-with-the-Rcmdr.pdf <https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/Getting-Started-with-the-Rcmdr.pdf>
+
+En esta otra página puede encontrar algún recurso más:
+https://www.rcommander.com <https://www.rcommander.com/>
+
+Si tiene preguntas concretas, seguro que alguien de la lista le podrá dar respuestas precisas.
+
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 12 jul 2020, a las 17:18, Ana Kohan Cortada <anakohancortada en yahoo.com.ar> escribió:
+> 
+> Hace días escribí......creo que se perdió mi mensaje, voy de nuevo con mi pedido de ayuda...
+> Buenas, soy novata en R, estoy comenzando con RCmdr y quisiera saber si pudieran ayudarme dándome algunas pistas para bajar los paquetes que se necesitan para activar muchas de las funciones que aparecen en la pestaña de Análisis y empezar a aplicar algunos análisis.
+> Yo sé que tal vez se dediquen sólo a trabajar con R (pero yo recién descubro esta interfase del RCmdr y me resulta más amigable, soy psicóloga y hago psicometría)
+> Desde ya, muchísimas muchas gracias desde Argentina!!!!! 
+> 
+> Dra. Ana Kohan Cortada     CIIPME-CONICET
+>        155 0441827
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Jul 12 17:33:38 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 12 Jul 2020 17:33:38 +0200
+Subject: [R-es] agrupar observaciones de una columna
+In-Reply-To: <CACZjutJCaY6hAO2X6kwkVyWbMXMS9VYdMThfiatvcZLq7G8ybA@mail.gmail.com>
+References: <CACZjutJCaY6hAO2X6kwkVyWbMXMS9VYdMThfiatvcZLq7G8ybA@mail.gmail.com>
+Message-ID: <CAOKbq8jTcfx426AAynuiTo4pwdgRGciLAKsY_JX+yBa_NW65Lw@mail.gmail.com>
+
+Hola,
+
+Mira la función "aggregate()".
+Hay otras muchas formas de crear esa nueva variable que es la suma de casos
+por Municipio y agrupado por Sexo, pero puedes empezar por esta.
+
+Gracias,
+Carlos.
+
+El dom., 12 jul. 2020 a las 17:00, depaso (<depaso en gmail.com>) escribió:
+
+> Hola!
+>
+> Estoy empezando con R y tengo que analizar una base de datos sobre COVID.
+>
+> Una de las columnas recoge si los casos son de hombres o de mujeres y no
+> sé cómo transformarlo en una columna que solo sume los casos totales,
+> independientemente de si son hombres o mujeres (pero sí me interesa
+> diferenciarlos por día y municipio, como ya aparecen).
+>
+> Adjunto pantallazo para hacer más comprensible mi duda, que afecta a la
+> columna *SexeDescripcio*.
+>
+> Muchas gracias y un saludo!
+>
+> --
+> ànnia
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Sun Jul 12 18:08:30 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Sun, 12 Jul 2020 18:08:30 +0200
+Subject: [R-es] agrupar observaciones de una columna
+In-Reply-To: <CACZjutJCaY6hAO2X6kwkVyWbMXMS9VYdMThfiatvcZLq7G8ybA@mail.gmail.com>
+References: <CACZjutJCaY6hAO2X6kwkVyWbMXMS9VYdMThfiatvcZLq7G8ybA@mail.gmail.com>
+Message-ID: <37E2C8A9-B536-4FB9-8930-B7AB3ACA1F51@gmail.com>
+
+Hola,
+
+Con tityverse (algo así porque el pantallazo está bien pero no es un ejemplo reproducible):
+
+Datos %>% group_by(TipusCasData, MunicipiCodi, MunicipiDescripcio) %>% summarise(casos = sum(NumCasos)
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 12 jul 2020, a las 16:59, depaso <depaso en gmail.com> escribió:
+> 
+> Hola!
+> 
+> Estoy empezando con R y tengo que analizar una base de datos sobre COVID. 
+> 
+> Una de las columnas recoge si los casos son de hombres o de mujeres y no sé cómo transformarlo en una columna que solo sume los casos totales, independientemente de si son hombres o mujeres (pero sí me interesa diferenciarlos por día y municipio, como ya aparecen).
+> 
+> Adjunto pantallazo para hacer más comprensible mi duda, que afecta a la columna SexeDescripcio.
+> 
+> Muchas gracias y un saludo!
+> 
+> -- 
+> ànnia 
+> <Captura de Pantalla 2020-07-12 a les 16.48.48.png>_______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From gpedr@z@v @end|ng |rom ut@edu@co  Sun Jul 12 18:50:49 2020
+From: gpedr@z@v @end|ng |rom ut@edu@co (Gerardo Pedraza Vega)
+Date: Sun, 12 Jul 2020 11:50:49 -0500
+Subject: [R-es] =?utf-8?q?Consulta=3A_Manejo_de_bases_de_datos_y_ejemplos?=
+	=?utf-8?q?_de_procesamiento_estad=C3=ADstico=2E?=
+Message-ID: <CAO3iK7orbc5Jvrue3e_4UmhCo5Z0UiFNjfMtJ5f3AoxvO_i3vQ@mail.gmail.com>
+
+Buen día para todos, reciban un cordial saludo;
+
+Quiero preguntarles si me pueden brindar algunos ejemplos practicos para
+iniciar mi estudio estadístico con R. Procesamiento de datos, bases de
+datos y ejemplos.
+
+Agradezco la atención prestada. Saludos.
+
+-- 
+
+____________________________________________________________________
+*Atte:*
+*Gerardo Pedraza Vega*
+*Especialista en Estadística*
+*Economista*
+*Joven investigador, **Grupo Cadenas de Valor & Competitividad Regional*
+*Facultad de Ciencias Económicas y Administrativas*
+*Universidad del Tolima*
+*Cel: 316-437-3329*
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Jul 12 19:20:45 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 12 Jul 2020 19:20:45 +0200
+Subject: [R-es] 
+	=?utf-8?q?Consulta=3A_Manejo_de_bases_de_datos_y_ejemplos?=
+	=?utf-8?q?_de_procesamiento_estad=C3=ADstico=2E?=
+In-Reply-To: <CAO3iK7orbc5Jvrue3e_4UmhCo5Z0UiFNjfMtJ5f3AoxvO_i3vQ@mail.gmail.com>
+References: <CAO3iK7orbc5Jvrue3e_4UmhCo5Z0UiFNjfMtJ5f3AoxvO_i3vQ@mail.gmail.com>
+Message-ID: <CAOKbq8gNC-zKAOkniFKBJsw_FknL5dTTDMN20z8rrZE1vxx5Dw@mail.gmail.com>
+
+Hola,
+
+Puedes empezar aprendiendo con estos documentos que sirven de introducción
+gratuitos que los puedes encontrar en esta página (busca por "Spanish"):
+
+https://cloud.r-project.org/other-docs.html
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+
+El dom., 12 jul. 2020 a las 18:51, Gerardo Pedraza Vega (<
+gpedrazav en ut.edu.co>) escribió:
+
+> Buen día para todos, reciban un cordial saludo;
+>
+> Quiero preguntarles si me pueden brindar algunos ejemplos practicos para
+> iniciar mi estudio estadístico con R. Procesamiento de datos, bases de
+> datos y ejemplos.
+>
+> Agradezco la atención prestada. Saludos.
+>
+> --
+>
+> ____________________________________________________________________
+> *Atte:*
+> *Gerardo Pedraza Vega*
+> *Especialista en Estadística*
+> *Economista*
+> *Joven investigador, **Grupo Cadenas de Valor & Competitividad Regional*
+> *Facultad de Ciencias Económicas y Administrativas*
+> *Universidad del Tolima*
+> *Cel: 316-437-3329*
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sun Jul 12 21:53:38 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sun, 12 Jul 2020 16:53:38 -0300
+Subject: [R-es] 
+	=?utf-8?q?Consulta=3A_Manejo_de_bases_de_datos_y_ejemplos?=
+	=?utf-8?q?_de_procesamiento_estad=C3=ADstico=2E?=
+In-Reply-To: <CAOKbq8gNC-zKAOkniFKBJsw_FknL5dTTDMN20z8rrZE1vxx5Dw@mail.gmail.com>
+References: <CAO3iK7orbc5Jvrue3e_4UmhCo5Z0UiFNjfMtJ5f3AoxvO_i3vQ@mail.gmail.com>
+ <CAOKbq8gNC-zKAOkniFKBJsw_FknL5dTTDMN20z8rrZE1vxx5Dw@mail.gmail.com>
+Message-ID: <CAHo_aESpsrQZhp+V=1GtSJz_gNJ7h=BLrRatypiNvM+yA8LiAg@mail.gmail.com>
+
+Estimado Gerardo.
+Todo depende que base de datos utiliza, si no recuerdo mal todas las
+librerías tienen un ejemplo, aunque, siempre hay dudas. Lo bueno de R es la
+cantidad de alternativas para lo mismo, lo malo de R es la cantidad de
+alternativas para lo mismo, por lo cual no se preocupe por encontrar cosas
+muy diferentes para el manejo de datos en R.
+Siempre es preferible que aquí consulte con un ejemplo, hoy hay muchas
+respuestas que no existían cuando yo comencé.
+Javier Rubén Marcuzzi
+
+El dom., 12 de jul. de 2020 2:21 PM, Carlos Ortega <cof en qualityexcellence.es>
+escribió:
+
+> Hola,
+>
+> Puedes empezar aprendiendo con estos documentos que sirven de introducción
+> gratuitos que los puedes encontrar en esta página (busca por "Spanish"):
+>
+> https://cloud.r-project.org/other-docs.html
+>
+> Gracias,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>
+>
+> El dom., 12 jul. 2020 a las 18:51, Gerardo Pedraza Vega (<
+> gpedrazav en ut.edu.co>) escribió:
+>
+> > Buen día para todos, reciban un cordial saludo;
+> >
+> > Quiero preguntarles si me pueden brindar algunos ejemplos practicos para
+> > iniciar mi estudio estadístico con R. Procesamiento de datos, bases de
+> > datos y ejemplos.
+> >
+> > Agradezco la atención prestada. Saludos.
+> >
+> > --
+> >
+> > ____________________________________________________________________
+> > *Atte:*
+> > *Gerardo Pedraza Vega*
+> > *Especialista en Estadística*
+> > *Economista*
+> > *Joven investigador, **Grupo Cadenas de Valor & Competitividad Regional*
+> > *Facultad de Ciencias Económicas y Administrativas*
+> > *Universidad del Tolima*
+> > *Cel: 316-437-3329*
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sun Jul 12 22:04:15 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sun, 12 Jul 2020 17:04:15 -0300
+Subject: [R-es] pedido de ayuda
+In-Reply-To: <C8E00206-BFF9-43C2-89DA-8ED3F77B4D2B@gmail.com>
+References: <1616088917.425022.1594567092317.ref@mail.yahoo.com>
+ <1616088917.425022.1594567092317@mail.yahoo.com>
+ <C8E00206-BFF9-43C2-89DA-8ED3F77B4D2B@gmail.com>
+Message-ID: <CAHo_aESpWOSSkjz3Gx84T2110SW9gJEMESaud27eLstzqMQgqA@mail.gmail.com>
+
+Estimada Ana Johan Cortada
+Desconozco de que parte de Argentina es, por lo de Conicet. Yo vivo a casi
+40 km de Santa Fe. Por acá, en la lista, aparecieron cosas de psicología en
+una charla de R en Madrid sobre redes. Sobre Rcmdr, se instala y listo, es
+bueno para comenzar, pero como escribe cosas por uno mismo, de pronto uno
+queda limitado, lo lo utilice en mis inicios, soy veterinario, pero aprendí
+R, Rcmdr puede ser bueno para estudiantes, pero para investigar se limita
+un poco. De todas formas si escribe a la lista con algo de código podremos
+intentar ayudarla sin saber psicología.
+Javier Rubén Marcuzzi
+
+El dom., 12 de jul. de 2020 12:29 PM, Emilio L. Cano <emilopezcano en gmail.com>
+escribió:
+
+> Estimada Ana,
+>
+> Su mensaje es demasiado general para que podamos ayudarle en la lista (al
+> menos yo no me veo capaz de darle una respuesta). Yo no uso R Commander
+> pero intento darle algunas pistas.
+>
+> Le recomiendo en español el material de la Universidad de Cádiz. Tienen un
+> paquete que al parecer lo instala todo:
+>
+> http://knuth.uca.es/R/doku.php?id=instalacion_de_r_y_rcmdr:r-uca <
+> http://knuth.uca.es/R/doku.php?id=instalacion_de_r_y_rcmdr:r-uca>
+>
+> También este libro completo, disponible para descarga:
+> http://sestio.uca.es/repos/ebrcmdr/pdf/13marzo/ebrcmdr.pdf <
+> http://sestio.uca.es/repos/ebrcmdr/pdf/13marzo/ebrcmdr.pdf>
+>
+> En inglés puede consultar la web del autor (John Fox) dedicada a R
+> Commander:
+> https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/ <
+> https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/>
+> Donde encontrará un manual:
+> https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/Getting-Started-with-the-Rcmdr.pdf
+> <
+> https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/Getting-Started-with-the-Rcmdr.pdf
+> >
+>
+> En esta otra página puede encontrar algún recurso más:
+> https://www.rcommander.com <https://www.rcommander.com/>
+>
+> Si tiene preguntas concretas, seguro que alguien de la lista le podrá dar
+> respuestas precisas.
+>
+>
+> Un saludo,
+>
+> Emilio L. Cano
+> http://emilio.lcano.com
+>
+>
+>
+> > El 12 jul 2020, a las 17:18, Ana Kohan Cortada <
+> anakohancortada en yahoo.com.ar> escribió:
+> >
+> > Hace días escribí......creo que se perdió mi mensaje, voy de nuevo con
+> mi pedido de ayuda...
+> > Buenas, soy novata en R, estoy comenzando con RCmdr y quisiera saber si
+> pudieran ayudarme dándome algunas pistas para bajar los paquetes que se
+> necesitan para activar muchas de las funciones que aparecen en la pestaña
+> de Análisis y empezar a aplicar algunos análisis.
+> > Yo sé que tal vez se dediquen sólo a trabajar con R (pero yo recién
+> descubro esta interfase del RCmdr y me resulta más amigable, soy psicóloga
+> y hago psicometría)
+> > Desde ya, muchísimas muchas gracias desde Argentina!!!!!
+> >
+> > Dra. Ana Kohan Cortada     CIIPME-CONICET
+> >        155 0441827
+> >
+> >
+> >       [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Sun Jul 12 22:51:24 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sun, 12 Jul 2020 17:51:24 -0300
+Subject: [R-es] agrupar observaciones de una columna
+In-Reply-To: <37E2C8A9-B536-4FB9-8930-B7AB3ACA1F51@gmail.com>
+References: <CACZjutJCaY6hAO2X6kwkVyWbMXMS9VYdMThfiatvcZLq7G8ybA@mail.gmail.com>
+ <37E2C8A9-B536-4FB9-8930-B7AB3ACA1F51@gmail.com>
+Message-ID: <CAHo_aER2agoS_BR6QxM6Tj8BksNu9-87=xdXmLZw0R9=jUtQcw@mail.gmail.com>
+
+Estimado Depaso
+De paso le respondo, si es un curso debería ver cómo se lo explicaron, hay
+muchas formas, como las que ya le recomendaron en esta lista, pero puede
+ser que su tutor esté pensando en el siguiente paso según una lógica, y
+lógicamente una alternativa válida de R puede crear conflicto con su curso.
+Por curiosidad, ¿Es un curso de epidemiología o alguno que toma datos y
+cree comprender la ciencia que no conoce? Vi cosas raras de Covid, incluso
+de gente del área de biología y con doctorados, etc. Cómo también vi cosas
+muy buenas compartidas en esta lista de correos, pero no tanto para
+principiantes. Recomiendo leer los correos archivados en la lista sobre
+Covid
+Javier Rubén Marcuzzi
+
+El dom., 12 de jul. de 2020 1:08 PM, Emilio L. Cano <emilopezcano en gmail.com>
+escribió:
+
+> Hola,
+>
+> Con tityverse (algo así porque el pantallazo está bien pero no es un
+> ejemplo reproducible):
+>
+> Datos %>% group_by(TipusCasData, MunicipiCodi, MunicipiDescripcio) %>%
+> summarise(casos = sum(NumCasos)
+>
+> Un saludo,
+>
+> Emilio L. Cano
+> http://emilio.lcano.com
+>
+>
+>
+> > El 12 jul 2020, a las 16:59, depaso <depaso en gmail.com> escribió:
+> >
+> > Hola!
+> >
+> > Estoy empezando con R y tengo que analizar una base de datos sobre
+> COVID.
+> >
+> > Una de las columnas recoge si los casos son de hombres o de mujeres y no
+> sé cómo transformarlo en una columna que solo sume los casos totales,
+> independientemente de si son hombres o mujeres (pero sí me interesa
+> diferenciarlos por día y municipio, como ya aparecen).
+> >
+> > Adjunto pantallazo para hacer más comprensible mi duda, que afecta a la
+> columna SexeDescripcio.
+> >
+> > Muchas gracias y un saludo!
+> >
+> > --
+> > ànnia
+> > <Captura de Pantalla 2020-07-12 a les
+> 16.48.48.png>_______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From |ho||ver@ @end|ng |rom gm@||@com  Mon Jul 13 07:30:16 2020
+From: |ho||ver@ @end|ng |rom gm@||@com (Hernan Olivera)
+Date: Mon, 13 Jul 2020 02:30:16 -0300
+Subject: [R-es] pedido de ayuda
+In-Reply-To: <C8E00206-BFF9-43C2-89DA-8ED3F77B4D2B@gmail.com>
+References: <1616088917.425022.1594567092317.ref@mail.yahoo.com>
+ <1616088917.425022.1594567092317@mail.yahoo.com>
+ <C8E00206-BFF9-43C2-89DA-8ED3F77B4D2B@gmail.com>
+Message-ID: <CAKoPW4jsggO6EhKUshC=xexpLhHavmVjs-k97j9TvbPzh8grUg@mail.gmail.com>
+
+Hola Ana
+
+Te sugiero que pruebes RStudio, es mas amigable y mas potente que R
+commander.
+Habría que ver que funciones necesitás, pero en general la documentación de
+las mismas tiene los comandos necesarios para hacerlas funcionales.
+Tal vez te ayude seguir un tutorial básico. Podés buscar, hay muchos. Este
+es uno: https://conceptosclaros.com/instalar-r-primeros-pasos/
+
+Contanos como te fue y algo mas sobre lo que estas tratando de hacer.
+
+saludos
+
+El dom., 12 jul. 2020 a las 12:29, Emilio L. Cano (<emilopezcano en gmail.com>)
+escribió:
+
+> Estimada Ana,
+>
+> Su mensaje es demasiado general para que podamos ayudarle en la lista (al
+> menos yo no me veo capaz de darle una respuesta). Yo no uso R Commander
+> pero intento darle algunas pistas.
+>
+> Le recomiendo en español el material de la Universidad de Cádiz. Tienen un
+> paquete que al parecer lo instala todo:
+>
+> http://knuth.uca.es/R/doku.php?id=instalacion_de_r_y_rcmdr:r-uca <
+> http://knuth.uca.es/R/doku.php?id=instalacion_de_r_y_rcmdr:r-uca>
+>
+> También este libro completo, disponible para descarga:
+> http://sestio.uca.es/repos/ebrcmdr/pdf/13marzo/ebrcmdr.pdf <
+> http://sestio.uca.es/repos/ebrcmdr/pdf/13marzo/ebrcmdr.pdf>
+>
+> En inglés puede consultar la web del autor (John Fox) dedicada a R
+> Commander:
+> https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/ <
+> https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/>
+> Donde encontrará un manual:
+> https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/Getting-Started-with-the-Rcmdr.pdf
+> <
+> https://socialsciences.mcmaster.ca/jfox/Misc/Rcmdr/Getting-Started-with-the-Rcmdr.pdf
+> >
+>
+> En esta otra página puede encontrar algún recurso más:
+> https://www.rcommander.com <https://www.rcommander.com/>
+>
+> Si tiene preguntas concretas, seguro que alguien de la lista le podrá dar
+> respuestas precisas.
+>
+>
+> Un saludo,
+>
+> Emilio L. Cano
+> http://emilio.lcano.com
+>
+>
+>
+> > El 12 jul 2020, a las 17:18, Ana Kohan Cortada <
+> anakohancortada en yahoo.com.ar> escribió:
+> >
+> > Hace días escribí......creo que se perdió mi mensaje, voy de nuevo con
+> mi pedido de ayuda...
+> > Buenas, soy novata en R, estoy comenzando con RCmdr y quisiera saber si
+> pudieran ayudarme dándome algunas pistas para bajar los paquetes que se
+> necesitan para activar muchas de las funciones que aparecen en la pestaña
+> de Análisis y empezar a aplicar algunos análisis.
+> > Yo sé que tal vez se dediquen sólo a trabajar con R (pero yo recién
+> descubro esta interfase del RCmdr y me resulta más amigable, soy psicóloga
+> y hago psicometría)
+> > Desde ya, muchísimas muchas gracias desde Argentina!!!!!
+> >
+> > Dra. Ana Kohan Cortada     CIIPME-CONICET
+> >        155 0441827
+> >
+> >
+> >       [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Hernan Olivera
+
+	[[alternative HTML version deleted]]
+
+
+From c@n@d@@reche @end|ng |rom gm@||@com  Tue Jul 14 18:50:24 2020
+From: c@n@d@@reche @end|ng |rom gm@||@com (=?UTF-8?Q?Jose_Luis_Ca=c3=b1adas_Reche?=)
+Date: Tue, 14 Jul 2020 18:50:24 +0200
+Subject: [R-es] De R a pyspark
+In-Reply-To: <AM5P192MB01775D26A171B43C9F03AD28B69D0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>
+References: <AM5P192MB01775D26A171B43C9F03AD28B69D0@AM5P192MB0177.EURP192.PROD.OUTLOOK.COM>
+Message-ID: <bb1ab662-6593-1c82-52fc-834f58745ed1@gmail.com>
+
+Hola.
+
+En cualquier manual de pyspark viene como hacer un filter y un
+withcolumn. te recomiendo el libro de Bill Chambers y Matehi Zaharia .
+Spark the definitive Guide. Aunque esto es una lista de R, jejej, así
+que te recomiendo encarecidamente el Mastering Spark with R de Javier
+Luraschi y Kevin Kuo. (está disponible online).
+
+El 16/6/20 a las 23:50, Samura . escribió:
+> Hola,
+>
+> alguien sabr?a decirme como "traducir" este c?digo de R a c?digo Spark con Python (pyspark)
+>
+> para rellenar los valores nulos de una columna con los valores de otra.
+>
+> idx <- which(is.na(df$columna3))
+>
+> df[idx, 'columna3'] <- df[idx, 'columna4']
+>
+> Muchas gracias!
+>
+>
+> 	[[alternative HTML version deleted]]
+>
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From eg@ren@e21 @end|ng |rom gm@||@com  Thu Jul 16 17:48:00 2020
+From: eg@ren@e21 @end|ng |rom gm@||@com (David Aguinaga)
+Date: Thu, 16 Jul 2020 17:48:00 +0200
+Subject: [R-es] =?utf-8?q?Rcomander_=28Anova_de_dos_factores_con_interacc?=
+ =?utf-8?b?acOzbik=?=
+Message-ID: <CAL4cLYd2dLpOqm07jKHmmGdzYK6FyydL5=RSDFbGvK_YzDgREQ@mail.gmail.com>
+
+Buenas tardes,
+
+Tengo una tabla de doble entrada sobre la que deseo efectuar una análisis
+anova de dos factores con interacción a través de Rcomander. La tabla tiene
+esta forma:
+
+  ritmo
+  X Y Z
+Altura A 10,15 10,22 15,24
+B 11,22 14,3 65,31
+
+
+Mi pregunta es:
+
+¿Debo dar otra forma a la tabla para que Rcomander la reconozca? Por
+ejemplo, así
+
+cardio ritmo altura
+10 X A
+15 X A
+11 X B
+22 X B
+(?) (?) (?)
+
+¿O hay alguna forma para que Rcomander reconozca la tabla de doble entrada
+a partir de Excel?
+
+Gracias
+David Aguinaga Abad
+
+	[[alternative HTML version deleted]]
+
+
+From truj|||o @end|ng |rom unex@e@  Thu Jul 16 18:12:50 2020
+From: truj|||o @end|ng |rom unex@e@ (=?UTF-8?Q?Jos=c3=a9_Trujillo_Carmona?=)
+Date: Thu, 16 Jul 2020 18:12:50 +0200
+Subject: [R-es] 
+ =?utf-8?q?Rcomander_=28Anova_de_dos_factores_con_interacc?=
+ =?utf-8?b?acOzbik=?=
+In-Reply-To: <CAL4cLYd2dLpOqm07jKHmmGdzYK6FyydL5=RSDFbGvK_YzDgREQ@mail.gmail.com>
+References: <CAL4cLYd2dLpOqm07jKHmmGdzYK6FyydL5=RSDFbGvK_YzDgREQ@mail.gmail.com>
+Message-ID: <695032bf-772e-f56e-e7e9-b0e96a1970b6@unex.es>
+
+Si quieres hacer un ANOVA 2F+Interacción, no puedes hacerlo con una 
+tabla de doble entrada. No quedan grados para la interacción. El error 
+experimental y la interacción están confundidos. Necesitas una tabla de 
+triple entrada. Una entrada para el primer factor, otra para el segundo 
+factor y una tercera entrada para las replicas de los tratamientos.
+
+Si ordenas las observaciones en columnas, necesitarás cuatro: Variable 
+respuesta, Primer factor, Segundo factor y las réplicas o individuos, 
+para un ANOVA con Interacción.
+
+Cada combinación de niveles de los dos factores son un tratamiento. Si 
+no tienes réplicas en los tratamientos (casillas en otras terminologías) 
+es imposible estimar la interacción. En realidad se toma como error 
+experimental la interacción porque se asume que no existe y por tanto la 
+medida de la variabilidad entre casillas está exclusivamente debida al 
+error experimental.
+
+No obstante puedes tratar de detectar la interacción. Existe un 
+contraste de Aditividad de Tukey que permite, bajo algunos supuestos, 
+detectar que la suposición de falta de interacción es falsa. No se puede 
+estimar la interacción, porque está confundida con el error 
+experimental, repito; pero al menos a veces se puede saber que no se 
+puede aplicar el ANOVA sin interacción porque hay que tener en cuenta la 
+interacción y se necesitan las réplicas de los tratamientos.
+
+Actualmente existe un paquete dedicado a este problema que recoge el 
+test de Tukey y otros posteriores que tratan el mismo problema:
+
+https://cran.r-project.org/web/packages/additivityTests/
+
+Saludos.
+El 16/7/20 a las 17:48, David Aguinaga escribió:
+> Buenas tardes,
+>
+> Tengo una tabla de doble entrada sobre la que deseo efectuar una análisis
+> anova de dos factores con interacción a través de Rcomander. La tabla 
+> tiene
+> esta forma:
+>
+> ritmo
+> X Y Z
+> Altura A 10,15 10,22 15,24
+> B 11,22 14,3 65,31
+>
+>
+> Mi pregunta es:
+>
+> ¿Debo dar otra forma a la tabla para que Rcomander la reconozca? Por
+> ejemplo, así
+>
+> cardio ritmo altura
+> 10 X A
+> 15 X A
+> 11 X B
+> 22 X B
+> (?) (?) (?)
+>
+> ¿O hay alguna forma para que Rcomander reconozca la tabla de doble entrada
+> a partir de Excel?
+>
+> Gracias
+> David Aguinaga Abad
+>
+> [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Sat Jul 18 23:46:13 2020
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Sat, 18 Jul 2020 15:46:13 -0600
+Subject: [R-es] =?utf-8?q?Paquetes_de_R_para_an=C3=A1lisis_de_encuestas_y?=
+	=?utf-8?q?_miner=C3=ADa_de_texto?=
+Message-ID: <CABkCotRXjAH4_++OkWiTrH5Ear4PaM2iGaC9=1KYCTKU=V5eSA@mail.gmail.com>
+
+Estimados miembros del grupo,
+
+Quería preguntarles por sugerencias de paquetes para:
+
+1. Análisis de encuestas o cuestionarios
+2. Minería de texto
+
+Muchas gracias y slaudos
+
+Manuel Spínola
+
+
+-- 
+*Manuel Spínola, Ph.D.*
+Instituto Internacional en Conservación y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Teléfono: (506) 8706 - 4662
+Personal website: Lobito de río <https://sites.google.com/site/lobitoderio/>
+Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+
+	[[alternative HTML version deleted]]
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Sun Jul 19 00:13:36 2020
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Sat, 18 Jul 2020 17:13:36 -0500
+Subject: [R-es] 
+	=?utf-8?q?Paquetes_de_R_para_an=C3=A1lisis_de_encuestas_y?=
+	=?utf-8?q?_miner=C3=ADa_de_texto?=
+In-Reply-To: <CABkCotRXjAH4_++OkWiTrH5Ear4PaM2iGaC9=1KYCTKU=V5eSA@mail.gmail.com>
+References: <CABkCotRXjAH4_++OkWiTrH5Ear4PaM2iGaC9=1KYCTKU=V5eSA@mail.gmail.com>
+Message-ID: <CAKL8G3ER84NzTXe_zYymeVsPMSRA9CEGVkLQN7k4RBdZ96eY2g@mail.gmail.com>
+
+Hola Manuel,
+
+Mira
+
+http://r-survey.r-forge.r-project.org/survey/index.html para la primera
+pregunta y
+
+   - https://cran.r-project.org/web/views/NaturalLanguageProcessing.html
+   - https://www.tidytextmining.com/
+   - https://hub.packtpub.com/9-useful-r-packages-for-nlp-text-mining/
+
+para la segunda.
+
+Saludos,
+Jorge.-
+
+
+
+On Sat, Jul 18, 2020 at 4:46 PM Manuel Spínola <mspinola10 en gmail.com> wrote:
+
+> Estimados miembros del grupo,
+>
+> Quería preguntarles por sugerencias de paquetes para:
+>
+> 1. Análisis de encuestas o cuestionarios
+> 2. Minería de texto
+>
+> Muchas gracias y slaudos
+>
+> Manuel Spínola
+>
+>
+> --
+> *Manuel Spínola, Ph.D.*
+> Instituto Internacional en Conservación y Manejo de Vida Silvestre
+> Universidad Nacional
+> Apartado 1350-3000
+> Heredia
+> COSTA RICA
+> mspinola en una.cr <mspinola en una.ac.cr>
+> mspinola10 en gmail.com
+> Teléfono: (506) 8706 - 4662
+> Personal website: Lobito de río <
+> https://sites.google.com/site/lobitoderio/>
+> Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From k@|o_@|v@ @end|ng |rom hotm@||@com  Sun Jul 19 11:42:35 2020
+From: k@|o_@|v@ @end|ng |rom hotm@||@com (ricardo alva)
+Date: Sun, 19 Jul 2020 04:42:35 -0500
+Subject: [R-es] =?iso-8859-1?q?An=E1lisis_de_datos_extremadamente_at=EDpi?=
+ =?iso-8859-1?q?cos?=
+References: <AM6PR03MB54607E2C9F6CFF8A106A1BAB837A0@AM6PR03MB5460.eurprd03.prod.outlook.com>
+Message-ID: <AM6PR03MB546081AF1A7881D2FDA31F6F837A0@AM6PR03MB5460.eurprd03.prod.outlook.com>
+
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20200719/79cf130d/attachment.html>
+
+From em||opezc@no @end|ng |rom gm@||@com  Sun Jul 19 11:47:04 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Sun, 19 Jul 2020 11:47:04 +0200
+Subject: [R-es] 
+ =?utf-8?q?An=C3=A1lisis_de_datos_extremadamente_at=C3=ADp?=
+ =?utf-8?q?icos?=
+In-Reply-To: <AM6PR03MB546081AF1A7881D2FDA31F6F837A0@AM6PR03MB5460.eurprd03.prod.outlook.com>
+References: <AM6PR03MB54607E2C9F6CFF8A106A1BAB837A0@AM6PR03MB5460.eurprd03.prod.outlook.com>
+ <AM6PR03MB546081AF1A7881D2FDA31F6F837A0@AM6PR03MB5460.eurprd03.prod.outlook.com>
+Message-ID: <336C0384-A6D7-4FEC-A737-83A20FBF4BDA@gmail.com>
+
+Hola,
+
+Para los gráficos puedes cambiar a escala logarítmica (si los atípicos están por arriba) o alguna otra transformación.
+Para la comparación puedes intentar hacer un test de Kruskal-Wallis
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 19 jul 2020, a las 11:42, ricardo alva <kalo_alva en hotmail.com> escribió:
+> 
+> Hola amigos buenas noches. 
+> Estoy intentando comparar la distribución de una misma variable continúa pero en dos lapsos de tiempo diferentes. Lo malo es que los datos son demasiados atípicos y a través de box plots no se puede apreciar por la gran cantidad de atípicos que hay, lo que hace que las cajas no se aprecien y sólo se visualice puros atípicos amontonados. Como podría determinar si de manera global los datos han aumentado o disminuido de valor, considerando que las mediciones corresponden a individuos diferentes. Que gráficos me pueden servir para esto? 
+> 
+> Enviado desde mi Movistar HUAWEI P smart 2019
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Jul 19 16:18:48 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 19 Jul 2020 16:18:48 +0200
+Subject: [R-es] 
+	=?utf-8?q?An=C3=A1lisis_de_datos_extremadamente_at=C3=ADp?=
+	=?utf-8?q?icos?=
+In-Reply-To: <AM6PR03MB546081AF1A7881D2FDA31F6F837A0@AM6PR03MB5460.eurprd03.prod.outlook.com>
+References: <AM6PR03MB54607E2C9F6CFF8A106A1BAB837A0@AM6PR03MB5460.eurprd03.prod.outlook.com>
+ <AM6PR03MB546081AF1A7881D2FDA31F6F837A0@AM6PR03MB5460.eurprd03.prod.outlook.com>
+Message-ID: <CAOKbq8h-tYDi=heA2p_qi1=r4E20MbCEATHwMvnUSta+Fsxkvg@mail.gmail.com>
+
+Hola Ricardo,
+
+En estos casos, vas a poder visualizar mejor las distribuciones si usas
+gráficos del tipo "violinplots".
+Son especialmente útiles para poder visualizar cambios en distribuciones en
+el tiempo.
+
+Otra alternativa con la que puedes ver estas diferencias es con los
+gráficos del paquete "ggridges".
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El dom., 19 jul. 2020 a las 11:43, ricardo alva (<kalo_alva en hotmail.com>)
+escribió:
+
+> Hola amigos buenas noches.
+> Estoy intentando comparar la distribución de una misma variable continúa
+> pero en dos lapsos de tiempo diferentes. Lo malo es que los datos son
+> demasiados atípicos y a través de box plots no se puede apreciar por la
+> gran cantidad de atípicos que hay, lo que hace que las cajas no se aprecien
+> y sólo se visualice puros atípicos amontonados. Como podría determinar si
+> de manera global los datos han aumentado o disminuido de valor,
+> considerando que las mediciones corresponden a individuos diferentes. Que
+> gráficos me pueden servir para esto?
+>
+> Enviado desde mi Movistar HUAWEI P smart 2019
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From Guiiiermo@Vi@ue m@iii@g oii uv@es  Mon Jul 20 10:38:10 2020
+From: Guiiiermo@Vi@ue m@iii@g oii uv@es (=?iso-8859-1?q?Guiiiermo=40Vi=40ue_m=40iii=40g_oii_uv=40es?=)
+Date: Mon, 20 Jul 2020 10:38:10 +0200 (CEST)
+Subject: [R-es] =?utf-8?q?Evitar_posibles_conflictos_entre_librer=C3=ADas?=
+Message-ID: <6351993313vivigui@uv.es>
+
+Buenos días,
+
+Tengo el siguiente problema que no consigo solucionar y quisiera preguntar si alguien tiene alguna recomendación:
+
+Estoy desarollando una shiny app en la que utilizo el paquete shinymanager para que el usuario acceda a ella mediante una contraseña.
+
+Esta app utiliza, entre otros, el paquete tidytext, que tiene en la lista de Suggests el paquete quanteda.
+https://cran.r-project.org/web/packages/tidytext/
+
+Cuando ejecuto esta app en mi ordenador local funciona bien, es decir, puedo hacer el login sin problema. Sin embargo, cuando subo esta app a un servidor personal, me da este error (tanto en local como en el servidor tengo las mismas versiones de los paquetes):
+
+Error in unclass: cannot unclass an environment
+  58: upgrade_tokens
+  57: as.tokens.tokens
+  55: docvars.tokens
+  52: $.tokens
+  50: secure_server
+
+secure_server es una función de shinymanager y he visto que upgrade_tokens es una función de quanteda. He podido descubrir que shinymanager define una clase interna que se llama .tokens <- R6::R6Class(...), mientras que quanteda tiene una función que se llama tokens <- function(...)
+
+Entiendo que hay un conflicto entre shinymanager y quanteda (aunque quanteda no es un paquete que se cargue con Imports), pero no he podido lograr resolverlo. Tampoco he podido averiguar qué significa "cannot unclass an environment".
+
+¿Alguien conoce una posible solución?
+
+Gracias de antemano.
+
+Un saludo,
+
+Guillermo
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Mon Jul 20 11:02:59 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Mon, 20 Jul 2020 06:02:59 -0300
+Subject: [R-es] 
+	=?utf-8?q?Evitar_posibles_conflictos_entre_librer=C3=ADas?=
+In-Reply-To: <6351993313vivigui@uv.es>
+References: <6351993313vivigui@uv.es>
+Message-ID: <CAHo_aERH1=18kbMuoTp8bFzfnq9zeGKunP6sMJvnhmqYfaz-LQ@mail.gmail.com>
+
+Estimado Guillermo
+
+El problema está en los tokens, esto es una cantidad de números y letras,
+lo que sea, mire un ejemplo en https://jwt.io/ , en otras palabras es lo
+que identifica cada una para con el servidor y que R no realice por ejemplo
+un promedio mezclando dados de usuarios. En un momento se debe requerir
+algo que al no tener el token no R no conoce donde buscar. Intente algun
+import o library(xxxx)
+
+Javier Rubén Marcuzzi
+
+El lun., 20 jul. 2020 a las 5:38, <Guillermo.Vinue en uv.es> escribió:
+
+> Buenos días,
+>
+> Tengo el siguiente problema que no consigo solucionar y quisiera preguntar
+> si alguien tiene alguna recomendación:
+>
+> Estoy desarollando una shiny app en la que utilizo el paquete shinymanager
+> para que el usuario acceda a ella mediante una contraseña.
+>
+> Esta app utiliza, entre otros, el paquete tidytext, que tiene en la lista
+> de Suggests el paquete quanteda.
+> https://cran.r-project.org/web/packages/tidytext/
+>
+> Cuando ejecuto esta app en mi ordenador local funciona bien, es decir,
+> puedo hacer el login sin problema. Sin embargo, cuando subo esta app a un
+> servidor personal, me da este error (tanto en local como en el servidor
+> tengo las mismas versiones de los paquetes):
+>
+> Error in unclass: cannot unclass an environment
+>   58: upgrade_tokens
+>   57: as.tokens.tokens
+>   55: docvars.tokens
+>   52: $.tokens
+>   50: secure_server
+>
+> secure_server es una función de shinymanager y he visto que upgrade_tokens
+> es una función de quanteda. He podido descubrir que shinymanager define una
+> clase interna que se llama .tokens <- R6::R6Class(...), mientras que
+> quanteda tiene una función que se llama tokens <- function(...)
+>
+> Entiendo que hay un conflicto entre shinymanager y quanteda (aunque
+> quanteda no es un paquete que se cargue con Imports), pero no he podido
+> lograr resolverlo. Tampoco he podido averiguar qué significa "cannot
+> unclass an environment".
+>
+> ¿Alguien conoce una posible solución?
+>
+> Gracias de antemano.
+>
+> Un saludo,
+>
+> Guillermo
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From ||@@ette401 @end|ng |rom gm@||@com  Tue Jul 21 22:06:53 2020
+From: ||@@ette401 @end|ng |rom gm@||@com (Lissette Fuentes Lorca)
+Date: Tue, 21 Jul 2020 17:06:53 -0300
+Subject: [R-es] error al instalar glue
+Message-ID: <CAC5WVbXwa7TNwaUu1=NLmcFBnHnv_GWj3KtvQdxpZP1tiZnwyw@mail.gmail.com>
+
+Hola,
+Estoy haciendo un análisis de datos de Twitter y cuando intento correr esta
+línea de código:
+
+timelines %>%
+  dplyr::filter(created_at > "2020-01-01") %>%
+  dplyr::group_by(screen_name) %>%
+  ts_plot("days", trim = 1L) +
+  ggplot2::geom_point() +
+  ggplot2::labs(
+    title = "Tuits publicados por cada cuenta"
+  )
+Me da el siguiente error
+
+Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck
+= vI[[j]]) :
+  namespace ?glue? 1.3.1 is already loaded, but >= 1.3.2 is required
+
+Instalé y corrí glue, no sé si tenga que ver con la versión de R que tengo.
+
+Alguien tiene idea cuál es el problema?
+Muchas gracias!
+
+	[[alternative HTML version deleted]]
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Wed Jul 22 00:47:37 2020
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Tue, 21 Jul 2020 17:47:37 -0500
+Subject: [R-es] error al instalar glue
+In-Reply-To: <CAC5WVbXwa7TNwaUu1=NLmcFBnHnv_GWj3KtvQdxpZP1tiZnwyw@mail.gmail.com>
+References: <CAC5WVbXwa7TNwaUu1=NLmcFBnHnv_GWj3KtvQdxpZP1tiZnwyw@mail.gmail.com>
+Message-ID: <CAKL8G3Gk0n=uBCOVYMF0gRMkA7k=4SsXeYPgrCcY7yGhAM9FBA@mail.gmail.com>
+
+Hola Lissette,
+Que versión de glue tienes instalada?
+Saludos,
+Jorge.-
+
+El El mar, 21 de jul. de 2020 a la(s) 3:07 p. m., Lissette Fuentes Lorca <
+lissette401 en gmail.com> escribió:
+
+> Hola,
+> Estoy haciendo un análisis de datos de Twitter y cuando intento correr esta
+> línea de código:
+>
+> timelines %>%
+>   dplyr::filter(created_at > "2020-01-01") %>%
+>   dplyr::group_by(screen_name) %>%
+>   ts_plot("days", trim = 1L) +
+>   ggplot2::geom_point() +
+>   ggplot2::labs(
+>     title = "Tuits publicados por cada cuenta"
+>   )
+> Me da el siguiente error
+>
+> Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck
+> = vI[[j]]) :
+>   namespace ?glue? 1.3.1 is already loaded, but >= 1.3.2 is required
+>
+> Instalé y corrí glue, no sé si tenga que ver con la versión de R que tengo.
+>
+> Alguien tiene idea cuál es el problema?
+> Muchas gracias!
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+-- 
+Sent from my phone. Please excuse my brevity and misspelling.
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Wed Jul 22 01:01:53 2020
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Tue, 21 Jul 2020 17:01:53 -0600
+Subject: [R-es] 
+	=?utf-8?q?Paquetes_de_R_para_an=C3=A1lisis_de_encuestas_y?=
+	=?utf-8?q?_miner=C3=ADa_de_texto?=
+In-Reply-To: <CAKL8G3ER84NzTXe_zYymeVsPMSRA9CEGVkLQN7k4RBdZ96eY2g@mail.gmail.com>
+References: <CABkCotRXjAH4_++OkWiTrH5Ear4PaM2iGaC9=1KYCTKU=V5eSA@mail.gmail.com>
+ <CAKL8G3ER84NzTXe_zYymeVsPMSRA9CEGVkLQN7k4RBdZ96eY2g@mail.gmail.com>
+Message-ID: <CABkCotS4Qa3Lre6Gv=tA8KmNZYPt35gGdT7Mz8GNHMAKeqfY9g@mail.gmail.com>
+
+Muchas gracias Jorge.
+
+Manuel
+
+El sáb., 18 jul. 2020 a las 16:14, Jorge I Velez (<jorgeivanvelez en gmail.com>)
+escribió:
+
+> Hola Manuel,
+>
+> Mira
+>
+> http://r-survey.r-forge.r-project.org/survey/index.html para la primera
+> pregunta y
+>
+>    - https://cran.r-project.org/web/views/NaturalLanguageProcessing.html
+>    - https://www.tidytextmining.com/
+>    - https://hub.packtpub.com/9-useful-r-packages-for-nlp-text-mining/
+>
+> para la segunda.
+>
+> Saludos,
+> Jorge.-
+>
+>
+>
+> On Sat, Jul 18, 2020 at 4:46 PM Manuel Spínola <mspinola10 en gmail.com>
+> wrote:
+>
+>> Estimados miembros del grupo,
+>>
+>> Quería preguntarles por sugerencias de paquetes para:
+>>
+>> 1. Análisis de encuestas o cuestionarios
+>> 2. Minería de texto
+>>
+>> Muchas gracias y slaudos
+>>
+>> Manuel Spínola
+>>
+>>
+>> --
+>> *Manuel Spínola, Ph.D.*
+>> Instituto Internacional en Conservación y Manejo de Vida Silvestre
+>> Universidad Nacional
+>> Apartado 1350-3000
+>> Heredia
+>> COSTA RICA
+>> mspinola en una.cr <mspinola en una.ac.cr>
+>> mspinola10 en gmail.com
+>> Teléfono: (506) 8706 - 4662
+>> Personal website: Lobito de río <
+>> https://sites.google.com/site/lobitoderio/>
+>> Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+-- 
+*Manuel Spínola, Ph.D.*
+Instituto Internacional en Conservación y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Teléfono: (506) 8706 - 4662
+Personal website: Lobito de río <https://sites.google.com/site/lobitoderio/>
+Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+
+	[[alternative HTML version deleted]]
+
+
+From m@c_j@v| @end|ng |rom hotm@||@com  Wed Jul 22 01:04:40 2020
+From: m@c_j@v| @end|ng |rom hotm@||@com (Javier Nieto)
+Date: Tue, 21 Jul 2020 23:04:40 +0000
+Subject: [R-es] error al instalar glue
+In-Reply-To: <CAKL8G3Gk0n=uBCOVYMF0gRMkA7k=4SsXeYPgrCcY7yGhAM9FBA@mail.gmail.com>
+References: <CAC5WVbXwa7TNwaUu1=NLmcFBnHnv_GWj3KtvQdxpZP1tiZnwyw@mail.gmail.com>,
+ <CAKL8G3Gk0n=uBCOVYMF0gRMkA7k=4SsXeYPgrCcY7yGhAM9FBA@mail.gmail.com>
+Message-ID: <SN1PR07MB3935522D73202F126D4B505DEB780@SN1PR07MB3935.namprd07.prod.outlook.com>
+
+Hola
+
+Seg?n el error (namespace ?glue? 1.3.1 is already loaded, but >= 1.3.2 is required) que env?as es por la versi?n de glue, necesitas una mayor o igual a la 1.3.2 y tienes la 1.3.1
+
+
+Saludos
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de Jorge I Velez <jorgeivanvelez en gmail.com>
+Enviado: martes, 21 de julio de 2020 05:47 p. m.
+Para: Lissette Fuentes Lorca <lissette401 en gmail.com>
+CC: r-help-es en r-project.org <r-help-es en r-project.org>
+Asunto: Re: [R-es] error al instalar glue
+
+Hola Lissette,
+Que versi?n de glue tienes instalada?
+Saludos,
+Jorge.-
+
+El El mar, 21 de jul. de 2020 a la(s) 3:07 p. m., Lissette Fuentes Lorca <
+lissette401 en gmail.com> escribi?:
+
+> Hola,
+> Estoy haciendo un an?lisis de datos de Twitter y cuando intento correr esta
+> l?nea de c?digo:
+>
+> timelines %>%
+>   dplyr::filter(created_at > "2020-01-01") %>%
+>   dplyr::group_by(screen_name) %>%
+>   ts_plot("days", trim = 1L) +
+>   ggplot2::geom_point() +
+>   ggplot2::labs(
+>     title = "Tuits publicados por cada cuenta"
+>   )
+> Me da el siguiente error
+>
+> Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck
+> = vI[[j]]) :
+>   namespace ?glue? 1.3.1 is already loaded, but >= 1.3.2 is required
+>
+> Instal? y corr? glue, no s? si tenga que ver con la versi?n de R que tengo.
+>
+> Alguien tiene idea cu?l es el problema?
+> Muchas gracias!
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+--
+Sent from my phone. Please excuse my brevity and misspelling.
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+
+From ||@@ette401 @end|ng |rom gm@||@com  Wed Jul 22 01:14:22 2020
+From: ||@@ette401 @end|ng |rom gm@||@com (Lissette Fuentes Lorca)
+Date: Tue, 21 Jul 2020 20:14:22 -0300
+Subject: [R-es] =?utf-8?q?Actualizar_la_versi=C3=B3n_de_glue?=
+In-Reply-To: <mailman.14017.1342.1595372693.1128.r-help-es@r-project.org>
+References: <mailman.14017.1342.1595372693.1128.r-help-es@r-project.org>
+Message-ID: <CAC5WVbUcutO4Ay4pN4qQk=gK70P-hudGQ37JLFKNw0Xbi3x+6g@mail.gmail.com>
+
+Hola! si, pensé que era algo referido a la versión de glue que tengo.
+Cómo puedo saber qué versión tengo instalada?
+cómo puedo actualizar la misma?
+
+Tal como señalan, al parecer tengo la  1.3.1 y necesito la 1.3.2 .
+Muchas gracias!
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Wed Jul 22 02:26:39 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 21 Jul 2020 21:26:39 -0300
+Subject: [R-es] =?utf-8?q?Actualizar_la_versi=C3=B3n_de_glue?=
+In-Reply-To: <CAC5WVbUcutO4Ay4pN4qQk=gK70P-hudGQ37JLFKNw0Xbi3x+6g@mail.gmail.com>
+References: <mailman.14017.1342.1595372693.1128.r-help-es@r-project.org>
+ <CAC5WVbUcutO4Ay4pN4qQk=gK70P-hudGQ37JLFKNw0Xbi3x+6g@mail.gmail.com>
+Message-ID: <CAHo_aER_MZCz0issPSuiE02EPfv+eGaAzDfDxN=XqgK=gwJmuw@mail.gmail.com>
+
+Estimado Lissette Fuentes Lorca
+
+Una forma que me dió una búsqueda y en mi caso funciona es la siguiente.
+
+ip <- as.data.frame(installed.packages()[,c(1,3:4)])
+rownames(ip) <- NULL
+ip <- ip[is.na(ip$Priority),1:2,drop=FALSE]
+print(ip, row.names=FALSE)
+
+El mar., 21 jul. 2020 a las 20:15, Lissette Fuentes Lorca (<
+lissette401 en gmail.com>) escribió:
+
+> Hola! si, pensé que era algo referido a la versión de glue que tengo.
+> Cómo puedo saber qué versión tengo instalada?
+> cómo puedo actualizar la misma?
+>
+> Tal como señalan, al parecer tengo la  1.3.1 y necesito la 1.3.2 .
+> Muchas gracias!
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From Guiiiermo@Vi@ue m@iii@g oii uv@es  Wed Jul 22 08:13:17 2020
+From: Guiiiermo@Vi@ue m@iii@g oii uv@es (=?iso-8859-1?q?Guiiiermo=40Vi=40ue_m=40iii=40g_oii_uv=40es?=)
+Date: Wed, 22 Jul 2020 08:13:17 +0200 (CEST)
+Subject: [R-es] 
+ =?utf-8?Q?(Fwd)=20Re:=20Re:__Evitar_posibles_conflictos_entre_librer=C3=AD	as?=
+Message-ID: <6382827661vivigui@uv.es>
+
+Estimado Javier,
+
+Gracias por la respuesta. Aunque he tratado de utilizar los imports y la carga de paquetes de diferentes formas, no he conseguido de momento evitar el error. 
+
+Al final, para el objetivo de crear un login estoy utilizando el paquete shinyauthr, https://github.com/PaulC91/shinyauthr
+
+No está tan desarrollado como el de shinymanager pero parece un poco más estable.
+
+Saludos,
+
+Guillermo
+
+> Estimado Guillermo
+> 
+> El problema está en los tokens, esto es una cantidad de números y letras,
+> lo que sea, mire un ejemplo en https://jwt.io/ , en otras palabras es lo
+> que identifica cada una para con el servidor y que R no realice por ejemplo
+> un promedio mezclando dados de usuarios. En un momento se debe requerir
+> algo que al no tener el token no R no conoce donde buscar. Intente algun
+> import o library(xxxx)
+> 
+> Javier Rubén Marcuzzi
+> 
+> El lun., 20 jul. 2020 a las 5:38, <Guillermo.Vinue en uv.es> escribió:
+> 
+> > Buenos días,
+> >
+> > Tengo el siguiente problema que no consigo solucionar y quisiera preguntar
+> > si alguien tiene alguna recomendación:
+> >
+> > Estoy desarollando una shiny app en la que utilizo el paquete shinymanager
+> > para que el usuario acceda a ella mediante una contraseña.
+> >
+> > Esta app utiliza, entre otros, el paquete tidytext, que tiene en la lista
+> > de Suggests el paquete quanteda.
+> > https://cran.r-project.org/web/packages/tidytext/
+> >
+> > Cuando ejecuto esta app en mi ordenador local funciona bien, es decir,
+> > puedo hacer el login sin problema. Sin embargo, cuando subo esta app a un
+> > servidor personal, me da este error (tanto en local como en el servidor
+> > tengo las mismas versiones de los paquetes):
+> >
+> > Error in unclass: cannot unclass an environment
+> >   58: upgrade_tokens
+> >   57: as.tokens.tokens
+> >   55: docvars.tokens
+> >   52: $.tokens
+> >   50: secure_server
+> >
+> > secure_server es una función de shinymanager y he visto que upgrade_tokens
+> > es una función de quanteda. He podido descubrir que shinymanager define una
+> > clase interna que se llama .tokens <- R6::R6Class(...), mientras que
+> > quanteda tiene una función que se llama tokens <- function(...)
+> >
+> > Entiendo que hay un conflicto entre shinymanager y quanteda (aunque
+> > quanteda no es un paquete que se cargue con Imports), pero no he podido
+> > lograr resolverlo. Tampoco he podido averiguar qué significa "cannot
+> > unclass an environment".
+> >
+> > ¿Alguien conoce una posible solución?
+> >
+> > Gracias de antemano.
+> >
+> > Un saludo,
+> >
+> > Guillermo
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+> 
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Wed Jul 22 14:57:09 2020
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Wed, 22 Jul 2020 07:57:09 -0500
+Subject: [R-es] =?utf-8?q?Actualizar_la_versi=C3=B3n_de_glue?=
+In-Reply-To: <CAC5WVbUcutO4Ay4pN4qQk=gK70P-hudGQ37JLFKNw0Xbi3x+6g@mail.gmail.com>
+References: <mailman.14017.1342.1595372693.1128.r-help-es@r-project.org>
+ <CAC5WVbUcutO4Ay4pN4qQk=gK70P-hudGQ37JLFKNw0Xbi3x+6g@mail.gmail.com>
+Message-ID: <CAKL8G3ESyu6UAmD417Fem8oNTFVN6gPfeWMd=UG-P55PNaJ0xw@mail.gmail.com>
+
+Lissette,
+
+La forma más fácil es verificar qué versión tienes es haciendo
+
+R>  packageVersion("glue")
+## [1] '1.4.1'
+
+Para actualizarla a la _última_ versión, debes hacer
+
+R> install.packages('glue')
+
+De esta forma siempre vas a instalar la versión más reciente disponible en
+https://cran.r-project.org/web/packages/glue/index.html
+
+Saludos,
+Jorge.-
+
+On Tue, Jul 21, 2020 at 6:15 PM Lissette Fuentes Lorca <
+lissette401 en gmail.com> wrote:
+
+> Hola! si, pensé que era algo referido a la versión de glue que tengo.
+> Cómo puedo saber qué versión tengo instalada?
+> cómo puedo actualizar la misma?
+>
+> Tal como señalan, al parecer tengo la  1.3.1 y necesito la 1.3.2 .
+> Muchas gracias!
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Tue Jul 28 08:25:30 2020
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Tue, 28 Jul 2020 08:25:30 +0200
+Subject: [R-es] Superponer mapas en ggplot
+Message-ID: <CAF3uytVW6tuDCDr=wC8azbDZ+8fW2HP1XdAGXvXVdw8aSKCsGQ@mail.gmail.com>
+
+Buenos días. Tengo dos mapas que hago con ggplot (abajo) y necesito
+superponer el 2º al 1º. En el 1º se representa la variable PA, binomial (0,
+1), en gris, y en el 2º la variable ExtTG7085, que es numérica y va de 0 a
+200. La 2ª es un gradiente en rojo. Lo ideal sería que donde coinciden el
+rojo de la 2ª se viera más oscuro, pero supongo que eso no es fácil. Podría
+también ser en otro color, pero manteniendo el gradiente. He pensado,
+también, en crear una nueva variable, combinación de las dos, que me
+permitiera hacer eso mismo, pero no encuentro la forma.
+
+Gracias por vuestra ayuda, una vez más,
+Manuel
+
+ggplot(legend=FALSE)+
+  geom_point(data=NCDS,aes(x=lon,y=lat,color= PA),shape=15,size=1) +
+  scale_color_manual(values=c("white","grey70"))+
+  geom_path(data=map_data('world'), aes(x=long, y=lat,group=group))
+
+ggplot(legend=FALSE)+
+  geom_point(data=NCDS,aes(x=lon,y=lat,color= ExtTG7085),shape=15,size=1) +
+# PTP o FTP
+  scale_colour_gradient2(low =
+"white",high="RED",midpoint=0,guide="colourbar",limits=c(0,200))+
+  geom_path(data=map_data('world'), aes(x=long, y=lat,group=group))
+
+	[[alternative HTML version deleted]]
+
+
+From jd@|c@r@z @end|ng |rom gm@||@com  Tue Jul 28 09:02:20 2020
+From: jd@|c@r@z @end|ng |rom gm@||@com (=?UTF-8?Q?Juan_Diego_Alcaraz=2DHern=C3=A1ndez?=)
+Date: Tue, 28 Jul 2020 09:02:20 +0200
+Subject: [R-es] Superponer mapas en ggplot
+In-Reply-To: <CAF3uytVW6tuDCDr=wC8azbDZ+8fW2HP1XdAGXvXVdw8aSKCsGQ@mail.gmail.com>
+References: <CAF3uytVW6tuDCDr=wC8azbDZ+8fW2HP1XdAGXvXVdw8aSKCsGQ@mail.gmail.com>
+Message-ID: <CAKmfRKOe1vDutuzo2HnbsjhL7NfJjGCsWS+iE4bAzG0EgKHsqQ@mail.gmail.com>
+
+Quizás lo tienes solucionado con el argumento alfa (para fijar un nivel de
+transparencia en el gráfico).
+
+Te mando un ejemplo:
+
+https://rpubs.com/daniballari/ggplot
+
+
+
+
+
+El mar., 28 jul. 2020 a las 8:26, Manuel Mendoza (<
+mmendoza en fulbrightmail.org>) escribió:
+
+> Buenos días. Tengo dos mapas que hago con ggplot (abajo) y necesito
+> superponer el 2º al 1º. En el 1º se representa la variable PA, binomial (0,
+> 1), en gris, y en el 2º la variable ExtTG7085, que es numérica y va de 0 a
+> 200. La 2ª es un gradiente en rojo. Lo ideal sería que donde coinciden el
+> rojo de la 2ª se viera más oscuro, pero supongo que eso no es fácil. Podría
+> también ser en otro color, pero manteniendo el gradiente. He pensado,
+> también, en crear una nueva variable, combinación de las dos, que me
+> permitiera hacer eso mismo, pero no encuentro la forma.
+>
+> Gracias por vuestra ayuda, una vez más,
+> Manuel
+>
+> ggplot(legend=FALSE)+
+>   geom_point(data=NCDS,aes(x=lon,y=lat,color= PA),shape=15,size=1) +
+>   scale_color_manual(values=c("white","grey70"))+
+>   geom_path(data=map_data('world'), aes(x=long, y=lat,group=group))
+>
+> ggplot(legend=FALSE)+
+>   geom_point(data=NCDS,aes(x=lon,y=lat,color= ExtTG7085),shape=15,size=1) +
+> # PTP o FTP
+>   scale_colour_gradient2(low =
+> "white",high="RED",midpoint=0,guide="colourbar",limits=c(0,200))+
+>   geom_path(data=map_data('world'), aes(x=long, y=lat,group=group))
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Juan Diego Alcaraz Hernández
+
+http://juandiegoalcaraz.wordpress.com/
+Research Group on Ecology of Inland Waters (GRECO)
+Research Group on Aquatic Ecology (EcoAqua)
+Institute of Aquatic Ecology
+University of Girona
+
+·´¯`·.¸¸..><((((º>.·´¯`·.¸¸.·´¯`·.¸><((((º>`·.¸¸.·´¯`·.¸
+<º))))><`·.¸¸.·´¯`·.¸.<º))))><.¸. , . .·´¯`·.. <º))))><¸.·
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom |u|br|ghtm@||@org  Tue Jul 28 10:20:17 2020
+From: mmendoz@ @end|ng |rom |u|br|ghtm@||@org (Manuel Mendoza)
+Date: Tue, 28 Jul 2020 10:20:17 +0200
+Subject: [R-es] Superponer mapas en ggplot
+In-Reply-To: <CAKmfRKOe1vDutuzo2HnbsjhL7NfJjGCsWS+iE4bAzG0EgKHsqQ@mail.gmail.com>
+References: <CAF3uytVW6tuDCDr=wC8azbDZ+8fW2HP1XdAGXvXVdw8aSKCsGQ@mail.gmail.com>
+ <CAKmfRKOe1vDutuzo2HnbsjhL7NfJjGCsWS+iE4bAzG0EgKHsqQ@mail.gmail.com>
+Message-ID: <CAF3uytVVUQu4K4LS8v0kzcF-MrqCsNXVx755a1kbL3uO9foC9Q@mail.gmail.com>
+
+Gracias Juan Diego. Esa es exactamente la idea. Ahora me surge otro
+problema: aun mirando los ejemplos, y otros que busqué en Internet, no
+consigo que me represente los dos mapas.
+
+Uno es:
+  geom_point(data=NCDS,aes(x=lon,y=lat,color= PA),shape=15,size=1) +
+  scale_color_manual(values=c("white","grey70"))+
+
+y el otro:
+ geom_point(data=NCDS,aes(x=lon,y=lat,color= ExtTG7085),shape=15,size=1) +
+ scale_colour_gradient2(low =
+"white",high="RED",midpoint=0,guide="colourbar",limits=c(0,200))+
+
+Manuel
+
+
+
+
+El mar., 28 jul. 2020 a las 9:02, Juan Diego Alcaraz-Hernández (<
+jdalcaraz en gmail.com>) escribió:
+
+> Quizás lo tienes solucionado con el argumento alfa (para fijar un nivel de
+> transparencia en el gráfico).
+>
+> Te mando un ejemplo:
+>
+> https://rpubs.com/daniballari/ggplot
+>
+>
+>
+>
+>
+> El mar., 28 jul. 2020 a las 8:26, Manuel Mendoza (<
+> mmendoza en fulbrightmail.org>) escribió:
+>
+>> Buenos días. Tengo dos mapas que hago con ggplot (abajo) y necesito
+>> superponer el 2º al 1º. En el 1º se representa la variable PA, binomial
+>> (0,
+>> 1), en gris, y en el 2º la variable ExtTG7085, que es numérica y va de 0 a
+>> 200. La 2ª es un gradiente en rojo. Lo ideal sería que donde coinciden el
+>> rojo de la 2ª se viera más oscuro, pero supongo que eso no es fácil.
+>> Podría
+>> también ser en otro color, pero manteniendo el gradiente. He pensado,
+>> también, en crear una nueva variable, combinación de las dos, que me
+>> permitiera hacer eso mismo, pero no encuentro la forma.
+>>
+>> Gracias por vuestra ayuda, una vez más,
+>> Manuel
+>>
+>> ggplot(legend=FALSE)+
+>>   geom_point(data=NCDS,aes(x=lon,y=lat,color= PA),shape=15,size=1) +
+>>   scale_color_manual(values=c("white","grey70"))+
+>>   geom_path(data=map_data('world'), aes(x=long, y=lat,group=group))
+>>
+>> ggplot(legend=FALSE)+
+>>   geom_point(data=NCDS,aes(x=lon,y=lat,color= ExtTG7085),shape=15,size=1)
+>> +
+>> # PTP o FTP
+>>   scale_colour_gradient2(low =
+>> "white",high="RED",midpoint=0,guide="colourbar",limits=c(0,200))+
+>>   geom_path(data=map_data('world'), aes(x=long, y=lat,group=group))
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Juan Diego Alcaraz Hernández
+>
+> http://juandiegoalcaraz.wordpress.com/
+> Research Group on Ecology of Inland Waters (GRECO)
+> Research Group on Aquatic Ecology (EcoAqua)
+> Institute of Aquatic Ecology
+> University of Girona
+>
+> ·´¯`·.¸¸..><((((º>.·´¯`·.¸¸.·´¯`·.¸><((((º>`·.¸¸.·´¯`·.¸
+> <º))))><`·.¸¸.·´¯`·.¸.<º))))><.¸. , . .·´¯`·.. <º))))><¸.·
+>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Fri Jul 31 07:03:28 2020
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Fri, 31 Jul 2020 02:03:28 -0300
+Subject: [R-es] Problemas con formato fecha al importar base .sav (spss)
+Message-ID: <CAOF0weHV8RQ=2pK75+RZcp+PwtFa9s2JS6pCybUtty7PJ=C1fA@mail.gmail.com>
+
+Hola,
+Estoy con un problema para poder traer fecha de spss a r.
+El formato de la fecha en spss está (dia/mes/año/hora:minuto:segundo) y lo
+querría ver igual en el data frame en r.
+
+Hago lo siguiente.
+
+# llamo el archivo .sav
+migra_mayo_2020<-read.spss("Mayo 2020.sav", to.data.frame = TRUE)
+
+#transformo
+migra_mayo_2020 <- transform(migra_mayo_2020,FECHA_CR=as.Date(ISOdate(1582,
+10, 14) + migra_mayo_2020$FECHA_CR))
+
+El campo fecha al importarlo de .sav al data frame en R me genera un vector
+numèrico de 11 dígitos. Lo intente con as.POSIXct y tampoco tuve
+resultados,  pierdo las horas minutos y segundos.
+
+Muchas gracias!
+
+
+
+
+
+
+<http://www.avg.com/email-signature?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+Libre
+de virus. www.avg.com
+<http://www.avg.com/email-signature?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail>
+<#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Jul 31 09:02:46 2020
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 31 Jul 2020 09:02:46 +0200
+Subject: [R-es] Problemas con formato fecha al importar base .sav (spss)
+In-Reply-To: <CAOF0weHV8RQ=2pK75+RZcp+PwtFa9s2JS6pCybUtty7PJ=C1fA@mail.gmail.com>
+References: <CAOF0weHV8RQ=2pK75+RZcp+PwtFa9s2JS6pCybUtty7PJ=C1fA@mail.gmail.com>
+Message-ID: <CAOKbq8j8hK2d15h6gKPFHnuLMS5nxbMCVwpBCtZsCRqa=CKLJA@mail.gmail.com>
+
+Hola,
+
+Si puedes pasar un ejemplo de cómo queda el vector porque a lo mejor hay
+que reconstruir ese vector a fecha/hora antes de convertirlo a tipo Date.
+
+Gracias,
+Carlos.
+
+El vie., 31 jul. 2020 a las 7:04, juan manuel dias (<juamadias en gmail.com>)
+escribió:
+
+> Hola,
+> Estoy con un problema para poder traer fecha de spss a r.
+> El formato de la fecha en spss está (dia/mes/año/hora:minuto:segundo) y lo
+> querría ver igual en el data frame en r.
+>
+> Hago lo siguiente.
+>
+> # llamo el archivo .sav
+> migra_mayo_2020<-read.spss("Mayo 2020.sav", to.data.frame = TRUE)
+>
+> #transformo
+> migra_mayo_2020 <- transform(migra_mayo_2020,FECHA_CR=as.Date(ISOdate(1582,
+> 10, 14) + migra_mayo_2020$FECHA_CR))
+>
+> El campo fecha al importarlo de .sav al data frame en R me genera un vector
+> numèrico de 11 dígitos. Lo intente con as.POSIXct y tampoco tuve
+> resultados,  pierdo las horas minutos y segundos.
+>
+> Muchas gracias!
+>
+>
+>
+>
+>
+>
+> <
+> http://www.avg.com/email-signature?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail
+> >
+> Libre
+> de virus. www.avg.com
+> <
+> http://www.avg.com/email-signature?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail
+> >
+> <#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Fri Jul 31 09:27:21 2020
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?iso-8859-1?Q?Jes=FAs_Para_Fern=E1ndez?=)
+Date: Fri, 31 Jul 2020 07:27:21 +0000
+Subject: [R-es] Mejor paquete machine learning
+Message-ID: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+
+Buenas
+
+He visto el paquete mlr3, pero se que hay algun otro del estilo.
+
+Cu?l usais vosotros y por qu??
+
+Un saludo
+
+Get Outlook for Android<https://aka.ms/ghei36>
+
+	[[alternative HTML version deleted]]
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Fri Jul 31 12:49:36 2020
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Fri, 31 Jul 2020 05:49:36 -0500
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+Message-ID: <CAKL8G3FhDJVepUeCxC+mDkP4xsnZ0Kbrj-03deiqLdj63JWnSw@mail.gmail.com>
+
+Hola Jesús,
+No sé si mejor o peor, pero caret [1,2] funciona bastante bien.
+Espero sea de utilidad.
+Saludos,
+Jorge.-
+
+[1] https://topepo.github.io/caret/
+[2] https://www.machinelearningplus.com/machine-learning/caret-package/
+
+
+
+On Fri, Jul 31, 2020 at 2:27 AM Jesús Para Fernández <
+j.para.fernandez en hotmail.com> wrote:
+
+> Buenas
+>
+> He visto el paquete mlr3, pero se que hay algun otro del estilo.
+>
+> Cuál usais vosotros y por qué?
+>
+> Un saludo
+>
+> Get Outlook for Android<https://aka.ms/ghei36>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Fri Jul 31 14:29:13 2020
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Fri, 31 Jul 2020 09:29:13 -0300
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <CAKL8G3FhDJVepUeCxC+mDkP4xsnZ0Kbrj-03deiqLdj63JWnSw@mail.gmail.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <CAKL8G3FhDJVepUeCxC+mDkP4xsnZ0Kbrj-03deiqLdj63JWnSw@mail.gmail.com>
+Message-ID: <CAHo_aET+zphPUi9aEtCwhw90VTs9J0sN62C-wmeLyTgUtcVxYw@mail.gmail.com>
+
+Estimados
+
+Yo también pienso que no hay mejor o peor, hay simples y complejos,
+eficientes en términos de cómputo o eficientes en forma de buscar una
+solución para luego llevar a producción.
+
+Sobre la producción, el ejemplo más fácil es sobre el reconocimiento de
+imágenes y los algoritmos en esa competencia siempre abierta, pero en lo
+personal también creo que para producción ONNX debe ser tenida en cuenta,
+http://onnx.ai/ , R por su característica no facilita mucho el llevar desde
+R a otro lado, pero si hay dos opciones en R y una tiene la posibilidad de
+exportar a ONNX, aunque en este momento no hace falta, lo tengo en cuenta
+para el futuro por las dudas.
+
+Javier Rubén Marcuzzi
+
+El vie., 31 jul. 2020 a las 7:50, Jorge I Velez (<jorgeivanvelez en gmail.com>)
+escribió:
+
+> Hola Jesús,
+> No sé si mejor o peor, pero caret [1,2] funciona bastante bien.
+> Espero sea de utilidad.
+> Saludos,
+> Jorge.-
+>
+> [1] https://topepo.github.io/caret/
+> [2] https://www.machinelearningplus.com/machine-learning/caret-package/
+>
+>
+>
+> On Fri, Jul 31, 2020 at 2:27 AM Jesús Para Fernández <
+> j.para.fernandez en hotmail.com> wrote:
+>
+> > Buenas
+> >
+> > He visto el paquete mlr3, pero se que hay algun otro del estilo.
+> >
+> > Cuál usais vosotros y por qué?
+> >
+> > Un saludo
+> >
+> > Get Outlook for Android<https://aka.ms/ghei36>
+> >
+> >         [[alternative HTML version deleted]]
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri Jul 31 17:58:00 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 31 Jul 2020 17:58:00 +0200
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+Message-ID: <A11FBEC6-0C93-4807-8035-AC8DD0EC5ACF@gmail.com>
+
+Hola,
+
+Como se ha comentado ya, caret y mlr3 están bien.
+
+Pero yo empezaría a considerar el conjunto de paquetes ?tidymodels?. Como todo lo que hacen en RStudio, es opinable. Y yo opino que está muy bien. Está todavía en pañales, pero cuando lo acaben creo que va a ser una pasada.
+
+https://www.tidymodels.org <https://www.tidymodels.org/>
+
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 31 jul 2020, a las 9:27, Jesús Para Fernández <j.para.fernandez en hotmail.com> escribió:
+> 
+> Buenas
+> 
+> He visto el paquete mlr3, pero se que hay algun otro del estilo.
+> 
+> Cu?l usais vosotros y por qu??
+> 
+> Un saludo
+> 
+> Get Outlook for Android<https://aka.ms/ghei36>
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Fri Jul 31 18:00:52 2020
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?utf-8?B?SmVzw7pzIFBhcmEgRmVybsOhbmRleg==?=)
+Date: Fri, 31 Jul 2020 16:00:52 +0000
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <A11FBEC6-0C93-4807-8035-AC8DD0EC5ACF@gmail.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>,
+ <A11FBEC6-0C93-4807-8035-AC8DD0EC5ACF@gmail.com>
+Message-ID: <AM5PR0101MB238809DCDA320EC349933A50CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+
+El problema es que te obligaran a usar tibbles y yo soy mas de data.table....
+
+Get Outlook for Android<https://aka.ms/ghei36>
+________________________________
+From: Emilio L. Cano <emilopezcano en gmail.com>
+Sent: Friday, July 31, 2020 5:58:00 PM
+To: Jesús Para Fernández <j.para.fernandez en hotmail.com>
+Cc: r-help-es en r-project.org <r-help-es en r-project.org>
+Subject: Re: [R-es] Mejor paquete machine learning
+
+Hola,
+
+Como se ha comentado ya, caret y mlr3 están bien.
+
+Pero yo empezaría a considerar el conjunto de paquetes ?tidymodels?. Como todo lo que hacen en RStudio, es opinable. Y yo opino que está muy bien. Está todavía en pañales, pero cuando lo acaben creo que va a ser una pasada.
+
+https://www.tidymodels.org
+
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+El 31 jul 2020, a las 9:27, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+
+Buenas
+
+He visto el paquete mlr3, pero se que hay algun otro del estilo.
+
+Cu?l usais vosotros y por qu??
+
+Un saludo
+
+Get Outlook for Android<https://aka.ms/ghei36>
+
+[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri Jul 31 18:05:57 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 31 Jul 2020 18:05:57 +0200
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <AM5PR0101MB238809DCDA320EC349933A50CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <A11FBEC6-0C93-4807-8035-AC8DD0EC5ACF@gmail.com>
+ <AM5PR0101MB238809DCDA320EC349933A50CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+Message-ID: <70475128-7F28-4DA2-B8A2-48CBECF10529@gmail.com>
+
+Yo no uso data.table. Pero según veo en este post de Kaggle se pueden usar (tanto con funciones del tidyverse como de tidymodels)
+Pero vamos, que lo bueno que tenemos es poder elegir entre distintas opciones :)
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 31 jul 2020, a las 18:00, Jesús Para Fernández <j.para.fernandez en hotmail.com> escribió:
+> 
+> El problema es que te obligaran a usar tibbles y yo soy mas de data.table....
+> 
+> Get Outlook for Android <https://aka.ms/ghei36>
+> From: Emilio L. Cano <emilopezcano en gmail.com>
+> Sent: Friday, July 31, 2020 5:58:00 PM
+> To: Jesús Para Fernández <j.para.fernandez en hotmail.com>
+> Cc: r-help-es en r-project.org <r-help-es en r-project.org>
+> Subject: Re: [R-es] Mejor paquete machine learning
+>  
+> Hola,
+> 
+> Como se ha comentado ya, caret y mlr3 están bien.
+> 
+> Pero yo empezaría a considerar el conjunto de paquetes ?tidymodels?. Como todo lo que hacen en RStudio, es opinable. Y yo opino que está muy bien. Está todavía en pañales, pero cuando lo acaben creo que va a ser una pasada.
+> 
+> https://www.tidymodels.org <https://www.tidymodels.org/>
+> 
+> 
+> Un saludo,
+> 
+> Emilio L. Cano
+> http://emilio.lcano.com <http://emilio.lcano.com/>
+> 
+> 
+> 
+>> El 31 jul 2020, a las 9:27, Jesús Para Fernández <j.para.fernandez en hotmail.com <mailto:j.para.fernandez en hotmail.com>> escribió:
+>> 
+>> Buenas
+>> 
+>> He visto el paquete mlr3, pero se que hay algun otro del estilo.
+>> 
+>> Cu?l usais vosotros y por qu??
+>> 
+>> Un saludo
+>> 
+>> Get Outlook for Android<https://aka.ms/ghei36 <https://aka.ms/ghei36>>
+>> 
+>> [[alternative HTML version deleted]]
+>> 
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Fri Jul 31 18:13:56 2020
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?utf-8?B?SmVzw7pzIFBhcmEgRmVybsOhbmRleg==?=)
+Date: Fri, 31 Jul 2020 16:13:56 +0000
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <70475128-7F28-4DA2-B8A2-48CBECF10529@gmail.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <A11FBEC6-0C93-4807-8035-AC8DD0EC5ACF@gmail.com>
+ <AM5PR0101MB238809DCDA320EC349933A50CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>,
+ <70475128-7F28-4DA2-B8A2-48CBECF10529@gmail.com>
+Message-ID: <AM5PR0101MB2388F46BED1245280F50DF54CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+
+Puedes poner el post de kaggle?
+
+Get Outlook for Android<https://aka.ms/ghei36>
+________________________________
+From: Emilio L. Cano <emilopezcano en gmail.com>
+Sent: Friday, July 31, 2020 6:05:57 PM
+To: Jesús Para Fernández <j.para.fernandez en hotmail.com>
+Cc: r-help-es en r-project.org <r-help-es en r-project.org>
+Subject: Re: [R-es] Mejor paquete machine learning
+
+Yo no uso data.table. Pero según veo en este post de Kaggle se pueden usar (tanto con funciones del tidyverse como de tidymodels)
+Pero vamos, que lo bueno que tenemos es poder elegir entre distintas opciones :)
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+El 31 jul 2020, a las 18:00, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+
+El problema es que te obligaran a usar tibbles y yo soy mas de data.table....
+
+Get Outlook for Android<https://aka.ms/ghei36>
+________________________________
+From: Emilio L. Cano <emilopezcano en gmail.com<mailto:emilopezcano en gmail.com>>
+Sent: Friday, July 31, 2020 5:58:00 PM
+To: Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>
+Cc: r-help-es en r-project.org<mailto:r-help-es en r-project.org> <r-help-es en r-project.org<mailto:r-help-es en r-project.org>>
+Subject: Re: [R-es] Mejor paquete machine learning
+
+Hola,
+
+Como se ha comentado ya, caret y mlr3 están bien.
+
+Pero yo empezaría a considerar el conjunto de paquetes ?tidymodels?. Como todo lo que hacen en RStudio, es opinable. Y yo opino que está muy bien. Está todavía en pañales, pero cuando lo acaben creo que va a ser una pasada.
+
+https://www.tidymodels.org<https://www.tidymodels.org/>
+
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com<http://emilio.lcano.com/>
+
+
+
+El 31 jul 2020, a las 9:27, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+
+Buenas
+
+He visto el paquete mlr3, pero se que hay algun otro del estilo.
+
+Cu?l usais vosotros y por qu??
+
+Un saludo
+
+Get Outlook for Android<https://aka.ms/ghei36>
+
+[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From em||opezc@no @end|ng |rom gm@||@com  Fri Jul 31 18:15:36 2020
+From: em||opezc@no @end|ng |rom gm@||@com (Emilio L. Cano)
+Date: Fri, 31 Jul 2020 18:15:36 +0200
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <AM5PR0101MB2388F46BED1245280F50DF54CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <A11FBEC6-0C93-4807-8035-AC8DD0EC5ACF@gmail.com>
+ <AM5PR0101MB238809DCDA320EC349933A50CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <70475128-7F28-4DA2-B8A2-48CBECF10529@gmail.com>
+ <AM5PR0101MB2388F46BED1245280F50DF54CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+Message-ID: <D98F6B1A-BE04-4F62-867F-ECCA59650F59@gmail.com>
+
+Claro, se me olvidó pegarlo: https://www.kaggle.com/ar89dsl/exploring-tidymodels <https://www.kaggle.com/ar89dsl/exploring-tidymodels>
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+> El 31 jul 2020, a las 18:13, Jesús Para Fernández <j.para.fernandez en hotmail.com> escribió:
+> 
+> Puedes poner el post de kaggle? 
+> 
+> Get Outlook for Android <https://aka.ms/ghei36>
+> From: Emilio L. Cano <emilopezcano en gmail.com>
+> Sent: Friday, July 31, 2020 6:05:57 PM
+> To: Jesús Para Fernández <j.para.fernandez en hotmail.com>
+> Cc: r-help-es en r-project.org <r-help-es en r-project.org>
+> Subject: Re: [R-es] Mejor paquete machine learning
+>  
+> Yo no uso data.table. Pero según veo en este post de Kaggle se pueden usar (tanto con funciones del tidyverse como de tidymodels)
+> Pero vamos, que lo bueno que tenemos es poder elegir entre distintas opciones :)
+> 
+> Un saludo,
+> 
+> Emilio L. Cano
+> http://emilio.lcano.com <http://emilio.lcano.com/>
+> 
+> 
+> 
+>> El 31 jul 2020, a las 18:00, Jesús Para Fernández <j.para.fernandez en hotmail.com <mailto:j.para.fernandez en hotmail.com>> escribió:
+>> 
+>> El problema es que te obligaran a usar tibbles y yo soy mas de data.table....
+>> 
+>> Get Outlook for Android <https://aka.ms/ghei36>
+>> From: Emilio L. Cano <emilopezcano en gmail.com <mailto:emilopezcano en gmail.com>>
+>> Sent: Friday, July 31, 2020 5:58:00 PM
+>> To: Jesús Para Fernández <j.para.fernandez en hotmail.com <mailto:j.para.fernandez en hotmail.com>>
+>> Cc: r-help-es en r-project.org <mailto:r-help-es en r-project.org> <r-help-es en r-project.org <mailto:r-help-es en r-project.org>>
+>> Subject: Re: [R-es] Mejor paquete machine learning
+>>  
+>> Hola,
+>> 
+>> Como se ha comentado ya, caret y mlr3 están bien.
+>> 
+>> Pero yo empezaría a considerar el conjunto de paquetes ?tidymodels?. Como todo lo que hacen en RStudio, es opinable. Y yo opino que está muy bien. Está todavía en pañales, pero cuando lo acaben creo que va a ser una pasada.
+>> 
+>> https://www.tidymodels.org <https://www.tidymodels.org/>
+>> 
+>> 
+>> Un saludo,
+>> 
+>> Emilio L. Cano
+>> http://emilio.lcano.com <http://emilio.lcano.com/>
+>> 
+>> 
+>> 
+>>> El 31 jul 2020, a las 9:27, Jesús Para Fernández <j.para.fernandez en hotmail.com <mailto:j.para.fernandez en hotmail.com>> escribió:
+>>> 
+>>> Buenas
+>>> 
+>>> He visto el paquete mlr3, pero se que hay algun otro del estilo.
+>>> 
+>>> Cu?l usais vosotros y por qu??
+>>> 
+>>> Un saludo
+>>> 
+>>> Get Outlook for Android<https://aka.ms/ghei36 <https://aka.ms/ghei36>>
+>>> 
+>>> [[alternative HTML version deleted]]
+>>> 
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org <mailto:R-help-es en r-project.org>
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es <https://stat.ethz.ch/mailman/listinfo/r-help-es>
+>> 
+> 
+
+
+	[[alternative HTML version deleted]]
+
+
+From j@p@r@@|ern@ndez @end|ng |rom hotm@||@com  Fri Jul 31 18:25:12 2020
+From: j@p@r@@|ern@ndez @end|ng |rom hotm@||@com (=?utf-8?B?SmVzw7pzIFBhcmEgRmVybsOhbmRleg==?=)
+Date: Fri, 31 Jul 2020 16:25:12 +0000
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <D98F6B1A-BE04-4F62-867F-ECCA59650F59@gmail.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <A11FBEC6-0C93-4807-8035-AC8DD0EC5ACF@gmail.com>
+ <AM5PR0101MB238809DCDA320EC349933A50CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+ <70475128-7F28-4DA2-B8A2-48CBECF10529@gmail.com>
+ <AM5PR0101MB2388F46BED1245280F50DF54CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>,
+ <D98F6B1A-BE04-4F62-867F-ECCA59650F59@gmail.com>
+Message-ID: <AM5PR0101MB2388A544A039946CA4E6350CCC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+
+Gracias!!!!
+
+Get Outlook for Android<https://aka.ms/ghei36>
+________________________________
+From: Emilio L. Cano <emilopezcano en gmail.com>
+Sent: Friday, July 31, 2020 6:15:36 PM
+To: Jesús Para Fernández <j.para.fernandez en hotmail.com>
+Cc: r-help-es en r-project.org <r-help-es en r-project.org>
+Subject: Re: [R-es] Mejor paquete machine learning
+
+Claro, se me olvidó pegarlo: https://www.kaggle.com/ar89dsl/exploring-tidymodels
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com
+
+
+
+El 31 jul 2020, a las 18:13, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+
+Puedes poner el post de kaggle?
+
+Get Outlook for Android<https://aka.ms/ghei36>
+________________________________
+From: Emilio L. Cano <emilopezcano en gmail.com<mailto:emilopezcano en gmail.com>>
+Sent: Friday, July 31, 2020 6:05:57 PM
+To: Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>
+Cc: r-help-es en r-project.org<mailto:r-help-es en r-project.org> <r-help-es en r-project.org<mailto:r-help-es en r-project.org>>
+Subject: Re: [R-es] Mejor paquete machine learning
+
+Yo no uso data.table. Pero según veo en este post de Kaggle se pueden usar (tanto con funciones del tidyverse como de tidymodels)
+Pero vamos, que lo bueno que tenemos es poder elegir entre distintas opciones :)
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com<http://emilio.lcano.com/>
+
+
+
+El 31 jul 2020, a las 18:00, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+
+El problema es que te obligaran a usar tibbles y yo soy mas de data.table....
+
+Get Outlook for Android<https://aka.ms/ghei36>
+________________________________
+From: Emilio L. Cano <emilopezcano en gmail.com<mailto:emilopezcano en gmail.com>>
+Sent: Friday, July 31, 2020 5:58:00 PM
+To: Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>>
+Cc: r-help-es en r-project.org<mailto:r-help-es en r-project.org> <r-help-es en r-project.org<mailto:r-help-es en r-project.org>>
+Subject: Re: [R-es] Mejor paquete machine learning
+
+Hola,
+
+Como se ha comentado ya, caret y mlr3 están bien.
+
+Pero yo empezaría a considerar el conjunto de paquetes ?tidymodels?. Como todo lo que hacen en RStudio, es opinable. Y yo opino que está muy bien. Está todavía en pañales, pero cuando lo acaben creo que va a ser una pasada.
+
+https://www.tidymodels.org<https://www.tidymodels.org/>
+
+
+Un saludo,
+
+Emilio L. Cano
+http://emilio.lcano.com<http://emilio.lcano.com/>
+
+
+
+El 31 jul 2020, a las 9:27, Jesús Para Fernández <j.para.fernandez en hotmail.com<mailto:j.para.fernandez en hotmail.com>> escribió:
+
+Buenas
+
+He visto el paquete mlr3, pero se que hay algun otro del estilo.
+
+Cu?l usais vosotros y por qu??
+
+Un saludo
+
+Get Outlook for Android<https://aka.ms/ghei36>
+
+[[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
+From m@p|no|@10 @end|ng |rom gm@||@com  Fri Jul 31 18:30:10 2020
+From: m@p|no|@10 @end|ng |rom gm@||@com (=?UTF-8?Q?Manuel_Sp=C3=ADnola?=)
+Date: Fri, 31 Jul 2020 10:30:10 -0600
+Subject: [R-es] Mejor paquete machine learning
+In-Reply-To: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+References: <AM5PR0101MB2388B7845AE772FF37D2FE18CC4E0@AM5PR0101MB2388.eurprd01.prod.exchangelabs.com>
+Message-ID: <CABkCotRs0JYeyeE8sHu1rX6KTm4wheOSiAvCiXJ84QBQ7D1jdQ@mail.gmail.com>
+
+Hola Jesús,
+
+Tanto mlr3, caret o parsnip son muy buenas opciones.
+
+Para complementarlos puedes usar DALEX e ingredients.
+
+Manuel
+
+El vie., 31 jul. 2020 a las 1:27, Jesús Para Fernández (<
+j.para.fernandez en hotmail.com>) escribió:
+
+> Buenas
+>
+> He visto el paquete mlr3, pero se que hay algun otro del estilo.
+>
+> Cuál usais vosotros y por qué?
+>
+> Un saludo
+>
+> Get Outlook for Android<https://aka.ms/ghei36>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+*Manuel Spínola, Ph.D.*
+Instituto Internacional en Conservación y Manejo de Vida Silvestre
+Universidad Nacional
+Apartado 1350-3000
+Heredia
+COSTA RICA
+mspinola en una.cr <mspinola en una.ac.cr>
+mspinola10 en gmail.com
+Teléfono: (506) 8706 - 4662
+Personal website: Lobito de río <https://sites.google.com/site/lobitoderio/>
+Institutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>
+
+	[[alternative HTML version deleted]]
+
+

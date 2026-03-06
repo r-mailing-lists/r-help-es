@@ -1,0 +1,3470 @@
+From rv@|dezr @end|ng |rom gm@||@com  Mon Jun  3 01:00:04 2019
+From: rv@|dezr @end|ng |rom gm@||@com (Rolando Valdez)
+Date: Sun, 2 Jun 2019 16:00:04 -0700
+Subject: [R-es] Incluir un rango de varias variables explicativas a un modelo
+Message-ID: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+
+Hola,
+
+Quiero especificar una ecuación con varias variables explicativas de una
+manera eficiente sin necesidad de escribir todas y cada una. Tengo un
+conjunto de variables (junto con otras) dentro de una base de datos que se
+llaman pot23 pot311 pot312 pot 316 pot317........... pot80. No
+necesariamente están secuenciadas. Quisiera saber cómo indicar que incluya
+todas las variables de pot23 a pot80 en una ecuación.
+
+He intentado lo siguiente, pero no funciona:
+
+> pots <- paste("pot",23:321, sep="")
+> eqreg2 <- lwage~SEXO+EDAD+HLENGUA+ESCOACUM+marr+wageszm14[,pots]
+> fit <- qregspiv(eqreg2, shpfile = zm15, tau = 0.5, nboot = 70, data =
+wageszm14)
+Error: Can't find columns `pot24`, `pot25`, `pot26`, `pot27`, `pot28`, ...
+(and 273 more) in `.data`.
+
+De igual forma, después estaría interesado en obtener el logaritmo de todas
+esas variables pot~
+
+Gracias de antemano por cualquier tipo de ayuda.
+
+-- 
+Rol~
+
+	[[alternative HTML version deleted]]
+
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Mon Jun  3 05:03:49 2019
+From: er|cconch@munoz @end|ng |rom gm@||@com (neo)
+Date: Sun, 2 Jun 2019 23:03:49 -0400
+Subject: [R-es] =?utf-8?q?stat=5Fellipse=28=29_y_criterios_de_clasificaci?=
+ =?utf-8?b?w7Nu?=
+Message-ID: <fbca5dba-f449-b6fc-6662-a52451eb34ac@gmail.com>
+
+Qué tal muchachos, vengo con una duda que no he podido resolver con los 
+buscadores ... he medido dos variables: altura y diámetro, y asociado a 
+esas mediciones tengo muchas variables de clasificación ...
+
+Para examinar los datos he construido un gráfico de doble entrada 
+(gracias por la ayuda anterior a Carlos Ortega y Jesús Fernández) que me 
+permite 3 criterios de clasificación de los datos: la entrada vertical, 
+la horizontal y los colores de los puntos (ADJUNTO IMAGEN). Sé que se 
+podrían agregar otros usando la forma de los puntos y cosas así, pero de 
+ese modo es un poco difícil darse cuenta de si aparece algun patrón 
+asociado a la forma de los puntos. De modo que yo quiero agregar un 
+cuarto criterio de clasificación usando la función stat_ellipse(), por 
+ejemplo. Mi idea es que las elipses usen un cuarto criterio (no 
+observable directamente en el gráfico) para tratar de encontrar algún 
+patrón en los datos, es decir, dibujar las elipses alrededor de ciertos 
+grupos de puntos de acuerdo a una caracteristica que no puedo ver en el 
+gráfico. De ese modo podría hacer visible un cuarto criterio de 
+clasificación.  Me explico bien ?
+
+Mi problema al usar stat_ellipse() es que las elipses se construyen 
+alrededor de un criterio que ya estoy observando en el gráfico. En el 
+caso de la imagen que adjunto, se construyen alrededor del COLOR de los 
+puntos, lo que no me agrega información adicional porque para eso ya 
+estoy usando el color.
+
+Mi pregunta es, si es posible indicar a la función stat_ellipse() o a 
+alguna otra función, que dibuje un polígono alrededor de los puntos que 
+cumplan un cierto criterio que no sea alguno de los que ya veo. He leído 
+la ayuda de stat_ellipse() y con lo que ahí dice no se me ocurre cómo 
+hacerlo. Quizá no es posible hacerlo, no sé, y no he encontrado pistas, 
+quizá por mi mal inglés no lo he expresado correctamente.
+
+Alguna idea ? Adjunto imagen.
+
+Muchas gracias.
+
+Eric.
+
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: Screenshot from 2019-06-02 22-42-58.png
+Type: image/png
+Size: 77459 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190602/5f995627/attachment-0001.png>
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Mon Jun  3 13:49:34 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Mon, 3 Jun 2019 13:49:34 +0200
+Subject: [R-es] Incluir un rango de varias variables explicativas a un
+ modelo
+In-Reply-To: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+References: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+Message-ID: <CAOKbq8hg_xH0Zi3vzv7R2pV8YYp=Jh5H4==8vKkUU-88T2VphQ@mail.gmail.com>
+
+Hola,
+
+Mira la función "*as.formula()*".
+Incluye un ejemplo muy parecido a lo que estás queriendo hacer.
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El lun., 3 jun. 2019 a las 1:00, Rolando Valdez (<rvaldezr en gmail.com>)
+escribió:
+
+> Hola,
+>
+> Quiero especificar una ecuación con varias variables explicativas de una
+> manera eficiente sin necesidad de escribir todas y cada una. Tengo un
+> conjunto de variables (junto con otras) dentro de una base de datos que se
+> llaman pot23 pot311 pot312 pot 316 pot317........... pot80. No
+> necesariamente están secuenciadas. Quisiera saber cómo indicar que incluya
+> todas las variables de pot23 a pot80 en una ecuación.
+>
+> He intentado lo siguiente, pero no funciona:
+>
+> > pots <- paste("pot",23:321, sep="")
+> > eqreg2 <- lwage~SEXO+EDAD+HLENGUA+ESCOACUM+marr+wageszm14[,pots]
+> > fit <- qregspiv(eqreg2, shpfile = zm15, tau = 0.5, nboot = 70, data =
+> wageszm14)
+> Error: Can't find columns `pot24`, `pot25`, `pot26`, `pot27`, `pot28`, ...
+> (and 273 more) in `.data`.
+>
+> De igual forma, después estaría interesado en obtener el logaritmo de todas
+> esas variables pot~
+>
+> Gracias de antemano por cualquier tipo de ayuda.
+>
+> --
+> Rol~
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From rv@|dezr @end|ng |rom gm@||@com  Tue Jun  4 05:42:55 2019
+From: rv@|dezr @end|ng |rom gm@||@com (Rolando Valdez)
+Date: Mon, 3 Jun 2019 20:42:55 -0700
+Subject: [R-es] Incluir un rango de varias variables explicativas a un
+ modelo
+In-Reply-To: <CAOKbq8hg_xH0Zi3vzv7R2pV8YYp=Jh5H4==8vKkUU-88T2VphQ@mail.gmail.com>
+References: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+ <CAOKbq8hg_xH0Zi3vzv7R2pV8YYp=Jh5H4==8vKkUU-88T2VphQ@mail.gmail.com>
+Message-ID: <CAFvJtoGJ6yizO_x8SX+44eQQYVm23Qd=pCKJ_+Ba0WT89QHHLw@mail.gmail.com>
+
+Hola, gracias por la respuesta,
+
+No me funcionó debido a que los nombres de las variables no están seriadas,
+es decir, los nombres de las variables son del tipo: x23 x25 x30, x301
+x320, x80. Entonces me da este error:
+Error in eval(predvars, data, env) : object 'pot24' not found. Debido a que
+pot24 no existe, ya que de pot23 se brinca a pot30.
+
+En Stata es algo muy simple de hacer, solo tengo que especificar gl
+indepvars "x23-x80" y ya. En R no logro hacerlo.
+
+¿Alguna otra sugerencia?
+
+Gracias de antemano.
+
+El lun., 3 de jun. de 2019 a la(s) 04:50, Carlos Ortega (
+cof en qualityexcellence.es) escribió:
+
+> Hola,
+>
+> Mira la función "*as.formula()*".
+> Incluye un ejemplo muy parecido a lo que estás queriendo hacer.
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El lun., 3 jun. 2019 a las 1:00, Rolando Valdez (<rvaldezr en gmail.com>)
+> escribió:
+>
+>> Hola,
+>>
+>> Quiero especificar una ecuación con varias variables explicativas de una
+>> manera eficiente sin necesidad de escribir todas y cada una. Tengo un
+>> conjunto de variables (junto con otras) dentro de una base de datos que se
+>> llaman pot23 pot311 pot312 pot 316 pot317........... pot80. No
+>> necesariamente están secuenciadas. Quisiera saber cómo indicar que incluya
+>> todas las variables de pot23 a pot80 en una ecuación.
+>>
+>> He intentado lo siguiente, pero no funciona:
+>>
+>> > pots <- paste("pot",23:321, sep="")
+>> > eqreg2 <- lwage~SEXO+EDAD+HLENGUA+ESCOACUM+marr+wageszm14[,pots]
+>> > fit <- qregspiv(eqreg2, shpfile = zm15, tau = 0.5, nboot = 70, data =
+>> wageszm14)
+>> Error: Can't find columns `pot24`, `pot25`, `pot26`, `pot27`, `pot28`, ...
+>> (and 273 more) in `.data`.
+>>
+>> De igual forma, después estaría interesado en obtener el logaritmo de
+>> todas
+>> esas variables pot~
+>>
+>> Gracias de antemano por cualquier tipo de ayuda.
+>>
+>> --
+>> Rol~
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+
+-- 
+Rol~
+
+	[[alternative HTML version deleted]]
+
+
+From @ko@@|@tem@@ @end|ng |rom gm@||@com  Wed Jun  5 13:00:03 2019
+From: @ko@@|@tem@@ @end|ng |rom gm@||@com (=?UTF-8?Q?Diego_Mart=C3=ADn?=)
+Date: Wed, 5 Jun 2019 13:00:03 +0200
+Subject: [R-es] 
+	=?utf-8?q?Identificar_por_coordenadas_geogr=C3=A1ficas_un?=
+	=?utf-8?q?a_calle_de_una_ciudad?=
+In-Reply-To: <CAKHhLBJwMeQxLYH3K+PV6+t=yAcnJssOE3MZe4SGxcmtoNzZQQ@mail.gmail.com>
+References: <CAKHhLBKh0bdWpQHLAm0oD0UUyiXzkUXd+DX26vNBTjZeJ0GmRQ@mail.gmail.com>
+ <28341b26-d4e4-ad38-1bb0-a4ce8b6d84cd@gmail.com>
+ <CAHo_aEQ1AjU=5jVnHfaUO5ubjyRpaxTLa0_RM9e-DbmQ+zBtoA@mail.gmail.com>
+ <CAKHhLBJwMeQxLYH3K+PV6+t=yAcnJssOE3MZe4SGxcmtoNzZQQ@mail.gmail.com>
+Message-ID: <CAKHhLBJ5whjaB8mLQUF0-6SBs+S5_SnwjDce1cBQdRR4sSQOKQ@mail.gmail.com>
+
+Gracias a vuestra ayuda implementé fácilmente esta función:
+
+id_geocode <- geocode(locate,
+                      output = "all",
+                      source = "dsk",
+                      messaging = FALSE,
+                      force = FALSE,
+                      sensor = FALSE,
+                      override_limit = FALSE,
+                      client = "",
+                      signature = "",
+                      nameType = "long")
+
+Y como los casos de la variable "locate" no parecieron muy complicados,
+encontró casi el 100% y resolvió mi necesidad. Ahora bien, en cuestión de
+precisión es mejor Google y pasar a la opción profesional, aunque tenga un
+coste.
+
+Gracias una vez más.
+
+Diego Martín.
+Geógrafo.
+
+El jue., 16 may. 2019 a las 7:22, Diego Martín (<ako.sistemas en gmail.com>)
+escribió:
+
+> Muchísimas gracias a todos. Voy a echar un vistazo y, sí, os contaré qué
+> tal.
+> Un abrazo.
+>
+> El jue., 16 may. 2019 a las 0:31, Javier Marcuzzi (<
+> javier.ruben.marcuzzi en gmail.com>) escribió:
+>
+>> Estimados
+>>
+>> Sobre como obtener la geolocalización, aparte de lo aportado por Rubén
+>> Casal, también existe el api de Microsoft, lo que yo descartaría es tomar
+>> una base de datos con geolocalización, teóricamente andarían pero si uno
+>> por casualidad conoce la geografía real, se da cuenta de errores, salvo que
+>> en España los datos estén correctos.
+>>
+>> Javier Rubén Marcuzzi
+>>
+>> El mié., 15 may. 2019 a las 8:50, rubenfcasal (<rubenfcasal en gmail.com>)
+>> escribió:
+>>
+>>> Hola a todos,
+>>>
+>>> Yo tengo empleado herramientas de este tipo hace tiempo. Básicamente
+>>> hacían consultas a google maps sobre direcciones y devolvían la
+>>> posición. El número de consultas tenía restricciones y había que darse
+>>> de alta en la api de google:
+>>> https://developers.google.com/maps/documentation/geocoding/start?csw=1
+>>>
+>>> Buscando ahora esas herramientas me encontré con la función geocode de
+>>> ggmap:
+>>>
+>>> https://www.rdocumentation.org/packages/ggmap/versions/2.6.1/topics/geocode
+>>> https://www.jessesadler.com/post/geocoding-with-r
+>>> podrías comenzar por esta...
+>>>
+>>> Como a mi gustan bastante las herramientas de OpenStreetMap (para cargar
+>>> rutas en R, ...),
+>>> y para no depender de google, miré también ahora si había novedades
+>>> sobre esto y encontré varias:
+>>>
+>>> https://datascienceplus.com/osm-nominatim-with-r-getting-locations-geo-coordinates-by-its-address
+>>> https://rud.is/b/2015/07/29/introducing-the-nominatim-geocoding-package
+>>>
+>>> Diego, ya nos dirás como hiciste finalmente...
+>>>
+>>> Un saludo, Rubén.
+>>>
+>>> El 15/05/2019 a las 13:16, Diego Martín escribió:
+>>> > Saludos estimados compañeros:
+>>> >         ¿Alguno de ustedes sabe de alguna librería con la que
+>>> geolocalizar
+>>> >   una calle de una ciudad española?, aunque no cuenten nada más que
+>>> aquellas
+>>> > a partir de un umbral de población.
+>>> >          Muchas gracias.
+>>> >
+>>> >       [[alternative HTML version deleted]]
+>>> >
+>>> > _______________________________________________
+>>> > R-help-es mailing list
+>>> > R-help-es en r-project.org
+>>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>> >
+>>>
+>>>
+>>> --
+>>> Ruben Fernandez Casal
+>>> https://rubenfcasal.github.io
+>>> Department of Mathematics
+>>> Faculty of Computer Science
+>>> Universidade da Coruña
+>>> Corporate email: ruben.fcasal <at> udc <dot> es
+>>> --
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Wed Jun  5 23:15:16 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Wed, 5 Jun 2019 23:15:16 +0200
+Subject: [R-es] Incluir un rango de varias variables explicativas a un
+ modelo
+In-Reply-To: <CAFvJtoGJ6yizO_x8SX+44eQQYVm23Qd=pCKJ_+Ba0WT89QHHLw@mail.gmail.com>
+References: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+ <CAOKbq8hg_xH0Zi3vzv7R2pV8YYp=Jh5H4==8vKkUU-88T2VphQ@mail.gmail.com>
+ <CAFvJtoGJ6yizO_x8SX+44eQQYVm23Qd=pCKJ_+Ba0WT89QHHLw@mail.gmail.com>
+Message-ID: <CA+8ueybJQUWawYGYotvMFxCTZ-s_W=__6mB2+e5OhNzyvfHO0g@mail.gmail.com>
+
+Meto cuchara y disculpen si es una tontería:
+Y si creás un objeto con los nombres de las variables? y si solamente te
+interesan las que cumplan no sé qué característica en el nombre, pedirlo.
+
+pabuscar <- sort(names(tudataframe))
+pabuscar[grep('x', pabuscar)]
+
+Los que saben seguro que lo hacen más lindo, pero yo creo que eso te
+funcionaría y no es difacil. Suerte
+
+Hau idatzi du Rolando Valdez (rvaldezr en gmail.com) erabiltzaileak (2019 eka.
+4, ar. (05:43)):
+
+> Hola, gracias por la respuesta,
+>
+> No me funcionó debido a que los nombres de las variables no están seriadas,
+> es decir, los nombres de las variables son del tipo: x23 x25 x30, x301
+> x320, x80. Entonces me da este error:
+> Error in eval(predvars, data, env) : object 'pot24' not found. Debido a que
+> pot24 no existe, ya que de pot23 se brinca a pot30.
+>
+> En Stata es algo muy simple de hacer, solo tengo que especificar gl
+> indepvars "x23-x80" y ya. En R no logro hacerlo.
+>
+> ¿Alguna otra sugerencia?
+>
+> Gracias de antemano.
+>
+> El lun., 3 de jun. de 2019 a la(s) 04:50, Carlos Ortega (
+> cof en qualityexcellence.es) escribió:
+>
+> > Hola,
+> >
+> > Mira la función "*as.formula()*".
+> > Incluye un ejemplo muy parecido a lo que estás queriendo hacer.
+> >
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+> > El lun., 3 jun. 2019 a las 1:00, Rolando Valdez (<rvaldezr en gmail.com>)
+> > escribió:
+> >
+> >> Hola,
+> >>
+> >> Quiero especificar una ecuación con varias variables explicativas de una
+> >> manera eficiente sin necesidad de escribir todas y cada una. Tengo un
+> >> conjunto de variables (junto con otras) dentro de una base de datos que
+> se
+> >> llaman pot23 pot311 pot312 pot 316 pot317........... pot80. No
+> >> necesariamente están secuenciadas. Quisiera saber cómo indicar que
+> incluya
+> >> todas las variables de pot23 a pot80 en una ecuación.
+> >>
+> >> He intentado lo siguiente, pero no funciona:
+> >>
+> >> > pots <- paste("pot",23:321, sep="")
+> >> > eqreg2 <- lwage~SEXO+EDAD+HLENGUA+ESCOACUM+marr+wageszm14[,pots]
+> >> > fit <- qregspiv(eqreg2, shpfile = zm15, tau = 0.5, nboot = 70, data =
+> >> wageszm14)
+> >> Error: Can't find columns `pot24`, `pot25`, `pot26`, `pot27`, `pot28`,
+> ...
+> >> (and 273 more) in `.data`.
+> >>
+> >> De igual forma, después estaría interesado en obtener el logaritmo de
+> >> todas
+> >> esas variables pot~
+> >>
+> >> Gracias de antemano por cualquier tipo de ayuda.
+> >>
+> >> --
+> >> Rol~
+> >>
+> >>         [[alternative HTML version deleted]]
+> >>
+> >> _______________________________________________
+> >> R-help-es mailing list
+> >> R-help-es en r-project.org
+> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+> >>
+> >
+> >
+> > --
+> > Saludos,
+> > Carlos Ortega
+> > www.qualityexcellence.es
+> >
+>
+>
+> --
+> Rol~
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Thu Jun  6 00:15:18 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Thu, 6 Jun 2019 00:15:18 +0200
+Subject: [R-es] Incluir un rango de varias variables explicativas a un
+ modelo
+In-Reply-To: <CAFvJtoGJ6yizO_x8SX+44eQQYVm23Qd=pCKJ_+Ba0WT89QHHLw@mail.gmail.com>
+References: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+ <CAOKbq8hg_xH0Zi3vzv7R2pV8YYp=Jh5H4==8vKkUU-88T2VphQ@mail.gmail.com>
+ <CAFvJtoGJ6yizO_x8SX+44eQQYVm23Qd=pCKJ_+Ba0WT89QHHLw@mail.gmail.com>
+Message-ID: <CAOKbq8gy=PunKinCm5UWVUjqcGfJhi1SaeZK16WF7ajD4Tajbg@mail.gmail.com>
+
+Hola,
+
+Mira este código para construir tu fórmula a partir de los nombres de tus
+variables...
+
+#-------------------------------
+
+library(dplyr)
+library(randNames)
+
+set.seed(1234)
+
+# Creo unos nombres aletaorios como nombres de variables
+# Esto lo tendrías de tu data.frame con "names(tu_data_frame)"
+my_names <- 25 %>%
+  rand_names(nationality = 'ES') %>%
+  select(name.first)
+
+mynam_vec <- as.vector(my_names$name.first)
+mynam_vec
+
+# Construyo una formula con los nombres de las variables
+myformula <- vector()
+for(i in 1:length(mynam_vec)) {
+  tmp <- mynam_vec[i]
+  if(i != length(mynam_vec)) {
+      myformula <- paste0(myformula, tmp, sep=" + ", collapse = "")
+  } else {
+      myformula <- paste0(myformula, tmp, sep= '' )
+  }
+}
+myform_end <- paste("lweg ~ ", myformula, sep = " ")
+myform_end
+class(myform_end)
+
+# Y con la cadena la transformo en una formula
+como_formula <- as.formula(myform_end)
+como_formula
+class(como_formula)
+#-----------------------
+
+Que produce este resultado:
+
+> library(dplyr)
+> library(randNames)
+>
+> set.seed(1234)
+>
+> # Creo unos nombres aletaorios como nombres de variables
+> # Esto lo tendrías de tu data.frame con "names(tu_data_frame)"
+> my_names <- 25 %>%
++   rand_names(nationality = 'ES') %>%
++   select(name.first)
+>
+> mynam_vec <- as.vector(my_names$name.first)
+> mynam_vec
+ [1] "sonia"     "elisa"     "adrian"    "irene"     "laura"     "joaquin"
+  "raquel"
+ [8] "eva"       "rodrigo"   "carmelo"   "vicenta"   "jordi"     "nuria"
+  "enrique"
+[15] "luz"       "mohamed"   "alfredo"   "nieves"    "fatima"    "santiago"
+ "francisco"
+[22] "joaquin"   "jose"      "manuel"    "andrea"
+>
+> # Construyo una formula con los nombres de las variables
+> myformula <- vector()
+> for(i in 1:length(mynam_vec)) {
++   tmp <- mynam_vec[i]
++   if(i != length(mynam_vec)) {
++       myformula <- paste0(myformula, tmp, sep=" + ", collapse = "")
++   } else {
++       myformula <- paste0(myformula, tmp, sep= '' )
++   }
++ }
+> myform_end <- paste("lweg ~ ", myformula, sep = " ")
+> myform_end
+[1] "lweg ~  sonia + elisa + adrian + irene + laura + joaquin + raquel +
+eva + rodrigo + carmelo + vicenta + jordi + nuria + enrique + luz + mohamed
++ alfredo + nieves + fatima + santiago + francisco + joaquin + jose +
+manuel + andrea"
+> class(myform_end)
+[1] "character"
+>
+> # Y con la cadena la transformo en una formula
+> como_formula <- as.formula(myform_end)
+> como_formula
+lweg ~ sonia + elisa + adrian + irene + laura + joaquin + raquel +
+    eva + rodrigo + carmelo + vicenta + jordi + nuria + enrique +
+    luz + mohamed + alfredo + nieves + fatima + santiago + francisco +
+    joaquin + jose + manuel + andrea
+> class(como_formula)
+[1] "formula"
+
+#-----------------
+
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+
+El mar., 4 jun. 2019 a las 5:43, Rolando Valdez (<rvaldezr en gmail.com>)
+escribió:
+
+> Hola, gracias por la respuesta,
+>
+> No me funcionó debido a que los nombres de las variables no están
+> seriadas, es decir, los nombres de las variables son del tipo: x23 x25 x30,
+> x301 x320, x80. Entonces me da este error:
+> Error in eval(predvars, data, env) : object 'pot24' not found. Debido a
+> que pot24 no existe, ya que de pot23 se brinca a pot30.
+>
+> En Stata es algo muy simple de hacer, solo tengo que especificar gl
+> indepvars "x23-x80" y ya. En R no logro hacerlo.
+>
+> ¿Alguna otra sugerencia?
+>
+> Gracias de antemano.
+>
+> El lun., 3 de jun. de 2019 a la(s) 04:50, Carlos Ortega (
+> cof en qualityexcellence.es) escribió:
+>
+>> Hola,
+>>
+>> Mira la función "*as.formula()*".
+>> Incluye un ejemplo muy parecido a lo que estás queriendo hacer.
+>>
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>> El lun., 3 jun. 2019 a las 1:00, Rolando Valdez (<rvaldezr en gmail.com>)
+>> escribió:
+>>
+>>> Hola,
+>>>
+>>> Quiero especificar una ecuación con varias variables explicativas de una
+>>> manera eficiente sin necesidad de escribir todas y cada una. Tengo un
+>>> conjunto de variables (junto con otras) dentro de una base de datos que
+>>> se
+>>> llaman pot23 pot311 pot312 pot 316 pot317........... pot80. No
+>>> necesariamente están secuenciadas. Quisiera saber cómo indicar que
+>>> incluya
+>>> todas las variables de pot23 a pot80 en una ecuación.
+>>>
+>>> He intentado lo siguiente, pero no funciona:
+>>>
+>>> > pots <- paste("pot",23:321, sep="")
+>>> > eqreg2 <- lwage~SEXO+EDAD+HLENGUA+ESCOACUM+marr+wageszm14[,pots]
+>>> > fit <- qregspiv(eqreg2, shpfile = zm15, tau = 0.5, nboot = 70, data =
+>>> wageszm14)
+>>> Error: Can't find columns `pot24`, `pot25`, `pot26`, `pot27`, `pot28`,
+>>> ...
+>>> (and 273 more) in `.data`.
+>>>
+>>> De igual forma, después estaría interesado en obtener el logaritmo de
+>>> todas
+>>> esas variables pot~
+>>>
+>>> Gracias de antemano por cualquier tipo de ayuda.
+>>>
+>>> --
+>>> Rol~
+>>>
+>>>         [[alternative HTML version deleted]]
+>>>
+>>> _______________________________________________
+>>> R-help-es mailing list
+>>> R-help-es en r-project.org
+>>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>>
+>>
+>>
+>> --
+>> Saludos,
+>> Carlos Ortega
+>> www.qualityexcellence.es
+>>
+>
+>
+> --
+> Rol~
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Thu Jun  6 00:36:11 2019
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Wed, 5 Jun 2019 17:36:11 -0500
+Subject: [R-es] Incluir un rango de varias variables explicativas a un
+ modelo
+In-Reply-To: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+References: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+Message-ID: <CAKL8G3EjLJ6RD3=yaooCLzBGE5w_VpJtk2=Vyt8sZzbhrs9Ckw@mail.gmail.com>
+
+Hola Rolando,
+
+Quizás subset() sea tu amigo en este caso.  Intenta:
+
+## selecciona la variable dependiente y las variables independientes
+d0 <- subset(wageszm14, select = c(lwage, SEXO:marr, pot23:pot317)
+
+## ajusta el modelo
+fit <- qregspiv(lwage ~ ., shpfile = zm15, tau = 0.5, nboot = 70, data = d0)
+
+## resultados
+summary(fit)
+
+Saludos,
+Jorge.-
+
+
+
+On Sun, Jun 2, 2019 at 6:00 PM Rolando Valdez <rvaldezr en gmail.com> wrote:
+
+> Hola,
+>
+> Quiero especificar una ecuación con varias variables explicativas de una
+> manera eficiente sin necesidad de escribir todas y cada una. Tengo un
+> conjunto de variables (junto con otras) dentro de una base de datos que se
+> llaman pot23 pot311 pot312 pot 316 pot317........... pot80. No
+> necesariamente están secuenciadas. Quisiera saber cómo indicar que incluya
+> todas las variables de pot23 a pot80 en una ecuación.
+>
+> He intentado lo siguiente, pero no funciona:
+>
+> > pots <- paste("pot",23:321, sep="")
+> > eqreg2 <- lwage~SEXO+EDAD+HLENGUA+ESCOACUM+marr+wageszm14[,pots]
+> > fit <- qregspiv(eqreg2, shpfile = zm15, tau = 0.5, nboot = 70, data =
+> wageszm14)
+> Error: Can't find columns `pot24`, `pot25`, `pot26`, `pot27`, `pot28`, ...
+> (and 273 more) in `.data`.
+>
+> De igual forma, después estaría interesado en obtener el logaritmo de todas
+> esas variables pot~
+>
+> Gracias de antemano por cualquier tipo de ayuda.
+>
+> --
+> Rol~
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From rv@|dezr @end|ng |rom gm@||@com  Thu Jun  6 21:07:49 2019
+From: rv@|dezr @end|ng |rom gm@||@com (Rolando Valdez)
+Date: Thu, 6 Jun 2019 12:07:49 -0700
+Subject: [R-es] Incluir un rango de varias variables explicativas a un
+ modelo
+In-Reply-To: <CA+8ueybJQUWawYGYotvMFxCTZ-s_W=__6mB2+e5OhNzyvfHO0g@mail.gmail.com>
+References: <CAFvJtoHho7W0COHHhyYXmRhkJBUNALht6+AA97MjgJe+o9yEcQ@mail.gmail.com>
+ <CAOKbq8hg_xH0Zi3vzv7R2pV8YYp=Jh5H4==8vKkUU-88T2VphQ@mail.gmail.com>
+ <CAFvJtoGJ6yizO_x8SX+44eQQYVm23Qd=pCKJ_+Ba0WT89QHHLw@mail.gmail.com>
+ <CA+8ueybJQUWawYGYotvMFxCTZ-s_W=__6mB2+e5OhNzyvfHO0g@mail.gmail.com>
+Message-ID: <CAFvJtoHri7rcS2df4H04uazh-wyuu5Jqyd6-HGfAxudj9SOh4A@mail.gmail.com>
+
+Sí, más o menos así lo resolví:
+
+nn <-names(wageszm14)
+lvadd <- nn[grep("^lvadd", nn)]
+(eqreg <- as.formula(paste("lwage ~ age + educ + percmen + marr + natlang
++", paste(lvadd, collapse = "+"))))
+lwage ~ age + educ + percmen + marr + natlang + lvadd23_pot23 +
+    lvadd3133_pot3133 + lvadd_commer_pot_commer +
+lvadd_communic_pot_communic +
+    lvadd_hserv_pot_hserv + lvadd62_pot62 + lvadd_host_pot_host +
+    lvadd81_pot81
+
+Con eso quedó resuelto.
+
+Gracias a todos por sus respuestas.
+
+
+
+El mié., 5 de jun. de 2019 a la(s) 14:15, Juan Abasolo (juan.abasolo en ehu.eus)
+escribió:
+
+> Meto cuchara y disculpen si es una tontería:
+> Y si creás un objeto con los nombres de las variables? y si solamente te
+> interesan las que cumplan no sé qué característica en el nombre, pedirlo.
+>
+> pabuscar <- sort(names(tudataframe))
+> pabuscar[grep('x', pabuscar)]
+>
+> Los que saben seguro que lo hacen más lindo, pero yo creo que eso te
+> funcionaría y no es difacil. Suerte
+>
+> Hau idatzi du Rolando Valdez (rvaldezr en gmail.com) erabiltzaileak (2019
+> eka. 4, ar. (05:43)):
+>
+>> Hola, gracias por la respuesta,
+>>
+>> No me funcionó debido a que los nombres de las variables no están
+>> seriadas,
+>> es decir, los nombres de las variables son del tipo: x23 x25 x30, x301
+>> x320, x80. Entonces me da este error:
+>> Error in eval(predvars, data, env) : object 'pot24' not found. Debido a
+>> que
+>> pot24 no existe, ya que de pot23 se brinca a pot30.
+>>
+>> En Stata es algo muy simple de hacer, solo tengo que especificar gl
+>> indepvars "x23-x80" y ya. En R no logro hacerlo.
+>>
+>> ¿Alguna otra sugerencia?
+>>
+>> Gracias de antemano.
+>>
+>> El lun., 3 de jun. de 2019 a la(s) 04:50, Carlos Ortega (
+>> cof en qualityexcellence.es) escribió:
+>>
+>> > Hola,
+>> >
+>> > Mira la función "*as.formula()*".
+>> > Incluye un ejemplo muy parecido a lo que estás queriendo hacer.
+>> >
+>> > Saludos,
+>> > Carlos Ortega
+>> > www.qualityexcellence.es
+>> >
+>> > El lun., 3 jun. 2019 a las 1:00, Rolando Valdez (<rvaldezr en gmail.com>)
+>> > escribió:
+>> >
+>> >> Hola,
+>> >>
+>> >> Quiero especificar una ecuación con varias variables explicativas de
+>> una
+>> >> manera eficiente sin necesidad de escribir todas y cada una. Tengo un
+>> >> conjunto de variables (junto con otras) dentro de una base de datos
+>> que se
+>> >> llaman pot23 pot311 pot312 pot 316 pot317........... pot80. No
+>> >> necesariamente están secuenciadas. Quisiera saber cómo indicar que
+>> incluya
+>> >> todas las variables de pot23 a pot80 en una ecuación.
+>> >>
+>> >> He intentado lo siguiente, pero no funciona:
+>> >>
+>> >> > pots <- paste("pot",23:321, sep="")
+>> >> > eqreg2 <- lwage~SEXO+EDAD+HLENGUA+ESCOACUM+marr+wageszm14[,pots]
+>> >> > fit <- qregspiv(eqreg2, shpfile = zm15, tau = 0.5, nboot = 70, data =
+>> >> wageszm14)
+>> >> Error: Can't find columns `pot24`, `pot25`, `pot26`, `pot27`, `pot28`,
+>> ...
+>> >> (and 273 more) in `.data`.
+>> >>
+>> >> De igual forma, después estaría interesado en obtener el logaritmo de
+>> >> todas
+>> >> esas variables pot~
+>> >>
+>> >> Gracias de antemano por cualquier tipo de ayuda.
+>> >>
+>> >> --
+>> >> Rol~
+>> >>
+>> >>         [[alternative HTML version deleted]]
+>> >>
+>> >> _______________________________________________
+>> >> R-help-es mailing list
+>> >> R-help-es en r-project.org
+>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>> >>
+>> >
+>> >
+>> > --
+>> > Saludos,
+>> > Carlos Ortega
+>> > www.qualityexcellence.es
+>> >
+>>
+>>
+>> --
+>> Rol~
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Juan Abasolo
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>
+
+
+-- 
+Rol~
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Fri Jun  7 19:10:03 2019
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Fri, 7 Jun 2019 14:10:03 -0300
+Subject: [R-es] =?utf-8?q?Transformar_factor_a_num=C3=A9rico=2E?=
+Message-ID: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+
+Hola, Estoy levantando un archivo csv y hay dos campos (atendidos,
+asistidos) que necesito leerlos como numéricos o enteros, pero al
+levantarlos están en formato factor. Como puedo hacer para transformarlos a
+numéricos?
+
+
+caac_enero_2019<-read.csv("1-Informe Caac Geonode-Mes de Enero.csv",sep =
+";")
+
+[image: image.png]
+
+
+Intenté con:
+
+caac_enero_2019$asistidos<
+as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+
+
+
+intenté de esta otra forma:
+
+caac_enero_2019$asistidos<-as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+
+
+
+Pero al hacer:
+
+ sum(caac_enero_2019$asistidos)
+
+
+
+Arroja el siguiente mensaje: NA.
+
+
+
+Alguien me podrá dar una mano para resolver esto?
+
+
+
+Muchas gracias!
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190607/d8b9bdd4/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 3533 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190607/d8b9bdd4/attachment.png>
+
+From d@r|om@nzo|| @end|ng |rom y@hoo@com@@r  Fri Jun  7 20:30:06 2019
+From: d@r|om@nzo|| @end|ng |rom y@hoo@com@@r (Dario Manzoli)
+Date: Fri, 7 Jun 2019 15:30:06 -0300
+Subject: [R-es] =?utf-8?q?Transformar_factor_a_num=C3=A9rico=2E?=
+In-Reply-To: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+References: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+Message-ID: <007501d51d5f$09c91790$1d5b46b0$@yahoo.com.ar>
+
+Hola Juan Manuel:
+
+Lo que suelo hacer en esos casos es primero pasarlos a character y después a numeric. De la siguiente forma:
+
+ 
+
+caac_enero_2019$asistidos <- as.character (caac_enero_2019$asistidos)
+
+ 
+
+caac_enero_2019$asistidos<-as.numeric (caac_enero_2019$asistidos)
+
+ 
+
+Saludos
+
+Darío
+
+ 
+
+ 
+
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de juan manuel dias
+Enviado el: viernes, 7 de junio de 2019 14:10
+Para: Lista R <r-help-es en r-project.org>
+Asunto: [R-es] Transformar factor a numérico.
+
+ 
+
+Hola, Estoy levantando un archivo csv y hay dos campos (atendidos, asistidos) que necesito leerlos como numéricos o enteros, pero al levantarlos están en formato factor. Como puedo hacer para transformarlos a numéricos? 
+
+ 
+
+caac_enero_2019<-read.csv("1-Informe Caac Geonode-Mes de Enero.csv",sep = ";")
+
+ 
+
+
+
+ 
+
+Intenté con:
+
+caac_enero_2019$asistidos< as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+
+ 
+
+intenté de esta otra forma:
+
+caac_enero_2019$asistidos<-as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+
+ 
+
+Pero al hacer:
+
+ sum(caac_enero_2019$asistidos)
+
+ 
+
+Arroja el siguiente mensaje: NA.
+
+ 
+
+Alguien me podrá dar una mano para resolver esto?
+
+ 
+
+Muchas gracias!
+
+  
+
+
+
+---
+El software de antivirus Avast ha analizado este correo electrónico en busca de virus.
+https://www.avast.com/antivirus
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190607/dfde9b5c/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 3533 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190607/dfde9b5c/attachment-0001.png>
+
+From jcm|d @end|ng |rom c@rmon@roch@@com  Fri Jun  7 20:57:08 2019
+From: jcm|d @end|ng |rom c@rmon@roch@@com (JCMld)
+Date: Fri, 7 Jun 2019 20:57:08 +0200
+Subject: [R-es] =?utf-8?q?Transformar_factor_a_num=C3=A9rico=2E?=
+In-Reply-To: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+References: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+Message-ID: <000c01d51d62$cec1de30$6c459a90$@com>
+
+Prueba a usar el parámetro colClasses en el read.csv, es decir:
+
+caac_enero_2019<-read.csv("1-Informe Caac Geonode-Mes de Enero.csv",sep = ";",colClasses=c("integer","integer"))
+
+Saludos,
+
+Juan
+
+ 
+
+De: R-help-es [mailto:r-help-es-bounces en r-project.org] En nombre de juan manuel dias
+Enviado el: viernes, 7 de junio de 2019 19:10
+Para: Lista R
+Asunto: [R-es] Transformar factor a numérico.
+
+ 
+
+Hola, Estoy levantando un archivo csv y hay dos campos (atendidos, asistidos) que necesito leerlos como numéricos o enteros, pero al levantarlos están en formato factor. Como puedo hacer para transformarlos a numéricos? 
+
+ 
+
+caac_enero_2019<-read.csv("1-Informe Caac Geonode-Mes de Enero.csv",sep = ";")
+
+ 
+
+image.png
+
+ 
+
+Intenté con:
+
+caac_enero_2019$asistidos< as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+
+ 
+
+intenté de esta otra forma:
+
+caac_enero_2019$asistidos<-as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+
+ 
+
+Pero al hacer:
+
+ sum(caac_enero_2019$asistidos)
+
+ 
+
+Arroja el siguiente mensaje: NA.
+
+ 
+
+Alguien me podrá dar una mano para resolver esto?
+
+ 
+
+Muchas gracias!
+
+  
+
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190607/dea98d37/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 3533 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190607/dea98d37/attachment.png>
+
+From er|cconch@munoz @end|ng |rom gm@||@com  Sat Jun  8 00:10:14 2019
+From: er|cconch@munoz @end|ng |rom gm@||@com (Eric)
+Date: Fri, 7 Jun 2019 18:10:14 -0400
+Subject: [R-es] =?utf-8?q?Transformar_factor_a_num=C3=A9rico=2E?=
+In-Reply-To: <000c01d51d62$cec1de30$6c459a90$@com>
+References: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+ <000c01d51d62$cec1de30$6c459a90$@com>
+Message-ID: <CALATcDCnD-BpoKBu_W6OtnU0pd=F_qx=rRf9pUtBQHECAty_2A@mail.gmail.com>
+
+Usa la función fread() de la librería data.table así:
+
+library(data.table)
+
+tuobjeto <- fread(tusdatos.csv)
+
+Normalmente, fread() es bastante inteligente y reconocerá los tipos de
+datos correctamente sin tener que hacer transformaciones de tipos de datos.
+
+Así me recomendaron en esta misma lista hace tiempo y se resolvió cuando lo
+necesité.
+
+Saludos !!
+
+Eric.
+
+
+
+
+
+
+
+
+
+On Friday, June 7, 2019, JCMld <jcmld en carmonarocha.com> wrote:
+
+> Prueba a usar el parámetro colClasses en el read.csv, es decir:
+>
+> caac_enero_2019<-read.csv("1-Informe Caac Geonode-Mes de Enero.csv",sep =
+> ";",colClasses=c("integer","integer"))
+>
+> Saludos,
+>
+> Juan
+>
+>
+>
+> *De:* R-help-es [mailto:r-help-es-bounces en r-project.org] *En nombre de *juan
+> manuel dias
+> *Enviado el:* viernes, 7 de junio de 2019 19:10
+> *Para:* Lista R
+> *Asunto:* [R-es] Transformar factor a numérico.
+>
+>
+>
+> Hola, Estoy levantando un archivo csv y hay dos campos (atendidos,
+> asistidos) que necesito leerlos como numéricos o enteros, pero al
+> levantarlos están en formato factor. Como puedo hacer para transformarlos a
+> numéricos?
+>
+>
+>
+> caac_enero_2019<-read.csv("1-Informe Caac Geonode-Mes de Enero.csv",sep =
+> ";")
+>
+>
+>
+> [image: image.png]
+>
+>
+>
+> Intenté con:
+>
+> caac_enero_2019$asistidos< as.numeric(levels(caac_enero_
+> 2019$asistidos))[caac_enero_2019$asistidos]
+>
+>
+>
+> intenté de esta otra forma:
+>
+> caac_enero_2019$asistidos<-as.numeric(levels(caac_enero_
+> 2019$asistidos))[caac_enero_2019$asistidos]
+>
+>
+>
+> Pero al hacer:
+>
+>  sum(caac_enero_2019$asistidos)
+>
+>
+>
+> Arroja el siguiente mensaje: NA.
+>
+>
+>
+> Alguien me podrá dar una mano para resolver esto?
+>
+>
+>
+> Muchas gracias!
+>
+>
+>
+
+
+-- 
+Nota: las tildes se han omitido para evitar conflictos con algunos lectores
+de correo.
+
+Frases notables:
+* SATYÂT NÂSTI PARO DHARMAH (No hay religion mas elevada que la verdad)
+* La oscuridad no se combate, se ilumina ...
+* Un economista es un experto que sabrá mañana por qué las cosas que predijo
+ayer no han sucedido hoy (Laurence Peter).
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190607/c448efa2/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image001.png
+Type: image/png
+Size: 3533 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190607/c448efa2/attachment-0001.png>
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sat Jun  8 00:53:22 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sat, 8 Jun 2019 00:53:22 +0200
+Subject: [R-es] =?utf-8?q?Transformar_factor_a_num=C3=A9rico=2E?=
+In-Reply-To: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+References: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+Message-ID: <CAOKbq8g7_=mpkcuCTHzBbYObF7N2yS9YOXFA-KGSRygGsLFGfA@mail.gmail.com>
+
+Hola,
+
+Además de que en la importación de los datos, evites que los trate como
+factores.
+La forma de convertirles a "numeric" es así:
+
+caac_enero_2019$asistidos< as.numeric(*as.vector*
+(caac_enero_2019$asistidos))
+
+Primero los transformas a "vector", y una vez que ya no tienen estructura
+de factor, si no que aparecen como "character" los pasas a "numeric".
+
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+El vie., 7 jun. 2019 a las 19:10, juan manuel dias (<juamadias en gmail.com>)
+escribió:
+
+> Hola, Estoy levantando un archivo csv y hay dos campos (atendidos,
+> asistidos) que necesito leerlos como numéricos o enteros, pero al
+> levantarlos están en formato factor. Como puedo hacer para transformarlos a
+> numéricos?
+>
+>
+> caac_enero_2019<-read.csv("1-Informe Caac Geonode-Mes de Enero.csv",sep =
+> ";")
+>
+> [image: image.png]
+>
+>
+> Intenté con:
+>
+> caac_enero_2019$asistidos<
+> as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+>
+>
+>
+> intenté de esta otra forma:
+>
+>
+> caac_enero_2019$asistidos<-as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+>
+>
+>
+> Pero al hacer:
+>
+>  sum(caac_enero_2019$asistidos)
+>
+>
+>
+> Arroja el siguiente mensaje: NA.
+>
+>
+>
+> Alguien me podrá dar una mano para resolver esto?
+>
+>
+>
+> Muchas gracias!
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190608/b686dc2e/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 3533 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190608/b686dc2e/attachment.png>
+
+From |@rchuby @end|ng |rom gm@||@com  Sat Jun  8 17:21:16 2019
+From: |@rchuby @end|ng |rom gm@||@com (Fernando Archuby)
+Date: Sat, 8 Jun 2019 12:21:16 -0300
+Subject: [R-es] Significancia de clusters
+Message-ID: <CAE09ejcd8yyRZK7+Jk1ridHzVRLdvFdBW9qOzjeO=AS51mCDdg@mail.gmail.com>
+
+Buenos días/tardes/noches.
+
+Estoy analizando datos de conteos de especies por muestra (paleontología,
+pero es similar a un estudio de comunidades actules). Mi matriz consiste en
+112 muestras y 113 especies. Probé diferentes estrategias para armar
+clusters con significado (paleo) biológico. Las dos opciones que me quedé
+son la distancia Chord y Bray-Curtis (sobre el log x+1 de las
+proporciones), en los dos casos con UPGMA. Bien, me encontré con un
+problema al querer evaluar la relevancia (significación) de los clusters
+con el paquete pvclust(), que hace un remuestreo con diferentes tamaños
+muestrales y calcula una especie de probabilidad de significación de cada
+cluster (nodo). Bien, pude hacerlo, siguiendo instrucciones de Borcard et
+al (2018) para el caso de Chord pero no Bray-Curtis. No me doy cuenta de
+cómo especificar el método de cálculo de la matriz de distancia
+(disimilitud)....En pvclust() se debe especificar el método de cálculo de
+las distancias (dist.method) pero entre las opciones no encuentro cómo
+calcular la distancia de Bray-Curtis. Díganme qué otra info puedo darles
+para ampliar. Y muchas gracias!
+
+http://127.0.0.1:30722/library/pvclust/html/pvclust.html
+
+Borcard, D., Gillet, F., & Legendre, P. (2018). Numerical Ecology with R.
+https://doi.org/10.1007/978-3-319-71404-2
+
+Saludos,
+
+Fernando.
+
+
+-- 
+
+*Dr. Fernando M. Archuby*
+CONICET-UNLP
+Teléfono Personal: +54-221-15-6129667.
+farchuby en gmail.com
+
+	[[alternative HTML version deleted]]
+
+
+From r@b|deg@|n @end|ng |rom gm@||@com  Sun Jun  9 18:48:31 2019
+From: r@b|deg@|n @end|ng |rom gm@||@com (Rafael Bidegain)
+Date: Sun, 9 Jun 2019 13:48:31 -0300
+Subject: [R-es] como graficar una coordenada en un mapa
+Message-ID: <CAAfqxSRcg9ocxejBh1M-yAbfqXgcObB86jPHX8vbVhvu=uXgag@mail.gmail.com>
+
+Hola a todos.
+
+Soy nuevo en R, estoy aprendiendo con tutoriales y lo hago sin un fin
+comercial y/o laboral.
+
+Necesito ayuda para mostrar un mapa y sobre ese mapa poner un punto dado
+por una coordenada.
+
+con esto consigo mostrar el mapa.
+library(raster)
+arg<-getData('GADM', country='ARG', level=0)
+plot(arg)
+
+En ese mapa quiero mostrar un punto que está en el sistema de coordenadas
+de google en -32.571723, -58.991303
+
+gracias!
+-- 
+Rafael Bidegain
+
+Ya que los cuerdos no hablan, hablará el loco.
+(The Fool, Padraic Pearse)
+
+# yo quiero educación libre. ¡YA!
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Mon Jun 10 00:29:01 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Mon, 10 Jun 2019 00:29:01 +0200
+Subject: [R-es] como graficar una coordenada en un mapa
+In-Reply-To: <CAAfqxSRcg9ocxejBh1M-yAbfqXgcObB86jPHX8vbVhvu=uXgag@mail.gmail.com>
+References: <CAAfqxSRcg9ocxejBh1M-yAbfqXgcObB86jPHX8vbVhvu=uXgag@mail.gmail.com>
+Message-ID: <CA+8ueybWdeQFUCk2ZZbO_Grpzb6oe5HfSFsBdx4p0J3=QU_gPQ@mail.gmail.com>
+
+Hola, Rafael;
+Yo uso otras librerías, pero si andás por gusto, capaz que les encontrás su
+gracia. Estos son unos apuntes míos (porteñorenegado, como verás)
+intentando aprender, que se parecen a los tuyos, diría:
+
+# -----
+library(maptools)
+#  Argentinagaz (Tandil eta Buenos Aires)
+
+# Data
+x <- data.frame(
+    ixena = c('Buenos Aires', 'Tandil'),
+    lati = c(-34.6131500, -37.3216705),
+    long = c(-58.3772300, -59.1331596))
+
+coordinates(x) <- c("long", "lati")
+proj4string(x) <- CRS("+proj=longlat +datum=WGS84")
+
+data(wrld_simpl)
+argn <- wrld_simpl[wrld_simpl$ISO3 == 'ARG', ]
+plot(argn, col = 1)
+points(x, pch = 20, col = 4, cex = 2)
+text(x, c('Nací', 'Pertenencia'), col = 8, cex = 1.2)
+
+# ---
+Llegué ahí siguiendo algún ejemplo de StackOverflow.
+
+Trabajo con un par de tu apellido. Los tuyos son de Baja Navarra?
+
+Suerte
+
+
+
+Hau idatzi du Rafael Bidegain (r.bidegain en gmail.com) erabiltzaileak (2019
+eka. 9, ig. (18:49)):
+
+> Hola a todos.
+>
+> Soy nuevo en R, estoy aprendiendo con tutoriales y lo hago sin un fin
+> comercial y/o laboral.
+>
+> Necesito ayuda para mostrar un mapa y sobre ese mapa poner un punto dado
+> por una coordenada.
+>
+> con esto consigo mostrar el mapa.
+> library(raster)
+> arg<-getData('GADM', country='ARG', level=0)
+> plot(arg)
+>
+> En ese mapa quiero mostrar un punto que está en el sistema de coordenadas
+> de google en -32.571723, -58.991303
+>
+> gracias!
+> --
+> Rafael Bidegain
+>
+> Ya que los cuerdos no hablan, hablará el loco.
+> (The Fool, Padraic Pearse)
+>
+> # yo quiero educación libre. ¡YA!
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@m@d|@@ @end|ng |rom gm@||@com  Mon Jun 10 19:29:47 2019
+From: ju@m@d|@@ @end|ng |rom gm@||@com (juan manuel dias)
+Date: Mon, 10 Jun 2019 14:29:47 -0300
+Subject: [R-es] =?utf-8?q?Transformar_factor_a_num=C3=A9rico=2E?=
+In-Reply-To: <CAOKbq8g7_=mpkcuCTHzBbYObF7N2yS9YOXFA-KGSRygGsLFGfA@mail.gmail.com>
+References: <CAOF0weHbHQcfqePXfz2LYurOeiJjQzMnUvb3CxHFa2pQbC6NzQ@mail.gmail.com>
+ <CAOKbq8g7_=mpkcuCTHzBbYObF7N2yS9YOXFA-KGSRygGsLFGfA@mail.gmail.com>
+Message-ID: <CAOF0weE27E=EfAQFSu9XivedAO4oVrjm0xrebLZUaYyQA6sfGA@mail.gmail.com>
+
+Muchas gracias a todos! Voy a probar con cada una de las opciones que me
+pasaron!
+Saludos, Juan.
+
+El vie., 7 jun. 2019 a las 19:54, Carlos Ortega (<cof en qualityexcellence.es>)
+escribió:
+
+> Hola,
+>
+> Además de que en la importación de los datos, evites que los trate como
+> factores.
+> La forma de convertirles a "numeric" es así:
+>
+> caac_enero_2019$asistidos< as.numeric(*as.vector*
+> (caac_enero_2019$asistidos))
+>
+> Primero los transformas a "vector", y una vez que ya no tienen estructura
+> de factor, si no que aparecen como "character" los pasas a "numeric".
+>
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+> El vie., 7 jun. 2019 a las 19:10, juan manuel dias (<juamadias en gmail.com>)
+> escribió:
+>
+>> Hola, Estoy levantando un archivo csv y hay dos campos (atendidos,
+>> asistidos) que necesito leerlos como numéricos o enteros, pero al
+>> levantarlos están en formato factor. Como puedo hacer para transformarlos a
+>> numéricos?
+>>
+>>
+>> caac_enero_2019<-read.csv("1-Informe Caac Geonode-Mes de Enero.csv",sep =
+>> ";")
+>>
+>> [image: image.png]
+>>
+>>
+>> Intenté con:
+>>
+>> caac_enero_2019$asistidos<
+>> as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+>>
+>>
+>>
+>> intenté de esta otra forma:
+>>
+>>
+>> caac_enero_2019$asistidos<-as.numeric(levels(caac_enero_2019$asistidos))[caac_enero_2019$asistidos]
+>>
+>>
+>>
+>> Pero al hacer:
+>>
+>>  sum(caac_enero_2019$asistidos)
+>>
+>>
+>>
+>> Arroja el siguiente mensaje: NA.
+>>
+>>
+>>
+>> Alguien me podrá dar una mano para resolver esto?
+>>
+>>
+>>
+>> Muchas gracias!
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190610/d7007a1c/attachment.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: image.png
+Type: image/png
+Size: 3533 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20190610/d7007a1c/attachment.png>
+
+From |rm@tur@ @end|ng |rom gm@||@com  Wed Jun 12 13:22:32 2019
+From: |rm@tur@ @end|ng |rom gm@||@com (Francisco Maturana)
+Date: Wed, 12 Jun 2019 07:22:32 -0400
+Subject: [R-es] Significancia de clusters
+In-Reply-To: <mailman.13403.9.1560074402.29646.r-help-es@r-project.org>
+References: <mailman.13403.9.1560074402.29646.r-help-es@r-project.org>
+Message-ID: <CACsCVgVjyB4eQWa_8K_y2+xXMsx6F0aW2MJjupPQU923q3tJtw@mail.gmail.com>
+
+Estimado Fernando, un paquete que me ha dado muy buenos resultados es
+FactoMinerR
+http://factominer.free.fr/
+Además, tiene un amplio soporte
+Aca la web del desarrollador que te deja unos videos
+https://francoishusson.wordpress.com/2017/08/04/clustering-with-factominer/
+
+tanto conceptuales como del uso de las funciones
+
+Saludos
+Fco
+
+
+
+
+
+>
+> Asuntos del día:
+>
+>    1. Significancia de clusters (Fernando Archuby)
+>
+> ----------------------------------------------------------------------
+>
+> Message: 1
+> Date: Sat, 8 Jun 2019 12:21:16 -0300
+> From: Fernando Archuby <farchuby en gmail.com>
+> To: r-help-es en r-project.org
+> Subject: [R-es] Significancia de clusters
+> Message-ID:
+>         <CAE09ejcd8yyRZK7+Jk1ridHzVRLdvFdBW9qOzjeO=
+> AS51mCDdg en mail.gmail.com>
+> Content-Type: text/plain; charset="utf-8"
+>
+> Buenos días/tardes/noches.
+>
+> Estoy analizando datos de conteos de especies por muestra (paleontología,
+> pero es similar a un estudio de comunidades actules). Mi matriz consiste en
+> 112 muestras y 113 especies. Probé diferentes estrategias para armar
+> clusters con significado (paleo) biológico. Las dos opciones que me quedé
+> son la distancia Chord y Bray-Curtis (sobre el log x+1 de las
+> proporciones), en los dos casos con UPGMA. Bien, me encontré con un
+> problema al querer evaluar la relevancia (significación) de los clusters
+> con el paquete pvclust(), que hace un remuestreo con diferentes tamaños
+> muestrales y calcula una especie de probabilidad de significación de cada
+> cluster (nodo). Bien, pude hacerlo, siguiendo instrucciones de Borcard et
+> al (2018) para el caso de Chord pero no Bray-Curtis. No me doy cuenta de
+> cómo especificar el método de cálculo de la matriz de distancia
+> (disimilitud)....En pvclust() se debe especificar el método de cálculo de
+> las distancias (dist.method) pero entre las opciones no encuentro cómo
+> calcular la distancia de Bray-Curtis. Díganme qué otra info puedo darles
+> para ampliar. Y muchas gracias!
+>
+> http://127.0.0.1:30722/library/pvclust/html/pvclust.html
+>
+> Borcard, D., Gillet, F., & Legendre, P. (2018). Numerical Ecology with R.
+> https://doi.org/10.1007/978-3-319-71404-2
+>
+> Saludos,
+>
+> Fernando.
+>
+>
+> --
+>
+> *Dr. Fernando M. Archuby*
+> CONICET-UNLP
+> Teléfono Personal: +54-221-15-6129667.
+> farchuby en gmail.com
+>
+>
+
+
+
+-- 
+Francisco Maturana Miranda
+Dr. Planificación territorial, urbanismo y dinámicas del espacio
+Profesor Asociado, Departamento de Geografía Universidad Alberto Hurtado
+www.fmaturana.cl
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Wed Jun 12 13:42:33 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Wed, 12 Jun 2019 13:42:33 +0200
+Subject: [R-es] Significancia de clusters
+In-Reply-To: <CAE09ejcd8yyRZK7+Jk1ridHzVRLdvFdBW9qOzjeO=AS51mCDdg@mail.gmail.com>
+References: <CAE09ejcd8yyRZK7+Jk1ridHzVRLdvFdBW9qOzjeO=AS51mCDdg@mail.gmail.com>
+Message-ID: <CAOKbq8ibAa71w_0kBhCLa4aa2jigN6fF05P4sFmaDtA1axaxXQ@mail.gmail.com>
+
+Hola,
+
+El índice de "Bray-Curtis" para la medida de distancias entre clústers lo
+tienes implementado en el paquete "*vegan*" en la función "*vegdist()*".
+https://cloud.r-project.org/web/packages/vegan/index.html
+
+Gracias,
+Carlos Ortega
+www.qualityexcellence.es
+
+El sáb., 8 jun. 2019 a las 17:21, Fernando Archuby (<farchuby en gmail.com>)
+escribió:
+
+> Buenos días/tardes/noches.
+>
+> Estoy analizando datos de conteos de especies por muestra (paleontología,
+> pero es similar a un estudio de comunidades actules). Mi matriz consiste en
+> 112 muestras y 113 especies. Probé diferentes estrategias para armar
+> clusters con significado (paleo) biológico. Las dos opciones que me quedé
+> son la distancia Chord y Bray-Curtis (sobre el log x+1 de las
+> proporciones), en los dos casos con UPGMA. Bien, me encontré con un
+> problema al querer evaluar la relevancia (significación) de los clusters
+> con el paquete pvclust(), que hace un remuestreo con diferentes tamaños
+> muestrales y calcula una especie de probabilidad de significación de cada
+> cluster (nodo). Bien, pude hacerlo, siguiendo instrucciones de Borcard et
+> al (2018) para el caso de Chord pero no Bray-Curtis. No me doy cuenta de
+> cómo especificar el método de cálculo de la matriz de distancia
+> (disimilitud)....En pvclust() se debe especificar el método de cálculo de
+> las distancias (dist.method) pero entre las opciones no encuentro cómo
+> calcular la distancia de Bray-Curtis. Díganme qué otra info puedo darles
+> para ampliar. Y muchas gracias!
+>
+> http://127.0.0.1:30722/library/pvclust/html/pvclust.html
+>
+> Borcard, D., Gillet, F., & Legendre, P. (2018). Numerical Ecology with R.
+> https://doi.org/10.1007/978-3-319-71404-2
+>
+> Saludos,
+>
+> Fernando.
+>
+>
+> --
+>
+> *Dr. Fernando M. Archuby*
+> CONICET-UNLP
+> Teléfono Personal: +54-221-15-6129667.
+> farchuby en gmail.com
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From |@gr|m@e@cr|t@ @end|ng |rom gm@||@com  Thu Jun 13 12:42:16 2019
+From: |@gr|m@e@cr|t@ @end|ng |rom gm@||@com (Ruben Tobalina Ramirez)
+Date: Thu, 13 Jun 2019 12:42:16 +0200
+Subject: [R-es] Problema de INSERT en Windows SQL
+In-Reply-To: <CAKXAqm3-L8kqE0uST3rqvBe+Tv0F-r4Of6dVrXwgxC-0G_K5uw@mail.gmail.com>
+References: <CAKXAqm3-L8kqE0uST3rqvBe+Tv0F-r4Of6dVrXwgxC-0G_K5uw@mail.gmail.com>
+Message-ID: <CAKXAqm1jShAHAD5vq=u+6rpeaDmEZgL4zG47pQuCuhtra4cknw@mail.gmail.com>
+
+Pd: Perdón por el duplicado de mensaje, se me olvido poner el asunto al
+anterior y me han surgido nuevas consultas.
+
+Buenos días,
+llevo unos dias peleando para realizar una consulta con INSERT en Windows
+SQL. He probado varios paquetes de R y con ninguno lo he conseguido.
+Ahora mismo estoy probando con DBI y odbc.
+
+Probé con dbSendStatementy al ejecutar la consulta:
+dbSendStatement(con,paste("INSERT INTO DATOSPERFIL VALUES (", idPerfil,",",
+Fecha, ",", Seguidores,",", Seguidos,",", Likes,",", Descripcion,",",
+url,")"))
+obtengo el siguiente error:
+
+rs <- dbSendStatement(con,query)Error: <SQL> 'INSERT INTO DATOSPERFIL
+VALUES ( 1 , 13/06/2019 , 170604 , 90 ,  , Periodista de Antena 3
+Autor de El rastro de los rusos muertos Antena 3 Tv News Spain
+managing editor presenter and author , NA )'
+  nanodbc/nanodbc.cpp:1587: 42000: [Microsoft][ODBC SQL Server
+Driver][SQL Server]Sintaxis incorrecta cerca de ','.
+
+¿Qué estoy haciendo mal?
+
+Conseguí añadir datos en la base con la función dbWriteTable del mismo
+paquete DBI:
+dbWriteTable(con, "imdbpelis_copia", dtf, append=FALSE, overwrite=FALSE
+,row.names = FALSE)
+
+El problema es que no me deja añadir nuevos datos en la tabla, solo la
+sobreescribe. ¿Se puede hacer con dbWriteTable?
+
+Como duda general, ¿cual es la mejor forma de trabajar con SQL desde R?
+
+Un saludo y muchas gracias
+
+-- 
+Rubén.
+
+	[[alternative HTML version deleted]]
+
+
+From jorpr@mo @end|ng |rom gm@||@com  Thu Jun 13 12:50:54 2019
+From: jorpr@mo @end|ng |rom gm@||@com (Jorge Pradas)
+Date: Thu, 13 Jun 2019 12:50:54 +0200
+Subject: [R-es] Problema de INSERT en Windows SQL
+In-Reply-To: <CAKXAqm1jShAHAD5vq=u+6rpeaDmEZgL4zG47pQuCuhtra4cknw@mail.gmail.com>
+References: <CAKXAqm3-L8kqE0uST3rqvBe+Tv0F-r4Of6dVrXwgxC-0G_K5uw@mail.gmail.com>
+ <CAKXAqm1jShAHAD5vq=u+6rpeaDmEZgL4zG47pQuCuhtra4cknw@mail.gmail.com>
+Message-ID: <CADf19gJqp=h5+XenxsxmZugcCmhkyhGXRXf_WMFQo0rPFix_sw@mail.gmail.com>
+
+Hola Ruben,
+
+yo uso el paquete RODBC y no suelo tener problemas.
+Lo mejor es que la sentencia la metas en una cadena y luego la ejecutes
+directamente en la consola de SQL que uses, sin pasar por R, para ver que
+la sentencia está bien.
+Así viendo el código pienso que igual el problema es que las cadenas de
+caracteres deben ir encerradas con comillas sino no te irá.
+de manera que quede algo o así ' ", Seguidores," ','  ", Seguidos," '
+
+todo lo que sea un varchar debe ir con comillas.
+Mira a ver si eso te puede ayudar.
+Jorge
+
+El jue., 13 jun. 2019 a las 12:42, Ruben Tobalina Ramirez (<
+lagrimaescrita en gmail.com>) escribió:
+
+> Pd: Perdón por el duplicado de mensaje, se me olvido poner el asunto al
+> anterior y me han surgido nuevas consultas.
+>
+> Buenos días,
+> llevo unos dias peleando para realizar una consulta con INSERT en Windows
+> SQL. He probado varios paquetes de R y con ninguno lo he conseguido.
+> Ahora mismo estoy probando con DBI y odbc.
+>
+> Probé con dbSendStatementy al ejecutar la consulta:
+> dbSendStatement(con,paste("INSERT INTO DATOSPERFIL VALUES (", idPerfil,",",
+> Fecha, ",", Seguidores,",", Seguidos,",", Likes,",", Descripcion,",",
+> url,")"))
+> obtengo el siguiente error:
+>
+> rs <- dbSendStatement(con,query)Error: <SQL> 'INSERT INTO DATOSPERFIL
+> VALUES ( 1 , 13/06/2019 , 170604 , 90 ,  , Periodista de Antena 3
+> Autor de El rastro de los rusos muertos Antena 3 Tv News Spain
+> managing editor presenter and author , NA )'
+>   nanodbc/nanodbc.cpp:1587: 42000: [Microsoft][ODBC SQL Server
+> Driver][SQL Server]Sintaxis incorrecta cerca de ','.
+>
+> ¿Qué estoy haciendo mal?
+>
+> Conseguí añadir datos en la base con la función dbWriteTable del mismo
+> paquete DBI:
+> dbWriteTable(con, "imdbpelis_copia", dtf, append=FALSE, overwrite=FALSE
+> ,row.names = FALSE)
+>
+> El problema es que no me deja añadir nuevos datos en la tabla, solo la
+> sobreescribe. ¿Se puede hacer con dbWriteTable?
+>
+> Como duda general, ¿cual es la mejor forma de trabajar con SQL desde R?
+>
+> Un saludo y muchas gracias
+>
+> --
+> Rubén.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From |@gr|m@e@cr|t@ @end|ng |rom gm@||@com  Thu Jun 13 15:06:17 2019
+From: |@gr|m@e@cr|t@ @end|ng |rom gm@||@com (Ruben Tobalina Ramirez)
+Date: Thu, 13 Jun 2019 15:06:17 +0200
+Subject: [R-es] Problema de INSERT en Windows SQL
+In-Reply-To: <CADf19gJqp=h5+XenxsxmZugcCmhkyhGXRXf_WMFQo0rPFix_sw@mail.gmail.com>
+References: <CAKXAqm3-L8kqE0uST3rqvBe+Tv0F-r4Of6dVrXwgxC-0G_K5uw@mail.gmail.com>
+ <CAKXAqm1jShAHAD5vq=u+6rpeaDmEZgL4zG47pQuCuhtra4cknw@mail.gmail.com>
+ <CADf19gJqp=h5+XenxsxmZugcCmhkyhGXRXf_WMFQo0rPFix_sw@mail.gmail.com>
+Message-ID: <CAKXAqm1uV79iH249bWpyqGK88HwSvUQFzidqyqQtGBVzdcxLiA@mail.gmail.com>
+
+Hola Jorge,
+he probado con RODBCy me ha funcionado a la primera! Como diría áquel:
+"¡Ójala te hubiera conocido antes!"
+
+Muchísimas gracias!! Un abrazo!
+Rubén,
+
+
+
+El jue., 13 jun. 2019 a las 12:51, Jorge Pradas (<jorpramo en gmail.com>)
+escribió:
+
+> Hola Ruben,
+>
+> yo uso el paquete RODBC y no suelo tener problemas.
+> Lo mejor es que la sentencia la metas en una cadena y luego la ejecutes
+> directamente en la consola de SQL que uses, sin pasar por R, para ver que
+> la sentencia está bien.
+> Así viendo el código pienso que igual el problema es que las cadenas de
+> caracteres deben ir encerradas con comillas sino no te irá.
+> de manera que quede algo o así ' ", Seguidores," ','  ", Seguidos," '
+>
+> todo lo que sea un varchar debe ir con comillas.
+> Mira a ver si eso te puede ayudar.
+> Jorge
+>
+> El jue., 13 jun. 2019 a las 12:42, Ruben Tobalina Ramirez (<
+> lagrimaescrita en gmail.com>) escribió:
+>
+>> Pd: Perdón por el duplicado de mensaje, se me olvido poner el asunto al
+>> anterior y me han surgido nuevas consultas.
+>>
+>> Buenos días,
+>> llevo unos dias peleando para realizar una consulta con INSERT en Windows
+>> SQL. He probado varios paquetes de R y con ninguno lo he conseguido.
+>> Ahora mismo estoy probando con DBI y odbc.
+>>
+>> Probé con dbSendStatementy al ejecutar la consulta:
+>> dbSendStatement(con,paste("INSERT INTO DATOSPERFIL VALUES (",
+>> idPerfil,",",
+>> Fecha, ",", Seguidores,",", Seguidos,",", Likes,",", Descripcion,",",
+>> url,")"))
+>> obtengo el siguiente error:
+>>
+>> rs <- dbSendStatement(con,query)Error: <SQL> 'INSERT INTO DATOSPERFIL
+>> VALUES ( 1 , 13/06/2019 , 170604 , 90 ,  , Periodista de Antena 3
+>> Autor de El rastro de los rusos muertos Antena 3 Tv News Spain
+>> managing editor presenter and author , NA )'
+>>   nanodbc/nanodbc.cpp:1587: 42000: [Microsoft][ODBC SQL Server
+>> Driver][SQL Server]Sintaxis incorrecta cerca de ','.
+>>
+>> ¿Qué estoy haciendo mal?
+>>
+>> Conseguí añadir datos en la base con la función dbWriteTable del mismo
+>> paquete DBI:
+>> dbWriteTable(con, "imdbpelis_copia", dtf, append=FALSE, overwrite=FALSE
+>> ,row.names = FALSE)
+>>
+>> El problema es que no me deja añadir nuevos datos en la tabla, solo la
+>> sobreescribe. ¿Se puede hacer con dbWriteTable?
+>>
+>> Como duda general, ¿cual es la mejor forma de trabajar con SQL desde R?
+>>
+>> Un saludo y muchas gracias
+>>
+>> --
+>> Rubén.
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+-- 
+Rubén.
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Fri Jun 14 10:03:01 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Fri, 14 Jun 2019 10:03:01 +0200
+Subject: [R-es] =?utf-8?q?61_-_Reuni=C3=B3n_Grupo_de_Usuarios_de_R_de_Mad?=
+ =?utf-8?b?cmlkLi4u?=
+Message-ID: <CAOKbq8grZ9F=P8z3EFOVL_8qaGHiwSCpEwP6ebgEU78__6-8Cg@mail.gmail.com>
+
+Buenas a todos,
+
+Ya están disponibles los videos de la sesión de ayer de la reunión del
+"Grupo de Usuarios de R de Madrid".
+
+http://madrid.r-es.org/61-jueves-13-de-junio-2019/
+
+Gracias y en cuanto a las reuniones ya volvemos en septiembre,
+Carlos.
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Fri Jun 14 11:36:18 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Fri, 14 Jun 2019 11:36:18 +0200
+Subject: [R-es] Ejecutar un script de Python con argumentos desde R
+Message-ID: <CA+8ueyYCVWQ2tLc9zviDzz+ThHZc6DrSZL4m4v8uCg7_Fti7zQ@mail.gmail.com>
+
+Hola, amigos
+Se me acabo la sapienza. A ver:
+tengo un sript de Python script.py que neesita sus argumentos arg1 arg2
+arg3, si desde la consola del sistema me pongo en la carpeta en la que lo
+tengo y hago:
+$ script.py arg1 arg arg3
+Funciona perfecto.
+
+Pero desde R no lo consigo (entiendo que por no saber)
+
+Lo hago así (copio y pego):
+
+dir <- getwd()
+setwd('data/row/directoriocondatos/')
+
+py_run_string(
+        paste0('script.py ',
+            paste0(ar[i], '1 '),
+            ar[i],
+            paste0(' ', ar[i], '3')
+            ))
+setwd(dir)
+
+El resultado del paste0() ese lo pego en la consola del sistema y
+perfecto... pero olvidate del for. Yo quiero que el script quede integrado
+para hacer todo de un solo paso, pero no sé.
+> paste0('script.py ',
+            paste0(ar[i], '1 '),
+            ar[i],
+            paste0(' ', ar[i], '3')
+            )
+[1] "script.py arg1 arg arg3" # Si eso lo pego en la consola, todo bien.
+
+Eso significa que tengo que corregir algo de la orden, o cambiarla o...
+manden
+Alguien que me desasne?
+
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Fri Jun 14 11:46:20 2019
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino De La Cruz Rot)
+Date: Fri, 14 Jun 2019 09:46:20 +0000
+Subject: [R-es] Ejecutar un script de Python con argumentos desde R
+In-Reply-To: <CA+8ueyYCVWQ2tLc9zviDzz+ThHZc6DrSZL4m4v8uCg7_Fti7zQ@mail.gmail.com>
+References: <CA+8ueyYCVWQ2tLc9zviDzz+ThHZc6DrSZL4m4v8uCg7_Fti7zQ@mail.gmail.com>
+Message-ID: <c0160cef-e47d-c2cb-8e2d-c1f58d86987e@urjc.es>
+
+¿Has probado esto?
+
+system(
+> paste0('script.py ',
+
+             paste0(ar[i], '1 '),
+             ar[i],
+             paste0(' ', ar[i], '3')
+             )
+
+)
+
+
+
+
+El 14/06/2019 a las 11:36, Juan Abasolo escribió:
+> Hola, amigos
+> Se me acabo la sapienza. A ver:
+> tengo un sript de Python script.py que neesita sus argumentos arg1 arg2
+> arg3, si desde la consola del sistema me pongo en la carpeta en la que lo
+> tengo y hago:
+> $ script.py arg1 arg arg3
+> Funciona perfecto.
+>
+> Pero desde R no lo consigo (entiendo que por no saber)
+>
+> Lo hago así (copio y pego):
+>
+> dir <- getwd()
+> setwd('data/row/directoriocondatos/')
+>
+> py_run_string(
+>          paste0('script.py ',
+>              paste0(ar[i], '1 '),
+>              ar[i],
+>              paste0(' ', ar[i], '3')
+>              ))
+> setwd(dir)
+>
+> El resultado del paste0() ese lo pego en la consola del sistema y
+> perfecto... pero olvidate del for. Yo quiero que el script quede integrado
+> para hacer todo de un solo paso, pero no sé.
+>> paste0('script.py ',
+>              paste0(ar[i], '1 '),
+>              ar[i],
+>              paste0(' ', ar[i], '3')
+>              )
+> [1] "script.py arg1 arg arg3" # Si eso lo pego en la consola, todo bien.
+>
+> Eso significa que tengo que corregir algo de la orden, o cambiarla o...
+> manden
+> Alguien que me desasne?
+>
+>
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Fri Jun 14 12:14:31 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Fri, 14 Jun 2019 12:14:31 +0200
+Subject: [R-es] Ejecutar un script de Python con argumentos desde R
+In-Reply-To: <c0160cef-e47d-c2cb-8e2d-c1f58d86987e@urjc.es>
+References: <CA+8ueyYCVWQ2tLc9zviDzz+ThHZc6DrSZL4m4v8uCg7_Fti7zQ@mail.gmail.com>
+ <c0160cef-e47d-c2cb-8e2d-c1f58d86987e@urjc.es>
+Message-ID: <CA+8ueya26B-0+-rvP3ah03XKSCk17CjskCYJ_a-rKF=tV5iCUQ@mail.gmail.com>
+
+Ni idea de eso; te lo agradezco. Seguramente lo voy a terminar usando
+bastante.
+Pregunto: ahí debería hacer todas las operaciones propias del sistema? No
+me encuentra el script, y se me hace raro. Capaz que pasa al sistema desde
+la carpeta en la que está el script de R, no desde el wd de R.
+Ahora me toca salir y después intentar probar y que funcione.
+Gracis de vuelta
+
+
+
+Hau idatzi du Marcelino De La Cruz Rot (marcelino.delacruz en urjc.es)
+erabiltzaileak (2019 eka. 14, or. (11:46)):
+
+> ¿Has probado esto?
+>
+> system(
+> > paste0('script.py ',
+>
+>              paste0(ar[i], '1 '),
+>              ar[i],
+>              paste0(' ', ar[i], '3')
+>              )
+>
+> )
+>
+>
+>
+>
+> El 14/06/2019 a las 11:36, Juan Abasolo escribió:
+> > Hola, amigos
+> > Se me acabo la sapienza. A ver:
+> > tengo un sript de Python script.py que neesita sus argumentos arg1 arg2
+> > arg3, si desde la consola del sistema me pongo en la carpeta en la que lo
+> > tengo y hago:
+> > $ script.py arg1 arg arg3
+> > Funciona perfecto.
+> >
+> > Pero desde R no lo consigo (entiendo que por no saber)
+> >
+> > Lo hago así (copio y pego):
+> >
+> > dir <- getwd()
+> > setwd('data/row/directoriocondatos/')
+> >
+> > py_run_string(
+> >          paste0('script.py ',
+> >              paste0(ar[i], '1 '),
+> >              ar[i],
+> >              paste0(' ', ar[i], '3')
+> >              ))
+> > setwd(dir)
+> >
+> > El resultado del paste0() ese lo pego en la consola del sistema y
+> > perfecto... pero olvidate del for. Yo quiero que el script quede
+> integrado
+> > para hacer todo de un solo paso, pero no sé.
+> >> paste0('script.py ',
+> >              paste0(ar[i], '1 '),
+> >              ar[i],
+> >              paste0(' ', ar[i], '3')
+> >              )
+> > [1] "script.py arg1 arg arg3" # Si eso lo pego en la consola, todo bien.
+> >
+> > Eso significa que tengo que corregir algo de la orden, o cambiarla o...
+> > manden
+> > Alguien que me desasne?
+> >
+> >
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+>
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Fri Jun 14 12:51:54 2019
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino De La Cruz Rot)
+Date: Fri, 14 Jun 2019 10:51:54 +0000
+Subject: [R-es] Ejecutar un script de Python con argumentos desde R
+In-Reply-To: <CA+8ueya26B-0+-rvP3ah03XKSCk17CjskCYJ_a-rKF=tV5iCUQ@mail.gmail.com>
+References: <CA+8ueyYCVWQ2tLc9zviDzz+ThHZc6DrSZL4m4v8uCg7_Fti7zQ@mail.gmail.com>
+ <c0160cef-e47d-c2cb-8e2d-c1f58d86987e@urjc.es>
+ <CA+8ueya26B-0+-rvP3ah03XKSCk17CjskCYJ_a-rKF=tV5iCUQ@mail.gmail.com>
+Message-ID: <f99491e6-2931-1470-1835-356344368555@urjc.es>
+
+Hola Juan:
+
+en vez de system(), quería decir shell(), es decir:
+
+shell(
+  paste0('script.py ',
+
+              paste0(ar[i], '1 '),
+              ar[i],
+              paste0(' ', ar[i], '3')
+              )
+
+)
+
+Si el script está en el working directory [getwd()], te debería 
+funcionar sin problemas.
+
+Tanto system() como shell() te permiten interactuar con el sistema 
+fácilmente. Cada una tiene sus peculiaridades. Consulta ?system y ?shell
+
+
+
+
+
+El 14/06/2019 a las 12:14, Juan Abasolo escribió:
+> Ni idea de eso; te lo agradezco. Seguramente lo voy a terminar usando 
+> bastante.
+> Pregunto: ahí debería hacer todas las operaciones propias del sistema? 
+> No me encuentra el script, y se me hace raro. Capaz que pasa al 
+> sistema desde la carpeta en la que está el script de R, no desde el wd 
+> de R.
+> Ahora me toca salir y después intentar probar y que funcione.
+> Gracis de vuelta
+>
+>
+>
+> Hau idatzi du Marcelino De La Cruz Rot (marcelino.delacruz en urjc.es 
+> <mailto:marcelino.delacruz en urjc.es>) erabiltzaileak (2019 eka. 14, or. 
+> (11:46)):
+>
+>     ¿Has probado esto?
+>
+>     system(
+>     > paste0('script.py ',
+>
+>                  paste0(ar[i], '1 '),
+>                  ar[i],
+>                  paste0(' ', ar[i], '3')
+>                  )
+>
+>     )
+>
+>
+>
+>
+>     El 14/06/2019 a las 11:36, Juan Abasolo escribió:
+>     > Hola, amigos
+>     > Se me acabo la sapienza. A ver:
+>     > tengo un sript de Python script.py que neesita sus argumentos
+>     arg1 arg2
+>     > arg3, si desde la consola del sistema me pongo en la carpeta en
+>     la que lo
+>     > tengo y hago:
+>     > $ script.py arg1 arg arg3
+>     > Funciona perfecto.
+>     >
+>     > Pero desde R no lo consigo (entiendo que por no saber)
+>     >
+>     > Lo hago así (copio y pego):
+>     >
+>     > dir <- getwd()
+>     > setwd('data/row/directoriocondatos/')
+>     >
+>     > py_run_string(
+>     >          paste0('script.py ',
+>     >              paste0(ar[i], '1 '),
+>     >              ar[i],
+>     >              paste0(' ', ar[i], '3')
+>     >              ))
+>     > setwd(dir)
+>     >
+>     > El resultado del paste0() ese lo pego en la consola del sistema y
+>     > perfecto... pero olvidate del for. Yo quiero que el script quede
+>     integrado
+>     > para hacer todo de un solo paso, pero no sé.
+>     >> paste0('script.py ',
+>     >              paste0(ar[i], '1 '),
+>     >              ar[i],
+>     >              paste0(' ', ar[i], '3')
+>     >              )
+>     > [1] "script.py arg1 arg arg3" # Si eso lo pego en la consola,
+>     todo bien.
+>     >
+>     > Eso significa que tengo que corregir algo de la orden, o
+>     cambiarla o...
+>     > manden
+>     > Alguien que me desasne?
+>     >
+>     >
+>
+>     -- 
+>     Marcelino de la Cruz Rot
+>     Depto. de Biología y Geología
+>     Física y Química Inorgánica
+>     Universidad Rey Juan Carlos
+>     Móstoles España
+>
+>
+>
+> -- 
+> Juan Abasolo
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From rodr|guezm@rce|og@@ton @end|ng |rom gm@||@com  Fri Jun 14 14:09:28 2019
+From: rodr|guezm@rce|og@@ton @end|ng |rom gm@||@com (=?UTF-8?Q?Marcelo_Rodr=C3=ADguez?=)
+Date: Fri, 14 Jun 2019 09:09:28 -0300
+Subject: [R-es] =?utf-8?q?Comparaci=C3=B3n_interacciones?=
+Message-ID: <CACVOLwJ8u39PRe=F6z=2Q9ZEni-AKGjkHrfzVoprOgFHbJJkCQ@mail.gmail.com>
+
+Hola Grupo!
+Estoy teniendo el inconveniente de no saber como plantear en mi script la
+sentencia para obtener las comparaciones a posteriori de las
+interacciones...
+Tengo un modelo de medidas repetidas que es el siguiente:
+fit_med_rep3<-lme(IGG1~TTO*dia, random=~1|ANIMAL, correlation=corAR1(form =
+~ 1 |ANIMAL ),data=med_rep)
+summary(fit_med_rep3)
+anova(fit_med_rep3)
+
+Hasta ahí voy bien...(dijo un pato y estaba en la puerta del horno), el
+tema es cuando pido las comparaciones multiples a posteriori con el
+siguiente script:
+
+compFIT3<-glht(fit_med_rep3, linfct=mcp(TTO  ="Tukey",interaction_average =
+TRUE),test = adjusted(type = "bonferroni"))
+
+He probado crear un nuevo objeto (interacción=interaction(TTO,dia)) y
+ponerlo en el modelo para luego en vez de solo poner el factor TTO en la
+comparación a posteriori poner el objeto intertacción y tampoco lo pude
+resolver de esa forma...También probé con interaction_leverage=TRUE...y
+nada.
+
+La que me queda es molestar al grupo o hacer una matriz de contraste a
+mano...
+
+Muchas gracias de antemano!!
+Saludos
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Fri Jun 14 15:48:26 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Fri, 14 Jun 2019 15:48:26 +0200
+Subject: [R-es] Ejecutar un script de Python con argumentos desde R
+In-Reply-To: <f99491e6-2931-1470-1835-356344368555@urjc.es>
+References: <CA+8ueyYCVWQ2tLc9zviDzz+ThHZc6DrSZL4m4v8uCg7_Fti7zQ@mail.gmail.com>
+ <c0160cef-e47d-c2cb-8e2d-c1f58d86987e@urjc.es>
+ <CA+8ueya26B-0+-rvP3ah03XKSCk17CjskCYJ_a-rKF=tV5iCUQ@mail.gmail.com>
+ <f99491e6-2931-1470-1835-356344368555@urjc.es>
+Message-ID: <CA+8ueyarhAJyY0M_wQe2P4nJb6-6CHOomWv8eR65jP93antG9Q@mail.gmail.com>
+
+Y así es como cada vez te debo más cervezas o cafés!
+
+Mil gracias.
+
+Me faltaba invocar *python*
+
+
+*system(*
+
+
+
+
+
+
+
+*   paste0('python script.py ',               paste0(ar[i], '1 '),
+     ar[i],               paste0(' ', ar[i], '3')               ) )*
+
+Entiendo que el comando shell() es para que funcione en windows; en Linux
+con el original system() es suficiente. Veo que tengo que hacer algo
+también para que el sistema espere a que se termine de ejecutar el comando,
+porque necesito que lea los ficheros que genera. Pero de eso me desasno
+leyendo.
+
+Gracias
+
+
+
+Hau idatzi du Marcelino De La Cruz Rot (marcelino.delacruz en urjc.es)
+erabiltzaileak (2019 eka. 14, or. (12:52)):
+
+> Hola Juan:
+>
+> en vez de system(), quería decir shell(), es decir:
+>
+> shell(
+>   paste0('script.py ',
+>
+>               paste0(ar[i], '1 '),
+>               ar[i],
+>               paste0(' ', ar[i], '3')
+>               )
+>
+> )
+>
+> Si el script está en el working directory [getwd()], te debería
+> funcionar sin problemas.
+>
+> Tanto system() como shell() te permiten interactuar con el sistema
+> fácilmente. Cada una tiene sus peculiaridades. Consulta ?system y ?shell
+>
+>
+>
+>
+>
+> El 14/06/2019 a las 12:14, Juan Abasolo escribió:
+> > Ni idea de eso; te lo agradezco. Seguramente lo voy a terminar usando
+> > bastante.
+> > Pregunto: ahí debería hacer todas las operaciones propias del sistema?
+> > No me encuentra el script, y se me hace raro. Capaz que pasa al
+> > sistema desde la carpeta en la que está el script de R, no desde el wd
+> > de R.
+> > Ahora me toca salir y después intentar probar y que funcione.
+> > Gracis de vuelta
+> >
+> >
+> >
+> > Hau idatzi du Marcelino De La Cruz Rot (marcelino.delacruz en urjc.es
+> > <mailto:marcelino.delacruz en urjc.es>) erabiltzaileak (2019 eka. 14, or.
+> > (11:46)):
+> >
+> >     ¿Has probado esto?
+> >
+> >     system(
+> >     > paste0('script.py ',
+> >
+> >                  paste0(ar[i], '1 '),
+> >                  ar[i],
+> >                  paste0(' ', ar[i], '3')
+> >                  )
+> >
+> >     )
+> >
+> >
+> >
+> >
+> >     El 14/06/2019 a las 11:36, Juan Abasolo escribió:
+> >     > Hola, amigos
+> >     > Se me acabo la sapienza. A ver:
+> >     > tengo un sript de Python script.py que neesita sus argumentos
+> >     arg1 arg2
+> >     > arg3, si desde la consola del sistema me pongo en la carpeta en
+> >     la que lo
+> >     > tengo y hago:
+> >     > $ script.py arg1 arg arg3
+> >     > Funciona perfecto.
+> >     >
+> >     > Pero desde R no lo consigo (entiendo que por no saber)
+> >     >
+> >     > Lo hago así (copio y pego):
+> >     >
+> >     > dir <- getwd()
+> >     > setwd('data/row/directoriocondatos/')
+> >     >
+> >     > py_run_string(
+> >     >          paste0('script.py ',
+> >     >              paste0(ar[i], '1 '),
+> >     >              ar[i],
+> >     >              paste0(' ', ar[i], '3')
+> >     >              ))
+> >     > setwd(dir)
+> >     >
+> >     > El resultado del paste0() ese lo pego en la consola del sistema y
+> >     > perfecto... pero olvidate del for. Yo quiero que el script quede
+> >     integrado
+> >     > para hacer todo de un solo paso, pero no sé.
+> >     >> paste0('script.py ',
+> >     >              paste0(ar[i], '1 '),
+> >     >              ar[i],
+> >     >              paste0(' ', ar[i], '3')
+> >     >              )
+> >     > [1] "script.py arg1 arg arg3" # Si eso lo pego en la consola,
+> >     todo bien.
+> >     >
+> >     > Eso significa que tengo que corregir algo de la orden, o
+> >     cambiarla o...
+> >     > manden
+> >     > Alguien que me desasne?
+> >     >
+> >     >
+> >
+> >     --
+> >     Marcelino de la Cruz Rot
+> >     Depto. de Biología y Geología
+> >     Física y Química Inorgánica
+> >     Universidad Rey Juan Carlos
+> >     Móstoles España
+> >
+> >
+> >
+> > --
+> > Juan Abasolo
+> >
+> > Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> > Bilboko Hezkuntza Fakultatea
+> > Euskal Herriko Unibertsitatea
+> > UPV/EHU
+> >
+> > Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+> >
+> > T: (+34) 94 601 7567
+> > Telegram: @JuanAbasolo
+> > Skype: abasolo72
+> >
+> > Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+>
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Thu Jun 20 08:27:04 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Thu, 20 Jun 2019 08:27:04 +0200
+Subject: [R-es] Hacer un plot de un dendograma 3D
+Message-ID: <CA+8ueyaTOGoMNikO2H4rrPdsDHJ21x7t=gynYhvqAsvHN9qYPQ@mail.gmail.com>
+
+Buenas a todos,
+Lo que quiero preguntar es si se puede hacer algo... que no sé si ni
+siquiera exíste.
+
+Intento explicarme: Recuerdo que en un libro frances sobre analisis
+multidimensional, para alumnos de alguna carrera tipo marketing, en las
+explicaciones de qué es un dendograma, cómo se genera, que no tiene
+importancia cuál está al lado de cuál sino cuál está conectado con cuál a
+qué altura, con fin explicativo, aparecían unos diagramas 3D de los
+dendogramas.
+
+No recuerdo el nombre del libro, pero sí que me resultaron muy didácticos.
+
+Mi pregunta: algo así es factible de hacerse con datos reales en R. Me
+imajino algo tipo una proyección en X e Y de un MDS sobre la que en una Z
+se desarrollara el dendograma.
+
+Se me ocurren motivos por los que no sería factible y motivos por los que
+sí. Entonces traigo la pregunta al foro.
+
+Juan.
+
+-- 
+Juan Abasolo
+
+Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+Bilboko Hezkuntza Fakultatea
+Euskal Herriko Unibertsitatea
+UPV/EHU
+
+Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+
+T: (+34) 94 601 7567
+Telegram: @JuanAbasolo
+Skype: abasolo72
+
+Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+
+	[[alternative HTML version deleted]]
+
+
+From m@rce||no@de|@cruz @end|ng |rom urjc@e@  Thu Jun 20 08:55:18 2019
+From: m@rce||no@de|@cruz @end|ng |rom urjc@e@ (Marcelino De La Cruz Rot)
+Date: Thu, 20 Jun 2019 06:55:18 +0000
+Subject: [R-es] Hacer un plot de un dendograma 3D
+In-Reply-To: <CA+8ueyaTOGoMNikO2H4rrPdsDHJ21x7t=gynYhvqAsvHN9qYPQ@mail.gmail.com>
+References: <CA+8ueyaTOGoMNikO2H4rrPdsDHJ21x7t=gynYhvqAsvHN9qYPQ@mail.gmail.com>
+Message-ID: <ea664de8-ef42-d75c-0c11-65036e13c8c1@urjc.es>
+
+Hola Juan:
+
+parece que estás hablando de la función orditree3d() en el paquete vegan3d.
+Échale un vistazo.
+
+Marcelino
+
+
+El 20/06/2019 a las 8:27, Juan Abasolo escribió:
+> Buenas a todos,
+> Lo que quiero preguntar es si se puede hacer algo... que no sé si ni
+> siquiera exíste.
+>
+> Intento explicarme: Recuerdo que en un libro frances sobre analisis
+> multidimensional, para alumnos de alguna carrera tipo marketing, en las
+> explicaciones de qué es un dendograma, cómo se genera, que no tiene
+> importancia cuál está al lado de cuál sino cuál está conectado con cuál a
+> qué altura, con fin explicativo, aparecían unos diagramas 3D de los
+> dendogramas.
+>
+> No recuerdo el nombre del libro, pero sí que me resultaron muy didácticos.
+>
+> Mi pregunta: algo así es factible de hacerse con datos reales en R. Me
+> imajino algo tipo una proyección en X e Y de un MDS sobre la que en una Z
+> se desarrollara el dendograma.
+>
+> Se me ocurren motivos por los que no sería factible y motivos por los que
+> sí. Entonces traigo la pregunta al foro.
+>
+> Juan.
+>
+
+-- 
+Marcelino de la Cruz Rot
+Depto. de Biología y Geología
+Física y Química Inorgánica
+Universidad Rey Juan Carlos
+Móstoles España
+
+
+From ju@n@@b@@o|o @end|ng |rom ehu@eu@  Thu Jun 20 09:40:46 2019
+From: ju@n@@b@@o|o @end|ng |rom ehu@eu@ (Juan Abasolo)
+Date: Thu, 20 Jun 2019 09:40:46 +0200
+Subject: [R-es] Hacer un plot de un dendograma 3D
+In-Reply-To: <ea664de8-ef42-d75c-0c11-65036e13c8c1@urjc.es>
+References: <CA+8ueyaTOGoMNikO2H4rrPdsDHJ21x7t=gynYhvqAsvHN9qYPQ@mail.gmail.com>
+ <ea664de8-ef42-d75c-0c11-65036e13c8c1@urjc.es>
+Message-ID: <CA+8ueyaHv9AeYj4=3xYH6kBf+XaBu0k00h8BfusezGkbHu6TYw@mail.gmail.com>
+
+Muchas gracias. Lo investigo.
+
+Me alegra saber que no andaba tan errado. A ver si no la herro.
+
+Juan Abasolo.
+telefomotik, barjatu trebezi falta
+
+Marcelino De La Cruz Rot <marcelino.delacruz en urjc.es> igorleak hau idatzi
+zuen (2019 eka. 20, og. 08:55):
+
+> Hola Juan:
+>
+> parece que estás hablando de la función orditree3d() en el paquete vegan3d.
+> Échale un vistazo.
+>
+> Marcelino
+>
+>
+> El 20/06/2019 a las 8:27, Juan Abasolo escribió:
+> > Buenas a todos,
+> > Lo que quiero preguntar es si se puede hacer algo... que no sé si ni
+> > siquiera exíste.
+> >
+> > Intento explicarme: Recuerdo que en un libro frances sobre analisis
+> > multidimensional, para alumnos de alguna carrera tipo marketing, en las
+> > explicaciones de qué es un dendograma, cómo se genera, que no tiene
+> > importancia cuál está al lado de cuál sino cuál está conectado con cuál a
+> > qué altura, con fin explicativo, aparecían unos diagramas 3D de los
+> > dendogramas.
+> >
+> > No recuerdo el nombre del libro, pero sí que me resultaron muy
+> didácticos.
+> >
+> > Mi pregunta: algo así es factible de hacerse con datos reales en R. Me
+> > imajino algo tipo una proyección en X e Y de un MDS sobre la que en una Z
+> > se desarrollara el dendograma.
+> >
+> > Se me ocurren motivos por los que no sería factible y motivos por los que
+> > sí. Entonces traigo la pregunta al foro.
+> >
+> > Juan.
+> >
+>
+> --
+> Marcelino de la Cruz Rot
+> Depto. de Biología y Geología
+> Física y Química Inorgánica
+> Universidad Rey Juan Carlos
+> Móstoles España
+>
+>
+
+	[[alternative HTML version deleted]]
+
+
+From @|y@ry9800 @end|ng |rom gm@||@com  Mon Jun 24 22:59:43 2019
+From: @|y@ry9800 @end|ng |rom gm@||@com (Alicia N. Torriente Martinez)
+Date: Mon, 24 Jun 2019 17:59:43 -0300
+Subject: [R-es] Dudas
+Message-ID: <CAHyCE8Gn_w6iHnufL0xQhJEzEL-6BhbO3uJuVzb2R-ArS8pu1g@mail.gmail.com>
+
+Buenas, tengo la misma duda que otra persona que escribió hace unos años,
+específicamente el 20 de mayo de 2015. Estoy creando un proyecto en Java
+vinculado con R, estoy utilizando Rserve pero me resulta imposible invocar
+las funciones que tengo en un fichero .R. El código que utiliza estas
+funciones simplemente no funciona, no imprime nada. Si pudieran ayudarme
+estaría muy agradecida. Espero su respuesta. Saludos.
+
+	[[alternative HTML version deleted]]
+
+
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Tue Jun 25 14:42:04 2019
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Tue, 25 Jun 2019 09:42:04 -0300
+Subject: [R-es] Dudas
+In-Reply-To: <CAHyCE8Gn_w6iHnufL0xQhJEzEL-6BhbO3uJuVzb2R-ArS8pu1g@mail.gmail.com>
+References: <CAHyCE8Gn_w6iHnufL0xQhJEzEL-6BhbO3uJuVzb2R-ArS8pu1g@mail.gmail.com>
+Message-ID: <CAHo_aERBoNg3Q-MiN+oBJV5gwR51_GpOHnEgufBou6hnWeDmUA@mail.gmail.com>
+
+Estimada Alicia Martinez
+
+Por lo que escribe pienso que puede ser lo publicado en
+https://www.rforge.net/Rserve/ , hay ejemplos y todo en esa página, pero
+por la fecha posiblemente se dejo de utilizar, desarrollar, alguna razón
+debe haber, en lo personal evalué y comencé a realizar algo con java y R,
+pensé que era una idea genial, pero fue quedando y ahora yo dedicaría
+tiempo en eso, lógicamente que seguramente hay gente con conocimientos
+mayores a los míos que puede crear una gran empresa con R y java, millones
+de personas pueden superarme en ese aspecto, incluso leí algo en la
+documentación de oracle java que habría, o hay un nuevo java que en su
+motor tiene R, como que unen ambos, eso sería bueno, habría que explorarlo,
+algo de eso hay.
+
+Javier Marcuzzi
+
+El lun., 24 jun. 2019 a las 18:00, Alicia N. Torriente Martinez (<
+alyary9800 en gmail.com>) escribió:
+
+> Buenas, tengo la misma duda que otra persona que escribió hace unos años,
+> específicamente el 20 de mayo de 2015. Estoy creando un proyecto en Java
+> vinculado con R, estoy utilizando Rserve pero me resulta imposible invocar
+> las funciones que tengo en un fichero .R. El código que utiliza estas
+> funciones simplemente no funciona, no imprime nada. Si pudieran ayudarme
+> estaría muy agradecida. Espero su respuesta. Saludos.
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+	[[alternative HTML version deleted]]
+
+
+From rv@|dezr @end|ng |rom gm@||@com  Thu Jun 27 01:24:49 2019
+From: rv@|dezr @end|ng |rom gm@||@com (Rolando Valdez)
+Date: Wed, 26 Jun 2019 16:24:49 -0700
+Subject: [R-es] Crear variable de tendencia (trend) en panel
+Message-ID: <CAFvJtoEYy6_eRv_Fmj3H6dECM5zbOJg=rwCdCr=LyLB6d=ZvFA@mail.gmail.com>
+
+Hola a todos,
+
+¿Cómo puedo crear una variable de tendencia en un panel de datos? Tengo
+2000 elementos i y 10 años (t). La idea es crear una variable de tendencia
+simple trend = 1, 2, 3,....10, para cada una de las secciones cruzadas.
+
+Agradezco de antemano cualquier ayuda.
+
+-- 
+Rol~
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Sun Jun 30 16:50:10 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Sun, 30 Jun 2019 16:50:10 +0200
+Subject: [R-es] problema con ggplot2
+Message-ID: <20190630165010.Horde.rAKThNM5Pk_OGKn67sEY1do@webmail.csic.es>
+
+
+Hace tiempo que utilizo ggplot2, pero después de haber instalado  
+varios paquetes nuevos, al cargarlo (library(ggplot2)) me da este error:
+
+Error: package or namespace load failed for ?ggplot2? in  
+loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck =  
+vI[[j]]):
+  namespace ?pkgconfig? 2.0.1 is being loaded, but >= 2.0.2 is required
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Sun Jun 30 16:53:01 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Sun, 30 Jun 2019 16:53:01 +0200
+Subject: [R-es] =?utf-8?q?=C2=BFc=C3=B3mo_puedo_cambiar_mi_email_para_est?=
+ =?utf-8?q?a_lista_de_correo=3F?=
+Message-ID: <20190630165301.Horde.593kUoDffEqnF_4tfOk4A4t@webmail.csic.es>
+
+
+¿cómo puedo cambiar mi email para esta lista de correo?
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Sun Jun 30 17:06:01 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Sun, 30 Jun 2019 17:06:01 +0200
+Subject: [R-es] problema con ggplot2
+In-Reply-To: <20190630165010.Horde.rAKThNM5Pk_OGKn67sEY1do@webmail.csic.es>
+Message-ID: <20190630170601.Horde.KUWJqr62n2vegwogD-DX0FI@webmail.csic.es>
+
+
+Encontré esta "solución":
+
+remove.packages(c("ggplot2", "data.table"))
+install.packages('Rcpp', dependencies = TRUE)
+install.packages('ggplot2', dependencies = TRUE)
+install.packages('data.table', dependencies = TRUE)
+
+
+no me  dio error, pero ahora me dice que no está:
+
+> library(ggplot2)
+
+Error in library(ggplot2) : there is no package called ?ggplot2?
+
+
+
+
+
+
+
+
+Quoting Manuel Mendoza <mmendoza en mncn.csic.es>:
+
+> Hace tiempo que utilizo ggplot2, pero después de haber instalado  
+> varios paquetes nuevos, al cargarlo (library(ggplot2)) me da este  
+> error:
+>
+> Error: package or namespace load failed for ?ggplot2? in  
+> loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck =  
+> vI[[j]]):
+>  namespace ?pkgconfig? 2.0.1 is being loaded, but >= 2.0.2 is required
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Jun 30 17:12:06 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 30 Jun 2019 17:12:06 +0200
+Subject: [R-es] 
+	=?utf-8?q?=C2=BFc=C3=B3mo_puedo_cambiar_mi_email_para_est?=
+	=?utf-8?q?a_lista_de_correo=3F?=
+In-Reply-To: <20190630165301.Horde.593kUoDffEqnF_4tfOk4A4t@webmail.csic.es>
+References: <20190630165301.Horde.593kUoDffEqnF_4tfOk4A4t@webmail.csic.es>
+Message-ID: <CAOKbq8iJbo2WbU85ydqLbyWHZSSH4U_=i5VXEA6VQV1_bfEAwg@mail.gmail.com>
+
+Tienes que recuperar uno de los correos que te tiene que estar llegando de
+forma periódica confirmando que estás suscrito.
+A través de este correo, puedes desactivar tu cuenta, poner otro correo,
+etc...
+
+El dom., 30 jun. 2019 a las 17:00, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+escribió:
+
+>
+> ¿cómo puedo cambiar mi email para esta lista de correo?
+> --
+> Dr Manuel Mendoza
+> Department of Biogeography and Global Change
+> National Museum of Natural Science (MNCN)
+> Spanish Scientific Council (CSIC)
+> C/ Serrano 115bis, 28006 MADRID
+> Spain
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From co| @end|ng |rom qu@||tyexce||ence@e@  Sun Jun 30 17:13:52 2019
+From: co| @end|ng |rom qu@||tyexce||ence@e@ (Carlos Ortega)
+Date: Sun, 30 Jun 2019 17:13:52 +0200
+Subject: [R-es] problema con ggplot2
+In-Reply-To: <20190630170601.Horde.KUWJqr62n2vegwogD-DX0FI@webmail.csic.es>
+References: <20190630165010.Horde.rAKThNM5Pk_OGKn67sEY1do@webmail.csic.es>
+ <20190630170601.Horde.KUWJqr62n2vegwogD-DX0FI@webmail.csic.es>
+Message-ID: <CAOKbq8iU6X1Ob9_SU-WGkw=cqcbC8YOEyRmMkXQUTQFUnzxHug@mail.gmail.com>
+
+Prueba a salir de RStudio y al entrar de nuevo.
+Y también actualiza todos los paquetes, por posibles dependencias
+adicionales (con "Update", bueno ya sabrás)...
+
+Gracias,
+Carlos.
+
+El dom., 30 jun. 2019 a las 17:10, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+escribió:
+
+>
+> Encontré esta "solución":
+>
+> remove.packages(c("ggplot2", "data.table"))
+> install.packages('Rcpp', dependencies = TRUE)
+> install.packages('ggplot2', dependencies = TRUE)
+> install.packages('data.table', dependencies = TRUE)
+>
+>
+> no me  dio error, pero ahora me dice que no está:
+>
+> > library(ggplot2)
+>
+> Error in library(ggplot2) : there is no package called ?ggplot2?
+>
+>
+>
+>
+>
+>
+>
+>
+> Quoting Manuel Mendoza <mmendoza en mncn.csic.es>:
+>
+> > Hace tiempo que utilizo ggplot2, pero después de haber instalado
+> > varios paquetes nuevos, al cargarlo (library(ggplot2)) me da este
+> > error:
+> >
+> > Error: package or namespace load failed for ?ggplot2? in
+> > loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck =
+> > vI[[j]]):
+> >  namespace ?pkgconfig? 2.0.1 is being loaded, but >= 2.0.2 is required
+> >
+> > _______________________________________________
+> > R-help-es mailing list
+> > R-help-es en r-project.org
+> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+>
+> --
+> Dr Manuel Mendoza
+> Department of Biogeography and Global Change
+> National Museum of Natural Science (MNCN)
+> Spanish Scientific Council (CSIC)
+> C/ Serrano 115bis, 28006 MADRID
+> Spain
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+
+-- 
+Saludos,
+Carlos Ortega
+www.qualityexcellence.es
+
+	[[alternative HTML version deleted]]
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Sun Jun 30 17:19:51 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Sun, 30 Jun 2019 17:19:51 +0200
+Subject: [R-es] 
+ =?utf-8?q?=C2=BFc=C3=B3mo_puedo_cambiar_mi_email_para_est?=
+ =?utf-8?q?a_lista_de_correo=3F?=
+In-Reply-To: <CAOKbq8iJbo2WbU85ydqLbyWHZSSH4U_=i5VXEA6VQV1_bfEAwg@mail.gmail.com>
+References: <20190630165301.Horde.593kUoDffEqnF_4tfOk4A4t@webmail.csic.es>
+ <CAOKbq8iJbo2WbU85ydqLbyWHZSSH4U_=i5VXEA6VQV1_bfEAwg@mail.gmail.com>
+Message-ID: <20190630171951.Horde.mFS4dHN52xi0oYVOS4D_nPN@webmail.csic.es>
+
+Gracias
+
+Quoting Carlos Ortega <cof en qualityexcellence.es>:
+
+> Tienes que recuperar uno de los correos que te tiene que estar llegando de
+> forma periódica confirmando que estás suscrito.
+> A través de este correo, puedes desactivar tu cuenta, poner otro correo,
+> etc...
+>
+> El dom., 30 jun. 2019 a las 17:00, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+> escribió:
+>
+>>
+>> ¿cómo puedo cambiar mi email para esta lista de correo?
+>> --
+>> Dr Manuel Mendoza
+>> Department of Biogeography and Global Change
+>> National Museum of Natural Science (MNCN)
+>> Spanish Scientific Council (CSIC)
+>> C/ Serrano 115bis, 28006 MADRID
+>> Spain
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+
+
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From mmendoz@ @end|ng |rom mncn@c@|c@e@  Sun Jun 30 17:21:46 2019
+From: mmendoz@ @end|ng |rom mncn@c@|c@e@ (Manuel Mendoza)
+Date: Sun, 30 Jun 2019 17:21:46 +0200
+Subject: [R-es] problema con ggplot2
+In-Reply-To: <CAOKbq8iU6X1Ob9_SU-WGkw=cqcbC8YOEyRmMkXQUTQFUnzxHug@mail.gmail.com>
+References: <20190630165010.Horde.rAKThNM5Pk_OGKn67sEY1do@webmail.csic.es>
+ <20190630170601.Horde.KUWJqr62n2vegwogD-DX0FI@webmail.csic.es>
+ <CAOKbq8iU6X1Ob9_SU-WGkw=cqcbC8YOEyRmMkXQUTQFUnzxHug@mail.gmail.com>
+Message-ID: <20190630172146.Horde.BRKSEZvT4lCoM_wk6FEi3v9@webmail.csic.es>
+
+
+Gracias Carlos. Se me ocurrió otra solución más drástica pero  
+funcionó: desinstalar e instalar r.
+
+
+Quoting Carlos Ortega <cof en qualityexcellence.es>:
+
+> Prueba a salir de RStudio y al entrar de nuevo.
+> Y también actualiza todos los paquetes, por posibles dependencias
+> adicionales (con "Update", bueno ya sabrás)...
+>
+> Gracias,
+> Carlos.
+>
+> El dom., 30 jun. 2019 a las 17:10, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+> escribió:
+>
+>>
+>> Encontré esta "solución":
+>>
+>> remove.packages(c("ggplot2", "data.table"))
+>> install.packages('Rcpp', dependencies = TRUE)
+>> install.packages('ggplot2', dependencies = TRUE)
+>> install.packages('data.table', dependencies = TRUE)
+>>
+>>
+>> no me  dio error, pero ahora me dice que no está:
+>>
+>> > library(ggplot2)
+>>
+>> Error in library(ggplot2) : there is no package called ?ggplot2?
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>>
+>> Quoting Manuel Mendoza <mmendoza en mncn.csic.es>:
+>>
+>> > Hace tiempo que utilizo ggplot2, pero después de haber instalado
+>> > varios paquetes nuevos, al cargarlo (library(ggplot2)) me da este
+>> > error:
+>> >
+>> > Error: package or namespace load failed for ?ggplot2? in
+>> > loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck =
+>> > vI[[j]]):
+>> >  namespace ?pkgconfig? 2.0.1 is being loaded, but >= 2.0.2 is required
+>> >
+>> > _______________________________________________
+>> > R-help-es mailing list
+>> > R-help-es en r-project.org
+>> > https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>>
+>> --
+>> Dr Manuel Mendoza
+>> Department of Biogeography and Global Change
+>> National Museum of Natural Science (MNCN)
+>> Spanish Scientific Council (CSIC)
+>> C/ Serrano 115bis, 28006 MADRID
+>> Spain
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Saludos,
+> Carlos Ortega
+> www.qualityexcellence.es
+
+
+-- 
+Dr Manuel Mendoza
+Department of Biogeography and Global Change
+National Museum of Natural Science (MNCN)
+Spanish Scientific Council (CSIC)
+C/ Serrano 115bis, 28006 MADRID
+Spain
+
+
+From truj|||o @end|ng |rom unex@e@  Sun Jun 30 18:48:03 2019
+From: truj|||o @end|ng |rom unex@e@ (=?UTF-8?Q?Jos=c3=a9_Trujillo_Carmona?=)
+Date: Sun, 30 Jun 2019 18:48:03 +0200
+Subject: [R-es] 
+ =?utf-8?q?=C2=BFc=C3=B3mo_puedo_cambiar_mi_email_para_est?=
+ =?utf-8?q?a_lista_de_correo=3F?=
+In-Reply-To: <CAOKbq8iJbo2WbU85ydqLbyWHZSSH4U_=i5VXEA6VQV1_bfEAwg@mail.gmail.com>
+References: <20190630165301.Horde.593kUoDffEqnF_4tfOk4A4t@webmail.csic.es>
+ <CAOKbq8iJbo2WbU85ydqLbyWHZSSH4U_=i5VXEA6VQV1_bfEAwg@mail.gmail.com>
+Message-ID: <f015fa22-c465-1ef4-a9cb-85dff376c0c2@unex.es>
+
+Directamente a partir de cualquier mensaje, al pie de los mensajes 
+aparece la dirección:
+
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+En ella puedes dar de alta el nuevo correo y cuando esté operativo dar 
+de baja el viejo.
+
+Saludos.
+
+El 30/6/19 a las 17:12, Carlos Ortega escribió:
+> Tienes que recuperar uno de los correos que te tiene que estar llegando de
+> forma periódica confirmando que estás suscrito.
+> A través de este correo, puedes desactivar tu cuenta, poner otro correo,
+> etc...
+>
+> El dom., 30 jun. 2019 a las 17:00, Manuel Mendoza (<mmendoza en mncn.csic.es>)
+> escribió:
+>
+>> ¿cómo puedo cambiar mi email para esta lista de correo?
+>> --
+>> Dr Manuel Mendoza
+>> Department of Biogeography and Global Change
+>> National Museum of Natural Science (MNCN)
+>> Spanish Scientific Council (CSIC)
+>> C/ Serrano 115bis, 28006 MADRID
+>> Spain
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+
+
+From r@b|deg@|n @end|ng |rom gm@||@com  Sun Jun 30 19:03:43 2019
+From: r@b|deg@|n @end|ng |rom gm@||@com (Rafael Bidegain)
+Date: Sun, 30 Jun 2019 14:03:43 -0300
+Subject: [R-es] como graficar una coordenada en un mapa
+In-Reply-To: <CA+8ueybWdeQFUCk2ZZbO_Grpzb6oe5HfSFsBdx4p0J3=QU_gPQ@mail.gmail.com>
+References: <CAAfqxSRcg9ocxejBh1M-yAbfqXgcObB86jPHX8vbVhvu=uXgag@mail.gmail.com>
+ <CA+8ueybWdeQFUCk2ZZbO_Grpzb6oe5HfSFsBdx4p0J3=QU_gPQ@mail.gmail.com>
+Message-ID: <CAAfqxSQT_h-NVHwFPKf=S_PdaMqsdu3rEYqLL4-+JOgWtP8yZQ@mail.gmail.com>
+
+Hola Juan, Listeros
+
+Muchas gracias por los ejemplos, pude adaptarlos muy bien a lo que
+necesito.
+Ahora estoy sacando datos de los sismos que detecta el "Instituto Nacional
+de Prevención Sismica" http://contenidos.inpres.gob.ar/sismologia/xultimos
+tengo ganas de establecer rangos según la profundidad de los sismos
+detectados y graficarlos.
+Lo voy a lograr gracias a la información que me enviaste.
+
+inicio O.T.
+Entiendo que los viejos Bidegain vinieron a América del Sur (Argentina y
+Uruguay) provenientes de Baja Navarra.
+Intentamos con otros parientes establecer la ruta (en un grupo de facebook)
+pero nunca lo logramos.
+Entiendo que hay dos puntos donde desembarcaron Montevideo y Buenos Aires,
+Algunos de los que llegaron a Montevideo se trasladaron a Entre Ríos y de
+allí vienen mis abuelos.
+fin O.T.
+
+saludos cordiales.
+
+El dom., 9 jun. 2019 a las 19:29, Juan Abasolo (<juan.abasolo en ehu.eus>)
+escribió:
+
+> Hola, Rafael;
+> Yo uso otras librerías, pero si andás por gusto, capaz que les encontrás
+> su gracia. Estos son unos apuntes míos (porteñorenegado, como verás)
+> intentando aprender, que se parecen a los tuyos, diría:
+>
+> # -----
+> library(maptools)
+> #  Argentinagaz (Tandil eta Buenos Aires)
+>
+> # Data
+> x <- data.frame(
+>     ixena = c('Buenos Aires', 'Tandil'),
+>     lati = c(-34.6131500, -37.3216705),
+>     long = c(-58.3772300, -59.1331596))
+>
+> coordinates(x) <- c("long", "lati")
+> proj4string(x) <- CRS("+proj=longlat +datum=WGS84")
+>
+> data(wrld_simpl)
+> argn <- wrld_simpl[wrld_simpl$ISO3 == 'ARG', ]
+> plot(argn, col = 1)
+> points(x, pch = 20, col = 4, cex = 2)
+> text(x, c('Nací', 'Pertenencia'), col = 8, cex = 1.2)
+>
+> # ---
+> Llegué ahí siguiendo algún ejemplo de StackOverflow.
+>
+> Trabajo con un par de tu apellido. Los tuyos son de Baja Navarra?
+>
+> Suerte
+>
+>
+>
+> Hau idatzi du Rafael Bidegain (r.bidegain en gmail.com) erabiltzaileak (2019
+> eka. 9, ig. (18:49)):
+>
+>> Hola a todos.
+>>
+>> Soy nuevo en R, estoy aprendiendo con tutoriales y lo hago sin un fin
+>> comercial y/o laboral.
+>>
+>> Necesito ayuda para mostrar un mapa y sobre ese mapa poner un punto dado
+>> por una coordenada.
+>>
+>> con esto consigo mostrar el mapa.
+>> library(raster)
+>> arg<-getData('GADM', country='ARG', level=0)
+>> plot(arg)
+>>
+>> En ese mapa quiero mostrar un punto que está en el sistema de coordenadas
+>> de google en -32.571723, -58.991303
+>>
+>> gracias!
+>> --
+>> Rafael Bidegain
+>>
+>> Ya que los cuerdos no hablan, hablará el loco.
+>> (The Fool, Padraic Pearse)
+>>
+>> # yo quiero educación libre. ¡YA!
+>>
+>>         [[alternative HTML version deleted]]
+>>
+>> _______________________________________________
+>> R-help-es mailing list
+>> R-help-es en r-project.org
+>> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>>
+>
+>
+> --
+> Juan Abasolo
+>
+> Hizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea
+> Bilboko Hezkuntza Fakultatea
+> Euskal Herriko Unibertsitatea
+> UPV/EHU
+>
+> Sarriena auzoa z/g 48940 - Leioa (Bizkaia)
+>
+> T: (+34) 94 601 7567
+> Telegram: @JuanAbasolo
+> Skype: abasolo72
+>
+> Tutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>
+>
+
+
+-- 
+Rafael Bidegain
+
+Ya que los cuerdos no hablan, hablará el loco.
+(The Fool, Padraic Pearse)
+
+# yo quiero educación libre. ¡YA!
+
+	[[alternative HTML version deleted]]
+
+
