@@ -641,27 +641,6 @@
       "thread_id": "thread-e290f1be8bea",
       "thread_depth": 3,
       "month": "2022-05"
-    },
-    {
-      "id": "msg-b2192c098236",
-      "message_id": "<CAOF0weHkQmsndCZ6bwzJK0HTTL8i4WYt-zY5F_ZUnD6iDkaFmw@mail.gmail.com>",
-      "from_name": "juan manuel dias",
-      "from_email_hash": "0e20f3bbbf2409866bf1f688a9bf7a805326d2be25a8cb60a7e74eb20215cc51",
-      "date": "2022-05-31T20:51:29-03:00",
-      "subject": "[R-es]  separar una variable en dos variables por una o más condiciones",
-      "subject_clean": "[R-es]  separar una variable en dos variables por una o más condiciones",
-      "in_reply_to": "<CAOKbq8jcowk6oFecPVdRV9FUKVfrDFSa9hAM=FpLPqqWPxyZ2w@mail.gmail.com>",
-      "references": [
-        "<CAOF0weGrS7QqjQOqFv39rNBDMWMbtMtq7x0ZmmSCO6aGXL0AwQ@mail.gmail.com>",
-        "<9b920e45-6a77-41cf-924d-9778e9f17948@urjc.es>",
-        "<CAOF0weGRLAi1M99EaZevcW8Jk=hQiFGOmYZsJagqA9vNJNo4yg@mail.gmail.com>",
-        "<CAOKbq8jcowk6oFecPVdRV9FUKVfrDFSa9hAM=FpLPqqWPxyZ2w@mail.gmail.com>"
-      ],
-      "body_plain": "Muy bueno gracias Carlos!\n\nEl mar., 31 de mayo de 2022 18:25, Carlos Ortega <cof en qualityexcellence.es>\nescribiÃ³:\n\n> Hola,\n>\n> Esta es otra forma de resolverlo en una sola pasada...\n>\n> > library(data.table)\n> > library(tidytable)\n> > library(stringi)\n> >\n> > variable<- c(\"9,301E+11\",\"8,301E+11\",\"00001-00170818\",\"1000055365\",\"G.A.\n> 001-24699570\")\n> > Unidades <- c(\"remito\",\"remito\",\"remito\",\"remito\",\"remito\")\n> > # base_1<-cbind(variable,Unidades)\n> >\n> > datos <- data.table(\n> +   variable = variable,\n> +   Unidades = Unidades\n> + )\n> >\n> > datos %>%\n> +   mutate.( variable_1 = ifelse.(stri_detect_fixed(variable, \"E+\"),\n> variable, NA)) %>%\n> +   mutate.( variable_2 = ifelse.(is.na(variable_1), variable, NA)) %>%\n> +   as.data.table()\n>             variable Unidades variable_1        variable_2\n>               <char>   <char>     <char>            <char>\n> 1:         9,301E+11   remito  9,301E+11              <NA>\n> 2:         8,301E+11   remito  8,301E+11              <NA>\n> 3:    00001-00170818   remito       <NA>    00001-00170818\n> 4:        1000055365   remito       <NA>        1000055365\n> 5: G.A. 001-24699570   remito       <NA> G.A. 001-24699570\n>\n> Gracias,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El mar, 31 may 2022 a las 23:10, juan manuel dias (<juamadias en gmail.com>)\n> escribiÃ³:\n>\n>> hola muchas gracias! ahora prueba esto que me decÃ­s!\n>> por ahora resolvÃ­ asÃ­, seguro luego lo mejore!\n>>\n>> a$var.3<-(!str_detect(a$Remito,\"\\\\E\\\\+\"))\n>> a$var.4<-(str_detect(a$Remito,\"\\\\E\\\\+\"))\n>>\n>> a<-a %>%\n>>   mutate(var4=ifelse (var.3==FALSE ,Remito,NA))\n>>\n>> a<-a %>%\n>>   mutate(var5=ifelse (var.3==TRUE ,Remito,NA))\n>>\n>> a$var.6<-ifelse(is.na(a$var4),a$var5,a$var4)\n>>\n>>\n>> El mar, 31 may 2022 a las 17:53, Marcelino de la Cruz Rot (<\n>> marcelino.delacruz en urjc.es>) escribiÃ³:\n>>\n>> > Hola:\n>> > Puedes conseguirlo fÃ¡cilmente con algunas frases de R bÃ¡sico:\n>> >\n>> > variable<- c(\"9,301E+11\",\"8,301E+11\",\"00001-00170818\",\"1000055365\",\"G.A.\n>> > 001-24699570\")\n>> > cuales.cientificos <- grep(\"E+\", variable)\n>> >\n>> > cientificos <- variable[cuales.cientificos]\n>> > cientificos <- sub(\",\", \".\", cientificos)\n>> > options(scipen=999)\n>> > cientificos <- as.character(as.numeric(cientificos))\n>> >\n>> > variable3 <- variable\n>> > variable3[cuales.cientificos] <- cientificos\n>> > variable3\n>> > [1] \"930100000000\" \"830100000000\"      \"00001-00170818\"\n>> > \"1000055365\"        \"G.A. 001-24699570\"\n>> >\n>> >\n>> > Un saludo,\n>> > Marcelino\n>> >\n>> >\n>> >\n>> > El 31/05/2022 a las 21:38, juan manuel dias escribiÃ³:\n>> > > Hola,\n>> > >\n>> > > Tengo una base de datos y en uno de las variables/vectores, que es\n>> > > formato character, dentro de ese vector me encuentro que tengo casos\n>> > > con notaciÃ³n cientÃ­fica, casos alfanumÃ©ricos etc.\n>> > >\n>> > > Tengo que dividir esa variable en dos nuevas variables, de forma tal\n>> > > que me quede una variable con los casos que tengan notaciÃ³n cientÃ­fica\n>> > > para convertir a nÃºmero, otro que donde tenga los alfanumÃ©ricos.\n>> > > variable<-\n>> > > c(\"9,301E+11\",\"8,301E+11\",\"00001-00170818\",\"1000055365\",\"G.A.\n>> > > 001-24699570\")\n>> > > Unidades <- c(\"remito\",\"remito\",\"remito\",\"remito\",\"remito\")\n>> > > base.1<-cbind(variable,Unidades)\n>> > > base.1\n>> > > image.png\n>> > >\n>> > > Lo que necesito serÃ­a separar \"variable\" asi:\n>> > >\n>> > > variable<-\n>> > > c(\"9,301E+11\",\"8,301E+11\",\"00001-00170818\",\"1000055365\",\"G.A.\n>> > > 001-24699570\")\n>> > > variable.1<-c(\"9,301E+11\",\"8,301E+11\",NA,NA,NA)\n>> > > variable.2<-c(\"\",\"\",\"00001-00170818\",\"1000055365\",\"G.A. 001-24699570\")\n>> > > Unidades <- c(\"remito\",\"remito\",\"remito\",\"remito\",\"remito\")\n>> > > base.2<-as.data.frame(cbind(variable,variable.1,variable.2,Unidades))\n>> > >\n>> > > image.png\n>> > >\n>> > > Lo que no logro hacer es separar \"variable\" en variable.1 y\n>> variable.2.\n>> > > IntentÃ© con str_detect dentro de un mutate y con if_else pero no logrÃ©\n>> > > que me de el resultado que busco.\n>> > >\n>> > > ####\n>> > > !str_detect(base2$variable.1,\"\\\\E\\\\+\"))\n>> > > str_detect( base2$variable.1  ,\"\\\\E\\\\+\"))\n>> > >\n>> > > Teniendo esa separaciÃ³n luego hago lo siguiente:\n>> > >\n>> > > ## reemplazo comas por puntos \".\" en  variable.1 para convertir a\n>> > numÃ©rica\n>> > > ## convierto numÃ©rica variable.1\n>> > > ## y finalmente elimino notaciÃ³n cientÃ­fica\n>> > > base.2$variable.1 <-(gsub(\",\", \".\", base.2$variable.1))\n>> > > base.2$variable.1 <-as.numeric(base.2$variable.1)\n>> > > base.2$variable.1<-format(base.2$variable.1, scientific=F)\n>> > >\n>> > > Y finalmente crear una variable \"variable.3\" que quede asÃ­:\n>> > >\n>> > > ## genero una variable final\n>> > > base.2$variable.3<-ifelse(base.2$variable.1==\"\n>> > >  NA\",base.2$variable.2,base.2$variable.1)\n>> > > view(base.2)\n>> > >\n>> > > image.png\n>> > >\n>> > > Gracias!\n>> > >\n>> > > Juan.\n>> > >\n>> > >\n>> > > _______________________________________________\n>> > > R-help-es mailing list\n>> > > R-help-es en r-project.org\n>> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >\n>> >\n>> > --\n>> > Marcelino de la Cruz Rot\n>> > Depto. de BiologÃ­a y GeologÃ­a\n>> > FÃ­sica y QuÃ­mica InorgÃ¡nica\n>> > Universidad Rey Juan Carlos\n>> > MÃ³stoles EspaÃ±a\n>> >\n>> > _______________________________________________\n>> > R-help-es mailing list\n>> > R-help-es en r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\t[[alternative HTML version deleted]]",
-      "body_snippet": "Muy bueno gracias Carlos!\n\nEl mar., 31 de mayo de 2022 18:25, Carlos Ortega <cof en qualityexcellence.es>\nescribiÃ³:\n\n> Hola,\n>\n> Esta es otra forma de resolverlo en una sola pasada...\n>\n> > library(d",
-      "thread_id": "thread-b2192c098236",
-      "thread_depth": 0,
-      "month": "2022-05"
     }
   ],
   "threads": [
@@ -788,17 +767,6 @@
       "started": "2022-05-31T16:38:45-03:00",
       "last_reply": "2022-05-31T21:42:52+00:00",
       "root_message_id": "msg-e290f1be8bea"
-    },
-    {
-      "id": "thread-b2192c098236",
-      "subject": "[R-es]  separar una variable en dos variables por una o más condiciones",
-      "message_count": 1,
-      "participants": [
-        "juan manuel dias"
-      ],
-      "started": "2022-05-31T20:51:29-03:00",
-      "last_reply": "2022-05-31T20:51:29-03:00",
-      "root_message_id": "msg-b2192c098236"
     }
   ]
 }
