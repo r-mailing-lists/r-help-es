@@ -388,6 +388,40 @@
       "thread_id": "thread-64990ad2071e",
       "thread_depth": 2,
       "month": "2021-06"
+    },
+    {
+      "id": "msg-832e8b742e92",
+      "message_id": "<CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>",
+      "from_name": "juan manuel dias",
+      "from_email_hash": "0e20f3bbbf2409866bf1f688a9bf7a805326d2be25a8cb60a7e74eb20215cc51",
+      "date": "2021-06-30T19:15:21-03:00",
+      "subject": "[R-es] Consulta filtro múltiple.",
+      "subject_clean": "[R-es] Consulta filtro múltiple.",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola, como andan!\n\nTengo una base de datos de medicamentos (monodrogas), con tres variables,\nunidades, precio y precio unitario. Necesito llegar a un data frame donde\ntenga solo las monodrogas que cumplen alguna condiciÃ³n en la variable\nunidades, pero considerando varias monodrogas.\n\nEsto es un recorte de la base:\n\nMonodroga UNIDADES Precio PrecioUnit\naciclovir 20 111272 55.636\naciclovir 20 97464 48.732\naciclovir 40 98322 432\naciclovir 40 98322 324\nparacetamol 1 19291 192.91\nparacetamol 1 24702 247.02\nparacetamol 1 21120 211.2\nparacetamol 10 9993 9.993\nparacetamol 10 10443 10.443\nrosuvastatina 14 141134 100.81\nrosuvastatina 28 258262 92.2364286\nrosuvastatina 28 201590 71.9964286\nrosuvastatina 30 183717 61.239\nrosuvastatina 30 231935 77.3116667\n\nPor ejemplo, para la monodroga \"aciclovir\" necesito solo las filas donde\nUnidades==20,  en paracetamol==10 y en rosuvastatina==30.\n\nEstoy trabajando con tidyverse y he probado algunas cosas que no han\nfuncionado.\n\nprom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final %>%\n  ##unite(\"concat1\",CodDrog,CodForma,sep=\"\",remove = FALSE) %>%\n  ##unite(\"concat2\",CodDrog,CodForma,Potencia,sep=\"\",remove = FALSE) %>%\n  filter(!is.na(CodDrog)) %>%\n  ##filter(monodroga==\"aciclovir\", Unidades %in% c(20)) %>%\n  group_by(concat1,concat2,monodroga) %>%\n  summarize(min_may_2021=min(precio_unitario),\n            max_may_2021=max(precio_unitario),\n            prom_may_2021=mean(precio_unitario)) %>%\n  ungroup()\n\nAjdunto la base en csv.\n\nMuchas gracias!\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210630/6497cf18/attachment.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: base_monodrogas.csv\nType: application/vnd.ms-excel\nSize: 455 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20210630/6497cf18/attachment.xlb>",
+      "body_snippet": "Hola, como andan!\n\nTengo una base de datos de medicamentos (monodrogas), con tres variables,\nunidades, precio y precio unitario. Necesito llegar a un data frame donde\ntenga solo las monodrogas que cum",
+      "thread_id": "thread-832e8b742e92",
+      "thread_depth": 0,
+      "month": "2021-06"
+    },
+    {
+      "id": "msg-f17425c75c2c",
+      "message_id": "<20210630183445.123808a6@TheMatrix>",
+      "from_name": "Eric Concha M.",
+      "from_email_hash": "9592c049134ace3b88d587013cf973f4a2bdf83e2d50d581ff507e78f61f6805",
+      "date": "2021-06-30T18:34:45-04:00",
+      "subject": "[R-es] Consulta filtro múltiple.",
+      "subject_clean": "[R-es] Consulta filtro múltiple.",
+      "in_reply_to": "<CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>",
+      "references": [
+        "<CAOF0weGr4st65oQZjWxDxM3W=Ht6T5BowCMoExX0Xt6LGwV9bw@mail.gmail.com>"
+      ],
+      "body_plain": "Y si lo haces con la libreria data.table ? suponiendo que bd es tu\n base de datos:\n\n bd1 <- bd[monodroga==\"aciclovir\" & UNIDADES==20,]\n bd2 <- bd[monodroga==\"paracetamol\" & UNIDADES==10,]\n bd3 <- bd[monodroga==\"rosuvastatina\" & UNIDADES==30,]\n\ny luego las unes:\n\n bd.nueva <- rbind(bd1,bd2,bd3)\n\nAlgo asÃ­ podrÃ­a ser ... hay muchas otras formas de hacerlo, pero me\ngusta data.table cuando son bbdd grandes xq es muy rÃ¡pida, sobretodo si\nla usas con set.key() ... mira la ayuda de R para que veas los detalles\nde data.table.\n\nOjo con los detalles, como que la columna monodroga sea tipo caracter o\nfactor, q UNIDADES sea numÃ©rico, y asÃ­ ...\n\nSuerte !!\n\nEric.\n\n\n\n\nn Wed, 30 Jun 2021 19:15:21 -0300\njuan manuel dias <juamadias en gmail.com> wrote:\n\n> Hola, como andan!\n> \n> Tengo una base de datos de medicamentos (monodrogas), con tres\n> variables, unidades, precio y precio unitario. Necesito llegar a un\n> data frame donde tenga solo las monodrogas que cumplen alguna\n> condiciÃ³n en la variable unidades, pero considerando varias\n> monodrogas.\n> \n> Esto es un recorte de la base:\n> \n> Monodroga UNIDADES Precio PrecioUnit\n> aciclovir 20 111272 55.636\n> aciclovir 20 97464 48.732\n> aciclovir 40 98322 432\n> aciclovir 40 98322 324\n> paracetamol 1 19291 192.91\n> paracetamol 1 24702 247.02\n> paracetamol 1 21120 211.2\n> paracetamol 10 9993 9.993\n> paracetamol 10 10443 10.443\n> rosuvastatina 14 141134 100.81\n> rosuvastatina 28 258262 92.2364286\n> rosuvastatina 28 201590 71.9964286\n> rosuvastatina 30 183717 61.239\n> rosuvastatina 30 231935 77.3116667\n> \n> Por ejemplo, para la monodroga \"aciclovir\" necesito solo las filas\n> donde Unidades==20,  en paracetamol==10 y en rosuvastatina==30.\n> \n> Estoy trabajando con tidyverse y he probado algunas cosas que no han\n> funcionado.\n> \n> prom_max_min_base_precios_May_2021_final<-base_precios_May_2021_final\n> %>% ##unite(\"concat1\",CodDrog,CodForma,sep=\"\",remove = FALSE) %>%\n>   ##unite(\"concat2\",CodDrog,CodForma,Potencia,sep=\"\",remove = FALSE)\n> %>% filter(!is.na(CodDrog)) %>%\n>   ##filter(monodroga==\"aciclovir\", Unidades %in% c(20)) %>%\n>   group_by(concat1,concat2,monodroga) %>%\n>   summarize(min_may_2021=min(precio_unitario),\n>             max_may_2021=max(precio_unitario),\n>             prom_may_2021=mean(precio_unitario)) %>%\n>   ungroup()\n> \n> Ajdunto la base en csv.\n> \n> Muchas gracias!",
+      "body_snippet": "Y si lo haces con la libreria data.table ? suponiendo que bd es tu\n base de datos:\n\n bd1 <- bd[monodroga==\"aciclovir\" & UNIDADES==20,]\n bd2 <- bd[monodroga==\"paracetamol\" & UNIDADES==10,]\n bd3 <- bd[m",
+      "thread_id": "thread-832e8b742e92",
+      "thread_depth": 1,
+      "month": "2021-06"
     }
   ],
   "threads": [
@@ -489,6 +523,18 @@
       "started": "2021-06-24T11:44:11-03:00",
       "last_reply": "2021-06-25T16:34:12-03:00",
       "root_message_id": "msg-64990ad2071e"
+    },
+    {
+      "id": "thread-832e8b742e92",
+      "subject": "[R-es] Consulta filtro múltiple.",
+      "message_count": 2,
+      "participants": [
+        "Eric Concha M.",
+        "juan manuel dias"
+      ],
+      "started": "2021-06-30T19:15:21-03:00",
+      "last_reply": "2021-06-30T18:34:45-04:00",
+      "root_message_id": "msg-832e8b742e92"
     }
   ]
 }
