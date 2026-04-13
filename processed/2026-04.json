@@ -59,6 +59,22 @@
       "thread_id": "thread-324aa1cf85a2",
       "thread_depth": 2,
       "month": "2026-04"
+    },
+    {
+      "id": "msg-05e130a9264d",
+      "message_id": "<GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>",
+      "from_name": "MANUEL MORALES ORTIZ",
+      "from_email_hash": "1f8cd5231f0502ff94c5d199dff1a8d2d710534f9997beeb5e61be495d6ac6ca",
+      "date": "2026-04-12T19:17:01Z",
+      "subject": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "subject_clean": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "in_reply_to": null,
+      "references": [],
+      "body_plain": "Hola, quiero construir una funci?n en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende ser?a el siguiente:\n\nlibrary(MASS)\nx<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)\ndatos<- matrix(x,4,4,byrow=T)\ninicio<- matrix(rep(1,16),4,4)\nres<- loglm(~1+2,data= datos,fitted=T,start = inicio)\nresid<- residuals(res)\nresid<-abs(as.vector(resid))\nmax<- which.max(resid)\n\n# Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual\ndatos<- as.vector(datos)\ndatos[6]<- 0\ndatos<- matrix(datos,4,4)\n\n# Vuelvo a analizar la tabla\ninicio[2,2] <- 0\nres<- loglm(~1+2,data= datos,fitted=T,start = inicio)\nchi2<-res$pearson\naux<- chi2 > qchisq(.95,9)\n\n# A continuaci?n, se calculan los residuales,\n\nresid<- residuals(res)\n\n# Repetir el procedimiento hasta que no queden residuales significativos.\n\n?Alguna sugerencia?\n\nSaludos\n\n\n\n\n\n\n\n--\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, quiero construir una funci?n en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando la tabla  hasta que se acepte el modelo de independencia y n",
+      "thread_id": "thread-05e130a9264d",
+      "thread_depth": 0,
+      "month": "2026-04"
     }
   ],
   "threads": [
@@ -73,6 +89,17 @@
       "started": "2026-04-01T07:42:06Z",
       "last_reply": "2026-04-01T14:05:23Z",
       "root_message_id": "msg-324aa1cf85a2"
+    },
+    {
+      "id": "thread-05e130a9264d",
+      "subject": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "message_count": 1,
+      "participants": [
+        "MANUEL MORALES ORTIZ"
+      ],
+      "started": "2026-04-12T19:17:01Z",
+      "last_reply": "2026-04-12T19:17:01Z",
+      "root_message_id": "msg-05e130a9264d"
     }
   ]
 }

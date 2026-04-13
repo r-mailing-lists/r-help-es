@@ -240,3 +240,57 @@ Emilio
 	[[alternative HTML version deleted]]
 
 
+From mor@|e@ @end|ng |rom u@@e@  Sun Apr 12 21:17:01 2026
+From: mor@|e@ @end|ng |rom u@@e@ (MANUEL MORALES ORTIZ)
+Date: Sun, 12 Apr 2026 19:17:01 +0000
+Subject: [R-es] Crear funcion para identificar residuales en tabla de
+ contingencia
+Message-ID: <GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+
+Hola, quiero construir una funci?n en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende ser?a el siguiente:
+
+library(MASS)
+x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)
+datos<- matrix(x,4,4,byrow=T)
+inicio<- matrix(rep(1,16),4,4)
+res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+resid<- residuals(res)
+resid<-abs(as.vector(resid))
+max<- which.max(resid)
+
+# Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual
+datos<- as.vector(datos)
+datos[6]<- 0
+datos<- matrix(datos,4,4)
+
+# Vuelvo a analizar la tabla
+inicio[2,2] <- 0
+res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+chi2<-res$pearson
+aux<- chi2 > qchisq(.95,9)
+
+# A continuaci?n, se calculan los residuales,
+
+resid<- residuals(res)
+
+# Repetir el procedimiento hasta que no queden residuales significativos.
+
+?Alguna sugerencia?
+
+Saludos
+
+
+
+
+
+
+
+--
+
+
+
+
+
+	[[alternative HTML version deleted]]
+
+
