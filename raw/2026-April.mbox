@@ -294,3 +294,533 @@ Saludos
 	[[alternative HTML version deleted]]
 
 
+From r-uc@ @end|ng |rom uc@@e@  Mon Apr 13 07:23:10 2026
+From: r-uc@ @end|ng |rom uc@@e@ (Proyecto R-UCA)
+Date: Mon, 13 Apr 2026 07:23:10 +0200
+Subject: [R-es] Crear funcion para identificar residuales en tabla de
+ contingencia
+In-Reply-To: <GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+References: <GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+Message-ID: <fc0d4822271a6bc26f59cbf1c9c6de176bf58d9b.camel@uca.es>
+
+Hola, Manuel:
+
+Si haces repetidos contrastes a un nivel de confianza 1-alpha el resultado final no tendrá ese nivel de confianza. Hay que ajustar los
+niveles usando la corrección de Bonferroni.
+
+Por otra parte, el test que estás haciendo no es sobre una casilla es sobre la tabla entera. Si quieres analizar las casillas tendrás que
+utilizar otro tipo de test. Tal vez uno basado en errores estandarizados.
+
+No recuerdo ni encuentro ninguno en este momento. Un hilo del que tirar podría ser:
+https://pubmed.ncbi.nlm.nih.gov/24788323/
+
+Un saludo.
+
+
+El dom, 12-04-2026 a las 19:17 +0000, MANUEL MORALES ORTIZ escribió:
+> Hola, quiero construir una funcin en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando
+> la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende
+> sera el siguiente:
+> 
+> library(MASS)
+> x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)
+> datos<- matrix(x,4,4,byrow=T)
+> inicio<- matrix(rep(1,16),4,4)
+> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+> resid<- residuals(res)
+> resid<-abs(as.vector(resid))
+> max<- which.max(resid)
+> 
+> # Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual
+> datos<- as.vector(datos)
+> datos[6]<- 0
+> datos<- matrix(datos,4,4)
+> 
+> # Vuelvo a analizar la tabla
+> inicio[2,2] <- 0
+> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+> chi2<-res$pearson
+> aux<- chi2 > qchisq(.95,9)
+> 
+> # A continuacin, se calculan los residuales,
+> 
+> resid<- residuals(res)
+> 
+> # Repetir el procedimiento hasta que no queden residuales significativos.
+> 
+> Alguna sugerencia?
+> 
+> Saludos
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> --
+> 
+> 
+> 
+> 
+> 
+> 	[[alternative HTML version deleted]]
+> 
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!W0VL6NufuD4gWEkqY5ZCuu6w5RV4JvHth-kVWEWTvR9OyPbMbVMVItbUdLmpq24bnGLzc3YPGzI$
+>  
+
+
+From mor@|e@ @end|ng |rom u@@e@  Mon Apr 13 09:26:51 2026
+From: mor@|e@ @end|ng |rom u@@e@ (MANUEL MORALES ORTIZ)
+Date: Mon, 13 Apr 2026 07:26:51 +0000
+Subject: [R-es] 
+ =?utf-8?q?Crear_una_funci=C3=B3n_para_identificar_residua?=
+ =?utf-8?q?les_en_una_tabla_de_contingencia?=
+In-Reply-To: <mailman.15386.4230.1776057839.1806.r-help-es@r-project.org>
+References: <mailman.15386.4230.1776057839.1806.r-help-es@r-project.org>
+Message-ID: <GV2PR01MB11994DECDD914B986926E2B7AAF242@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+
+Hola, muchas gracias por responder.  La idea es crear una función que reproduzca el procedimiento descrito por Bakeman & Quera (1995).  Analizan tablas de contingencia procedentes de secuencias de conducta donde suelen  aparecer residuales espurios. Con objeto de identificar solo los residuales significativos utilizan un procedimiento que consiste en evaluar globalmente la tabla de contingencia y si se rechaza la hipótesis de independencia identificar el mayor residual significativo y convertirlo en cero estructural. Se volvería a realizar un nuevo análisis global considerando el cero estructural. Este procedimiento se repetiría hasta aceptar la hipótesis nula.
+
+A continuación, incluyo un ejemplo con la tentativa de la función con el cálculo de los residuales estandarizados:
+
+x1<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)
+x2<- c(5,1,11,1,3,0,15,0,6,14,13,13,5,2,7,3)
+datos1<- matrix(x1,4,4,byrow=T)
+datos2<-matrix(x2,4,4,byrow=T)
+
+resid_ln2<- function(x,ini){
+  RS <- rowSums(x)
+  CS <- colSums(x)
+  GT <- sum(x)
+  inicio<- c(rep(1,9),0,rep(1,6))
+  res<- loglm(~1+2,data= x,fitted=T,start=ini)
+  num<- (x - res$fitted)
+  den <-  sqrt(res$fitted*((1 - RS / GT) %*% t(1 - CS / GT)))
+  ASR<- num/den
+  ASR
+}
+
+
+bq<- function(x){
+  i<- 16
+  n <- 9
+  aux<- TRUE
+  inicio<- rep(1,16)
+  while(i != 0 || aux==TRUE){
+    res<- loglm(~1+2, data=x, fitted=T,start=inicio)
+    resid<- resid_ln2(x,inicio)
+    chi2<-res$pearson
+    aux<- chi2 > qchisq(.95,n)
+    resid1<-as.vector(abs(resid))
+    maxresid<- which.max(resid)
+    resid1[maxresid]<- 0
+    resid<- matrix(resid1,4,4)
+    n<- n-1
+    inicio[maxresid]<-0
+    x1<- as.vector(x)
+    x1[maxresid]<- 0
+    x<- matrix(x1,4,4)
+    if(aux ==FALSE) {
+      return(list(resid,chi2,qchisq(.95,n),inicio,x))
+    }
+    else{
+      print(cat("Iteración",i))
+    }
+    i<- i-1
+  }
+}
+
+bq(datos1)
+bq(datos2)
+
+Bakeman, R., & Quera, V. (1995). Log-linear approaches to lag-sequential analysis when consecutive codes may and cannot repeat. Psychological Bulletin, 118(2), 272?284. https://doi.org/https://doi.org/10.1037/0033-2909.118.2.272
+
+Se admiten sugerencias y posibles mejoras de la función.
+Saludos
+
+
+
+
+
+
+
+
+--
+
+
+
+
+
+________________________________
+De: R-help-es <r-help-es-bounces en r-project.org> en nombre de r-help-es-request en r-project.org <r-help-es-request en r-project.org>
+Enviado: lunes, 13 de abril de 2026 7:23
+Para: r-help-es en r-project.org <r-help-es en r-project.org>
+Asunto: Resumen de R-help-es, Vol 204, Envío 3
+
+Envíe los mensajes para la lista R-help-es a
+        r-help-es en r-project.org
+
+Para subscribirse o anular su subscripción a través de la WEB
+        https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+O por correo electrónico, enviando un mensaje con el texto "help" en
+el asunto (subject) o en el cuerpo a:
+        r-help-es-request en r-project.org
+
+Puede contactar con el responsable de la lista escribiendo a:
+        r-help-es-owner en r-project.org
+
+Si responde a algún contenido de este mensaje, por favor, edite la
+linea del asunto (subject) para que el texto sea mas especifico que:
+"Re: Contents of R-help-es digest...". Además, por favor, incluya en
+la respuesta sólo aquellas partes del mensaje a las que está
+respondiendo.
+
+
+Asuntos del día:
+
+   1. Crear funcion para identificar residuales en tabla de
+      contingencia (MANUEL MORALES ORTIZ)
+   2. Re: Crear funcion para identificar residuales en tabla de
+      contingencia (Proyecto R-UCA)
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Sun, 12 Apr 2026 19:17:01 +0000
+From: MANUEL MORALES ORTIZ <morales en us.es>
+To: "r-help-es en r-project.org" <r-help-es en r-project.org>
+Subject: [R-es] Crear funcion para identificar residuales en tabla de
+        contingencia
+Message-ID:
+        <GV2PR01MB11994E9A45C7030EC50824F67AF272 en GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+
+Content-Type: text/plain; charset="utf-8"
+
+Hola, quiero construir una funci?n en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende ser?a el siguiente:
+
+library(MASS)
+x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)
+datos<- matrix(x,4,4,byrow=T)
+inicio<- matrix(rep(1,16),4,4)
+res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+resid<- residuals(res)
+resid<-abs(as.vector(resid))
+max<- which.max(resid)
+
+# Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual
+datos<- as.vector(datos)
+datos[6]<- 0
+datos<- matrix(datos,4,4)
+
+# Vuelvo a analizar la tabla
+inicio[2,2] <- 0
+res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+chi2<-res$pearson
+aux<- chi2 > qchisq(.95,9)
+
+# A continuaci?n, se calculan los residuales,
+
+resid<- residuals(res)
+
+# Repetir el procedimiento hasta que no queden residuales significativos.
+
+?Alguna sugerencia?
+
+Saludos
+
+
+
+
+
+
+
+--
+
+
+
+
+
+        [[alternative HTML version deleted]]
+
+
+
+
+------------------------------
+
+Message: 2
+Date: Mon, 13 Apr 2026 07:23:10 +0200
+From: Proyecto R-UCA <r-uca en uca.es>
+To: r-help-es en r-project.org
+Subject: Re: [R-es] Crear funcion para identificar residuales en tabla
+        de contingencia
+Message-ID: <fc0d4822271a6bc26f59cbf1c9c6de176bf58d9b.camel en uca.es>
+Content-Type: text/plain; charset="utf-8"
+
+Hola, Manuel:
+
+Si haces repetidos contrastes a un nivel de confianza 1-alpha el resultado final no tendrá ese nivel de confianza. Hay que ajustar los
+niveles usando la corrección de Bonferroni.
+
+Por otra parte, el test que estás haciendo no es sobre una casilla es sobre la tabla entera. Si quieres analizar las casillas tendrás que
+utilizar otro tipo de test. Tal vez uno basado en errores estandarizados.
+
+No recuerdo ni encuentro ninguno en este momento. Un hilo del que tirar podría ser:
+https://pubmed.ncbi.nlm.nih.gov/24788323/
+
+Un saludo.
+
+
+El dom, 12-04-2026 a las 19:17 +0000, MANUEL MORALES ORTIZ escribió:
+> Hola, quiero construir una funcin en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando
+> la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende
+> sera el siguiente:
+>
+> library(MASS)
+> x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)
+> datos<- matrix(x,4,4,byrow=T)
+> inicio<- matrix(rep(1,16),4,4)
+> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+> resid<- residuals(res)
+> resid<-abs(as.vector(resid))
+> max<- which.max(resid)
+>
+> # Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual
+> datos<- as.vector(datos)
+> datos[6]<- 0
+> datos<- matrix(datos,4,4)
+>
+> # Vuelvo a analizar la tabla
+> inicio[2,2] <- 0
+> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+> chi2<-res$pearson
+> aux<- chi2 > qchisq(.95,9)
+>
+> # A continuacin, se calculan los residuales,
+>
+> resid<- residuals(res)
+>
+> # Repetir el procedimiento hasta que no queden residuales significativos.
+>
+> Alguna sugerencia?
+>
+> Saludos
+>
+>
+>
+>
+>
+>
+>
+> --
+>
+>
+>
+>
+>
+>        [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!W0VL6NufuD4gWEkqY5ZCuu6w5RV4JvHth-kVWEWTvR9OyPbMbVMVItbUdLmpq24bnGLzc3YPGzI$
+>
+
+
+
+
+------------------------------
+
+Subject: Pié de página del digest
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+
+------------------------------
+
+Fin de Resumen de R-help-es, Vol 204, Envío 3
+*********************************************
+
+	[[alternative HTML version deleted]]
+
+
+From jorge|v@nve|ez @end|ng |rom gm@||@com  Mon Apr 13 15:53:25 2026
+From: jorge|v@nve|ez @end|ng |rom gm@||@com (Jorge I Velez)
+Date: Mon, 13 Apr 2026 08:53:25 -0500
+Subject: [R-es] Crear funcion para identificar residuales en tabla de
+ contingencia
+In-Reply-To: <GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+References: <GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+Message-ID: <CAKL8G3F2+XxgsOfXMD-CFCvd9OAdOsuFTFNgViHSAhB3kDg9Jg@mail.gmail.com>
+
+Hola Manuel,
+Interesante.
+El inconveniente es qué haces con la celda que tiene residuales
+significativos. La remueves?  La haces cero?  Igualas su frecuencia al
+valor esperado?
+Adjunto un ejemplo donde se utiliza la prueba de independencia chi^2 en
+lugar del modelo loglineal y la celda "problema" se reemplaza por su valor
+esperado bajo independencia. La función la construí con ayuda de Gemini.
+Espero sea de ayuda.
+Saludos,
+Jorge Vélez.-
+
+
+On Sun, Apr 12, 2026 at 2:17?PM MANUEL MORALES ORTIZ <morales en us.es> wrote:
+
+> Hola, quiero construir una función en la que me identifique los residuales
+> significativos de una tabla de contingencia y me vaya analizando la tabla
+> hasta que se acepte el modelo de independencia y no queden residuales
+> significativos. Un ejemplo tentativo de lo que se pretende sería el
+> siguiente:
+>
+> library(MASS)
+> x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)
+> datos<- matrix(x,4,4,byrow=T)
+> inicio<- matrix(rep(1,16),4,4)
+> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+> resid<- residuals(res)
+> resid<-abs(as.vector(resid))
+> max<- which.max(resid)
+>
+> # Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual
+> datos<- as.vector(datos)
+> datos[6]<- 0
+> datos<- matrix(datos,4,4)
+>
+> # Vuelvo a analizar la tabla
+> inicio[2,2] <- 0
+> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+> chi2<-res$pearson
+> aux<- chi2 > qchisq(.95,9)
+>
+> # A continuación, se calculan los residuales,
+>
+> resid<- residuals(res)
+>
+> # Repetir el procedimiento hasta que no queden residuales significativos.
+>
+> ¿Alguna sugerencia?
+>
+> Saludos
+>
+>
+>
+>
+>
+>
+>
+> --
+>
+>
+>
+>
+>
+>         [[alternative HTML version deleted]]
+>
+> _______________________________________________
+> R-help-es mailing list
+> R-help-es en r-project.org
+> https://stat.ethz.ch/mailman/listinfo/r-help-es
+>
+
+------------ próxima parte ------------
+Se ha borrado un adjunto en formato HTML...
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20260413/61189791/attachment-0001.html>
+
+------------ próxima parte ------------
+A non-text attachment was scrubbed...
+Name: manuel-residuales.pdf
+Type: application/pdf
+Size: 153974 bytes
+Desc: no disponible
+URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20260413/61189791/attachment-0001.pdf>
+
+From mor@|e@ @end|ng |rom u@@e@  Mon Apr 13 17:33:32 2026
+From: mor@|e@ @end|ng |rom u@@e@ (MANUEL MORALES ORTIZ)
+Date: Mon, 13 Apr 2026 15:33:32 +0000
+Subject: [R-es] Crear funcion para identificar residuales en tabla de
+ contingencia
+In-Reply-To: <GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+ <CAKL8G3F2+XxgsOfXMD-CFCvd9OAdOsuFTFNgViHSAhB3kDg9Jg@mail.gmail.com>
+References: <GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+ <CAKL8G3F2+XxgsOfXMD-CFCvd9OAdOsuFTFNgViHSAhB3kDg9Jg@mail.gmail.com>
+Message-ID: <GV2PR01MB11994E96A8C63EEFE81B614CAAF242@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>
+
+Gracias Jorge por las sugerencias. La idea es sustituir el mayor residual significativo por un cero estructural en la tabla de frecuencias y volver a realizar el análisis hasta conseguir que se acepte el modelo nulo.
+Saludos
+
+
+Sobre 13 abr 2026 en 15:54, Jorge I Velez <jorgeivanvelez en gmail.com<mailto:jorgeivanvelez en gmail.com>> escribió:
+
+Hola Manuel,
+Interesante.
+El inconveniente es qué haces con la celda que tiene residuales significativos. La remueves?  La haces cero?  Igualas su frecuencia al valor esperado?
+Adjunto un ejemplo donde se utiliza la prueba de independencia chi^2 en lugar del modelo loglineal y la celda "problema" se reemplaza por su valor esperado bajo independencia. La función la construí con ayuda de Gemini.
+Espero sea de ayuda.
+Saludos,
+Jorge Vélez.-
+
+
+On Sun, Apr 12, 2026 at 2:17?PM MANUEL MORALES ORTIZ <morales en us.es<mailto:morales en us.es>> wrote:
+Hola, quiero construir una función en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende sería el siguiente:
+
+library(MASS)
+x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)
+datos<- matrix(x,4,4,byrow=T)
+inicio<- matrix(rep(1,16),4,4)
+res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+resid<- residuals(res)
+resid<-abs(as.vector(resid))
+max<- which.max(resid)
+
+# Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual
+datos<- as.vector(datos)
+datos[6]<- 0
+datos<- matrix(datos,4,4)
+
+# Vuelvo a analizar la tabla
+inicio[2,2] <- 0
+res<- loglm(~1+2,data= datos,fitted=T,start = inicio)
+chi2<-res$pearson
+aux<- chi2 > qchisq(.95,9)
+
+# A continuación, se calculan los residuales,
+
+resid<- residuals(res)
+
+# Repetir el procedimiento hasta que no queden residuales significativos.
+
+¿Alguna sugerencia?
+
+Saludos
+
+
+
+
+
+
+
+--
+
+
+
+
+
+        [[alternative HTML version deleted]]
+
+_______________________________________________
+R-help-es mailing list
+R-help-es en r-project.org<mailto:R-help-es en r-project.org>
+https://stat.ethz.ch/mailman/listinfo/r-help-es
+
+	[[alternative HTML version deleted]]
+
+

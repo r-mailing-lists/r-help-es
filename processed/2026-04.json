@@ -75,6 +75,79 @@
       "thread_id": "thread-05e130a9264d",
       "thread_depth": 0,
       "month": "2026-04"
+    },
+    {
+      "id": "msg-52aee48f6f0e",
+      "message_id": "<fc0d4822271a6bc26f59cbf1c9c6de176bf58d9b.camel@uca.es>",
+      "from_name": "Proyecto R-UCA",
+      "from_email_hash": "ffa5226eca417edd6d1b3406ea22b16796605b56130a898287cba043b41d0417",
+      "date": "2026-04-13T05:23:10Z",
+      "subject": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "subject_clean": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "in_reply_to": "<GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>",
+      "references": [
+        "<GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>"
+      ],
+      "body_plain": "Hola, Manuel:\n\nSi haces repetidos contrastes a un nivel de confianza 1-alpha el resultado final no tendrÃ¡ ese nivel de confianza. Hay que ajustar los\nniveles usando la correcciÃ³n de Bonferroni.\n\nPor otra parte, el test que estÃ¡s haciendo no es sobre una casilla es sobre la tabla entera. Si quieres analizar las casillas tendrÃ¡s que\nutilizar otro tipo de test. Tal vez uno basado en errores estandarizados.\n\nNo recuerdo ni encuentro ninguno en este momento. Un hilo del que tirar podrÃ­a ser:\nhttps://pubmed.ncbi.nlm.nih.gov/24788323/\n\nUn saludo.\n\n\nEl dom, 12-04-2026 a las 19:17 +0000, MANUEL MORALES ORTIZ escribiÃ³:\n> Hola, quiero construir una funcin en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando\n> la tablaÂ  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende\n> sera el siguiente:\n> \n> library(MASS)\n> x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)\n> datos<- matrix(x,4,4,byrow=T)\n> inicio<- matrix(rep(1,16),4,4)\n> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)\n> resid<- residuals(res)\n> resid<-abs(as.vector(resid))\n> max<- which.max(resid)\n> \n> # Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual\n> datos<- as.vector(datos)\n> datos[6]<- 0\n> datos<- matrix(datos,4,4)\n> \n> # Vuelvo a analizar la tabla\n> inicio[2,2] <- 0\n> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)\n> chi2<-res$pearson\n> aux<- chi2 > qchisq(.95,9)\n> \n> # A continuacin, se calculan los residuales,\n> \n> resid<- residuals(res)\n> \n> # Repetir el procedimiento hasta que no queden residuales significativos.\n> \n> Alguna sugerencia?\n> \n> Saludos\n> \n> \n> \n> \n> \n> \n> \n> --\n> \n> \n> \n> \n> \n> \t[[alternative HTML version deleted]]\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!W0VL6NufuD4gWEkqY5ZCuu6w5RV4JvHth-kVWEWTvR9OyPbMbVMVItbUdLmpq24bnGLzc3YPGzI$\n>",
+      "body_snippet": "Hola, Manuel:\n\nSi haces repetidos contrastes a un nivel de confianza 1-alpha el resultado final no tendrÃ¡ ese nivel de confianza. Hay que ajustar los\nniveles usando la correcciÃ³n de Bonferroni.\n\nPor",
+      "thread_id": "thread-05e130a9264d",
+      "thread_depth": 1,
+      "month": "2026-04"
+    },
+    {
+      "id": "msg-89f64b19fee4",
+      "message_id": "<GV2PR01MB11994DECDD914B986926E2B7AAF242@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>",
+      "from_name": "MANUEL MORALES ORTIZ",
+      "from_email_hash": "1f8cd5231f0502ff94c5d199dff1a8d2d710534f9997beeb5e61be495d6ac6ca",
+      "date": "2026-04-13T07:26:51Z",
+      "subject": "[R-es]  Crear una función para identificar residuales en una tabla de contingencia",
+      "subject_clean": "[R-es]  Crear una función para identificar residuales en una tabla de contingencia",
+      "in_reply_to": "<mailman.15386.4230.1776057839.1806.r-help-es@r-project.org>",
+      "references": [
+        "<mailman.15386.4230.1776057839.1806.r-help-es@r-project.org>"
+      ],
+      "body_plain": "Hola, muchas gracias por responder.  La idea es crear una funciÃ³n que reproduzca el procedimiento descrito por Bakeman & Quera (1995).  Analizan tablas de contingencia procedentes de secuencias de conducta donde suelen  aparecer residuales espurios. Con objeto de identificar solo los residuales significativos utilizan un procedimiento que consiste en evaluar globalmente la tabla de contingencia y si se rechaza la hipÃ³tesis de independencia identificar el mayor residual significativo y convertirlo en cero estructural. Se volverÃ­a a realizar un nuevo anÃ¡lisis global considerando el cero estructural. Este procedimiento se repetirÃ­a hasta aceptar la hipÃ³tesis nula.\n\nA continuaciÃ³n, incluyo un ejemplo con la tentativa de la funciÃ³n con el cÃ¡lculo de los residuales estandarizados:\n\nx1<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)\nx2<- c(5,1,11,1,3,0,15,0,6,14,13,13,5,2,7,3)\ndatos1<- matrix(x1,4,4,byrow=T)\ndatos2<-matrix(x2,4,4,byrow=T)\n\nresid_ln2<- function(x,ini){\n  RS <- rowSums(x)\n  CS <- colSums(x)\n  GT <- sum(x)\n  inicio<- c(rep(1,9),0,rep(1,6))\n  res<- loglm(~1+2,data= x,fitted=T,start=ini)\n  num<- (x - res$fitted)\n  den <-  sqrt(res$fitted*((1 - RS / GT) %*% t(1 - CS / GT)))\n  ASR<- num/den\n  ASR\n}\n\n\nbq<- function(x){\n  i<- 16\n  n <- 9\n  aux<- TRUE\n  inicio<- rep(1,16)\n  while(i != 0 || aux==TRUE){\n    res<- loglm(~1+2, data=x, fitted=T,start=inicio)\n    resid<- resid_ln2(x,inicio)\n    chi2<-res$pearson\n    aux<- chi2 > qchisq(.95,n)\n    resid1<-as.vector(abs(resid))\n    maxresid<- which.max(resid)\n    resid1[maxresid]<- 0\n    resid<- matrix(resid1,4,4)\n    n<- n-1\n    inicio[maxresid]<-0\n    x1<- as.vector(x)\n    x1[maxresid]<- 0\n    x<- matrix(x1,4,4)\n    if(aux ==FALSE) {\n      return(list(resid,chi2,qchisq(.95,n),inicio,x))\n    }\n    else{\n      print(cat(\"IteraciÃ³n\",i))\n    }\n    i<- i-1\n  }\n}\n\nbq(datos1)\nbq(datos2)\n\nBakeman, R., & Quera, V. (1995). Log-linear approaches to lag-sequential analysis when consecutive codes may and cannot repeat. Psychological Bulletin, 118(2), 272?284. https://doi.org/https://doi.org/10.1037/0033-2909.118.2.272\n\nSe admiten sugerencias y posibles mejoras de la funciÃ³n.\nSaludos\n\n\n\n\n\n\n\n\n--\n\n\n\n\n\n________________________________\nDe: R-help-es <r-help-es-bounces en r-project.org> en nombre de r-help-es-request en r-project.org <r-help-es-request en r-project.org>\nEnviado: lunes, 13 de abril de 2026 7:23\nPara: r-help-es en r-project.org <r-help-es en r-project.org>\nAsunto: Resumen de R-help-es, Vol 204, EnvÃ­o 3\n\nEnvÃ­e los mensajes para la lista R-help-es a\n        r-help-es en r-project.org\n\nPara subscribirse o anular su subscripciÃ³n a travÃ©s de la WEB\n        https://stat.ethz.ch/mailman/listinfo/r-help-es\n\nO por correo electrÃ³nico, enviando un mensaje con el texto \"help\" en\nel asunto (subject) o en el cuerpo a:\n        r-help-es-request en r-project.org\n\nPuede contactar con el responsable de la lista escribiendo a:\n        r-help-es-owner en r-project.org\n\nSi responde a algÃºn contenido de este mensaje, por favor, edite la\nlinea del asunto (subject) para que el texto sea mas especifico que:\n\"Re: Contents of R-help-es digest...\". AdemÃ¡s, por favor, incluya en\nla respuesta sÃ³lo aquellas partes del mensaje a las que estÃ¡\nrespondiendo.\n\n\nAsuntos del dÃ­a:\n\n   1. Crear funcion para identificar residuales en tabla de\n      contingencia (MANUEL MORALES ORTIZ)\n   2. Re: Crear funcion para identificar residuales en tabla de\n      contingencia (Proyecto R-UCA)\n\n----------------------------------------------------------------------\n\nMessage: 1\nDate: Sun, 12 Apr 2026 19:17:01 +0000\nFrom: MANUEL MORALES ORTIZ <morales en us.es>\nTo: \"r-help-es en r-project.org\" <r-help-es en r-project.org>\nSubject: [R-es] Crear funcion para identificar residuales en tabla de\n        contingencia\nMessage-ID:\n        <GV2PR01MB11994E9A45C7030EC50824F67AF272 en GV2PR01MB11994.eurprd01.prod.exchangelabs.com>\n\nContent-Type: text/plain; charset=\"utf-8\"\n\nHola, quiero construir una funci?n en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende ser?a el siguiente:\n\nlibrary(MASS)\nx<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)\ndatos<- matrix(x,4,4,byrow=T)\ninicio<- matrix(rep(1,16),4,4)\nres<- loglm(~1+2,data= datos,fitted=T,start = inicio)\nresid<- residuals(res)\nresid<-abs(as.vector(resid))\nmax<- which.max(resid)\n\n# Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual\ndatos<- as.vector(datos)\ndatos[6]<- 0\ndatos<- matrix(datos,4,4)\n\n# Vuelvo a analizar la tabla\ninicio[2,2] <- 0\nres<- loglm(~1+2,data= datos,fitted=T,start = inicio)\nchi2<-res$pearson\naux<- chi2 > qchisq(.95,9)\n\n# A continuaci?n, se calculan los residuales,\n\nresid<- residuals(res)\n\n# Repetir el procedimiento hasta que no queden residuales significativos.\n\n?Alguna sugerencia?\n\nSaludos\n\n\n\n\n\n\n\n--\n\n\n\n\n\n        [[alternative HTML version deleted]]\n\n\n\n\n------------------------------\n\nMessage: 2\nDate: Mon, 13 Apr 2026 07:23:10 +0200\nFrom: Proyecto R-UCA <r-uca en uca.es>\nTo: r-help-es en r-project.org\nSubject: Re: [R-es] Crear funcion para identificar residuales en tabla\n        de contingencia\nMessage-ID: <fc0d4822271a6bc26f59cbf1c9c6de176bf58d9b.camel en uca.es>\nContent-Type: text/plain; charset=\"utf-8\"\n\nHola, Manuel:\n\nSi haces repetidos contrastes a un nivel de confianza 1-alpha el resultado final no tendrÃ¡ ese nivel de confianza. Hay que ajustar los\nniveles usando la correcciÃ³n de Bonferroni.\n\nPor otra parte, el test que estÃ¡s haciendo no es sobre una casilla es sobre la tabla entera. Si quieres analizar las casillas tendrÃ¡s que\nutilizar otro tipo de test. Tal vez uno basado en errores estandarizados.\n\nNo recuerdo ni encuentro ninguno en este momento. Un hilo del que tirar podrÃ­a ser:\nhttps://pubmed.ncbi.nlm.nih.gov/24788323/\n\nUn saludo.\n\n\nEl dom, 12-04-2026 a las 19:17 +0000, MANUEL MORALES ORTIZ escribiÃ³:\n> Hola, quiero construir una funcin en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando\n> la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende\n> sera el siguiente:\n>\n> library(MASS)\n> x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)\n> datos<- matrix(x,4,4,byrow=T)\n> inicio<- matrix(rep(1,16),4,4)\n> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)\n> resid<- residuals(res)\n> resid<-abs(as.vector(resid))\n> max<- which.max(resid)\n>\n> # Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual\n> datos<- as.vector(datos)\n> datos[6]<- 0\n> datos<- matrix(datos,4,4)\n>\n> # Vuelvo a analizar la tabla\n> inicio[2,2] <- 0\n> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)\n> chi2<-res$pearson\n> aux<- chi2 > qchisq(.95,9)\n>\n> # A continuacin, se calculan los residuales,\n>\n> resid<- residuals(res)\n>\n> # Repetir el procedimiento hasta que no queden residuales significativos.\n>\n> Alguna sugerencia?\n>\n> Saludos\n>\n>\n>\n>\n>\n>\n>\n> --\n>\n>\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://urldefense.com/v3/__https://stat.ethz.ch/mailman/listinfo/r-help-es__;!!D9dNQwwGXtA!W0VL6NufuD4gWEkqY5ZCuu6w5RV4JvHth-kVWEWTvR9OyPbMbVMVItbUdLmpq24bnGLzc3YPGzI$\n>\n\n\n\n\n------------------------------\n\nSubject: PiÃ© de pÃ¡gina del digest\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n------------------------------\n\nFin de Resumen de R-help-es, Vol 204, EnvÃ­o 3\n*********************************************\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, muchas gracias por responder.  La idea es crear una funciÃ³n que reproduzca el procedimiento descrito por Bakeman & Quera (1995).  Analizan tablas de contingencia procedentes de secuencias de co",
+      "thread_id": "thread-89f64b19fee4",
+      "thread_depth": 0,
+      "month": "2026-04"
+    },
+    {
+      "id": "msg-e1bdad5a3c56",
+      "message_id": "<CAKL8G3F2+XxgsOfXMD-CFCvd9OAdOsuFTFNgViHSAhB3kDg9Jg@mail.gmail.com>",
+      "from_name": "Jorge I Velez",
+      "from_email_hash": "874dca51563da807a88f095f0afa53c85d1ee3dc475fa731dd1d5c0887e5ea41",
+      "date": "2026-04-13T13:53:25Z",
+      "subject": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "subject_clean": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "in_reply_to": "<GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>",
+      "references": [
+        "<GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>"
+      ],
+      "body_plain": "Hola Manuel,\nInteresante.\nEl inconveniente es quÃ© haces con la celda que tiene residuales\nsignificativos. La remueves?  La haces cero?  Igualas su frecuencia al\nvalor esperado?\nAdjunto un ejemplo donde se utiliza la prueba de independencia chi^2 en\nlugar del modelo loglineal y la celda \"problema\" se reemplaza por su valor\nesperado bajo independencia. La funciÃ³n la construÃ­ con ayuda de Gemini.\nEspero sea de ayuda.\nSaludos,\nJorge VÃ©lez.-\n\n\nOn Sun, Apr 12, 2026 at 2:17?PM MANUEL MORALES ORTIZ <morales en us.es> wrote:\n\n> Hola, quiero construir una funciÃ³n en la que me identifique los residuales\n> significativos de una tabla de contingencia y me vaya analizando la tabla\n> hasta que se acepte el modelo de independencia y no queden residuales\n> significativos. Un ejemplo tentativo de lo que se pretende serÃ­a el\n> siguiente:\n>\n> library(MASS)\n> x<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)\n> datos<- matrix(x,4,4,byrow=T)\n> inicio<- matrix(rep(1,16),4,4)\n> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)\n> resid<- residuals(res)\n> resid<-abs(as.vector(resid))\n> max<- which.max(resid)\n>\n> # Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual\n> datos<- as.vector(datos)\n> datos[6]<- 0\n> datos<- matrix(datos,4,4)\n>\n> # Vuelvo a analizar la tabla\n> inicio[2,2] <- 0\n> res<- loglm(~1+2,data= datos,fitted=T,start = inicio)\n> chi2<-res$pearson\n> aux<- chi2 > qchisq(.95,9)\n>\n> # A continuaciÃ³n, se calculan los residuales,\n>\n> resid<- residuals(res)\n>\n> # Repetir el procedimiento hasta que no queden residuales significativos.\n>\n> Â¿Alguna sugerencia?\n>\n> Saludos\n>\n>\n>\n>\n>\n>\n>\n> --\n>\n>\n>\n>\n>\n>         [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20260413/61189791/attachment-0001.html>\n\n------------ prÃ³xima parte ------------\nA non-text attachment was scrubbed...\nName: manuel-residuales.pdf\nType: application/pdf\nSize: 153974 bytes\nDesc: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20260413/61189791/attachment-0001.pdf>",
+      "body_snippet": "Hola Manuel,\nInteresante.\nEl inconveniente es quÃ© haces con la celda que tiene residuales\nsignificativos. La remueves?  La haces cero?  Igualas su frecuencia al\nvalor esperado?\nAdjunto un ejemplo don",
+      "thread_id": "thread-05e130a9264d",
+      "thread_depth": 1,
+      "month": "2026-04"
+    },
+    {
+      "id": "msg-176807cd6819",
+      "message_id": "<GV2PR01MB11994E96A8C63EEFE81B614CAAF242@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>",
+      "from_name": "MANUEL MORALES ORTIZ",
+      "from_email_hash": "1f8cd5231f0502ff94c5d199dff1a8d2d710534f9997beeb5e61be495d6ac6ca",
+      "date": "2026-04-13T15:33:32Z",
+      "subject": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "subject_clean": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "in_reply_to": "<GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com> <CAKL8G3F2+XxgsOfXMD-CFCvd9OAdOsuFTFNgViHSAhB3kDg9Jg@mail.gmail.com>",
+      "references": [
+        "<GV2PR01MB11994E9A45C7030EC50824F67AF272@GV2PR01MB11994.eurprd01.prod.exchangelabs.com>",
+        "<CAKL8G3F2+XxgsOfXMD-CFCvd9OAdOsuFTFNgViHSAhB3kDg9Jg@mail.gmail.com>"
+      ],
+      "body_plain": "Gracias Jorge por las sugerencias. La idea es sustituir el mayor residual significativo por un cero estructural en la tabla de frecuencias y volver a realizar el anÃ¡lisis hasta conseguir que se acepte el modelo nulo.\nSaludos\n\n\nSobre 13 abr 2026 en 15:54, Jorge I Velez <jorgeivanvelez en gmail.com<mailto:jorgeivanvelez en gmail.com>> escribiÃ³:\n\nHola Manuel,\nInteresante.\nEl inconveniente es quÃ© haces con la celda que tiene residuales significativos. La remueves?  La haces cero?  Igualas su frecuencia al valor esperado?\nAdjunto un ejemplo donde se utiliza la prueba de independencia chi^2 en lugar del modelo loglineal y la celda \"problema\" se reemplaza por su valor esperado bajo independencia. La funciÃ³n la construÃ­ con ayuda de Gemini.\nEspero sea de ayuda.\nSaludos,\nJorge VÃ©lez.-\n\n\nOn Sun, Apr 12, 2026 at 2:17?PM MANUEL MORALES ORTIZ <morales en us.es<mailto:morales en us.es>> wrote:\nHola, quiero construir una funciÃ³n en la que me identifique los residuales significativos de una tabla de contingencia y me vaya analizando la tabla  hasta que se acepte el modelo de independencia y no queden residuales significativos. Un ejemplo tentativo de lo que se pretende serÃ­a el siguiente:\n\nlibrary(MASS)\nx<- c(13,6,7,9,9,25,5,6,6,7,6,14,7,8,14,46)\ndatos<- matrix(x,4,4,byrow=T)\ninicio<- matrix(rep(1,16),4,4)\nres<- loglm(~1+2,data= datos,fitted=T,start = inicio)\nresid<- residuals(res)\nresid<-abs(as.vector(resid))\nmax<- which.max(resid)\n\n# Asigno el valor 0 a la caslla de la tabla que tiene el mayor residual\ndatos<- as.vector(datos)\ndatos[6]<- 0\ndatos<- matrix(datos,4,4)\n\n# Vuelvo a analizar la tabla\ninicio[2,2] <- 0\nres<- loglm(~1+2,data= datos,fitted=T,start = inicio)\nchi2<-res$pearson\naux<- chi2 > qchisq(.95,9)\n\n# A continuaciÃ³n, se calculan los residuales,\n\nresid<- residuals(res)\n\n# Repetir el procedimiento hasta que no queden residuales significativos.\n\nÂ¿Alguna sugerencia?\n\nSaludos\n\n\n\n\n\n\n\n--\n\n\n\n\n\n        [[alternative HTML version deleted]]\n\n_______________________________________________\nR-help-es mailing list\nR-help-es en r-project.org<mailto:R-help-es en r-project.org>\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias Jorge por las sugerencias. La idea es sustituir el mayor residual significativo por un cero estructural en la tabla de frecuencias y volver a realizar el anÃ¡lisis hasta conseguir que se acept",
+      "thread_id": "thread-05e130a9264d",
+      "thread_depth": 2,
+      "month": "2026-04"
     }
   ],
   "threads": [
@@ -93,13 +166,26 @@
     {
       "id": "thread-05e130a9264d",
       "subject": "[R-es] Crear funcion para identificar residuales en tabla de contingencia",
+      "message_count": 4,
+      "participants": [
+        "Jorge I Velez",
+        "MANUEL MORALES ORTIZ",
+        "Proyecto R-UCA"
+      ],
+      "started": "2026-04-12T19:17:01Z",
+      "last_reply": "2026-04-13T15:33:32Z",
+      "root_message_id": "msg-05e130a9264d"
+    },
+    {
+      "id": "thread-89f64b19fee4",
+      "subject": "[R-es]  Crear una función para identificar residuales en una tabla de contingencia",
       "message_count": 1,
       "participants": [
         "MANUEL MORALES ORTIZ"
       ],
-      "started": "2026-04-12T19:17:01Z",
-      "last_reply": "2026-04-12T19:17:01Z",
-      "root_message_id": "msg-05e130a9264d"
+      "started": "2026-04-13T07:26:51Z",
+      "last_reply": "2026-04-13T07:26:51Z",
+      "root_message_id": "msg-89f64b19fee4"
     }
   ]
 }
