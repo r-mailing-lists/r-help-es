@@ -148,3 +148,51 @@ www.qualityexcellence.es
 	[[alternative HTML version deleted]]
 
 
+From j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com  Mon Jul 20 03:56:19 2026
+From: j@v|er@ruben@m@rcuzz| @end|ng |rom gm@||@com (Javier Marcuzzi)
+Date: Sun, 19 Jul 2026 22:56:19 -0300
+Subject: [R-es] Para ejecutar
+Message-ID: <BB5E07F3-FB1A-45DF-B18D-D466ACA22460@gmail.com>
+
+Estimados:
+
+¿Pueden ejecutar este código en R?
+
+
+
+
+# Instalar el paquete ggplot2 si no lo tienes instalado
+if (!require(ggplot2)) {
+  install.packages("ggplot2")
+}
+
+# Cargar la librería
+library(ggplot2)
+arg_blue <- "#75AADB"
+esp_red <- "#AA151B"
+esp_yellow <- "#F1BF00"
+p <- ggplot() +
+  theme_void() +
+  coord_cartesian(xlim = c(0, 100), ylim = c(0, 100)) +
+  annotate("rect", xmin = 0, xmax = 50, ymin = 66.6, ymax = 100, fill = arg_blue) +
+  annotate("rect", xmin = 0, xmax = 50, ymin = 33.3, ymax = 66.6, fill = "white") +
+  annotate("rect", xmin = 0, xmax = 50, ymin = 0, ymax = 33.3, fill = arg_blue) +
+  annotate("point", x = 25, y = 50, color = "#FDB813", size = 25) +
+  annotate("rect", xmin = 50, xmax = 100, ymin = 75, ymax = 100, fill = esp_red) +
+  annotate("rect", xmin = 50, xmax = 100, ymin = 25, ymax = 75, fill = esp_yellow) +
+  annotate("rect", xmin = 50, xmax = 100, ymin = 0, ymax = 25, fill = esp_red) +
+  annotate("rect", xmin = 10, xmax = 90, ymin = 20, ymax = 80, 
+           fill = "black", alpha = 0.75, color = "white", size = 2) +
+  annotate("text", x = 50, y = 65, label = "¡CAMPEONES DEL MUNDO!", 
+           color = "white", size = 8, fontface = "bold") +
+  annotate("text", x = 50, y = 45, label = "Desde Argentina", 
+           color = arg_blue, size = 9, fontface = "bold") +
+  annotate("text", x = 50, y = 33, label = "felicitamos a España", 
+           color = esp_yellow, size = 9, fontface = "bold") +
+  theme(
+    plot.background = element_rect(fill = "gray10", color = NA),
+    plot.margin = margin(10, 10, 10, 10)
+  )
+
+print(p)
+
