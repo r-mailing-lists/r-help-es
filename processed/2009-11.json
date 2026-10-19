@@ -31,11 +31,14 @@
       "references": [
         "<13549e790911020453s2aef2ddevdb6e70dd4f36578e@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091102/31a12db6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091102/31a12db6/attachment.pl>",
+      "body_plain": "Hola Luciano.\n\nMira la función 'rle'.\n\nCreo que te debería servir.\n\nUn saludo.\n\nJavier Muñoz.\n\n2009/11/2 Luciano Selzer <luciano.selzer at gmail.com>\n\n> Hola lista, tengo una base de datos muy grande de un datalogger.\n> Consiste en un vector con 0's y 1's, y tengo que ver cuando hay 600 o\n> más unos seguidos. Se me ocurrió hacerlo con un loop for. Pero tarda\n> demasiado. También intente usar which para que seleccione solo los 1\n> para empezar a sumar pero no hay gran diferencia. A alguien se le\n> ocurre alguna solución para hacerlo más rápido?\n>\n> Acá está el código con los datos de prueba:\n>\n>\n> test<-rep(c(rep(0,5),rep(1,601),rep(0,100),rep(1,100),rep(0,3),rep(1,200),rep(0,300),rep(1,1000)),100)\n> loop<-numeric()\n> for (i in 1:length(test)) {\n>    loop[i]<-sum(test[i:(i+600)])\n>    }\n>\n> loop2<-numeric()\n> for (i in which(test==1)) {\n>    loop2[i]<-sum(test[i:(i+600)])\n> }\n>\n>\n>\n> Muchas gracias a todos los que contesten.\n> Luciano\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Luciano.\n\nMira la función 'rle'.\n\nCreo que te debería servir.\n\nUn saludo.\n\nJavier Muñoz.\n\n2009/11/2 Luciano Selzer <luciano.selzer at gmail.com>\n\n> Hola lista, tengo una base de datos muy grande ",
       "thread_id": "thread-0f6a7b113b30",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091102/31a12db6/attachment.pl"
+      ]
     },
     {
       "id": "msg-182a56f723ef",
@@ -88,11 +91,14 @@
       "references": [
         "<13549e790911020453s2aef2ddevdb6e70dd4f36578e@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091102/6a3fc931/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091102/6a3fc931/attachment.pl>",
+      "body_plain": "Buenas tardes Luciano,\n\nEsta es una solución utilizando rle():\n\ntest <-\nrep(c(rep(0,5),rep(1,601),rep(0,100),rep(1,100),rep(0,3),rep(1,200),rep(0,300),rep(1,1000)),100)\nnames(test) <- 1:length(test)\nres <- rle(test)$lengths\nf <- names(res[res > 600])\nf[f != \"\"]\n\nLos resultados obtenidos con el programa enviado por Gabriela Cendoya y los\nproporcionados por rle() son equivalentes:\n\nres <- rle(test)$lengths\nf <- names(res[res > 600])\nresjiv <- f[f != \"\"]\n\ntest0 <- test[test==0]\nfilas <- as.numeric(names(test0))\nresgab <- names(test0)[c(names(test0)[1]>600,diff(filas)>600)]\n\nidentical(resjiv, resgab)\n# [1] TRUE\n\nSin embargo, si la eficiencia es relevante y no quieres \"hackear\" la función\nrle(), te sugeriría trabajar con la solución enviada por Gabriela. Esto\ndemuestra una vez más que trabajar con funciones vectorizadas es un poco más\neficiente.\n\nEstos son los tiempos para 100 réplicas:\n\n# rle()\nsystem.time(replicate(100, {\n                                     res <- rle(test)$lengths\n                                     f <- names(res[res > 600])\n                                     f[f != \"\"]\n                                       }\n                                )\n                              )\n#   user  system elapsed\n#  10.49    0.19   10.69\n\n# Gabriela\nsystem.time(replicate(100, {\n                                        test0 <- test[test==0]\n                                        filas <- as.numeric(names(test0))\n\n names(test0)[c(names(test0)[1]>600,diff(filas)>600)]\n                                      }\n                              )\n                          )\n#    user  system elapsed\n#   4.93    0.05    4.98\n\n\nEspero sea de utilidad,\n                          Jorge Ivan Velez\n\n\n2009/11/2 Luciano Selzer <>\n\n> Hola lista, tengo una base de datos muy grande de un datalogger.\n> Consiste en un vector con 0's y 1's, y tengo que ver cuando hay 600 o\n> más unos seguidos. Se me ocurrió hacerlo con un loop for. Pero tarda\n> demasiado. También intente usar which para que seleccione solo los 1\n> para empezar a sumar pero no hay gran diferencia. A alguien se le\n> ocurre alguna solución para hacerlo más rápido?\n>\n> Acá está el código con los datos de prueba:\n>\n>\n> test<-rep(c(rep(0,5),rep(1,601),rep(0,100),rep(1,100),rep(0,3),rep(1,200),rep(0,300),rep(1,1000)),100)\n> loop<-numeric()\n> for (i in 1:length(test)) {\n>    loop[i]<-sum(test[i:(i+600)])\n>    }\n>\n> loop2<-numeric()\n> for (i in which(test==1)) {\n>    loop2[i]<-sum(test[i:(i+600)])\n> }\n>\n>\n>\n> Muchas gracias a todos los que contesten.\n> Luciano\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Luciano,\n\nEsta es una solución utilizando rle():\n\ntest <-\nrep(c(rep(0,5),rep(1,601),rep(0,100),rep(1,100),rep(0,3),rep(1,200),rep(0,300),rep(1,1000)),100)\nnames(test) <- 1:length(test)\nr",
       "thread_id": "thread-0f6a7b113b30",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091102/6a3fc931/attachment.pl"
+      ]
     },
     {
       "id": "msg-ed35e7cfc14f",
@@ -174,11 +180,14 @@
       "references": [
         "<94EAD6DA-9056-4AC7-827A-09FDECC1720D@me.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/5093435f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/5093435f/attachment.pl>",
+      "body_plain": "Buenas tardes Javier,\n\nLa descripción que ofreces es bastante confusa. Quizás un data.frame de lo\nque tienes y de lo que te gustaría tener podría ayudarnos a ayudarte.\n\nSaludos,\n       Jorge Ivan Velez\n\n\n2009/11/3 Javier Marcuzzi <>\n\n> Necesito algo de programación básica para resolver un problema, un\n> inconveniente es que intente \"if\", cuándo se lo aplico digamos a x <- 5 no\n> hay drama, pero si es a leche$litros me dice que solo se toma el primer\n> elemento. Como pueden ver estoy re perdido.\n>\n> Mi problema: los datos están en un data.frame como el siguiente\n>\n>  animal     inicio        fin    control idlactancias Cle_KilosOrdenie1\n>   DL\n> 1    1482 2006-08-08 2007-08-23 2007-02-23         4353              11.4\n> 199 days\n> 2    1482 2004-08-08 2005-05-01 2004-12-21         4351              11.0\n> 135 days\n> 3    1482 2004-08-08 2005-05-01 2005-04-26         4351              11.0\n> 261 days\n> 4    1482 2005-05-02 2006-08-07 2005-05-24         4352               7.8\n>  22 days\n> 5    1482 2006-08-08 2007-08-23 2007-06-25         4353               7.8\n> 321 days\n> 6    1482 2005-05-02 2006-08-07 2005-12-26         4352               7.4\n> 238 days\n> 7    1482 2006-08-08 2007-08-23 2007-01-24         4353              14.8\n> 169 days\n> 8    1482 2006-08-08 2007-08-23 2007-07-24         4353               7.4\n> 350 days\n> 9    1482 2004-08-08 2005-05-01 2004-11-23         4351              16.2\n> 107 days\n> 10   1482 2005-05-02 2006-08-07 2005-07-26         4352               9.0\n>  85 days\n> 11   1482 2006-08-08 2007-08-23 2006-11-20         4353              20.2\n> 104 days\n> 12   1482 2005-05-02 2006-08-07 2005-08-24         4352               9.4\n> 114 days\n> 13   1482 2006-08-08 2007-08-23 2007-04-26         4353              10.2\n> 261 days\n>\n>\n> Por cada animal tengo fecha de inicio, fecha de final, y entre estas fechas\n> de control. En la fecha de inicio y final no hay control, salvo que justo\n> ese día se realice el control, pero los controles son una vez al mes, por lo\n> cuál es mucha casualidad. En los controles se realizan mediciones, por lo\n> cuál hay una fecha y un número asociado a esa fecha.\n>\n> La formula matemática es desde el inicio hasta la fecha del primer control,\n> entre las fechas de controles, y desde la fecha de ultimo control a la fecha\n> de fin. Los números se multiplican por la diferencia de días entre las\n> fechas, salvo los dos extremos.\n>\n> El problema radica en que los datos no son por ejemplo, inicio, control 1,\n> control 2, control 3, fin. Pudiendo hacer una hoja de calculo resolviendo\n> rápidamente el inconveniente, cada animal tiene inicio, diferente números de\n> fechas de control con sus números,  y casi todos fecha de final, porque hay\n> algunos que no llegaron al final, entonces tienen inicio, dos controles y\n> cuándo pase el tiempo ...\n>\n> Lo que yo pené es buscar la menor fecha por animal, la mayor fecha por\n> animal, de esta forma tengo la fecha de inicio y final, y luego las fechas\n> que se encuentren entre estas dos. Teniendo estas fechas puedo aplicar la\n> formula que tiene las tres partes inicio, entre controles, final. Claro que\n> todo esto se debe realizar por todo el data.frame y para todos los animales.\n> El resultado final es un número que resume todo lo producido entre la fecha\n> inicial y final (o hasta donde se midió), por cada animal.\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Javier,\n\nLa descripción que ofreces es bastante confusa. Quizás un data.frame de lo\nque tienes y de lo que te gustaría tener podría ayudarnos a ayudarte.\n\nSaludos,\n       Jorge Ivan Vele",
       "thread_id": "thread-a4874e49c464",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/5093435f/attachment.pl"
+      ]
     },
     {
       "id": "msg-15050d4b522b",
@@ -209,11 +218,14 @@
         "<94EAD6DA-9056-4AC7-827A-09FDECC1720D@me.com>",
         "<317737de0911030916u1d4f8b8cmf69b25467fae4b1d@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/366d9e25/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/366d9e25/attachment.pl>",
+      "body_plain": "Hola Javier,\n\nCoincido con lo confuso de tu email, pero me da que lo que intentas hacer es\nuna comparación elemento a elemento. Si es así yo buscaría en los manuales\nbásicos como subindicar una matriz (recuerda que puedes tratar el data.frame\nbien como lista o bien como una matriz), otra posible forma es que definas\nuna función que apliques a cada fila o columna y luego utilices las\nfunciones vectoriales de R, por ejemplo APPLY. De todas formas conviene que\nintentes describir un poco mejor el problema. Un saludo.\n\nFernando Fernández.\n\nEl 3 de noviembre de 2009 18:16, Jorge Ivan Velez\n<jorgeivanvelez at gmail.com>escribió:\n\n> Buenas tardes Javier,\n>\n> La descripción que ofreces es bastante confusa. Quizás un data.frame de lo\n> que tienes y de lo que te gustaría tener podría ayudarnos a ayudarte.\n>\n> Saludos,\n>       Jorge Ivan Velez\n>\n>\n> 2009/11/3 Javier Marcuzzi <>\n>\n> > Necesito algo de programación básica para resolver un problema, un\n> > inconveniente es que intente \"if\", cuándo se lo aplico digamos a x <- 5\n> no\n> > hay drama, pero si es a leche$litros me dice que solo se toma el primer\n> > elemento. Como pueden ver estoy re perdido.\n> >\n> > Mi problema: los datos están en un data.frame como el siguiente\n> >\n> >  animal     inicio        fin    control idlactancias Cle_KilosOrdenie1\n> >   DL\n> > 1    1482 2006-08-08 2007-08-23 2007-02-23         4353              11.4\n> > 199 days\n> > 2    1482 2004-08-08 2005-05-01 2004-12-21         4351              11.0\n> > 135 days\n> > 3    1482 2004-08-08 2005-05-01 2005-04-26         4351              11.0\n> > 261 days\n> > 4    1482 2005-05-02 2006-08-07 2005-05-24         4352               7.8\n> >  22 days\n> > 5    1482 2006-08-08 2007-08-23 2007-06-25         4353               7.8\n> > 321 days\n> > 6    1482 2005-05-02 2006-08-07 2005-12-26         4352               7.4\n> > 238 days\n> > 7    1482 2006-08-08 2007-08-23 2007-01-24         4353              14.8\n> > 169 days\n> > 8    1482 2006-08-08 2007-08-23 2007-07-24         4353               7.4\n> > 350 days\n> > 9    1482 2004-08-08 2005-05-01 2004-11-23         4351              16.2\n> > 107 days\n> > 10   1482 2005-05-02 2006-08-07 2005-07-26         4352               9.0\n> >  85 days\n> > 11   1482 2006-08-08 2007-08-23 2006-11-20         4353              20.2\n> > 104 days\n> > 12   1482 2005-05-02 2006-08-07 2005-08-24         4352               9.4\n> > 114 days\n> > 13   1482 2006-08-08 2007-08-23 2007-04-26         4353              10.2\n> > 261 days\n> >\n> >\n> > Por cada animal tengo fecha de inicio, fecha de final, y entre estas\n> fechas\n> > de control. En la fecha de inicio y final no hay control, salvo que justo\n> > ese día se realice el control, pero los controles son una vez al mes, por\n> lo\n> > cuál es mucha casualidad. En los controles se realizan mediciones, por lo\n> > cuál hay una fecha y un número asociado a esa fecha.\n> >\n> > La formula matemática es desde el inicio hasta la fecha del primer\n> control,\n> > entre las fechas de controles, y desde la fecha de ultimo control a la\n> fecha\n> > de fin. Los números se multiplican por la diferencia de días entre las\n> > fechas, salvo los dos extremos.\n> >\n> > El problema radica en que los datos no son por ejemplo, inicio, control\n> 1,\n> > control 2, control 3, fin. Pudiendo hacer una hoja de calculo resolviendo\n> > rápidamente el inconveniente, cada animal tiene inicio, diferente números\n> de\n> > fechas de control con sus números,  y casi todos fecha de final, porque\n> hay\n> > algunos que no llegaron al final, entonces tienen inicio, dos controles y\n> > cuándo pase el tiempo ...\n> >\n> > Lo que yo pené es buscar la menor fecha por animal, la mayor fecha por\n> > animal, de esta forma tengo la fecha de inicio y final, y luego las\n> fechas\n> > que se encuentren entre estas dos. Teniendo estas fechas puedo aplicar la\n> > formula que tiene las tres partes inicio, entre controles, final. Claro\n> que\n> > todo esto se debe realizar por todo el data.frame y para todos los\n> animales.\n> > El resultado final es un número que resume todo lo producido entre la\n> fecha\n> > inicial y final (o hasta donde se midió), por cada animal.\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Javier,\n\nCoincido con lo confuso de tu email, pero me da que lo que intentas hacer es\nuna comparación elemento a elemento. Si es así yo buscaría en los manuales\nbásicos como subindicar una matriz",
       "thread_id": "thread-a4874e49c464",
       "thread_depth": 2,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/366d9e25/attachment.pl"
+      ]
     },
     {
       "id": "msg-f9f70cbb5da2",
@@ -229,11 +241,14 @@
         "<317737de0911030916u1d4f8b8cmf69b25467fae4b1d@mail.gmail.com>",
         "<fcd5213d0911031343r5417cfc0o3d32063357445ef2@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/42b37eed/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/42b37eed/attachment.pl>",
+      "body_plain": "Esperemos explicar un poco mejor, en el sitio\n\nhttp://www.icar.org/Documents/Rules%20and%20regulations/Guidelines/Guidelines_2009.pdf\n\no buscando en google icar 2.1.4.1\n\ndebe salir el método estándar para el cálculo de lactancia, que es la  \ncálculo que quiero aplicar\n\nLa formula es FY=IoM1+l1*((M1+M2)/2)+((M2+M3)/2)+l(l-1)*(M(n-1)+Mn)/ \n2+lnMn\n\nSería mejor que lean el original, esta en pdf y bien explicado, son 14  \nrenglones, más otro tipo de información que les resulte interesante.\n\nA los datos para aplicar esta fórmula los tengo en el data.frame que  \nescribí antes. En realidad tengo acceso a la base de datos mysql y la  \nconsulta la paso al data.frame, por lo cual hay posibilidades de hacer  \nuna consulta a mysql de otra forma en caso de tener que modificar para  \ntrabajar de forma más eficiente.\n>  animal     inicio        fin    control idlactancias  \n> Cle_KilosOrdenie1\n> >   DL\n> > 1    1482 2006-08-08 2007-08-23 2007-02-23          \n> 4353              11.4\n> > 199 days\n> > 2    1482 2004-08-08 2005-05-01 2004-12-21          \n> 4351              11.0\n\n\nPensé en hacer una matriz, pero el número de filas y/o columnas es  \ndistinto para cada vaca, por lo que tendía que leer el data.frama para  \nrealizar una matriz de acuerdo a los animales que tienen el mismo  \nnúmero de controles,\n\n\n\nEl 03/11/2009, a las 19:43, Fernando Fernández escribió:\n\n> Hola Javier,\n>\n> Coincido con lo confuso de tu email, pero me da que lo que intentas  \n> hacer es una comparación elemento a elemento. Si es así yo buscaría  \n> en los manuales básicos como subindicar una matriz (recuerda que  \n> puedes tratar el data.frame bien como lista o bien como una matriz),  \n> otra posible forma es que definas una función que apliques a cada  \n> fila o columna y luego utilices las funciones vectoriales de R, por  \n> ejemplo APPLY. De todas formas conviene que intentes describir un  \n> poco mejor el problema. Un saludo.\n>\n> Fernando Fernández.\n>\n> El 3 de noviembre de 2009 18:16, Jorge Ivan Velez <jorgeivanvelez at gmail.com \n> > escribió:\n> Buenas tardes Javier,\n>\n> La descripción que ofreces es bastante confusa. Quizás un data.frame  \n> de lo\n> que tienes y de lo que te gustaría tener podría ayudarnos a ayudarte.\n>\n> Saludos,\n>       Jorge Ivan Velez\n>\n>\n> 2009/11/3 Javier Marcuzzi <>\n>\n> > Necesito algo de programación básica para resolver un problema, un\n> > inconveniente es que intente \"if\", cuándo se lo aplico digamos a x  \n> <- 5 no\n> > hay drama, pero si es a leche$litros me dice que solo se toma el  \n> primer\n> > elemento. Como pueden ver estoy re perdido.\n> >\n> > Mi problema: los datos están en un data.frame como el siguiente\n> >\n> >  animal     inicio        fin    control idlactancias  \n> Cle_KilosOrdenie1\n> >   DL\n> > 1    1482 2006-08-08 2007-08-23 2007-02-23          \n> 4353              11.4\n> > 199 days\n> > 2    1482 2004-08-08 2005-05-01 2004-12-21          \n> 4351              11.0\n> > 135 days\n> > 3    1482 2004-08-08 2005-05-01 2005-04-26          \n> 4351              11.0\n> > 261 days\n> > 4    1482 2005-05-02 2006-08-07 2005-05-24          \n> 4352               7.8\n> >  22 days\n> > 5    1482 2006-08-08 2007-08-23 2007-06-25          \n> 4353               7.8\n> > 321 days\n> > 6    1482 2005-05-02 2006-08-07 2005-12-26          \n> 4352               7.4\n> > 238 days\n> > 7    1482 2006-08-08 2007-08-23 2007-01-24          \n> 4353              14.8\n> > 169 days\n> > 8    1482 2006-08-08 2007-08-23 2007-07-24          \n> 4353               7.4\n> > 350 days\n> > 9    1482 2004-08-08 2005-05-01 2004-11-23          \n> 4351              16.2\n> > 107 days\n> > 10   1482 2005-05-02 2006-08-07 2005-07-26          \n> 4352               9.0\n> >  85 days\n> > 11   1482 2006-08-08 2007-08-23 2006-11-20          \n> 4353              20.2\n> > 104 days\n> > 12   1482 2005-05-02 2006-08-07 2005-08-24          \n> 4352               9.4\n> > 114 days\n> > 13   1482 2006-08-08 2007-08-23 2007-04-26          \n> 4353              10.2\n> > 261 days\n> >\n> >\n> > Por cada animal tengo fecha de inicio, fecha de final, y entre  \n> estas fechas\n> > de control. En la fecha de inicio y final no hay control, salvo  \n> que justo\n> > ese día se realice el control, pero los controles son una vez al  \n> mes, por lo\n> > cuál es mucha casualidad. En los controles se realizan mediciones,  \n> por lo\n> > cuál hay una fecha y un número asociado a esa fecha.\n> >\n> > La formula matemática es desde el inicio hasta la fecha del primer  \n> control,\n> > entre las fechas de controles, y desde la fecha de ultimo control  \n> a la fecha\n> > de fin. Los números se multiplican por la diferencia de días entre  \n> las\n> > fechas, salvo los dos extremos.\n> >\n> > El problema radica en que los datos no son por ejemplo, inicio,  \n> control 1,\n> > control 2, control 3, fin. Pudiendo hacer una hoja de calculo  \n> resolviendo\n> > rápidamente el inconveniente, cada animal tiene inicio, diferente  \n> números de\n> > fechas de control con sus números,  y casi todos fecha de final,  \n> porque hay\n> > algunos que no llegaron al final, entonces tienen inicio, dos  \n> controles y\n> > cuándo pase el tiempo ...\n> >\n> > Lo que yo pené es buscar la menor fecha por animal, la mayor fecha  \n> por\n> > animal, de esta forma tengo la fecha de inicio y final, y luego  \n> las fechas\n> > que se encuentren entre estas dos. Teniendo estas fechas puedo  \n> aplicar la\n> > formula que tiene las tres partes inicio, entre controles, final.  \n> Claro que\n> > todo esto se debe realizar por todo el data.frame y para todos los  \n> animales.\n> > El resultado final es un número que resume todo lo producido entre  \n> la fecha\n> > inicial y final (o hasta donde se midió), por cada animal.\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Esperemos explicar un poco mejor, en el sitio\n\nhttp://www.icar.org/Documents/Rules%20and%20regulations/Guidelines/Guidelines_2009.pdf\n\no buscando en google icar 2.1.4.1\n\ndebe salir el método estándar ",
       "thread_id": "thread-a4874e49c464",
       "thread_depth": 3,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/42b37eed/attachment.pl"
+      ]
     },
     {
       "id": "msg-920699888a19",
@@ -267,11 +282,14 @@
       "references": [
         "<9C5C17DF-1EDC-4071-AC17-EF0A02EBC484@me.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/4b13c57c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/4b13c57c/attachment.pl>",
+      "body_plain": "colega \nno se si tu necesidad sea exactamente esta pero en alguna ocasion necesite poner valores dependiendo de el valor de cada reglon de la tabla, esto  lo hice usando subindices, hasta donde te entiendo es lo que tu quieres, revisa este ejemplo, espero le entiendas\n\nfor (i in 1:length(elemento)){\nsubt=elemento[i]\ncontador=which(tabla$elemento==subt)\n  for (j in (min(contador)):(max(contador))){\n    tiempo[(j-(min(contador))+1)]=(tabla$tiempo[j])\n    degradacion[(j-(min(contador))+1)]=(tabla$degradacion[j])\n  }\n  }\n\nbasicamente cuando pones [ ] se maneja como un subindice, revisalo y si tienes dudas aqui estamos\nsaludos\nEnrique RAMOS\n\n\n\n\n________________________________\nDe: Javier Marcuzzi <javiermarcuzzi at me.com>\nPara: R-help-es at r-project.org\nEnviado: mar, noviembre 3, 2009 11:42:31 AM\nAsunto: [R-es] programación básica\n\nTrataré de explicar de otra forma\n\nSupongamos que hoy es 1º de enero y hacemos el análisis\n\nTengo por un lado el número de animal, 1,2,3,4\nA cada animal le corresponden fechas de inicio, por ejemplo el animal 1 tiene dos fechas de inicio 1º de enero y 1º de diciembre.\n\nCada animal puede o no tener fecha de final, por ejemplo el animal 1 tiene fecha de final el 1º de noviembre, pero aún no tiene fecha de final cuándo la fecha de inicio es 1º de diciembre.\n\nLuego de la fecha de inicio 1º de enero vienen las fechas de control y sus valores, 3º marzo 45, 4º de abril 30, 3º septiembre 30.\n\nEntonces en un data.frame tengo las columnas animal, fecha de inicio, fecha de final, fecha de control, control.\n\nLa fórmula del cálculo es días entre la fecha de inicio a fecha del primer control por el valor del control, luego entre a diferencias de días entre los controles, en el ejemplo entre el 3º de marzo y 4º de abril, luego entre 4º de abril y 3º septiembre, y a cada diferencia la multiplico por el promedio de sus valores (45 + 30)/2 para el primer caso. Al final es desde la última fecha de control hasta la fecha de final, o desde el último control hasta el día de análisis (1º de enero).\n\nPor lo que dentro del data.frame tengo que detectar para cada animal la diferencia entre la fecha de inicio y la fecha de control, las diferencias de días entre las fechas de controles sucesivas, y detectar la fecha de final, para luego realizar los cálculos de acuerdo a las fechas.\n\nSi lo tendría en una planilla de cálculo hacía (A4-C4)*B4+(E4-C4)*((B4+D4)/2)+ +++++\n\nPero el número de columnas depende y es distinto para cada animal, y los datos no están en columnas, están de esta forma\n\nanimal    inicio        fin    control idlactancias Cle_KilosOrdenie1      DL\n1    1482 2006-08-08 2007-08-23 2007-02-23        4353              11.4 199 days\n2    1482 2004-08-08 2005-05-01 2004-12-21        4351              11.0 135 days\n3    1482 2004-08-08 2005-05-01 2005-04-26        4351              11.0 261 days\n\n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n__________________________________________________\nCorreo Yahoo!\nEspacio para todos tus mensajes, antivirus y antispam ¡gratis! \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "colega \nno se si tu necesidad sea exactamente esta pero en alguna ocasion necesite poner valores dependiendo de el valor de cada reglon de la tabla, esto  lo hice usando subindices, hasta donde te ent",
       "thread_id": "thread-15050d4b522b",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091103/4b13c57c/attachment.pl"
+      ]
     },
     {
       "id": "msg-602240aaf1e5",
@@ -533,11 +551,14 @@
       "references": [
         "<1967848221guivivi@alumni.uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091106/b619628c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091106/b619628c/attachment.pl>",
+      "body_plain": "Buenos dias guivivi,\n\nAdicional a los comentarios y sugerencias enviadas por otros miembros de la\nlista, otra alternativa, podría ser la librería R2PPT disponible en CRAN:\nhttp://cran.r-project.org/web/packages/R2PPT/index.html\n\nEspero sea de utilidad,\n\n                       Jorge Ivan Velez\n\n2009/11/6 <>\n\n> Hola,\n>\n> Por favor, necesito guardar en un mismo documento tres gráficos y que\n> éste se pueda abrir en powerpoint para poder insertar las tres gráficas\n> allí.\n> Con jpeg() sólo se me guarda la última gráfica.\n> ¿Alguien me puede ayudar?.\n>\n> Muchas gracias\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias guivivi,\n\nAdicional a los comentarios y sugerencias enviadas por otros miembros de la\nlista, otra alternativa, podría ser la librería R2PPT disponible en CRAN:\nhttp://cran.r-project.org/we",
       "thread_id": "thread-98ec5454c0de",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091106/b619628c/attachment.pl"
+      ]
     },
     {
       "id": "msg-d295f82dee89",
@@ -583,11 +604,14 @@
       "references": [
         "<20091106160110.1483253zhn6lmjp2@webmail.atica.um.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091106/8d120707/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091106/8d120707/attachment.pl>",
+      "body_plain": "Buenos dias Javier,\n\nEsta es una sugerencia para hacer lo que quieres:\n\n# Ejemplo\nx <- rnorm(100)\ny <- 2 + 1.9*x + rnorm(100)\nreg <- lm(y ~x)\nsummary(reg)\n\n# Gráfico\nplot(x,y)\nabline(reg, col = 2)\nlegend('topleft', c('Real','Ajustado'), pch = c(1, NA), lty = c(NA, 1), col\n= c(1,2))\n\nSi debes realizar muchas regresiones al mismo tiempo, te sugeriría construir\nuna función que genere y guarde los gráficos, además de información\nrelevante acerca del modelo ajustado. Una función útil en estos casos es\nlmList(). Ahora, si adicional al modelo ajustado requieres intervalos de\nconfianza y predicción, en los ejemplos de ?predict.lm puedes encontrar algo\nque puede ayudarte.\n\nOtro punto en el que (quizás) puedes estar interesado es en agregar\ninformación del modelo ajustado en el gráfico (en general el valor de R^2 y\nel valor p de la prueba F). Para ello la función text() es de muchísima\nutilidad.\n\nSaludos,\n\n        Jorge Ivan Velez\n\n\n2009/11/6 JAVIER MARTINEZ LOPEZ <>\n\n> Hola,\n>\n> estoy haciendo una tanda de regresiones en R y no sé por qué no salen las\n> líneas de regresión en muchas de las gráfica, aún siendo regresiones\n> significativas y con un ajuste medio-alto. Yo hago un plot de las variables\n> y luego hago \"abline\" de la regresión, pero no siempre aparce la línea de\n> regresión, mientras que con otro programas sí que aparece. ¿Alguien sabe por\n> qué? Necesito hacerlo en R porque son miles de regresiones!\n>\n> Gracias y saludos,\n>\n> Javier Martínez\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Javier,\n\nEsta es una sugerencia para hacer lo que quieres:\n\n# Ejemplo\nx <- rnorm(100)\ny <- 2 + 1.9*x + rnorm(100)\nreg <- lm(y ~x)\nsummary(reg)\n\n# Gráfico\nplot(x,y)\nabline(reg, col = 2)\nleg",
       "thread_id": "thread-243dc40ca733",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091106/8d120707/attachment.pl"
+      ]
     },
     {
       "id": "msg-590a554c3be3",
@@ -677,11 +701,14 @@
       "references": [
         "<13549e790911020453s2aef2ddevdb6e70dd4f36578e@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091107/098086ec/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091107/098086ec/attachment.pl>",
+      "body_plain": "Luciano me parece que esto resuelve tu problema\n\ntest<-rep(c(rep(0,5),rep(1,601),rep(0,100),rep(1,100),rep(0,3),rep(1,200),rep(0,300),rep(1,1000)),100)\n\nlookforKones<-function(test,k)\n{\n I1=seq(1,length(test),1)[test==0]\n I1[(I1[2:length(I1)]-I1[1:length(I1)-1])>=k]+1\n}\n\n#usage lookforKones(test,600)\n\n\nProf. Julio Di Rienzo\nEstadística y Biometría\nFCA- U.N. Córdoba\nIBS CC Member\nhttp://sites.google.com/site/juliodirienzo\n\"Biometry, the active pursuit of biological\nknowledge by quantitative methods.\"\n(R.A. Fisher, 1948)\n\n\n\n2009/11/2 Luciano Selzer <luciano.selzer at gmail.com>\n\n> Hola lista, tengo una base de datos muy grande de un datalogger.\n> Consiste en un vector con 0's y 1's, y tengo que ver cuando hay 600 o\n> más unos seguidos. Se me ocurrió hacerlo con un loop for. Pero tarda\n> demasiado. También intente usar which para que seleccione solo los 1\n> para empezar a sumar pero no hay gran diferencia. A alguien se le\n> ocurre alguna solución para hacerlo más rápido?\n>\n> Acá está el código con los datos de prueba:\n>\n>\n> test<-rep(c(rep(0,5),rep(1,601),rep(0,100),rep(1,100),rep(0,3),rep(1,200),rep(0,300),rep(1,1000)),100)\n> loop<-numeric()\n> for (i in 1:length(test)) {\n>    loop[i]<-sum(test[i:(i+600)])\n>    }\n>\n> loop2<-numeric()\n> for (i in which(test==1)) {\n>    loop2[i]<-sum(test[i:(i+600)])\n> }\n>\n>\n>\n> Muchas gracias a todos los que contesten.\n> Luciano\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Luciano me parece que esto resuelve tu problema\n\ntest<-rep(c(rep(0,5),rep(1,601),rep(0,100),rep(1,100),rep(0,3),rep(1,200),rep(0,300),rep(1,1000)),100)\n\nlookforKones<-function(test,k)\n{\n I1=seq(1,leng",
       "thread_id": "thread-0f6a7b113b30",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091107/098086ec/attachment.pl"
+      ]
     },
     {
       "id": "msg-96d3aed8ab30",
@@ -711,11 +738,14 @@
       "references": [
         "<2898576585guivivi@alumni.uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091109/46d8a516/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091109/46d8a516/attachment.pl>",
+      "body_plain": "Hola, ahora no lo puedo mirar bien pues escribo desde el tlf, pero si\ntuvieras esa tabla y las columnas estuvieran separadas por , o ;\nPodrias leer con read.csv o read.csv2\n\nDesde hoja de calculo podrias expottar a csv para tener las columnas con esa\nseparacion\n\nEspero que te sirva, saludos\n\nOn 9 Nov 2009 09:57, <guivivi at alumni.uv.es> wrote:\n\nHola,\n\nTengo la siguiente tabla cuyas columnas tienen un tamaño distinto, por\nlo que hay filas que tienen celdas en blanco:\nFORMA1       FORMA2       Parches5     Parches10\n           1  0.253164557  0.236607143 0.253164557\n 1.260869565  0.179531161         0.48 0.179531161\n 0.168721381  0.236607143  0.506122449 0.302480916\n 0.149076774  0.302480916  0.399408284 1.472727273\n 0.412958115         0.48  0.460144928  0.25974026\n 0.533936652  1.472727273  0.272900763 0.375527426\n           1   0.25974026  0.422222222 0.647435897\n 2.653061224  0.375527426   0.51627907           1\n 1.456852792  0.506122449  0.928571429 0.573816156\n 1.754966887  0.647435897  0.689655172 0.535714286\n 0.407566024            1  1.458333333 1.123152709\n 2.739130435  0.399408284   0.56043956 0.491071429\n 0.504690432  0.573816156  0.187325905 1.534883721\n 0.139683735  1.123152709  0.444444444 0.142030662\n           1  0.491071429  0.525096525 0.560906516\n 0.401888772  0.460144928  0.472636816 0.835694051\n 0.206314879  1.534883721  0.514492754 0.729166667\n 0.248027057  0.272900763  0.354916067 0.465116279\n  0.46260069  0.142030662  0.298245614 1.254716981\n 0.296270718  0.560906516   0.26986755 0.147639485\n 0.535714286  0.835694051  0.393665158 0.366141732\n 0.291223404  0.729166667  0.425249169 0.268523677\n 0.326599327  0.465116279  0.703422053 0.619834711\n 0.651663405  0.422222222            1 0.635761589\n        11.4  1.254716981            1 0.526315789\n 0.322093023  0.147639485  0.696035242 0.459677419\n 0.464864865   0.51627907  0.681318681 0.305821665\n 0.533031088  0.366141732  0.564516129 0.430420712\n 0.263028817  0.268523677  0.510416667 0.850815851\n           1  0.619834711  0.847750865 0.231372549\n 1.103030303  0.635761589  0.216216216 0.181194907\n 0.662990196  0.526315789  0.174242424 0.365159129\n 0.527210884  0.928571429  0.866666667 0.560126582\n 0.297844546  0.459677419              0.231900452\n        6.05  0.689655172              0.461988304\n 0.776978417  0.305821665              0.635103926\n 0.245056497  0.430420712              0.260509993\n 0.432400932  0.850815851              0.526501767\n           1  0.231372549              0.327887981\n 0.130434783  0.181194907              0.367021277\n 0.166932144  0.365159129              0.444444444\n 0.248178311  0.560126582              0.556818182\n 0.165883143  0.231900452              0.248035915\n 0.241767403  0.461988304              0.299219428\n 0.739166667  1.458333333              0.320413437\n 2.037593985  0.635103926              0.443939394\n        9.05   0.56043956              0.532442748\n 2.216981132  0.260509993               0.38933841\n 0.185793515  0.526501767              0.164666051\n 1.504524887  0.187325905              0.207594038\n 1.283911672  0.327887981              0.489795918\n 0.986072423  0.367021277                        1\n 0.185852258  0.444444444              0.338582677\n 0.171095008  0.556818182              0.452272727\n 0.561165049  0.444444444              0.320855615\n 0.443701226  0.248035915              0.984615385\n 0.469640644  0.525096525              0.524475524\n 0.229830508  0.299219428              0.454873646\n 0.186531585  0.472636816              0.232044199\n 0.469586375  0.320413437              0.349295775\n 0.555389222  0.443939394              0.210876804\n        0.65  0.532442748              0.433130699\n 0.616580311   0.38933841              0.365023474\n 1.847457627  0.164666051              0.358296623\n 0.617511521  0.207594038              0.304229195\n 0.833333333  0.489795918                0.3595724\n  1.38028169            1              0.727272727\n 3.779411765  0.338582677              0.209443099\n 0.636851521  0.452272727              0.416470588\n 0.950248756  0.514492754              0.896551724\n 0.962686567  0.320855615              0.318718381\n  2.06302521  0.984615385              0.387356322\n 0.468660969  0.524475524              0.946666667\n  0.28529535  0.454873646                      0.5\n 0.230701754  0.232044199                    0.486\n 0.991097923  0.354916067              0.371134021\n 0.433515483  0.349295775              0.613989637\n 0.206545455  0.298245614              0.299646643\n  0.52276867  0.210876804              0.664305949\n 1.565995526  0.433130699              0.545454545\n 0.588339223  0.365023474              0.292149292\n 0.514195584   0.26986755              0.369127517\n        4.95  0.358296623              0.153699466\n 1.025477707  0.304229195              0.152251893\n 0.182745314  0.393665158              0.316925734\n 0.187348912    0.3595724              0.140131187\n 0.697993664  0.727272727              0.628820961\n        8.55  0.425249169              0.533527697\n 1.809278351  0.209443099               0.42192691\n           1  0.416470588              0.242463117\n  0.35213205  0.896551724              0.420289855\n 1.243421053  0.318718381              0.399014778\n 0.358117326  0.387356322              0.427586207\n 0.269562334  0.703422053              0.240206186\n 0.288268156  0.946666667              0.444444444\n 0.454943132            1              0.841346154\n 0.691823899          0.5              0.332218506\n  0.61242236        0.486              0.397608371\n 4.816326531  0.371134021              0.495833333\n 2.948863636  0.613989637              0.349685535\n 3.986842105  0.299646643              0.305699482\n 2.020547945            1              0.103868944\n  0.37636612  0.664305949              0.178617157\n 2.456692913  0.545454545              0.209078404\n 1.822660099  0.292149292              0.527980535\n 2.491071429  0.696035242\n 2.168067227  0.369127517\n 1.533678756  0.153699466\n 0.449044586  0.152251893\n 0.212485682  0.681318681\n        3.75  0.316925734\n 0.681967213  0.140131187\n 0.601851852  0.628820961\n  0.79020979  0.533527697\n           1   0.42192691\n        3.55  0.564516129\n 0.276642336  0.510416667\n 0.239278752  0.242463117\n 0.149178959  0.420289855\n 0.470588235  0.399014778\n           1  0.847750865\n 0.985374771  0.427586207\n 0.988429752  0.240206186\n 1.097345133  0.444444444\n 1.298701299  0.841346154\n 0.492260062  0.332218506\n           2  0.397608371\n           1  0.495833333\n  1.51754386  0.216216216\n 0.377289377  0.349685535\n           1  0.305699482\n           1  0.174242424\n           1  0.103868944\n 0.605839416  0.178617157\n 0.847178186  0.209078404\n       3.375  0.866666667\n 0.251377986  0.527980535\n 1.494117647\n 1.531746032\n 1.581395349\nPara leer esta tabla con R, uso la siguiente instrucción:\nData <- read.table(\"C:/nombredemiarchivo.prn\",header=TRUE,fill=TRUE)\ncon la que obtengo que las celdas vacías se han rellenado con NA pero\nel problema es que la columna Parches10 pasa a tener los valores de la\ncolumna Parches5 y viceversa.\n¿Cómo puedo leer una tabla de este tipo manteniendo las columnas en su\nsitio?.\nLos parámetros strip.white logical y blank.lines.skip logical tampoco\nme han funcionado.\n¿Alguien me puede ayudar?.\nMuchas gracias.\n\n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, ahora no lo puedo mirar bien pues escribo desde el tlf, pero si\ntuvieras esa tabla y las columnas estuvieran separadas por , o ;\nPodrias leer con read.csv o read.csv2\n\nDesde hoja de calculo podr",
       "thread_id": "thread-96d3aed8ab30",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091109/46d8a516/attachment.pl"
+      ]
     },
     {
       "id": "msg-782d2bbe609f",
@@ -797,11 +827,14 @@
       "references": [
         "<C472DFDC9746E941A43C8839CCC6B6160F04761C@INDEC2.mecon.ar>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091109/5301957f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091109/5301957f/attachment.pl>",
+      "body_plain": "Buenos dias Silvia,\n\nEn http://gbi.agrsci.dk/~ejo/R/docs/SASImport.html hay algunas sugerencias\nacerca de cómo hacer lo que necesitas.\nAsí mismo, haciendo\n\nrequire(foreign)\nlibrary(help=foreign)\n?read.ssd\n?read.xport\n\npuedes encontrar ideas adicionales.\n\nEspero sea de utilidad,\n\n                                 Jorge Ivan Velez\n\n\n2009/11/9 Larumbe Silvia <>\n\n>\n> Hola.\n>\n> yo soy usuario SAS y ahora estoy intentando comenzar a trabajar en R.\n> Estoy necesitando leer archivos de datos que tengo en formato SAS.\n> Se que esta el package foreing que permite leer directamente datos que se\n> encuentran en ese formato.\n> Alguien podria indicarme como lo debo hacer. Solo quiero leer algunas\n> variables dado que el archivo es extenso.\n>\n> Muchas gracias.\n> Silvia.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Silvia,\n\nEn http://gbi.agrsci.dk/~ejo/R/docs/SASImport.html hay algunas sugerencias\nacerca de cómo hacer lo que necesitas.\nAsí mismo, haciendo\n\nrequire(foreign)\nlibrary(help=foreign)\n?read",
       "thread_id": "thread-0a107abcb930",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091109/5301957f/attachment.pl"
+      ]
     },
     {
       "id": "msg-c333816f1f32",
@@ -833,11 +866,14 @@
       "references": [
         "<C472DFDC9746E941A43C8839CCC6B6160F04761C@INDEC2.mecon.ar>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091110/945f126c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091110/945f126c/attachment.pl>",
+      "body_plain": "Hola,\n\nSoy un usuario nuevo, aprendiendo poco a poco el manejo del R\n\nen este moemnto estoy trbajando con algunas distrubciones, en este caso \n\nla distribcion de probabilidad de Poisson.\n\nNecesito realizar una simulacion con la distribucion para estimar la media a 95% de confianza \n\ncon 20% de error.  \n \t\t \t   \t\t  \n_________________________________________________________________\nExplore the seven wonders of the world\n\nBRE\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSoy un usuario nuevo, aprendiendo poco a poco el manejo del R\n\nen este moemnto estoy trbajando con algunas distrubciones, en este caso \n\nla distribcion de probabilidad de Poisson.\n\nNecesito rea",
       "thread_id": "thread-0a107abcb930",
       "thread_depth": 2,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091110/945f126c/attachment.pl"
+      ]
     },
     {
       "id": "msg-19b7916e9b08",
@@ -1031,11 +1067,14 @@
       "subject_clean": "[R-es] barplot",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091111/15710d1a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091111/15710d1a/attachment.pl>",
+      "body_plain": "Hola,\n\n¿Alguien sabe cómo puedo poner verticalmente las etiquetas de cada barra en\nun barplot? Es que si no no se ven todas, y no veo la forma con las opciones\nde barplot.\n\nMuchas gracias,\n\nJavier\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\n¿Alguien sabe cómo puedo poner verticalmente las etiquetas de cada barra en\nun barplot? Es que si no no se ven todas, y no veo la forma con las opciones\nde barplot.\n\nMuchas gracias,\n\nJavier\n\n\t[",
       "thread_id": "thread-2c83dad65513",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091111/15710d1a/attachment.pl"
+      ]
     },
     {
       "id": "msg-1443374a6e04",
@@ -1065,11 +1104,14 @@
       "references": [
         "<1e6f51f90911110705t682813a6ia154f15a0a98a955@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091111/765ae116/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091111/765ae116/attachment.pl>",
+      "body_plain": "Hola Javier,\n\nPara modificar parámetros mas especificos en los gráficos mira ?par, ahí\ntienes por ejemplo el parametro las, creo que es el que necesitas.\n\nSaludos\n\nEl 11 de noviembre de 2009 16:05, Javier Martinez <\njavi.martinez.lopez at gmail.com> escribió:\n\n> Hola,\n>\n> ¿Alguien sabe cómo puedo poner verticalmente las etiquetas de cada barra en\n> un barplot? Es que si no no se ven todas, y no veo la forma con las\n> opciones\n> de barplot.\n>\n> Muchas gracias,\n>\n> Javier\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Javier,\n\nPara modificar parámetros mas especificos en los gráficos mira ?par, ahí\ntienes por ejemplo el parametro las, creo que es el que necesitas.\n\nSaludos\n\nEl 11 de noviembre de 2009 16:05, Ja",
       "thread_id": "thread-2c83dad65513",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091111/765ae116/attachment.pl"
+      ]
     },
     {
       "id": "msg-c32b8e4d8b91",
@@ -1132,11 +1174,14 @@
       "subject_clean": "[R-es] Potencia de una matriz",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091112/5e43d068/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091112/5e43d068/attachment.pl>",
+      "body_plain": "Cordial saludo.\n\nLes agradecería que me ayudaran con una función eficiente para calcular\npotencias de una matriz. ¿Cuál biblioteca la tiene?\n\nGracias de antemano\n\n\nCésar Escalante C.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Cordial saludo.\n\nLes agradecería que me ayudaran con una función eficiente para calcular\npotencias de una matriz. ¿Cuál biblioteca la tiene?\n\nGracias de antemano\n\n\nCésar Escalante C.\n\n\t[[alternative H",
       "thread_id": "thread-3ceb394f3074",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091112/5e43d068/attachment.pl"
+      ]
     },
     {
       "id": "msg-4aa6efb47b42",
@@ -1150,11 +1195,14 @@
       "references": [
         "<256745190911121911i403f99c9ldb0aadfc17d44f71@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091112/32114f29/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091112/32114f29/attachment.pl>",
+      "body_plain": "Buenas noches César,\n\nSi te refieres a tomar cada elemento de una matriz, digamos A, y elevarlos a\nuna potencia k, entonces escribir\n\nA^k\n\nen la consola del R es más que suficiente.\n\nSea k = 2. Si en vez de lo anterior lo que necesitas es B = A x A (porque\nk=2), entonces podrías construir una función que lo realice. \"A mano\"\nescribirías lo siguiente en la consola:\n\nB <- A %*% A\nB\n\nEl problema es que cuando k es por ejemplo 10, lo anterior es bastante\nineficiente.\n\nA continuación te doy varios ejemplos de ambas situaciones. El uso de f1 o\nf2 depende de tu aplicación. Si ninguna de las dos opciones es lo que\nbuscas, quizás un poco más de detalle podría ayudarnos a ayudarte. De qué\ndimensión es la matriz A de tu aplicación y qué valores puede tomar k?\n\nUna librería que podría ser de utilidad podría ser \"Matrix\", aunque no la he\nrevisado detalladamente.\n\n# Creando una matriz A\nset.seed(123)\nA <- matrix(rnorm(4), ncol = 2)\nA\n\n# Elevando cada elemento de A a la potencia k\nf1 <- function(x,k) x^k\nf1(A, 2)     # A^2\nf1(A, 5)     # A^5\n\n# Producto matricial de A por si misma k veces\nf2 <- function(x, k){\n        r <- diag(dim(x)[2])\n        for(i in 1:k) r <- r %*% x\n        r\n        }\nf2(A,2) # A x A\nf2(A,3) # A x A x A\nf2(A,5) # A x A x A x A x A\n\nSaludos,\n\n                     Jorge Ivan Velez\n\n\n2009/11/12 Cesar Escalante <>\n\n> Cordial saludo.\n>\n> Les agradecería que me ayudaran con una función eficiente para calcular\n> potencias de una matriz. ¿Cuál biblioteca la tiene?\n>\n> Gracias de antemano\n>\n>\n> César Escalante C.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches César,\n\nSi te refieres a tomar cada elemento de una matriz, digamos A, y elevarlos a\nuna potencia k, entonces escribir\n\nA^k\n\nen la consola del R es más que suficiente.\n\nSea k = 2. Si en ",
       "thread_id": "thread-3ceb394f3074",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091112/32114f29/attachment.pl"
+      ]
     },
     {
       "id": "msg-027011843f42",
@@ -1185,11 +1233,14 @@
       "subject_clean": "[R-es] Programa de las jornadas de R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/078619d2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/078619d2/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nEl programa de las jornadas ya está disponible en la web:\nhttp://www.ereros.org/ponencias/index.html,  Es un programa temporal porque\naún estamos encajando vuestras propuestas. Recordad también que el plazo de\nentrega de las propuestas es pasado mañana.\n\nComo sabéis vamos a retransmitir las jornadas en directo y nos gustaría\nhacer una estimación de las personas interesadas en participar a distancia.\npara eso quería pediros que aquellos que vais a usar este servició lo\ncomuniquéis en esta dirección de correo: rconf2009 at ereros.org\n\nLa información sobre la retransmisión podéis encontrarla aquí:\nhttp://www.ereros.org/servicios/streaming.html\n\nY como siempre, cualquier duda o cualquier sugerencia sobre las jornadas\npodéis escribir directamente en esta lista.\n\nUn saludo!!\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nEl programa de las jornadas ya está disponible en la web:\nhttp://www.ereros.org/ponencias/index.html,  Es un programa temporal porque\naún estamos encajando vuestras propuestas. Recordad",
       "thread_id": "thread-051cba1e48ba",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/078619d2/attachment.pl"
+      ]
     },
     {
       "id": "msg-f337e46f84ae",
@@ -1205,11 +1256,14 @@
         "<317737de0911121952x6285ca20r66b1332fbbb24e20@mail.gmail.com>",
         "<1f6d6c820911130619s51ceeabbw92e69b85c17e802f@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/620a74a2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/620a74a2/attachment.pl>",
+      "body_plain": "Buenos dias Kjetil y César,\n\nSólo para los archivos:  si la eficiencia es importante en la aplicación, el\nutilizar la función matpow en la libreria expm de R-Forge es muchísimo\nmejor. Este es un ejemplo de una matriz A de orden 2x2 cuando k=2 y se\nrealizan 100000 repeticiones:\n\n# install.packages(\"expm\", repos=\"http://R-Forge.R-project.org\")\nrequire(expm)\n\n# matpow\nsystem.time(replicate(100000, A %^% 2))\n#   user  system elapsed\n#   0.71    0.02    0.72\n\n# f2\nsystem.time(replicate(100000, f2(A,2)))\n#   user  system elapsed\n#   8.92    0.00    8.96\n\nSaludos a ambos,\n\n               Jorge Ivan Velez\n\n2009/11/13 Kjetil Halvorsen <>\n\n> El paquete expm, no en CRAN, pero en R-forge, tiene una funci'on\n> matpow\n>\n> Kjetil\n>\n> 2009/11/13 Jorge Ivan Velez <>:\n> > Buenas noches César,\n> >\n> > Si te refieres a tomar cada elemento de una matriz, digamos A, y\n> elevarlos a\n> > una potencia k, entonces escribir\n> >\n> > A^k\n> >\n> > en la consola del R es más que suficiente.\n> >\n> > Sea k = 2. Si en vez de lo anterior lo que necesitas es B = A x A (porque\n> > k=2), entonces podrías construir una función que lo realice. \"A mano\"\n> > escribirías lo siguiente en la consola:\n> >\n> > B <- A %*% A\n> > B\n> >\n> > El problema es que cuando k es por ejemplo 10, lo anterior es bastante\n> > ineficiente.\n> >\n> > A continuación te doy varios ejemplos de ambas situaciones. El uso de f1\n> o\n> > f2 depende de tu aplicación. Si ninguna de las dos opciones es lo que\n> > buscas, quizás un poco más de detalle podría ayudarnos a ayudarte. De qué\n> > dimensión es la matriz A de tu aplicación y qué valores puede tomar k?\n> >\n> > Una librería que podría ser de utilidad podría ser \"Matrix\", aunque no la\n> he\n> > revisado detalladamente.\n> >\n> > # Creando una matriz A\n> > set.seed(123)\n> > A <- matrix(rnorm(4), ncol = 2)\n> > A\n> >\n> > # Elevando cada elemento de A a la potencia k\n> > f1 <- function(x,k) x^k\n> > f1(A, 2)     # A^2\n> > f1(A, 5)     # A^5\n> >\n> > # Producto matricial de A por si misma k veces\n> > f2 <- function(x, k){\n> >        r <- diag(dim(x)[2])\n> >        for(i in 1:k) r <- r %*% x\n> >        r\n> >        }\n> > f2(A,2) # A x A\n> > f2(A,3) # A x A x A\n> > f2(A,5) # A x A x A x A x A\n> >\n> > Saludos,\n> >\n> >                     Jorge Ivan Velez\n> >\n> >\n> > 2009/11/12 Cesar Escalante <>\n> >\n> >> Cordial saludo.\n> >>\n> >> Les agradecería que me ayudaran con una función eficiente para calcular\n> >> potencias de una matriz. ¿Cuál biblioteca la tiene?\n> >>\n> >> Gracias de antemano\n> >>\n> >>\n> >> César Escalante C.\n> >>\n> >>        [[alternative HTML version deleted]]\n> >>\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >>\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n>\n>\n> --\n> \"... an entire human genome would fit on a music CD.\"\n>\n> --- www.thinkgene.com\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Kjetil y César,\n\nSólo para los archivos:  si la eficiencia es importante en la aplicación, el\nutilizar la función matpow en la libreria expm de R-Forge es muchísimo\nmejor. Este es un ejemp",
       "thread_id": "thread-3ceb394f3074",
       "thread_depth": 3,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/620a74a2/attachment.pl"
+      ]
     },
     {
       "id": "msg-0ea291f6e3a4",
@@ -1226,11 +1280,14 @@
         "<1f6d6c820911130619s51ceeabbw92e69b85c17e802f@mail.gmail.com>",
         "<317737de0911130716s18f7931ew957d5b139f416088@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/9b241987/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/9b241987/attachment.pl>",
+      "body_plain": "Jorge, Kjetil, muchas gracias.\nNo sabía de la existencia de otras bibliotecas.\n\nAl ejecutar el comando\ninstall.packages(\"expm\",\nrepos=\"http://R-Forge.R-project.org<http://r-forge.r-project.org/>\n\")\n\nsale el siguiente mensaje:\n\nWarning: unable to access index for repository\nhttp://R-Forge.R-project.org/bin/windows/contrib/2.9<http://r-forge.r-project.org/bin/windows/contrib/2.9>\nWarning message:\nIn getDependencies(pkgs, dependencies, available, lib) :\n  package ‘expm’ is not available\n\nJorge no estoy desarrollando una aplicación concreta. Estaba estudiando y\ntuve esa necesidad. Ya había escrito una función, pero es mejor saber si\nexiste una escrita en una biblioteca especializada.\n\nMiré Matrix y no encuentro la función.\n\nGracias de nuevo.\n\nSaludos.\n\nCésar Escalante C.\n\n\n\nEl 13 de noviembre de 2009 10:16, Jorge Ivan Velez <jorgeivanvelez at gmail.com\n> escribió:\n\n> Buenos dias Kjetil y César,\n>\n> Sólo para los archivos:  si la eficiencia es importante en la aplicación,\n> el utilizar la función matpow en la libreria expm de R-Forge es muchísimo\n> mejor. Este es un ejemplo de una matriz A de orden 2x2 cuando k=2 y se\n> realizan 100000 repeticiones:\n>\n> # install.packages(\"expm\", repos=\"http://R-Forge.R-project.org<http://r-forge.r-project.org/>\n> \")\n> require(expm)\n>\n> # matpow\n> system.time(replicate(100000, A %^% 2))\n> #   user  system elapsed\n> #   0.71    0.02    0.72\n>\n> # f2\n> system.time(replicate(100000, f2(A,2)))\n> #   user  system elapsed\n> #   8.92    0.00    8.96\n>\n> Saludos a ambos,\n>\n>                Jorge Ivan Velez\n>\n> 2009/11/13 Kjetil Halvorsen <>\n>\n>> El paquete expm, no en CRAN, pero en R-forge, tiene una funci'on\n>> matpow\n>>\n>> Kjetil\n>>\n>> 2009/11/13 Jorge Ivan Velez <>:\n>>\n>>  > Buenas noches César,\n>> >\n>> > Si te refieres a tomar cada elemento de una matriz, digamos A, y\n>> elevarlos a\n>> > una potencia k, entonces escribir\n>> >\n>> > A^k\n>> >\n>> > en la consola del R es más que suficiente.\n>> >\n>> > Sea k = 2. Si en vez de lo anterior lo que necesitas es B = A x A\n>> (porque\n>> > k=2), entonces podrías construir una función que lo realice. \"A mano\"\n>> > escribirías lo siguiente en la consola:\n>> >\n>> > B <- A %*% A\n>> > B\n>> >\n>> > El problema es que cuando k es por ejemplo 10, lo anterior es bastante\n>> > ineficiente.\n>> >\n>> > A continuación te doy varios ejemplos de ambas situaciones. El uso de f1\n>> o\n>> > f2 depende de tu aplicación. Si ninguna de las dos opciones es lo que\n>> > buscas, quizás un poco más de detalle podría ayudarnos a ayudarte. De\n>> qué\n>> > dimensión es la matriz A de tu aplicación y qué valores puede tomar k?\n>> >\n>> > Una librería que podría ser de utilidad podría ser \"Matrix\", aunque no\n>> la he\n>> > revisado detalladamente.\n>> >\n>> > # Creando una matriz A\n>> > set.seed(123)\n>> > A <- matrix(rnorm(4), ncol = 2)\n>> > A\n>> >\n>> > # Elevando cada elemento de A a la potencia k\n>> > f1 <- function(x,k) x^k\n>> > f1(A, 2)     # A^2\n>> > f1(A, 5)     # A^5\n>> >\n>> > # Producto matricial de A por si misma k veces\n>> > f2 <- function(x, k){\n>> >        r <- diag(dim(x)[2])\n>> >        for(i in 1:k) r <- r %*% x\n>> >        r\n>> >        }\n>> > f2(A,2) # A x A\n>> > f2(A,3) # A x A x A\n>> > f2(A,5) # A x A x A x A x A\n>> >\n>> > Saludos,\n>> >\n>> >                     Jorge Ivan Velez\n>> >\n>> >\n>> > 2009/11/12 Cesar Escalante <>\n>> >\n>> >> Cordial saludo.\n>> >>\n>> >> Les agradecería que me ayudaran con una función eficiente para calcular\n>> >> potencias de una matriz. ¿Cuál biblioteca la tiene?\n>> >>\n>> >> Gracias de antemano\n>> >>\n>> >>\n>> >> César Escalante C.\n>> >>\n>> >>        [[alternative HTML version deleted]]\n>> >>\n>> >>\n>> >> _______________________________________________\n>> >> R-help-es mailing list\n>> >> R-help-es at r-project.org\n>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >>\n>> >>\n>> >\n>> >        [[alternative HTML version deleted]]\n>> >\n>> >\n>> > _______________________________________________\n>> > R-help-es mailing list\n>> > R-help-es at r-project.org\n>> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >\n>> >\n>>\n>>\n>>\n>> --\n>> \"... an entire human genome would fit on a music CD.\"\n>>\n>> --- www.thinkgene.com\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Jorge, Kjetil, muchas gracias.\nNo sabía de la existencia de otras bibliotecas.\n\nAl ejecutar el comando\ninstall.packages(\"expm\",\nrepos=\"http://R-Forge.R-project.org<http://r-forge.r-project.org/>\n\")\n\ns",
       "thread_id": "thread-3ceb394f3074",
       "thread_depth": 4,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/9b241987/attachment.pl"
+      ]
     },
     {
       "id": "msg-5f5928c6db0e",
@@ -1248,11 +1305,14 @@
         "<317737de0911130716s18f7931ew957d5b139f416088@mail.gmail.com>",
         "<256745190911131030sa9667f3u4748545e31bd4723@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/131de375/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/131de375/attachment.pl>",
+      "body_plain": "Buenas tardes César,\n\nEs sólo un warning. Qué pasa cuando escribes library(expm) despues de\ninstall.packages(...)? Cuál es tu sessionInfo()?\n\nSi no puedes utilizar matpow, entonces actualiza tu versión de R (veo que\ntienes 2.9.2) y ejecuta de nuevo\n\ninstall.packages(\"expm\",\nrepos=\"http://R-Forge.R-project.org<http://r-forge.r-project.org/>\n\")\nrequire(expm)\n\nSeguramente una vez hagas lo anterior, todo funcionará. Si aún después de\nhacer lo anterior no funciona, entonces ingresa a\nhttp://r-forge.r-project.org/R/?group_id=107, descarga manualmente el\narchivo .zip y luego utiliza Packages -> Install Packages from zip files...\n en la consola del R.\n\nEsta es mi sessionInfo():\n\nR version 2.10.0 Patched (2009-10-26 r50212)\ni386-pc-mingw32\n\nlocale:\n[1] LC_COLLATE=English_United States.1252  LC_CTYPE=English_United\nStates.1252\n[3] LC_MONETARY=English_United States.1252 LC_NUMERIC=C\n\n[5] LC_TIME=English_United States.1252\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base\n\nloaded via a namespace (and not attached):\n[1] tools_2.10.0\n\n\nEspero sea de utilidad,\n\n                  Jorge Ivan Velez\n\n\n2009/11/13 Cesar Escalante <>\n\n> Jorge, Kjetil, muchas gracias.\n> No sabía de la existencia de otras bibliotecas.\n>\n> Al ejecutar el comando\n> install.packages(\"expm\", repos=\"http://R-Forge.R-project.org<http://r-forge.r-project.org/>\n> \")\n>\n> sale el siguiente mensaje:\n>\n> Warning: unable to access index for repository\n> http://R-Forge.R-project.org/bin/windows/contrib/2.9<http://r-forge.r-project.org/bin/windows/contrib/2.9>\n> Warning message:\n> In getDependencies(pkgs, dependencies, available, lib) :\n>   package ‘expm’ is not available\n>\n> Jorge no estoy desarrollando una aplicación concreta. Estaba estudiando y\n> tuve esa necesidad. Ya había escrito una función, pero es mejor saber si\n> existe una escrita en una biblioteca especializada.\n>\n> Miré Matrix y no encuentro la función.\n>\n> Gracias de nuevo.\n>\n> Saludos.\n>\n> César Escalante C.\n>\n>\n>\n> El 13 de noviembre de 2009 10:16, Jorge Ivan Velez <> escribió:\n>\n>  Buenos dias Kjetil y César,\n>>\n>> Sólo para los archivos:  si la eficiencia es importante en la aplicación,\n>> el utilizar la función matpow en la libreria expm de R-Forge es muchísimo\n>> mejor. Este es un ejemplo de una matriz A de orden 2x2 cuando k=2 y se\n>> realizan 100000 repeticiones:\n>>\n>> # install.packages(\"expm\", repos=\"http://R-Forge.R-project.org<http://r-forge.r-project.org/>\n>> \")\n>> require(expm)\n>>\n>> # matpow\n>> system.time(replicate(100000, A %^% 2))\n>> #   user  system elapsed\n>> #   0.71    0.02    0.72\n>>\n>> # f2\n>> system.time(replicate(100000, f2(A,2)))\n>> #   user  system elapsed\n>> #   8.92    0.00    8.96\n>>\n>> Saludos a ambos,\n>>\n>>                Jorge Ivan Velez\n>>\n>> 2009/11/13 Kjetil Halvorsen <>\n>>\n>>> El paquete expm, no en CRAN, pero en R-forge, tiene una funci'on\n>>> matpow\n>>>\n>>> Kjetil\n>>>\n>>> 2009/11/13 Jorge Ivan Velez <>:\n>>>\n>>>  > Buenas noches César,\n>>> >\n>>> > Si te refieres a tomar cada elemento de una matriz, digamos A, y\n>>> elevarlos a\n>>> > una potencia k, entonces escribir\n>>> >\n>>> > A^k\n>>> >\n>>> > en la consola del R es más que suficiente.\n>>> >\n>>> > Sea k = 2. Si en vez de lo anterior lo que necesitas es B = A x A\n>>> (porque\n>>> > k=2), entonces podrías construir una función que lo realice. \"A mano\"\n>>> > escribirías lo siguiente en la consola:\n>>> >\n>>> > B <- A %*% A\n>>> > B\n>>> >\n>>> > El problema es que cuando k es por ejemplo 10, lo anterior es bastante\n>>> > ineficiente.\n>>> >\n>>> > A continuación te doy varios ejemplos de ambas situaciones. El uso de\n>>> f1 o\n>>> > f2 depende de tu aplicación. Si ninguna de las dos opciones es lo que\n>>> > buscas, quizás un poco más de detalle podría ayudarnos a ayudarte. De\n>>> qué\n>>> > dimensión es la matriz A de tu aplicación y qué valores puede tomar k?\n>>> >\n>>> > Una librería que podría ser de utilidad podría ser \"Matrix\", aunque no\n>>> la he\n>>> > revisado detalladamente.\n>>> >\n>>> > # Creando una matriz A\n>>> > set.seed(123)\n>>> > A <- matrix(rnorm(4), ncol = 2)\n>>> > A\n>>> >\n>>> > # Elevando cada elemento de A a la potencia k\n>>> > f1 <- function(x,k) x^k\n>>> > f1(A, 2)     # A^2\n>>> > f1(A, 5)     # A^5\n>>> >\n>>> > # Producto matricial de A por si misma k veces\n>>> > f2 <- function(x, k){\n>>> >        r <- diag(dim(x)[2])\n>>> >        for(i in 1:k) r <- r %*% x\n>>> >        r\n>>> >        }\n>>> > f2(A,2) # A x A\n>>> > f2(A,3) # A x A x A\n>>> > f2(A,5) # A x A x A x A x A\n>>> >\n>>> > Saludos,\n>>> >\n>>> >                     Jorge Ivan Velez\n>>> >\n>>> >\n>>> > 2009/11/12 Cesar Escalante <>\n>>> >\n>>> >> Cordial saludo.\n>>> >>\n>>> >> Les agradecería que me ayudaran con una función eficiente para\n>>> calcular\n>>> >> potencias de una matriz. ¿Cuál biblioteca la tiene?\n>>> >>\n>>> >> Gracias de antemano\n>>> >>\n>>> >>\n>>> >> César Escalante C.\n>>> >>\n>>> >>        [[alternative HTML version deleted]]\n>>> >>\n>>> >>\n>>> >> _______________________________________________\n>>> >> R-help-es mailing list\n>>> >> R-help-es at r-project.org\n>>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>> >>\n>>> >>\n>>> >\n>>> >        [[alternative HTML version deleted]]\n>>> >\n>>> >\n>>> > _______________________________________________\n>>> > R-help-es mailing list\n>>> > R-help-es at r-project.org\n>>> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>> >\n>>> >\n>>>\n>>>\n>>>\n>>> --\n>>> \"... an entire human genome would fit on a music CD.\"\n>>>\n>>> --- www.thinkgene.com\n>>>\n>>\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes César,\n\nEs sólo un warning. Qué pasa cuando escribes library(expm) despues de\ninstall.packages(...)? Cuál es tu sessionInfo()?\n\nSi no puedes utilizar matpow, entonces actualiza tu versió",
       "thread_id": "thread-3ceb394f3074",
       "thread_depth": 5,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091113/131de375/attachment.pl"
+      ]
     },
     {
       "id": "msg-c106dbbb3661",
@@ -1286,11 +1346,14 @@
       "subject_clean": "[R-es] RODBC",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091115/77b79dea/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091115/77b79dea/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nal intentar guardar un data.frame en formato Excel con la función:\n\ncn<- odbcConnectExcel(\"C:\\\\Documents and Settings\\\\ ... \\\\nombre.xls\",readOnly=FALSE)\nsqlSave(cn,datos,rownames=TRUE,append=FALSE,safer=FALSE)\nclose(cn)\n\nme da el siguiente error:\n\nError en sqlSave(cn, datos, rownames = TRUE, append = FALSE, safer = FALSE) : \n  [RODBC] Failed exec in Update\n\n\n22018 39 [Microsoft][ODBC ... ]El valor de caracteres para la especificación de la transmisión no es válido (null)\n\nDespués de este error, he ACTULIZADO los paquetes de R y he vuelto a ejecutar:\n\ncn<- odbcConnectExcel(\"C:\\\\Documents and Settings\\\\ ... \\\\nombre.xls\",readOnly=FALSE)\n\nsqlSave(cn,datos,rownames=TRUE,append=FALSE,safer=FALSE)\n\nclose(cn)\n\ny esta vez me ha dado el error:\n\nError en sqlSave(cn, datos, rownames = TRUE, append = FALSE, safer = FALSE) : \n  [RODBC] ERROR: Could not SQLExecDirect\n\n1.- ¿Cómo puedo solucionar el problema cuando me da el primer error: [RODBC] Failed exec in Update?\n\n2.- ¿Y cómo puedo solucionar el problema cuando me da el segundo error: [RODBC] ERROR: Could not SQLExecDirect?\n\n3.- En global, ¿qué está sucediendo?\n\nMuchas gracias por todo,\n\nD.\n \t\t \t   \t\t  \n_________________________________________________________________\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nal intentar guardar un data.frame en formato Excel con la función:\n\ncn<- odbcConnectExcel(\"C:\\\\Documents and Settings\\\\ ... \\\\nombre.xls\",readOnly=FALSE)\nsqlSave(cn,datos,rownames=TRUE,",
       "thread_id": "thread-a64ee8614779",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091115/77b79dea/attachment.pl"
+      ]
     },
     {
       "id": "msg-072bce64e648",
@@ -1497,11 +1560,14 @@
       "subject_clean": "[R-es] Cálculo del PAR via OR",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091116/2d661f05/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091116/2d661f05/attachment.pl>",
+      "body_plain": "Buenas noches a todos,\n\nDe antemano les pido disculpas por lo extenso de este mensaje.\n\n*CONTEXTO*\nEl PAR (Population Attributable Risk) es una medida ampliamente utilizada en\nEpidemiología que define la proporción de casos que serían prevenidos si\nfuese posible eliminar uno o mas factores de exposición de la población\nestudiada. En la literatura, existe una revisión por Benichou (2001) (ver\n[1]) y algunos trabajos mas recientes, como por ejemplo el de Spiegelman et\nal. (2007)  (ver [2]).\n\nEn general, el PAR es relativamente simple de calcular cuando se tienen\nestudios tipo caso-control, pero desafotunadamente no ocurre lo mismo cuando\nse tienen estudios de cohorte. En el primer caso, la expresión para calcular\nel PAR%, % de reducción de la incidencia en la población cuando logra\neliminarse uno o más factores de la población,  es PAR% = Pe * (RR-1) /\nRR donde Pe es la proporción de casos expuestos al factor de riesgo y RR el\nriesgo relativo. Cuando se tienen estudios de cohorte, e.g., no se tienen\nvalores de RR pero si de OR, la estimación del PAR% no es sencilla. En [2]\nse presenta una macro en SAS para hacerlo (ver [3]). La principal dificultad\ncon este procedimiento es que los datos necesitan un formato \"especial\".\n\n*EJEMPLO con una tabla 2x2*\nConsideremos un estudio caso-control resumido en una tabla de 2x2 (lo\nusual). El RR, PAR y PAR%, así como el PAR% en función de la Pe y el RR\nestán dados a continuación:\n\n# Función para estimar RR, PAR y PAR% cuando se tienen c-c\nPARCC <- function(x){\n              np <- rowSums(x)\n              nc <- rowSums(t(x))\n              Ie <- x[1,1]/np[1]\n              Iu <- x[2,1]/np[2]\n              Ip <- nc[1]/sum(np)\n              RR <- Ie/Iu\n              PAR <- Ip - Iu\n              PARp <- 100 * PAR / Ip\n              out <- c(RR, PAR, PARp)\n              names(out) <- c('RR','PAR','PAR%')\n              out\n              }\n\n# Función para estimar PAR% usando RR y Pe\nRR2PARp <- function(RR, Pe) 100*Pe*(RR-1)/RR\n\n# Datos\nx <- matrix(c(82, 1549,\n              23, 779), ncol = 2, byrow = TRUE)\nrownames(x) <- c('Never','Almost daily')\ncolnames(x) <- c('Case','Control')\nx\n\n# Estimación del PAR basado in datos c-c\nres <- PARCC(x)\nres\n# RR         PAR        PAR%\n# 1.75309893  0.01447829 33.54827218\n\n# PAR% a partir del RR y Pe\naddmargins(x, margin = c(1,2))\nRR <- as.numeric(res[1])\nPe <- 82/105\nRR2PARp(RR, Pe)\n# [1] 33.54827\n\nComo pueden observar, la implementación funciona relativamente bien en este\ncaso.\n\n*PREGUNTA*\nLa GRAN dificultad que tenemos en este momento es que *no* tenemos un\nestudio caso-control, por lo que existen valores de OR en lugar de RR.\nDesafortunadamente no podemos _aproximar_ el OR via RR.  Conoce alguien\nalguna manera, preferiblemente en R, de calcular el PAR (o el PAR%) en\ntablas de 2x2 utilizando el OR (Odds Ratio) en lugar del RR?  Sabe alguien\nde la existencia de alguna libreria en R que implemente la macro\ndesarrollada por Spiegelman et al. (2007)?\n\nMuchas gracias por su ayuda,\n\n                              Jorge Ivan Velez\n\n[1] http://smm.sagepub.com/cgi/content/short/10/3/195\n[2] http://www.springerlink.com/content/8kh447526x243163/\n[3] http://www.hsph.harvard.edu/faculty/spiegelman/par.html\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches a todos,\n\nDe antemano les pido disculpas por lo extenso de este mensaje.\n\n*CONTEXTO*\nEl PAR (Population Attributable Risk) es una medida ampliamente utilizada en\nEpidemiología que define",
       "thread_id": "thread-95ebb89c81a0",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091116/2d661f05/attachment.pl"
+      ]
     },
     {
       "id": "msg-375293c6d39b",
@@ -1518,11 +1584,14 @@
         "<1f6d6c820911160738n778ae780x9f473b30d51f664d@mail.gmail.com>",
         "<1f6d6c820911161125l6e03ad43r86692b48428fd70a@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091116/a5736cbc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091116/a5736cbc/attachment.pl>",
+      "body_plain": "Hola, yo te respondo sobre las tablas de frecuencia: en la libreria\nagricolae hay una función muy simple que hace las tablas como se suelen\nenseñar en los cursos introductorios, ademas podes asociarle facilmente el\nhistograma correspondiente, acá va del ejemplo del paquete:\n\n\nlibrary(agricolae)\ndata(growth)\nattach(growth)\nh2<-graph.freq(height,plot=FALSE)\ntable.freq(h2)\n\n\nsaludos, teresa\n\n\nEl 16 de noviembre de 2009 16:25, Kjetil Halvorsen\n<kjetil1001 at gmail.com>escribió:\n\n> Respono yo mismo, para eludivar cuan \"evil\" es attach()\n>\n> 2009/11/16 Kjetil Halvorsen <kjetil1001 at gmail.com>:\n> > 2009/11/16 J. Miguel Marin <jmmarin at est-econ.uc3m.es>:\n> >> Bueno,\n> >>\n> >> obviamente, la solución inmediata es poner attach(dataframe)\n> >>\n> >> es decir,\n> >>\n> >> freq <- function(x,cosa){\n> >> attach(cosa)\n> >> list(data.frame(table(cut(x, breaks=nclass.Sturges(x)))))\n> >> }\n>\n> despues de usar freq(y, cosa)\n> una vez, una copia de cosa esta en la lista de busqueda (tipea\n> search() para verlo)\n>\n> despues de llamar freq(y2, cosa, dos copias de cosa ... tipea serch()\n> para ver!\n> despues de usarlo la tercera vez, etc .......\n>\n> Como un mínimo la función tenía que ser definida como esto:\n>\n> >> freq <- function(x,cosa){\n> >> attach(cosa)\n> >> ans <- list(data.frame(table(cut(x, breaks=nclass.Sturges(x)))))\n>     detach(cosa)\n>     ans\n> >> }\n>\n> Pero: Lo mejor es olvidarse de attach() y usar with()\n>\n> Kjetil\n>\n>\n> >>\n> >\n> > Lo último que hacer es enseñar a futuros usuarios de usar attach(),\n> pertenece\n> > a la parte arqueológico de R!\n> > Tienes que usar with():\n> > with(cosa, lo_que_quiere_hacer_con_cosa)\n> > por ejemplo:\n> > en lugar de definir la funcion freq (que en realidad es una versión de\n> with()):\n> > with(cosa, table(x))\n> > o\n> > with(cosa,data.frame(table(cut(x,breaks=nclass.Sturges(x)))))\n> >\n> > with() necesita más propaganda!!!\n> >\n> > Para la pregunta original, talves:\n> > library(Hmisc)  # paquete muy extenso de Frank Harrel\n> > ?describe\n> > example(describe)\n> >\n> > Kjetil\n> >\n> >\n> >> Pero estaría mejor no tener que poner el segundo argumento en la función\n> si\n> >> eso fuera posible...\n> >> Y mejor aún: incluir un submenú en RCommander.\n> >>\n> >>\n> >>\n> >>>\n> >>> Hola,\n> >>>\n> >>> me gustaría hacer una función que fuera bastante automática (para\n> >>> docencia)\n> >>> y que hiciera tablas de frecuencias.\n> >>>\n> >>> La primera idea que funciona es ésta\n> >>>\n> >>> freq <- function(x){\n> >>> list(data.frame(table(cut(x, breaks=nclass.Sturges(x)))))\n> >>> }\n> >>>\n> >>> Sin embarg,o hay que poner (en general) en x algo así como\n> >>> el_dataframe$x\n> >>> para que funcione y la gente se lía si les dices que lo pongan así.\n> >>>\n> >>> Si escribo la función como\n> >>>\n> >>> freq <- function(x,dataframe){\n> >>> list(data.frame(table(cut(dataframe$x,\n> >>> breaks=nclass.Sturges(dataframe$x)))))\n> >>> }\n> >>>\n> >>> NO funciona con una tabla de datos dada.\n> >>>\n> >>> Por otro lado, también estaría bien que si se hace un ls() de objetos,\n> >>> detectase\n> >>> aquél que fuese un data frame y lo tomase por defecto. Pero no sé cómo\n> >>> hacerlo.\n> >>>\n> >>> Todo ello para hacer una función automática un poco para la gente que\n> no\n> >>> se aclara\n> >>> demasiado con RCommnader\n> >>>\n> >>> Finalmente ¿esto se podría programar en RCommander de manera asequible?\n> Me\n> >>> temo que no viene incluída ninguna función para hacer las típicas\n> tablas de\n> >>> frecuencias para variables cuantitativas...\n> >>>\n> >>> Un saludo\n> >>>\n> >>>\n> >>> jm~\n> >>>\n> >>> _______________________________\n> >>>\n> >>>       J. Miguel Marin\n> >>>\n> >>> http://www.est.uc3m.es/jmmarin\n> >>>\n> >>>   Dep. of Statistics\n> >>> University Carlos III of Madrid\n> >>>       Spain (E.U.)\n> >>>\n> >>> _______________________________________________\n> >>> R-help-es mailing list\n> >>> R-help-es at r-project.org\n> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>>\n> >>\n> >>\n> >>\n> >>\n> >> jm~\n> >>\n> >> _______________________________\n> >>\n> >>       J. Miguel Marin\n> >>\n> >> http://www.est.uc3m.es/jmmarin\n> >>\n> >>   Dep. of Statistics\n> >> University Carlos III of Madrid\n> >>       Spain (E.U.)\n>  >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >\n> >\n> >\n> > --\n> > \"... an entire human genome would fit on a music CD.\"\n> >\n> > --- www.thinkgene.com\n> >\n>\n>\n>\n> --\n> \"... an entire human genome would fit on a music CD.\"\n>\n> --- www.thinkgene.com\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nIng. Agr. M.Sc.Teresa Boca\nInstituto de Clima y Agua INTA Castelar.\nLas Cabañas y Los Reseros s/n°\n1712 Castelar Pcia de Buenos Aires, Argentina\nCel: 01115-3572-9584\nTel: (54-11)-4621-0125/1684\nFax:(54-11)-4621-5663\ntboca at cnia.inta.gov.ar\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, yo te respondo sobre las tablas de frecuencia: en la libreria\nagricolae hay una función muy simple que hace las tablas como se suelen\nenseñar en los cursos introductorios, ademas podes asociarle",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 4,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091116/a5736cbc/attachment.pl"
+      ]
     },
     {
       "id": "msg-ed69cc98fb7d",
@@ -1584,11 +1653,14 @@
         "<4B01B34B.2060802@etecsa.cu>",
         "<0A5B869BDC0A7445B15F9A4A53794377181C05BFB4@ASSCCEVS02.sergas.local>"
       ],
-      "body_plain": "Hola colegas:\n\nNo habÃ­a tenido oportunidad para responder, a todos gracias por sus \nrespuestas, en estos momentos estoy probando todas las opciones que me \nbrindaron, les comentarÃ© los resultados y mÃ¡s adelante les estarÃ© \nhaciendo otras preguntas relacionadas con el tema, un abrazo a todos.\n\nSaludos,\n\nLeonardo\n\n\n\nmiguel.angel.rodriguez.muinos en sergas.es escribiÃ³:\n> Hola Leonardo.\n>\n> Cuando hablas de que has instalado R en Ubuntu supongo que te referirÃ¡s a que los has instalado desde el gestor de paquetes   (porque tambiÃ©n se puede instar a \"a mano\").\n>\n> Ubuntu trae, por defecto, activados unos repositorios de software. AhÃ­ puedes encontrar R e instalarlo (y varios de los packages del CRAN) aunque yo te recomiendo que aÃ±adas manualmente el repositorio \"deb http://crans.es.r-project.org/bin/linux/ubuntu karmic/\" (sin las comillas) para que lea directamente del mirror espaÃ±ol de R-Project y tengas una versiÃ³n actualizada de R (y muchos mÃ¡s packages disponibles). Entre esos packages se encuentra Rcommander, que es el GUI que te recomiendo utilizar.\n>\n> AdemÃ¡s de este GUI, existe uno mÃ¡s integrado con KDE que se llama RkWard... Pero no te lo recomiendo porque da algunos problemmillas con las Ãºltimas versiones de R (aunque estÃ¡n en ello e igual ya lo han solucionado).\n>\n> Como he comentado en alguna ocasiÃ³n, hemos preparado una distro de Linux basada en Ubuntu (con KDE), llamada EpiLinux (www.galiciasaude.es/dxsp), que ya trae todo esto implementado (es una distro para bioestadÃ­stica y estudios de salud).\n> Enlace de descarga: www.galiciasaude.es/epilinux\n> Nosotros, en un principio habÃ­amos apostado por RkWard pero, al final, optamos por Rcommander.\n>\n> Una vez instalado, lanzar el programa es tan sencillo como ir al menÃº y buscar el icono de \"R\".\n>\n> En caso de que lo hayas instalado \"a mano\", simplemente abre una ventana de terminal y pon \"R\" (sin las comillas).\n>\n> Espero haberte ayudado.\n>\n> Un Saludo,\n> Miguel.\n>\n>\n>\n> -----Mensaje original-----\n> De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Leonardo HernÃ¡ndez PÃ©rez\n> Enviado el: lunes, 16 de noviembre de 2009 21:17\n> CC: r-help-es en r-project.org\n> Asunto: [R-es] R en Ubuntu\n>\n>\n> Hola colegas: Acabo de instalar R sobre Ubuntu y no encuentro la forma de ejecutarlo, no me ha creado un lanzador en ningÃºn lugar, en verdad no estoy muy relacionado ni con Ubuntu ni con R, Necesito saber como ejecutarlo.\n>\n> Saludos,\n>\n> Leonardo\n>\n>\n>\n> Nota: A informaciÃ³n contida nesta mensaxe e os seus posibles documentos adxuntos Ã© privada e confidencial e estÃ¡ dirixida Ãºnicamente Ã³ seu destinatario/a. Se vostede non Ã© o/a destinatario/a orixinal desta mensaxe, por favor elimÃ­nea. A distribuciÃ³n ou copia desta mensaxe non estÃ¡ autorizada. \n>\n> Nota: La informaciÃ³n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y estÃ¡ dirigida Ãºnicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimÃ­nelo. La distribuciÃ³n o copia de este mensaje no estÃ¡ autorizada.\n>\n> See more languages: http://www.sergas.es/aviso_confidencialidad.htm \n>\n>\n>   \n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091117/daab31fb/attachment.pl>",
+      "body_plain": "Hola colegas:\n\nNo habÃ­a tenido oportunidad para responder, a todos gracias por sus \nrespuestas, en estos momentos estoy probando todas las opciones que me \nbrindaron, les comentarÃ© los resultados y mÃ¡s adelante les estarÃ© \nhaciendo otras preguntas relacionadas con el tema, un abrazo a todos.\n\nSaludos,\n\nLeonardo\n\n\n\nmiguel.angel.rodriguez.muinos en sergas.es escribiÃ³:\n> Hola Leonardo.\n>\n> Cuando hablas de que has instalado R en Ubuntu supongo que te referirÃ¡s a que los has instalado desde el gestor de paquetes   (porque tambiÃ©n se puede instar a \"a mano\").\n>\n> Ubuntu trae, por defecto, activados unos repositorios de software. AhÃ­ puedes encontrar R e instalarlo (y varios de los packages del CRAN) aunque yo te recomiendo que aÃ±adas manualmente el repositorio \"deb http://crans.es.r-project.org/bin/linux/ubuntu karmic/\" (sin las comillas) para que lea directamente del mirror espaÃ±ol de R-Project y tengas una versiÃ³n actualizada de R (y muchos mÃ¡s packages disponibles). Entre esos packages se encuentra Rcommander, que es el GUI que te recomiendo utilizar.\n>\n> AdemÃ¡s de este GUI, existe uno mÃ¡s integrado con KDE que se llama RkWard... Pero no te lo recomiendo porque da algunos problemmillas con las Ãºltimas versiones de R (aunque estÃ¡n en ello e igual ya lo han solucionado).\n>\n> Como he comentado en alguna ocasiÃ³n, hemos preparado una distro de Linux basada en Ubuntu (con KDE), llamada EpiLinux (www.galiciasaude.es/dxsp), que ya trae todo esto implementado (es una distro para bioestadÃ­stica y estudios de salud).\n> Enlace de descarga: www.galiciasaude.es/epilinux\n> Nosotros, en un principio habÃ­amos apostado por RkWard pero, al final, optamos por Rcommander.\n>\n> Una vez instalado, lanzar el programa es tan sencillo como ir al menÃº y buscar el icono de \"R\".\n>\n> En caso de que lo hayas instalado \"a mano\", simplemente abre una ventana de terminal y pon \"R\" (sin las comillas).\n>\n> Espero haberte ayudado.\n>\n> Un Saludo,\n> Miguel.\n>\n>\n>\n> -----Mensaje original-----\n> De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Leonardo HernÃ¡ndez PÃ©rez\n> Enviado el: lunes, 16 de noviembre de 2009 21:17\n> CC: r-help-es en r-project.org\n> Asunto: [R-es] R en Ubuntu\n>\n>\n> Hola colegas: Acabo de instalar R sobre Ubuntu y no encuentro la forma de ejecutarlo, no me ha creado un lanzador en ningÃºn lugar, en verdad no estoy muy relacionado ni con Ubuntu ni con R, Necesito saber como ejecutarlo.\n>\n> Saludos,\n>\n> Leonardo\n>\n>\n>\n> Nota: A informaciÃ³n contida nesta mensaxe e os seus posibles documentos adxuntos Ã© privada e confidencial e estÃ¡ dirixida Ãºnicamente Ã³ seu destinatario/a. Se vostede non Ã© o/a destinatario/a orixinal desta mensaxe, por favor elimÃ­nea. A distribuciÃ³n ou copia desta mensaxe non estÃ¡ autorizada. \n>\n> Nota: La informaciÃ³n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y estÃ¡ dirigida Ãºnicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimÃ­nelo. La distribuciÃ³n o copia de este mensaje no estÃ¡ autorizada.\n>\n> See more languages: http://www.sergas.es/aviso_confidencialidad.htm \n>\n>\n>   \n------------ prÃ³xima parte ------------\n--- \nEste mensaje fue revisado por Kaspersky Mail Gateway en el servidor imx2.etecsa.cu\nVisite nuestros sitios: <http://www.kaspersky.com>, <http://www.viruslist.com>",
       "body_snippet": "Hola colegas:\n\nNo habÃ­a tenido oportunidad para responder, a todos gracias por sus \nrespuestas, en estos momentos estoy probando todas las opciones que me \nbrindaron, les comentarÃ© los resultados y ",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 6,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091117/daab31fb/attachment.pl"
+      ]
     },
     {
       "id": "msg-f7bfab14dec9",
@@ -1633,11 +1705,14 @@
         "<4B0313D5.8070508@etecsa.cu>",
         "<1258526423.29763.7.camel@ubuntu.une.net.co>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091119/44f917ce/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091119/44f917ce/attachment.pl>",
+      "body_plain": "Hola Colegas:\n\nAhora tengo otras dudas.\n\nInstalé Rkward, sin problemas, me ha trabajado bien, y me aparece un \nlanzador sin problemas.\nInstalé Rcommander desde la consola pero no me aparece ningún lanzador \n¿Que debo hacer para ejecutarlo?\nAñadí a sources.list  # deb \nhttp://cran.es.r-project.org/bin/linux/ubuntu karmic/, actualicé pero no \nvi nada que hablara de R en el proceso de actualización, ¿Como puedo \ncomprobar que está tomando las actualizaciones desde esa ubicación?\n\nUn saludo a todos,\n\nLeonardo\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Colegas:\n\nAhora tengo otras dudas.\n\nInstalé Rkward, sin problemas, me ha trabajado bien, y me aparece un \nlanzador sin problemas.\nInstalé Rcommander desde la consola pero no me aparece ningún lan",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 8,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091119/44f917ce/attachment.pl"
+      ]
     },
     {
       "id": "msg-92fed007d694",
@@ -1686,11 +1761,14 @@
         "<4B0563B0.1070801@etecsa.cu>",
         "<13549e790911190740o4e1ca24dt8707934047f491d2@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091119/f946fbea/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091119/f946fbea/attachment.pl>",
+      "body_plain": "Ya lo hice, el comando es library(Rcmdr), un millón de gracias Luciano.\n\nSaludos,\n\nLeonardo\n\nLuciano Selzer escribió:\n> Hola Leonardo:\n> RCommander es un paquete para R. Debes cargarlo como cargas cualquier\n> paquete en R\n> library(RCommander) #No recuerdo si las mayúsculas están bien pero\n> sino cámbialo por minúsculas.\n>\n> Respecto a lo otro no tengo idea.\n> Saludos\n> Luciano\n>\n>\n>\n> El día 19 de noviembre de 2009 12:26, Leonardo Hernández Pérez\n> <leonardo.hernandez at etecsa.cu> escribió:\n>   \n>> Hola Colegas:\n>>\n>> Ahora tengo otras dudas.\n>>\n>> Instalé Rkward, sin problemas, me ha trabajado bien, y me aparece un\n>> lanzador sin problemas.\n>> Instalé Rcommander desde la consola pero no me aparece ningún lanzador\n>> ¿Que debo hacer para ejecutarlo?\n>> Añadí a sources.list  # deb\n>> http://cran.es.r-project.org/bin/linux/ubuntu karmic/, actualicé pero no\n>> vi nada que hablara de R en el proceso de actualización, ¿Como puedo\n>> comprobar que está tomando las actualizaciones desde esa ubicación?\n>>\n>> Un saludo a todos,\n>>\n>> Leonardo\n>>\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>>     \n>\n>\n>   \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Ya lo hice, el comando es library(Rcmdr), un millón de gracias Luciano.\n\nSaludos,\n\nLeonardo\n\nLuciano Selzer escribió:\n> Hola Leonardo:\n> RCommander es un paquete para R. Debes cargarlo como cargas cua",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 10,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091119/f946fbea/attachment.pl"
+      ]
     },
     {
       "id": "msg-f4db444bbe31",
@@ -1850,11 +1928,14 @@
         "<4B0563B0.1070801@etecsa.cu>",
         "<0A5B869BDC0A7445B15F9A4A53794377181C05C430@ASSCCEVS02.sergas.local>"
       ],
-      "body_plain": "Hola Miguel Angel:\n\nGracias por tu ayuda, funciona perfecto, solo me costÃ³ un poco de \ntrabajo encontrar el fichero \"profile\", su ubicaciÃ³n es \n\"/usr/lib/R/library/base/R\"\n\nUn saludo a todos,\n\nLeonardo\n\n\nmiguel.angel.rodriguez.muinos en sergas.es escribiÃ³:\n> Hola Leonardo.\n>\n> Entiendo que has aÃ±adido ese repositorio y actualizado la lista de paquetes. Si cargas algÃºn gestor grÃ¡fico (tipo Synaptics o similar) te aparecerÃ¡n (aunque algunos de ellos ya estaban con los repositorios por defecto de Ubuntu) una serie de paquetes llamados \"r-base.loquesea\" y \"r-cran.loquesea\". El primero es R y los demÃ¡s son packages instalables (uno de ellos el r-cran-rcmdr (creo recordar que se llama asÃ­). Seleccionando lo que te interesa instalar (r-base es primordial) tendrÃ¡s R instalado en el sistema y el conjunto de packages adicionales que necesites. Una vez terminada la instalaciÃ³n, te aparece un icono de acceso directo en el menÃº (la ubicaciÃ³n dependerÃ¡ del GUI que uses). El Rcommander tienes que lanzarlo desde dentro de R (una vez cargado) con library(Rcmdr). Si quieres que cargue automÃ¡ticamente al iniciar R, simplemente edita el fichero Rprofile.site (de la carpeta etc, centro de la carpeta de instalaciÃ³n de R) y aÃ±Ã¡dele al final la instrucciÃ³n \"library(Rcmdr)\" (sin las comillas, of course).\n>\n> Un Saludo,\n> Miguel.\n>\n>\n> -----Mensaje original-----\n> De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Leonardo HernÃ¡ndez PÃ©rez\n> Enviado el: jueves, 19 de noviembre de 2009 16:27\n> Para: r-help-es en r-project.org\n> Asunto: Re: [R-es] R en Ubuntu\n>\n> Hola Colegas:\n>\n> Ahora tengo otras dudas.\n>\n> InstalÃ© Rkward, sin problemas, me ha trabajado bien, y me aparece un lanzador sin problemas.\n> InstalÃ© Rcommander desde la consola pero no me aparece ningÃºn lanzador Â¿Que debo hacer para ejecutarlo?\n> AÃ±adÃ­ a sources.list  # deb\n> http://cran.es.r-project.org/bin/linux/ubuntu karmic/, actualicÃ© pero no vi nada que hablara de R en el proceso de actualizaciÃ³n, Â¿Como puedo comprobar que estÃ¡ tomando las actualizaciones desde esa ubicaciÃ³n?\n>\n> Un saludo a todos,\n>\n> Leonardo\n>\n>\n>\n> Nota: A informaciÃ³n contida nesta mensaxe e os seus posibles documentos adxuntos Ã© privada e confidencial e estÃ¡ dirixida Ãºnicamente Ã³ seu destinatario/a. Se vostede non Ã© o/a destinatario/a orixinal desta mensaxe, por favor elimÃ­nea. A distribuciÃ³n ou copia desta mensaxe non estÃ¡ autorizada. \n>\n> Nota: La informaciÃ³n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y estÃ¡ dirigida Ãºnicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimÃ­nelo. La distribuciÃ³n o copia de este mensaje no estÃ¡ autorizada.\n>\n> See more languages: http://www.sergas.es/aviso_confidencialidad.htm \n>\n> XACOBEO 2010: http://www.xacobeo.org\n>\n>\n>\n>   \n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/125825cb/attachment.pl>",
+      "body_plain": "Hola Miguel Angel:\n\nGracias por tu ayuda, funciona perfecto, solo me costÃ³ un poco de \ntrabajo encontrar el fichero \"profile\", su ubicaciÃ³n es \n\"/usr/lib/R/library/base/R\"\n\nUn saludo a todos,\n\nLeonardo\n\n\nmiguel.angel.rodriguez.muinos en sergas.es escribiÃ³:\n> Hola Leonardo.\n>\n> Entiendo que has aÃ±adido ese repositorio y actualizado la lista de paquetes. Si cargas algÃºn gestor grÃ¡fico (tipo Synaptics o similar) te aparecerÃ¡n (aunque algunos de ellos ya estaban con los repositorios por defecto de Ubuntu) una serie de paquetes llamados \"r-base.loquesea\" y \"r-cran.loquesea\". El primero es R y los demÃ¡s son packages instalables (uno de ellos el r-cran-rcmdr (creo recordar que se llama asÃ­). Seleccionando lo que te interesa instalar (r-base es primordial) tendrÃ¡s R instalado en el sistema y el conjunto de packages adicionales que necesites. Una vez terminada la instalaciÃ³n, te aparece un icono de acceso directo en el menÃº (la ubicaciÃ³n dependerÃ¡ del GUI que uses). El Rcommander tienes que lanzarlo desde dentro de R (una vez cargado) con library(Rcmdr). Si quieres que cargue automÃ¡ticamente al iniciar R, simplemente edita el fichero Rprofile.site (de la carpeta etc, centro de la carpeta de instalaciÃ³n de R) y aÃ±Ã¡dele al final la instrucciÃ³n \"library(Rcmdr)\" (sin las comillas, of course).\n>\n> Un Saludo,\n> Miguel.\n>\n>\n> -----Mensaje original-----\n> De: r-help-es-bounces en r-project.org [mailto:r-help-es-bounces en r-project.org] En nombre de Leonardo HernÃ¡ndez PÃ©rez\n> Enviado el: jueves, 19 de noviembre de 2009 16:27\n> Para: r-help-es en r-project.org\n> Asunto: Re: [R-es] R en Ubuntu\n>\n> Hola Colegas:\n>\n> Ahora tengo otras dudas.\n>\n> InstalÃ© Rkward, sin problemas, me ha trabajado bien, y me aparece un lanzador sin problemas.\n> InstalÃ© Rcommander desde la consola pero no me aparece ningÃºn lanzador Â¿Que debo hacer para ejecutarlo?\n> AÃ±adÃ­ a sources.list  # deb\n> http://cran.es.r-project.org/bin/linux/ubuntu karmic/, actualicÃ© pero no vi nada que hablara de R en el proceso de actualizaciÃ³n, Â¿Como puedo comprobar que estÃ¡ tomando las actualizaciones desde esa ubicaciÃ³n?\n>\n> Un saludo a todos,\n>\n> Leonardo\n>\n>\n>\n> Nota: A informaciÃ³n contida nesta mensaxe e os seus posibles documentos adxuntos Ã© privada e confidencial e estÃ¡ dirixida Ãºnicamente Ã³ seu destinatario/a. Se vostede non Ã© o/a destinatario/a orixinal desta mensaxe, por favor elimÃ­nea. A distribuciÃ³n ou copia desta mensaxe non estÃ¡ autorizada. \n>\n> Nota: La informaciÃ³n contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y estÃ¡ dirigida Ãºnicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimÃ­nelo. La distribuciÃ³n o copia de este mensaje no estÃ¡ autorizada.\n>\n> See more languages: http://www.sergas.es/aviso_confidencialidad.htm \n>\n> XACOBEO 2010: http://www.xacobeo.org\n>\n>\n>\n>   \n------------ prÃ³xima parte ------------\n--- \nEste mensaje fue revisado por Kaspersky Mail Gateway en el servidor imx2.etecsa.cu\nVisite nuestros sitios: <http://www.kaspersky.com>, <http://www.viruslist.com>",
       "body_snippet": "Hola Miguel Angel:\n\nGracias por tu ayuda, funciona perfecto, solo me costÃ³ un poco de \ntrabajo encontrar el fichero \"profile\", su ubicaciÃ³n es \n\"/usr/lib/R/library/base/R\"\n\nUn saludo a todos,\n\nLeona",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 10,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/125825cb/attachment.pl"
+      ]
     },
     {
       "id": "msg-0488a98757a7",
@@ -1925,11 +2006,14 @@
         "<0b4e01ca69df$bb313c30$7d8f6386@VMED.UKD>",
         "<29E06E0DDE574D36BF2763FC4985429D@321475b7e0e341a>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/61ae705f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/61ae705f/attachment.pl>",
+      "body_plain": "Buenos dias Beatriz,\n\nEn Windows, esta es una manera de generar el gráfico en formato eps con\nletras griegas en las leyendas:\n\nplot(1:10, xlab = expression(chi^2), ylab = expression(sigma^2) )\nsavePlot('C:/ejemplo.eps', type = 'eps',  device = dev.cur())\n\nComo verás, todo funciona sin problemas tanto en la ventana gráfica de R\ncomo en el archivo eps generado.\n\nCómo generaste tu gráfico?  Qué instrucción utilizaste para guardarlo? Sobre\nqué plataforma (Wndows, Mac, Linux) estás trabajando? Qué versión de R\nutilizas?  Esta simple información podría ayudarnos a ayudarte.\n\nEspero sea de utilidad,\n\n                                    Jorge Ivan Velez\n\n\n2009/11/20 Beatriz Lacruz <>\n\n> Hola,\n>\n> Acabo de empezar a trabajar con R.\n>\n> ¿Me podríais recomendar algún texto en el que esté explicado cómo trabajar\n> con gráficos?\n>\n> Mi problema es que cuando guardo una gráfica desde la ventana en formato\n> postscript las letras griegas que he incluido con expression en la leyendas\n> de los ejes no se guardan como tales. Por ejemplo, en vez de la letra chi\n> aparece una c.\n>\n> Gracias de antemano,\n>\n> Beatriz Lacruz Casaucau\n> ______________________________________________________\n>\n> Universidad de Zaragoza\n> Departamento de Métodos Estadísticos\n> Edificio de Matemáticas, 3ª planta\n> Pedro Cerbuna, 12\n> 50009 Zaragoza (Spain)\n>\n> Tel. 976 76 10 00 Ext. 3245\n> Fax. 976 76 11 15\n>\n> http://metodosestadisticos.unizar.es/personales/lacruz/\n>\n\n\n\n\n_______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Beatriz,\n\nEn Windows, esta es una manera de generar el gráfico en formato eps con\nletras griegas en las leyendas:\n\nplot(1:10, xlab = expression(chi^2), ylab = expression(sigma^2) )\nsavePlo",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 8,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/61ae705f/attachment.pl"
+      ]
     },
     {
       "id": "msg-c96e1ffba84d",
@@ -1949,11 +2033,14 @@
         "<20091120115745.jeylgtle04g0ww8o@webcartero01.uc3m.es>",
         "<0b4e01ca69df$bb313c30$7d8f6386@VMED.UKD>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/2c7f9c29/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/2c7f9c29/attachment.pl>",
+      "body_plain": "2009/11/20 Pablo Emilio Verde <PabloEmilio.Verde at uni-duesseldorf.de>\n\n> Hola,\n>\n> Si, el tema es fundamental para las clases de estadistica introductoria.\n>\n> Algo que note es lo siguiente, la funcion \"graph.freq()\" del paquete\n> \"agricolae\" es la funcion \"hist()\" del paquete \"graphics\" standard.\n> Exactamente la misma! La funcion \"table.freq()\" te agrega la tabla\n> que necesitabas.\n>\n> Podes probar:\n>\n> library(agricolae)\n> set.seed(123)\n>   x <- rnorm(100, mean = 2, sd=1)\n> tmp <- hist(x, plot=FALSE)\n> table.freq(tmp)\n>\n> Como tema marginal salio la discusion del uso de \"with()\" o \"attach()\".\n> Indudablemente, ni uno ni otro es mejor, ni uno ni otro es arcaico.\n> Entiendo\n> que, si deberian estar en desuso, entonces no formarian parte del sistema.\n>\n\n     Esto no es necesariamente correcto. Una función como \"attach\" que ha\nexistido\n     mucho tiempo, y que esta mencionado en muchos libros,\n     es muy dificil de remover del sistema.\n\nKjetil\n\n\n>\n> El tema pasa, por el contexto en el que se utiilzan. Claramente, si\n> necesitamos\n> la asignacion de un data.frame en forma global utilizanos \"attach()\". De lo\n> contrario si la asignacion es local \"with()\" es mas efectivo.\n>\n> El peligro de utilizar \"attach()\" en forma indescriminada, es que se pueden\n> enmascarar variables que no necesitamos en un analisis y entiendo que R\n> no siempre nos avisa! Asi que su uso requiere de mas cuidado y el uso\n> conjunto de \"detach()\".\n>\n> Cuando hago un analisis de datos de mucha responsabilidad, no utilizo\n> ni uno ni otro. Para mi, lo mas importante es que el uso de variables sea\n> absolutamente explicito y uso \"$\". No es muy elegante, pero almenos es\n> una decision \"mini-max\".\n>\n> Pablo\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n>\n> ----- Original Message -----\n> From: \"J. Miguel Marin\" <jmmarin at est-econ.uc3m.es>\n> To: <r-help-es at r-project.org>\n> Sent: Friday, November 20, 2009 11:57 AM\n> Subject: Re: [R-es] Funcion para una tabla de frecuencias\n>\n>\n> Hola,\n>\n> muchas gracias por vuestra ayuda.\n> Quizás lo que dice Teresa es lo que mejor se adapta a lo que yo\n> buscaba: tablas introductorias como aparecen en los textos básicos y\n> que suelen recoger los programas comerciales como opciones inmediatas.\n>\n> También eran muy interesantes los consejos sobre programación aunque mi\n> idea era tratar de introducir el R de una manera competitiva respecto a\n> los programas comerciales, aunque eso implique tomar opciones menos\n> ortodoxas.\n>\n> Un saludo\n>\n> > Hola, yo te respondo sobre las tablas de frecuencia: en la libreria\n> > agricolae hay una función muy simple que hace las tablas como se suelen\n> > enseñar en los cursos introductorios, ademas podes asociarle facilmente\n> el\n> > histograma correspondiente, acá va del ejemplo del paquete:\n> >\n> >\n> > library(agricolae)\n> > data(growth)\n> > attach(growth)\n> > h2<-graph.freq(height,plot=FALSE)\n> > table.freq(h2)\n> >\n> >\n> > saludos, teresa\n> >\n> >\n> > El 16 de noviembre de 2009 16:25, Kjetil Halvorsen\n> > <kjetil1001 at gmail.com>escribió:\n> >\n> >> Respono yo mismo, para eludivar cuan \"evil\" es attach()\n> >>\n> >> 2009/11/16 Kjetil Halvorsen <kjetil1001 at gmail.com>:\n> >> > 2009/11/16 J. Miguel Marin <jmmarin at est-econ.uc3m.es>:\n> >> >> Bueno,\n> >> >>\n> >> >> obviamente, la solución inmediata es poner attach(dataframe)\n> >> >>\n> >> >> es decir,\n> >> >>\n> >> >> freq <- function(x,cosa){\n> >> >> attach(cosa)\n> >> >> list(data.frame(table(cut(x, breaks=nclass.Sturges(x)))))\n> >> >> }\n> >>\n> >> despues de usar freq(y, cosa)\n> >> una vez, una copia de cosa esta en la lista de busqueda (tipea\n> >> search() para verlo)\n> >>\n> >> despues de llamar freq(y2, cosa, dos copias de cosa ... tipea serch()\n> >> para ver!\n> >> despues de usarlo la tercera vez, etc .......\n> >>\n> >> Como un mínimo la función tenía que ser definida como esto:\n> >>\n> >> >> freq <- function(x,cosa){\n> >> >> attach(cosa)\n> >> >> ans <- list(data.frame(table(cut(x, breaks=nclass.Sturges(x)))))\n> >>     detach(cosa)\n> >>     ans\n> >> >> }\n> >>\n> >> Pero: Lo mejor es olvidarse de attach() y usar with()\n> >>\n> >> Kjetil\n> >>\n> >>\n> >> >>\n> >> >\n> >> > Lo último que hacer es enseñar a futuros usuarios de usar attach(),\n> >> pertenece\n> >> > a la parte arqueológico de R!\n> >> > Tienes que usar with():\n> >> > with(cosa, lo_que_quiere_hacer_con_cosa)\n> >> > por ejemplo:\n> >> > en lugar de definir la funcion freq (que en realidad es una versión de\n> >> with()):\n> >> > with(cosa, table(x))\n> >> > o\n> >> > with(cosa,data.frame(table(cut(x,breaks=nclass.Sturges(x)))))\n> >> >\n> >> > with() necesita más propaganda!!!\n> >> >\n> >> > Para la pregunta original, talves:\n> >> > library(Hmisc)  # paquete muy extenso de Frank Harrel\n> >> > ?describe\n> >> > example(describe)\n> >> >\n> >> > Kjetil\n> >> >\n> >> >\n> >> >> Pero estaría mejor no tener que poner el segundo argumento en la\n> función\n> >> si\n> >> >> eso fuera posible...\n> >> >> Y mejor aún: incluir un submenú en RCommander.\n> >> >>\n> >> >>\n> >> >>\n> >> >>>\n> >> >>> Hola,\n> >> >>>\n> >> >>> me gustaría hacer una función que fuera bastante automática (para\n> >> >>> docencia)\n> >> >>> y que hiciera tablas de frecuencias.\n> >> >>>\n> >> >>> La primera idea que funciona es ésta\n> >> >>>\n> >> >>> freq <- function(x){\n> >> >>> list(data.frame(table(cut(x, breaks=nclass.Sturges(x)))))\n> >> >>> }\n> >> >>>\n> >> >>> Sin embarg,o hay que poner (en general) en x algo así como\n> >> >>> el_dataframe$x\n> >> >>> para que funcione y la gente se lía si les dices que lo pongan así.\n> >> >>>\n> >> >>> Si escribo la función como\n> >> >>>\n> >> >>> freq <- function(x,dataframe){\n> >> >>> list(data.frame(table(cut(dataframe$x,\n> >> >>> breaks=nclass.Sturges(dataframe$x)))))\n> >> >>> }\n> >> >>>\n> >> >>> NO funciona con una tabla de datos dada.\n> >> >>>\n> >> >>> Por otro lado, también estaría bien que si se hace un ls() de\n> objetos,\n> >> >>> detectase\n> >> >>> aquél que fuese un data frame y lo tomase por defecto. Pero no sé\n> cómo\n> >> >>> hacerlo.\n> >> >>>\n> >> >>> Todo ello para hacer una función automática un poco para la gente\n> que\n> >> no\n> >> >>> se aclara\n> >> >>> demasiado con RCommnader\n> >> >>>\n> >> >>> Finalmente ¿esto se podría programar en RCommander de manera\n> asequible?\n> >> Me\n> >> >>> temo que no viene incluída ninguna función para hacer las típicas\n> >> tablas de\n> >> >>> frecuencias para variables cuantitativas...\n> >> >>>\n> >> >>> Un saludo\n> >> >>>\n> >> >>>\n> >> >>> jm~\n> >> >>>\n> >> >>> _______________________________\n> >> >>>\n> >> >>>       J. Miguel Marin\n> >> >>>\n> >> >>> http://www.est.uc3m.es/jmmarin\n> >> >>>\n> >> >>>   Dep. of Statistics\n> >> >>> University Carlos III of Madrid\n> >> >>>       Spain (E.U.)\n> >> >>>\n> >> >>> _______________________________________________\n> >> >>> R-help-es mailing list\n> >> >>> R-help-es at r-project.org\n> >> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >> >>>\n> >> >>\n> >> >>\n> >> >>\n> >> >>\n> >> >> jm~\n> >> >>\n> >> >> _______________________________\n> >> >>\n> >> >>       J. Miguel Marin\n> >> >>\n> >> >> http://www.est.uc3m.es/jmmarin\n> >> >>\n> >> >>   Dep. of Statistics\n> >> >> University Carlos III of Madrid\n> >> >>       Spain (E.U.)\n> >>  >>\n> >> >> _______________________________________________\n> >> >> R-help-es mailing list\n> >> >> R-help-es at r-project.org\n> >> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >> >>\n> >> >\n> >> >\n> >> >\n> >> > --\n> >> > \"... an entire human genome would fit on a music CD.\"\n> >> >\n> >> > --- www.thinkgene.com\n> >> >\n> >>\n> >>\n> >>\n> >> --\n> >> \"... an entire human genome would fit on a music CD.\"\n> >>\n> >> --- www.thinkgene.com\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >\n> >\n> >\n> > --\n> > Ing. Agr. M.Sc.Teresa Boca\n> > Instituto de Clima y Agua INTA Castelar.\n> > Las Cabañas y Los Reseros s/n°\n> > 1712 Castelar Pcia de Buenos Aires, Argentina\n> > Cel: 01115-3572-9584\n> > Tel: (54-11)-4621-0125/1684\n> > Fax:(54-11)-4621-5663\n> > tboca at cnia.inta.gov.ar\n> >\n> > [[alternative HTML version deleted]]\n> >\n> >\n>\n>\n>\n>\n> jm~\n>\n> _______________________________\n>\n>        J. Miguel Marin\n>\n> http://www.est.uc3m.es/jmmarin\n>\n>    Dep. of Statistics\n> University Carlos III of Madrid\n>        Spain (E.U.)\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \n\"... an entire human genome would fit on a music CD.\"\n\n--- www.thinkgene.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "2009/11/20 Pablo Emilio Verde <PabloEmilio.Verde at uni-duesseldorf.de>\n\n> Hola,\n>\n> Si, el tema es fundamental para las clases de estadistica introductoria.\n>\n> Algo que note es lo siguiente, la func",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 7,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/2c7f9c29/attachment.pl"
+      ]
     },
     {
       "id": "msg-48c1aa37f207",
@@ -1975,11 +2062,14 @@
         "<29E06E0DDE574D36BF2763FC4985429D@321475b7e0e341a>",
         "<317737de0911200612g31a775c3wa820401d4c6d1897@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/3aa57b7d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/3aa57b7d/attachment.pl>",
+      "body_plain": "Gracias por vuestras respuestas. \nMe valen todas, excepto legend(\"topleft\",substitute(chi)) que no funciona.\n\nEl problema ahora es que al abrir el .eps tiene las letras griegas, pero al compilarlo dentro de un archivo latex se vuelven latinas. Pero supongo que me tendré que ir a un foro de LaTex a preguntar.\n\nPor si sirve para algo, mi función es:\n\ncurve(dchisq(x, 2), 0, 16,ylab=\"\",lwd=2)                                     \ncurve(dchisq(x, 4), 0, 16, add=TRUE, lwd=2,lty=2)                   \ncurve(dchisq(x, 8), 0, 16, add=TRUE, lwd=2,lty=3)\ntext(0.7,0.5,\"n=2\")\ntext(4.5,0.15,\"n=4\")\ntext(12,0.07,\"n=8\")\nlegend(\"center\",expression({chi^2}[n]),bty=\"n\",cex=2)\n\nLe he añadido para probar:\nlegend(\"topleft\",substitute(chi)) #que no funciona\nlegend(\"topright\",expression(\"Esto es\"~chi))\nsavePlot('chi.eps', type = 'eps',  device = dev.cur())\n\nMi plataforma es Windows y la versión de R 2.9.2.\n\nMuchas gracias por responder tan rápido.\n\nBeatriz Lacruz Casaucau\n______________________________________________________\n\nUniversidad de Zaragoza\nDepartamento de Métodos Estadísticos\nEdificio de Matemáticas, 3ª planta\nPedro Cerbuna, 12\n50009 Zaragoza (Spain)\n\nTel. 976 76 10 00 Ext. 3245\nFax. 976 76 11 15\n\nhttp://metodosestadisticos.unizar.es/personales/lacruz/\n______________________________________________________\n  ----- Original Message ----- \n  From: Jorge Ivan Velez \n  To: Beatriz Lacruz \n  Cc: r-help-es at r-project.org \n  Sent: Friday, November 20, 2009 3:12 PM\n  Subject: Re: [R-es] Guardar gráficos en eps con letras griegas en las leyendas\n\n\n  Buenos dias Beatriz,\n\n\n  En Windows, esta es una manera de generar el gráfico en formato eps con letras griegas en las leyendas:\n\n\n  plot(1:10, xlab = expression(chi^2), ylab = expression(sigma^2) )\n  savePlot('C:/ejemplo.eps', type = 'eps',  device = dev.cur())\n\n\n  Como verás, todo funciona sin problemas tanto en la ventana gráfica de R como en el archivo eps generado.\n\n\n  Cómo generaste tu gráfico?  Qué instrucción utilizaste para guardarlo? Sobre qué plataforma (Wndows, Mac, Linux) estás trabajando? Qué versión de R utilizas?  Esta simple información podría ayudarnos a ayudarte.\n\n\n  Espero sea de utilidad,\n\n\n                                      Jorge Ivan Velez\n\n\n\n\n  2009/11/20 Beatriz Lacruz <>\n\n    Hola,\n\n    Acabo de empezar a trabajar con R.\n\n    ¿Me podríais recomendar algún texto en el que esté explicado cómo trabajar con gráficos?\n\n    Mi problema es que cuando guardo una gráfica desde la ventana en formato postscript las letras griegas que he incluido con expression en la leyendas de los ejes no se guardan como tales. Por ejemplo, en vez de la letra chi aparece una c.\n\n    Gracias de antemano,\n\n    Beatriz Lacruz Casaucau\n    ______________________________________________________\n\n    Universidad de Zaragoza\n    Departamento de Métodos Estadísticos\n    Edificio de Matemáticas, 3ª planta\n    Pedro Cerbuna, 12\n    50009 Zaragoza (Spain)\n\n    Tel. 976 76 10 00 Ext. 3245\n    Fax. 976 76 11 15\n\n    http://metodosestadisticos.unizar.es/personales/lacruz/\n\n\n\n\n\n\n\n    _______________________________________________\n    R-help-es mailing list\n    R-help-es at r-project.org\n    https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias por vuestras respuestas. \nMe valen todas, excepto legend(\"topleft\",substitute(chi)) que no funciona.\n\nEl problema ahora es que al abrir el .eps tiene las letras griegas, pero al compilarlo den",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 9,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/3aa57b7d/attachment.pl"
+      ]
     },
     {
       "id": "msg-9b995821421f",
@@ -2001,11 +2091,14 @@
         "<29E06E0DDE574D36BF2763FC4985429D@321475b7e0e341a>",
         "<317737de0911200612g31a775c3wa820401d4c6d1897@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/f576fc30/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/f576fc30/attachment.pl>",
+      "body_plain": "Gracias por vuestras respuestas. \nMe valen todas, excepto legend(\"topleft\",substitute(chi)) que no funciona.\n\nEl problema ahora es que al abrir el .eps tiene las letras griegas, pero al compilarlo dentro de un archivo latex se vuelven latinas. Pero supongo que me tendré que ir a un foro de LaTex a preguntar.\n\nPor si sirve para algo, mi función es:\n\ncurve(dchisq(x, 2), 0, 16,ylab=\"\",lwd=2)                                     \ncurve(dchisq(x, 4), 0, 16, add=TRUE, lwd=2,lty=2)                   \ncurve(dchisq(x, 8), 0, 16, add=TRUE, lwd=2,lty=3)\ntext(0.7,0.5,\"n=2\")\ntext(4.5,0.15,\"n=4\")\ntext(12,0.07,\"n=8\")\nlegend(\"center\",expression({chi^2}[n]),bty=\"n\",cex=2)\n\nLe he añadido para probar:\nlegend(\"topleft\",substitute(chi)) #que no funciona\nlegend(\"topright\",expression(\"Esto es\"~chi))\nsavePlot('chi.eps', type = 'eps',  device = dev.cur())\n\nMi plataforma es Windows y la versión de R 2.9.2.\n\nMuchas gracias por responder tan rápido.\n\nBeatriz Lacruz Casaucau\n______________________________________________________\n\nUniversidad de Zaragoza\nDepartamento de Métodos Estadísticos\nEdificio de Matemáticas, 3ª planta\nPedro Cerbuna, 12\n50009 Zaragoza (Spain)\n\nTel. 976 76 10 00 Ext. 3245\nFax. 976 76 11 15\n\nhttp://metodosestadisticos.unizar.es/personales/lacruz/\n______________________________________________________\n  ----- Original Message ----- \n  From: Jorge Ivan Velez \n  To: Beatriz Lacruz \n  Cc: r-help-es at r-project.org \n  Sent: Friday, November 20, 2009 3:12 PM\n  Subject: Re: [R-es] Guardar gráficos en eps con letras griegas en las leyendas\n\n\n  Buenos dias Beatriz,\n\n\n  En Windows, esta es una manera de generar el gráfico en formato eps con letras griegas en las leyendas:\n\n\n  plot(1:10, xlab = expression(chi^2), ylab = expression(sigma^2) )\n  savePlot('C:/ejemplo.eps', type = 'eps',  device = dev.cur())\n\n\n  Como verás, todo funciona sin problemas tanto en la ventana gráfica de R como en el archivo eps generado.\n\n\n  Cómo generaste tu gráfico?  Qué instrucción utilizaste para guardarlo? Sobre qué plataforma (Wndows, Mac, Linux) estás trabajando? Qué versión de R utilizas?  Esta simple información podría ayudarnos a ayudarte.\n\n\n  Espero sea de utilidad,\n\n\n                                      Jorge Ivan Velez\n\n\n\n\n  2009/11/20 Beatriz Lacruz <>\n\n    Hola,\n\n    Acabo de empezar a trabajar con R.\n\n    ¿Me podríais recomendar algún texto en el que esté explicado cómo trabajar con gráficos?\n\n    Mi problema es que cuando guardo una gráfica desde la ventana en formato postscript las letras griegas que he incluido con expression en la leyendas de los ejes no se guardan como tales. Por ejemplo, en vez de la letra chi aparece una c.\n\n    Gracias de antemano,\n\n    Beatriz Lacruz Casaucau\n    ______________________________________________________\n\n    Universidad de Zaragoza\n    Departamento de Métodos Estadísticos\n    Edificio de Matemáticas, 3ª planta\n    Pedro Cerbuna, 12\n    50009 Zaragoza (Spain)\n\n    Tel. 976 76 10 00 Ext. 3245\n    Fax. 976 76 11 15\n\n    http://metodosestadisticos.unizar.es/personales/lacruz/\n\n\n\n\n\n\n\n    _______________________________________________\n    R-help-es mailing list\n    R-help-es at r-project.org\n    https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias por vuestras respuestas. \nMe valen todas, excepto legend(\"topleft\",substitute(chi)) que no funciona.\n\nEl problema ahora es que al abrir el .eps tiene las letras griegas, pero al compilarlo den",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 9,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/f576fc30/attachment.pl"
+      ]
     },
     {
       "id": "msg-c8fd97409193",
@@ -2053,11 +2146,14 @@
         "<317737de0911200612g31a775c3wa820401d4c6d1897@mail.gmail.com>",
         "<9F9741AC96F34EA0BCC7A1A58613F1B9@321475b7e0e341a>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/b29cca27/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/b29cca27/attachment.pl>",
+      "body_plain": "Buenos dias Beatriz,\n\nPara las leyendas puedes adaptar lo siguiente:\n\nn <- c(2, 4, 8)\ncurve(dchisq(x, 2), 0, 16,ylab=\"f(x, n)\",lwd=2, las=1, xlab =\n'x')\ncurve(dchisq(x, 4), 0, 16, add=TRUE, lwd=2,lty=2)\ncurve(dchisq(x, 8), 0, 16, add=TRUE, lwd=2,lty=3)\n# text(0.7,0.5,\"n=2\")\n# text(4.5,0.15,\"n=4\")\n# text(12,0.07,\"n=8\")\nlegend(8.5, .5, paste('n=', n, sep=\"\"), bty = 'n', lty = 1:3, title =\nexpression(chi[n]^2), ncol = 3)\nsavePlot('chi.eps', type = 'eps',  device = dev.cur())\n\nEn cuanto al problema que tienes con LaTeX, has intentado generando el\narchivo en PDF y luego compilando en este formato?\n\n\nSaludos,\n\n            Jorge Ivan Velez\n\n\n2009/11/20 Beatriz Lacruz <>\n\n>  Gracias por vuestras respuestas.\n> Me valen todas, excepto legend(\"topleft\",substitute(chi)) que no funciona.\n>\n> El problema ahora es que al abrir el .eps tiene las letras griegas, pero al\n> compilarlo dentro de un archivo latex se vuelven latinas. Pero supongo que\n> me tendré que ir a un foro de LaTex a preguntar.\n>\n> Por si sirve para algo, mi función es:\n>\n> curve(dchisq(x, 2), 0,\n> 16,ylab=\"\",lwd=2)\n> curve(dchisq(x, 4), 0, 16, add=TRUE, lwd=2,lty=2)\n> curve(dchisq(x, 8), 0, 16, add=TRUE, lwd=2,lty=3)\n> text(0.7,0.5,\"n=2\")\n> text(4.5,0.15,\"n=4\")\n> text(12,0.07,\"n=8\")\n> legend(\"center\",expression({chi^2}[n]),bty=\"n\",cex=2)\n> Le he añadido para probar:\n> legend(\"topleft\",substitute(chi)) #que no funciona\n> legend(\"topright\",expression(\"Esto es\"~chi))\n> savePlot('chi.eps', type = 'eps',  device = dev.cur())\n>\n> Mi plataforma es Windows y la versión de R 2.9.2.\n>\n> Muchas gracias por responder tan rápido.\n>\n> Beatriz Lacruz Casaucau\n> ______________________________________________________\n>\n> Universidad de Zaragoza\n> Departamento de Métodos Estadísticos\n> Edificio de Matemáticas, 3ª planta\n> Pedro Cerbuna, 12\n> 50009 Zaragoza (Spain)\n>\n> Tel. 976 76 10 00 Ext. 3245\n> Fax. 976 76 11 15\n>\n> http://metodosestadisticos.unizar.es/personales/lacruz/\n> ______________________________________________________\n>\n> ----- Original Message -----\n> *From:* Jorge Ivan Velez <jorgeivanvelez at gmail.com>\n> *To:* Beatriz Lacruz <lacruz at unizar.es>\n> *Cc:* r-help-es at r-project.org\n> *Sent:* Friday, November 20, 2009 3:12 PM\n> *Subject:* Re: [R-es] Guardar gráficos en eps con letras griegas en las\n> leyendas\n>\n> Buenos dias Beatriz,\n>\n> En Windows, esta es una manera de generar el gráfico en formato eps con\n> letras griegas en las leyendas:\n>\n>  plot(1:10, xlab = expression(chi^2), ylab = expression(sigma^2) )\n> savePlot('C:/ejemplo.eps', type = 'eps',  device = dev.cur())\n>\n> Como verás, todo funciona sin problemas tanto en la ventana gráfica de R\n> como en el archivo eps generado.\n>\n> Cómo generaste tu gráfico?  Qué instrucción utilizaste para guardarlo?\n> Sobre qué plataforma (Wndows, Mac, Linux) estás trabajando? Qué versión de R\n> utilizas?  Esta simple información podría ayudarnos a ayudarte.\n>\n> Espero sea de utilidad,\n>\n>                                     Jorge Ivan Velez\n>\n>\n> 2009/11/20 Beatriz Lacruz <>\n>\n>> Hola,\n>>\n>> Acabo de empezar a trabajar con R.\n>>\n>> ¿Me podríais recomendar algún texto en el que esté explicado cómo trabajar\n>> con gráficos?\n>>\n>> Mi problema es que cuando guardo una gráfica desde la ventana en formato\n>> postscript las letras griegas que he incluido con expression en la leyendas\n>> de los ejes no se guardan como tales. Por ejemplo, en vez de la letra chi\n>> aparece una c.\n>>\n>> Gracias de antemano,\n>>\n>> Beatriz Lacruz Casaucau\n>> ______________________________________________________\n>>\n>> Universidad de Zaragoza\n>> Departamento de Métodos Estadísticos\n>> Edificio de Matemáticas, 3ª planta\n>> Pedro Cerbuna, 12\n>> 50009 Zaragoza (Spain)\n>>\n>> Tel. 976 76 10 00 Ext. 3245\n>> Fax. 976 76 11 15\n>>\n>> http://metodosestadisticos.unizar.es/personales/lacruz/\n>>\n>\n>\n>\n>\n> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Beatriz,\n\nPara las leyendas puedes adaptar lo siguiente:\n\nn <- c(2, 4, 8)\ncurve(dchisq(x, 2), 0, 16,ylab=\"f(x, n)\",lwd=2, las=1, xlab =\n'x')\ncurve(dchisq(x, 4), 0, 16, add=TRUE, lwd=2,lty=",
       "thread_id": "thread-072bce64e648",
       "thread_depth": 10,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091120/b29cca27/attachment.pl"
+      ]
     },
     {
       "id": "msg-17804baba071",
@@ -2176,11 +2272,14 @@
         "<00a801ca6c2b$5e057550$7d8f6386@VMED.UKD>",
         "<256a87490911230309r783b5bfeu3f4a22b8aabeb85@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091123/4f63965a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091123/4f63965a/attachment.pl>",
+      "body_plain": "Para mí no hay mucho problema en como llamarlo o como citarlo. Ambas \ncosas, como dice Xavi están bien resueltas. No veo por qué un nombre ha \nde ser muy largo cuando es suficientemente explícito con la ayuda del \ncontexto.\n\nEl problema que no veo bien resuelto es el de su uso en Internet. Con \n2000 paquetes oficiales y un número quizás superior de paquetes no \noficiales, y cada paquete conteniendo procedimientos que habría que ir \nrastreando por los manuales de los paquetes para encontrar alguno que \ninteresa, la posibilidad de utilzar buscadores es más que importante.\n\nPero un palabra de una letra los buscadores la consideran irrelevante \npor aparecer por doquier. Para buscar un procedimiento del tipo \n\"Friedmann with replicates\" y especificar que uno quiere procedimientos \nde R utilizo CRAN, pero esto limita bastante las búsquedas. Uno a menudo \nno cita esta fuente cuando escribe utilizando R y es posible que el \nmétodo utilizado no esté explicitado en el documento de CRAN.\n\nEn fin, este es para mí el problema, pero creo que a estas alturas de la \npelícula no tiene arreglo: Es R y se cita \"citation()\"\n\nXavi de Blas escribió:\n> Hola a todos, para mi R es R.\n>\n> Muchos programas libres tienen grandes proyectos alrededor, como el\n> proyecto GNOME, pero el software se llama GNOME.\n>\n> Depende de para qué lo necesites te puede servir el \"cómo citar R en\n> publicaciones\", entonces uno simplemente habla de R y cita así\n>\n> http://statisticalexperts.com/forum/thread-1-1-1.html\n> http://cran.r-project.org/doc/FAQ/R-FAQ.html#Citing-R\n>\n> y ya no hay ambigüedad posible.\n>\n>\n> Bueno, no se si respondo a lo que se preguntaba pero quizás a alguien le sirva.\n> Saludos y hasta el jueves en Murcia\n>\n>\n> 2009/11/23 Pablo Emilio Verde <PabloEmilio.Verde at uni-duesseldorf.de>:\n>   \n>> Hola Carlos,\n>>\n>> Interesante pregunta !?\n>> Despues de todo las cosas existen cuando tienen un nombre.\n>>\n>> Yo creo que \"R\" ya tienen nombre y su nombre es \"R\"... a secas!\n>>\n>> Todo lo demas que comentas, es para aclarar que R es la punta\n>> del \"iceberg\". Y si uno quiere entender de que se trata, tendra\n>> que seguir bajando desde la punta y posiblemente sumergirse\n>> en aguas heladas.\n>>\n>> Te comento una experiencia personal. Hace 10 años introduje\n>> el uso de R en mi trabajo cotidiano, y con mucha temeridad\n>> \"queme los botes\": hice cancelar todas las licencias de software\n>> estadisticos comerciales. Esto me trajo por un tiempo mas\n>> enemigos que amigos. Pero el tiempo se encargo de nivelar\n>> los conflictos.\n>>\n>> El corolario de esta historia fue que tanto, justos y como pecadores\n>> acordaron el uso de un nombre simple: \"R\". Con la diferencia\n>> que los segundos fueron atormentados por el uso de software\n>> comerciales, mientras que los primeros son regocijados\n>> por sus obras cotidianas.\n>>\n>> Pablo\n>>\n>> PS: la construccion con guion \"R-project\" enfatiza que es una \"palabra\"\n>> nueva en ingles.\n>>\n>>\n>>\n>>\n>>\n>>\n>>\n>> ----- Original Message -----\n>> From: \"Carlos J. Gil Bellosta\" <cgb at datanalytics.com>\n>> To: \"r-help-es\" <r-help-es at r-project.org>\n>> Sent: Sunday, November 22, 2009 7:17 PM\n>> Subject: [R-es] ¿Cómo se llama R?\n>>\n>>\n>> Hola, ¿qué tal?\n>>\n>> Después de un paseo por la Wikipedia en español he llegado a la\n>> conclusión de que no sé cómo se llama R.\n>>\n>> En la Wikipedia se lo conoce como \"R-project\", así, en inglés. Existen\n>> otros nombres que redireccionan a la misma página, tales como:\n>>\n>> Lenguaje de programación R\n>> GNU S\n>> Lenguaje R\n>> GNU R\n>> R project (sin guión)\n>>\n>> A R no se lo puede llamar R a secas por lo de la \"desambiguación\".\n>> Tampoco es un \"lenguaje de programación\", ya que se trata de una\n>> implementación del lenguaje de programación S.\n>>\n>> GNU S sería bastante ecuánime, pero no incluye la letra R por ningún\n>> lado. GNU R sería doblemente recursivo (\"Gnu is Not Unix\" y \"R es GNU\",\n>> por lo que GNU R sería GNU^2 R, etc. hasta el \"stack overflow\").\n>>\n>> En cualquier caso, \"R-project\" parece poco adecuado, con guión o sin él.\n>>\n>> ¿Alguna idea o sugerencia?\n>>\n>> Un saludo,\n>>\n>> Carlos J. Gil Bellosta\n>> http://www.datanalytics.com\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>     \n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>   \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Para mí no hay mucho problema en como llamarlo o como citarlo. Ambas \ncosas, como dice Xavi están bien resueltas. No veo por qué un nombre ha \nde ser muy largo cuando es suficientemente explícito con ",
       "thread_id": "thread-59d9d374753e",
       "thread_depth": 3,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091123/4f63965a/attachment.pl"
+      ]
     },
     {
       "id": "msg-159388316f9c",
@@ -2247,11 +2346,14 @@
         "<4B0BAFA1.8090905@unex.es>",
         "<6955952183guivivi@alumni.uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/9ac7523f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/9ac7523f/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nComo moderadora de la lista, me gustaría que solo mandaseis mensajes que\ntengan que ver con R. Por ejemplo cómo sería la implementación de estas\nfórmulas en R.\n\nSi tenéis dudas de estadística podéis mandaros emails ente vosotros, pero no\nconsidero que esta cadena tenga interés general, para el resto de usuarios.\n\nCualquier comentario al respecto de qué se puede mandar y qué no, sí que\npodemos discutirlo entre todos en otro hilo.\n\n\nUn saludo\n\nPatricia\n\n\n\n\n\nEl 24 de noviembre de 2009 11:16, <guivivi at alumni.uv.es> escribió:\n\n> Hola, gracias por tu respuesta, no sé si te refieres a las fórmulas\n> típicas de cálculo de intervalos de confianza sabiendo la media y la\n> desviación típica.\n> Lo que me gustaría saber es si se puede calcular el intervalo de\n> confianza a partir de los que ya tengo, no sé si calculando sus marcas\n> de clase, no sé exactamente a qué te refieres con la fórmula de los\n> intervalos de confianza.\n>\n> Gracias y saludos\n>\n> > Sí, se puede.\n> >\n> > Es un ejercicio de clase bastante elemental que se resuelve\n> simplemente\n> > estudiando la fórmula de los intervalos de confianza. No tiene nada\n> que\n> > ver con R: Es un ejercicio de cálculo elemental.\n> >\n> > Otro ejercicio mucho más interesante y previo es estudiar si existe\n> una\n> > única media que estimar. Es decir si las diferentes medias son\n> > estimaciones de la misma media y las respectivas muestras han sido\n> > tomadas de la misma población o si por el contrario hay varias\n> poblaciones.\n> >\n> > En este último caso el concepto de \"media de las medias\" ha de ser\n> > tomado con muchas precauciones y es posible que \"exista\" y se le\n> pueda\n> > calcular su intervalo de confianza o por el contrario es un artificio\n> > producido durante el muestreo. El análisis de estas cuestiones, que\n> > habría que ir respondiendo progresivamente, corresponde ya a la\n> > Estadística Inferencial y es también un ejercicio elemental para el\n> que\n> > R sí puede ayudar.\n> >\n> > Saludos.\n> >\n> > guivivi at alumni.uv.es escribió:\n> > > Hola a todos,\n> > >\n> > > Tengo una duda sobre estadística antes de usar R y es la siguiente:\n> > > Tengo unas muestras y para cada una de ellas, he calculado su media\n> y\n> > > su intervalo de confianza.\n> > > He calculado la media de las medias y ahora me pregunto: ¿podría\n> > > obtener el intervalo de confianza para esta media de medias a\n> partir de\n> > > los intervalos de confianza que tenía para cada media?.\n> > >\n> > > Agradeceré cualquier ayuda.\n> > > Saludos.\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n> >\n> >\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nComo moderadora de la lista, me gustaría que solo mandaseis mensajes que\ntengan que ver con R. Por ejemplo cómo sería la implementación de estas\nfórmulas en R.\n\nSi tenéis dudas de estad",
       "thread_id": "thread-159388316f9c",
       "thread_depth": 3,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/9ac7523f/attachment.pl"
+      ]
     },
     {
       "id": "msg-8aa424b45cbc",
@@ -2319,11 +2421,14 @@
       "references": [
         "<387D1B10-A5FB-4029-9ED3-20182E7E690A@me.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/3e10f6d0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/3e10f6d0/attachment.pl>",
+      "body_plain": "Buenos dias Javier,\n\nUn buen lugar para comenzar son las \"Task Views\", particularmente [1].\n\nSaludos,\n\n                     Jorge Ivan Velez\n\n[1] http://cran.r-project.org/web/views/Genetics.html\n\n\n2009/11/24 Javier Marcuzzi <>\n\n> Hola:\n>\n> Les consulto si ustedes utiliza R para realizar estimaciones genéticas, con\n> el modelo animal, BLUP, test day, determinar heredabilidad, etc.\n>\n> Conozco algunos paquetes útiles para estos trabajos, como el de genética\n> cuantitativa, pero me surgen dudas en su implementación.\n>\n> Actualmente uso el R para algunas cosas y código fortran compilado para\n> otras cosas, pero si puedo usar todo en R sería más práctico, aunque no\n> estoy seguro que sea eficiente como del tiempo que puede llevar para llegar\n> al mismo resultado.\n>\n> Gracias_______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Javier,\n\nUn buen lugar para comenzar son las \"Task Views\", particularmente [1].\n\nSaludos,\n\n                     Jorge Ivan Velez\n\n[1] http://cran.r-project.org/web/views/Genetics.html\n\n\n20",
       "thread_id": "thread-f9233d28f7d2",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/3e10f6d0/attachment.pl"
+      ]
     },
     {
       "id": "msg-3d1f26570a7a",
@@ -2335,11 +2440,14 @@
       "subject_clean": "[R-es] extraer un valor de un objeto lmer",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/0c66c790/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/0c66c790/attachment.pl>",
+      "body_plain": ">\n> Hola, a todos!\n\n\nEstoy ajustando un modelo componentes de varianza utilizando el paquete\nlme4, quiero extraer luego los valores estimados de varianza de cada factor\naleatorio de este objeto lmer y guardarlo en un vector.\nExiste la función VarCorr,  Esto es lo que hago:\n\nMi ejemplo: tengo 3 factores NDVIaño;  Máx.IH; TV\n\n# Ajusto el modelos\nlmer(peligro100 ~ 1 + (1|NDVIaño) + (1|Máx.IH) + (1|TV), data=Verano)\n#Extraigo las componentes de varianza\nCom_Var<-VarCorr(var_verano_NDVIaño )\n\nCom_Var$NDVIaño[1] # Este es el valor de varianza deNDVIaño\nCom_Var$Máx.IH[1] # Este es el valor de varianza deMáx.IH\nCom_Var$TV[1] # Este es el valor de varianza de TV\n\n\n*Pero no se como extraer la componente de varianza residual....*\nDesde ya agradezco alguna sugerencia\n\nsaludos\nteresa\n\n\n\n\n\n\n\n\n\n-- \nIng. Agr. M.Sc.Teresa Boca\nInstituto de Clima y Agua INTA Castelar.\nLas Cabañas y Los Reseros s/n°\n1712 Castelar Pcia de Buenos Aires, Argentina\nCel: 01115-3572-9584\nTel: (54-11)-4621-0125/1684\nFax:(54-11)-4621-5663\ntboca at cnia.inta.gov.ar\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": ">\n> Hola, a todos!\n\n\nEstoy ajustando un modelo componentes de varianza utilizando el paquete\nlme4, quiero extraer luego los valores estimados de varianza de cada factor\naleatorio de este objeto lmer y",
       "thread_id": "thread-3d1f26570a7a",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/0c66c790/attachment.pl"
+      ]
     },
     {
       "id": "msg-7a07993e6459",
@@ -2351,11 +2459,14 @@
       "subject_clean": "[R-es] Pregunta sobre LM",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/cfeb9c64/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/cfeb9c64/attachment.pl>",
+      "body_plain": "Hola Buen día,\n\nestoy ajustando una regresión multiple, pero sucede que tengo un factor de\nexpanción,\n\ndigamos que deseo ajustar el modelo\n\ningreso ~ edad + ocupacion\n\nmi problema es que cada observación tienen un factor de expanción, es decir\ncada variable no representa una observación sino más, que no es un número\nfijo para cada observación.\n\npor lo que a mí se me ocurrio usarlas como peso\n\nlm(ingreso ~ edad + ocupacion,weights=factor)\n\npero al hacer esto me pondera la varíanza del modelo, por lo que mis limites\nde inferencia se ven afectado por los factores. Cuando en realidad los\nfactores no son correcciones a la varianza, en SAS recuerdo que esto se\npodía resolver usando los factores en lugar de como pesos como frecuencias\nde observaciónpero en R nose si exista alguna forma de hacer esto, decirle\nque el factor representa cuantas veces la observación aparece en la muestra.\n\n\nSaludos.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Buen día,\n\nestoy ajustando una regresión multiple, pero sucede que tengo un factor de\nexpanción,\n\ndigamos que deseo ajustar el modelo\n\ningreso ~ edad + ocupacion\n\nmi problema es que cada observac",
       "thread_id": "thread-7a07993e6459",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091124/cfeb9c64/attachment.pl"
+      ]
     },
     {
       "id": "msg-62ec4e7dfe59",
@@ -2401,11 +2512,14 @@
       "subject_clean": "[R-es] Programa final Jornadas de R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091125/48f65875/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091125/48f65875/attachment.pl>",
+      "body_plain": "Hola,\n\nComo sabéis, mañana empiezan las primeras jornadas de R en España.\n\nPodéis ver el programa final en: http://www.ereros.org/ponencias/index.html\n\nLas jornadas se van a retransmitir en directo en:\nhttp://www.ereros.org/servicios/tv.html para todos aquellos que estéis\ninteresados pero no podáis asistir.\n\nNos vemos allí, un saludo!\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nComo sabéis, mañana empiezan las primeras jornadas de R en España.\n\nPodéis ver el programa final en: http://www.ereros.org/ponencias/index.html\n\nLas jornadas se van a retransmitir en directo en",
       "thread_id": "thread-b473723c4932",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091125/48f65875/attachment.pl"
+      ]
     },
     {
       "id": "msg-4b5e90b88515",
@@ -2433,11 +2547,14 @@
       "subject_clean": "[R-es] Ya somos 200 usuarios en la lista",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091126/fd1f79f7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091126/fd1f79f7/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nDesde las conferencias de R en Murcia, quiero daros la enhorabuena, ya hemos\nsobrepasado el límite de los 200 usuarios en esta lisa\n\n¡Muchas gracias a todos por participar!\n\nUn saludo\nPatricia\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nDesde las conferencias de R en Murcia, quiero daros la enhorabuena, ya hemos\nsobrepasado el límite de los 200 usuarios en esta lisa\n\n¡Muchas gracias a todos por participar!\n\nUn saludo\nP",
       "thread_id": "thread-8dfae7fe7181",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091126/fd1f79f7/attachment.pl"
+      ]
     },
     {
       "id": "msg-6774133c43f1",
@@ -2451,11 +2568,14 @@
       "references": [
         "<e013b3630911261043n2b9d7999u944bfa34d939abc0@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091126/71531a39/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091126/71531a39/attachment.pl>",
+      "body_plain": "Que bueno, Patricia! Seguimos creciendo ....\n\nUna idea que pueden discutir en la conferencia en Murcia (demasiado lejos de\nAntofagasta para ir...)\n\nExiste mecanismos en R para internacionalización de mensajes, pero\ntípicamente\nmensajes de error/warnings. ¿Es posible usar este mecanismo para\ntraducir output estadístico, típicamente resultados de\nsummary(---)\nprint(...)\n¿Traducciones de esto a español, si esta implementado(?), esta avanzado?\n\nQue piensa la gente del tema de traducción?\n\nKjetil\n\n2009/11/26 Usuario R <r.user.spain at gmail.com>\n\n> Hola a todos,\n>\n> Desde las conferencias de R en Murcia, quiero daros la enhorabuena, ya\n> hemos\n> sobrepasado el límite de los 200 usuarios en esta lisa\n>\n> ¡Muchas gracias a todos por participar!\n>\n> Un saludo\n> Patricia\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \n\"... an entire human genome would fit on a music CD.\"\n\n--- www.thinkgene.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Que bueno, Patricia! Seguimos creciendo ....\n\nUna idea que pueden discutir en la conferencia en Murcia (demasiado lejos de\nAntofagasta para ir...)\n\nExiste mecanismos en R para internacionalización de ",
       "thread_id": "thread-8dfae7fe7181",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091126/71531a39/attachment.pl"
+      ]
     },
     {
       "id": "msg-d7e29e4ed52d",
@@ -2485,11 +2605,14 @@
       "subject_clean": "[R-es] R en Windows 7 a 64 bits",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091127/9d81960a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091127/9d81960a/attachment.pl>",
+      "body_plain": "Buenas noches para cada uno.\n\nMe alegra saber que superamos los 200 usuarios y tengos expectativas con\nrespecto a la I Conferencia de R-hispano en Murcia.\n\nNo soy usuario de Linux por desconocimiento, algo que lamento. Debo instalar\nR en un equipo con Windows 7 a 64 bits. ¿Podrían indicarme por favor cómo\ninstalarlo? ¿Se hace con el mismo archivo R-2.10.0-win32? ¿Debo cuidar o\ncambiar algo antes o después?\n\nGracias de antemano por la amable atención.\n\nSaludos.\n\nCésar Escalante C.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches para cada uno.\n\nMe alegra saber que superamos los 200 usuarios y tengos expectativas con\nrespecto a la I Conferencia de R-hispano en Murcia.\n\nNo soy usuario de Linux por desconocimiento,",
       "thread_id": "thread-4b4207f488bd",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091127/9d81960a/attachment.pl"
+      ]
     },
     {
       "id": "msg-4ee74670daea",
@@ -2504,11 +2627,14 @@
         "<256745190911271656i376f274fjde8f9c750c4e51d4@mail.gmail.com>",
         "<317737de0911271737g23abb803v3858558219bbdace@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091127/ad163dff/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091127/ad163dff/attachment.pl>",
+      "body_plain": "Buenas noches César,\n\nTal y como se estipula en la sección 8.1 de [1], la R 32-bits funciona en\nWindows 64-bits aunque con las limitaciones de RAM que todos conocemos (solo\npuedes usar hasta 4 GB de RAM en el mejor de los casos). Para instalarlo\nsólo descarga el ejecutable usual de CRAN, haz doble click y sigue el\nprocedimiento de instalación como normalmente lo has hecho.\n\nHasta donde tengo entendido no existe una versión disponible (gratuita) de R\n64-bits, aunque esta puede adquirirse a través de REvolution Computing [2].\nAhora, si por el tipo de trabajo que realizas necesitas gran cantidad de\nRAM, entonces las plataformas Linux o Mac son buenas alternativas para ello.\n\nEspero sea de utilidad,\n\n          Jorge Ivan Velez\n\n[1] http://cran.r-project.org/doc/manuals/R-admin.html\n <http://cran.r-project.org/doc/manuals/R-admin.html>[2]\nhttp://www.revolution-computing.com\n\n<http://www.revolution-computing.com/>\n\n2009/11/27 Cesar Escalante <>\n\n> Buenas noches para cada uno.\n>\n> Me alegra saber que superamos los 200 usuarios y tengos expectativas con\n> respecto a la I Conferencia de R-hispano en Murcia.\n>\n> No soy usuario de Linux por desconocimiento, algo que lamento. Debo\n> instalar\n> R en un equipo con Windows 7 a 64 bits. ¿Podrían indicarme por favor cómo\n> instalarlo? ¿Se hace con el mismo archivo R-2.10.0-win32? ¿Debo cuidar o\n> cambiar algo antes o después?\n>\n> Gracias de antemano por la amable atención.\n>\n> Saludos.\n>\n> César Escalante C.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches César,\n\nTal y como se estipula en la sección 8.1 de [1], la R 32-bits funciona en\nWindows 64-bits aunque con las limitaciones de RAM que todos conocemos (solo\npuedes usar hasta 4 GB de R",
       "thread_id": "thread-4ee74670daea",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091127/ad163dff/attachment.pl"
+      ]
     },
     {
       "id": "msg-9d1024578d71",
@@ -2520,11 +2646,14 @@
       "subject_clean": "[R-es] summary( Jornadas de R )",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091128/69117254/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091128/69117254/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nComo sabéis hemos celebrado estos d'ias las primeras jornadas de R. Han sido\nunos d'ias que creo que todos hemos disfrutado, y quer'ia compartir algunas\nexperiencias con los que no pudisteis venir e intercambiar impresiones con\nlos asistentes.\n\nLas jornadas de R han sido un espacio para muchas actividades. Hemos tenido\ncharlas muy interesantes, sobre las que destaco el inter'es que ha creado\nlas ponencias que se refer'ia los problemas de la implantaci'on de R tanto\nen la docencia como en empresas privadas. Adem'as hemos tenido talleres\ndonde hemos aprendido entre otras cosas a usar y crear extensiones para\nRComander y a generar documentos odf.\n\nCreo que una de las cosas mas trascendentales que hemos hecho ha sido\nempezar a hablar de crear una comunidad de usuarios de R. Se han abierto\nvarios frentes de discusi'on sobre esto, desde el nombre de la comunidad, la\nestructura, detalles sobre la p'agina web de la comunidad etc.\n\nDe aqu'i en adelante espero que podamos ir organizando discusiones para\ntomar decisiones y hasta que tengamos otro recurso, creo que esta lista es\nel mejor lugar para hacerlo. Entre otras cosas deber'iamos por ejemplo\npensar en qu'e tipo de organicaci'on vamos a montar. Yo ir'e mandando emails\ncon hilos de discusi'on para aclarar los puntos que han quedado en el aire.\n\nY nada mas, que muchas gracias a los asistentes y participantes, espero que\ntodos lo pasaseis tan bien como yo :)\n\nNos vemos por aqu'i\n\nPatricia\n\n\n\n(...muchas gracias Jose Antonio y Juanjo por todo )\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nComo sabéis hemos celebrado estos d'ias las primeras jornadas de R. Han sido\nunos d'ias que creo que todos hemos disfrutado, y quer'ia compartir algunas\nexperiencias con los que no pudi",
       "thread_id": "thread-9d1024578d71",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091128/69117254/attachment.pl"
+      ]
     },
     {
       "id": "msg-eabd35f80a00",
@@ -2578,11 +2707,14 @@
       "references": [
         "<e013b3630911281312m4d0522f7yd3d1e32828c3fc1d@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091129/22718c30/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091129/22718c30/attachment.pl>",
+      "body_plain": "No puedo dejar de felicitaros por el éxito en todos los sentidos. Ha sido un\ngran inicio pues hemos aprendido mucho y hemos conocido grandes personas.\n\nQuiero agradecer especialmente a la organización el haber sido tan atenta y\ncercana. No es facil en momentos de tantas tareas y horarios.\n\nHasta la próxima!!\n\nOn 28 Nov 2009 22:12, \"Usuario R\" <r.user.spain at gmail.com> wrote:\n\nHola a todos,\n\nComo sabéis hemos celebrado estos d'ias las primeras jornadas de R. Han sido\nunos d'ias que creo que todos hemos disfrutado, y quer'ia compartir algunas\nexperiencias con los que no pudisteis venir e intercambiar impresiones con\nlos asistentes.\n\nLas jornadas de R han sido un espacio para muchas actividades. Hemos tenido\ncharlas muy interesantes, sobre las que destaco el inter'es que ha creado\nlas ponencias que se refer'ia los problemas de la implantaci'on de R tanto\nen la docencia como en empresas privadas. Adem'as hemos tenido talleres\ndonde hemos aprendido entre otras cosas a usar y crear extensiones para\nRComander y a generar documentos odf.\n\nCreo que una de las cosas mas trascendentales que hemos hecho ha sido\nempezar a hablar de crear una comunidad de usuarios de R. Se han abierto\nvarios frentes de discusi'on sobre esto, desde el nombre de la comunidad, la\nestructura, detalles sobre la p'agina web de la comunidad etc.\n\nDe aqu'i en adelante espero que podamos ir organizando discusiones para\ntomar decisiones y hasta que tengamos otro recurso, creo que esta lista es\nel mejor lugar para hacerlo. Entre otras cosas deber'iamos por ejemplo\npensar en qu'e tipo de organicaci'on vamos a montar. Yo ir'e mandando emails\ncon hilos de discusi'on para aclarar los puntos que han quedado en el aire.\n\nY nada mas, que muchas gracias a los asistentes y participantes, espero que\ntodos lo pasaseis tan bien como yo :)\n\nNos vemos por aqu'i\n\nPatricia\n\n\n\n(...muchas gracias Jose Antonio y Juanjo por todo )\n\n       [[alternative HTML version deleted]]\n\n\n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "No puedo dejar de felicitaros por el éxito en todos los sentidos. Ha sido un\ngran inicio pues hemos aprendido mucho y hemos conocido grandes personas.\n\nQuiero agradecer especialmente a la organización",
       "thread_id": "thread-9d1024578d71",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091129/22718c30/attachment.pl"
+      ]
     },
     {
       "id": "msg-94141b78142d",
@@ -2612,11 +2744,14 @@
       "subject_clean": "[R-es] Se publicaran las jornadas ?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091129/4b3e8bbc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091129/4b3e8bbc/attachment.pl>",
+      "body_plain": "Mi felicitación a los organizadores de las Primeras Jornadas de R en España.\n\nDesgraciadamente no pude asistir a todas las retrasmisiones, pero además, cuando me conecté a las 15:30 del viernes 27, no había ninguna retrasmisión. Supongo que se adelantaron por alguna razón.\n\n¿Va a ser posible poder ver condensadas las jornadas?\n\nMuchísimas gracias.\n\nAgustín Alonso\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Mi felicitación a los organizadores de las Primeras Jornadas de R en España.\n\nDesgraciadamente no pude asistir a todas las retrasmisiones, pero además, cuando me conecté a las 15:30 del viernes 27, no",
       "thread_id": "thread-6932416e852e",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091129/4b3e8bbc/attachment.pl"
+      ]
     },
     {
       "id": "msg-499b6a83d7da",
@@ -2664,11 +2799,14 @@
       "references": [
         "<C22E8F5B-3381-4AB5-8ED5-40187F6A7531@me.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/d74de3e0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/d74de3e0/attachment.pl>",
+      "body_plain": "Buenos dias Javier,\n\nIntenta lo siguiente y cuéntanos cómo te va:\n\nproduccion <- matrix(NA, ncol = 4, nrow = 5)\nfor (i in 1:5) produccion[i,] <- lactYield(sheep[[i]])$yield\nproduccion\n\nSaludos,\n\n               Jorge Ivan Velez\n\n\n2009/11/30 Javier Marcuzzi <>\n\n> Hola:\n> Hace unos días consulte sobre como programar ...., encontré una solución,\n> pero ahora me encuentro con un problema, creo que sencillo, pero tengo la\n> mente cansada y no doy con lo justo. El código se encuentra al final del\n> correo, pero tengo que hacer un data.frame con todos los resultados, algo\n> como milk, fat, prot, lact y luego todos los resultados. Intento hacer una\n> función, pero ..., cansado no se logra y quiero presentar el avance esta\n> tarde.\n>\n> Sobre lo que pregunté en programación la vez anterior, utilicé animSci, se\n> encuentra en desarrollo pero me sirvió.\n>\n> Ahora si, el código (bueno, lo que falta está en animSci).\n>\n> > for (i in 1:5){\n> +       produccion <- lactYield(sheep[[i]])$yield\n> +       print(produccion)\n> +       }\n>     milk       fat      prot      lact\n> 310.67500  20.25071  16.16300  14.90246\n>     milk       fat      prot      lact\n> 329.30000  21.10688  18.38016  15.54592\n>      milk        fat       prot       lact\n> 171.550000  11.312535         NA   7.916945\n>      milk        fat       prot       lact\n> 205.700000  12.977903  11.714892   9.272243\n> milk  fat prot lact\n>  NA   NA   NA   NA\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Javier,\n\nIntenta lo siguiente y cuéntanos cómo te va:\n\nproduccion <- matrix(NA, ncol = 4, nrow = 5)\nfor (i in 1:5) produccion[i,] <- lactYield(sheep[[i]])$yield\nproduccion\n\nSaludos,\n\n     ",
       "thread_id": "thread-9bd0cb5d3c03",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/d74de3e0/attachment.pl"
+      ]
     },
     {
       "id": "msg-5621018abf86",
@@ -2682,11 +2820,14 @@
       "references": [
         "<C22E8F5B-3381-4AB5-8ED5-40187F6A7531@me.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/3c3611d3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/3c3611d3/attachment.pl>",
+      "body_plain": "Hola, tu problema es muy sencillo. De hecho estás haciendo las cosas más\ncomplicadas de lo que son al usar el loop for. Creo que está de más y se\npodría hacer con otras funciones. Hay varias soluciones\n\n#No estoy seguro que funcione...\nproduccion <- data.frame()\n> for (i in 1:5){\n+       produccion[i,] <- lactYield(sheep[[i]])$yield\n+       print(produccion)\n+       }\n\nOtra forma es usar la librería plyr, supongo que sheep es una lista. En mi\nopinión usar plyr es mucho más simple ya que se ocupa de todo.\n\nlibrary(plyr)\nproduccion <- ldply(sheep, function(foo) lactYield(foo)$yield)\n\nEspero que funcione.\nSaludos\n\nLuciano\n\n\nEl 30 de noviembre de 2009 10:34, Javier Marcuzzi\n<javiermarcuzzi at me.com>escribió:\n\n> Hola:\n> Hace unos días consulte sobre como programar ...., encontré una solución,\n> pero ahora me encuentro con un problema, creo que sencillo, pero tengo la\n> mente cansada y no doy con lo justo. El código se encuentra al final del\n> correo, pero tengo que hacer un data.frame con todos los resultados, algo\n> como milk, fat, prot, lact y luego todos los resultados. Intento hacer una\n> función, pero ..., cansado no se logra y quiero presentar el avance esta\n> tarde.\n>\n> Sobre lo que pregunté en programación la vez anterior, utilicé animSci, se\n> encuentra en desarrollo pero me sirvió.\n>\n> Ahora si, el código (bueno, lo que falta está en animSci).\n>\n> > for (i in 1:5){\n> +       produccion <- lactYield(sheep[[i]])$yield\n> +       print(produccion)\n> +       }\n>     milk       fat      prot      lact\n> 310.67500  20.25071  16.16300  14.90246\n>     milk       fat      prot      lact\n> 329.30000  21.10688  18.38016  15.54592\n>      milk        fat       prot       lact\n> 171.550000  11.312535         NA   7.916945\n>      milk        fat       prot       lact\n> 205.700000  12.977903  11.714892   9.272243\n> milk  fat prot lact\n>  NA   NA   NA   NA\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, tu problema es muy sencillo. De hecho estás haciendo las cosas más\ncomplicadas de lo que son al usar el loop for. Creo que está de más y se\npodría hacer con otras funciones. Hay varias solucione",
       "thread_id": "thread-9bd0cb5d3c03",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/3c3611d3/attachment.pl"
+      ]
     },
     {
       "id": "msg-b4e6fff61c24",
@@ -2717,11 +2858,14 @@
       "subject_clean": "[R-es] incompatibilidad de tinnR y R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/e2a9f31d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/e2a9f31d/attachment.pl>",
+      "body_plain": "Tengo instalado el R2.9.0 y el TinnR 1.17.2.4 y cuando abro Tinn R no me\ndetecta q el R este abierto por lo cual no me permite correr ningun\nprograma, alguien sabe q puede estar pasando?\n\nSaludos\n\n-- \nJosé\n\n\"... hoy el cambio cualitativo la liberacion, implica, cambios organicos, de\ninstinto y biologicos, AL MISMO TIEMPO q cambios politicos y sociales\" H. M.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Tengo instalado el R2.9.0 y el TinnR 1.17.2.4 y cuando abro Tinn R no me\ndetecta q el R este abierto por lo cual no me permite correr ningun\nprograma, alguien sabe q puede estar pasando?\n\nSaludos\n\n-- ",
       "thread_id": "thread-0a0a140d2911",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/e2a9f31d/attachment.pl"
+      ]
     },
     {
       "id": "msg-c9ef7c3eea79",
@@ -2735,11 +2879,14 @@
       "references": [
         "<873bbe000911300653t7514819aveaa8400b184d01eb@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/cee3efab/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/cee3efab/attachment.pl>",
+      "body_plain": "Hola,\n\nPues no sé qué configuración tienes, pero podrías empezar por repasar que\nhas hecho todos los pasos que vienen en esta guía:\n\nhttp://gbi.agrsci.dk/statistics/courses/phd07/material/Day1-R-Intro/installR-version6.pdf\n\nSaludos\n\nPatricia\n\n\nEl 30 de noviembre de 2009 15:53, jose ramirez costa <\njoseramirezcosta at gmail.com> escribió:\n\n> Tengo instalado el R2.9.0 y el TinnR 1.17.2.4 y cuando abro Tinn R no me\n> detecta q el R este abierto por lo cual no me permite correr ningun\n> programa, alguien sabe q puede estar pasando?\n>\n> Saludos\n>\n> --\n> José\n>\n> \"... hoy el cambio cualitativo la liberacion, implica, cambios organicos,\n> de\n> instinto y biologicos, AL MISMO TIEMPO q cambios politicos y sociales\" H.\n> M.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPues no sé qué configuración tienes, pero podrías empezar por repasar que\nhas hecho todos los pasos que vienen en esta guía:\n\nhttp://gbi.agrsci.dk/statistics/courses/phd07/material/Day1-R-Intro",
       "thread_id": "thread-0a0a140d2911",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/cee3efab/attachment.pl"
+      ]
     },
     {
       "id": "msg-c4c01b91f7df",
@@ -2753,11 +2900,14 @@
       "references": [
         "<873bbe000911300653t7514819aveaa8400b184d01eb@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/8d1dfa7d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/8d1dfa7d/attachment.pl>",
+      "body_plain": "Buenos días José,\n\nLo primero que se me ocurre que podría estar pasando es que no tienes\nconfigurado R en modo SDI. Sin esta opción, es difícil que Tinn-R y R puedan\n\"comunicarse\". Para activar esta opción\n\n1. Abre R\n2. Edit --> GUI Preferences --> SDI\n3. Haz click en Save... y ubica estas opciones en el directorio por defecto.\n4. Cierra R.\n5. Trabaja con R y Tinn-R de la manera usual.\n\nSi lo anterior no funciona, podrías enviarnos un poco mas de información\nacerca de tu sistema y qué has intentado?\n\nEspero sea de utilidad,\n\n                              Jorge Ivan Velez\n\n\n2009/11/30 jose ramirez costa <>\n\n> Tengo instalado el R2.9.0 y el TinnR 1.17.2.4 y cuando abro Tinn R no me\n> detecta q el R este abierto por lo cual no me permite correr ningun\n> programa, alguien sabe q puede estar pasando?\n>\n> Saludos\n>\n> --\n> José\n>\n> \"... hoy el cambio cualitativo la liberacion, implica, cambios organicos,\n> de\n> instinto y biologicos, AL MISMO TIEMPO q cambios politicos y sociales\" H.\n> M.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos días José,\n\nLo primero que se me ocurre que podría estar pasando es que no tienes\nconfigurado R en modo SDI. Sin esta opción, es difícil que Tinn-R y R puedan\n\"comunicarse\". Para activar esta o",
       "thread_id": "thread-0a0a140d2911",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/8d1dfa7d/attachment.pl"
+      ]
     },
     {
       "id": "msg-e7737a6e1b3b",
@@ -2771,11 +2921,14 @@
       "references": [
         "<873bbe000911300653t7514819aveaa8400b184d01eb@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/6c8a8389/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/6c8a8389/attachment.pl>",
+      "body_plain": "Hola José, la versión de Tinn-R que usas es bastante vieja. Quizá usando la\nversión nueva sería mejor. Además de lo que dijo Jorge, hay que configurar\nun archivo de R. En la versión nueva de Tinn-R lo haces automáticamente en\nR/Configure/Permanent(Rprofile.site), para hacerlo en Vista o Windows 7\ndebes ejecutar Tinn-R como administrador. Sino puede configurar el archivo\nRprofile.site que está en la carpeta etc de R. Las instrucciones de como\nhacerlo están en la ayuda de Tinn-R\nSaludos\nLuciano\n\n\nEl 30 de noviembre de 2009 12:03, Jorge Ivan Velez <jorgeivanvelez at gmail.com\n> escribió:\n\n> Buenos días José,\n>\n> Lo primero que se me ocurre que podría estar pasando es que no tienes\n> configurado R en modo SDI. Sin esta opción, es difícil que Tinn-R y R\n> puedan\n> \"comunicarse\". Para activar esta opción\n>\n> 1. Abre R\n> 2. Edit --> GUI Preferences --> SDI\n> 3. Haz click en Save... y ubica estas opciones en el directorio por\n> defecto.\n> 4. Cierra R.\n> 5. Trabaja con R y Tinn-R de la manera usual.\n>\n> Si lo anterior no funciona, podrías enviarnos un poco mas de información\n> acerca de tu sistema y qué has intentado?\n>\n> Espero sea de utilidad,\n>\n>                              Jorge Ivan Velez\n>\n>\n> 2009/11/30 jose ramirez costa <>\n>\n> > Tengo instalado el R2.9.0 y el TinnR 1.17.2.4 y cuando abro Tinn R no me\n> > detecta q el R este abierto por lo cual no me permite correr ningun\n> > programa, alguien sabe q puede estar pasando?\n> >\n> > Saludos\n> >\n> > --\n> > José\n> >\n> > \"... hoy el cambio cualitativo la liberacion, implica, cambios organicos,\n> > de\n> > instinto y biologicos, AL MISMO TIEMPO q cambios politicos y sociales\" H.\n> > M.\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola José, la versión de Tinn-R que usas es bastante vieja. Quizá usando la\nversión nueva sería mejor. Además de lo que dijo Jorge, hay que configurar\nun archivo de R. En la versión nueva de Tinn-R lo",
       "thread_id": "thread-0a0a140d2911",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/6c8a8389/attachment.pl"
+      ]
     },
     {
       "id": "msg-86082ed1c784",
@@ -2789,11 +2942,14 @@
       "references": [
         "<e013b3630911281312m4d0522f7yd3d1e32828c3fc1d@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/025d9a0a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/025d9a0a/attachment.pl>",
+      "body_plain": "Hola compañeros,\nquiero aprovechar un momento libre para agradecer a la organización todo el\ntrabajo que ha hecho para que las jornadas sea un exito, todo un placer\nencontrar a gente con tantas ganas de que un proyecto salga adelante,\nenhorabuena a Juanjo, Jose Antonio, Patricia, Manuel, Carlos.\n\nYo también espero que este sea el punto de partida para que montemos una red\nde trabajo y mantengamos reuniones periódicas incluso mas allá de las\npropias jornadas, y por supuesto, esperando que toda la gente que no pudo\nacudir a las jornadas por las mas diversas circunstancias se incorpore a\nparticipar en el proyecto y crear una asociación de usuarios de R.\n\nEn el plano personal, he de decir que las exposiciones y los debates (dentro\ny fuera del recinto) resultaron muy interesantes y enriquecedores,\nespecialmente, el poder comprobar como compañeros utilizan R en distintos\nproyectos educativos y la visión aplicada que nos dio Carlos.\n\nCreo que también fue importante ver otro tipo de aplicaciones en las que se\nusa R, quiza este tema sea algo que se deba potenciar mas en las siguientes\njornadas. En mi opinión, conferencias plenarias y talleres cubrieron un\namplio espectro, pero quiza sea deseable que en futuras ediciones o en algun\ntipo de publicación que podamos potenciar, se den a conocer librerias,\nfunciones o aplicaciones desarrolladas en Universidades o Empresas.\n\nRespecto al futuro, creo que debemos aprovechar la inercia de las jornadas y\na través de esta lista y/o la futura página web fomentar todo tipo de\nactividades.\n\nSaludos!!!\n\n\n\n-- \nLuis Mariano Esteban Escaño\nEscuela Universitaria Politécnica de La Almunia\nUniversidad de Zaragoza\nC/ Mayor s/n 50100 La Almunia de Doña Godina\nTlfno. 976600883\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola compañeros,\nquiero aprovechar un momento libre para agradecer a la organización todo el\ntrabajo que ha hecho para que las jornadas sea un exito, todo un placer\nencontrar a gente con tantas ganas ",
       "thread_id": "thread-9d1024578d71",
       "thread_depth": 1,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/025d9a0a/attachment.pl"
+      ]
     },
     {
       "id": "msg-3bb4532997b0",
@@ -2805,11 +2961,14 @@
       "subject_clean": "[R-es] cluster, vinculación inter-grupo e intra-grupo",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/2afa0a43/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/2afa0a43/attachment.pl>",
+      "body_plain": "Hola a tod at s.\n\nExiste en R, la opción de realizar un análisis cluster jerárquico, con \nel método de vinculación inter-grupos e intra-grupos, que usa SPSS?. \nEstoy mirando con hclust , pero las opciones para method son  ward, \nsimple, complete, average, mcquitty, median, centroid.\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a tod at s.\n\nExiste en R, la opción de realizar un análisis cluster jerárquico, con \nel método de vinculación inter-grupos e intra-grupos, que usa SPSS?. \nEstoy mirando con hclust , pero las opci",
       "thread_id": "thread-3bb4532997b0",
       "thread_depth": 0,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/2afa0a43/attachment.pl"
+      ]
     },
     {
       "id": "msg-3d568dcd0238",
@@ -2877,11 +3036,14 @@
         "<873bbe000911300653t7514819aveaa8400b184d01eb@mail.gmail.com>",
         "<13549e790911300719v6d065efbg14ba65b5445d749d@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/8858e5d7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/8858e5d7/attachment.pl>",
+      "body_plain": "Luciano y José,\n\nSólo como aclaración:  el archivo de R mencionado sólo debe configurarse en\nversiones mas recientes de Tinn-R, no en la que esta utilizando José. Yo uso\nexactamente la misma con R 2.10.0 Patched y lo único que debo configurar\nantes de comenzar a trabajar (y sólo por una vez) es la opción SDI en la\nGUI. Para ello basta con seguir las instrucciones 1-5 que di en mi mensaje\nprevio.\n\nComo dije en un principio, seríamos de mucha mas ayuda si tuviésemos un poco\nmás de información. Intenta lo que mencioné con anterioridad, asi como\nactualizar tu versión de R.\n\nSaludos a todos,\n\n                Jorge Ivan Velez\n\n2009/11/30 Luciano Selzer <>\n\n> Hola José, la versión de Tinn-R que usas es bastante vieja. Quizá usando la\n> versión nueva sería mejor. Además de lo que dijo Jorge, hay que configurar\n> un archivo de R. En la versión nueva de Tinn-R lo haces automáticamente en\n> R/Configure/Permanent(Rprofile.site), para hacerlo en Vista o Windows 7\n> debes ejecutar Tinn-R como administrador. Sino puede configurar el archivo\n> Rprofile.site que está en la carpeta etc de R. Las instrucciones de como\n> hacerlo están en la ayuda de Tinn-R\n> Saludos\n> Luciano\n>\n>\n> El 30 de noviembre de 2009 12:03, Jorge Ivan Velez <\n> > escribió:\n>\n> > Buenos días José,\n> >\n> > Lo primero que se me ocurre que podría estar pasando es que no tienes\n> > configurado R en modo SDI. Sin esta opción, es difícil que Tinn-R y R\n> > puedan\n> > \"comunicarse\". Para activar esta opción\n> >\n> > 1. Abre R\n> > 2. Edit --> GUI Preferences --> SDI\n> > 3. Haz click en Save... y ubica estas opciones en el directorio por\n> > defecto.\n> > 4. Cierra R.\n> > 5. Trabaja con R y Tinn-R de la manera usual.\n> >\n> > Si lo anterior no funciona, podrías enviarnos un poco mas de información\n> > acerca de tu sistema y qué has intentado?\n> >\n> > Espero sea de utilidad,\n> >\n> >                              Jorge Ivan Velez\n> >\n> >\n> > 2009/11/30 jose ramirez costa <>\n> >\n> > > Tengo instalado el R2.9.0 y el TinnR 1.17.2.4 y cuando abro Tinn R no\n> me\n> > > detecta q el R este abierto por lo cual no me permite correr ningun\n> > > programa, alguien sabe q puede estar pasando?\n> > >\n> > > Saludos\n> > >\n> > > --\n> > > José\n> > >\n> > > \"... hoy el cambio cualitativo la liberacion, implica, cambios\n> organicos,\n> > > de\n> > > instinto y biologicos, AL MISMO TIEMPO q cambios politicos y sociales\"\n> H.\n> > > M.\n> > >\n> > >        [[alternative HTML version deleted]]\n> > >\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n> > >\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Luciano y José,\n\nSólo como aclaración:  el archivo de R mencionado sólo debe configurarse en\nversiones mas recientes de Tinn-R, no en la que esta utilizando José. Yo uso\nexactamente la misma con R 2.1",
       "thread_id": "thread-0a0a140d2911",
       "thread_depth": 2,
-      "month": "2009-11"
+      "month": "2009-11",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20091130/8858e5d7/attachment.pl"
+      ]
     }
   ],
   "threads": [

@@ -13,11 +13,14 @@
       "subject_clean": "[R-es] consulta",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/886c66f3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/886c66f3/attachment.pl>",
+      "body_plain": "Hola, creo tener\nun problema por que me suscribí a la lista hace varios días y nunca he recibido\nmensajes.... puede ser???? Como debería hacer para solucionarlo??\n\n\nsaludos\n\nGermán\n Lic. Germán García Ecología y Conservación de Aves Marinas Departamento de Biología, Facultad de Ciencias Exactas y Naturales, Universidad Nacional de Mar del Plata - CONICET Funes 3250 (B7602AYJ) Mar del Plata, Argentina Tel Oficina: +54 223 4757008\n\n\n\n      Yahoo! Cocina\n\nEncontra las mejores recetas con Yahoo! Cocina.\n\n\nhttp://ar.mujer.yahoo.com/cocina/\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, creo tener\nun problema por que me suscribí a la lista hace varios días y nunca he recibido\nmensajes.... puede ser???? Como debería hacer para solucionarlo??\n\n\nsaludos\n\nGermán\n Lic. Germán García",
       "thread_id": "thread-1f78bf9ff6b0",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/886c66f3/attachment.pl"
+      ]
     },
     {
       "id": "msg-101ed713c2a9",
@@ -65,11 +68,14 @@
       "subject_clean": "[R-es] gracias! y CONSULTA GLMM",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/975db24e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/975db24e/attachment.pl>",
+      "body_plain": "ok, gracias!.... \npor momentos pensé que me estaba quedando\nafuera de algo super interesante!.... acá van dos consultas\n\n \nConsulta1: operativa. Como hago para ver\nlos mensajes que han estado circulando por la lista?... puedo de alguna forma\ntener acceso?\n \nConsaulta2: GLMM. Trataré de ser lo mas\nclaro que pueda.\n \nRealice una toma de datos en aves. Tengo\npadres con dos condiciones diferentes, llamémosle “condición A” y “condición B”.\nA estos adultos les tome algunos parámetros reproductivos como día de puesta,\ntamaño de nidada, tamaño promedio de huevo por nidada y el tamaño para cada\nhuevo (el 1, el 2 y el 3; cuando las clutch eran completas).\n \nMi intención es comparar el tamaño del huevo\n1 de la condición A con el de la condición B, el tamaño del huevo 2 de la condición\nA con el de la B y lo mismo con el huevo 3. No quiero realizar en análisis como\nse hacia antiguamente quizás con una simple prueba de t por separado para cada\norden de huevo. Entonces empecé a pensar que tipo de análisis podía hacer donde\nmetiera todo los huevos, y contemple la dependencia entre ellos. Sabiendo que el\ntamaño del huevo 1 dentro de una misma nidada no es independiente del tamaño de\nlos otros dos huevos pensé el realizar un GLMM. Donde tengo como factor\naleatorio el nido, de esta forma estoy por ejemplo relacionando que el huevo 1,\n2 y 3 del nido 352 son hermanos y dependen entre si.\n \nAhora estoy buscando una estructura de\nmodelo que en un summary me permita leer lo que busqué inicialmente; que es\ncomo dije arriba la comparación para el huevo 1 dentro de las dos condiciones.\n \nRealizando diferentes pruebas, encontré que\nsi aplico un scrip con:\n \nFactor aleatorio: random=~1|ID/orden\nFactor fijo: orden/condition\n \nMe arroja un summary donde directamente\npuedo encontrar entre mas cosas esto:\n \n>\na2<-lme(eggvol~(orden/condition),data=data,\nrandom=~1|ID/orden,method=\"REML\")\n \n> summary (a2)\nLinear mixed-effects model fit by REML\n Data: data \n       AIC      BIC    logLik\n  454.6547 478.2794 -218.3273\n \nRandom effects:\n Formula: ~1 | ID\n        (Intercept)\nStdDev:    2.058396\n \n Formula: ~1 | orden %in% ID\n        (Intercept)  Residual\nStdDev:    1.187783 0.5933053\n \nFixed effects: eggvol ~ (orden/condition) \n                      Value Std.Error DF  t-value p-value\n(Intercept)        38.42744 0.4307688 67 89.20663  0.0000\norden.L            -0.99294 0.2603872 67 -3.81332  0.0003\norden.Q            -0.21088 0.2603872 67 -0.80986  0.4209\norden1:conditionB  1.32954 0.9114527 67  1.45870  0.1493\norden2:conditionB1.68538 0.9114527 67  1.84912  0.0689\norden3:conditionB  2.03277\n0.9114527 67  2.23025  0.0291\n Correlation: \n                   (Intr) ordn.L ordn.Q ordn1:\nordn2:\norden.L             0.000                            \norden.Q             0.000  0.000                     \norden1:conditionB -0.473  0.202 -0.117              \norden2:conditionB -0.473  0.000  0.233  0.706       \norden3:conditionB -0.473 -0.202\n-0.117  0.706  0.706\n \nStandardized Within-Group Residuals:\n        Min          Q1         Med          Q3         Max \n-0.92413989 -0.25945975  0.00819915  0.26634706  1.05463841 \n \nNumber of Observations: 108\nNumber of Groups: \n           ID orden %in% ID \n           36           108 \n \n \n \nA mi entender me esta comparando lo que\nbusco, el huevo 1 condición B vs el huevo1 condición A y asi los otros huevos.\n \norden1:conditionB  \norden2:conditionB\norden3:conditionB  \n \nAhora, mi consulta puntual radica en esta\nbien realizar un modelo donde el factor fijo este cruzado (o anidado no se bien\ncual sería el termino) “””orden/condition”””. Alguien estuvo realizando modelos\ndonde tenga este tipo de factores fijos?\n \nBueno solo eso, espero poder haber sido\nclaro y que puedan ayudarme.\n\nGermán\n\n\n      Yahoo! Cocina\n\nEncontra las mejores recetas con Yahoo! Cocina.\n\n\nhttp://ar.mujer.yahoo.com/cocina/\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "ok, gracias!.... \npor momentos pensé que me estaba quedando\nafuera de algo super interesante!.... acá van dos consultas\n\n \nConsulta1: operativa. Como hago para ver\nlos mensajes que han estado circulan",
       "thread_id": "thread-6f2f3a291588",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/975db24e/attachment.pl"
+      ]
     },
     {
       "id": "msg-655bd8e2fd74",
@@ -83,11 +89,14 @@
       "references": [
         "<540638.36636.qm@web56408.mail.re3.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/5a3cfe1f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/5a3cfe1f/attachment.pl>",
+      "body_plain": "Hola German,\n\nBienvenido a la lista!\nPara ver los archivos anteriores puedes ir a :\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\nUn saludo.\n\n\n\n\nEl 9 de septiembre de 2009 16:05, German Garcia <biolger at yahoo.com.ar>escribió:\n\n> ok, gracias!....\n> por momentos pensé que me estaba quedando\n> afuera de algo super interesante!.... acá van dos consultas\n>\n>\n> Consulta1: operativa. Como hago para ver\n> los mensajes que han estado circulando por la lista?... puedo de alguna\n> forma\n> tener acceso?\n>\n> Consaulta2: GLMM. Trataré de ser lo mas\n> claro que pueda.\n>\n> Realice una toma de datos en aves. Tengo\n> padres con dos condiciones diferentes, llamémosle “condición A” y\n> “condición B”.\n> A estos adultos les tome algunos parámetros reproductivos como día de\n> puesta,\n> tamaño de nidada, tamaño promedio de huevo por nidada y el tamaño para cada\n> huevo (el 1, el 2 y el 3; cuando las clutch eran completas).\n>\n> Mi intención es comparar el tamaño del huevo\n> 1 de la condición A con el de la condición B, el tamaño del huevo 2 de la\n> condición\n> A con el de la B y lo mismo con el huevo 3. No quiero realizar en análisis\n> como\n> se hacia antiguamente quizás con una simple prueba de t por separado para\n> cada\n> orden de huevo. Entonces empecé a pensar que tipo de análisis podía hacer\n> donde\n> metiera todo los huevos, y contemple la dependencia entre ellos. Sabiendo\n> que el\n> tamaño del huevo 1 dentro de una misma nidada no es independiente del\n> tamaño de\n> los otros dos huevos pensé el realizar un GLMM. Donde tengo como factor\n> aleatorio el nido, de esta forma estoy por ejemplo relacionando que el\n> huevo 1,\n> 2 y 3 del nido 352 son hermanos y dependen entre si.\n>\n> Ahora estoy buscando una estructura de\n> modelo que en un summary me permita leer lo que busqué inicialmente; que es\n> como dije arriba la comparación para el huevo 1 dentro de las dos\n> condiciones.\n>\n> Realizando diferentes pruebas, encontré que\n> si aplico un scrip con:\n>\n> Factor aleatorio: random=~1|ID/orden\n> Factor fijo: orden/condition\n>\n> Me arroja un summary donde directamente\n> puedo encontrar entre mas cosas esto:\n>\n> >\n> a2<-lme(eggvol~(orden/condition),data=data,\n> random=~1|ID/orden,method=\"REML\")\n>\n> > summary (a2)\n> Linear mixed-effects model fit by REML\n>  Data: data\n>       AIC      BIC    logLik\n>  454.6547 478.2794 -218.3273\n>\n> Random effects:\n>  Formula: ~1 | ID\n>        (Intercept)\n> StdDev:    2.058396\n>\n>  Formula: ~1 | orden %in% ID\n>        (Intercept)  Residual\n> StdDev:    1.187783 0.5933053\n>\n> Fixed effects: eggvol ~ (orden/condition)\n>                      Value Std.Error DF  t-value p-value\n> (Intercept)        38.42744 0.4307688 67 89.20663  0.0000\n> orden.L            -0.99294 0.2603872 67 -3.81332  0.0003\n> orden.Q            -0.21088 0.2603872 67 -0.80986  0.4209\n> orden1:conditionB  1.32954 0.9114527 67  1.45870  0.1493\n> orden2:conditionB1.68538 0.9114527 67  1.84912  0.0689\n> orden3:conditionB  2.03277\n> 0.9114527 67  2.23025  0.0291\n>  Correlation:\n>                   (Intr) ordn.L ordn.Q ordn1:\n> ordn2:\n> orden.L             0.000\n> orden.Q             0.000  0.000\n> orden1:conditionB -0.473  0.202 -0.117\n> orden2:conditionB -0.473  0.000  0.233  0.706\n> orden3:conditionB -0.473 -0.202\n> -0.117  0.706  0.706\n>\n> Standardized Within-Group Residuals:\n>        Min          Q1         Med          Q3         Max\n> -0.92413989 -0.25945975  0.00819915  0.26634706  1.05463841\n>\n> Number of Observations: 108\n> Number of Groups:\n>           ID orden %in% ID\n>           36           108\n>\n>\n>\n> A mi entender me esta comparando lo que\n> busco, el huevo 1 condición B vs el huevo1 condición A y asi los otros\n> huevos.\n>\n> orden1:conditionB\n> orden2:conditionB\n> orden3:conditionB\n>\n> Ahora, mi consulta puntual radica en esta\n> bien realizar un modelo donde el factor fijo este cruzado (o anidado no se\n> bien\n> cual sería el termino) “””orden/condition”””. Alguien estuvo realizando\n> modelos\n> donde tenga este tipo de factores fijos?\n>\n> Bueno solo eso, espero poder haber sido\n> claro y que puedan ayudarme.\n>\n> Germán\n>\n>\n>      Yahoo! Cocina\n>\n> Encontra las mejores recetas con Yahoo! Cocina.\n>\n>\n> http://ar.mujer.yahoo.com/cocina/\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola German,\n\nBienvenido a la lista!\nPara ver los archivos anteriores puedes ir a :\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\nUn saludo.\n\n\n\n\nEl 9 de septiembre de 2009 16:05, German Garcia <bio",
       "thread_id": "thread-6f2f3a291588",
       "thread_depth": 1,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/5a3cfe1f/attachment.pl"
+      ]
     },
     {
       "id": "msg-c517bef9de5f",
@@ -99,11 +108,14 @@
       "subject_clean": "[R-es] factores anidados",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/2686eb66/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/2686eb66/attachment.pl>",
+      "body_plain": "Tengo la siguiente consulta:\n\nTengo un modelo lineal con 4 factores anidados y aleatorios (concentració n (cc), lote, muestra y operador) en ese orden. Para obtener las componentes de la varianza utilizo la función \"lmer\" pero no obtengo los resultados correctos:\n\nlmer(y~(1|cc/ lote/muestra/ operador) ) ; y es la respuesta.\n\nme podrían decir donde está el error??\ngracias.\nricardo.\n\n\n\n\n_________________________________________________________________\nRevisá tus correos de Hotmail en tu BlackBerry - Clic Aquí\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Tengo la siguiente consulta:\n\nTengo un modelo lineal con 4 factores anidados y aleatorios (concentració n (cc), lote, muestra y operador) en ese orden. Para obtener las componentes de la varianza util",
       "thread_id": "thread-c517bef9de5f",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/2686eb66/attachment.pl"
+      ]
     },
     {
       "id": "msg-4cc5723b4883",
@@ -117,11 +129,14 @@
       "references": [
         "<BAY112-W3436D3AFA14244C03FABEA8AE90@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/6fd947e8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/6fd947e8/attachment.pl>",
+      "body_plain": "Sin más información sobre tu modelo y/o el diseño de tu experimento,\nte aconsejo utilizar lme en vez de lmer:\n\nrequire(nlme)\n\nlme(y~1, random=~1|cc/ lote/muestra/ operador)\n\nUn saludo. Olivier\n--   \n____________________________________\n\nOlivier G. Nuñez\nEmail: onunez at iberstat.es\nTel : +34 663 03 69 09\nWeb: http://www.iberstat.es\n\n____________________________________\n\n\n\n\nEl 09/09/2009, a las 16:46, Ricardo Bello escribió:\n\n>\n> Tengo la siguiente consulta:\n>\n> Tengo un modelo lineal con 4 factores anidados y aleatorios  \n> (concentració n (cc), lote, muestra y operador) en ese orden. Para \n> obtener las componentes de la varianza utilizo la función \"lmer\"  \n> pero no obtengo los resultados correctos:\n>\n> lmer(y~(1|cc/ lote/muestra/ operador) ) ; y es la respuesta.\n>\n> me podrían decir donde está el error??\n> gracias.\n> ricardo.\n>\n>\n>\n>\n> _________________________________________________________________\n> Revisá tus correos de Hotmail en tu BlackBerry - Clic Aquí\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sin más información sobre tu modelo y/o el diseño de tu experimento,\nte aconsejo utilizar lme en vez de lmer:\n\nrequire(nlme)\n\nlme(y~1, random=~1|cc/ lote/muestra/ operador)\n\nUn saludo. Olivier\n--   \n_",
       "thread_id": "thread-c517bef9de5f",
       "thread_depth": 1,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090909/6fd947e8/attachment.pl"
+      ]
     },
     {
       "id": "msg-4732fa63ad8a",
@@ -213,11 +228,14 @@
       "subject_clean": "[R-es] Como puedo calcular un maximo de alguna funcion?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090918/769a67e1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090918/769a67e1/attachment.pl>",
+      "body_plain": "Nos gustaria conocer alguna alternativa para realizar una funcion, a la que le entreguemos una funcion y nos entregue el maximo luego de evaluar la segunda derivada\nnuestro principal problema es que no conocemos como trabajar con la derivada ya que es de tipo call o expresion\n\naqui esta nuestro algoritmo\n\n\n\n\nf<-expression(20*x*(1-x)^3)\nf\n\n#Primera derivada\n\nderivada<-D(f,\"x\")\nderivada\nmode(derivada)\n\n\n#Segunda derivada\n\nsegundaderivada<-D(derivada,\"x\")\nsegundaderivada\n\n\n\n#Instale y cargue el paquete rootsolve \n#Puntos criticos para la primera derivada\n\nfun <- function (x)20*(1-x)^3-60*x*(1-x)^2\ncurve(fun(x),0,10,main=\"uniroot.all\")\nAll <- uniroot.all(fun,c(0,10))\npoints(All,y=rep(0,length(All)),pch=16,cex=2)\n\nceros<-All    #Guardamos los puntos criticos en el vector llamado ceros\nceros\n\n\n\n#Evaluando los puntos criticos en la segunda derivada\n\nfun <- function (x)-120*(1-x)^2+120*x*(1-x)\n\ni=1\nwhile(i<=length(ceros))\n{\nif (eval(fun(ceros[i]))<0)\n{\ncat(ceros[i])\ncat(\" es maximo\\n\")\n}\ni<-i+1\n}\n\n\n\n\n \t\t \t   \t\t  \n_________________________________________________________________\n[[elided Hotmail spam]]\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Nos gustaria conocer alguna alternativa para realizar una funcion, a la que le entreguemos una funcion y nos entregue el maximo luego de evaluar la segunda derivada\nnuestro principal problema es que n",
       "thread_id": "thread-c1bd517257f7",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090918/769a67e1/attachment.pl"
+      ]
     },
     {
       "id": "msg-6305e405a3bd",
@@ -247,11 +265,14 @@
       "subject_clean": "[R-es] hola",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090919/c95df037/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090919/c95df037/attachment.pl>",
+      "body_plain": "hola a todos soy fabian huerta, de argentina, estudio lic en biotecnologia\ny recien empiezo con R\nsaludos\n\nfabian\n\n\n\n\n      Yahoo! Cocina\n\nEncontra las mejores recetas con Yahoo! Cocina.\n\n\nhttp://ar.mujer.yahoo.com/cocina/\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "hola a todos soy fabian huerta, de argentina, estudio lic en biotecnologia\ny recien empiezo con R\nsaludos\n\nfabian\n\n\n\n\n      Yahoo! Cocina\n\nEncontra las mejores recetas con Yahoo! Cocina.\n\n\nhttp://ar.m",
       "thread_id": "thread-03bd4f0a4a62",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090919/c95df037/attachment.pl"
+      ]
     },
     {
       "id": "msg-046f15f0c428",
@@ -297,11 +318,14 @@
       "subject_clean": "[R-es] pregunta $",
       "in_reply_to": "<e013b3630909240035m4a04bf7an1abe5ec7c2f73113@mail.gmail.com>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090924/d3a6bb5e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090924/d3a6bb5e/attachment.pl>",
+      "body_plain": "una pregunta aun no comprendo totalmente el uso del signo $, me podrian decir donde encuentro su significado (si, si ya se que significa dinero y eso.........) desde el punto de vista de R\ngracias\nfabian huerta\n\n\n\n      Yahoo! Cocina\n\nEncontra las mejores recetas con Yahoo! Cocina.\n\n\nhttp://ar.mujer.yahoo.com/cocina/\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "una pregunta aun no comprendo totalmente el uso del signo $, me podrian decir donde encuentro su significado (si, si ya se que significa dinero y eso.........) desde el punto de vista de R\ngracias\nfab",
       "thread_id": "thread-d2d77ea517b0",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090924/d3a6bb5e/attachment.pl"
+      ]
     },
     {
       "id": "msg-4f44d318d7ef",
@@ -316,11 +340,14 @@
         "<e013b3630909240035m4a04bf7an1abe5ec7c2f73113@mail.gmail.com>",
         "<724991.69287.qm@web33201.mail.mud.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090924/149e6f98/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090924/149e6f98/attachment.pl>",
+      "body_plain": "Buenas tardes Bernardo,\nEl uso y signifado est'a documentado en\n\n?'$'\n\nB'asicamente significa extraer (o reemplazar) algo. Por ejemplo:\n\n# Algunos datos\ndf <- data.frame(x = rnorm(10), y = rnorm(10, 25,4))\ndf$x\ndf$y\n\nLo anterior crea un data frame df y extrae las variables x y y de este.\nAhora, reemplacemos x por x+1 en df.\n\ndf$x <- df$x + 1\ndf   # ver'as que x es ahora x+1 en tus datos originales\n\nEspero sea de utilidad,\nJorge Ivan Velez\n\n2009/9/24 Bernardo Fabian Huerta <>\n\n> una pregunta aun no comprendo totalmente el uso del signo $, me podrian\n> decir donde encuentro su significado (si, si ya se que significa dinero y\n> eso.........) desde el punto de vista de R\n> gracias\n> fabian huerta\n>\n>\n>\n>      Yahoo! Cocina\n>\n> Encontra las mejores recetas con Yahoo! Cocina.\n>\n>\n> http://ar.mujer.yahoo.com/cocina/\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Bernardo,\nEl uso y signifado est'a documentado en\n\n?'$'\n\nB'asicamente significa extraer (o reemplazar) algo. Por ejemplo:\n\n# Algunos datos\ndf <- data.frame(x = rnorm(10), y = rnorm(10, 2",
       "thread_id": "thread-d2d77ea517b0",
       "thread_depth": 1,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090924/149e6f98/attachment.pl"
+      ]
     },
     {
       "id": "msg-8acd73a6e469",
@@ -368,11 +395,14 @@
       "subject_clean": "[R-es] Duda sobre estimación con datos de panel",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/df35491f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/df35491f/attachment.pl>",
+      "body_plain": "Hola a todos, tengo algunas dudas sobre la utilización de técnicas de panel\n(package plm).  Creo que tiene algo que ver con mi desconocimiento\neconométrico así que pido disculpas de antemano. Estoy trabajando con un\nconjunto de empresas en 180 sectores de actividad 1997-2006 y lo que\npretendo es explicar la productividad y rentabilidad de las empresas en\nfunción del sector al que pertenece, la localización y a sus propios\nrecursos (ella misma). Básicamente la idea sería estimar algo como: Yit = α\n+ βdummy_sectorit+ βdummy_provinciait +β idit +uit\n\n\n\nDespués de leer Croissant y Millo (2008) disponible en\nwww.jstatsoft.org/quizás podría utilizar efectos aleatorios (aunque\ntengo que comprobar esto\ncon el test heckman aunque si rechaza esta opción por efectos fijos…) en\nparticular haría:\n\nR> BdD.tways <- plm(productividad ~ id_empresa+sector+provincia,\ndata=BdD_Industria,\n\n+ effect =”twoways”, model=”random”, random.method = “ameniya”)\n\n\n\nAfortunadamente es un panel completo, ya que  los autores mencionan que por\nel momento suele puede estimarse con esta opción.\n\nMi primera duda suponiendo que pueda justificar la aplicación de este\nmodelo, es que según los resultados de Croissant y Millo (2008)  parece que\ntendría la solución a lo que busco pero no entiendo la interpretación\nsiguiente:\n\nEffects:\n\nIdiosyncratic  2644.135                  51.42                     0.2359\n\nIndividual       8294.716                  91.07                     0.7400\n\nTime                   270.529                   16.44\n0.0241\n\nTheta:     0.874(id)  0.296 (time)   0.295 (total)\n\n\n\nLa otra duda es si existen estimaciones de panel semiparametricos en caso de\nintroducir variables continuas.\n\nMuchas gracias de antemano\n\nJusto\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos, tengo algunas dudas sobre la utilización de técnicas de panel\n(package plm).  Creo que tiene algo que ver con mi desconocimiento\neconométrico así que pido disculpas de antemano. Estoy tr",
       "thread_id": "thread-79b808cde744",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/df35491f/attachment.pl"
+      ]
     },
     {
       "id": "msg-be8742dbdf66",
@@ -402,11 +432,14 @@
       "subject_clean": "[R-es] Jornadas de R, ya tenemos web !!",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/e224aaad/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/e224aaad/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nYa podéis visitar la página web de las jornadas de R* RCONF2009*\n\nhttp://ereros.org/\n\n\nAún no está abierto el correo para subscribirse, os volveré a escribir\ncuando esté listo, y mientras tanto podéis usar esta lista para preguntar lo\nque queráis.\n\nVan a ser unas jornadas totalmente abiertas, y además se van a\nretransmitiren directo.\n\nUn saludo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nYa podéis visitar la página web de las jornadas de R* RCONF2009*\n\nhttp://ereros.org/\n\n\nAún no está abierto el correo para subscribirse, os volveré a escribir\ncuando esté listo, y mientr",
       "thread_id": "thread-3729c3e0054f",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/e224aaad/attachment.pl"
+      ]
     },
     {
       "id": "msg-8cd7536c8e17",
@@ -418,11 +451,14 @@
       "subject_clean": "[R-es] Letra cursiva en legend()",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/d1637737/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/d1637737/attachment.pl>",
+      "body_plain": "Buenas tardes para todos,\nConsideren la siguiente gráfica:\n\n# Algunos datos\nset.seed(123)\nD <- matrix(rnorm(100), ncol = 2)\n\n# Gráfico\nmatplot(D, type = 'l', lty = 1, col = c(3,4),\n              las = 1, xlab = \"Observación\", ylab = 'Valores')\n\n# Leyenda\nlegend('topleft', c('A1','A2'), text.col = c(3,4),\n                col = c(3,4), lty = 1, ncol = 2, bty= 'n')\n\nPodría por favor alguien indicarme cómo cambiar la fuente de \"----  A1\" y\n\"---- A2\" a cursiva? es decir, pasar de \"x\" a \"_x_\", donde _x_ es la\nrepresentación en letra cursiva de x?  Dentro de legend() el parámetro font=\n no funciona como si ocurre, por ejemplo, en plot(). Revisando las opciones\nque ofrece ?par no encuentro algo similar a lo que busco.\n\nMuchas gracias por su tiempo,\n\n                                        Jorge Ivan Velez\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes para todos,\nConsideren la siguiente gráfica:\n\n# Algunos datos\nset.seed(123)\nD <- matrix(rnorm(100), ncol = 2)\n\n# Gráfico\nmatplot(D, type = 'l', lty = 1, col = c(3,4),\n              las =",
       "thread_id": "thread-8cd7536c8e17",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/d1637737/attachment.pl"
+      ]
     },
     {
       "id": "msg-f050a2817d91",
@@ -434,11 +470,14 @@
       "subject_clean": "[R-es] Duda datos de panel",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/06a3a527/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/06a3a527/attachment.pl>",
+      "body_plain": "Hola a todos, tengo algunas dudas sobre la utilización de técnicas de panel\n(package plm). Creo que tiene algo que ver con mi desconocimiento\neconométrico así que pido disculpas de antemano. Estoy trabajando con un\nconjunto de empresas en 180 sectores de actividad 1997-2006 y lo que\npretendo es explicar la productividad y rentabilidad de las empresas en\nfunción del sector al que pertenece, la localización y a sus propios\nrecursos (ella misma). Básicamente la idea sería estimar algo como:\n\nYit = a + dummy_sectorit+ dummy_provinciait +dummy_idit +uit\n\n\n\nDespués de leer Croissant y Millo (2008) disponible en\nwww.jstatsoft.org/ (journal\nof statistical software) quizás podría utilizar efectos aleatorios (aunque\ntengo que comprobar esto con el test heckman no obstante si rechaza esta\nopción por efectos fijos…..) en particular haría:\n\nR> BdD.tways <- plm(productividad - id_empresa+sector+provincia,\ndata=BdD_Industria,\n\n+ effect =”twoways”, model=”random”, random.method = “ameniya”)\n\n\n\nAfortunadamente es un panel completo, ya que  los autores mencionan que por\nel momento solo puede estimarse con esta opción.\n\nMi primera duda suponiendo que pueda justificar la aplicación de este\nmodelo, es que según los resultados de Croissant y Millo (2008)  parece que\ntendría la solución a lo que busco pero no entiendo la interpretación\nsiguiente:\n\nEffects:\n\nIdiosyncratic  2644.135                  51.42                     0.2359\n\nIndividual       8294.716                  91.07                     0.7400\n\nTime                   270.529                   16.44\n0.0241\n\nTheta:     0.874(id)  0.296 (time)   0.295 (total)\n\nLa otra duda se refiere a si alguien conoce algun modelo para estimar panel\nen semiparametrico en el supuesto de introducir variables continuas.\n\nMuchas gracias de antemano\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos, tengo algunas dudas sobre la utilización de técnicas de panel\n(package plm). Creo que tiene algo que ver con mi desconocimiento\neconométrico así que pido disculpas de antemano. Estoy tra",
       "thread_id": "thread-f050a2817d91",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090925/06a3a527/attachment.pl"
+      ]
     },
     {
       "id": "msg-2bde0c0b75fb",
@@ -504,11 +543,14 @@
       "references": [
         "<4abea94d.2fb.1050.6540@balcarce.inta.gov.ar>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090926/9aac2017/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090926/9aac2017/attachment.pl>",
+      "body_plain": "Muchas gracias Gloria, funcionó perfecto.\nSaludos,\n                 Jorge Ivan Velez\n\n\n2009/9/26 gmonteru <>\n\n> Hola Jorge,\n>\n> Una forma de cambiar la fuente del texto en la leyenda\n> (usando la función legend como indicás) es manejando el\n> argumento \"font\" en par, es decir desde fuera de la\n> función legend.\n> En el ejemplo que proporcionás sería:\n>\n> # Algunos datos\n> set.seed(123)\n> D <- matrix(rnorm(100), ncol = 2)\n>\n> # Gráfico\n> matplot(D, type = 'l', lty = 1, col = c(3,4),\n>              las = 1, xlab = \"Observación\", ylab =\n> 'Valores')\n>\n> par(font=3) # fuente tipo itálica\n> # Leyenda\n> legend('topleft', c('A1','A2'), text.col = c(3,4),\n>                col = c(3,4), lty = 1, ncol = 2,\n> bty= 'n')\n>\n> par(font=1) # volver el font al valor por defecto\n>\n> Espero sea de utilidad.\n> Saludos\n>\n> Gloria\n>\n> ----- Original Message Follows -----\n> From: Jorge Ivan Velez <jorgeivanvelez at gmail.com>\n> To: R-help-es <r-help-es at r-project.org>\n> Subject: [R-es] Letra cursiva en legend()\n> Date: Fri, 25 Sep 2009 14:19:33 -0400\n>\n> > Buenas tardes para todos,\n> > Consideren la siguiente gráfica:\n> >\n> > # Algunos datos\n> > set.seed(123)\n> > D <- matrix(rnorm(100), ncol = 2)\n> >\n> > # Gráfico\n> > matplot(D, type = 'l', lty = 1, col = c(3,4),\n> >               las = 1, xlab = \"Observación\", ylab\n> =\n> > 'Valores')\n> >\n> > # Leyenda\n> > legend('topleft', c('A1','A2'), text.col = c(3,4),\n> >                 col = c(3,4), lty = 1, ncol = 2,\n> bty= 'n')\n> >\n> > Podría por favor alguien indicarme cómo cambiar la\n> fuente\n> > de \"----  A1\" y \"---- A2\" a cursiva? es decir, pasar de\n> > \"x\" a \"_x_\", donde _x_ es la representación en letra\n> > cursiva de x?  Dentro de legend() el parámetro font no\n> > funciona como si ocurre, por ejemplo, en plot(). Revisando\n> > las opciones que ofrece ?par no encuentro algo similar a\n> > lo que busco.\n> >\n> > Muchas gracias por su tiempo,\n> >\n> >                                         Jorge Ivan Velez\n> >\n> >     [[alternative HTML version deleted]]\n> >\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> ___________________________________________________________________________\n>\n> Aviso:\n>\n> El contenido del presente e-mail y sus posibles adjuntos pertenecen al INTA\n> y pueden contener información confidencial. Si usted no es el destinatario\n> original de este mensaje y por este medio pudo acceder a dicha información,\n> por favor solicitamos contactar al remitente y eliminar el mensaje de\n> inmediato. Se encuentra prohibida la divulgación, copia, distribución o\n> cualquier otro uso de la información contenida en el presente e-mail por\n> parte de personas distintas al destinatario.\n>\n>\n> This e-mail contents and its possible attachments belong to INTA and may\n> contain confidential information. If this message was not originally\n> addressed to you, but you have accessed to such information by this means,\n> please contact the sender and eliminate this message immediately.\n> Circulation, copy, distribution, or any other use of the information\n> contained in this e-mail is not allowed on part of those different from the\n> addressee.\n>\n>\n> Antes de imprimir este mensaje, asegúrese de que sea necesario. Proteger el\n> medio ambiente está también en su mano.\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Gloria, funcionó perfecto.\nSaludos,\n                 Jorge Ivan Velez\n\n\n2009/9/26 gmonteru <>\n\n> Hola Jorge,\n>\n> Una forma de cambiar la fuente del texto en la leyenda\n> (usando la func",
       "thread_id": "thread-d0649f3583f7",
       "thread_depth": 1,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090926/9aac2017/attachment.pl"
+      ]
     },
     {
       "id": "msg-f9651e04926e",
@@ -538,11 +580,14 @@
       "subject_clean": "[R-es] Correlación entre X (ordinal) y Y (nomial)",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090928/72b58f5d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090928/72b58f5d/attachment.pl>",
+      "body_plain": "Buenas tardes para todos,\n\nEstoy trabajando con una tabla de datos que contiene una variable ordinal\n(X) y otra nominal (Y). La primera tiene categorias n1,n2, n3 y n4 siendo n4\nla de mayor gravedad, y la segunda tiene categorias A, B, C, D (el orden no\nimporta).\n\nMe gustaría determinar la correlación entre X y Y utilizando R (por\nsupuesto!) y sin perder la información ordinal que contiene X. En CRAN\nencontré que una opción podría ser la librería polycor pero\ndesafortunadamente las funciones que se encuentran allí no aplican para\ncuando X es ordinal y Y es nominal. En [1] sugieren utilizar el coeficiente\nde correlación \"Rank-Biserial\" pero mis datos tienen más de dos categorías\nen ambas variables.\n\nPodría alguien sugerirme alguna otra librería / función en R que pueda\nutilizar?\n\nMuchas gracias por su tiempo,\n\n                                   Jorge Ivan Velez\n[1] http://www.andrews.edu/~calkins/math/edrm611/edrm13.htm\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes para todos,\n\nEstoy trabajando con una tabla de datos que contiene una variable ordinal\n(X) y otra nominal (Y). La primera tiene categorias n1,n2, n3 y n4 siendo n4\nla de mayor gravedad, ",
       "thread_id": "thread-aa30f683718d",
       "thread_depth": 0,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090928/72b58f5d/attachment.pl"
+      ]
     },
     {
       "id": "msg-4b09fd2c5516",
@@ -628,11 +673,14 @@
         "<317737de0909281519h11b84941u806ee9d7b56e59c1@mail.gmail.com>",
         "<b028350f0909290255y79c1fb3bj3dd86b532a516f@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090929/b5709e87/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090929/b5709e87/attachment.pl>",
+      "body_plain": "Empezando por el final, querido Carlos:\n\nA mí no me cuesta nada una definición de correlación entre cualquier \ntipo de variables: una medida de la intensidad de la relación entre dos \nvariables.\n\nEn un extremo de las posibilidades estaría la independencia y en el otro \nuna relación puramente determinista. En el caso del ejemplo de Jorge \npodría ser n1 -> A, n2 -> B,   n3 -> C y n4 -> D. O por supuesto \ncualquier otra combinación. Otra cuestión sería buscar una función de \nregresión que nos llevaría directamente a una función discriminante o a \nuna regresión logística multinomial.\n\nPero volviendo al problema de la correlación que es mucho más sencillo \nla medida clásica \"Coeficiente de contingencia de Pearson\" se obtendría \na partir de la tabla de contingencia en este caso 4x4 y su valor es:\n\nP = sqrt( (ji^2 / N) / (1 + ji^2 /N) ) = sqrt( ji^2 / (N + ji^2) )   \nEveritt, B.S.; 1977, \"The Analysis of Contingency Tables\"\n\nEs una medida en la que 0 significa independencia, pero que \nlamentablemete su limite superior no es 1 sino sqrt( (q-1)/ q), donde q \nes el menor número entre el número de filas y el de columnas. En el caso \nde Jorge el límite superior de esta función es:\n\nsqrt( 3/ 4) = 0.866\n\nNo es exactamente 1 el máximo pero para cuatro valores no está mal.\n\nHay muchas medidas más y algunas muy clásicas aparecen en el libro de \nEveritt que cito.\n\nPara su aplicación en R la función a utilizar es evidentemente \n\"chisq.test\" del páquete básico \"stats\"\n\nEl tema da para mucho más a partir de la regresión logística \nmultinomial, pero como primera medida haber hecho una aportación suficiente.\n\nUn saludo.\n\n\n\nCarlos J. Gil Bellosta escribió:\n> Hola, ¿qué tal?\n>\n> Me cuesta cierto trabajo imaginar una definición de correlación entre\n> dos variables si una de ellas es nominal desordenada que recoja la\n> idea general de cuantificar \"en qué medida crece (o decrece) Y cuando\n> crece X\"...\n>\n> Un saludo,\n>\n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n>\n>\n> El día 29 de septiembre de 2009 00:19, Jorge Ivan Velez\n> <jorgeivanvelez at gmail.com> escribió:\n>   \n>> Buenas tardes para todos,\n>>\n>> Estoy trabajando con una tabla de datos que contiene una variable ordinal\n>> (X) y otra nominal (Y). La primera tiene categorias n1,n2, n3 y n4 siendo n4\n>> la de mayor gravedad, y la segunda tiene categorias A, B, C, D (el orden no\n>> importa).\n>>\n>> Me gustaría determinar la correlación entre X y Y utilizando R (por\n>> supuesto!) y sin perder la información ordinal que contiene X. En CRAN\n>> encontré que una opción podría ser la librería polycor pero\n>> desafortunadamente las funciones que se encuentran allí no aplican para\n>> cuando X es ordinal y Y es nominal. En [1] sugieren utilizar el coeficiente\n>> de correlación \"Rank-Biserial\" pero mis datos tienen más de dos categorías\n>> en ambas variables.\n>>\n>> Podría alguien sugerirme alguna otra librería / función en R que pueda\n>> utilizar?\n>>\n>> Muchas gracias por su tiempo,\n>>\n>>                                   Jorge Ivan Velez\n>> [1] http://www.andrews.edu/~calkins/math/edrm611/edrm13.htm\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>>     \n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>   \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Empezando por el final, querido Carlos:\n\nA mí no me cuesta nada una definición de correlación entre cualquier \ntipo de variables: una medida de la intensidad de la relación entre dos \nvariables.\n\nEn u",
       "thread_id": "thread-aa30f683718d",
       "thread_depth": 2,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090929/b5709e87/attachment.pl"
+      ]
     },
     {
       "id": "msg-c2b15940cb82",
@@ -647,11 +695,14 @@
         "<317737de0909281519h11b84941u806ee9d7b56e59c1@mail.gmail.com>",
         "<b028350f0909290255y79c1fb3bj3dd86b532a516f@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090929/7087e856/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090929/7087e856/attachment.pl>",
+      "body_plain": "Empezando por el final, querido Carlos:\n\nA mí no me cuesta nada una definición de correlación entre cualquier \ntipo de variables: una medida de la intensidad de la relación entre dos \nvariables.\n\nEn un extremo de las posibilidades estaría la independencia y en el otro \nuna relación puramente determinista. En el caso del ejemplo de Jorge \npodría ser n1 -> A, n2 -> B,   n3 -> C y n4 -> D. O por supuesto \ncualquier otra combinación. Otra cuestión sería buscar una función de \nregresión que nos llevaría directamente a una función discriminante o a \nuna regresión logística multinomial.\n\nPero volviendo al problema de la correlación que es mucho más sencillo \nla medida clásica \"Coeficiente de contingencia de Pearson\" se obtendría \na partir de la tabla de contingencia en este caso 4x4 y su valor es:\n\nP = sqrt( (ji^2 / N) / (1 + ji^2 /N) ) = sqrt( ji^2 / (N + ji^2) )   \nEveritt, B.S.; 1977, \"The Analysis of Contingency Tables\"\n\nEs una medida en la que 0 significa independencia, pero que \nlamentablemete su limite superior no es 1 sino sqrt( (q-1)/ q), donde q \nes el menor número entre el número de filas y el de columnas. En el caso \nde Jorge el límite superior de esta función es:\n\nsqrt( 3/ 4) = 0.866\n\nNo es exactamente 1 el máximo pero para cuatro valores no está mal.\n\nHay muchas medidas más y algunas muy clásicas aparecen en el libro de \nEveritt que cito.\n\nPara su aplicación en R la función a utilizar es evidentemente \n\"chisq.test\" del páquete básico \"stats\"\n\nEl tema da para mucho más a partir de la regresión logística \nmultinomial, pero como primera medida haber hecho una aportación suficiente.\n\nUn saludo.\n\n\n\nCarlos J. Gil Bellosta escribió:\n> Hola, ¿qué tal?\n>\n> Me cuesta cierto trabajo imaginar una definición de correlación entre\n> dos variables si una de ellas es nominal desordenada que recoja la\n> idea general de cuantificar \"en qué medida crece (o decrece) Y cuando\n> crece X\"...\n>\n> Un saludo,\n>\n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n>\n>\n> El día 29 de septiembre de 2009 00:19, Jorge Ivan Velez\n> <jorgeivanvelez at gmail.com> escribió:\n>   \n>> Buenas tardes para todos,\n>>\n>> Estoy trabajando con una tabla de datos que contiene una variable ordinal\n>> (X) y otra nominal (Y). La primera tiene categorias n1,n2, n3 y n4 siendo n4\n>> la de mayor gravedad, y la segunda tiene categorias A, B, C, D (el orden no\n>> importa).\n>>\n>> Me gustaría determinar la correlación entre X y Y utilizando R (por\n>> supuesto!) y sin perder la información ordinal que contiene X. En CRAN\n>> encontré que una opción podría ser la librería polycor pero\n>> desafortunadamente las funciones que se encuentran allí no aplican para\n>> cuando X es ordinal y Y es nominal. En [1] sugieren utilizar el coeficiente\n>> de correlación \"Rank-Biserial\" pero mis datos tienen más de dos categorías\n>> en ambas variables.\n>>\n>> Podría alguien sugerirme alguna otra librería / función en R que pueda\n>> utilizar?\n>>\n>> Muchas gracias por su tiempo,\n>>\n>>                                   Jorge Ivan Velez\n>> [1] http://www.andrews.edu/~calkins/math/edrm611/edrm13.htm\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>>     \n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>   \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Empezando por el final, querido Carlos:\n\nA mí no me cuesta nada una definición de correlación entre cualquier \ntipo de variables: una medida de la intensidad de la relación entre dos \nvariables.\n\nEn u",
       "thread_id": "thread-aa30f683718d",
       "thread_depth": 2,
-      "month": "2009-09"
+      "month": "2009-09",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090929/7087e856/attachment.pl"
+      ]
     },
     {
       "id": "msg-24e3c57836bd",

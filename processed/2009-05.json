@@ -13,11 +13,14 @@
       "subject_clean": "[R-es] Distribución log-logistica",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/d54e9681/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/d54e9681/attachment.pl>",
+      "body_plain": "Hola a tod at s,\nHace poco en la lista se discutieron algunas aproximaciones para determinar\nla distribución de probabilidad que potencialmente podrían haber generado\nlos datos (ver [1]) y una de ellas fué el AIC. Haciendo uso del programa\nenviado por Pablo Verde (ver [1]), estos son los resultados para mis datos:\n\nweibull , AIC =  69839.44\nexponential , AIC =  79488.77\ngaussian , AIC =  69413.03\nlogistic , AIC =  68816.95\nlognormal , AIC =  68001.32\nloglogistic , AIC =  67987.08\n\nDe acuerdo con lo anterior, la distribución que _potencialmente los genera_\nes la log-logistica. Haciendo una revisión de los datos y las aplicaciones\nde esta distribución, encuentro que sería apropiado utilizarla como modelo.\nEn R es posible generar observaciones, densidades, percentiles y algunas\notras cantidades para esta distribución utilizando la libreria actuar (ver\n[2]).\n\nMe gustaria saber si alguno de ustedes conoce alguna función (ya\nimplementada en R o que haya escrito y quiera/pueda compartirla) que permita\nestimar *los parámetros* de la distribución log-logística.\n\nMuchisimas gracias,\n\nJorge Ivan Velez\n\n[1] https://stat.ethz.ch/pipermail/r-help-es/2009-April/000043.html\n[2] http://rss.acs.unt.edu/Rdoc/library/actuar/html/Loglogistic.html\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a tod at s,\nHace poco en la lista se discutieron algunas aproximaciones para determinar\nla distribución de probabilidad que potencialmente podrían haber generado\nlos datos (ver [1]) y una de ella",
       "thread_id": "thread-704068d76a43",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/d54e9681/attachment.pl"
+      ]
     },
     {
       "id": "msg-00788fa6b231",
@@ -48,11 +51,14 @@
         "<317737de0905040835o753ff718h91fec492ca54dfac@mail.gmail.com>",
         "<011701c9ccd6$75b93730$7d8f6386@VMED.UKD>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/1c5b7c07/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/1c5b7c07/attachment.pl>",
+      "body_plain": "Hola Pablo,\nMuchas gracias por tu ayuda. Es precisamente lo que necesitaba. La\noptimización que mencionas es una opción válida, así que la exploraré luego.\n\nPara aquellos que pudiesen estar interesados, hace poco encontré [1]. En\neste artículo presentan la estimación de los parámetros para esta\ndistribución via Momentos Generalizados.\n\nSaludos,\n\nJorge Ivan Velez\n\n[1] http://tinyurl.com/dd8jn3\n\n\n2009/5/4 Pablo Emilio Verde <PabloEmilio.Verde at uni-duesseldorf.de>\n\n> Hola Jorge,\n>\n> Podes utilizar directamente la funcion survreg() del paquete survival.\n> Este es un ejamplo:\n>\n> # estimacion de los parametros de la distribucion log-logistica:\n>\n> library(actuar)\n> library(survival)\n> set.seed(123)\n> y <- rllogis(100, shape=2, scale = 0.5)\n>\n> summary(fn <- survreg(Surv(y)~1, dist=\"loglogistic\"))\n> ...\n>\n> Call:\n> survreg(formula = Surv(y) ~ 1, dist = \"loglogistic\")\n>             Value Std. Error     z        p\n> (Intercept) -0.689     0.0836 -8.24 1.72e-16\n> Log(scale)  -0.729     0.0833 -8.75 2.14e-18\n>\n> Scale= 0.482\n> ...\n>\n> > # La estimacion del parametro de escala de la distibucion log-logistica\n> es:\n> > exp(-0.689 )\n> [1] 0.5020779\n>\n> > # La estimacion del parametro de forma (shape) de la distribucion\n> log-logistica es:\n> > 1/0.482\n> [1] 2.074689\n>\n> Alternativamente, podes utilizar la funcion dllogistic() y escribir\n> directamente\n> la funcion de verosimilitud y luego optimizarla.\n>\n> Pablo\n>\n>\n>\n> ----- Original Message -----\n> From: \"Jorge Ivan Velez\" <jorgeivanvelez at gmail.com>\n> To: \"R-help-es\" <r-help-es at r-project.org>\n> Sent: Monday, May 04, 2009 5:35 PM\n> Subject: [R-es] Distribución log-logistica\n>\n>\n> Hola a tod at s,\n> Hace poco en la lista se discutieron algunas aproximaciones para determinar\n> la distribución de probabilidad que potencialmente podrían haber generado\n> los datos (ver [1]) y una de ellas fué el AIC. Haciendo uso del programa\n> enviado por Pablo Verde (ver [1]), estos son los resultados para mis datos:\n>\n> weibull , AIC =  69839.44\n> exponential , AIC =  79488.77\n> gaussian , AIC =  69413.03\n> logistic , AIC =  68816.95\n> lognormal , AIC =  68001.32\n> loglogistic , AIC =  67987.08\n>\n> De acuerdo con lo anterior, la distribución que _potencialmente los genera_\n> es la log-logistica. Haciendo una revisión de los datos y las aplicaciones\n> de esta distribución, encuentro que sería apropiado utilizarla como modelo.\n> En R es posible generar observaciones, densidades, percentiles y algunas\n> otras cantidades para esta distribución utilizando la libreria actuar (ver\n> [2]).\n>\n> Me gustaria saber si alguno de ustedes conoce alguna función (ya\n> implementada en R o que haya escrito y quiera/pueda compartirla) que\n> permita\n> estimar *los parámetros* de la distribución log-logística.\n>\n> Muchisimas gracias,\n>\n> Jorge Ivan Velez\n>\n> [1] https://stat.ethz.ch/pipermail/r-help-es/2009-April/000043.html\n> [2] http://rss.acs.unt.edu/Rdoc/library/actuar/html/Loglogistic.html\n>\n> [[alternative HTML version deleted]]\n>\n>\n>\n>\n>\n> ----------------------------------------------------------------------------\n> ----\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Pablo,\nMuchas gracias por tu ayuda. Es precisamente lo que necesitaba. La\noptimización que mencionas es una opción válida, así que la exploraré luego.\n\nPara aquellos que pudiesen estar interesado",
       "thread_id": "thread-cfdfd3c69503",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/1c5b7c07/attachment.pl"
+      ]
     },
     {
       "id": "msg-12502ebd31b9",
@@ -64,11 +70,14 @@
       "subject_clean": "[R-es] GEV para datos no estacionarios",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090505/50bd86a5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090505/50bd86a5/attachment.pl>",
+      "body_plain": "Hola a todos,\nSoy nuevo en R y estoy intentando modelizar una serie de datos no\nestacionarios usand la distribucion Generalizada de Valores Extremos GEV.\n\n¿Podriais indicarme como se modeliza una tendencia polinómica (cuadrática,\npor ejemplo) en alguno de los 3 parámetros (situación, escala o forma)? He\nencontrado documentación a cerca de modelización linear o exponencial, pero\nno acabo de comprender como se modelizaría una tendencia polinómica.\n\nGracias\n\nAlberto\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\nSoy nuevo en R y estoy intentando modelizar una serie de datos no\nestacionarios usand la distribucion Generalizada de Valores Extremos GEV.\n\n¿Podriais indicarme como se modeliza una tend",
       "thread_id": "thread-12502ebd31b9",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090505/50bd86a5/attachment.pl"
+      ]
     },
     {
       "id": "msg-4bf18f9a00d9",
@@ -100,11 +109,14 @@
       "references": [
         "<3abc030b0905041649h15fc4dfev9ae702ca977f32e1@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/1594c736/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/1594c736/attachment.pl>",
+      "body_plain": "Buenas noches Alberto,\nDale una mirada a http://www.ral.ucar.edu/~ericg/softextreme.php\n\nEspero sea de utilidad,\n\nJorge Ivan Velez\n\n\n2009/5/4 Alberto Bordallo <a.bordallo at gmail.com>\n\n> Hola a todos,\n> Soy nuevo en R y estoy intentando modelizar una serie de datos no\n> estacionarios usand la distribucion Generalizada de Valores Extremos GEV.\n>\n> ¿Podriais indicarme como se modeliza una tendencia polinómica (cuadrática,\n> por ejemplo) en alguno de los 3 parámetros (situación, escala o forma)? He\n> encontrado documentación a cerca de modelización linear o exponencial, pero\n> no acabo de comprender como se modelizaría una tendencia polinómica.\n>\n> Gracias\n>\n> Alberto\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches Alberto,\nDale una mirada a http://www.ral.ucar.edu/~ericg/softextreme.php\n\nEspero sea de utilidad,\n\nJorge Ivan Velez\n\n\n2009/5/4 Alberto Bordallo <a.bordallo at gmail.com>\n\n> Hola a todos",
       "thread_id": "thread-12502ebd31b9",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090504/1594c736/attachment.pl"
+      ]
     },
     {
       "id": "msg-de7a11db0987",
@@ -152,11 +164,14 @@
       "subject_clean": "[R-es] OT --- pregunta de español",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/3fd1d7ac/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/3fd1d7ac/attachment.pl>",
+      "body_plain": "Hola!\n\nEn español, ¿como se traduce \"martingale\"? Específicamente,\n¿(el/la) martingal(a)  wikipedia español dice la martingala, pero solo en\nforma definitiva referiendo a\nuna estrategia específica. como será en forma no definitiva, como en ingles\n\"let X be a martingale\" ---\n\"Sea X una martingala\"? ¿es correcto?\n\nNo me esnñaron esto en mis cursos de español!\n\nKjetil\n\n-- \n\"Mathematics is not the rigid and rigidity-producing schema that the layman\nthinks it is; rather, in it we find ourselves at that meeting point of\nconstraint and freedom that is the very essence of human nature.\"\n                                    - Hermann Weyl\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola!\n\nEn español, ¿como se traduce \"martingale\"? Específicamente,\n¿(el/la) martingal(a)  wikipedia español dice la martingala, pero solo en\nforma definitiva referiendo a\nuna estrategia específica. co",
       "thread_id": "thread-89d4d475279e",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/3fd1d7ac/attachment.pl"
+      ]
     },
     {
       "id": "msg-10be1abacf44",
@@ -170,11 +185,14 @@
       "references": [
         "<1f6d6c820905070804l4496eae1r1709f7eec7f5532e@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/645a68cf/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/645a68cf/attachment.pl>",
+      "body_plain": "Hola Kjetil,\nA mi tampoco, pero si, \"Sea X una martingala\" es la manera correcta.\n\nSaludos,\n\nJorge Ivan Velez\n\n\n2009/5/7 Kjetil Halvorsen <kjetil1001 at gmail.com>\n\n> Hola!\n>\n> En español, ¿como se traduce \"martingale\"? Específicamente,\n> ¿(el/la) martingal(a)  wikipedia español dice la martingala, pero solo en\n> forma definitiva referiendo a\n> una estrategia específica. como será en forma no definitiva, como en ingles\n> \"let X be a martingale\" ---\n> \"Sea X una martingala\"? ¿es correcto?\n>\n> No me esnñaron esto en mis cursos de español!\n>\n> Kjetil\n>\n> --\n> \"Mathematics is not the rigid and rigidity-producing schema that the layman\n> thinks it is; rather, in it we find ourselves at that meeting point of\n> constraint and freedom that is the very essence of human nature.\"\n>                                    - Hermann Weyl\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Kjetil,\nA mi tampoco, pero si, \"Sea X una martingala\" es la manera correcta.\n\nSaludos,\n\nJorge Ivan Velez\n\n\n2009/5/7 Kjetil Halvorsen <kjetil1001 at gmail.com>\n\n> Hola!\n>\n> En español, ¿como se tr",
       "thread_id": "thread-89d4d475279e",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/645a68cf/attachment.pl"
+      ]
     },
     {
       "id": "msg-c705c1de89b7",
@@ -188,11 +206,14 @@
       "references": [
         "<1f6d6c820905070804l4496eae1r1709f7eec7f5532e@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/b9c87531/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/b9c87531/attachment.pl>",
+      "body_plain": "Hola,\nSe traduce Martingala, y se dice \"el proceso x es una martingala...\"\n:)\n\nSaludos\n\nEl 7 de mayo de 2009 17:04, Kjetil Halvorsen <kjetil1001 at gmail.com>escribió:\n\n> Hola!\n>\n> En español, ¿como se traduce \"martingale\"? Específicamente,\n> ¿(el/la) martingal(a)  wikipedia español dice la martingala, pero solo en\n> forma definitiva referiendo a\n> una estrategia específica. como será en forma no definitiva, como en ingles\n> \"let X be a martingale\" ---\n> \"Sea X una martingala\"? ¿es correcto?\n>\n> No me esnñaron esto en mis cursos de español!\n>\n> Kjetil\n>\n> --\n> \"Mathematics is not the rigid and rigidity-producing schema that the layman\n> thinks it is; rather, in it we find ourselves at that meeting point of\n> constraint and freedom that is the very essence of human nature.\"\n>                                    - Hermann Weyl\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\nSe traduce Martingala, y se dice \"el proceso x es una martingala...\"\n:)\n\nSaludos\n\nEl 7 de mayo de 2009 17:04, Kjetil Halvorsen <kjetil1001 at gmail.com>escribió:\n\n> Hola!\n>\n> En español, ¿como s",
       "thread_id": "thread-89d4d475279e",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/b9c87531/attachment.pl"
+      ]
     },
     {
       "id": "msg-aefa07fe1a06",
@@ -222,11 +243,14 @@
       "subject_clean": "[R-es] OT más martingalas",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/a13d18c4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/a13d18c4/attachment.pl>",
+      "body_plain": "Como tenía tanto éxito preguntando de martingalas, continue con otras\nproblemas de\ntraducción.  No encuentro esto con google!\n\nstopping time (o optional time) =>   tiempo de parar ?\nDoob's optimal stopping time theorem  => teorema de parar óptimamente  ?\nstopped process   =>  proceso parada ?\n\nsaludos,\n\nKjetil\n\n-- \n\"Mathematics is not the rigid and rigidity-producing schema that the layman\nthinks it is; rather, in it we find ourselves at that meeting point of\nconstraint and freedom that is the very essence of human nature.\"\n                                    - Hermann Weyl\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Como tenía tanto éxito preguntando de martingalas, continue con otras\nproblemas de\ntraducción.  No encuentro esto con google!\n\nstopping time (o optional time) =>   tiempo de parar ?\nDoob's optimal sto",
       "thread_id": "thread-740a037072e1",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/a13d18c4/attachment.pl"
+      ]
     },
     {
       "id": "msg-8644716e7d33",
@@ -240,11 +264,14 @@
       "references": [
         "<1f6d6c820905071945w2d8bf817yeb20bdd266d98be1@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/5629e93c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/5629e93c/attachment.pl>",
+      "body_plain": "Buenas noches Kjetil,\n1. stopping time (o optional time)\n- Si es \"stopping\" time, sería algo como \"tiempo para detenerse\", \"tiempo de\nparo\", \"tiempo de detención\", \"tiempo de interrupción\". Me inclino por esta\núltima.\n- Si es \"optional time\", sería algo como \"tiempo adicional\" / opcional.\nDepende del contexto. Estás trabajando con algo de Ingeniería?\n\n2. Doob's optimal stopping time theorem\nTeorema de Dobb para ... (ver número 1).\n\n3. stopped process   =>  proceso parada ?\nProceso detenido o suspendido. Depende del contexto.\n\nDale una mirada a las definiciones que aparecen en [1].\n\nSaludos,\n\nJorge Ivan Velez\n\n[1]\nhttp://www.wordreference.com/es/translation.asp?tranword=stopped&dict=enes&B10=Search\n\n\n\nOn Thu, May 7, 2009 at 10:45 PM, Kjetil Halvorsen <kjetil1001 at gmail.com>wrote:\n\n> Como tenía tanto éxito preguntando de martingalas, continue con otras\n> problemas de\n> traducción.  No encuentro esto con google!\n>\n> stopping time (o optional time) =>   tiempo de parar ?\n> Doob's optimal stopping time theorem  => teorema de parar óptimamente  ?\n> stopped process   =>  proceso parada ?\n>\n> saludos,\n>\n> Kjetil\n>\n> --\n> \"Mathematics is not the rigid and rigidity-producing schema that the layman\n> thinks it is; rather, in it we find ourselves at that meeting point of\n> constraint and freedom that is the very essence of human nature.\"\n>                                    - Hermann Weyl\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches Kjetil,\n1. stopping time (o optional time)\n- Si es \"stopping\" time, sería algo como \"tiempo para detenerse\", \"tiempo de\nparo\", \"tiempo de detención\", \"tiempo de interrupción\". Me inclino",
       "thread_id": "thread-740a037072e1",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090507/5629e93c/attachment.pl"
+      ]
     },
     {
       "id": "msg-36ef5adddcba",
@@ -258,11 +285,14 @@
       "references": [
         "<1f6d6c820905071945w2d8bf817yeb20bdd266d98be1@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090508/df5c93d4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090508/df5c93d4/attachment.pl>",
+      "body_plain": "Kjetil,\n\nen estos apuntes del Profesor Nualart (uno de los grandes de la  \nProbabilidad en España) sobre cálculo estocástico,\n\nhttp://orfeu.mat.ub.es/~nualart/curs.pdf\n\ndeberías encontrar los términos (en su contexto) que estás buscando.\nUn saludo. Olivier\n\n--  \n____________________________________\n\nOlivier G. Nuñez\nEmail: onunez at iberstat.es\nTel : +34 663 03 69 09\nWeb: http://www.iberstat.es\n\n____________________________________\n\n\n\n\nEl 08/05/2009, a las 4:45, Kjetil Halvorsen escribió:\n\n> Como tenía tanto éxito preguntando de martingalas, continue con otras\n> problemas de\n> traducción.  No encuentro esto con google!\n>\n> stopping time (o optional time) =>   tiempo de parar ?\n> Doob's optimal stopping time theorem  => teorema de parar  \n> óptimamente  ?\n> stopped process   =>  proceso parada ?\n>\n> saludos,\n>\n> Kjetil\n>\n> -- \n> \"Mathematics is not the rigid and rigidity-producing schema that  \n> the layman\n> thinks it is; rather, in it we find ourselves at that meeting point of\n> constraint and freedom that is the very essence of human nature.\"\n>                                     - Hermann Weyl\n>\n> \t[[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Kjetil,\n\nen estos apuntes del Profesor Nualart (uno de los grandes de la  \nProbabilidad en España) sobre cálculo estocástico,\n\nhttp://orfeu.mat.ub.es/~nualart/curs.pdf\n\ndeberías encontrar los términos",
       "thread_id": "thread-740a037072e1",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090508/df5c93d4/attachment.pl"
+      ]
     },
     {
       "id": "msg-44be0c7bed2d",
@@ -306,11 +336,14 @@
       "subject_clean": "[R-es] Resumen de R-help-es, respuesta: stopping time",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090511/9bbce1cc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090511/9bbce1cc/attachment.pl>",
+      "body_plain": "Hola buen día a todos.\n\nEs la primera vez que participó en este foro, así que espero hacerlo de\nforma correcta.\nRelacionado con la traducción el manejo que en mis cursos de probabilidad y\nprocesos estocástico que teníamos a estos términos son:\n--stopping time (o optional time) =>  tiempo de paro (o un paro opcional)\n--Doob's optimal stopping time theorem  => Teorema de tiempo de paro óptimo\nde Doob\n--stopped process   =>  proceso parado (tu proponías proceso parada pero la\npalabra proceso en español es masculino por lo que lo correcto es que sea\nparado).\n\nEspero esto allá sido de gran ayuda.\n\nSaludos\nJuan\n\n\n>\n> On Thu, May 7, 2009 at 10:45 PM, Kjetil Halvorsen <kjetil1001 at gmail.com\n> >wrote:\n>\n> > Como tenía tanto éxito preguntando de martingalas, continue con otras\n> > problemas de\n> > traducción.  No encuentro esto con google!\n> >\n> > stopping time (o optional time) =>   tiempo de parar ?\n> > Doob's optimal stopping time theorem  => teorema de parar óptimamente  ?\n> > stopped process   =>  proceso parada ?\n> >\n> > saludos,\n> >\n> > Kjetil\n> >\n> > --\n> > \"Mathematics is not the rigid and rigidity-producing schema that the\n> layman\n> > thinks it is; rather, in it we find ourselves at that meeting point of\n> > constraint and freedom that is the very essence of human nature.\"\n> >                                    - Hermann Weyl\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola buen día a todos.\n\nEs la primera vez que participó en este foro, así que espero hacerlo de\nforma correcta.\nRelacionado con la traducción el manejo que en mis cursos de probabilidad y\nprocesos est",
       "thread_id": "thread-468d6870f99d",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090511/9bbce1cc/attachment.pl"
+      ]
     },
     {
       "id": "msg-cf739350948a",
@@ -324,11 +357,14 @@
       "references": [
         "<f028e93a0905110851r678f2f12qffabd56925b33436@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090511/58818a9d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090511/58818a9d/attachment.pl>",
+      "body_plain": "Gracias!\n\nHe resuelto con esto la mayoría de mis problemas de traducción. Unos pocos\nproblemas más:\n\nup-crossings --- the up-crossing inequality  ??  pasos por arriba ??\nLévy's upward and downward theorems ?? Teoremas de arriba y abajo ?? que se\ndice ??\n\nKjetil\n\n2009/5/11 Juan Morales Velasco <juanmove at gmail.com>\n\n> Hola buen día a todos.\n>\n> Es la primera vez que participó en este foro, así que espero hacerlo de\n> forma correcta.\n> Relacionado con la traducción el manejo que en mis cursos de probabilidad y\n> procesos estocástico que teníamos a estos términos son:\n> --stopping time (o optional time) =>  tiempo de paro (o un paro opcional)\n> --Doob's optimal stopping time theorem  => Teorema de tiempo de paro óptimo\n> de Doob\n> --stopped process   =>  proceso parado (tu proponías proceso parada pero la\n> palabra proceso en español es masculino por lo que lo correcto es que sea\n> parado).\n>\n> Espero esto allá sido de gran ayuda.\n>\n> Saludos\n> Juan\n>\n>\n> >\n> > On Thu, May 7, 2009 at 10:45 PM, Kjetil Halvorsen <kjetil1001 at gmail.com\n> > >wrote:\n> >\n> > > Como tenía tanto éxito preguntando de martingalas, continue con otras\n> > > problemas de\n> > > traducción.  No encuentro esto con google!\n> > >\n> > > stopping time (o optional time) =>   tiempo de parar ?\n> > > Doob's optimal stopping time theorem  => teorema de parar óptimamente\n>  ?\n> > > stopped process   =>  proceso parada ?\n> > >\n> > > saludos,\n> > >\n> > > Kjetil\n> > >\n> > > --\n> > > \"Mathematics is not the rigid and rigidity-producing schema that the\n> > layman\n> > > thinks it is; rather, in it we find ourselves at that meeting point of\n> > > constraint and freedom that is the very essence of human nature.\"\n> > >                                    - Hermann Weyl\n> > >\n> > >        [[alternative HTML version deleted]]\n> > >\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n> > >\n> >\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \n\"Mathematics is not the rigid and rigidity-producing schema that the layman\nthinks it is; rather, in it we find ourselves at that meeting point of\nconstraint and freedom that is the very essence of human nature.\"\n                                    - Hermann Weyl\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias!\n\nHe resuelto con esto la mayoría de mis problemas de traducción. Unos pocos\nproblemas más:\n\nup-crossings --- the up-crossing inequality  ??  pasos por arriba ??\nLévy's upward and downward the",
       "thread_id": "thread-468d6870f99d",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090511/58818a9d/attachment.pl"
+      ]
     },
     {
       "id": "msg-589bea185b67",
@@ -358,11 +394,14 @@
       "references": [
         "<1242260941.10571.41.camel@kropotkin>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090513/1a9be05f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090513/1a9be05f/attachment.pl>",
+      "body_plain": "Buenas noches Carlos,\nMuy buena noticia que se llegue a este tipo de cosas, más sabiendo el\npotencial y la flexibilidad que R tiene frente a otras aplicaciones. Muchas\ngracias por compartir este tipo de información.\n\nEn lo personal, creo que R, más que _hacer_ hueco en las empresas, comienza\na llenar MUCHOS de los que siempre han existido. Por supuesto, aún falta un\nlargo camino por recorrer.\n\nSaludos,\n\nJorge Ivan Velez\n\n\n2009/5/13 Carlos J. Gil Bellosta <cgb at datanalytics.com>\n\n> Hola, ¿qué tal?\n>\n> No sé si es o no noticia conocida, pero ahí va el enlace:\n>\n>\n> http://www.informationbuilders.com/products/webfocus/predictivemodeling.html\n>\n> Y, ahora, en resumidas cuentas: una multinacional que vende herramientas\n> de gestión ha incorporado un módulo de \"análisis predictivo\" construido\n> sobre R.\n>\n> Poco a poco, R se hace un hueco en la empresa...\n>\n> Un saludo,\n>\n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches Carlos,\nMuy buena noticia que se llegue a este tipo de cosas, más sabiendo el\npotencial y la flexibilidad que R tiene frente a otras aplicaciones. Muchas\ngracias por compartir este tipo ",
       "thread_id": "thread-589bea185b67",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090513/1a9be05f/attachment.pl"
+      ]
     },
     {
       "id": "msg-b3b3d922ca86",
@@ -411,11 +450,14 @@
       "subject_clean": "[R-es] Modificando heatmaps",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090516/82bd3287/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090516/82bd3287/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nEstoy trabajando con la función heatmap.2() de la libreria ggplots. A\ncontinuación encontrarán un ejemplo de la estructura de mis datos y el\ncódigo para generar el gráfico que me gustaría modificar:\n\n# Datos\nset.seed(123)\nx <- matrix(rnorm(8*30), ncol = 8)\nrownames(x) <- paste('GM10A',1:30,sep=\"\")\ncolnames(x) <- paste('Muestra_',1:8,sep=\"\")\n\n# Mapa\nrequire(gplots)\nheatmap.2(x, key=TRUE, symkey=TRUE, keysize = 0.9, col=\nrev(heat.colors(30)),\n              density.info=\"none\", trace=\"none\",\n                cexCol=1, cexRow=.7, xlab='Muestra')\n\nCómo podrán ver, en la parte superior izquierda hay un recuadro con los\ntextos \"Color Key\" y \"Value\". Alguien sabe cómo eliminarlos?\n\nMuchas gracias por su ayuda,\n\n\nJorge Ivan Velez\n\n\nPS:  No necesariamente el heatmap debe realizarse con la función mencionada\nanteriormente. Si conocen otras funciones / librerías que permitan realizar\nel mismo tipo de gráfico, agradecería que pudieran informarme.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nEstoy trabajando con la función heatmap.2() de la libreria ggplots. A\ncontinuación encontrarán un ejemplo de la estructura de mis datos y el\ncódigo para generar el gráfico que me gustar",
       "thread_id": "thread-9fb4ea0ff07f",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090516/82bd3287/attachment.pl"
+      ]
     },
     {
       "id": "msg-c741ef3918f2",
@@ -448,11 +490,14 @@
         "<317737de0905161342g6ccf1d0eq917aeb92929c1185@mail.gmail.com>",
         "<1242512406.4a0f3c1648c85@wwwmail.uni-duesseldorf.de>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090516/cc00268b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090516/cc00268b/attachment.pl>",
+      "body_plain": "Buenas tardes Pablo,\nGracias por la sugerencia, pero desafortunadamente no funciona. Cuando se\nutiliza key=FALSE desaparecen el texto que quiero elimiar y también los\ncolores y su significado dentro del gráfico.\n\nLo que me gustaría es eliminar *solo* el texto, conservando el resto de la\ninformación que hay en el cuadro de la parte superior izquierda.\n\nGracias de nuevo,\n\nJorge\n\n\n2009/5/16 <PabloEmilio.Verde at uni-duesseldorf.de>\n\n> Mensaje citado por Jorge Ivan Velez <jorgeivanvelez at gmail.com>:\n>\n> > Hola a todos,\n> >\n> > Estoy trabajando con la función heatmap.2() de la libreria ggplots. A\n> > continuación encontrarán un ejemplo de la estructura de mis datos y el\n> > código para generar el gráfico que me gustaría modificar:\n> >\n> > # Datos\n> > set.seed(123)\n> > x <- matrix(rnorm(8*30), ncol = 8)\n> > rownames(x) <- paste('GM10A',1:30,sep=\"\")\n> > colnames(x) <- paste('Muestra_',1:8,sep=\"\")\n> >\n> > # Mapa\n> > require(gplots)\n> > heatmap.2(x, key=TRUE, symkey=TRUE, keysize = 0.9, col=\n> > rev(heat.colors(30)),\n> >               density.info=\"none\", trace=\"none\",\n> >                 cexCol=1, cexRow=.7, xlab='Muestra')\n> >\n> > Cómo podrán ver, en la parte superior izquierda hay un recuadro con los\n> > textos \"Color Key\" y \"Value\". Alguien sabe cómo eliminarlos?\n>\n>\n> Hay que utilizar el argumento key=FALSE.\n>\n> Pablo\n>\n>\n> ----------------------------------------------------------------\n> This message was sent using IMP, the Internet Messaging Program.\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Pablo,\nGracias por la sugerencia, pero desafortunadamente no funciona. Cuando se\nutiliza key=FALSE desaparecen el texto que quiero elimiar y también los\ncolores y su significado dentro d",
       "thread_id": "thread-9fb4ea0ff07f",
       "thread_depth": 2,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090516/cc00268b/attachment.pl"
+      ]
     },
     {
       "id": "msg-9549852fa031",
@@ -488,11 +533,14 @@
         "<1242512406.4a0f3c1648c85@wwwmail.uni-duesseldorf.de>",
         "<317737de0905161525l3756d083x37514f2e464c5b6@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/8ad08493/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/8ad08493/attachment.pl>",
+      "body_plain": "Hola Jorge,\n\nNo veo que lo puedas hacer mediante el uso de algun argumento. Pero una posibiliad al vuelo, es la siguiente:\n\nDefini tu propia version de la funcion, e.g., heatmap.x, y comenta las siguientes lineas de heatmap.2:\n\n\n      # else mtext(side = 1, \"Value\", line = 2)\n\n      # title(\"Color Key\\nand Density Plot\")\n\n      #  else title(\"Color Key\") \n\nEsto si hace lo que vos queres. \n\nPablo\n\n\n\n\n  ----- Original Message ----- \n  From: Jorge Ivan Velez \n  To: PabloEmilio.Verde at uni-duesseldorf.de \n  Cc: R-help-es \n  Sent: Sunday, May 17, 2009 12:25 AM\n  Subject: Re: [R-es] Modificando heatmaps\n\n\n\n\n  Buenas tardes Pablo,\n\n\n  Gracias por la sugerencia, pero desafortunadamente no funciona. Cuando se utiliza key=FALSE desaparecen el texto que quiero elimiar y también los colores y su significado dentro del gráfico. \n\n\n  Lo que me gustaría es eliminar *solo* el texto, conservando el resto de la información que hay en el cuadro de la parte superior izquierda.\n\n\n  Gracias de nuevo,\n\n\n\n  Jorge \n\n\n\n  2009/5/16 <PabloEmilio.Verde at uni-duesseldorf.de>\n\n    Mensaje citado por Jorge Ivan Velez <jorgeivanvelez at gmail.com>:\n\n\n    > Hola a todos,\n    >\n    > Estoy trabajando con la función heatmap.2() de la libreria ggplots. A\n    > continuación encontrarán un ejemplo de la estructura de mis datos y el\n    > código para generar el gráfico que me gustaría modificar:\n    >\n    > # Datos\n    > set.seed(123)\n    > x <- matrix(rnorm(8*30), ncol = 8)\n    > rownames(x) <- paste('GM10A',1:30,sep=\"\")\n    > colnames(x) <- paste('Muestra_',1:8,sep=\"\")\n    >\n    > # Mapa\n    > require(gplots)\n    > heatmap.2(x, key=TRUE, symkey=TRUE, keysize = 0.9, col=\n    > rev(heat.colors(30)),\n    >               density.info=\"none\", trace=\"none\",\n    >                 cexCol=1, cexRow=.7, xlab='Muestra')\n    >\n    > Cómo podrán ver, en la parte superior izquierda hay un recuadro con los\n    > textos \"Color Key\" y \"Value\". Alguien sabe cómo eliminarlos?\n\n\n\n    Hay que utilizar el argumento key=FALSE.\n\n    Pablo\n\n\n    ----------------------------------------------------------------\n    This message was sent using IMP, the Internet Messaging Program.\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Jorge,\n\nNo veo que lo puedas hacer mediante el uso de algun argumento. Pero una posibiliad al vuelo, es la siguiente:\n\nDefini tu propia version de la funcion, e.g., heatmap.x, y comenta las sigui",
       "thread_id": "thread-9fb4ea0ff07f",
       "thread_depth": 3,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/8ad08493/attachment.pl"
+      ]
     },
     {
       "id": "msg-9c0dae56984a",
@@ -509,11 +557,14 @@
         "<317737de0905161525l3756d083x37514f2e464c5b6@mail.gmail.com>",
         "<002301c9d795$11168fc0$7d8f6386@VMED.UKD>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/91f16150/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/91f16150/attachment.pl>",
+      "body_plain": "Buenos dias Pablo y Olivier,\nMuchas gracias por sus sugerencias. Definir una nueva función, e.g.\nheatmap.X, eliminando las lineas apropiadas, es una solución bastante\nsimple.\n\nSaludos,\n\nJorge Ivan Velez\n\n\n>> > Hola a todos,\n>> >\n>> > Estoy trabajando con la función heatmap.2() de la libreria ggplots. A\n>> > continuación encontrarán un ejemplo de la estructura de mis datos y el\n>> > código para generar el gráfico que me gustaría modificar:\n>> >\n>> > # Datos\n>> > set.seed(123)\n>> > x <- matrix(rnorm(8*30), ncol = 8)\n>> > rownames(x) <- paste('GM10A',1:30,sep=\"\")\n>> > colnames(x) <- paste('Muestra_',1:8,sep=\"\")\n>> >\n>> > # Mapa\n>> > require(gplots)\n>> > heatmap.2(x, key=TRUE, symkey=TRUE, keysize = 0.9, col=\n>> > rev(heat.colors(30)),\n>> >               density.info=\"none\", trace=\"none\",\n>> >                 cexCol=1, cexRow=.7, xlab='Muestra')\n>> >\n>> > Cómo podrán ver, en la parte superior izquierda hay un recuadro con los\n>> > textos \"Color Key\" y \"Value\". Alguien sabe cómo eliminarlos?\n>>\n>>\n>>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Pablo y Olivier,\nMuchas gracias por sus sugerencias. Definir una nueva función, e.g.\nheatmap.X, eliminando las lineas apropiadas, es una solución bastante\nsimple.\n\nSaludos,\n\nJorge Ivan Vel",
       "thread_id": "thread-9fb4ea0ff07f",
       "thread_depth": 4,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/91f16150/attachment.pl"
+      ]
     },
     {
       "id": "msg-bc1c123a29c2",
@@ -531,11 +582,14 @@
         "<002301c9d795$11168fc0$7d8f6386@VMED.UKD>",
         "<317737de0905180552r5db4c6f4r3e6017a4c60a05e8@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/5d32b87a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/5d32b87a/attachment.pl>",
+      "body_plain": "un detalle:\nal definir heatmap.3 <- edit(heatmap.2)\nse pierde los comentarios en el codigo de heatmap.2.\n\nEs mejor copiar de codigo fuente directamente.\n\nkjetil\n\n2009/5/18 Jorge Ivan Velez <jorgeivanvelez at gmail.com>\n\n> Buenos dias Pablo y Olivier,\n> Muchas gracias por sus sugerencias. Definir una nueva función, e.g.\n> heatmap.X, eliminando las lineas apropiadas, es una solución bastante\n> simple.\n>\n> Saludos,\n>\n> Jorge Ivan Velez\n>\n>\n> >> > Hola a todos,\n> >> >\n> >> > Estoy trabajando con la función heatmap.2() de la libreria ggplots. A\n> >> > continuación encontrarán un ejemplo de la estructura de mis datos y el\n> >> > código para generar el gráfico que me gustaría modificar:\n> >> >\n> >> > # Datos\n> >> > set.seed(123)\n> >> > x <- matrix(rnorm(8*30), ncol = 8)\n> >> > rownames(x) <- paste('GM10A',1:30,sep=\"\")\n> >> > colnames(x) <- paste('Muestra_',1:8,sep=\"\")\n> >> >\n> >> > # Mapa\n> >> > require(gplots)\n> >> > heatmap.2(x, key=TRUE, symkey=TRUE, keysize = 0.9, col=\n> >> > rev(heat.colors(30)),\n> >> >               density.info=\"none\", trace=\"none\",\n> >> >                 cexCol=1, cexRow=.7, xlab='Muestra')\n> >> >\n> >> > Cómo podrán ver, en la parte superior izquierda hay un recuadro con\n> los\n> >> > textos \"Color Key\" y \"Value\". Alguien sabe cómo eliminarlos?\n> >>\n> >>\n> >>\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \n\"Mathematics is not the rigid and rigidity-producing schema that the layman\nthinks it is; rather, in it we find ourselves at that meeting point of\nconstraint and freedom that is the very essence of human nature.\"\n                                    - Hermann Weyl\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "un detalle:\nal definir heatmap.3 <- edit(heatmap.2)\nse pierde los comentarios en el codigo de heatmap.2.\n\nEs mejor copiar de codigo fuente directamente.\n\nkjetil\n\n2009/5/18 Jorge Ivan Velez <jorgeivanv",
       "thread_id": "thread-9fb4ea0ff07f",
       "thread_depth": 5,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/5d32b87a/attachment.pl"
+      ]
     },
     {
       "id": "msg-f2adf81b0380",
@@ -554,11 +608,14 @@
         "<317737de0905180552r5db4c6f4r3e6017a4c60a05e8@mail.gmail.com>",
         "<1f6d6c820905180752o5e008612xaacec838270ab013@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/e4cb3336/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/e4cb3336/attachment.pl>",
+      "body_plain": "Muchas gracias por la sugerencia Kjetil.\nEfectivamente ya he experimentado lo que mencionas con otras funciones, asi\nque el procedimiento que segui fue:\n1. Cargar la libreria gplot\n2. Escribir heatmap.2 en la consola de R\n3. Copiar el código en un archivo de texto y eliminar las lineas que generan\nlos textos que no quiero en el gráfico\n4. Usar source('minuevafuncion.txt')\n5. Usar  minuevafuncion(misdatos,...)  para generar el gráfico\n\nDe nuevo, gracias a Pablo y Olivier por su ayuda.\n\nJorge Ivan Velez\n\n\nal definir heatmap.3 <- edit(heatmap.2)\n> se pierde los comentarios en el codigo de heatmap.2.\n>\n> Es mejor copiar de codigo fuente directamente.\n>\n> kjetil\n>\n> 2009/5/18 Jorge Ivan Velez <jorgeivanvelez at gmail.com>\n>\n>> Buenos dias Pablo y Olivier,\n>> Muchas gracias por sus sugerencias. Definir una nueva función, e.g.\n>> heatmap.X, eliminando las lineas apropiadas, es una solución bastante\n>> simple.\n>>\n>> Saludos,\n>>\n>> Jorge Ivan Velez\n>>\n>>\n>> >> > Hola a todos,\n>> >> >\n>> >> > Estoy trabajando con la función heatmap.2() de la libreria ggplots. A\n>> >> > continuación encontrarán un ejemplo de la estructura de mis datos y\n>> el\n>> >> > código para generar el gráfico que me gustaría modificar:\n>> >> >\n>> >> > # Datos\n>> >> > set.seed(123)\n>> >> > x <- matrix(rnorm(8*30), ncol = 8)\n>> >> > rownames(x) <- paste('GM10A',1:30,sep=\"\")\n>> >> > colnames(x) <- paste('Muestra_',1:8,sep=\"\")\n>> >> >\n>> >> > # Mapa\n>> >> > require(gplots)\n>> >> > heatmap.2(x, key=TRUE, symkey=TRUE, keysize = 0.9, col=\n>> >> > rev(heat.colors(30)),\n>> >> >               density.info=\"none\", trace=\"none\",\n>> >> >                 cexCol=1, cexRow=.7, xlab='Muestra')\n>> >> >\n>> >> > Cómo podrán ver, en la parte superior izquierda hay un recuadro con\n>> los\n>> >> > textos \"Color Key\" y \"Value\". Alguien sabe cómo eliminarlos?\n>> >>\n>> >>\n>> >>\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n>\n> --\n> \"Mathematics is not the rigid and rigidity-producing schema that the layman\n> thinks it is; rather, in it we find ourselves at that meeting point of\n> constraint and freedom that is the very essence of human nature.\"\n>                                     - Hermann Weyl\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias por la sugerencia Kjetil.\nEfectivamente ya he experimentado lo que mencionas con otras funciones, asi\nque el procedimiento que segui fue:\n1. Cargar la libreria gplot\n2. Escribir heatmap",
       "thread_id": "thread-9fb4ea0ff07f",
       "thread_depth": 6,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090518/e4cb3336/attachment.pl"
+      ]
     },
     {
       "id": "msg-dc47117c9995",
@@ -570,11 +627,14 @@
       "subject_clean": "[R-es] Como importar archivo paradox db en R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090519/0de90502/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090519/0de90502/attachment.pl>",
+      "body_plain": "Hola!\nAlguien sabe si existe alguna función para importar archivos de base de\ndatos tipo paradox en R?\nEn el help del CRAN no encontré nada.\nDesde ya muchas gracias!\nTeresa\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola!\nAlguien sabe si existe alguna función para importar archivos de base de\ndatos tipo paradox en R?\nEn el help del CRAN no encontré nada.\nDesde ya muchas gracias!\nTeresa\n\n\t[[alternative HTML versio",
       "thread_id": "thread-dc47117c9995",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090519/0de90502/attachment.pl"
+      ]
     },
     {
       "id": "msg-f823794f7d10",
@@ -588,11 +648,14 @@
       "references": [
         "<caed23000905191247l7abdadc8o9d79042612eb50a5@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090519/b869b987/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090519/b869b987/attachment.pl>",
+      "body_plain": "Buenas tardes Teresa,\nNo conozco ese tipo de archivos pero sabiendo la extensión y el aspecto que\ntienen una vez se abren utilizando NotePad++ (ver [1]), por ejemplo, podrías\nescribir una una función que lo lea.\n\nLo otro que puedes hacer es implementar un convertidor. Para ello puedes\ndarle una mirada a [2].\n\nSi no tienes inconveniente en enviarme una muestra del archivo que quieres\nprocesar, le daré una mirada y veré qué puede hacerse desde R.\n\nSaludos,\n\nJorge Ivan Velez\n\n[1] http://notepad-plus.sourceforge.net/uk/download.php\n[2] http://www.softwarelode.com/1208/details-paradox-converter.html\n\n\n2009/5/19 Teresa Boca <tboca at cnia.inta.gov.ar>\n\n> Hola!\n> Alguien sabe si existe alguna función para importar archivos de base de\n> datos tipo paradox en R?\n> En el help del CRAN no encontré nada.\n> Desde ya muchas gracias!\n> Teresa\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Teresa,\nNo conozco ese tipo de archivos pero sabiendo la extensión y el aspecto que\ntienen una vez se abren utilizando NotePad++ (ver [1]), por ejemplo, podrías\nescribir una una función ",
       "thread_id": "thread-dc47117c9995",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090519/b869b987/attachment.pl"
+      ]
     },
     {
       "id": "msg-77567ffcc24b",
@@ -625,11 +688,14 @@
         "<caed23000905191247l7abdadc8o9d79042612eb50a5@mail.gmail.com>",
         "<1242771963.5971.51.camel@kropotkin>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090520/4a752443/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090520/4a752443/attachment.pl>",
+      "body_plain": "Gracias a todos por las respuestas, pruebo las sugerencias realizadas, y si\nno funcionan volveré a consultarles!\nSaludos\nteresa\n\nEl 19 de mayo de 2009 19:26, Carlos J. Gil Bellosta\n<cgb at datanalytics.com>escribió:\n\n> Hola, ¿qué tal?\n>\n> Creo que lo más sencillo sería, suponiendo que tienes Paradox instalado\n> y no solamente un fichero de ese gestor de bases de datos, acceder a él\n> a través de ODBC. Si mal no recuerdo (no uso Windows) puedes\n> configurarlo en Panel de Control > Fuentes de Datos.\n>\n> Luego puedes usar el paquete RODBC desde R para importar las tablas como\n> dataframes.\n>\n> Un saludo,\n>\n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n>\n>\n\n\n-- \nIng. Agr. M.Sc.Teresa Boca\nInstituto de Clima y Agua INTA Castelar.\nLas Cabañas y Los Reseros s/n°\n1712 Castelar Pcia de Buenos Aires, Argentina\nCel: 01115-3572-9584\nTel: (54-11)-4621-0125/1684\nFax:(54-11)-4621-5663\ntboca at cnia.inta.gov.ar\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias a todos por las respuestas, pruebo las sugerencias realizadas, y si\nno funcionan volveré a consultarles!\nSaludos\nteresa\n\nEl 19 de mayo de 2009 19:26, Carlos J. Gil Bellosta\n<cgb at datanalytic",
       "thread_id": "thread-dc47117c9995",
       "thread_depth": 2,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090520/4a752443/attachment.pl"
+      ]
     },
     {
       "id": "msg-c44bbe0805a5",
@@ -641,11 +707,14 @@
       "subject_clean": "[R-es] \"help\"",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/80ee0aec/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/80ee0aec/attachment.pl>",
+      "body_plain": "Hola,\n\nalguien me puede decir cómo descargar la librería\n\"kohonen\", pues lo he intentado con download.packages y no hay forma. No sé\nsi es porque pongo mal el directorio de destino o porque esa librería esta\ndentro de otra y no la localizo. Ya he usado en otras ocasiones el comando\ndownload.packages y no me había dado problemas\n\ngracias\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nalguien me puede decir cómo descargar la librería\n\"kohonen\", pues lo he intentado con download.packages y no hay forma. No sé\nsi es porque pongo mal el directorio de destino o porque esa librer",
       "thread_id": "thread-c44bbe0805a5",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/80ee0aec/attachment.pl"
+      ]
     },
     {
       "id": "msg-a3db5a6d6665",
@@ -659,11 +728,14 @@
       "references": [
         "<c3fb6c890905210132o69f29febj4c963d2a290b5e6d@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/de72fe0b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/de72fe0b/attachment.pl>",
+      "body_plain": "Hola Jose,\nYo lo he encontrado en el repositorio de suiza, si das en Packages ->\nInstall package(s), seleccionas Suiza, por ejemplo y ahí lo tienes.\n\nUn saludo\n\n\n2009/5/21 José M. Nevado <josemanevado at gmail.com>\n\n> Hola,\n>\n> alguien me puede decir cómo descargar la librería\n> \"kohonen\", pues lo he intentado con download.packages y no hay forma. No sé\n> si es porque pongo mal el directorio de destino o porque esa librería esta\n> dentro de otra y no la localizo. Ya he usado en otras ocasiones el comando\n> download.packages y no me había dado problemas\n>\n> gracias\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Jose,\nYo lo he encontrado en el repositorio de suiza, si das en Packages ->\nInstall package(s), seleccionas Suiza, por ejemplo y ahí lo tienes.\n\nUn saludo\n\n\n2009/5/21 José M. Nevado <josemanevado",
       "thread_id": "thread-c44bbe0805a5",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/de72fe0b/attachment.pl"
+      ]
     },
     {
       "id": "msg-a092915791ba",
@@ -675,11 +747,14 @@
       "subject_clean": "[R-es] \"help\"",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/3dcc90ad/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/3dcc90ad/attachment.pl>",
+      "body_plain": "José\n\n \n\nYo he descargado todos los paquetes disponibles en el 'mirror' más cercano a mí (UK), a través del menú principal (Packages -> Load Packages) y la librería \"kohonen\" fue incluida. Hice library(kohonen) y se cargó.\n\nDe todas formas, probé en otra PC donde no tengo todos los paquetes descargados, y a través de Packages -> Install package(s) seleccioné \"kohonen\" y se cargó. Quizás te convenga buscar en otro repositorio al que consultaste. En el de Bristol está.\n\nJosé Luis\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "José\n\n \n\nYo he descargado todos los paquetes disponibles en el 'mirror' más cercano a mí (UK), a través del menú principal (Packages -> Load Packages) y la librería \"kohonen\" fue incluida. Hice librar",
       "thread_id": "thread-a092915791ba",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/3dcc90ad/attachment.pl"
+      ]
     },
     {
       "id": "msg-98c771b2faba",
@@ -731,11 +806,14 @@
       "references": [
         "<c3fb6c890905210132o69f29febj4c963d2a290b5e6d@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/4f712d8a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/4f712d8a/attachment.pl>",
+      "body_plain": "Buenos dias José,\nUna forma es utilizando la función install.packages(), seleccionando el\nrepositorio del CRAN y finalmente usando require() o library() para\ncargarla. Luego de unos segundos la libreria está lista para usar:\n\n> install.packages(\"kohonen\", repos=\"http://cran.r-project.org/\")\n#trying URL '\nhttp://cran.r-project.org/bin/windows/contrib/2.9/kohonen_2.0.5.zip'\n#Content type 'application/zip' length 828747 bytes (809 Kb)\n#opened URL\n#downloaded 809 Kb\n#\n#package 'kohonen' successfully unpacked and MD5 sums checked\n#\n#The downloaded packages are in\n#       C:\\Documents and Settings\\velezjo\\Local\nSettings\\Temp\\RtmppTJk31\\downloaded_packages\n#updating HTML package descriptions\n\n> library(kohonen)\n#Loading required package: kohonen\n#Loading required package: class\n\n> library(help=\"kohonen\")\n\nSaludos,\n\nJorge Ivan Velez\n\n\n2009/5/21 José M. Nevado <josemanevado at gmail.com>\n\n> Hola,\n>\n> alguien me puede decir cómo descargar la librería\n> \"kohonen\", pues lo he intentado con download.packages y no hay forma. No sé\n> si es porque pongo mal el directorio de destino o porque esa librería esta\n> dentro de otra y no la localizo. Ya he usado en otras ocasiones el comando\n> download.packages y no me había dado problemas\n>\n> gracias\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias José,\nUna forma es utilizando la función install.packages(), seleccionando el\nrepositorio del CRAN y finalmente usando require() o library() para\ncargarla. Luego de unos segundos la librer",
       "thread_id": "thread-c44bbe0805a5",
       "thread_depth": 1,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/4f712d8a/attachment.pl"
+      ]
     },
     {
       "id": "msg-6e546b8ff8fb",
@@ -747,11 +825,14 @@
       "subject_clean": "[R-es] Cómo descargar librerías automáticamente?",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/a38964cf/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/a38964cf/attachment.pl>",
+      "body_plain": "Buenas tardes para todos,\nMe gustaría automatizar la descarga de librerias cuando ejecuto una función\nque estoy por terminar. Supongamos que la función se llama foo y require las\nlibrerias A y B. Una manera fácil de cargar las librerias dentro de foo es:\n\nfoo <- function(argumentos){\n            require(A)\n            require(B)\n           # hacer transformaciones, cálculos y gráficos aquí\n               }\n\nPor supuesto, require() hace su trabajo si y solo si A y B han sido\ndescargadas previamente. Si no es así, el usuario tendría que descargarlas\n(lo cual NO me gustaría) via los métodos ya conocidos.\n\nLo que quisiera hacer, dentro de foo (y agradezco de antemano cualquier\nsugerencia), es chequear si una libreria en particular ya ha sido\ndescargada. Si esto no lo ha sido, entonces que R la descargue\nautomáticamente y la cargue en el espacio de trabajo para luego ejecutar el\nresto de las cosas dentro de foo. Con ello quiero \"ahorrarle\" el proceso de\nbúsqueda y descarga al usuario.\n\nEn lenguaje R sería algo como:\n\n   if(  A está instalada  ) require(A)   else   \"descargarla\nautomáticamente\"\n\nEl problema es que no sé cómo preguntar si \"A está instalada\". El resto es\n\"fácil\" de hacer.\n\nEstoy trabajando con R 2.9.0 Pactched en Windows XP.\n\nMuchas gracias por su ayuda,\n\nJorge Ivan Velez\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes para todos,\nMe gustaría automatizar la descarga de librerias cuando ejecuto una función\nque estoy por terminar. Supongamos que la función se llama foo y require las\nlibrerias A y B. Una ",
       "thread_id": "thread-6e546b8ff8fb",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/a38964cf/attachment.pl"
+      ]
     },
     {
       "id": "msg-58f614ee78ab",
@@ -784,11 +865,14 @@
         "<317737de0905211303w76ba814atacc45c80e518d321@mail.gmail.com>",
         "<1242949244.5364.28.camel@kropotkin>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/c0c47bfa/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/c0c47bfa/attachment.pl>",
+      "body_plain": "Muchas gracias a Manuel Muñoz Márquez (Proyecto R UCA), Luis Mariano Esteban\n(Universidad de Zaragoza) y Carlos J. Gil Bellosta (Data Analytics) por sus\nvaliosos comentarios.\n\nTomando como base el script al que Manuel me refirió (ver [1]), esta es la\nsolución que implementé:\n\n# Función para descargar automáticamente las librerias que se\n# requiren pero NO están instaladas. Por defecto (argumento url) se\n# buscan en los repositorios del CRAN pero podría ser Omegahat\n\ngetPkg <-\nfunction(pkg, url = \"http://cran.r-project.org\")\n     {\n     to.do <- setdiff(pkg, installed.packages()[,1])\n     for(package in to.do) invisible(install.packages(package, repos = url))\n     }\n\nPor supuesto, otras sugerencias y/o comentarios acerca de cómo mejorarlo,\nSON bienvenidos  :)\n\n# Ejemplo:  chequeando la libreria fBasics\noptions(warn=-1, width=100)  # Para eliminar los warnings\ngetPkg('fBasics')\nrequire(fBasics, quietly = TRUE)\n\nUna vez descargada, podemos intentarlo de nuevo y no se obtiene resultado\nalguno (como era de esperarse):\n\ngetPkg('fBasics')  # no pasa nada :)\n\n\nAhora, si se requieren mas de dos librerias (del mismo repositorio),\nentonces el argumento de getPkg debe ser un vector que contiene el nombre de\nlas librerias necesarias. Por ejemplo si se requiren las librerias RODBC,\nAMORE y multtest, entonces:\n\n# Vector de librerias\npkgs <- c('RODBC','AMORE','multtest')\ngetPkg(pkgs)\n\n\nGracias de nuevo,\n\nJorge Ivan Velez\n\n[1] http://knuth.uca.es/repos/R-contribuciones/r-uca/r-uca-w/install.R\n\n\n\n>\n>\n>\n> On Thu, 2009-05-21 at 16:03 -0400, Jorge Ivan Velez wrote:\n> > Buenas tardes para todos,\n> > Me gustara automatizar la descarga de librerias cuando ejecuto una funcin\n> > que estoy por terminar. Supongamos que la funcin se llama foo y require\n> las\n> > librerias A y B. Una manera fcil de cargar las librerias dentro de foo\n> es:\n> >\n> > foo <- function(argumentos){\n> >             require(A)\n> >             require(B)\n> >            # hacer transformaciones, clculos y grficos aqu\n> >                }\n> >\n> > Por supuesto, require() hace su trabajo si y solo si A y B han sido\n> > descargadas previamente. Si no es as, el usuario tendra que descargarlas\n> > (lo cual NO me gustara) via los mtodos ya conocidos.\n> >\n> > Lo que quisiera hacer, dentro de foo (y agradezco de antemano cualquier\n> > sugerencia), es chequear si una libreria en particular ya ha sido\n> > descargada. Si esto no lo ha sido, entonces que R la descargue\n> > automticamente y la cargue en el espacio de trabajo para luego ejecutar\n> el\n> > resto de las cosas dentro de foo. Con ello quiero \"ahorrarle\" el proceso\n> de\n> > bsqueda y descarga al usuario.\n> >\n> > En lenguaje R sera algo como:\n> >\n> >    if(  A est instalada  ) require(A)   else   \"descargarla\n> > automticamente\"\n> >\n> > El problema es que no s cmo preguntar si \"A est instalada\". El resto es\n> > \"fcil\" de hacer.\n> >\n> > Estoy trabajando con R 2.9.0 Pactched en Windows XP.\n> >\n> > Muchas gracias por su ayuda,\n> >\n> > Jorge Ivan Velez\n> >\n> >       [[alternative HTML version deleted]]\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias a Manuel Muñoz Márquez (Proyecto R UCA), Luis Mariano Esteban\n(Universidad de Zaragoza) y Carlos J. Gil Bellosta (Data Analytics) por sus\nvaliosos comentarios.\n\nTomando como base el scr",
       "thread_id": "thread-6e546b8ff8fb",
       "thread_depth": 2,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090521/c0c47bfa/attachment.pl"
+      ]
     },
     {
       "id": "msg-8cf10fc1df51",
@@ -800,11 +884,14 @@
       "subject_clean": "[R-es] Análisis factorial",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090525/d0762325/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20090525/d0762325/attachment.pl>",
+      "body_plain": "Hola a tod at s\nTengo que realizar un análisis factorial y normalmente utilizo SPSS o Stata\n(Análisis factorial con extracción componentes principales). Mi proposito\nes utilizar en esta ocasión R. Mi problema es que la información que\nencuentro siempre se refiere a componentes principales. ¿Podría alguien\ndarme alguna indicación?. La idea sería poder obtener la información\nhabitual, cargas factoriales (y guardar los factores como variables para su\nposterior utilización), comunalidades y los test KMO y de Barlett.\n\nMuchas gracias\nJusto\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a tod at s\nTengo que realizar un análisis factorial y normalmente utilizo SPSS o Stata\n(Análisis factorial con extracción componentes principales). Mi proposito\nes utilizar en esta ocasión R. Mi ",
       "thread_id": "thread-8cf10fc1df51",
       "thread_depth": 0,
-      "month": "2009-05"
+      "month": "2009-05",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20090525/d0762325/attachment.pl"
+      ]
     },
     {
       "id": "msg-77d5ef027ee8",
