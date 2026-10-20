@@ -15,11 +15,14 @@
       "references": [
         "<3DB7E138AD202E4E88395D80B1611203FD64A1@nkarkposta1.intranat.wan>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/34228aca/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/34228aca/attachment.pl>",
+      "body_plain": "Hola,\n\nPara poder ayudarte necesitaríamos conocer algunos detalles adicionales:\n\n   - ¿Estás usando oneway.plot dentro del paquete \"Deducer\" o dentro de\n   \"DAAG\"?\n   - ¿Podrías adjuntar el ejemplo del código y conjunto de datos que quieres\n   modificar?\n\nSi estás utilizando oneway.plot del paquete DAAG, hay un parámetro en la\nfunción \"oma\" que es el que te permitiría aumentar los márgenes. Su\nestructura la puedes consultar en la función par(). Del resto de dudas\n(tamaño de letra, número de gráficos por hoja) tengo que comprobar si la\nfunción admite los parámetros de par() que permiten hacer estas cosas...\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n2011/9/30 Juan Bautista <jbautista at neiker.net>\n\n> Hola a todos, en el comando \"oneway.plots\" el grafico que te dibuja no lo\n> puedo modificar o no sé como hacerlo.\n> Estoy analizando 8 tratamientos y quisiera poder modificar el tamaño de\n> letra, márgenes o número de gráficos por hoja para que en cada gráfico\n> pudieran aparecer en el eje de las X los 8 nombres.\n> Si alguien sabe como lo,puedo hacer agradezco la ayuda.\n> Juan Bautista Relloso Barrio\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPara poder ayudarte necesitaríamos conocer algunos detalles adicionales:\n\n   - ¿Estás usando oneway.plot dentro del paquete \"Deducer\" o dentro de\n   \"DAAG\"?\n   - ¿Podrías adjuntar el ejemplo de",
       "thread_id": "thread-15fae8b11db9",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/34228aca/attachment.pl"
+      ]
     },
     {
       "id": "msg-f130e6120d71",
@@ -34,11 +37,14 @@
         "<3DB7E138AD202E4E88395D80B1611203FD64A1@nkarkposta1.intranat.wan>",
         "<CAFKNbkJ5u+T7m1qa2=brDScSebhtdcRUy7XV8h1z_+5rGj_jXQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/c137d84d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/c137d84d/attachment.pl>",
+      "body_plain": "Hola,\n\nContinuando con la opción de que estés usando DAAG, efectivamente con par()\nse puede ajustar perfectamente los parámetros que necesitas. Los parámetros\nhan de ir fuera de la función oneway.plot.\n\nAdjunto un ejemplo para 8 gráficos que por economía son el mismo:\n\n\nrice.aov <- aov(ShootDryMass ~ trt, data=rice)\npar(mfrow=c(2,4), cex=0.6)\nreplicate(8, oneway.plot(obj=rice.aov))\n\nEl número de gráficos por hoja lo ajustas con mfrow.\nEl tamaño de letra lo ajustas con cex.\nComo tendrás ocho gráficos diferentes, en vez de utilizar la función\nreplicate, has de incluir tras la línea con par(... los ocho gráficos.\n\nDe nuevo mira el detalle de la función par() para ajustar muchos más\ndetalles del gráfico.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n2011/10/1 Carlos Ortega <coforfe at gmail.com>\n\n> Hola,\n>\n> Para poder ayudarte necesitaríamos conocer algunos detalles adicionales:\n>\n>    - ¿Estás usando oneway.plot dentro del paquete \"Deducer\" o dentro de\n>    \"DAAG\"?\n>    - ¿Podrías adjuntar el ejemplo del código y conjunto de datos que\n>    quieres modificar?\n>\n> Si estás utilizando oneway.plot del paquete DAAG, hay un parámetro en la\n> función \"oma\" que es el que te permitiría aumentar los márgenes. Su\n> estructura la puedes consultar en la función par(). Del resto de dudas\n> (tamaño de letra, número de gráficos por hoja) tengo que comprobar si la\n> función admite los parámetros de par() que permiten hacer estas cosas...\n>\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n> 2011/9/30 Juan Bautista <jbautista at neiker.net>\n>\n>> Hola a todos, en el comando \"oneway.plots\" el grafico que te dibuja no lo\n>> puedo modificar o no sé como hacerlo.\n>> Estoy analizando 8 tratamientos y quisiera poder modificar el tamaño de\n>> letra, márgenes o número de gráficos por hoja para que en cada gráfico\n>> pudieran aparecer en el eje de las X los 8 nombres.\n>> Si alguien sabe como lo,puedo hacer agradezco la ayuda.\n>> Juan Bautista Relloso Barrio\n>>\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nContinuando con la opción de que estés usando DAAG, efectivamente con par()\nse puede ajustar perfectamente los parámetros que necesitas. Los parámetros\nhan de ir fuera de la función oneway.plot",
       "thread_id": "thread-15fae8b11db9",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/c137d84d/attachment.pl"
+      ]
     },
     {
       "id": "msg-db528dcab2e1",
@@ -71,11 +77,14 @@
         "<mailman.15.1317463205.1261.r-help-es@r-project.org>",
         "<1317470437.4e8700e5d1d3d@webmail.upv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/a663374d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/a663374d/attachment.pl>",
+      "body_plain": "Adriana\n\nNunca use ese package (genelag), pero me llamo la atención y mire el manual,\nel cual dice:\n\n\"vars\" plot the evaluation function versus the variable value\n\nMirando el mensaje de tu error, el length zero posiblemente indique que te\nfalto ingresar algo que necesita la función.\n\n\n\nEl 1 de octubre de 2011 09:00, Adriana Villa Murillo\n<advilmu at doctor.upv.es>escribió:\n\n>\n> Hola\n>\n> Estoy usando el package genalg para Algoritmos genéticos y obtengo el\n> mensaje:\n>\n> Error en evalVals[object] = evalFunc(population[object, ]) :\n>  replacement has length zero\n>\n> Sabeis que significa eso? soy nuevo usuario en R\n>\n> Gracias!!!\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Adriana\n\nNunca use ese package (genelag), pero me llamo la atención y mire el manual,\nel cual dice:\n\n\"vars\" plot the evaluation function versus the variable value\n\nMirando el mensaje de tu error, el l",
       "thread_id": "thread-db528dcab2e1",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111001/a663374d/attachment.pl"
+      ]
     },
     {
       "id": "msg-7ae78c67ef57",
@@ -87,11 +96,14 @@
       "subject_clean": "[R-es] Error con pie3D y for",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111003/eb3c78fd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111003/eb3c78fd/attachment.pl>",
+      "body_plain": "Hola a todo el mundo,\n\nEscribo por si alguien puede ayudarme. Estoy intentando generar un gráfico\n3d en pdf para cada registro de un data.frame y no lo consigo. Utilizo pie3D\nde plotrix en un bucle y cuando llego al registro 13 me dice:\n\n*Error en if (labelsep < minsep) { :\n  valor ausente donde TRUE/FALSE es necesario*\n\nHasta ese momento me genera todos los pdf sin problema. Sí que he generado\nlos gráficos en 2D con pie y un bucle parecido.\n\nEl bucle que he escrito es el siguiente:\n\nfor(i in 1:length(t(dades)))\n{\npdf(paste(\"c:\\\\mapes\\\\3D_sectors\",dades[i,1],\".pdf\"))\npie3D(as.matrix(dades[i,2:5]),col=palette,explode=0.2,\nmain=paste(\"Mapa\",dades[i,1]),\nlabels=paste(colnames(dades[i,2:5]),\"\\n\",dades[i,2:5],\"%\"),radius=.8)\ndev.off()\n}\n\nY los datos:\n\n\"ID\";\"v1\";\"v2\";\"v3\";\"v4\";\"v5\";\"v6\"\n\"01\";5.5;41.8;10.3;42.5;358548.507718702;4576770.05784555\n\"02\";3.6;8.7;15.2;72.5;496278.621827092;4683812.88108699\n\"03\";0.8;38.3;10.1;50.8;391153.40626302;4582825.30286329\n\"04\";5.4;13.4;15.1;66.1;366811.115062856;4681555.48196547\n\"05\";8.2;10.6;19.7;61.5;321243.752822837;4706335.6470499\n\"06\";1.5;31.6;16;50.9;382012.071037717;4606332.83730013\n\"07\";1.9;29.7;13.8;54.7;404147.334942226;4627525.95710878\n\"08\";2.7;21.5;13.9;61.9;330903.532884721;4556242.57547137\n\"09\";6.9;21.5;11.4;60.1;294515.217864864;4524095.15099946\n\"10\";1.6;11.2;19.4;67.8;505477.989039337;4645242.01151333\n\"11\";0.2;28.7;10.5;60.6;413331.287159983;4583582.68605248\n\"12\";0.8;20.1;16.5;62.6;375801.647335852;4569778.96845999\n\"13\";0;13;7.7;79.2;430382.728575057;4584654.30624991\n\"14\";5.4;25.5;19.7;49.4;405135.912098405;4664406.17561431\n\"15\";3.4;3.9;24.2;68.5;400215.1821287;4694043.93688062\n\"16\";5.4;49.3;12;33.3;350317.02365569;4589693.62260169\n\"17\";0.7;18.4;15.6;65.4;397713.678003332;4568793.56943331\n\"18\";24.6;19.2;15.3;40.9;317994.082601572;4589907.1721435\n\"19\";1.6;35.8;12.3;50.3;462421.77216075;4670393.61645736\n\"20\";0.7;18.2;11.5;69.7;486155.455252868;4646255.66631595\n\"21\";1.1;16.4;14.9;67.6;461267.985176289;4606541.10706396\n\"22\";9.6;21.3;15.8;53.3;288455.824045255;4504952.6991395\n\"23\";21.7;20.6;14.5;43.3;327348.204529629;4640700.52821437\n\"24\";3.9;30.5;12.7;52.9;438167.607749901;4647029.15572223\n\"25\";9.6;14.9;17.4;58.2;328901.564642441;4676567.56662623\n\"26\";8.8;10.5;17.1;63.5;349666.156616966;4711810.64023291\n\"27\";12.2;32.4;13.8;41.6;322579.078627982;4612825.74569361\n\"28\";3.7;29.3;14.4;52.5;482439.452245322;4663947.6132033\n\"29\";18;12.6;21.7;47.6;316576.911247227;4565666.55526086\n\"30\";3.6;70.9;4.2;21.3;300033.804704933;4556400.82019236\n\"31\";1.6;39.3;11;48.1;436410.687853432;4681810.91273048\n\"32\";10.8;46.6;8.8;33.9;360494.176244131;4622737.85398312\n\"33\";7.5;12.7;13.4;66.4;294127.13025374;4604287.62364858\n\"34\";1.1;28.8;15.5;54.7;471124.046665996;4632677.04025366\n\"35\";11.3;23.2;18.2;47.2;377572.99854011;4652696.7574331\n\"36\";0.6;26.1;12.1;61.3;356183.320859356;4558587.74697974\n\"37\";25.7;13.5;19.9;40.8;279266.32928515;4548327.06882255\n\"38\";10.7;27.2;13.3;48.7;340846.709112724;4612041.19862861\n\"39\";1.2;9.2;16.8;72.8;322281.633482307;4732853.61461772\n\"40\";0.1;30.4;10.1;59.4;421084.943724487;4602099.53373022\n\"41\";0.4;38.3;10.4;50.9;442759.520563602;4614434.90922826\n\n\nAprovecho para hacer una segunda pregunta: se le puede pedir que siempre\ntodos los nombres queden fuera de los sectores? En algunos casos quedan\nsuperpuestas la etiquetas con el color del quesito y no se puede leer con\nfacilidad. Forzar la posición de las etiquetas en un grafico concreto es\nsencillo (labelpos), pero no encuentro cómo hacerlo en este caso.\n\nMuchas gracias.\n\nManel.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todo el mundo,\n\nEscribo por si alguien puede ayudarme. Estoy intentando generar un gráfico\n3d en pdf para cada registro de un data.frame y no lo consigo. Utilizo pie3D\nde plotrix en un bucle y ",
       "thread_id": "thread-7ae78c67ef57",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111003/eb3c78fd/attachment.pl"
+      ]
     },
     {
       "id": "msg-2cc037ee8ba8",
@@ -105,11 +117,14 @@
       "references": [
         "<CAKoaBiG3SRnbJc7O_=oOfKJaV96s3vNCqFm3Of7wyNOkTvi0VA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111003/6e9d1b3a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111003/6e9d1b3a/attachment.pl>",
+      "body_plain": "Hola,\n\nPara la primera pregunta, haría falta tener todo el data.frame. En el\nconjunto de datos que has enviado no aparece una columna de tipo factor, que\nentiendo que son las que agrupan y de las que obtienes las etiquetas.\n\nDe la segunda pregunta mira la función \"pie3D.labels()\". En el epígrafe de\n\"Details\" aparece lo siguiente:\n\n*pie3D.labels tries to separate labels that are placed closer than\nminsep radians.\nThis simple system will handle minor crowding of labels. If labels are very\ncrowded, capturing the return value of pie3D and editing the label positions\nmay allow the user to avoid manually placing labels.*\n\n\nComo en otros objetos gráficos, capturas la salida del objeto y en la\ncaptura (normalmente una lista) aparecen detalles que puedes modificar y\nvolver a pasárselos al objeto. Vaya, lo que indica la referencia indicada.\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/10/3 J Manel S Griño <jmanelsg at gmail.com>\n\n> Hola a todo el mundo,\n>\n> Escribo por si alguien puede ayudarme. Estoy intentando generar un gráfico\n> 3d en pdf para cada registro de un data.frame y no lo consigo. Utilizo\n> pie3D\n> de plotrix en un bucle y cuando llego al registro 13 me dice:\n>\n> *Error en if (labelsep < minsep) { :\n>  valor ausente donde TRUE/FALSE es necesario*\n>\n> Hasta ese momento me genera todos los pdf sin problema. Sí que he generado\n> los gráficos en 2D con pie y un bucle parecido.\n>\n> El bucle que he escrito es el siguiente:\n>\n> for(i in 1:length(t(dades)))\n> {\n> pdf(paste(\"c:\\\\mapes\\\\3D_sectors\",dades[i,1],\".pdf\"))\n> pie3D(as.matrix(dades[i,2:5]),col=palette,explode=0.2,\n> main=paste(\"Mapa\",dades[i,1]),\n> labels=paste(colnames(dades[i,2:5]),\"\\n\",dades[i,2:5],\"%\"),radius=.8)\n> dev.off()\n> }\n>\n> Y los datos:\n>\n> \"ID\";\"v1\";\"v2\";\"v3\";\"v4\";\"v5\";\"v6\"\n> \"01\";5.5;41.8;10.3;42.5;358548.507718702;4576770.05784555\n> \"02\";3.6;8.7;15.2;72.5;496278.621827092;4683812.88108699\n> \"03\";0.8;38.3;10.1;50.8;391153.40626302;4582825.30286329\n> \"04\";5.4;13.4;15.1;66.1;366811.115062856;4681555.48196547\n> \"05\";8.2;10.6;19.7;61.5;321243.752822837;4706335.6470499\n> \"06\";1.5;31.6;16;50.9;382012.071037717;4606332.83730013\n> \"07\";1.9;29.7;13.8;54.7;404147.334942226;4627525.95710878\n> \"08\";2.7;21.5;13.9;61.9;330903.532884721;4556242.57547137\n> \"09\";6.9;21.5;11.4;60.1;294515.217864864;4524095.15099946\n> \"10\";1.6;11.2;19.4;67.8;505477.989039337;4645242.01151333\n> \"11\";0.2;28.7;10.5;60.6;413331.287159983;4583582.68605248\n> \"12\";0.8;20.1;16.5;62.6;375801.647335852;4569778.96845999\n> \"13\";0;13;7.7;79.2;430382.728575057;4584654.30624991\n> \"14\";5.4;25.5;19.7;49.4;405135.912098405;4664406.17561431\n> \"15\";3.4;3.9;24.2;68.5;400215.1821287;4694043.93688062\n> \"16\";5.4;49.3;12;33.3;350317.02365569;4589693.62260169\n> \"17\";0.7;18.4;15.6;65.4;397713.678003332;4568793.56943331\n> \"18\";24.6;19.2;15.3;40.9;317994.082601572;4589907.1721435\n> \"19\";1.6;35.8;12.3;50.3;462421.77216075;4670393.61645736\n> \"20\";0.7;18.2;11.5;69.7;486155.455252868;4646255.66631595\n> \"21\";1.1;16.4;14.9;67.6;461267.985176289;4606541.10706396\n> \"22\";9.6;21.3;15.8;53.3;288455.824045255;4504952.6991395\n> \"23\";21.7;20.6;14.5;43.3;327348.204529629;4640700.52821437\n> \"24\";3.9;30.5;12.7;52.9;438167.607749901;4647029.15572223\n> \"25\";9.6;14.9;17.4;58.2;328901.564642441;4676567.56662623\n> \"26\";8.8;10.5;17.1;63.5;349666.156616966;4711810.64023291\n> \"27\";12.2;32.4;13.8;41.6;322579.078627982;4612825.74569361\n> \"28\";3.7;29.3;14.4;52.5;482439.452245322;4663947.6132033\n> \"29\";18;12.6;21.7;47.6;316576.911247227;4565666.55526086\n> \"30\";3.6;70.9;4.2;21.3;300033.804704933;4556400.82019236\n> \"31\";1.6;39.3;11;48.1;436410.687853432;4681810.91273048\n> \"32\";10.8;46.6;8.8;33.9;360494.176244131;4622737.85398312\n> \"33\";7.5;12.7;13.4;66.4;294127.13025374;4604287.62364858\n> \"34\";1.1;28.8;15.5;54.7;471124.046665996;4632677.04025366\n> \"35\";11.3;23.2;18.2;47.2;377572.99854011;4652696.7574331\n> \"36\";0.6;26.1;12.1;61.3;356183.320859356;4558587.74697974\n> \"37\";25.7;13.5;19.9;40.8;279266.32928515;4548327.06882255\n> \"38\";10.7;27.2;13.3;48.7;340846.709112724;4612041.19862861\n> \"39\";1.2;9.2;16.8;72.8;322281.633482307;4732853.61461772\n> \"40\";0.1;30.4;10.1;59.4;421084.943724487;4602099.53373022\n> \"41\";0.4;38.3;10.4;50.9;442759.520563602;4614434.90922826\n>\n>\n> Aprovecho para hacer una segunda pregunta: se le puede pedir que siempre\n> todos los nombres queden fuera de los sectores? En algunos casos quedan\n> superpuestas la etiquetas con el color del quesito y no se puede leer con\n> facilidad. Forzar la posición de las etiquetas en un grafico concreto es\n> sencillo (labelpos), pero no encuentro cómo hacerlo en este caso.\n>\n> Muchas gracias.\n>\n> Manel.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPara la primera pregunta, haría falta tener todo el data.frame. En el\nconjunto de datos que has enviado no aparece una columna de tipo factor, que\nentiendo que son las que agrupan y de las que ",
       "thread_id": "thread-7ae78c67ef57",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111003/6e9d1b3a/attachment.pl"
+      ]
     },
     {
       "id": "msg-e5a9666582bf",
@@ -145,11 +160,14 @@
       "subject_clean": "[R-es] Unir tablas",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111004/6d721aa9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111004/6d721aa9/attachment.pl>",
+      "body_plain": "Hola a tofos,\n\nEstoy trabajando con distintas tablas, todas tienen las mismas variables (V1, V2, V3) y lo unico que debo hacer es unir los casos en funcion a las mismas variables.\nPor ejemplo\n\ntabla1<-data.frame(v1,v2,v3)\ntabla2<-data.frame(v1,v2,v3)\ntabla3<-data.frame(v1,v2,v3)\ntabla4<-data.frame(v1,v2,v3)\n\nQuiero unir todos los casos. Creando una gran tabla.\n\nQuien puede ayudarme?\nJosé\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a tofos,\n\nEstoy trabajando con distintas tablas, todas tienen las mismas variables (V1, V2, V3) y lo unico que debo hacer es unir los casos en funcion a las mismas variables.\nPor ejemplo\n\ntabla1<",
       "thread_id": "thread-da6602aacfe6",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111004/6d721aa9/attachment.pl"
+      ]
     },
     {
       "id": "msg-539cf2db9bbe",
@@ -163,11 +181,14 @@
       "references": [
         "<1317756984.16422.YahooMailNeo@web26502.mail.ukl.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111004/5b42060f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111004/5b42060f/attachment.pl>",
+      "body_plain": "Si tienen el mismo nombre de variables , prueba con\nrbind(tabla1,tabla2,....)\n\nEn tu caso\ntabla.total <- rbind(tabla1,tabla2,tabla3,tabla4)\n\nSaludos\n\n\nEl 04/10/11 21:36, Jose Bustos Melo escribió:\n>\n>  Hola a tofos,\n>\n> Estoy trabajando con distintas tablas, todas tienen las mismas variables (V1, V2, V3) y lo unico que debo hacer es unir los casos en funcion a las mismas variables.\n> Por ejemplo\n>\n> tabla1<-data.frame(v1,v2,v3)\n> tabla2<-data.frame(v1,v2,v3)\n> tabla3<-data.frame(v1,v2,v3)\n> tabla4<-data.frame(v1,v2,v3)\n>\n> Quiero unir todos los casos. Creando una gran tabla.\n>\n> Quien puede ayudarme?\n> José\n>\n> \t[[alternative HTML version deleted]]\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Si tienen el mismo nombre de variables , prueba con\nrbind(tabla1,tabla2,....)\n\nEn tu caso\ntabla.total <- rbind(tabla1,tabla2,tabla3,tabla4)\n\nSaludos\n\n\nEl 04/10/11 21:36, Jose Bustos Melo escribió:\n>\n>",
       "thread_id": "thread-da6602aacfe6",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111004/5b42060f/attachment.pl"
+      ]
     },
     {
       "id": "msg-b8ecef14127b",
@@ -197,11 +218,14 @@
       "references": [
         "<4E8C3C2F.1010601@um.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/0fddf5b7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/0fddf5b7/attachment.pl>",
+      "body_plain": "Hola,\n\nSi el problema realmente es de dependencias con otra librería, el interfaz\nde Mac para R permite que cuando instalas un nuevo paquete se incluyan\nautomáticamente todas las dependencias. Para ello tienes que habilitar un\ncheck que aparece en la ventana donde detallas el nombre del paquete.\n\nOtra opción consiste en mirar el detalle del paquete R-Commander y ver las\ndependencias con otras librerías y cargar estas otras de forma manual.\n\nMira aquí el detalle:\nhttp://cran.at.r-project.org/web/packages/Rcmdr/index.html\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/10/5 José Antonio Palazón Ferrando <palazon at um.es>\n\n> No se responder a la siguiente pregunta:\n>\n> Un alumno se ha instalado R-Commander en Mac y la opción \"Nuevo conjunto\n> de Datos\" del menú de \"Datos\" no le aparece. ¿Sabes que ha podido\n> ocurrir? Imagino que le falta algún paquete, pero no se cual.\n>\n> Me podéis echar una mano\n>\n>\n> --\n> ______________________________**______________________________\n> José Antonio Palazón Ferrando\n> Profesor Titular. Departamento de Ecología e Hidrología.\n> Facultad de Biología. Universidad de Murcia.\n> Campus Universitario de Espinardo\n> 30100 MURCIA-SPAIN\n> Telf: +34 868 88 49 80\n> Fax : +34 868 88 39 63\n> Email: palazon at um.es\n>       http://webs.um.es/palazon\n>\n> ______________________________**_________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSi el problema realmente es de dependencias con otra librería, el interfaz\nde Mac para R permite que cuando instalas un nuevo paquete se incluyan\nautomáticamente todas las dependencias. Para el",
       "thread_id": "thread-b8ecef14127b",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/0fddf5b7/attachment.pl"
+      ]
     },
     {
       "id": "msg-4d469e52b4a3",
@@ -286,11 +310,14 @@
       "references": [
         "<mailman.1530.1317859926.26350.r-help-es@r-project.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/d43b7700/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/d43b7700/attachment.pl>",
+      "body_plain": "Ricardobueno ... no es tan complicado ... te copio parte de un código que tengo para eso.Esto genera 8 gráficas en pdf\nEn resumen lo que haces es en el bucle, llamas a las variables que quieres que se grafiquen pero por referencia, no por nombre ... para que te sirva el contador del \"for\", es decir datos[,i] donde i varía de acuerdo al contador...los títulos los debes grabar en un vector para luego llamarlo en el main del plot, igual como referencia... titulos <- names(datos)lo mismo puedes hacer con los colores ... puedes asignarles los que quieras ... siempre y cuando tengas predefinido un array con los nombres de los colores..también el nombre del archivo pdf que quieres  lo puedes llamar por referencia ... \n# GRAFICAS DE PARTICIPACION TASAS ACTIVASwin.graph(width=11, height=7,pointsize=10)par(las=1)for(i in 1:8){niv <- bceact03[bceact03$ORD==i,c(4,5)]*100col00 <- as.character(sisact01[[i]][,6])plot(sisact01[[i]][,2],sisact01[[i]][,4],pch=20,lwd=20,col=col00,xlab=\"tasa (porcentaje)\",\tylab=\"participación (porcentaje)\",main=paste(\"Segmento:\",main01[i]))grid(nx=NULL,ny=NULL,col=\"lightgray\",lty=\"dotted\",lwd=1,equilogs=TRUE)abline(v=niv,col=c(\"blue\",\"red\"),lwd=2)text(sisact01[[i]][,2],sisact01[[i]][,4],sisact01[[i]][,1],cex=0.8,pos=1,offset=-0.4)text(sisact01[[i]][,2],sisact01[[i]][,4],sisact01[[i]][,2],cex=0.6,pos=1,offset=0.2)dev.copy2pdf(file=paste(\"ptc\",file01[i],\".pdf\",sep=\"\"))}\ndonde bceact03 y sisact01 son arreglos de datos \n\nSaludos.\n> Message: 6\n> Date: Wed, 5 Oct 2011 19:11:59 -0500\n> From: Ricardo Borda <ricardobordah at yahoo.es>\n> To: r-help-es at r-project.org\n> Subject: [R-es] Consulta\n> Message-ID:\n> \t<CAGSRbNvEY=99y4AttR_WBhivuKimsTDW44DieTtM=mGT1iLskQ at mail.gmail.com>\n> Content-Type: text/plain; charset=\"iso-8859-1\"\n> \n> Buenas noches\n> \n> \n> Quiero generar un archivo con 25 gráficos tal y como lo adjunto en el Pdf.\n> Quisiera saber qué debo hacer para que cada gráfico me aparezca con su\n> respectivo título.  Los títulos son los siguientes:\n> \n> \n>     names(por)\n> \n>  [1] \"C6.0\"                  \"C8.0\"                  \"C10.0\"\n>                  \"C11.0\"                 \"C12.0\"                 \"C13.0\"\n> \n> \n>  [7] \"C14.0\"                 \"C14.1\"                 \"C15.0\"\n>        \"C16.0\"                 \"C16.1\"                 \"C17.0\"\n> \n> \n> [13] \"C17.1\"                 \"C18.0\"                 \"C18.1n9c\"\n>               \"C18.2n6c\"              \"C18.2n9t\"              \"C18.3n3\"\n> \n> \n> [19] \"C20.0\"                 \"C20.1\"                 \"C20.3n6\"\n>                \"C20.4n6\"               \"C20.5n3\"               \"C22.0\"\n> \n> \n> [25] \"GRASA.NO.IDENTIFICADA\"\n> \n> \n> Estos títulos corresponden al nombre de las variables de la base de datos:\n> experimento.\n> \n> \n> \n> *El programa que estoy utilizando es el siguiente:*\n> \n> datos<-read.csv2(\"experimento.csv\")\n> \n> attach(datos)\n> \n> por<-datos[,c(6:30)]/datos[,31]\n> \n> tipo<-factor(datos$Tipo)\n> \n> pdf(\"graficos6.pdf\")\n> \n> parametros<-function(y){\n> \n> a<-boxplot(y~Tipo, data=por)\n> \n> return()\n> \n> }\n> \n> sim<-apply(por,2,parametros)\n> \n> dev.off()\n> \n> \n> \n> \n> \n> \n> \n> -- \n> Atentamente:\n> \n> Ricardo A. Borda Hernández\n> Docente de Estadística\n> ------------ próxima parte ------------\n> Se ha borrado un adjunto en formato HTML...\n> URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/60716923/attachment.html>\n> ------------ próxima parte ------------\n> A non-text attachment was scrubbed...\n> Name: graficos6.pdf\n> Type: application/pdf\n> Size: 60711 bytes\n> Desc: no disponible\n> URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/60716923/attachment.pdf>\n> ------------ próxima parte ------------\n> A non-text attachment was scrubbed...\n> Name: experimento.csv\n> Type: application/octet-stream\n> Size: 4658 bytes\n> Desc: no disponible\n> URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/60716923/attachment.obj>\n> \n> ------------------------------\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> \n> \n> Fin de Resumen de R-help-es, Vol 32, Envío 5\n> ********************************************\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Ricardobueno ... no es tan complicado ... te copio parte de un código que tengo para eso.Esto genera 8 gráficas en pdf\nEn resumen lo que haces es en el bucle, llamas a las variables que quieres que se",
       "thread_id": "thread-5de9f626b875",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111005/d43b7700/attachment.pl"
+      ]
     },
     {
       "id": "msg-eb4bc05a4268",
@@ -338,11 +365,14 @@
       "references": [
         "<5811599987vivigui@uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/114b16a5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/114b16a5/attachment.pl>",
+      "body_plain": "Hola,\n\nLo tenías casi hecho...\n\n\nf <- c(153.2, 148.7, 136.6, 133.8, 135.8, 146.0)\nf2 <- c(139.1, 143.5, 139.8, 136.1, 143.0, 130.8)\nf3 <- c(130.1, 127.4, 132.8, 133.2, 140.2, 136.8)\n\nli <- list(f,f2,f3)\n\n*boxplot(li)*\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\n\n2011/10/6 <Guillermo.Vinue at uv.es>\n\n> Hola, estoy atascado con algo que creo que no debe ser muy difícil, pero\n> no me sale, es simplemente añadir boxplots paralelos a un primer boxplot\n> ya representado en una misma gráfica.\n>\n> Lo que he hecho es lo siguiente:\n>\n> f <- c(153.2, 148.7, 136.6, 133.8, 135.8, 146.0)\n> f2 <- c(139.1, 143.5, 139.8, 136.1, 143.0, 130.8)\n> f3 <- c(130.1, 127.4, 132.8, 133.2, 140.2, 136.8)\n>\n> li <- list(f,f2,f3)\n>\n> boxplot(f)\n>\n> for(i in 2:3){\n>  boxplot(li[[i]], add = T, at = i)\n> }\n>\n> Con estas sentencias, sólo me sale representado el primer boxplot,\n> ¿alguien me puede decir cómo añadir en el gráfico del primer boxplot,\n> los otros dos de modo que los tres estén en el mismo gráfico colocados\n> en paralelo?.\n>\n> Muchas gracias,\n>\n> Guillermo\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nLo tenías casi hecho...\n\n\nf <- c(153.2, 148.7, 136.6, 133.8, 135.8, 146.0)\nf2 <- c(139.1, 143.5, 139.8, 136.1, 143.0, 130.8)\nf3 <- c(130.1, 127.4, 132.8, 133.2, 140.2, 136.8)\n\nli <- list(f,f2,f",
       "thread_id": "thread-eb4bc05a4268",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/114b16a5/attachment.pl"
+      ]
     },
     {
       "id": "msg-d6da089f7d0d",
@@ -392,11 +422,14 @@
       "subject_clean": "[R-es] Survival",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/16787584/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/16787584/attachment.pl>",
+      "body_plain": "Hola a todos:\n\nEstoy comenzando a utilizar la librería survival, mi experiencia al respecto es nula.\n\nEl material que leo y los ejemplos son entendibles, pero tengo una duda respecto a como preparar mis datos antes de utilizar la librería.\n\nMis datos (los cuales yo mido a campo y puedo escribirlos en la base de datos, planilla de cálculo, como yo quiera) son el seguimiento a lo largo del tiempo de ciertas cosas que van pasando.\nBásicamente tengo el individuo, la fecha de inicio del protocolo, cuatro o cinco tratamientos, y el resultado (si o no). Cabe aclarar que el resultado puede ser al primer tratamiento, segundo tratamiento, al producirse el resultado no se realiza el siguiente tratamiento (no enveneno a nadie, pero es comparable, si está muerto no doy más veneno). También conozco la fecha de nacimiento, podía tener la edad a cada tiempo.\n\nMi duda es porque leo los ejemplos y los datos ya están acomodados, o muy próximo a lo necesario para el procesamiento del modelo en R. No se a ustedes, pero para a mi muchas veces es más el tiempo que me lleva acomodar los datos (dentro o fuera de R) que el que me lleva pensar y hacer el modelo estadístico.\n\nLo que yo pensé es almacenar los registros de una forma muy sencilla, las columnas serían las siguientes:\n\nIndividuo, fecha, lo que paso.\n\nY en la columna “lo que paso” usar palabras como, “nacimiento”, “inicio de protocolo”, “tratamiento”, “resultado”.\n\nQuedaría algo como (las fechas son cualquiera)\n\njavier    17/11/00    nacimiento\njavier    27/12/01    inicio protocolo\njavier    08/03/02    tratamiento   \njavier    20/09/03    tratamiento\njavier    30/04/04    resultado\n\nMirando ejemplos, las columnas preparadas son serían algo como:\nindividuo    fecha tratamiento    resultado\n\nO \nIndividuo     entre fechas        resultados\n\nLa libreria survival tiene el siguiente ejemplo:\nfit <- coxph(Surv(time1, time2, status) ~ age + creatinine, data=mydata)\n\nsubject    time1    time2    status    age    creatinine . . .\n1             0             15         0         25         1.3\n1             15           46         0         25         1.5\n1             46           73         0         25         1.4\n\nYo no puedo contemplar esa forma porque mis datos no tienen un “entre tal y tal fecha”. (me es muy importante conocer si fue al día 22 o 23, por ejemplo) \nSerían algo como:\n\nsubject    time     status ( status es si o no para la fecha o día time).\n\nNecesitaría algo de información como para leer un poco más o comentarios de experiencia de algunos de ustedes sobre survival y R. Principalmente a como ir preparando los registros para ser eficiente y no perder tiempo, llevo más de 5000 renglones pasados y no me gustaría tener que rehacer mi trabajo por almacenar de forma incorrecta la información. Tengo dudas sobre como preparar los registros para importar y/o procesar en R antes de escribir el modelo para la librería Survival.\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos:\n\nEstoy comenzando a utilizar la librería survival, mi experiencia al respecto es nula.\n\nEl material que leo y los ejemplos son entendibles, pero tengo una duda respecto a como preparar m",
       "thread_id": "thread-3c9f6cf9f0e5",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/16787584/attachment.pl"
+      ]
     },
     {
       "id": "msg-1ff62973e497",
@@ -408,11 +441,14 @@
       "subject_clean": "[R-es] Queridos amigos soy nuevo en R y tengo el siguiente problema: quiero utilizar el test para comparacion multiple de kruskal y que, de acuerdo a lo indicado en un tutorial que sigo, se llama con ...",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/cdaadc8c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/cdaadc8c/attachment.pl>",
+      "body_plain": "Queridos amigos soy nuevo en R y tengo el siguiente problema: quiero\nutilizar el test para comparacion multiple de kruskal y que, de acuerdo a lo\nindicado en un tutorial que sigo, se llama con:\n\nkruskalmc(....)\n\nsin embargo, al tratar de usarlo recibo el mensaje: \" Error: could not find\nfunction \"kruskalmc\" \" .... he visto que la funcion se supone que viene en\nel paquete \"pgirmess\", el que he logrado instalar despues de unas buenas\nhoras leyendo para ver como se hace, al final lo he logrado, pero la funcion\nkruskalmc() sigue sin estar disponible ...\n\nalguna sugerencia para resolver el problema??\n\nespero su ayuda,\n\nAgradecido de su tiempo y buena voluntad, eric.\n\n\n\n\n\n-- \nNota: las tildes se han omitido para evitar conflictos con algunos lectores\nde correo.\n\n* Un economista es un experto que sabrá mañana por qué las cosas que predijo\nayer no han sucedido hoy (Laurence Peter).\n\n* SATYÂT NÂSTI PARO DHARMAH\n\n* No es matando al enemigo que se consiguira la paz en el mundo ...\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Queridos amigos soy nuevo en R y tengo el siguiente problema: quiero\nutilizar el test para comparacion multiple de kruskal y que, de acuerdo a lo\nindicado en un tutorial que sigo, se llama con:\n\nkrusk",
       "thread_id": "thread-1ff62973e497",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/cdaadc8c/attachment.pl"
+      ]
     },
     {
       "id": "msg-1488759b6681",
@@ -426,11 +462,14 @@
       "references": [
         "<CALATcDDjjsspYTqkn1q0=ULgdYxY3U8T=gxcMndjLyOAkKYtSA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/0bb6d123/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/0bb6d123/attachment.pl>",
+      "body_plain": "Hola Eric,\n\nNecesitas instalar el paquete que contiene dicha funcion:\n\n> install.packages('pgirmess')\n> require('pgirmess')\n\nantes de realizar cualquier analisis.\n\nUn saludo,\nJorge\n\n\n2011/10/6 Eric <>\n\n> Queridos amigos soy nuevo en R y tengo el siguiente problema: quiero\n> utilizar el test para comparacion multiple de kruskal y que, de acuerdo a\n> lo\n> indicado en un tutorial que sigo, se llama con:\n>\n> kruskalmc(....)\n>\n> sin embargo, al tratar de usarlo recibo el mensaje: \" Error: could not find\n> function \"kruskalmc\" \" .... he visto que la funcion se supone que viene en\n> el paquete \"pgirmess\", el que he logrado instalar despues de unas buenas\n> horas leyendo para ver como se hace, al final lo he logrado, pero la\n> funcion\n> kruskalmc() sigue sin estar disponible ...\n>\n> alguna sugerencia para resolver el problema??\n>\n> espero su ayuda,\n>\n> Agradecido de su tiempo y buena voluntad, eric.\n>\n>\n>\n>\n>\n> --\n> Nota: las tildes se han omitido para evitar conflictos con algunos lectores\n> de correo.\n>\n> * Un economista es un experto que sabrá mañana por qué las cosas que\n> predijo\n> ayer no han sucedido hoy (Laurence Peter).\n>\n> * SATYÂT NÂSTI PARO DHARMAH\n>\n> * No es matando al enemigo que se consiguira la paz en el mundo ...\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Eric,\n\nNecesitas instalar el paquete que contiene dicha funcion:\n\n> install.packages('pgirmess')\n> require('pgirmess')\n\nantes de realizar cualquier analisis.\n\nUn saludo,\nJorge\n\n\n2011/10/6 Eric <>",
       "thread_id": "thread-1ff62973e497",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/0bb6d123/attachment.pl"
+      ]
     },
     {
       "id": "msg-511540ea1b21",
@@ -463,11 +502,14 @@
         "<CALATcDDjjsspYTqkn1q0=ULgdYxY3U8T=gxcMndjLyOAkKYtSA@mail.gmail.com>",
         "<CAH=m5MjhJU2C8zyv1wmYjQ0vYFaNj==iSFqUFs+pyQ=qdxHuHw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/d34a0354/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/d34a0354/attachment.pl>",
+      "body_plain": "fantastico !!!  ya esta funcionando kruskalmc() .... muchas gracias a Kjetil\ny Jorge por la rapidez en la respuesta, nunca espere que fuera taaaaan\nrapido.\n\nSlds, eric.\n\n\n\n\n\n\n\n2011/10/6 Kjetil brinchmann Halvorsen <kjetil1001 at gmail.com>\n\n> mire abajo.\n>\n> 2011/10/6 Eric <ericconchamunoz at gmail.com>:\n> > Queridos amigos soy nuevo en R y tengo el siguiente problema: quiero\n> > utilizar el test para comparacion multiple de kruskal y que, de acuerdo a\n> lo\n> > indicado en un tutorial que sigo, se llama con:\n> >\n> > kruskalmc(....)\n> >\n> > sin embargo, al tratar de usarlo recibo el mensaje: \" Error: could not\n> find\n> > function \"kruskalmc\" \" .... he visto que la funcion se supone que viene\n> en\n> > el paquete \"pgirmess\", el que he logrado instalar despues de unas buenas\n>\n> Asumiendo que la función esta en el paquete \"pgirmess\", haces esto:\n>\n> > library(pgirmess)\n>\n> y ahora la función debe estar accesible. Puedes ver sus páginas de ayuda\n> con\n>\n> > ?kruskalmc\n>\n> (Aqui \">\" denota el prompt de R)\n>\n> Kjetil\n>\n>\n> > horas leyendo para ver como se hace, al final lo he logrado, pero la\n> funcion\n> > kruskalmc() sigue sin estar disponible ...\n> >\n> > alguna sugerencia para resolver el problema??\n> >\n> > espero su ayuda,\n> >\n> > Agradecido de su tiempo y buena voluntad, eric.\n> >\n> >\n> >\n> >\n> >\n> > --\n> > Nota: las tildes se han omitido para evitar conflictos con algunos\n> lectores\n> > de correo.\n> >\n> > * Un economista es un experto que sabrá mañana por qué las cosas que\n> predijo\n> > ayer no han sucedido hoy (Laurence Peter).\n> >\n> > * SATYÂT NÂSTI PARO DHARMAH\n> >\n> > * No es matando al enemigo que se consiguira la paz en el mundo ...\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n>\n>\n> --\n> \"If you want a picture of the future - imagine a boot stamping on the\n> human face - forever.\"\n>\n> George Orwell (1984)\n>\n\n\n\n-- \nNota: las tildes se han omitido para evitar conflictos con algunos lectores\nde correo.\n\n* Un economista es un experto que sabrá mañana por qué las cosas que predijo\nayer no han sucedido hoy (Laurence Peter).\n\n* SATYÂT NÂSTI PARO DHARMAH\n\n* No es matando al enemigo que se consiguira la paz en el mundo ...\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "fantastico !!!  ya esta funcionando kruskalmc() .... muchas gracias a Kjetil\ny Jorge por la rapidez en la respuesta, nunca espere que fuera taaaaan\nrapido.\n\nSlds, eric.\n\n\n\n\n\n\n\n2011/10/6 Kjetil brinchm",
       "thread_id": "thread-1ff62973e497",
       "thread_depth": 2,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/d34a0354/attachment.pl"
+      ]
     },
     {
       "id": "msg-11a32a60eb14",
@@ -481,11 +523,14 @@
       "references": [
         "<BAEBDD9342334A028D24ED35CF133473@JavierMarcuzzi>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/0d71c19f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/0d71c19f/attachment.pl>",
+      "body_plain": "Hola,\n\nEmpiezo por la parte que puede ser más fácil y es sobre algún libro que\ntrate este tema pero aplicado a R. De lo más asequible, actualizado que\nconozco te recomendaría especialmente este libro:\n\nhttp://www.amazon.com/Handbook-Statistical-Analyses-Using-Second/dp/1420079336/ref=sr_1_1?s=books&ie=UTF8&qid=1317934799&sr=1-1\n\nY sobre el detalle de la organización de los datos, efectivamente como has\nvisto en los ejemplos, se organizan de manera que los detalles de un\nindividuo aparecen en una fila. En este tipo de modelos lo que monitoriza es\nel tiempo de supervivencia (lo que comentas como \"entre fechas\") y el resto\nde columnas suelen ser variables categóricas (tratamiento, sexo, etc) que\nsirven para contrastar si los tiempos de supervivencia están o no\nrelacionados con estas variables.\n\nPero como en tu caso, quieres mantener las fechas de diferentes hitos\n(nacimiento, tratamiento, etc), las puedes mantener en las primeras columnas\nde la tabla:\n\nIndividuo Nacimiento Inicio_Protocolo Resultado\nJavier     17/11/00    27/12/01          30/04/04\nOtro       20/10/00    16/09/01          25/03/03\n....\n\nComo no sé muy bien el significado de los eventos \"Tratamiento\" no los he\npuesto, pero vaya si los quieres mantener serían columnas adicionales.\n\nSobre esta tabla, el ampliarla para conseguir el \"Tiempo_Supervivencia\" es\ninmediato (resta de fechas de las columnas \"Resultado\" y \"Nacimiento\").  Además\ndel \"Tiempo_Supervivencia\" puedes llegar a analizar si el\n\"Tiempo_hasta_inicio_tratamiento\" o el \"Tiempo_en_tratamiento\" tiene o no\nefecto en los tiempos de supervivencia. Estas otras variables derivadas\nvuelven a ser de cálculo inmediato (resta de columnas con fechas).\n\nHacer esto mismo sobre la estructura que tienes :\n\njavier    17/11/00    nacimiento\njavier    27/12/01    inicio protocolo\njavier    08/03/02    tratamiento\njavier    20/09/03    tratamiento\njavier    30/04/04    resultado\n\nes algo bastante más complicado (pero factible).\n\nSi ya tienes pasadas 5000 líneas en tu tabla, de esa otra forma, la forma de\nconstruir la nueva estructura puede hacerse en R con un blucle o con un par\nde manipulaciones en Excel...\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n2011/10/6 Marcuzzi, Javier Rubén <javier.ruben.marcuzzi at gmail.com>\n\n> Hola a todos:\n>\n> Estoy comenzando a utilizar la librería survival, mi experiencia al\n> respecto es nula.\n>\n> El material que leo y los ejemplos son entendibles, pero tengo una duda\n> respecto a como preparar mis datos antes de utilizar la librería.\n>\n> Mis datos (los cuales yo mido a campo y puedo escribirlos en la base de\n> datos, planilla de cálculo, como yo quiera) son el seguimiento a lo largo\n> del tiempo de ciertas cosas que van pasando.\n> Básicamente tengo el individuo, la fecha de inicio del protocolo, cuatro o\n> cinco tratamientos, y el resultado (si o no). Cabe aclarar que el resultado\n> puede ser al primer tratamiento, segundo tratamiento, al producirse el\n> resultado no se realiza el siguiente tratamiento (no enveneno a nadie, pero\n> es comparable, si está muerto no doy más veneno). También conozco la fecha\n> de nacimiento, podía tener la edad a cada tiempo.\n>\n> Mi duda es porque leo los ejemplos y los datos ya están acomodados, o muy\n> próximo a lo necesario para el procesamiento del modelo en R. No se a\n> ustedes, pero para a mi muchas veces es más el tiempo que me lleva acomodar\n> los datos (dentro o fuera de R) que el que me lleva pensar y hacer el modelo\n> estadístico.\n>\n> Lo que yo pensé es almacenar los registros de una forma muy sencilla, las\n> columnas serían las siguientes:\n>\n> Individuo, fecha, lo que paso.\n>\n> Y en la columna “lo que paso” usar palabras como, “nacimiento”, “inicio de\n> protocolo”, “tratamiento”, “resultado”.\n>\n> Quedaría algo como (las fechas son cualquiera)\n>\n> javier    17/11/00    nacimiento\n> javier    27/12/01    inicio protocolo\n> javier    08/03/02    tratamiento\n> javier    20/09/03    tratamiento\n> javier    30/04/04    resultado\n>\n> Mirando ejemplos, las columnas preparadas son serían algo como:\n> individuo    fecha tratamiento    resultado\n>\n> O\n> Individuo     entre fechas        resultados\n>\n> La libreria survival tiene el siguiente ejemplo:\n> fit <- coxph(Surv(time1, time2, status) ~ age + creatinine, data=mydata)\n>\n> subject    time1    time2    status    age    creatinine . . .\n> 1             0             15         0         25         1.3\n> 1             15           46         0         25         1.5\n> 1             46           73         0         25         1.4\n>\n> Yo no puedo contemplar esa forma porque mis datos no tienen un “entre tal y\n> tal fecha”. (me es muy importante conocer si fue al día 22 o 23, por\n> ejemplo)\n> Serían algo como:\n>\n> subject    time     status ( status es si o no para la fecha o día time).\n>\n> Necesitaría algo de información como para leer un poco más o comentarios de\n> experiencia de algunos de ustedes sobre survival y R. Principalmente a como\n> ir preparando los registros para ser eficiente y no perder tiempo, llevo más\n> de 5000 renglones pasados y no me gustaría tener que rehacer mi trabajo por\n> almacenar de forma incorrecta la información. Tengo dudas sobre como\n> preparar los registros para importar y/o procesar en R antes de escribir el\n> modelo para la librería Survival.\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEmpiezo por la parte que puede ser más fácil y es sobre algún libro que\ntrate este tema pero aplicado a R. De lo más asequible, actualizado que\nconozco te recomendaría especialmente este libro:",
       "thread_id": "thread-3c9f6cf9f0e5",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111006/0d71c19f/attachment.pl"
+      ]
     },
     {
       "id": "msg-f91702c070f6",
@@ -513,11 +558,14 @@
       "subject_clean": "[R-es] Consulta",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111007/0c87708e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111007/0c87708e/attachment.pl>",
+      "body_plain": "Buenos días\n\nComo hago para trabajar con datos faltas en R una vez exportados desde\nexcel.  En la lectura de los datos le dí\n\nna.strings =\"NA\"\n\nPero al realizar cálculos básicos como la media me aparece NA\n\nAgradezco su atención y ayuda\n\n-- \nAtentamente:\n\nRicardo A. Borda Hernández\nDocente de Estadística\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos días\n\nComo hago para trabajar con datos faltas en R una vez exportados desde\nexcel.  En la lectura de los datos le dí\n\nna.strings =\"NA\"\n\nPero al realizar cálculos básicos como la media me apare",
       "thread_id": "thread-271d0b1770cf",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111007/0c87708e/attachment.pl"
+      ]
     },
     {
       "id": "msg-19d6c1c09cca",
@@ -549,11 +597,14 @@
       "references": [
         "<CAGSRbNv_stbi=8rFmgeT3UazFpZ4jqZ8jOhe0qwfZ3AP3eMB=Q@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111007/7edd657c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111007/7edd657c/attachment.pl>",
+      "body_plain": "Buenos dias Ricardo,\n\nObserva el siguiente ejemplo:\n\n> x <- c(1, 2, 3, 2, 1, 3, 4, 5, NA, 5, 6, 7, 4, NA)\n> mean(x)\n[1] NA\n> mean(x, na.rm = TRUE)\n[1] 3.583333\n\nUn saludo,\nJorge\n\n\n2011/10/7 Ricardo Borda <>\n\n> Buenos días\n>\n> Como hago para trabajar con datos faltas en R una vez exportados desde\n> excel.  En la lectura de los datos le dí\n>\n> na.strings =\"NA\"\n>\n> Pero al realizar cálculos básicos como la media me aparece NA\n>\n> Agradezco su atención y ayuda\n>\n> --\n> Atentamente:\n>\n> Ricardo A. Borda Hernández\n> Docente de Estadística\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Ricardo,\n\nObserva el siguiente ejemplo:\n\n> x <- c(1, 2, 3, 2, 1, 3, 4, 5, NA, 5, 6, 7, 4, NA)\n> mean(x)\n[1] NA\n> mean(x, na.rm = TRUE)\n[1] 3.583333\n\nUn saludo,\nJorge\n\n\n2011/10/7 Ricardo Bo",
       "thread_id": "thread-271d0b1770cf",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111007/7edd657c/attachment.pl"
+      ]
     },
     {
       "id": "msg-7aa54946fc39",
@@ -584,11 +635,14 @@
       "subject_clean": "[R-es] tapply",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111009/e0333161/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111009/e0333161/attachment.pl>",
+      "body_plain": "Hola\n\nEstoy cometiendo un error con tapply (lógicamente acepto cualquier otra forma para mi problema).\nPrepare el siguiente código para copiar y pegar, donde describo los datos y mi problema, creo que es la forma más fácil de explicarme.\n\n# primero cargo los datos para explicar el problema\nindividuo <- c('a', 'b', 'c', 'c','c')\nn_accion <- c(1,1,1,2,3)         # numero de accion en el individio, primera, segunda, tercera, ...\ninicio <-c(0,0,0,0,0)            # son los días desde que comienza el protocolo\nd_inicio <-c(2,5,5,9,12)         # son los dias desde el inicio al dia que se produce la acción\ndatos <- data.frame(individuo, n_accion, inicio, d_inicio)\ndatos\nquiero <- c(2,5,5,4,3)           # son los dias entre las acciónes susesivas, pero en la primera es desde el inicio\ndatos_quiero <- data.frame(individuo, n_accion, inicio, d_inicio, quiero)\ndatos_quiero\n# una forma de calcular los datos que quiero es la siguiente (yo_funca)\nyo_funca <- ifelse (n_accion >1, (d_inicio-d_inicio[n_accion+1]), d_inicio)\n# como tengo numeradas las acciónes tomo el valor de d_inicio para la acción siquiente n_accion + 1\nver <- data.frame(datos_quiero, yo_funca)\nver\n#\n#             Ahora el problema\n#\n#\n# en este ejemplo solo tengo individuos (a,b,c) y no hay acciónes repetidas mayores a 1\n# lógicamente en los datos reales tengo muchos individuos con el mismo n_accion\n# por tal motivo pense en crear un conteo utilizando tapply\n# pero hay un error en lo siguiente \"conteo <- with ...\"\nconteo <- with(ver, tapply(n_accion, individuo,  function(x){\n        conteo <- ifelse (n_accion >1, (n_accion - n_accion[n_accion+1]), n_accion)\n       yo_funca\n       }))\nver$Conteo <- do.call(c, conteo)\nver\n# ¿alguien puede ayudarme? O alguna otra forma de realizar lo mismo\nconteo \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola\n\nEstoy cometiendo un error con tapply (lógicamente acepto cualquier otra forma para mi problema).\nPrepare el siguiente código para copiar y pegar, donde describo los datos y mi problema, creo que",
       "thread_id": "thread-463ef75e1b5c",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111009/e0333161/attachment.pl"
+      ]
     },
     {
       "id": "msg-671d82ac9dab",
@@ -602,11 +656,14 @@
       "references": [
         "<8AA19E1DF7264B40B1FF570AD5E4DD19@JavierMarcuzzi>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111009/2b384a70/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111009/2b384a70/attachment.pl>",
+      "body_plain": "Hola Javier,\n\nPodrias intentar\n\n# esta funcion toma un vector x\n#  -- si x tiene longitud mayor a uno, reporta el\n#     primer elemento y la diferencia entre los demas\n#    si la longitud es uno, reporta x\nfoo <- function(x){\n    if(length(x) > 1) res <- c(x[1], diff(x))\n    else res <- x\n    res\n    }\n\nout <- ave(d_inicio, list(individuo), FUN = foo)\nout\n\nver$out <- out\nver\n\nUn saludo,\nJorge\n\n\n2011/10/9 Marcuzzi, Javier Rubén <>\n\n> Hola\n>\n> Estoy cometiendo un error con tapply (lógicamente acepto cualquier otra\n> forma para mi problema).\n> Prepare el siguiente código para copiar y pegar, donde describo los datos y\n> mi problema, creo que es la forma más fácil de explicarme.\n>\n> # primero cargo los datos para explicar el problema\n> individuo <- c('a', 'b', 'c', 'c','c')\n> n_accion <- c(1,1,1,2,3)         # numero de accion en el individio,\n> primera, segunda, tercera, ...\n> inicio <-c(0,0,0,0,0)            # son los días desde que comienza el\n> protocolo\n> d_inicio <-c(2,5,5,9,12)         # son los dias desde el inicio al dia que\n> se produce la acción\n> datos <- data.frame(individuo, n_accion, inicio, d_inicio)\n> datos\n> quiero <- c(2,5,5,4,3)           # son los dias entre las acciónes\n> susesivas, pero en la primera es desde el inicio\n> datos_quiero <- data.frame(individuo, n_accion, inicio, d_inicio, quiero)\n> datos_quiero\n> # una forma de calcular los datos que quiero es la siguiente (yo_funca)\n> yo_funca <- ifelse (n_accion >1, (d_inicio-d_inicio[n_accion+1]), d_inicio)\n> # como tengo numeradas las acciónes tomo el valor de d_inicio para la\n> acción siquiente n_accion + 1\n> ver <- data.frame(datos_quiero, yo_funca)\n> ver\n> #\n> #             Ahora el problema\n> #\n> #\n> # en este ejemplo solo tengo individuos (a,b,c) y no hay acciónes repetidas\n> mayores a 1\n> # lógicamente en los datos reales tengo muchos individuos con el mismo\n> n_accion\n> # por tal motivo pense en crear un conteo utilizando tapply\n> # pero hay un error en lo siguiente \"conteo <- with ...\"\n> conteo <- with(ver, tapply(n_accion, individuo,  function(x){\n>        conteo <- ifelse (n_accion >1, (n_accion - n_accion[n_accion+1]),\n> n_accion)\n>       yo_funca\n>       }))\n> ver$Conteo <- do.call(c, conteo)\n> ver\n> # ¿alguien puede ayudarme? O alguna otra forma de realizar lo mismo\n> conteo\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Javier,\n\nPodrias intentar\n\n# esta funcion toma un vector x\n#  -- si x tiene longitud mayor a uno, reporta el\n#     primer elemento y la diferencia entre los demas\n#    si la longitud es uno, repo",
       "thread_id": "thread-463ef75e1b5c",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111009/2b384a70/attachment.pl"
+      ]
     },
     {
       "id": "msg-29905c315908",
@@ -621,11 +678,14 @@
         "<8AA19E1DF7264B40B1FF570AD5E4DD19@JavierMarcuzzi>",
         "<CAKL8G3EFo53zWYPG7jeho2KP5Xpu6pskUQe1SvBLhk8KheTNYQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111010/5a334ca5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111010/5a334ca5/attachment.pl>",
+      "body_plain": "Jorge\n\nY así de fácil lo resuelve, y bueno, el que sabe sabe.\n\nMuchas gracias.\n\nJavier \n\nFrom: Jorge I Velez \nSent: Sunday, October 09, 2011 11:58 PM\nTo: Marcuzzi, Javier Rubén \nCc: r-help-es at r-project.org \nSubject: Re: [R-es] tapply\n\nHola Javier,\n\nPodrias intentar\n\n# esta funcion toma un vector x\n#  -- si x tiene longitud mayor a uno, reporta el \n#     primer elemento y la diferencia entre los demas\n#    si la longitud es uno, reporta x\nfoo <- function(x){\n    if(length(x) > 1) res <- c(x[1], diff(x))\n    else res <- x\n    res\n    }\n\nout <- ave(d_inicio, list(individuo), FUN = foo)\nout\n \nver$out <- out\nver\n\nUn saludo,\nJorge \n\n\n\n2011/10/9 Marcuzzi, Javier Rubén <>\n\n  Hola\n\n  Estoy cometiendo un error con tapply (lógicamente acepto cualquier otra forma para mi problema).\n  Prepare el siguiente código para copiar y pegar, donde describo los datos y mi problema, creo que es la forma más fácil de explicarme.\n\n  # primero cargo los datos para explicar el problema\n  individuo <- c('a', 'b', 'c', 'c','c')\n  n_accion <- c(1,1,1,2,3)         # numero de accion en el individio, primera, segunda, tercera, ...\n  inicio <-c(0,0,0,0,0)            # son los días desde que comienza el protocolo\n  d_inicio <-c(2,5,5,9,12)         # son los dias desde el inicio al dia que se produce la acción\n  datos <- data.frame(individuo, n_accion, inicio, d_inicio)\n  datos\n  quiero <- c(2,5,5,4,3)           # son los dias entre las acciónes susesivas, pero en la primera es desde el inicio\n  datos_quiero <- data.frame(individuo, n_accion, inicio, d_inicio, quiero)\n  datos_quiero\n  # una forma de calcular los datos que quiero es la siguiente (yo_funca)\n  yo_funca <- ifelse (n_accion >1, (d_inicio-d_inicio[n_accion+1]), d_inicio)\n  # como tengo numeradas las acciónes tomo el valor de d_inicio para la acción siquiente n_accion + 1\n  ver <- data.frame(datos_quiero, yo_funca)\n  ver\n  #\n  #             Ahora el problema\n  #\n  #\n  # en este ejemplo solo tengo individuos (a,b,c) y no hay acciónes repetidas mayores a 1\n  # lógicamente en los datos reales tengo muchos individuos con el mismo n_accion\n  # por tal motivo pense en crear un conteo utilizando tapply\n  # pero hay un error en lo siguiente \"conteo <- with ...\"\n  conteo <- with(ver, tapply(n_accion, individuo,  function(x){\n         conteo <- ifelse (n_accion >1, (n_accion - n_accion[n_accion+1]), n_accion)\n        yo_funca\n        }))\n  ver$Conteo <- do.call(c, conteo)\n  ver\n  # ¿alguien puede ayudarme? O alguna otra forma de realizar lo mismo\n  conteo\n         [[alternative HTML version deleted]]\n\n\n  _______________________________________________\n  R-help-es mailing list\n  R-help-es at r-project.org\n  https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Jorge\n\nY así de fácil lo resuelve, y bueno, el que sabe sabe.\n\nMuchas gracias.\n\nJavier \n\nFrom: Jorge I Velez \nSent: Sunday, October 09, 2011 11:58 PM\nTo: Marcuzzi, Javier Rubén \nCc: r-help-es at r-pro",
       "thread_id": "thread-463ef75e1b5c",
       "thread_depth": 2,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111010/5a334ca5/attachment.pl"
+      ]
     },
     {
       "id": "msg-ca862b19cea6",
@@ -637,11 +697,14 @@
       "subject_clean": "[R-es] Aplicación microcontroladores",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/70ac4b04/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/70ac4b04/attachment.pl>",
+      "body_plain": "Saludos a todos\n\nCuando manejo datos como series de tiempo o funciones mediante PCA\n(Principal Component Data), estos datos pueden ser exportados desde R a\nsoftwares para microcontroladores o pics, Gracias por la colaboración\n\nCARLOS ANDRES\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Saludos a todos\n\nCuando manejo datos como series de tiempo o funciones mediante PCA\n(Principal Component Data), estos datos pueden ser exportados desde R a\nsoftwares para microcontroladores o pics, Gr",
       "thread_id": "thread-ca862b19cea6",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/70ac4b04/attachment.pl"
+      ]
     },
     {
       "id": "msg-0b2eead0d502",
@@ -655,11 +718,14 @@
       "references": [
         "<CAFrddgdD1TuYjkh9tAs51ujvU-8SPcD3=bN79FuUKYQAX4a4Wg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/459aca8a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/459aca8a/attachment.pl>",
+      "body_plain": "Hola,\n\nHay librerías en R que permiten su integración con C++ por ejemplo:\n\nRcpp <http://cran.at.r-project.org/web/packages/Rcpp/index.html>Seamless R\nand C++ Integration\n\nPero a falta de más datos, no sé si lo que pretendes es:\n- Que el firmware del microcontrolador llame a R, éste procese y devuelva\nresultados. ¿R estaría en el mismo controlador?.\n- Que el microcontrolador pase datos/medidas a otro sistema donde resida R,\nR procese y devuelva datos?\n\nPero vaya, en este escenario lo complicado es la primera opción básicamente\npor la dificulta de integrar en el microcontrolador un mini Sistema\nOperativo sobre el que instalar R.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 11 de octubre de 2011 21:29, Carlos Andres Perez Angarita <\ncaaperezan at gmail.com> escribió:\n\n> Saludos a todos\n>\n> Cuando manejo datos como series de tiempo o funciones mediante PCA\n> (Principal Component Data), estos datos pueden ser exportados desde R a\n> softwares para microcontroladores o pics, Gracias por la colaboración\n>\n> CARLOS ANDRES\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nHay librerías en R que permiten su integración con C++ por ejemplo:\n\nRcpp <http://cran.at.r-project.org/web/packages/Rcpp/index.html>Seamless R\nand C++ Integration\n\nPero a falta de más datos, n",
       "thread_id": "thread-ca862b19cea6",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/459aca8a/attachment.pl"
+      ]
     },
     {
       "id": "msg-63d78653db88",
@@ -671,11 +737,14 @@
       "subject_clean": "[R-es] apply",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/846098a3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/846098a3/attachment.pl>",
+      "body_plain": "Nuevamente necesito ayuda, parece que en lugar de aprender ¿desaprendo?\nEs un problema sencillo, cosas que uno ya hacía y ahora por arte de magia no\nsalen.\n\nSe trata sobre apply (esta vez no intente con programación). La intención es\ncrear una columna en el data.frame donde coloco palabras o NA, de acuerdo a\nuna columna donde está todo codificado.\nPosiblemente se entiende mejor copiando y pegando los ejemplos en R que\nescribo a continuación, en entonces_quiero está el resultado final\n(deseado).\n\n# creo algunos datos\nx<-c(1,2,3,4,5,6)\ny<-c(1,2,'p','s','s','p')\n#  Lo deseo acomodar de la siguiente forma (estilo survival)\nquiero_p <-c(NA,NA,'p',NA,NA,'p')\nquiero_s <-c(NA,NA,NA,'s','s',NA)\nentonces_quiero<-data.frame(x,y,quiero_p,quiero_s)\nentonces_quiero\n# funcion para el caso 's'\nver <- function(x){\n        if (x=='s') {y <- 's'\n          return(y)}\n        else {y<-NA\n          return(y)}\n        }\n# pruebo la función para valores ingresados de a uno y a mano\nver(\"p\")\nver(\"s\")\nver(1)\nver(2)\n# los valores dados por la función ver son los correctos.\n\n\n#youtube   ejemplo http://www.youtube.com/watch?v=WR8ftX-GJoE\nceros <- function(x){if(x<3){x=0}else{x=1}}\napply(entonces_quiero[,1:2], c(1,2), ceros)\n# pero no\napply(entonces_quiero, c(1,2), ceros)\n\n# probando mi función \"ver\" como la funcion \"ceros\" (solo para la segunda\ncolumna. Me da un error\napply(entonces_quiero[,2], c(1,2),ver)\n# también probe algo como  <- function(x){if(x=='s'){x=='s'}else{x==NA}}\n#\n# es algo medio tonto, documentado en todos lados, pero tengo un problema y\nno me doy cuenta\n# hoy me canse de cometer errores con esto\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Nuevamente necesito ayuda, parece que en lugar de aprender ¿desaprendo?\nEs un problema sencillo, cosas que uno ya hacía y ahora por arte de magia no\nsalen.\n\nSe trata sobre apply (esta vez no intente c",
       "thread_id": "thread-63d78653db88",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111011/846098a3/attachment.pl"
+      ]
     },
     {
       "id": "msg-b08e96b448df",
@@ -721,11 +790,14 @@
       "references": [
         "<4e94e0eb.15b.eb4.20532@balcarce.inta.gov.ar>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111012/d45c28a0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111012/d45c28a0/attachment.pl>",
+      "body_plain": "Muchas gracia a ambos.\n\nAhora funciona, pero hay algo que no entiendo:\napply(entonces_quiero[,1:2], c(1,2),ver)\nfunciona, pero no para una sola columna.\n\nUna de mis opciónes que dió resultado fué:\nyy <- entonces_quiero[,2]\nyyy<-tapply(yy, ver)\n\nNuevamente gracias.\n\nJavier\n\nEl 11 de octubre de 2011 21:35, María Gloria Monterubbianesi <\ngmonterubbianesi at balcarce.inta.gov.ar> escribió:\n\n> Hola Javier,\n>\n> No usé apply, pero tal vez te sirva. Tomé tus mismos\n> datos y nombres para el desarrollo:\n>\n> x<-c(1,2,3,4,5,6)\n> y<-c(1,2,'p','s','s','p')\n> entonces_quiero<-data.frame(x,y) # es el data al que quieres\n> añadir las columnas\n> # “quiero_p” y “quiero_s” con las características\n> indicadas,\n>\n> entonces_quiero$quiero_p<-y\n> entonces_quiero$quiero_s<-y\n>\n> entonces_quiero$quiero_p\n> [entonces_quiero$quiero_p!='p']<-NA\n> entonces_quiero$quiero_s\n> [entonces_quiero$quiero_s!='s']<-NA\n>\n> entonces_quiero$quiero_p<-factor(entonces_quiero$quiero_p)\n> entonces_quiero$quiero_s<-factor(entonces_quiero$quiero_s)\n>\n> # “entonces_quiero” quedó como deseabas\n>\n> Saludos\n> Gloria\n>\n>\n> ----- Original Message Follows -----\n> From: Javier Marcuzzi <javier.ruben.marcuzzi at gmail.com>\n> To: r-help-es at r-project.org\n> Subject: [R-es] apply\n> Date: Tue, 11 Oct 2011 17:57:24 -0300\n>\n> > Nuevamente necesito ayuda, parece que en lugar de aprender\n> > ¿desaprendo? Es un problema sencillo, cosas que uno ya\n> > hacía y ahora por arte de magia no salen.\n> >\n> > Se trata sobre apply (esta vez no intente con\n> > programación). La intención es crear una columna en el\n> > data.frame donde coloco palabras o NA, de acuerdo a una\n> > columna donde está todo codificado. Posiblemente se\n> > entiende mejor copiando y pegando los ejemplos en R que\n> > escribo a continuación, en entonces_quiero está el\n> > resultado final (deseado).\n> >\n> > # creo algunos datos\n> > x<-c(1,2,3,4,5,6)\n> > y<-c(1,2,'p','s','s','p')\n> > #  Lo deseo acomodar de la siguiente forma (estilo\n> > survival) quiero_p <-c(NA,NA,'p',NA,NA,'p')\n> > quiero_s <-c(NA,NA,NA,'s','s',NA)\n> > entonces_quiero<-data.frame(x,y,quiero_p,quiero_s)\n> > entonces_quiero\n> > # funcion para el caso 's'\n> > ver <- function(x){\n> >         if (x=='s') {y <- 's'\n> >           return(y)}\n> >         else {y<-NA\n> >           return(y)}\n> >         }\n> > # pruebo la función para valores ingresados de a uno y a\n> > mano ver(\"p\")\n> > ver(\"s\")\n> > ver(1)\n> > ver(2)\n> > # los valores dados por la función ver son los\n> correctos.\n> >\n> >\n> > #youtube   ejemplo\n> > http://www.youtube.com/watch?v=WR8ftX-GJoE ceros <-\n> > function(x){if(x<3){x=0}else{x=1}}\n> > apply(entonces_quiero[,1:2], c(1,2), ceros) # pero no\n> > apply(entonces_quiero, c(1,2), ceros)\n> >\n> > # probando mi función \"ver\" como la funcion \"ceros\"\n> (solo\n> > para la segunda columna. Me da un error\n> > apply(entonces_quiero[,2], c(1,2),ver)\n> > # también probe algo como  <-\n> > function(x){if(x=='s'){x=='s'}else{x==NA}} #\n> > # es algo medio tonto, documentado en todos lados, pero\n> > tengo un problema y no me doy cuenta\n> > # hoy me canse de cometer errores con esto\n> >\n> >     [[alternative HTML version deleted]]\n> >\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> ___________________________________________________________________________\n>\n> Aviso:\n>\n> El contenido del presente e-mail y sus posibles adjuntos pertenecen al INTA\n> y pueden contener información confidencial. Si usted no es el destinatario\n> original de este mensaje y por este medio pudo acceder a dicha información,\n> por favor solicitamos contactar al remitente y eliminar el mensaje de\n> inmediato. Se encuentra prohibida la divulgación, copia, distribución o\n> cualquier otro uso de la información contenida en el presente e-mail por\n> parte de personas distintas al destinatario.\n>\n>\n> This e-mail contents and its possible attachments belong to INTA and may\n> contain confidential information. If this message was not originally\n> addressed to you, but you have accessed to such information by this means,\n> please contact the sender and eliminate this message immediately.\n> Circulation, copy, distribution, or any other use of the information\n> contained in this e-mail is not allowed on part of those different from the\n> addressee.\n>\n>\n> Antes de imprimir este mensaje, asegúrese de que sea necesario. Proteger el\n> medio ambiente está también en su mano.\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracia a ambos.\n\nAhora funciona, pero hay algo que no entiendo:\napply(entonces_quiero[,1:2], c(1,2),ver)\nfunciona, pero no para una sola columna.\n\nUna de mis opciónes que dió resultado fué:\nyy ",
       "thread_id": "thread-b08e96b448df",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111012/d45c28a0/attachment.pl"
+      ]
     },
     {
       "id": "msg-ce721b505d44",
@@ -737,11 +809,14 @@
       "subject_clean": "[R-es] Problemas escribiendo funciones",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/3747254a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/3747254a/attachment.pl>",
+      "body_plain": "Hola a todos\n\nNecesito usar los valores producidos en otra funcion que posee un lop, pero al llamarla me sale solo el último valor. \n\nPor ejemplo, suponed una funcion sencilla\n\n> a1<-function(y){\n+   for(x in 1:10)\n+   aa<-(2*y+x)\n+   aa}\n\n## Defino a a2<-a1(2) para que a1 evalue en x=2 y mirad lo que me sale:\n> a2<-a1(2)\n> a2\n[1] 14\n\n¿Por que no logro ver la serie de evaluaciones?.  Agradezco cualquier suguerencia al respecto\n\nSaludos\n\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos\n\nNecesito usar los valores producidos en otra funcion que posee un lop, pero al llamarla me sale solo el último valor. \n\nPor ejemplo, suponed una funcion sencilla\n\n> a1<-function(y){\n+   ",
       "thread_id": "thread-ce721b505d44",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/3747254a/attachment.pl"
+      ]
     },
     {
       "id": "msg-81de412b913e",
@@ -755,11 +830,14 @@
       "references": [
         "<BAY166-W54B91584A0962A5689AF7488E00@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/9fc09cbf/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/9fc09cbf/attachment.pl>",
+      "body_plain": "Hola,\n\n\n\nSupongo que querrás que te salgan asi:\n\na1(2)\n\n[1] 5\n\n[1] 6\n\n[1] 7\n\n[1] 8\n\n[1] 9\n\n[1] 10\n\n[1] 11\n\n[1] 12\n\n[1] 13\n\n[1] 14\n\n\n\nPara ello la función seria de esta manera:\n\n\n\na1<-function(y){\n\n  for(x in 1:10)\n\n  {\n\n       aa<-(2*y+x)\n\n     print(aa)\n\n   }\n\n\n\n}\n\n\n\nPara que vaya mostrando cada valor por el bucle pones el \"print\" ademas\nde meterlo dentro del bucle y definirlo bien por corchetes \"{\".\n\nFrom: a_villa43 at hotmail.com\nTo: r-help-es at r-project.org\nDate: Thu, 13 Oct 2011 07:14:24 -0400\nSubject: [R-es] Problemas escribiendo funciones\n\n \nHola a todos\n \nNecesito usar los valores producidos en otra funcion que posee un lop, pero al llamarla me sale solo el último valor. \n \nPor ejemplo, suponed una funcion sencilla\n \n> a1<-function(y){\n+   for(x in 1:10)\n+   aa<-(2*y+x)\n+   aa}\n \n## Defino a a2<-a1(2) para que a1 evalue en x=2 y mirad lo que me sale:\n> a2<-a1(2)\n> a2\n[1] 14\n \n¿Por que no logro ver la serie de evaluaciones?.  Agradezco cualquier suguerencia al respecto\n \nSaludos\n \n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]\n \n\n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\n\n\nSupongo que querrás que te salgan asi:\n\na1(2)\n\n[1] 5\n\n[1] 6\n\n[1] 7\n\n[1] 8\n\n[1] 9\n\n[1] 10\n\n[1] 11\n\n[1] 12\n\n[1] 13\n\n[1] 14\n\n\n\nPara ello la función seria de esta manera:\n\n\n\na1<-function(y){\n\n  f",
       "thread_id": "thread-ce721b505d44",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/9fc09cbf/attachment.pl"
+      ]
     },
     {
       "id": "msg-9a5fadd7c5c7",
@@ -773,11 +851,14 @@
       "references": [
         "<BAY166-W54B91584A0962A5689AF7488E00@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/eb00f590/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/eb00f590/attachment.pl>",
+      "body_plain": "Buenos dias Adriana,\n\nEstas segura que quieres evaluar la funcion en x=2?  No sera mas bien y=2?\n\nLa funcion no entrega la serie completa porque no inicializas \"aa\" ni\nentregas su valor al finalizar el loop.  La siguente modificacion hace lo\nque necesitas, pero no es la mas recomendada:\n\na1 <-function(y){\n    aa <- NULL\n    for(x in 1:10){\n     aa <- c(aa, 2*y + x)\n     }\n     aa\n     }\na1(2)\n\nOtra alternativa es\n\na1.nuevo <- function(y) 2*y + 1:10\na1.nuevo(2)\n\nUn saludo,\nJorge.-\n\n\n2011/10/13 Adriana Villa <>\n\n>\n> Hola a todos\n>\n> Necesito usar los valores producidos en otra funcion que posee un lop, pero\n> al llamarla me sale solo el último valor.\n>\n> Por ejemplo, suponed una funcion sencilla\n>\n> > a1<-function(y){\n> +   for(x in 1:10)\n> +   aa<-(2*y+x)\n> +   aa}\n>\n> ## Defino a a2<-a1(2) para que a1 evalue en x=2 y mirad lo que me sale:\n> > a2<-a1(2)\n> > a2\n> [1] 14\n>\n> ¿Por que no logro ver la serie de evaluaciones?.  Agradezco cualquier\n> suguerencia al respecto\n>\n> Saludos\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Adriana,\n\nEstas segura que quieres evaluar la funcion en x=2?  No sera mas bien y=2?\n\nLa funcion no entrega la serie completa porque no inicializas \"aa\" ni\nentregas su valor al finalizar e",
       "thread_id": "thread-ce721b505d44",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/eb00f590/attachment.pl"
+      ]
     },
     {
       "id": "msg-6b5a7e9d47a1",
@@ -792,11 +873,14 @@
         "<4e94e0eb.15b.eb4.20532@balcarce.inta.gov.ar>",
         "<CAHo_aESLh+HL5fLc-61xgzDvBgFG7D3Fj=PdxJGr9KDr7mDcdg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/cc5fb613/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/cc5fb613/attachment.pl>",
+      "body_plain": "No necesitas apply para hacer lo que pretendes. Pero si quieres que \nfunciones adecua mente con apply la función ver tienes que \nvectorilizarla. Cambiala  de este manera:\n\n\n# -------\nver <- function(x){\n         return (  ifelse (x=='s', 's', NA))\n          }\n# -------\n\n# Asi puedes usar apply, con alguna pequeña modificación\n\napply(entonces_quiero[,1:2], c(1,2),ver)\napply(data.frame(entonces_quiero[,2]), c(1),ver)\n\n# Pero el apply anterior no reporta utilidad alguna, Lo habituar es\n# utilizarlo con funciones de agregación: como sum(), mean() ...\n# Cuando no es el caso es más sencillo emplear directamente la función:\n\nver(entonces_quiero[,1:2])\nver(entonces_quiero[,2])\n\n\n\n\nEl 12/10/2011 14:14, Javier Marcuzzi escribió:\n> Muchas gracia a ambos.\n>\n> Ahora funciona, pero hay algo que no entiendo:\n> apply(entonces_quiero[,1:2], c(1,2),ver)\n> funciona, pero no para una sola columna.\n>\n> Una de mis opciónes que dió resultado fué:\n> yy<- entonces_quiero[,2]\n> yyy<-tapply(yy, ver)\n>\n> Nuevamente gracias.\n>\n> Javier\n>\n> El 11 de octubre de 2011 21:35, María Gloria Monterubbianesi<\n> gmonterubbianesi at balcarce.inta.gov.ar>  escribió:\n>\n>> Hola Javier,\n>>\n>> No usé apply, pero tal vez te sirva. Tomé tus mismos\n>> datos y nombres para el desarrollo:\n>>\n>> x<-c(1,2,3,4,5,6)\n>> y<-c(1,2,'p','s','s','p')\n>> entonces_quiero<-data.frame(x,y) # es el data al que quieres\n>> añadir las columnas\n>> # \"quiero_p\" y \"quiero_s\" con las características\n>> indicadas,\n>>\n>> entonces_quiero$quiero_p<-y\n>> entonces_quiero$quiero_s<-y\n>>\n>> entonces_quiero$quiero_p\n>> [entonces_quiero$quiero_p!='p']<-NA\n>> entonces_quiero$quiero_s\n>> [entonces_quiero$quiero_s!='s']<-NA\n>>\n>> entonces_quiero$quiero_p<-factor(entonces_quiero$quiero_p)\n>> entonces_quiero$quiero_s<-factor(entonces_quiero$quiero_s)\n>>\n>> # \"entonces_quiero\" quedó como deseabas\n>>\n>> Saludos\n>> Gloria\n>>\n>>\n>> ----- Original Message Follows -----\n>> From: Javier Marcuzzi<javier.ruben.marcuzzi at gmail.com>\n>> To: r-help-es at r-project.org\n>> Subject: [R-es] apply\n>> Date: Tue, 11 Oct 2011 17:57:24 -0300\n>>\n>>> Nuevamente necesito ayuda, parece que en lugar de aprender\n>>> ¿desaprendo? Es un problema sencillo, cosas que uno ya\n>>> hacía y ahora por arte de magia no salen.\n>>>\n>>> Se trata sobre apply (esta vez no intente con\n>>> programación). La intención es crear una columna en el\n>>> data.frame donde coloco palabras o NA, de acuerdo a una\n>>> columna donde está todo codificado. Posiblemente se\n>>> entiende mejor copiando y pegando los ejemplos en R que\n>>> escribo a continuación, en entonces_quiero está el\n>>> resultado final (deseado).\n>>>\n>>> # creo algunos datos\n>>> x<-c(1,2,3,4,5,6)\n>>> y<-c(1,2,'p','s','s','p')\n>>> #  Lo deseo acomodar de la siguiente forma (estilo\n>>> survival) quiero_p<-c(NA,NA,'p',NA,NA,'p')\n>>> quiero_s<-c(NA,NA,NA,'s','s',NA)\n>>> entonces_quiero<-data.frame(x,y,quiero_p,quiero_s)\n>>> entonces_quiero\n>>> # funcion para el caso 's'\n>>> ver<- function(x){\n>>>          if (x=='s') {y<- 's'\n>>>            return(y)}\n>>>          else {y<-NA\n>>>            return(y)}\n>>>          }\n>>> # pruebo la función para valores ingresados de a uno y a\n>>> mano ver(\"p\")\n>>> ver(\"s\")\n>>> ver(1)\n>>> ver(2)\n>>> # los valores dados por la función ver son los\n>> correctos.\n>>>\n>>> #youtube   ejemplo\n>>> http://www.youtube.com/watch?v=WR8ftX-GJoE ceros<-\n>>> function(x){if(x<3){x=0}else{x=1}}\n>>> apply(entonces_quiero[,1:2], c(1,2), ceros) # pero no\n>>> apply(entonces_quiero, c(1,2), ceros)\n>>>\n>>> # probando mi función \"ver\" como la funcion \"ceros\"\n>> (solo\n>>> para la segunda columna. Me da un error\n>>> apply(entonces_quiero[,2], c(1,2),ver)\n>>> # también probe algo como<-\n>>> function(x){if(x=='s'){x=='s'}else{x==NA}} #\n>>> # es algo medio tonto, documentado en todos lados, pero\n>>> tengo un problema y no me doy cuenta\n>>> # hoy me canse de cometer errores con esto\n>>>\n>>>      [[alternative HTML version deleted]]\n>>>\n>>>\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>> ___________________________________________________________________________\n>>\n>> Aviso:\n>>\n>> El contenido del presente e-mail y sus posibles adjuntos pertenecen al INTA\n>> y pueden contener información confidencial. Si usted no es el destinatario\n>> original de este mensaje y por este medio pudo acceder a dicha información,\n>> por favor solicitamos contactar al remitente y eliminar el mensaje de\n>> inmediato. Se encuentra prohibida la divulgación, copia, distribución o\n>> cualquier otro uso de la información contenida en el presente e-mail por\n>> parte de personas distintas al destinatario.\n>>\n>>\n>> This e-mail contents and its possible attachments belong to INTA and may\n>> contain confidential information. If this message was not originally\n>> addressed to you, but you have accessed to such information by this means,\n>> please contact the sender and eliminate this message immediately.\n>> Circulation, copy, distribution, or any other use of the information\n>> contained in this e-mail is not allowed on part of those different from the\n>> addressee.\n>>\n>>\n>> Antes de imprimir este mensaje, asegúrese de que sea necesario. Proteger el\n>> medio ambiente está también en su mano.\n>>\n> \t[[alternative HTML version deleted]]\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n-- \n+--------------------------------------------------------------\n| Francisco J. Viciana Fernández\n| Coordinador del Registro de Población\n| Servicio de Estadísticas Demográficas y Sociales\n| Instituto de Estadística y Cartografía de Andalucía\n| Leonardo Da Vinci, nº 21. Isla de La Cartuja.\n| 41071 SEVILLA.\n| franciscoj.viciana at juntadeandalucia.es\n+--------------------------------------------------------------\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "No necesitas apply para hacer lo que pretendes. Pero si quieres que \nfunciones adecua mente con apply la función ver tienes que \nvectorilizarla. Cambiala  de este manera:\n\n\n# -------\nver <- function(x",
       "thread_id": "thread-b08e96b448df",
       "thread_depth": 2,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111013/cc5fb613/attachment.pl"
+      ]
     },
     {
       "id": "msg-0f9bd26d43b3",
@@ -808,11 +892,14 @@
       "subject_clean": "[R-es] Oferta de trabajo publicada en linkedin",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111014/ad50f9eb/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111014/ad50f9eb/attachment.pl>",
+      "body_plain": "Perdón por posibles repeticiones (tal y como están las cosas me parece info. importante).\nRe-post de oferta de trabajo  R en linkedin\n\nJOB IN SPAIN! BIOINFORMATICO/A\n\nSeleccionamos BIONFORMATICO/A para empresa líder en Europa situada en zona Norte de España. + 3años de experiencia en Bioinformática Conocimientos de Genetica Molecular y Análisis de NGS.. Dominio PERL y también R o Matlab. Integración en proyecto profesional de referencia en el sector de la salud con funciones de responsabilidad y autonomía. Equipo joven y excelente ambiente de trabajo. Idiomas : Inglés y Español .Más info, enviar cv rosaperez at wantedseleccion.es<mailto:rosaperez at wantedseleccion.es>\n\n--\nPedro Concejero\nTelefónica I+D <http://www.tid.es/>\nUser Modelling - Analytic Models\nE-mail: pedro.concejero at tid.es<mailto:pedro.concejero at tid.es>\nskype: pedro.concejero\n\n\n\n________________________________\nEste mensaje se dirige exclusivamente a su destinatario. Puede consultar nuestra política de envío y recepción de correo electrónico en el enlace situado más abajo.\nThis message is intended exclusively for its addressee. We only send and receive email on the basis of the terms set out at.\nhttp://www.tid.es/ES/PAGINAS/disclaimer.aspx\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Perdón por posibles repeticiones (tal y como están las cosas me parece info. importante).\nRe-post de oferta de trabajo  R en linkedin\n\nJOB IN SPAIN! BIOINFORMATICO/A\n\nSeleccionamos BIONFORMATICO/A par",
       "thread_id": "thread-0f9bd26d43b3",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111014/ad50f9eb/attachment.pl"
+      ]
     },
     {
       "id": "msg-72d6b60ba095",
@@ -842,11 +929,14 @@
       "references": [
         "<20111017142637.e748uyaq4o4sgoc4@webcartero01.uc3m.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111017/82288a0c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111017/82288a0c/attachment.pl>",
+      "body_plain": "Hola,\n\nMira la ayuda de \"get()\" y de \"::\".\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 17 de octubre de 2011 14:26, J. Miguel Marin\n<jmmarin at est-econ.uc3m.es>escribió:\n\n>\n> Hola a tod at s,\n>\n> me gustaría usar solo un(os) comando(s) específico(s) de una librería pero\n> sin cargarla entera a la manera:\n> library(laquesea)\n>\n> ¿se puede hacer de alguna manera?\n>\n> Y saludos y gracias\n>\n> jm~\n>\n> ______________________________**_\n>\n>       J. Miguel Marin\n>\n> http://www.est.uc3m.es/jmmarin\n>\n>   Dep. of Statistics\n> University Carlos III of Madrid\n>       Spain (E.U.)\n>\n> ______________________________**_________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nMira la ayuda de \"get()\" y de \"::\".\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 17 de octubre de 2011 14:26, J. Miguel Marin\n<jmmarin at est-econ.uc3m.es>escribió:\n\n>\n> Hola a tod at s",
       "thread_id": "thread-72d6b60ba095",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111017/82288a0c/attachment.pl"
+      ]
     },
     {
       "id": "msg-a21e8b841747",
@@ -895,11 +985,14 @@
       "references": [
         "<7398991539vivigui@uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111018/70da6f31/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111018/70da6f31/attachment.pl>",
+      "body_plain": "Hola.\n\nSeguro que hay muchas formas de hacerlo, pero si los elementos de tu lista\nson factores y tienen exactamente los mismos 'levels', bastaría con:\n\ndo.call(\"rbind\", lapply(lis, function(x) table(x)))\n\no si prefieres una lista como dices en la pregunta:\n\naux <- as.list(as.data.frame(do.call(\"rbind\", lapply(lis, function(x)\ntable(x)))))\nlapply(aux, function(x) which(x > 0))\n\nSi los elementos no son factores o no tienen los mismos niveles; puedes\nconvertirlos a factores previamente:\n\nlis <- lapply(lis, function(x) {x <- factor(x, levels =\nunique(unlist(lis))); x})\n\nUn saludo\n\n\n\nEl 18 de octubre de 2011 10:52, <Guillermo.Vinue at uv.es> escribió:\n\n> Hola,\n>\n> Tengo una lista, llamada lis, cuyos elementos son los siguientes:\n>\n> >lis\n> [[1]]\n> [1] \"Pepe\"\n> [2] \"Miguel\"\n> [3] \"Enrique\"\n>\n> [[2]]\n> [1] \"Miguel\"\n> [2] \"Jose\"\n>\n> [[3]]\n> [1] \"David\"\n> [2] \"Pepe\"\n>\n> Me gustaría obtener en qué elementos de la lista se encuentra cada\n> nombre, es decir, quisiera obtener un resultado como el siguiente:\n>\n> \"Pepe\" está en el elemento 1 y 3 (lis[[1]] y lis[[3]]).\n> \"Miguel\" está en el 1 y en el 2.\n> \"Enrique\" está en el 1 ... y así sucesivamente.\n>\n> He estado probando distintas sentencias con la función grep pero no\n> obtengo el resultado deseado, ¿alguien me puede dar alguna idea?.\n>\n> Muchas gracias,\n>\n> Guillermo\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola.\n\nSeguro que hay muchas formas de hacerlo, pero si los elementos de tu lista\nson factores y tienen exactamente los mismos 'levels', bastaría con:\n\ndo.call(\"rbind\", lapply(lis, function(x) table(x",
       "thread_id": "thread-07ea38b2c970",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111018/70da6f31/attachment.pl"
+      ]
     },
     {
       "id": "msg-3d3666308659",
@@ -984,11 +1077,14 @@
         "<CAP3FtZiXSEELOw-uZSFMbtwqQzS8v50oRpwWXkytW8hCthra6w@mail.gmail.com>",
         "<CADg83efjBxpYo0Qj57BjJ9MsLVCdoy=Lnfhsn79vjjjYu7t94w@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/c3c6d3e2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/c3c6d3e2/attachment.pl>",
+      "body_plain": "Hola Carlos,\n\n¡Justo ese es el problema!\nEn el ejemplo hay dos observaciones por lugar y en mis datos cuatro.\nCon un aggregate() antes de hacer el gráfico se arregla todo. ¿Dentro de\nlattice no hay nada para hacer esto, no? Al menos yo no lo he visto.\n\nGracias.\n\nEl 21 de octubre de 2011 16:11, Carlos J. Gil Bellosta <cgb at datanalytics.com\n> escribió:\n\n> Hola, ¿qué tal?\n>\n> Tienes dos observaciones por lugar y variedad:\n>\n> table( meu$variety, meu$site )\n>\n> Las dos líneas que obtienes son los dos valores. Supongo que quieres\n> promediar (o similares) antes de representar.\n>\n> Un saludo,\n>\n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n>\n>\n> El día 21 de octubre de 2011 15:39, Jaume Tormo <jautorbla at gmail.com>\n> escribió:\n> > Hola a todos,\n> > ¿Que son esas lineas horizontales que aparecen dentro de las columnas del\n> > barchart?\n> > #cargamos el paquete\n> > require(lattice)\n> > #quito una variable para que la estructura sea igual que la de mis datos\n> > meu<-barley\n> > meu$year<-NULL\n> > #pinto el gráfico\n> > barchart(yield ~ variety | site, data = meu\n> >          , layout = c(1,6)\n> >          , ylab = \"Barley Yield (bushels/acre)\"\n> >          #, scales = list(x = list(rot = 45))\n> >          )\n> > Os adjunto el gráfico que sale.\n> > Si os fijáis en las columnas aparece una linea horizontal, como si\n> hubiera\n> > apilado los resultados o algo así. Pero solo he tenido en cuenta dos\n> > variables al hacer los gráficos. No entiendo de donde sale eso.\n> > ¿Alguien sabe que es y como quitarlo?\n> > Estoy empezando con lattice ¿alguna referencia, manual, tutorial?\n> > gracias.\n> > --\n> > Jaume Tormo Blanes\n> > IMEM Ramon Margalef.\n> > Carretera San Vicente del Raspeig s/n\n> > 03690 San Vicente del Raspeig - Alicante\n> > www.ua.es\n> > acercad.wordpress.com\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n\n\n\n-- \nJaume Tormo Blanes\nIMEM Ramon Margalef.\nCarretera San Vicente del Raspeig s/n\n03690 San Vicente del Raspeig - Alicante\nwww.ua.es\nacercad.wordpress.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Carlos,\n\n¡Justo ese es el problema!\nEn el ejemplo hay dos observaciones por lugar y en mis datos cuatro.\nCon un aggregate() antes de hacer el gráfico se arregla todo. ¿Dentro de\nlattice no hay na",
       "thread_id": "thread-7b5aae0d6235",
       "thread_depth": 2,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/c3c6d3e2/attachment.pl"
+      ]
     },
     {
       "id": "msg-f91555b1180b",
@@ -1002,11 +1098,14 @@
       "references": [
         "<4EA1A8A5.9070904@etecsa.cu>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/11152e04/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/11152e04/attachment.pl>",
+      "body_plain": "> x<-100:150\n > y<-120:170\n >C<-as.data.frame(cbind(x,y))\n >CAP <- stack(C[, c(\"x\",\"y\")])\n >names(CAP) <- c(\"variable\", \"factor\")\n >boxplot(variable~factor, ylab=\"variable\", xlab=\"factor\", data=CAP)\n\n\nSaludos.\n\n\n\nEl 21/10/11 19:15, Leonardo Hernández Pérez escribió:\n>\n> Hola amigos:\n>\n> Tengo dos columnas datos (dos variables en el mismo conjunto de datos \n> ) y quiero hacer con R commander un diagrama de caja (boxplot) el cual \n> contenga dos cajas pero solo me deja seleccionar una variable.\n>\n> Existe otra manera de hacerlo? o es que estoy cometiendo algún error.\n>\n> Un abrazo.\n>\n> Leonardo\n>\n>\n> ---\n> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx3.etecsa.cu\n> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>\n>    \n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>    \n\n-- \n_____---^---_____\n\nUniv. de Extremadura\nDept. Matemáticas.\nDespacho B29\nTf: + 34 924 289 300\nExt. 86823\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "> x<-100:150\n > y<-120:170\n >C<-as.data.frame(cbind(x,y))\n >CAP <- stack(C[, c(\"x\",\"y\")])\n >names(CAP) <- c(\"variable\", \"factor\")\n >boxplot(variable~factor, ylab=\"variable\", xlab=\"factor\", data=CAP)\n\n",
       "thread_id": "thread-9cb4a855b969",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/11152e04/attachment.pl"
+      ]
     },
     {
       "id": "msg-2aaa7e6be731",
@@ -1021,11 +1120,14 @@
         "<4EA1A8A5.9070904@etecsa.cu>",
         "<4EA19C91.30605@unex.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/816595f3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/816595f3/attachment.pl>",
+      "body_plain": "¡Ah! Era en RCommander.\n\nEntonces es:\n\nDatos->Conjunto de Datos Activo->Apilar variables del conjunto de datos \nactivo\n\nSe seleccionan las dos variables que pretendes representar juntas.\n\nSe crea un nuevo conjunto de datos activo con las dos variables apiladas \ny distinguidas por el nivel del factor.\n\nGráficas -> Diagrama de Caja\n\nSe utiliza \"Gráfica por grupos\"\n\n\n\nSaludos.\n\n\nEl 21/10/11 18:23, José Trujillo Carmona escribió:\n>   >  x<-100:150\n>   >  y<-120:170\n>   >C<-as.data.frame(cbind(x,y))\n>   >CAP<- stack(C[, c(\"x\",\"y\")])\n>   >names(CAP)<- c(\"variable\", \"factor\")\n>   >boxplot(variable~factor, ylab=\"variable\", xlab=\"factor\", data=CAP)\n>\n>\n> Saludos.\n>\n>\n>\n> El 21/10/11 19:15, Leonardo Hernández Pérez escribió:\n>    \n>> Hola amigos:\n>>\n>> Tengo dos columnas datos (dos variables en el mismo conjunto de datos\n>> ) y quiero hacer con R commander un diagrama de caja (boxplot) el cual\n>> contenga dos cajas pero solo me deja seleccionar una variable.\n>>\n>> Existe otra manera de hacerlo? o es que estoy cometiendo algún error.\n>>\n>> Un abrazo.\n>>\n>> Leonardo\n>>\n>>\n>> ---\n>> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx3.etecsa.cu\n>> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>\n>>\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>      \n>    \n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>    \n\n-- \n_____---^---_____\n\nUniv. de Extremadura\nDept. Matemáticas.\nDespacho B29\nTf: + 34 924 289 300\nExt. 86823\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "¡Ah! Era en RCommander.\n\nEntonces es:\n\nDatos->Conjunto de Datos Activo->Apilar variables del conjunto de datos \nactivo\n\nSe seleccionan las dos variables que pretendes representar juntas.\n\nSe crea un n",
       "thread_id": "thread-9cb4a855b969",
       "thread_depth": 2,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/816595f3/attachment.pl"
+      ]
     },
     {
       "id": "msg-9cb4a855b969",
@@ -1037,11 +1139,14 @@
       "subject_clean": "[R-es] Problemas para hacer gráficos en R commander",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Hola amigos:\n\nTengo dos columnas datos (dos variables en el mismo conjunto de datos ) \ny quiero hacer con R commander un diagrama de caja (boxplot) el cual \ncontenga dos cajas pero solo me deja seleccionar una variable.\n\nExiste otra manera de hacerlo? o es que estoy cometiendo algÃºn error.\n\nUn abrazo.\n\nLeonardo\n\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/13cea6e9/attachment.pl>",
+      "body_plain": "Hola amigos:\n\nTengo dos columnas datos (dos variables en el mismo conjunto de datos ) \ny quiero hacer con R commander un diagrama de caja (boxplot) el cual \ncontenga dos cajas pero solo me deja seleccionar una variable.\n\nExiste otra manera de hacerlo? o es que estoy cometiendo algÃºn error.\n\nUn abrazo.\n\nLeonardo\n\n------------ prÃ³xima parte ------------\n--- \nThis message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx3.etecsa.cu\nVisit our web-site: <http://www.kaspersky.com>, <http://www.viruslist.com>",
       "body_snippet": "Hola amigos:\n\nTengo dos columnas datos (dos variables en el mismo conjunto de datos ) \ny quiero hacer con R commander un diagrama de caja (boxplot) el cual \ncontenga dos cajas pero solo me deja selecc",
       "thread_id": "thread-9cb4a855b969",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/13cea6e9/attachment.pl"
+      ]
     },
     {
       "id": "msg-5178f04e5063",
@@ -1057,11 +1162,14 @@
         "<4EA19C91.30605@unex.es>",
         "<4EA19EEE.7020105@unex.es>"
       ],
-      "body_plain": "Gracias Amigos, Solucionado,\n\nUn Abrazo a Todos\n\nLeonardo\n\nEl 21/10/11 12:33, JosÃ© Trujillo Carmona escribiÃ³:\n> Â¡Ah! Era en RCommander.\n>\n> Entonces es:\n>\n> Datos->Conjunto de Datos Activo->Apilar variables del conjunto de datos\n> activo\n>\n> Se seleccionan las dos variables que pretendes representar juntas.\n>\n> Se crea un nuevo conjunto de datos activo con las dos variables apiladas\n> y distinguidas por el nivel del factor.\n>\n> GrÃ¡ficas ->  Diagrama de Caja\n>\n> Se utiliza \"GrÃ¡fica por grupos\"\n>\n>\n>\n> Saludos.\n>\n>\n> El 21/10/11 18:23, JosÃ© Trujillo Carmona escribiÃ³:\n>>    >   x<-100:150\n>>    >   y<-120:170\n>>    >C<-as.data.frame(cbind(x,y))\n>>    >CAP<- stack(C[, c(\"x\",\"y\")])\n>>    >names(CAP)<- c(\"variable\", \"factor\")\n>>    >boxplot(variable~factor, ylab=\"variable\", xlab=\"factor\", data=CAP)\n>>\n>>\n>> Saludos.\n>>\n>>\n>>\n>> El 21/10/11 19:15, Leonardo HernÃ¡ndez PÃ©rez escribiÃ³:\n>>\n>>> Hola amigos:\n>>>\n>>> Tengo dos columnas datos (dos variables en el mismo conjunto de datos\n>>> ) y quiero hacer con R commander un diagrama de caja (boxplot) el cual\n>>> contenga dos cajas pero solo me deja seleccionar una variable.\n>>>\n>>> Existe otra manera de hacerlo? o es que estoy cometiendo algÃºn error.\n>>>\n>>> Un abrazo.\n>>>\n>>> Leonardo\n>>>\n>>>\n>>> ---\n>>> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx3.etecsa.cu\n>>> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>\n>>>\n>>>\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>>\n>>\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> ---\n> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx2.etecsa.cu\n> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/14e12980/attachment-0001.html>\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/14e12980/attachment-0001.pl>",
+      "body_plain": "Gracias Amigos, Solucionado,\n\nUn Abrazo a Todos\n\nLeonardo\n\nEl 21/10/11 12:33, JosÃ© Trujillo Carmona escribiÃ³:\n> Â¡Ah! Era en RCommander.\n>\n> Entonces es:\n>\n> Datos->Conjunto de Datos Activo->Apilar variables del conjunto de datos\n> activo\n>\n> Se seleccionan las dos variables que pretendes representar juntas.\n>\n> Se crea un nuevo conjunto de datos activo con las dos variables apiladas\n> y distinguidas por el nivel del factor.\n>\n> GrÃ¡ficas ->  Diagrama de Caja\n>\n> Se utiliza \"GrÃ¡fica por grupos\"\n>\n>\n>\n> Saludos.\n>\n>\n> El 21/10/11 18:23, JosÃ© Trujillo Carmona escribiÃ³:\n>>    >   x<-100:150\n>>    >   y<-120:170\n>>    >C<-as.data.frame(cbind(x,y))\n>>    >CAP<- stack(C[, c(\"x\",\"y\")])\n>>    >names(CAP)<- c(\"variable\", \"factor\")\n>>    >boxplot(variable~factor, ylab=\"variable\", xlab=\"factor\", data=CAP)\n>>\n>>\n>> Saludos.\n>>\n>>\n>>\n>> El 21/10/11 19:15, Leonardo HernÃ¡ndez PÃ©rez escribiÃ³:\n>>\n>>> Hola amigos:\n>>>\n>>> Tengo dos columnas datos (dos variables en el mismo conjunto de datos\n>>> ) y quiero hacer con R commander un diagrama de caja (boxplot) el cual\n>>> contenga dos cajas pero solo me deja seleccionar una variable.\n>>>\n>>> Existe otra manera de hacerlo? o es que estoy cometiendo algÃºn error.\n>>>\n>>> Un abrazo.\n>>>\n>>> Leonardo\n>>>\n>>>\n>>> ---\n>>> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx3.etecsa.cu\n>>> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>\n>>>\n>>>\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es en r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>>\n>>\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> ---\n> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx2.etecsa.cu\n> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/14e12980/attachment-0001.html>\n------------ prÃ³xima parte ------------\n--- \nThis message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx3.etecsa.cu\nVisit our web-site: <http://www.kaspersky.com>, <http://www.viruslist.com>",
       "body_snippet": "Gracias Amigos, Solucionado,\n\nUn Abrazo a Todos\n\nLeonardo\n\nEl 21/10/11 12:33, JosÃ© Trujillo Carmona escribiÃ³:\n> Â¡Ah! Era en RCommander.\n>\n> Entonces es:\n>\n> Datos->Conjunto de Datos Activo->Apilar ",
       "thread_id": "thread-9cb4a855b969",
       "thread_depth": 3,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/14e12980/attachment-0001.pl"
+      ]
     },
     {
       "id": "msg-ddbc74992ef9",
@@ -1075,11 +1183,14 @@
       "references": [
         "<CAP3FtZiXSEELOw-uZSFMbtwqQzS8v50oRpwWXkytW8hCthra6w@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/a1975ad8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/a1975ad8/attachment.pl>",
+      "body_plain": "Hola,\n\nEfectivamente, cuando has eliminado \"year\", aún mantienes para las variables\n\"variety\" y \"site\" dos valores.\nEn algunos casos, esos dos puntos coinciden en valor lo que hace que en\nbarchart aparezca como una columna sin esa línea. También ocurre cuando los\ndos valores están centrados.\n\nUna forma más correcta de poder representar este conjunto modificado es\nmediante el uso de \"dotplot\"\n\ndotplot(yield ~ variety | site, data = meu,\n         layout = c(1,6),\n         ylab = \"Barley Yield (bushels/acre)\"\n         #, scales = list(x = list(rot = 45))\n         )\n\nSi quisieras representar una línea con el valor medio para cada \"variety\" y\nque aparezcan conectadas, esta sería una forma:\n\ndotplot(yield ~ variety | site, data = meu,\n         layout = c(1,6),\n         ylab = \"Barley Yield (bushels/acre)\",\n         #, scales = list(x = list(rot = 45))\n        panel = function(x, y, groups, subscripts, ...){\n          panel.dotplot(x, y, subscripts=subscripts, ...)\n          panel.average(x, y, col = \"grey\", lwd = 2, horizontal = FALSE)\n      }\n         )\n\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 21 de octubre de 2011 15:39, Jaume Tormo <jautorbla at gmail.com> escribió:\n\n> Hola a todos,\n>\n> ¿Que son esas lineas horizontales que aparecen dentro de las columnas del\n> barchart?\n> #cargamos el paquete\n> require(lattice)\n> #quito una variable para que la estructura sea igual que la de mis datos\n> meu<-barley\n> meu$year<-NULL\n> #pinto el gráfico\n> barchart(yield ~ variety | site, data = meu\n>          , layout = c(1,6)\n>          , ylab = \"Barley Yield (bushels/acre)\"\n>          #, scales = list(x = list(rot = 45))\n>          )\n> Os adjunto el gráfico que sale.\n> Si os fijáis en las columnas aparece una linea horizontal, como si hubiera\n> apilado los resultados o algo así. Pero solo he tenido en cuenta dos\n> variables al hacer los gráficos. No entiendo de donde sale eso.\n> ¿Alguien sabe que es y como quitarlo?\n> Estoy empezando con lattice ¿alguna referencia, manual, tutorial?\n>\n> gracias.\n>\n> --\n> Jaume Tormo Blanes\n> IMEM Ramon Margalef.\n> Carretera San Vicente del Raspeig s/n\n> 03690 San Vicente del Raspeig - Alicante\n> www.ua.es\n> acercad.wordpress.com\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEfectivamente, cuando has eliminado \"year\", aún mantienes para las variables\n\"variety\" y \"site\" dos valores.\nEn algunos casos, esos dos puntos coinciden en valor lo que hace que en\nbarchart apa",
       "thread_id": "thread-7b5aae0d6235",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111021/a1975ad8/attachment.pl"
+      ]
     },
     {
       "id": "msg-7a17cbfa8994",
@@ -1091,11 +1202,14 @@
       "subject_clean": "[R-es] integrales con R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c9acc945/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c9acc945/attachment.pl>",
+      "body_plain": "Hola,\n\nEstime una función de densidad de probabilidad (usando la función densiti) y\nquiero integrarla para encontrar percentiles 5 y 95....\n\nAlguien sabe como hacer esta integral en R????....\n\nGracias!!!..\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEstime una función de densidad de probabilidad (usando la función densiti) y\nquiero integrarla para encontrar percentiles 5 y 95....\n\nAlguien sabe como hacer esta integral en R????....\n\nGracias",
       "thread_id": "thread-7a17cbfa8994",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c9acc945/attachment.pl"
+      ]
     },
     {
       "id": "msg-460e4c50060f",
@@ -1127,11 +1241,14 @@
       "references": [
         "<CA+PEgE9MrRsZphncqyB6GczTMEcMQ9psSFpiU8cGgMiUgZ6NzQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c1d12f1a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c1d12f1a/attachment.pl>",
+      "body_plain": "Hola,\n\nTienes la función integrate() dentro del paquete stats.\n\nY si tienes la expresión analítica y buscas su integral igualmente\nanalítica, hay recursos en la red para su cálculo. Especialmente en todo el\nmundo de Wolfram Research (Mathematica, Wolfram Alpha):\nhttp://www.wolframalpha.com/\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 22 de octubre de 2011 14:40, Silvia Pierotti <silviapierotti504 at gmail.com\n> escribió:\n\n> Hola,\n>\n> Estime una función de densidad de probabilidad (usando la función densiti)\n> y\n> quiero integrarla para encontrar percentiles 5 y 95....\n>\n> Alguien sabe como hacer esta integral en R????....\n>\n> Gracias!!!..\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nTienes la función integrate() dentro del paquete stats.\n\nY si tienes la expresión analítica y buscas su integral igualmente\nanalítica, hay recursos en la red para su cálculo. Especialmente en t",
       "thread_id": "thread-7a17cbfa8994",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c1d12f1a/attachment.pl"
+      ]
     },
     {
       "id": "msg-eeaba52c5eb0",
@@ -1166,11 +1283,14 @@
         "<CAOKbq8iZ53SgzgS=0ZkiwmpLjkWf-xYtvWF=0_pfdam3CJVvOQ@mail.gmail.com>",
         "<20111022165319.bjbpx5eawgo8owog@webcartero01.uc3m.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c70da008/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c70da008/attachment.pl>",
+      "body_plain": "La siguiente funcion toma un objeto calculado con la función density() y\ndevuelve el cuantil correspondiente a un\np-valor dado. Quizas esto les sirva. No se si alguno en el grupo de\ndiscusión conoce alguna alternativa mas\nprecisa que esta funcón.\n\n*#*\n\n*# return the variate(s) for specified cumulative*\n\n*# probability(ies) for a density(...) object*\n\n*#*\n\n*# Rajiv Prasad (rajiv.prasad at pnl.gov) 05/14/2001*\n\n*#*\n\nRPDensityLookup <- *function*(density.obj, p=0.5, interp=\"l\")\n\n{\n\n  *if*(*missing*(density.obj))\n\n  {\n\n    *cat*(\"\\nUsage: RPDensityLookup(density.obj, p=0.5, interp=\\\"l\\\")\")\n\n    *cat*(\"\\n  density.obj: an object returned from the density(...)\nfunction\")\n\n    *cat*(\"\\n            p: cumulative probability value(s) for which\nvariate\")\n\n    *cat*(\"\\n               values are needed\")\n\n    *cat*(\"\\n       interp: \\\"l\\\" for linear interpolation between data\npoints\")\n\n    *cat*(\"\\n               \\\"s\\\" for spline fit using data points\\n\\n\")\n\n  }\n\n\n\n  n <- *length*(density.obj$x)\n\n  dx <- density.obj$x[2:n] - density.obj$x[1:(n-1)]\n\n  x <- *rep*(*NA*, *length*(p))\n\n\n\n  *# midpoints*\n\n  cumx <- (density.obj$x[2:n] + density.obj$x[1:(n-1)]) / 2\n\n  *# numerical integration*\n\n  cumy <- *cumsum*((density.obj$y[2:n] + density.obj$y[1:(n-1)]) / 2 * dx)\n\n\n\n  *if*(interp == \"l\")\n\n  {\n\n    Fx <- *approxfun*(cumy, cumx)  *# linear interpolation function*\n\n    x <- Fx(p)                   *# the variates corresponding to p's*\n\n  }\n\n  *else* *if*(interp == \"s\")\n\n  {\n\n    Fx <- *splinefun*(cumy, cumx)  *# spline fit*\n\n    x <- Fx(p)                   *# the variates corresponding to p's*\n\n  }\n\n  *else*\n\n  {\n\n    *cat*(*paste*(\"\\nError: unrecognized interp method (\\\"\", interp,\n\"\\\").\\n\\n\",\n\n*sep*=\"\"))\n\n  }\n\n\n\n  x\n\n}\n\n\n\n*#EJEMPLO*\n\nx=*rnorm*(100,0,1)\n\nmidensidad=*density*(x)\n\nRPDensityLookup(midensidad,0.25,\"s\")\n\n\n\n\n\n\n\n\n\n\n\n\nProf. Julio Di Rienzo\nEstadística y Biometría\nFCA- U.N. Córdoba\nIBS-RARG President\nhttp://sites.google.com/site/juliodirienzo\n\"Biometry, the active pursuit of biological\nknowledge by quantitative methods.\"\n(R.A. Fisher, 1948)\n\n\n\n2011/10/22 J. Miguel Marin <jmmarin at est-econ.uc3m.es>\n\n> Hola,\n> otra opción es usar \"Ryacas\" que permite calcular integrales analíticas vía\n> yacas dentro de R:\n> http://cran.es.r-project.org/**web/packages/Ryacas/index.html<http://cran.es.r-project.org/web/packages/Ryacas/index.html>\n>\n> Un saludo\n>\n>\n>  Hola,\n>>\n>> Tienes la función integrate() dentro del paquete stats.\n>>\n>> Y si tienes la expresión analítica y buscas su integral igualmente\n>> analítica, hay recursos en la red para su cálculo. Especialmente en todo\n>> el\n>> mundo de Wolfram Research (Mathematica, Wolfram Alpha):\n>> http://www.wolframalpha.com/\n>>\n>>\n>> Saludos,\n>> Carlos Ortega\n>> www.qualityexcellence.es\n>>\n>> El 22 de octubre de 2011 14:40, Silvia Pierotti <\n>> silviapierotti504 at gmail.com\n>>\n>>> escribió:\n>>>\n>>\n>>  Hola,\n>>>\n>>> Estime una función de densidad de probabilidad (usando la función\n>>> densiti)\n>>> y\n>>> quiero integrarla para encontrar percentiles 5 y 95....\n>>>\n>>> Alguien sabe como hacer esta integral en R????....\n>>>\n>>> Gracias!!!..\n>>>\n>>>       [[alternative HTML version deleted]]\n>>>\n>>>\n>>> ______________________________**_________________\n>>> R-help-es mailing list\n>>> R-help-es at r-project.org\n>>> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>>>\n>>>\n>>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>>\n>\n>\n>\n> jm~\n>\n> ______________________________**_\n>\n>       J. Miguel Marin\n>\n> http://www.est.uc3m.es/jmmarin\n>\n>   Dep. of Statistics\n> University Carlos III of Madrid\n>       Spain (E.U.)\n>\n>\n> ______________________________**_________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "La siguiente funcion toma un objeto calculado con la función density() y\ndevuelve el cuantil correspondiente a un\np-valor dado. Quizas esto les sirva. No se si alguno en el grupo de\ndiscusión conoce a",
       "thread_id": "thread-7a17cbfa8994",
       "thread_depth": 3,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/c70da008/attachment.pl"
+      ]
     },
     {
       "id": "msg-4b2084d2b15b",
@@ -1182,11 +1302,14 @@
       "subject_clean": "[R-es] Matriz series temporales",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/3a06f2a6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/3a06f2a6/attachment.pl>",
+      "body_plain": "Estimados:\nTengo la siguiente matriz de datos:\n> consultas\n\n idProvincia       Provincia  a2002.iv   a2003.i  a2003.ii a2003.iii\na2003.iv   a2004.i\n1           1    BUENOS AIRES 1,497,515 2,426,758 3,317,094 3,981,913\n3,982,320 4,082,995\n2           2 CAPITAL FEDERAL    84,581   173,672   222,065   217,656\n 211,537   221,983\n\n3           3       CATAMARCA     8,533    23,602   103,840   139,583\n 155,490   165,681\n4           4           CHACO   142,589   240,029   400,891   581,510\n 569,630   550,476\n5           5          CHUBUT    38,847    61,930    99,964   121,983\n 135,666   133,713\n\n6           6         CORDOBA   138,281   471,660 1,002,984 1,240,039\n1,245,946 1,414,945\n\nEs un data.frame que corresponde a una serie de consultas por provincia\n(idProvincia, Provincia) por trimestre para datos de 2002 (iv trimestre) a\n2011 (iii trimestre).-\nEstoy intentando definirlo como una serie de tiempo, para usarlo para\nmodelar cada Provincia por separado, algo así como lo que resultaría de:\n> consultas.serie <- ts(x,frequency=4, start = c(2002, 3))\na lo que le faltaría el parámetro para definir que idProvincia y Provincia\nson una dimensión espacial. Pero incluso filtrando una sola provincia, el\ncomando no funciona. Entiendo que debería convertir los datos a un vector, y\nluego si funcionaría, pero tampoco se hacerlo :( y supongo no es la forma\nelegante.\n¿Con qué comandos puedo acomodar el data.frame para trabajar con series\ntemporales según provincia?\nNo es posible ajustar el archivo de base porque es un .xls que resulta de\notros tantos, y la intención es usar R a partir de este resultado.\nMuchas gracias.\n-- \nMauricio\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados:\nTengo la siguiente matriz de datos:\n> consultas\n\n idProvincia       Provincia  a2002.iv   a2003.i  a2003.ii a2003.iii\na2003.iv   a2004.i\n1           1    BUENOS AIRES 1,497,515 2,426,758 3,",
       "thread_id": "thread-4b2084d2b15b",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/3a06f2a6/attachment.pl"
+      ]
     },
     {
       "id": "msg-7705393de296",
@@ -1200,11 +1323,14 @@
       "references": [
         "<CAKXoZH9Er_Rj=7HPAfXapSEsXX7MuKrCEgsP42swHsus_A9Hog@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/b641b5d9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/b641b5d9/attachment.pl>",
+      "body_plain": "Hola.\n\nAntes de convertir a serie temporal tienes que reorganizar los datos, por\nfilas los trimestres y por columnas las provincias. El paquete reshape te\npuede ayudar en eso o bien traspones los datos en una hoja de cálculo.\n\nUn saludo\nGregorio R. Serrano\n\nEl 22 de octubre de 2011 20:59, Mauricio Monsalvo\n<m.monsalvo at gmail.com>escribió:\n\n> Estimados:\n> Tengo la siguiente matriz de datos:\n> > consultas\n>\n>  idProvincia       Provincia  a2002.iv   a2003.i  a2003.ii a2003.iii\n> a2003.iv   a2004.i\n> 1           1    BUENOS AIRES 1,497,515 2,426,758 3,317,094 3,981,913\n> 3,982,320 4,082,995\n> 2           2 CAPITAL FEDERAL    84,581   173,672   222,065   217,656\n>  211,537   221,983\n>\n> 3           3       CATAMARCA     8,533    23,602   103,840   139,583\n>  155,490   165,681\n> 4           4           CHACO   142,589   240,029   400,891   581,510\n>  569,630   550,476\n> 5           5          CHUBUT    38,847    61,930    99,964   121,983\n>  135,666   133,713\n>\n> 6           6         CORDOBA   138,281   471,660 1,002,984 1,240,039\n> 1,245,946 1,414,945\n>\n> Es un data.frame que corresponde a una serie de consultas por provincia\n> (idProvincia, Provincia) por trimestre para datos de 2002 (iv trimestre) a\n> 2011 (iii trimestre).-\n> Estoy intentando definirlo como una serie de tiempo, para usarlo para\n> modelar cada Provincia por separado, algo así como lo que resultaría de:\n> > consultas.serie <- ts(x,frequency=4, start = c(2002, 3))\n> a lo que le faltaría el parámetro para definir que idProvincia y Provincia\n> son una dimensión espacial. Pero incluso filtrando una sola provincia, el\n> comando no funciona. Entiendo que debería convertir los datos a un vector,\n> y\n> luego si funcionaría, pero tampoco se hacerlo :( y supongo no es la forma\n> elegante.\n> ¿Con qué comandos puedo acomodar el data.frame para trabajar con series\n> temporales según provincia?\n> No es posible ajustar el archivo de base porque es un .xls que resulta de\n> otros tantos, y la intención es usar R a partir de este resultado.\n> Muchas gracias.\n> --\n> Mauricio\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nDr. Gregorio R. Serrano\nDpto. Economía Cuantitativa (UCM)\nVoz:+34 91394 2361\nFax:+34 91394 2591\nhttp://www.grserrano.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola.\n\nAntes de convertir a serie temporal tienes que reorganizar los datos, por\nfilas los trimestres y por columnas las provincias. El paquete reshape te\npuede ayudar en eso o bien traspones los dato",
       "thread_id": "thread-4b2084d2b15b",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/b641b5d9/attachment.pl"
+      ]
     },
     {
       "id": "msg-f2f5584031e5",
@@ -1218,11 +1344,14 @@
       "references": [
         "<CAKXoZH9Er_Rj=7HPAfXapSEsXX7MuKrCEgsP42swHsus_A9Hog@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/99ae7ff8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/99ae7ff8/attachment.pl>",
+      "body_plain": "Hola,\n\nDe esta forma con un bucle sí que cicla sobre cada provincia y genera el\nobjeto ts...\n\n\nlin.dat<-\"idProvincia Provincia a2002.iv a2003.i a2003.ii a2003.iii a2003.iv\na2004.i\n1 BUENOS_AIRES 1497515 2426758 3317094 3981913 3982320 4082995\n2 CAPITAL_FEDERAL 8458 173672 222065 217656 211537 221983\n3 CATAMARCA  8533 23602 103840 139583 155490 165681\n4 CHACO 142589 240029 400891 581510 569630 550476\n5 CHUBUT 38847 61930 99964 121983 135666 133713\n6 CORDOBA 138281 471660 1002984 1240039 1245946 1414945\n\"\n\ndat.df <- read.table(textConnection(lin.dat), skip=1, as.is = TRUE,\n                     col.names=c(\"Id\", \"Prov\", \"a2002.4\", \"a2003.1\",\n\"a2003.2\", \"a2003.3\", \"a2003.4\",\"a2004.1\"))\ncloseAllConnections()\n\np.d<-dat.df$Prov\nfor(i in 1:length(p.d)) {\n\n  print(p.d[i])\n  d.f.ts<-unlist(c(dat.df[dat.df$Prov==p.d[i], 3:8]))\n  names(d.f.ts)<-NULL\n  ts.dat<-ts(d.f.ts, frequency=4, start(2002,4))\n  plot(ts.dat)\n\n}\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 22 de octubre de 2011 20:59, Mauricio Monsalvo\n<m.monsalvo at gmail.com>escribió:\n\n> Estimados:\n> Tengo la siguiente matriz de datos:\n> > consultas\n>\n>  idProvincia       Provincia  a2002.iv   a2003.i  a2003.ii a2003.iii\n> a2003.iv   a2004.i\n> 1           1    BUENOS AIRES 1,497,515 2,426,758 3,317,094 3,981,913\n> 3,982,320 4,082,995\n> 2           2 CAPITAL FEDERAL    84,581   173,672   222,065   217,656\n>  211,537   221,983\n>\n> 3           3       CATAMARCA     8,533    23,602   103,840   139,583\n>  155,490   165,681\n> 4           4           CHACO   142,589   240,029   400,891   581,510\n>  569,630   550,476\n> 5           5          CHUBUT    38,847    61,930    99,964   121,983\n>  135,666   133,713\n>\n> 6           6         CORDOBA   138,281   471,660 1,002,984 1,240,039\n> 1,245,946 1,414,945\n>\n> Es un data.frame que corresponde a una serie de consultas por provincia\n> (idProvincia, Provincia) por trimestre para datos de 2002 (iv trimestre) a\n> 2011 (iii trimestre).-\n> Estoy intentando definirlo como una serie de tiempo, para usarlo para\n> modelar cada Provincia por separado, algo así como lo que resultaría de:\n> > consultas.serie <- ts(x,frequency=4, start = c(2002, 3))\n> a lo que le faltaría el parámetro para definir que idProvincia y Provincia\n> son una dimensión espacial. Pero incluso filtrando una sola provincia, el\n> comando no funciona. Entiendo que debería convertir los datos a un vector,\n> y\n> luego si funcionaría, pero tampoco se hacerlo :( y supongo no es la forma\n> elegante.\n> ¿Con qué comandos puedo acomodar el data.frame para trabajar con series\n> temporales según provincia?\n> No es posible ajustar el archivo de base porque es un .xls que resulta de\n> otros tantos, y la intención es usar R a partir de este resultado.\n> Muchas gracias.\n> --\n> Mauricio\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nDe esta forma con un bucle sí que cicla sobre cada provincia y genera el\nobjeto ts...\n\n\nlin.dat<-\"idProvincia Provincia a2002.iv a2003.i a2003.ii a2003.iii a2003.iv\na2004.i\n1 BUENOS_AIRES 14975",
       "thread_id": "thread-4b2084d2b15b",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/99ae7ff8/attachment.pl"
+      ]
     },
     {
       "id": "msg-5b292c6ed72d",
@@ -1274,11 +1403,14 @@
         "<CAP3FtZiXSEELOw-uZSFMbtwqQzS8v50oRpwWXkytW8hCthra6w@mail.gmail.com>",
         "<20111022225729.02ff0ef2@upm.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/8e595edd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/8e595edd/attachment.pl>",
+      "body_plain": "Sí, y además aunque sea comparando Lattice con ggplot2 (sin tener en cuenta\nlas posibilidades de LatticeExtra:\n\nhttp://learnr.wordpress.com/2009/06/28/ggplot2-version-of-figures-in-lattice-multivariate-data-visualization-with-r-part-1/\n\nEs otra referencia para Lattice muy valiosa.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\nEl 22 de octubre de 2011 22:57, Oscar Perpiñan Lamigueiro <\noscar.perpinan at upm.es> escribió:\n\n> > Estoy empezando con lattice ¿alguna referencia, manual, tutorial?\n> Existe un libro publicado por Springer.\n>\n> http://www.springer.com/statistics/computanional+statistics/book/978-0-387-75968-5\n>\n> pero la página de lattice en R-Forge que reproduce todos los ejemplos\n> del libro:\n> http://lmdvr.r-forge.r-project.org\n>\n> También te será útil este documentos de Deepayan:\n>\n> http://www.isid.ac.in/~deepayan/R-tutorials/labs/04_lattice_lab.pdf\n>\n> y la página web de latticeExtra en R-Forge:\n>\n> http://latticeextra.r-forge.r-project.org/\n>\n> Y para terminar, las figuras del libro de Paul Murrell:\n>\n> http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html\n>\n>\n> Saludos.\n>\n> Oscar.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Sí, y además aunque sea comparando Lattice con ggplot2 (sin tener en cuenta\nlas posibilidades de LatticeExtra:\n\nhttp://learnr.wordpress.com/2009/06/28/ggplot2-version-of-figures-in-lattice-multivariat",
       "thread_id": "thread-7b5aae0d6235",
       "thread_depth": 2,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111022/8e595edd/attachment.pl"
+      ]
     },
     {
       "id": "msg-d1663ff74bc1",
@@ -1294,11 +1426,14 @@
         "<CAOKbq8jAK6C3D3CcJn-FAt7Pto6-2fim9njA+46JZ57Kwo98dQ@mail.gmail.com>",
         "<20111022224811.27d75061@upm.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111023/567be25d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111023/567be25d/attachment.pl>",
+      "body_plain": "Genial Oscar! Me costó porque no conocía ni la zoo, pero el resultado es tal\ncual el que buscaba. Ahora viene la mejor parte.\nMuchas gracias a los dos.\nSaludos\n\nEl 22 de octubre de 2011 17:48, Oscar Perpiñan Lamigueiro <\noscar.perpinan at upm.es> escribió:\n\n> Hola,\n>\n> Con el paquete zoo puedes crear una serie temporal multivariante.\n> Reutilizo parte del código de Carlos para construir el data.frame\n> inicial:\n>\n> lin.dat<-\"idProvincia Provincia a2002.iv a2003.i a2003.ii a2003.iii\n> a2003.iv a2004.i\n> 1 BUENOS_AIRES 1497515 2426758 3317094 3981913 3982320 4082995\n> 2 CAPITAL_FEDERAL 8458 173672 222065 217656 211537 221983\n> 3 CATAMARCA  8533 23602 103840 139583 155490 165681\n> 4 CHACO 142589 240029 400891 581510 569630 550476\n> 5 CHUBUT 38847 61930 99964 121983 135666 133713\n> 6 CORDOBA 138281 471660 1002984 1240039 1245946 1414945\n> \"\n>\n> dat.df <- read.table(textConnection(lin.dat), header=TRUE)\n> closeAllConnections()\n>\n>\n> library(zoo)\n>\n> ## El índice temporal lo defino con la clase yearqtr\n> idx <- as.yearqtr(seq(2002.25, 2004, by=.25))\n> ## Los datos son todo el data.frame menos las dos primeras columnas\n> ## Además, le doy la vuelta\n> datos <- t(dat.df[,-c(1,2)])\n> ## Construyo el objeto zoo\n> z <- zoo(datos, idx)\n> ## Y le pongo nombres a las variables\n> names(z) <- dat.df$Provincia\n>\n> ##Represento toda la serie temporal en un único gráfico\n> library(lattice)\n> xyplot(z, superpose=TRUE, auto.key=list(space='right'))\n>\n> ## Se puede acceder a una de las variables con \"$\" o con [] como en el\n> ## caso de un data.frame\n> z$CATAMARCA\n> z[,\"CATAMARCA\"]\n> xyplot(z$CATAMARCA)\n>\n>\n> Saludos.\n>\n> Oscar.\n>\n>  El\n> Sat, 22 Oct 2011 22:07:20 +0200 Carlos Ortega\n> <cof at qualityexcellence.es> escribiÃ³:\n> > Hola,\n> >\n> > De esta forma con un bucle sí que cicla sobre cada provincia y genera\n> > el objeto ts...\n> >\n> >\n> > lin.dat<-\"idProvincia Provincia a2002.iv a2003.i a2003.ii a2003.iii\n> > a2003.iv a2004.i\n> > 1 BUENOS_AIRES 1497515 2426758 3317094 3981913 3982320 4082995\n> > 2 CAPITAL_FEDERAL 8458 173672 222065 217656 211537 221983\n> > 3 CATAMARCA  8533 23602 103840 139583 155490 165681\n> > 4 CHACO 142589 240029 400891 581510 569630 550476\n> > 5 CHUBUT 38847 61930 99964 121983 135666 133713\n> > 6 CORDOBA 138281 471660 1002984 1240039 1245946 1414945\n> > \"\n> >\n> > dat.df <- read.table(textConnection(lin.dat), skip=1, as.is = TRUE,\n> >                      col.names=c(\"Id\", \"Prov\", \"a2002.4\", \"a2003.1\",\n> > \"a2003.2\", \"a2003.3\", \"a2003.4\",\"a2004.1\"))\n> > closeAllConnections()\n> >\n> > p.d<-dat.df$Prov\n> > for(i in 1:length(p.d)) {\n> >\n> >   print(p.d[i])\n> >   d.f.ts<-unlist(c(dat.df[dat.df$Prov==p.d[i], 3:8]))\n> >   names(d.f.ts)<-NULL\n> >   ts.dat<-ts(d.f.ts, frequency=4, start(2002,4))\n> >   plot(ts.dat)\n> >\n> > }\n> >\n> >\n> > Saludos,\n> > Carlos Ortega\n> > www.qualityexcellence.es\n> >\n> > El 22 de octubre de 2011 20:59, Mauricio Monsalvo\n> > <m.monsalvo at gmail.com>escribió:\n> >\n> > > Estimados:\n> > > Tengo la siguiente matriz de datos:\n> > > > consultas\n> > >\n> > >  idProvincia       Provincia  a2002.iv   a2003.i  a2003.ii a2003.iii\n> > > a2003.iv   a2004.i\n> > > 1           1    BUENOS AIRES 1,497,515 2,426,758 3,317,094\n> > > 3,981,913 3,982,320 4,082,995\n> > > 2           2 CAPITAL FEDERAL    84,581   173,672   222,065\n> > > 217,656 211,537   221,983\n> > >\n> > > 3           3       CATAMARCA     8,533    23,602   103,840\n> > > 139,583 155,490   165,681\n> > > 4           4           CHACO   142,589   240,029   400,891\n> > > 581,510 569,630   550,476\n> > > 5           5          CHUBUT    38,847    61,930    99,964\n> > > 121,983 135,666   133,713\n> > >\n> > > 6           6         CORDOBA   138,281   471,660 1,002,984\n> > > 1,240,039 1,245,946 1,414,945\n> > >\n> > > Es un data.frame que corresponde a una serie de consultas por\n> > > provincia (idProvincia, Provincia) por trimestre para datos de 2002\n> > > (iv trimestre) a 2011 (iii trimestre).-\n> > > Estoy intentando definirlo como una serie de tiempo, para usarlo\n> > > para modelar cada Provincia por separado, algo así como lo que\n> > > resultaría de:\n> > > > consultas.serie <- ts(x,frequency=4, start = c(2002, 3))\n> > > a lo que le faltaría el parámetro para definir que idProvincia y\n> > > Provincia son una dimensión espacial. Pero incluso filtrando una\n> > > sola provincia, el comando no funciona. Entiendo que debería\n> > > convertir los datos a un vector, y\n> > > luego si funcionaría, pero tampoco se hacerlo :( y supongo no es la\n> > > forma elegante.\n> > > ¿Con qué comandos puedo acomodar el data.frame para trabajar con\n> > > series temporales según provincia?\n> > > No es posible ajustar el archivo de base porque es un .xls que\n> > > resulta de otros tantos, y la intención es usar R a partir de este\n> > > resultado. Muchas gracias.\n> > > --\n> > > Mauricio\n> > >\n> > >        [[alternative HTML version deleted]]\n> > >\n> > >\n> > > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > >\n> > >\n> >\n> >       [[alternative HTML version deleted]]\n> >\n>\n>\n\n\n-- \nMauricio\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Genial Oscar! Me costó porque no conocía ni la zoo, pero el resultado es tal\ncual el que buscaba. Ahora viene la mejor parte.\nMuchas gracias a los dos.\nSaludos\n\nEl 22 de octubre de 2011 17:48, Oscar P",
       "thread_id": "thread-4b2084d2b15b",
       "thread_depth": 3,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111023/567be25d/attachment.pl"
+      ]
     },
     {
       "id": "msg-2fb960744a9a",
@@ -1314,11 +1449,14 @@
         "<20111022225729.02ff0ef2@upm.es>",
         "<CAOKbq8jRHD5_U=QJxPRr4R1w1ecTmNeBneCp+hL0tvn9=iDUCg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/50cc4500/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/50cc4500/attachment.pl>",
+      "body_plain": "Muchas gracias a todos.\n\nPor cierto, el libro de Deepayan Sarkar en pdf está diponible aquí.\nhttp://ishare.iask.sina.com.cn/f/14312025.html\nNo se como de legal es esto, si hace falta desintegrar este mensaje por\ntemas legales adelante.\n\njaume.\n\n\nEl 22 de octubre de 2011 23:06, Carlos Ortega\n<cof at qualityexcellence.es>escribió:\n\n> Sí, y además aunque sea comparando Lattice con ggplot2 (sin tener en cuenta\n> las posibilidades de LatticeExtra:\n>\n>\n> http://learnr.wordpress.com/2009/06/28/ggplot2-version-of-figures-in-lattice-multivariate-data-visualization-with-r-part-1/\n>\n> Es otra referencia para Lattice muy valiosa.\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n> El 22 de octubre de 2011 22:57, Oscar Perpiñan Lamigueiro <\n> oscar.perpinan at upm.es> escribió:\n>\n>> > Estoy empezando con lattice ¿alguna referencia, manual, tutorial?\n>> Existe un libro publicado por Springer.\n>>\n>> http://www.springer.com/statistics/computanional+statistics/book/978-0-387-75968-5\n>>\n>> pero la página de lattice en R-Forge que reproduce todos los ejemplos\n>> del libro:\n>> http://lmdvr.r-forge.r-project.org\n>>\n>> También te será útil este documentos de Deepayan:\n>>\n>> http://www.isid.ac.in/~deepayan/R-tutorials/labs/04_lattice_lab.pdf\n>>\n>> y la página web de latticeExtra en R-Forge:\n>>\n>> http://latticeextra.r-forge.r-project.org/\n>>\n>> Y para terminar, las figuras del libro de Paul Murrell:\n>>\n>> http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html\n>>\n>>\n>> Saludos.\n>>\n>> Oscar.\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n\n\n-- \nJaume Tormo Blanes\nIMEM Ramon Margalef.\nCarretera San Vicente del Raspeig s/n\n03690 San Vicente del Raspeig - Alicante\nwww.ua.es\nacercad.wordpress.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias a todos.\n\nPor cierto, el libro de Deepayan Sarkar en pdf está diponible aquí.\nhttp://ishare.iask.sina.com.cn/f/14312025.html\nNo se como de legal es esto, si hace falta desintegrar este ",
       "thread_id": "thread-7b5aae0d6235",
       "thread_depth": 3,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/50cc4500/attachment.pl"
+      ]
     },
     {
       "id": "msg-97bce3e99966",
@@ -1330,11 +1468,14 @@
       "subject_clean": "[R-es] funcion replace()",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/9cb95fc3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/9cb95fc3/attachment.pl>",
+      "body_plain": "Hola a todos, estoy trabajnado con la funcion replace() en un data frame. \nMi problema se concentra en reemplazar solo algunos \nvalores de un data.frame que consta de 1000  filas con 90 columnas. Os \nexplico mejor:\n     x1    x2     x2…..   x9\n\n1 a11   a12    a13 ….a19\n\n2 a21  a22   a23…  a29\n\n.          ……………..\n\n           ………………\n\n9 a91  a92   a93…  a99\n\nSuponed que quiero reemplazar el valor de a21 por b21, a23 por b23…. \nmis cambios son de tipo aleatorio es decir no conllevan orde.  Pensé en \nhacerlos uno a uno con la funcion remplace() pero es mucha faena dada \nlo amplio de mis datos. Alguna suguerencia??\n\nGracias!!\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos, estoy trabajnado con la funcion replace() en un data frame. \nMi problema se concentra en reemplazar solo algunos \nvalores de un data.frame que consta de 1000  filas con 90 columnas. Os \n",
       "thread_id": "thread-97bce3e99966",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/9cb95fc3/attachment.pl"
+      ]
     },
     {
       "id": "msg-10c2ce467e8c",
@@ -1348,11 +1489,14 @@
       "references": [
         "<BAY166-W6181B196059797606F5A0E88EF0@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/4483f3fe/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/4483f3fe/attachment.pl>",
+      "body_plain": "Hola\n\nYo usaría data.frame(el que quiero, el que quiero, el que quiero).\n\nSon 90 columnas, pero puedo escribirlas en el orden que prefiero. Y si son\n90 columnas, son solo 90, lo importante para mi son tus datos. Podes\nescribir un renglón por columna, eso son 90 renglones.\n\ndatos <- data.frame(dato, dato1)\ndatos <- data.frame(datos, dato2)\ndatos <- data.frame(datos, dato3)\n\nEl 24 de octubre de 2011 07:05, Adri V. <a_villa43 at hotmail.com> escribió:\n\n>\n> Hola a todos, estoy trabajnado con la funcion replace() en un data frame.\n> Mi problema se concentra en reemplazar solo algunos\n> valores de un data.frame que consta de 1000  filas con 90 columnas. Os\n> explico mejor:\n>     x1    x2     x2…..   x9\n>\n> 1 a11   a12    a13 ….a19\n>\n> 2 a21  a22   a23…  a29\n>\n> .          ……………..\n>\n>           ………………\n>\n> 9 a91  a92   a93…  a99\n>\n> Suponed que quiero reemplazar el valor de a21 por b21, a23 por b23….\n> mis cambios son de tipo aleatorio es decir no conllevan orde.  Pensé en\n> hacerlos uno a uno con la funcion remplace() pero es mucha faena dada\n> lo amplio de mis datos. Alguna suguerencia??\n>\n> Gracias!!\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola\n\nYo usaría data.frame(el que quiero, el que quiero, el que quiero).\n\nSon 90 columnas, pero puedo escribirlas en el orden que prefiero. Y si son\n90 columnas, son solo 90, lo importante para mi son",
       "thread_id": "thread-97bce3e99966",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/4483f3fe/attachment.pl"
+      ]
     },
     {
       "id": "msg-f9ec6596f562",
@@ -1366,11 +1510,14 @@
       "references": [
         "<BAY166-W6181B196059797606F5A0E88EF0@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/9977615f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/9977615f/attachment.pl>",
+      "body_plain": "Hola,\n\nSon múltiples las funciones en R que permite la sustitución (texto,\ncaracteres, números). Pero en todas ellas has de pasar por indicar qué es lo\nque quieres modificar y el nuevo valor por el que quieres que se sustituya.\nDependiendo de si lo que quieres sustituir tiene algún elemento común, algún\npatrón semejante la expresión a utilizar se puede simplificar, pero cuenta\ncon que tendrás que  aportar el patrón a sustituir y el nuevo valor.\n\nY luego está el capítulo de la eficiencia del cómo hacerlo. Por el conjunto\nde datos que comentas, todas estas funciones para sustitución son bastante\neficientes. Dependerá que puedas utilizar algo compacto y rápido (vía las\nfunciones apply) de si hay patrón en todo lo que quieres sustituir. En otro\ncaso, siempre tienes a mano el utilizar un bucle e ir con la sustitución una\na una.\n\nSalvo que aportes más detalle: del data.frame que tienes, y del tipo de\nsustitución que quieres realizar más ayuda es complicado darte...\n\nSi quieres avanzar con las funciones de sustitución, mira la ayuda de\n\"grep()\", que ofrece más alternativas que la que aparece en replace().\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl 24 de octubre de 2011 12:05, Adri V. <a_villa43 at hotmail.com> escribió:\n\n>\n> Hola a todos, estoy trabajnado con la funcion replace() en un data frame.\n> Mi problema se concentra en reemplazar solo algunos\n> valores de un data.frame que consta de 1000  filas con 90 columnas. Os\n> explico mejor:\n>     x1    x2     x2…..   x9\n>\n> 1 a11   a12    a13 ….a19\n>\n> 2 a21  a22   a23…  a29\n>\n> .          ……………..\n>\n>           ………………\n>\n> 9 a91  a92   a93…  a99\n>\n> Suponed que quiero reemplazar el valor de a21 por b21, a23 por b23….\n> mis cambios son de tipo aleatorio es decir no conllevan orde.  Pensé en\n> hacerlos uno a uno con la funcion remplace() pero es mucha faena dada\n> lo amplio de mis datos. Alguna suguerencia??\n>\n> Gracias!!\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSon múltiples las funciones en R que permite la sustitución (texto,\ncaracteres, números). Pero en todas ellas has de pasar por indicar qué es lo\nque quieres modificar y el nuevo valor por el qu",
       "thread_id": "thread-97bce3e99966",
       "thread_depth": 1,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/9977615f/attachment.pl"
+      ]
     },
     {
       "id": "msg-04104c5ae811",
@@ -1387,11 +1534,14 @@
         "<CAOKbq8jRHD5_U=QJxPRr4R1w1ecTmNeBneCp+hL0tvn9=iDUCg@mail.gmail.com>",
         "<CAP3FtZjEf3=xDSMYNy0C=rANM0mUWyY57ATCfyBA9NR2M5t7Lw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/5a409ba2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/5a409ba2/attachment.pl>",
+      "body_plain": "Hola,\n\nPues yo lo veo bastante poco legal...\nSin querer entrar en un cruce inútil de correos. Creo que en la lista no\ndebiéramos cruzar la línea y al menos no fomentar en este sitio el\nconocimiento/uso de este tipo de enlaces.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/10/24 Jaume Tormo <jautorbla at gmail.com>\n\n> Muchas gracias a todos.\n>\n> Por cierto, el libro de Deepayan Sarkar en pdf está diponible aquí.\n> http://ishare.iask.sina.com.cn/f/14312025.html\n> No se como de legal es esto, si hace falta desintegrar este mensaje por\n> temas legales adelante.\n>\n> jaume.\n>\n>\n> El 22 de octubre de 2011 23:06, Carlos Ortega\n> <cof at qualityexcellence.es>escribió:\n>\n> > Sí, y además aunque sea comparando Lattice con ggplot2 (sin tener en\n> cuenta\n> > las posibilidades de LatticeExtra:\n> >\n> >\n> >\n> http://learnr.wordpress.com/2009/06/28/ggplot2-version-of-figures-in-lattice-multivariate-data-visualization-with-r-part-1/\n> >\n> > Es otra referencia para Lattice muy valiosa.\n> >\n> > Saludos,\n> > Carlos Ortega\n> > www.qualityexcellence.es\n> >\n> >\n> > El 22 de octubre de 2011 22:57, Oscar Perpiñan Lamigueiro <\n> > oscar.perpinan at upm.es> escribió:\n> >\n> >> > Estoy empezando con lattice ¿alguna referencia, manual, tutorial?\n> >> Existe un libro publicado por Springer.\n> >>\n> >>\n> http://www.springer.com/statistics/computanional+statistics/book/978-0-387-75968-5\n> >>\n> >> pero la página de lattice en R-Forge que reproduce todos los ejemplos\n> >> del libro:\n> >> http://lmdvr.r-forge.r-project.org\n> >>\n> >> También te será útil este documentos de Deepayan:\n> >>\n> >> http://www.isid.ac.in/~deepayan/R-tutorials/labs/04_lattice_lab.pdf\n> >>\n> >> y la página web de latticeExtra en R-Forge:\n> >>\n> >> http://latticeextra.r-forge.r-project.org/\n> >>\n> >> Y para terminar, las figuras del libro de Paul Murrell:\n> >>\n> >> http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html\n> >>\n> >>\n> >> Saludos.\n> >>\n> >> Oscar.\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >\n> >\n>\n>\n> --\n> Jaume Tormo Blanes\n> IMEM Ramon Margalef.\n> Carretera San Vicente del Raspeig s/n\n> 03690 San Vicente del Raspeig - Alicante\n> www.ua.es\n> acercad.wordpress.com\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPues yo lo veo bastante poco legal...\nSin querer entrar en un cruce inútil de correos. Creo que en la lista no\ndebiéramos cruzar la línea y al menos no fomentar en este sitio el\nconocimiento/us",
       "thread_id": "thread-7b5aae0d6235",
       "thread_depth": 4,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/5a409ba2/attachment.pl"
+      ]
     },
     {
       "id": "msg-ca5b2168a36a",
@@ -1409,11 +1559,14 @@
         "<CAP3FtZjEf3=xDSMYNy0C=rANM0mUWyY57ATCfyBA9NR2M5t7Lw@mail.gmail.com>",
         "<CAOKbq8ihX_qq2XxeAYvtHgLaHmw3Lc3sutZOcphAdLGdgHkOqA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/4fbdcf31/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/4fbdcf31/attachment.pl>",
+      "body_plain": "OK.\nSerá la última vez.\n\njaume.\n\nEl 24 de octubre de 2011 14:52, Carlos Ortega\n<cof at qualityexcellence.es>escribió:\n\n> Hola,\n>\n> Pues yo lo veo bastante poco legal...\n> Sin querer entrar en un cruce inútil de correos. Creo que en la lista no\n> debiéramos cruzar la línea y al menos no fomentar en este sitio el\n> conocimiento/uso de este tipo de enlaces.\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> 2011/10/24 Jaume Tormo <jautorbla at gmail.com>\n>\n>> Muchas gracias a todos.\n>>\n>> Por cierto, el libro de Deepayan Sarkar en pdf está diponible aquí.\n>> http://ishare.iask.sina.com.cn/f/14312025.html\n>> No se como de legal es esto, si hace falta desintegrar este mensaje por\n>> temas legales adelante.\n>>\n>> jaume.\n>>\n>>\n>> El 22 de octubre de 2011 23:06, Carlos Ortega\n>> <cof at qualityexcellence.es>escribió:\n>>\n>> > Sí, y además aunque sea comparando Lattice con ggplot2 (sin tener en\n>> cuenta\n>> > las posibilidades de LatticeExtra:\n>> >\n>> >\n>> >\n>> http://learnr.wordpress.com/2009/06/28/ggplot2-version-of-figures-in-lattice-multivariate-data-visualization-with-r-part-1/\n>> >\n>> > Es otra referencia para Lattice muy valiosa.\n>> >\n>> > Saludos,\n>> > Carlos Ortega\n>> > www.qualityexcellence.es\n>> >\n>> >\n>> > El 22 de octubre de 2011 22:57, Oscar Perpiñan Lamigueiro <\n>> > oscar.perpinan at upm.es> escribió:\n>> >\n>> >> > Estoy empezando con lattice ¿alguna referencia, manual, tutorial?\n>> >> Existe un libro publicado por Springer.\n>> >>\n>> >>\n>> http://www.springer.com/statistics/computanional+statistics/book/978-0-387-75968-5\n>> >>\n>> >> pero la página de lattice en R-Forge que reproduce todos los ejemplos\n>> >> del libro:\n>> >> http://lmdvr.r-forge.r-project.org\n>> >>\n>> >> También te será útil este documentos de Deepayan:\n>> >>\n>> >> http://www.isid.ac.in/~deepayan/R-tutorials/labs/04_lattice_lab.pdf\n>> >>\n>> >> y la página web de latticeExtra en R-Forge:\n>> >>\n>> >> http://latticeextra.r-forge.r-project.org/\n>> >>\n>> >> Y para terminar, las figuras del libro de Paul Murrell:\n>> >>\n>> >> http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html\n>> >>\n>> >>\n>> >> Saludos.\n>> >>\n>> >> Oscar.\n>> >>\n>> >> _______________________________________________\n>> >> R-help-es mailing list\n>> >> R-help-es at r-project.org\n>> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>> >>\n>> >\n>> >\n>>\n>>\n>> --\n>> Jaume Tormo Blanes\n>> IMEM Ramon Margalef.\n>> Carretera San Vicente del Raspeig s/n\n>> 03690 San Vicente del Raspeig - Alicante\n>> www.ua.es\n>> acercad.wordpress.com\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n\n\n-- \nJaume Tormo Blanes\nIMEM Ramon Margalef.\nCarretera San Vicente del Raspeig s/n\n03690 San Vicente del Raspeig - Alicante\nwww.ua.es\nacercad.wordpress.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "OK.\nSerá la última vez.\n\njaume.\n\nEl 24 de octubre de 2011 14:52, Carlos Ortega\n<cof at qualityexcellence.es>escribió:\n\n> Hola,\n>\n> Pues yo lo veo bastante poco legal...\n> Sin querer entrar en un cruce",
       "thread_id": "thread-7b5aae0d6235",
       "thread_depth": 5,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111024/4fbdcf31/attachment.pl"
+      ]
     },
     {
       "id": "msg-9d12c803369e",
@@ -1427,11 +1580,14 @@
       "references": [
         "<mailman.17.1319450405.7091.r-help-es@r-project.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111028/44ce0633/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111028/44ce0633/attachment.pl>",
+      "body_plain": "hola\n\nsabe alguien de algun paquete o un comando de R, que me ayude a analizar o a\ntratr informaciòn\nhidrologica... gracias\n\nsaludos\n\nEl 24 de octubre de 2011 05:00, <r-help-es-request at r-project.org> escribió:\n\n> Envíe los mensajes para la lista R-help-es a\n>        r-help-es at r-project.org\n>\n> Para subscribirse o anular su subscripción a través de la WEB\n>        https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> O por correo electrónico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n>        r-help-es-request at r-project.org\n>\n> Puede contactar con el responsable de la lista escribiendo a:\n>        r-help-es-owner at r-project.org\n>\n> Si responde a algún contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". Además, por favor, incluya en\n> la respuesta sólo aquellas partes del mensaje a las que está\n> respondiendo.\n>\n>\n> Asuntos del día:\n>\n>   1. Re: Matriz series temporales (Mauricio Monsalvo)\n>   2. Re: Lattice barchart (Jaume Tormo)\n>\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Sun, 23 Oct 2011 17:26:09 -0300\n> From: Mauricio Monsalvo <m.monsalvo at gmail.com>\n> To: Oscar Perpiñan Lamigueiro <oscar.perpinan at upm.es>\n> Cc: r-help-es at r-project.org\n> Subject: Re: [R-es] Matriz series temporales\n> Message-ID:\n>        <CAKXoZH8fJXr4_k0EC3-GeJ=d8tu5GqXyL8nk0RdRwXuazvLW2Q at mail.gmail.com\n> >\n> Content-Type: text/plain\n>\n> Genial Oscar! Me costó porque no conocía ni la zoo, pero el resultado es\n> tal\n> cual el que buscaba. Ahora viene la mejor parte.\n> Muchas gracias a los dos.\n> Saludos\n>\n> El 22 de octubre de 2011 17:48, Oscar Perpiñan Lamigueiro <\n> oscar.perpinan at upm.es> escribió:\n>\n> > Hola,\n> >\n> > Con el paquete zoo puedes crear una serie temporal multivariante.\n> > Reutilizo parte del código de Carlos para construir el data.frame\n> > inicial:\n> >\n> > lin.dat<-\"idProvincia Provincia a2002.iv a2003.i a2003.ii a2003.iii\n> > a2003.iv a2004.i\n> > 1 BUENOS_AIRES 1497515 2426758 3317094 3981913 3982320 4082995\n> > 2 CAPITAL_FEDERAL 8458 173672 222065 217656 211537 221983\n> > 3 CATAMARCA  8533 23602 103840 139583 155490 165681\n> > 4 CHACO 142589 240029 400891 581510 569630 550476\n> > 5 CHUBUT 38847 61930 99964 121983 135666 133713\n> > 6 CORDOBA 138281 471660 1002984 1240039 1245946 1414945\n> > \"\n> >\n> > dat.df <- read.table(textConnection(lin.dat), header=TRUE)\n> > closeAllConnections()\n> >\n> >\n> > library(zoo)\n> >\n> > ## El índice temporal lo defino con la clase yearqtr\n> > idx <- as.yearqtr(seq(2002.25, 2004, by=.25))\n> > ## Los datos son todo el data.frame menos las dos primeras columnas\n> > ## Además, le doy la vuelta\n> > datos <- t(dat.df[,-c(1,2)])\n> > ## Construyo el objeto zoo\n> > z <- zoo(datos, idx)\n> > ## Y le pongo nombres a las variables\n> > names(z) <- dat.df$Provincia\n> >\n> > ##Represento toda la serie temporal en un único gráfico\n> > library(lattice)\n> > xyplot(z, superpose=TRUE, auto.key=list(space='right'))\n> >\n> > ## Se puede acceder a una de las variables con \"$\" o con [] como en el\n> > ## caso de un data.frame\n> > z$CATAMARCA\n> > z[,\"CATAMARCA\"]\n> > xyplot(z$CATAMARCA)\n> >\n> >\n> > Saludos.\n> >\n> > Oscar.\n> >\n> >  El\n> > Sat, 22 Oct 2011 22:07:20 +0200 Carlos Ortega\n> > <cof at qualityexcellence.es> escribiÃ³:\n> > > Hola,\n> > >\n> > > De esta forma con un bucle sí que cicla sobre cada provincia y genera\n> > > el objeto ts...\n> > >\n> > >\n> > > lin.dat<-\"idProvincia Provincia a2002.iv a2003.i a2003.ii a2003.iii\n> > > a2003.iv a2004.i\n> > > 1 BUENOS_AIRES 1497515 2426758 3317094 3981913 3982320 4082995\n> > > 2 CAPITAL_FEDERAL 8458 173672 222065 217656 211537 221983\n> > > 3 CATAMARCA  8533 23602 103840 139583 155490 165681\n> > > 4 CHACO 142589 240029 400891 581510 569630 550476\n> > > 5 CHUBUT 38847 61930 99964 121983 135666 133713\n> > > 6 CORDOBA 138281 471660 1002984 1240039 1245946 1414945\n> > > \"\n> > >\n> > > dat.df <- read.table(textConnection(lin.dat), skip=1, as.is = TRUE,\n> > >                      col.names=c(\"Id\", \"Prov\", \"a2002.4\", \"a2003.1\",\n> > > \"a2003.2\", \"a2003.3\", \"a2003.4\",\"a2004.1\"))\n> > > closeAllConnections()\n> > >\n> > > p.d<-dat.df$Prov\n> > > for(i in 1:length(p.d)) {\n> > >\n> > >   print(p.d[i])\n> > >   d.f.ts<-unlist(c(dat.df[dat.df$Prov==p.d[i], 3:8]))\n> > >   names(d.f.ts)<-NULL\n> > >   ts.dat<-ts(d.f.ts, frequency=4, start(2002,4))\n> > >   plot(ts.dat)\n> > >\n> > > }\n> > >\n> > >\n> > > Saludos,\n> > > Carlos Ortega\n> > > www.qualityexcellence.es\n> > >\n> > > El 22 de octubre de 2011 20:59, Mauricio Monsalvo\n> > > <m.monsalvo at gmail.com>escribió:\n> > >\n> > > > Estimados:\n> > > > Tengo la siguiente matriz de datos:\n> > > > > consultas\n> > > >\n> > > >  idProvincia       Provincia  a2002.iv   a2003.i  a2003.ii a2003.iii\n> > > > a2003.iv   a2004.i\n> > > > 1           1    BUENOS AIRES 1,497,515 2,426,758 3,317,094\n> > > > 3,981,913 3,982,320 4,082,995\n> > > > 2           2 CAPITAL FEDERAL    84,581   173,672   222,065\n> > > > 217,656 211,537   221,983\n> > > >\n> > > > 3           3       CATAMARCA     8,533    23,602   103,840\n> > > > 139,583 155,490   165,681\n> > > > 4           4           CHACO   142,589   240,029   400,891\n> > > > 581,510 569,630   550,476\n> > > > 5           5          CHUBUT    38,847    61,930    99,964\n> > > > 121,983 135,666   133,713\n> > > >\n> > > > 6           6         CORDOBA   138,281   471,660 1,002,984\n> > > > 1,240,039 1,245,946 1,414,945\n> > > >\n> > > > Es un data.frame que corresponde a una serie de consultas por\n> > > > provincia (idProvincia, Provincia) por trimestre para datos de 2002\n> > > > (iv trimestre) a 2011 (iii trimestre).-\n> > > > Estoy intentando definirlo como una serie de tiempo, para usarlo\n> > > > para modelar cada Provincia por separado, algo así como lo que\n> > > > resultaría de:\n> > > > > consultas.serie <- ts(x,frequency=4, start = c(2002, 3))\n> > > > a lo que le faltaría el parámetro para definir que idProvincia y\n> > > > Provincia son una dimensión espacial. Pero incluso filtrando una\n> > > > sola provincia, el comando no funciona. Entiendo que debería\n> > > > convertir los datos a un vector, y\n> > > > luego si funcionaría, pero tampoco se hacerlo :( y supongo no es la\n> > > > forma elegante.\n> > > > ¿Con qué comandos puedo acomodar el data.frame para trabajar con\n> > > > series temporales según provincia?\n> > > > No es posible ajustar el archivo de base porque es un .xls que\n> > > > resulta de otros tantos, y la intención es usar R a partir de este\n> > > > resultado. Muchas gracias.\n> > > > --\n> > > > Mauricio\n> > > >\n> > > >        [[alternative HTML version deleted]]\n> > > >\n> > > >\n> > > > _______________________________________________\n> > > > R-help-es mailing list\n> > > > R-help-es at r-project.org\n> > > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> > > >\n> > > >\n> > >\n> > >       [[alternative HTML version deleted]]\n> > >\n> >\n> >\n>\n>\n> --\n> Mauricio\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n> ------------------------------\n>\n> Message: 2\n> Date: Mon, 24 Oct 2011 10:35:43 +0200\n> From: Jaume Tormo <jautorbla at gmail.com>\n> To: r-help-es at r-project.org\n> Subject: Re: [R-es] Lattice barchart\n> Message-ID:\n>        <CAP3FtZjEf3=xDSMYNy0C=rANM0mUWyY57ATCfyBA9NR2M5t7Lw at mail.gmail.com\n> >\n> Content-Type: text/plain\n>\n> Muchas gracias a todos.\n>\n> Por cierto, el libro de Deepayan Sarkar en pdf está diponible aquí.\n> http://ishare.iask.sina.com.cn/f/14312025.html\n> No se como de legal es esto, si hace falta desintegrar este mensaje por\n> temas legales adelante.\n>\n> jaume.\n>\n>\n> El 22 de octubre de 2011 23:06, Carlos Ortega\n> <cof at qualityexcellence.es>escribió:\n>\n> > Sí, y además aunque sea comparando Lattice con ggplot2 (sin tener en\n> cuenta\n> > las posibilidades de LatticeExtra:\n> >\n> >\n> >\n> http://learnr.wordpress.com/2009/06/28/ggplot2-version-of-figures-in-lattice-multivariate-data-visualization-with-r-part-1/\n> >\n> > Es otra referencia para Lattice muy valiosa.\n> >\n> > Saludos,\n> > Carlos Ortega\n> > www.qualityexcellence.es\n> >\n> >\n> > El 22 de octubre de 2011 22:57, Oscar Perpiñan Lamigueiro <\n> > oscar.perpinan at upm.es> escribió:\n> >\n> >> > Estoy empezando con lattice ¿alguna referencia, manual, tutorial?\n> >> Existe un libro publicado por Springer.\n> >>\n> >>\n> http://www.springer.com/statistics/computanional+statistics/book/978-0-387-75968-5\n> >>\n> >> pero la página de lattice en R-Forge que reproduce todos los ejemplos\n> >> del libro:\n> >> http://lmdvr.r-forge.r-project.org\n> >>\n> >> También te será útil este documentos de Deepayan:\n> >>\n> >> http://www.isid.ac.in/~deepayan/R-tutorials/labs/04_lattice_lab.pdf\n> >>\n> >> y la página web de latticeExtra en R-Forge:\n> >>\n> >> http://latticeextra.r-forge.r-project.org/\n> >>\n> >> Y para terminar, las figuras del libro de Paul Murrell:\n> >>\n> >> http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html\n> >>\n> >>\n> >> Saludos.\n> >>\n> >> Oscar.\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >\n> >\n>\n>\n> --\n> Jaume Tormo Blanes\n> IMEM Ramon Margalef.\n> Carretera San Vicente del Raspeig s/n\n> 03690 San Vicente del Raspeig - Alicante\n> www.ua.es\n> acercad.wordpress.com\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n> ------------------------------\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> Fin de Resumen de R-help-es, Vol 32, Envío 20\n> *********************************************\n>\n\n\n\n-- \n*Diego G. Mejía V.\nMedio Ambiente-Universidad Nacional de Loja*\n*Grupo de Ciencias de la Tierra y del Ambiente (GCTA)*\n*Investigador*\n*Universidad de Cuenca*\nAv 12 de Abril s/n\nCuenca, Ecuador\n\n*Telf: 087054630\n*-------------------------\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "hola\n\nsabe alguien de algun paquete o un comando de R, que me ayude a analizar o a\ntratr informaciòn\nhidrologica... gracias\n\nsaludos\n\nEl 24 de octubre de 2011 05:00, <r-help-es-request at r-project.or",
       "thread_id": "thread-9d12c803369e",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111028/44ce0633/attachment.pl"
+      ]
     },
     {
       "id": "msg-a3d661d1174c",
@@ -1443,11 +1599,14 @@
       "subject_clean": "[R-es] Paquetes para analizar tratar información hidrológica...",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111028/fddb4d54/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111028/fddb4d54/attachment.pl>",
+      "body_plain": "Hola,\n\nTienes varios paquetes:\n\nEcoHydRology<http://cran.at.r-project.org/web/packages/EcoHydRology/index.html>A\ncommunity modeling foundation for Eco-Hydrology\nFAdist <http://cran.at.r-project.org/web/packages/FAdist/index.html>Distributions\nthat are sometimes used in hydrology\nhydroGOF <http://cran.at.r-project.org/web/packages/hydroGOF/index.html>Goodness-of-fit\nfunctions for comparison of simulated and observed hydrological time series\nhydroTSM <http://cran.at.r-project.org/web/packages/hydroTSM/index.html>Time\nseries management, analysis and interpolation for hydrological modelling\ntopmodel <http://cran.at.r-project.org/web/packages/topmodel/index.html>Implementation\nof the hydrological model TOPMODEL in R\nwasim <http://cran.at.r-project.org/web/packages/wasim/index.html>Visualisation\nand analysis of output files of the hydrological model WASIM\nPor si alguien hay interesado en consultar la lista sobre el mismo tema, he\nmodificado el asunto de tu correo y he eliminado el hilo de correos que no\ntenían que ver con tu pregunta.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\nEl 28 de octubre de 2011 18:20, Diego Mejía <godie.85 at gmail.com> escribió:\n\n> hola\n>\n> sabe alguien de algun paquete o un comando de R, que me ayude a analizar o\n> a\n> tratr informaciòn\n> hidrologica... gracias\n>\n> saludos\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nTienes varios paquetes:\n\nEcoHydRology<http://cran.at.r-project.org/web/packages/EcoHydRology/index.html>A\ncommunity modeling foundation for Eco-Hydrology\nFAdist <http://cran.at.r-project.org/we",
       "thread_id": "thread-a3d661d1174c",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111028/fddb4d54/attachment.pl"
+      ]
     },
     {
       "id": "msg-3acf27fc1c44",
@@ -1459,11 +1618,14 @@
       "subject_clean": "[R-es] Out of topic. Tautología...",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111031/88c61c71/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111031/88c61c71/attachment.pl>",
+      "body_plain": "Se sale de un poco del tema de la lista pero creo que os gustara esto \nque he seguido en otra lista (de spss...!!).\n\nhttps://plus.google.com/116264189418994838408/posts/CSXeyftovTJ\n\nSalu2.\n\n-- \nAntonio Maurandi López\nServ. Cálculo Científico. Apoyo Estadístico.\nServicio de Apoyo a la Investigación (SAI)\nVicerrectorado de Investigación.\nUniversidad de Murcia\n\nEdif. CAID. Campus de Espinardo.\n30100 Murcia\n@. amaurandi at um.es\nT. 868 88 7315 F. 868 88 7302\nwww.um.es/sai www.um.es/ae\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Se sale de un poco del tema de la lista pero creo que os gustara esto \nque he seguido en otra lista (de spss...!!).\n\nhttps://plus.google.com/116264189418994838408/posts/CSXeyftovTJ\n\nSalu2.\n\n-- \nAntoni",
       "thread_id": "thread-3acf27fc1c44",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111031/88c61c71/attachment.pl"
+      ]
     },
     {
       "id": "msg-9b876f5c1a78",
@@ -1475,11 +1637,14 @@
       "subject_clean": "[R-es] Comprimir con wavelets en R",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111031/48fef414/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20111031/48fef414/attachment.pl>",
+      "body_plain": "Hola.\nEstoy trabajando con wavelets para datos en una dimensión y me preguntaba\nsi alguien conoce algún paquete que además de eliminar el ruido comprima\nlos datos en la forma como se hace en matlab.\nGracias de antemano.\nBernardo Mendoza\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola.\nEstoy trabajando con wavelets para datos en una dimensión y me preguntaba\nsi alguien conoce algún paquete que además de eliminar el ruido comprima\nlos datos en la forma como se hace en matlab.\nG",
       "thread_id": "thread-9b876f5c1a78",
       "thread_depth": 0,
-      "month": "2011-10"
+      "month": "2011-10",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20111031/48fef414/attachment.pl"
+      ]
     }
   ],
   "threads": [

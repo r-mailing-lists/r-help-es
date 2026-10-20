@@ -31,11 +31,14 @@
       "references": [
         "<4D961E59.3040400@gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/23a0f73f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/23a0f73f/attachment.pl>",
+      "body_plain": "Hola Argel,\n\nEl nuevo conjunto de datos con que debes alimentar la funcion predict() debe\nser un data.frame en el que el nombre de las variables deben corresponder a\nlos utilizados para ajustar el modelo.  Esa informacion puedes obtenerla de\n?predict.  En tu caso, no proporcionaste el \"Block\" para el cual quieres\nhacer la prediccion.\n\nTrata lo siguiente:\n\n> predict(CR.rsm2,\n\nnewdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],x2=summary(CR.rsm2)$canonical$xs[2],\nBlock = 'B1'))\n      x1\n84.36561\n> predict(CR.rsm2,\nnewdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],x2=summary(CR.rsm2)$canonical$xs[2],\nBlock = 'B2'))\n      x1\n79.90808\n\nUn comentario adicional:    La respuesta que se obtiene en este caso no es\nel valor de \"x1\" utilizando el modelo CR.rsm2 sino el valor de \"Yield\".\n\n\nSaludos,\nJorge Ivan Velez\n\n\n\n2011/4/1 Argel Gastélum Arellánez <>\n\n>    Hola compañeros de la lista. Estoy aprendiendo a usar el paquete \"rsm\"\n> para superficies de respuesta. Siguiendo este ejemplo todo va bien, hasta\n> que trato de obtener el valor máximo predicho para la variable de respuesta\n> en los valores de x1 y x2 estimados.\n>\n> -------------------------------------------------------------\n> library(\"rsm\")\n> ChemReact\n> CR <- coded.data(ChemReact, x1 ~ (Time - 85)/5, x2 ~ (Temp - 175)/5)\n> CR\n> # Realizando un ajuste de segundo orden:\n> CR.rsm2 <- rsm(Yield ~ Block + SO(x1, x2), data = CR)\n> CR.rsm2\n> summary(CR.rsm2)\n> # Graficando:\n> contour(CR.rsm2, ~ x1 + x2, at = summary(CR.rsm2)$canonical$xs, image =\n> TRUE, img.col = terrain.colors(50))\n> xs <- canonical(CR.rsm2)$xs\n> points (xs[1], xs[2], pch=2, col=\"red\")\n> points(CR[1:7,], col=\"black\", pch=19)\n> points(CR[8:14,], col=\"blue\", pch=19)\n> #Esta última línea da un error:\n> predict(CR.rsm2,\n> newdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],x2=summary(CR.rsm2)$canonical$xs[2]))\n> --------------------------------------------------------------\n>\n> La última línea me arroja el siguiente error:\n>\n> Error en eval(expr, envir, enclos) : objeto 'Block' no encontrado\n>\n>    De antemano agradezco la ayuda.\n>\n>    Saludos.\n>\n> --\n>    Argel.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Argel,\n\nEl nuevo conjunto de datos con que debes alimentar la funcion predict() debe\nser un data.frame en el que el nombre de las variables deben corresponder a\nlos utilizados para ajustar el mod",
       "thread_id": "thread-09ca16cb1a34",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/23a0f73f/attachment.pl"
+      ]
     },
     {
       "id": "msg-a77cc4f1252c",
@@ -49,11 +52,14 @@
       "references": [
         "<4D961E59.3040400@gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/8b7f2b96/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/8b7f2b96/attachment.pl>",
+      "body_plain": "No tengo mucha idea del paquete rsm. Pero lo que probablemente te este\ndiciendo el error es que te falta la columna Block en los nuevos datos para\npredecir.\n\nEspero que mi respuesta te sea de ayuda.\n\nLuciano\n\n\nEl 1 de abril de 2011 15:50, Argel Gastélum Arellánez <\nargel.gastelum at gmail.com> escribió:\n\n>    Hola compañeros de la lista. Estoy aprendiendo a usar el paquete \"rsm\"\n> para superficies de respuesta. Siguiendo este ejemplo todo va bien, hasta\n> que trato de obtener el valor máximo predicho para la variable de respuesta\n> en los valores de x1 y x2 estimados.\n>\n> -------------------------------------------------------------\n> library(\"rsm\")\n> ChemReact\n> CR <- coded.data(ChemReact, x1 ~ (Time - 85)/5, x2 ~ (Temp - 175)/5)\n> CR\n> # Realizando un ajuste de segundo orden:\n> CR.rsm2 <- rsm(Yield ~ Block + SO(x1, x2), data = CR)\n> CR.rsm2\n> summary(CR.rsm2)\n> # Graficando:\n> contour(CR.rsm2, ~ x1 + x2, at = summary(CR.rsm2)$canonical$xs, image =\n> TRUE, img.col = terrain.colors(50))\n> xs <- canonical(CR.rsm2)$xs\n> points (xs[1], xs[2], pch=2, col=\"red\")\n> points(CR[1:7,], col=\"black\", pch=19)\n> points(CR[8:14,], col=\"blue\", pch=19)\n> #Esta última línea da un error:\n> predict(CR.rsm2,\n> newdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],x2=summary(CR.rsm2)$canonical$xs[2]))\n> --------------------------------------------------------------\n>\n> La última línea me arroja el siguiente error:\n>\n> Error en eval(expr, envir, enclos) : objeto 'Block' no encontrado\n>\n>    De antemano agradezco la ayuda.\n>\n>    Saludos.\n>\n> --\n>    Argel.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "No tengo mucha idea del paquete rsm. Pero lo que probablemente te este\ndiciendo el error es que te falta la columna Block en los nuevos datos para\npredecir.\n\nEspero que mi respuesta te sea de ayuda.\n\n",
       "thread_id": "thread-09ca16cb1a34",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/8b7f2b96/attachment.pl"
+      ]
     },
     {
       "id": "msg-f10a549207a7",
@@ -85,11 +91,14 @@
       "references": [
         "<AANLkTikJsf0isHVwW8DW+FvTtj-1SqcT4a8MOA5jWaVq@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/ce903611/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/ce903611/attachment.pl>",
+      "body_plain": "Hola,\n\nQuisiera leer con 'read.table' un archivo .txt con nombres de variables que\ntienen espacios y nombres de filas con espacios.\n\n             Xxx xxx   yyy yyy   zzz zzz\nAaa aaa.     1.5.       2.0.        1.2\nBbb bbb.     0.5.      0.2.        0.1\nCcc ccc.        0.6.     0.4.         0.8\n\nMuchas gracias,\n\nManuel\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nQuisiera leer con 'read.table' un archivo .txt con nombres de variables que\ntienen espacios y nombres de filas con espacios.\n\n             Xxx xxx   yyy yyy   zzz zzz\nAaa aaa.     1.5.       2.",
       "thread_id": "thread-742d08a22f9d",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/ce903611/attachment.pl"
+      ]
     },
     {
       "id": "msg-674be6d2bb5f",
@@ -104,11 +113,14 @@
         "<4D961E59.3040400@gmail.com>",
         "<AANLkTinyBEi9Uuj47ogXRym-33Q_cnpkr9eYeCvM1KJL@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/8f400199/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/8f400199/attachment.pl>",
+      "body_plain": "El 01/04/11 13:07, Jorge Ivan Velez escribió:\n> Hola Argel,\n>\n> El nuevo conjunto de datos con que debes alimentar la funcion \n> predict() debe ser un data.frame en el que el nombre de las variables \n> deben corresponder a los utilizados para ajustar el modelo.  Esa \n> informacion puedes obtenerla de ?predict. En tu caso, no \n> proporcionaste el \"Block\" para el cual quieres hacer la prediccion.\n>\n> Trata lo siguiente:\n>\n> > predict(CR.rsm2,\n>      \n> newdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],x2=summary(CR.rsm2)$canonical$xs[2], \n> Block = 'B1'))\n>       x1\n> 84.36561\n> > predict(CR.rsm2,\n> newdata=data.frame(x1=summary(CR.rsm2)$canonical$xs[1],x2=summary(CR.rsm2)$canonical$xs[2], \n> Block = 'B2'))\n>       x1\n> 79.90808\n>\n> Un comentario adicional:    La respuesta que se obtiene en este caso \n> no es el valor de \"x1\" utilizando el modelo CR.rsm2 sino el valor de \n> \"Yield\".\n>\n>\n> Saludos,\n> Jorge Ivan Velez\n\n     Hola de nuevo, muchas gracias a Jorge Ivan, Luciano y Carlos por \nsus respuestas. Ahora entiendo cuál fue el error al usar la función \n\"predict\".\n\n     Como todavía estoy aprendiendo a trabajar con las superficies de \nrespuesta, ahora me queda la duda de cuál de las dos predicciones para \nla respuesta \"Yield\" es la más adecuada, si la hecha con el Block \"B1\" o \ncon el \"B2\". Por la figura obtenida con la función \"contour\" me parece \nque la hecha con el \"B1\". ¿Ustedes qué opinan?\n\n     Saludos.\n\n--\n     Argel.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "El 01/04/11 13:07, Jorge Ivan Velez escribió:\n> Hola Argel,\n>\n> El nuevo conjunto de datos con que debes alimentar la funcion \n> predict() debe ser un data.frame en el que el nombre de las variables \n",
       "thread_id": "thread-09ca16cb1a34",
       "thread_depth": 2,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/8f400199/attachment.pl"
+      ]
     },
     {
       "id": "msg-cb471c41f1f1",
@@ -125,11 +137,14 @@
         "<4D962F2D.5040700@gmail.com>",
         "<AANLkTin9+puw16R_aEuG-J0annVPi-wbvCJGQ+iykMPm@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/32f74b80/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/32f74b80/attachment.pl>",
+      "body_plain": "El 01/04/11 14:14, Jorge Ivan Velez escribió:\n> Hola Argel,\n>\n> A juzgar por lo que dice en la parte inferior de la figura  (\"Sliced \n> at Block = B1\"), la prediccion corresponderia mas a B1 que a B2.\n>\n> Un saludo,\n> Jorge Ivan Velez\n\n     Hola Jorge Ivan.\n\n     Lo suponía por el rótulo y por la forma de la superficie, pero no \nestaba seguro... ¿entonces cuál sería la utilidad de poder hacer la \npredicción con el bloque \"B2\"?, por lo que veo de la función \"contour\", \nal parecer no se especifica en los argumentos para cuál bloque haga la \ngráfica, sino que al parecer por default la hace para B1... sé que esto \nno es precisamente sobre el uso de R, pero es que no tengo a la mano \nreferencias donde poder checar esto.\n\n     De nuevo muchas gracias por tu ayuda.\n\n--\n     Argel.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "El 01/04/11 14:14, Jorge Ivan Velez escribió:\n> Hola Argel,\n>\n> A juzgar por lo que dice en la parte inferior de la figura  (\"Sliced \n> at Block = B1\"), la prediccion corresponderia mas a B1 que a B2.",
       "thread_id": "thread-cb471c41f1f1",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/32f74b80/attachment.pl"
+      ]
     },
     {
       "id": "msg-97bdecf1cac3",
@@ -144,11 +159,14 @@
         "<AANLkTikJsf0isHVwW8DW+FvTtj-1SqcT4a8MOA5jWaVq@mail.gmail.com>",
         "<AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/57909d85/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/57909d85/attachment.pl>",
+      "body_plain": "Hola,\n\nNo tienes más que separar las columnas del fichero .txt por un carácter\ndiferente al espacio.\nEs muy común el utilizar \";\" para los CSV, o incluso un tab o un \"|\".\n\nY que luego en read.table le especifiques ese carácter como separador.\nEn este caso, los espacios en los nombres de las columnas y en el de las\nfilas los ignorará y los reemplazará por un \".\".\n\nRecuerda que para especificar que la primera columna es la que incluye el\nnombre de las filas, lo tines que especificar igualmente en read.table bajo\nla opción de row.names.\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/4/1 Manuel Spínola <mspinola10 at gmail.com>\n\n> Hola,\n>\n> Quisiera leer con 'read.table' un archivo .txt con nombres de variables que\n> tienen espacios y nombres de filas con espacios.\n>\n>             Xxx xxx   yyy yyy   zzz zzz\n> Aaa aaa.     1.5.       2.0.        1.2\n> Bbb bbb.     0.5.      0.2.        0.1\n> Ccc ccc.        0.6.     0.4.         0.8\n>\n> Muchas gracias,\n>\n> Manuel\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nNo tienes más que separar las columnas del fichero .txt por un carácter\ndiferente al espacio.\nEs muy común el utilizar \";\" para los CSV, o incluso un tab o un \"|\".\n\nY que luego en read.table le",
       "thread_id": "thread-742d08a22f9d",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/57909d85/attachment.pl"
+      ]
     },
     {
       "id": "msg-9516d29130a5",
@@ -160,11 +178,14 @@
       "subject_clean": "[R-es] Separador de miles",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/383a02f0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/383a02f0/attachment.pl>",
+      "body_plain": "Hola a todos.\nMe encuentro realizando un gráfico en R y en los ejes quisiera que los\nvalores aparezcan con separador de miles.\nEs decir...\n1000000\n1,000,000\n\nGracias...\n-- \nPaula Altamar\nEstratificación-DIG-DANE\nCel: 3005137541\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos.\nMe encuentro realizando un gráfico en R y en los ejes quisiera que los\nvalores aparezcan con separador de miles.\nEs decir...\n1000000\n1,000,000\n\nGracias...\n-- \nPaula Altamar\nEstratificaci",
       "thread_id": "thread-9516d29130a5",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/383a02f0/attachment.pl"
+      ]
     },
     {
       "id": "msg-6b96ca997f1e",
@@ -178,11 +199,14 @@
       "references": [
         "<AANLkTinLPzuuyEzA4EMzURwZzT0kEaMPAgAVQreerwdb@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/cd0570f0/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/cd0570f0/attachment.pl>",
+      "body_plain": "En que sistema gráfico? Cual es la función y el objeto que estás graficando?\nLuciano\n\n\nEl 1 de abril de 2011 20:00, Paula Altamar <paula.altamar1 at gmail.com>escribió:\n\n> Hola a todos.\n> Me encuentro realizando un gráfico en R y en los ejes quisiera que los\n> valores aparezcan con separador de miles.\n> Es decir...\n> 1000000\n> 1,000,000\n>\n> Gracias...\n> --\n> Paula Altamar\n> Estratificación-DIG-DANE\n> Cel: 3005137541\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "En que sistema gráfico? Cual es la función y el objeto que estás graficando?\nLuciano\n\n\nEl 1 de abril de 2011 20:00, Paula Altamar <paula.altamar1 at gmail.com>escribió:\n\n> Hola a todos.\n> Me encuentro",
       "thread_id": "thread-9516d29130a5",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/cd0570f0/attachment.pl"
+      ]
     },
     {
       "id": "msg-ffda82406527",
@@ -197,11 +221,14 @@
         "<AANLkTikJsf0isHVwW8DW+FvTtj-1SqcT4a8MOA5jWaVq@mail.gmail.com>",
         "<AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/9b8f88f2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/9b8f88f2/attachment.pl>",
+      "body_plain": "Buenas noches Manuel,\n\nIntenta utilizando read.delim2() o haciendo scan().\n\nSaludos,\nJorge Ivan Velez\n\n\n2011/4/1 Manuel Spínola <>\n\n> Hola,\n>\n> Quisiera leer con 'read.table' un archivo .txt con nombres de variables que\n> tienen espacios y nombres de filas con espacios.\n>\n>             Xxx xxx   yyy yyy   zzz zzz\n> Aaa aaa.     1.5.       2.0.        1.2\n> Bbb bbb.     0.5.      0.2.        0.1\n> Ccc ccc.        0.6.     0.4.         0.8\n>\n> Muchas gracias,\n>\n> Manuel\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches Manuel,\n\nIntenta utilizando read.delim2() o haciendo scan().\n\nSaludos,\nJorge Ivan Velez\n\n\n2011/4/1 Manuel Spínola <>\n\n> Hola,\n>\n> Quisiera leer con 'read.table' un archivo .txt con nombr",
       "thread_id": "thread-742d08a22f9d",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110401/9b8f88f2/attachment.pl"
+      ]
     },
     {
       "id": "msg-9c5a4ca2da36",
@@ -213,11 +240,14 @@
       "subject_clean": "[R-es] Significado de un mensaje de error",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/2383ccf7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/2383ccf7/attachment.pl>",
+      "body_plain": "Hola a todos, estoy procesando unos datos con las siguientes intrucciones que \ncreo son del paquete stats:\ncloud(Imp89 ~ ImpTot89 * NDA | Edad, data = mtif,\n+       screen = list(x = -90, y = 45), distance = .4, zoom = .7)\n\ny obtengo el error:\nError en eval(substitute(groups), data, environment(formula)) : \n argumento 'envir' númerico no tiene longitud uno\n\nLa verdad es que no se qué significa este error ¿me podeis ayudar?\n\nGracias,\n\nFernando\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos, estoy procesando unos datos con las siguientes intrucciones que \ncreo son del paquete stats:\ncloud(Imp89 ~ ImpTot89 * NDA | Edad, data = mtif,\n+       screen = list(x = -90, y = 45), dis",
       "thread_id": "thread-9c5a4ca2da36",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/2383ccf7/attachment.pl"
+      ]
     },
     {
       "id": "msg-65363aa421f5",
@@ -233,11 +263,14 @@
         "<AANLkTikWw-7iuCLyxGT=Z1d9VROipbPHzufY=Zib7Hs8@mail.gmail.com>",
         "<AANLkTikJEhjk6A-LH4-23HP+ebWH0jMVK+ZKRQX-xOuK@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/2dab1f00/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/2dab1f00/attachment.pl>",
+      "body_plain": "Muchas gracias Carlos y Jorge.\n\nLa solución fue salvar el archivo como csv.\n\nHay un consenso de que formato de archivo es mejo para tarbajar en R, \ncsv o txt u otro formato?\n\nSaludos,\n\nManuel\n\n\nOn 01/04/2011 06:12 p.m., Jorge Ivan Velez wrote:\n> Buenas noches Manuel,\n>\n> Intenta utilizando read.delim2() o haciendo scan().\n>\n> Saludos,\n> Jorge Ivan Velez\n>\n>\n> 2011/4/1 Manuel Spínola <>\n>\n>     Hola,\n>\n>     Quisiera leer con 'read.table' un archivo .txt con nombres de\n>     variables que\n>     tienen espacios y nombres de filas con espacios.\n>\n>                 Xxx xxx   yyy yyy   zzz zzz\n>     Aaa aaa.     1.5.       2.0.        1.2\n>     Bbb bbb.     0.5.      0.2.        0.1\n>     Ccc ccc.        0.6.     0.4.         0.8\n>\n>     Muchas gracias,\n>\n>     Manuel\n>\n>            [[alternative HTML version deleted]]\n>\n>     _______________________________________________\n>     R-help-es mailing list\n>     R-help-es at r-project.org <mailto:R-help-es at r-project.org>\n>     https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \n*Manuel Spínola, Ph.D.*\nInstituto Internacional en Conservación y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.ac.cr\nmspinola10 at gmail.com\nTeléfono: (506) 2277-3598\nFax: (506) 2237-7036\nPersonal website: Lobito de río \n<https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Carlos y Jorge.\n\nLa solución fue salvar el archivo como csv.\n\nHay un consenso de que formato de archivo es mejo para tarbajar en R, \ncsv o txt u otro formato?\n\nSaludos,\n\nManuel\n\n\nOn 01/",
       "thread_id": "thread-742d08a22f9d",
       "thread_depth": 2,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/2dab1f00/attachment.pl"
+      ]
     },
     {
       "id": "msg-413ba662bd48",
@@ -251,11 +284,14 @@
       "references": [
         "<532333.57532.qm@web28213.mail.ukl.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/765cfbca/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/765cfbca/attachment.pl>",
+      "body_plain": "Buenos dias Fernando,\n\nNo.  La funcion cloud() esta en lattice.  Podrias por favor enviarnos el\nresultado de\n\nstr(mtif)\nsessionInfo()\n\ncuando lo escribes en la consola del R?  Lo unico que se me ocurre es que\nalgo anda mal con \"Edad\", pero no tengo informacion suficiente.\n\nUn saludo,\nJorge Ivan Velez\n\n\nOn Sat, Apr 2, 2011 at 5:39 AM, Fernando Sanchez <> wrote:\n\n> Hola a todos, estoy procesando unos datos con las siguientes intrucciones\n> que\n> creo son del paquete stats:\n> cloud(Imp89 ~ ImpTot89 * NDA | Edad, data = mtif,\n> +       screen = list(x = -90, y = 45), distance = .4, zoom = .7)\n>\n> y obtengo el error:\n> Error en eval(substitute(groups), data, environment(formula)) :\n>  argumento 'envir' númerico no tiene longitud uno\n>\n> La verdad es que no se qué significa este error ¿me podeis ayudar?\n>\n> Gracias,\n>\n> Fernando\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Fernando,\n\nNo.  La funcion cloud() esta en lattice.  Podrias por favor enviarnos el\nresultado de\n\nstr(mtif)\nsessionInfo()\n\ncuando lo escribes en la consola del R?  Lo unico que se me ocurr",
       "thread_id": "thread-9c5a4ca2da36",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/765cfbca/attachment.pl"
+      ]
     },
     {
       "id": "msg-82d264eea92b",
@@ -269,11 +305,14 @@
       "references": [
         "<532333.57532.qm@web28213.mail.ukl.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/fb746e99/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/fb746e99/attachment.pl>",
+      "body_plain": "Hola,\n\nEl error está asociado a que en la fórmula que has utilizado alguno o varios\nde los grupos múltiples que se generan no tienen datos.\n\nPrueba a simplificar la función que incluyes, eliminando alguno de los\ntérminos, por ejemplo:\n\nmp89 ~ ImpTot89  | Edad\nmp89 ~ ImpTot89 * NDA\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nOn Sat, Apr 2, 2011 at 11:39 AM, Fernando Sanchez <fernandsanche at yahoo.es>wrote:\n\n> Hola a todos, estoy procesando unos datos con las siguientes intrucciones\n> que\n> creo son del paquete stats:\n> cloud(Imp89 ~ ImpTot89 * NDA | Edad, data = mtif,\n> +       screen = list(x = -90, y = 45), distance = .4, zoom = .7)\n>\n> y obtengo el error:\n> Error en eval(substitute(groups), data, environment(formula)) :\n>  argumento 'envir' númerico no tiene longitud uno\n>\n> La verdad es que no se qué significa este error ¿me podeis ayudar?\n>\n> Gracias,\n>\n> Fernando\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEl error está asociado a que en la fórmula que has utilizado alguno o varios\nde los grupos múltiples que se generan no tienen datos.\n\nPrueba a simplificar la función que incluyes, eliminando al",
       "thread_id": "thread-9c5a4ca2da36",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110402/fb746e99/attachment.pl"
+      ]
     },
     {
       "id": "msg-539de593be89",
@@ -285,11 +324,14 @@
       "subject_clean": "[R-es] Significado de un mensaje de error",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/a514e42a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/a514e42a/attachment.pl>",
+      "body_plain": "Hola a todos, aprovecho el presente correo para agradecer las respuestas de \nCarlos Ortega y Jorge Iván Velez y procedo a contestar:\n\n- Carlos: con tu propuesta no he logrado nada de momento.\n\n- Jorge Iván: aquí va la información que pedías:\n\n> str(mtif)\n num [1:224, 1:30] 0 1 0 1 1 1 1 0 1 1 ...\n - attr(*, \"dimnames\")=List of 2\n  ..$ : chr [1:224] \"1\" \"3\" \"5\" \"6\" ...\n  ..$ : chr [1:30] \"FormPost\" \"FormCont.h.\" \"PImplNAte\" \"PCoroNAImplNAte\" ...\n>\n> sessionInfo()\nR version 2.12.1 (2010-12-16)\nPlatform: i386-apple-darwin9.8.0/i386 (32-bit)\n\nlocale:\n[1] es_ES.UTF-8/es_ES.UTF-8/C/C/es_ES.UTF-8/es_ES.UTF-8\n\nattached base packages:\n[1] splines   stats     graphics  grDevices utils     datasets  methods  \nbase\n\nother attached packages:\n[1] nnet_7.3-1      class_7.3-3     survival_2.36-2 mlbench_2.1-0  \nMASS_7.3-9      rpart_3.1-48\n\nloaded via a namespace (and not attached):\n[1] caret_4.72      grid_2.12.1     ipred_0.8-8     lattice_0.19-13\n>\n\nA ver si me podeis dar alguna otra pista.\n\nUn saludo,\n\nFernando\n\nDe: Carlos Ortega [mailto:coforfe at gmail.com] \nEnviado el: sábado, 02 de abril de 2011 23:24\nPara: Fernando Sanchez\nCC: r-help-es at r-project.org; r-help-es-bounce at r-project.org\nAsunto: Re: [R-es] Significado de un mensaje de error\n\nHola,\n\nEl error está asociado a que en la fórmula que has utilizado alguno o varios de \nlos grupos múltiples que se generan no tienen datos.\n\nPrueba a simplificar la función que incluyes, eliminando alguno de los términos, \npor ejemplo:\n\nmp89 ~ ImpTot89  | Edad\nmp89 ~ ImpTot89 * NDA\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nOn Sat, Apr 2, 2011 at 11:39 AM, Fernando Sanchez <fernandsanche at yahoo.es> \nwrote:\nHola a todos, estoy procesando unos datos con las siguientes intrucciones que\ncreo son del paquete stats:\ncloud(Imp89 ~ ImpTot89 * NDA | Edad, data = mtif,\n+       screen = list(x = -90, y = 45), distance = .4, zoom = .7)\n\ny obtengo el error:\nError en eval(substitute(groups), data, environment(formula)) :\n argumento 'envir' númerico no tiene longitud uno\n\nLa verdad es que no se qué significa este error ¿me podeis ayudar?\n\nGracias,\n\nFernando\n       [[alternative HTML version deleted]]\n\n\n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos, aprovecho el presente correo para agradecer las respuestas de \nCarlos Ortega y Jorge Iván Velez y procedo a contestar:\n\n- Carlos: con tu propuesta no he logrado nada de momento.\n\n- Jorge",
       "thread_id": "thread-539de593be89",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/a514e42a/attachment.pl"
+      ]
     },
     {
       "id": "msg-fc0ab7ddf232",
@@ -303,11 +345,14 @@
       "references": [
         "<90477.20699.qm@web28206.mail.ukl.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/fc1b3184/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/fc1b3184/attachment.pl>",
+      "body_plain": "Hola,\n\nVarias cosas:\n- ¿Puedes hacer summary(mtif)?. Sigo pensando que el problema es debido al\ngran número de celdas que se definen en la fórmula y que en muchas de ellas\nno hay puntos que cloud luego pueda representar.\n- La idea de mi anterior correo consistía en que ejecutaras \"cloud\" pero\nrestringiendo el número de combinaciones. Y dos opciones posibles son las\nque te proponían. Si ejecutas cloud con ellas y obtienes gráficos sin\nproblemas es que el problema está relacionado con esa falta de datos para el\ngran conjunto de combinaciones definidas en la formula.\n- Finalmente, si de esta última opción también tienes problemas, entonces te\npediría si por favor puedes adjuntar el data.frame \"mtif\".\n\nGracias,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n2011/4/3 Fernando Sanchez <fernandsanche at yahoo.es>\n\n> Hola a todos, aprovecho el presente correo para agradecer las respuestas de\n> Carlos Ortega y Jorge Iván Velez y procedo a contestar:\n>\n> - Carlos: con tu propuesta no he logrado nada de momento.\n>\n> - Jorge Iván: aquí va la información que pedías:\n>\n> > str(mtif)\n>  num [1:224, 1:30] 0 1 0 1 1 1 1 0 1 1 ...\n>  - attr(*, \"dimnames\")=List of 2\n>   ..$ : chr [1:224] \"1\" \"3\" \"5\" \"6\" ...\n>   ..$ : chr [1:30] \"FormPost\" \"FormCont.h.\" \"PImplNAte\" \"PCoroNAImplNAte\"\n> ...\n> >\n> > sessionInfo()\n> R version 2.12.1 (2010-12-16)\n> Platform: i386-apple-darwin9.8.0/i386 (32-bit)\n>\n> locale:\n> [1] es_ES.UTF-8/es_ES.UTF-8/C/C/es_ES.UTF-8/es_ES.UTF-8\n>\n> attached base packages:\n> [1] splines   stats     graphics  grDevices utils     datasets  methods\n> base\n>\n> other attached packages:\n> [1] nnet_7.3-1      class_7.3-3     survival_2.36-2 mlbench_2.1-0\n> MASS_7.3-9      rpart_3.1-48\n>\n> loaded via a namespace (and not attached):\n> [1] caret_4.72      grid_2.12.1     ipred_0.8-8     lattice_0.19-13\n> >\n>\n> A ver si me podeis dar alguna otra pista.\n>\n> Un saludo,\n>\n> Fernando\n>\n> De: Carlos Ortega [mailto:coforfe at gmail.com]\n> Enviado el: sábado, 02 de abril de 2011 23:24\n> Para: Fernando Sanchez\n> CC: r-help-es at r-project.org; r-help-es-bounce at r-project.org\n> Asunto: Re: [R-es] Significado de un mensaje de error\n>\n>\n> Hola,\n>\n> El error está asociado a que en la fórmula que has utilizado alguno o\n> varios de los grupos múltiples que se generan no tienen datos.\n>\n> Prueba a simplificar la función que incluyes, eliminando alguno de los\n> términos, por ejemplo:\n>\n> mp89 ~ ImpTot89  | Edad\n> mp89 ~ ImpTot89 * NDA\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n> On Sat, Apr 2, 2011 at 11:39 AM, Fernando Sanchez <fernandsanche at yahoo.es>\n> wrote:\n> Hola a todos, estoy procesando unos datos con las siguientes intrucciones\n> que\n> creo son del paquete stats:\n> cloud(Imp89 ~ ImpTot89 * NDA | Edad, data = mtif,\n> +       screen = list(x = -90, y = 45), distance = .4, zoom = .7)\n>\n> y obtengo el error:\n> Error en eval(substitute(groups), data, environment(formula)) :\n>  argumento 'envir' númerico no tiene longitud uno\n>\n> La verdad es que no se qué significa este error ¿me podeis ayudar?\n>\n> Gracias,\n>\n> Fernando\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nVarias cosas:\n- ¿Puedes hacer summary(mtif)?. Sigo pensando que el problema es debido al\ngran número de celdas que se definen en la fórmula y que en muchas de ellas\nno hay puntos que cloud lueg",
       "thread_id": "thread-539de593be89",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/fc1b3184/attachment.pl"
+      ]
     },
     {
       "id": "msg-26e06cccf205",
@@ -321,11 +366,14 @@
       "references": [
         "<AANLkTinLPzuuyEzA4EMzURwZzT0kEaMPAgAVQreerwdb@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/c82d7809/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/c82d7809/attachment.pl>",
+      "body_plain": "Hola,\n\nPor si el tipo de gráficos que estás queriendo cambiar son los\ncorrespondientes a la librería \"graphics\", esta solución del R-Help te puede\nayudar:\n\nhttp://tolstoy.newcastle.edu.au/R/e6/help/09/03/7116.html\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellenc.es\n\n2011/4/2 Paula Altamar <paula.altamar1 at gmail.com>\n\n> Hola a todos.\n> Me encuentro realizando un gráfico en R y en los ejes quisiera que los\n> valores aparezcan con separador de miles.\n> Es decir...\n> 1000000\n> 1,000,000\n>\n> Gracias...\n> --\n> Paula Altamar\n> Estratificación-DIG-DANE\n> Cel: 3005137541\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPor si el tipo de gráficos que estás queriendo cambiar son los\ncorrespondientes a la librería \"graphics\", esta solución del R-Help te puede\nayudar:\n\nhttp://tolstoy.newcastle.edu.au/R/e6/help/09",
       "thread_id": "thread-9516d29130a5",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110403/c82d7809/attachment.pl"
+      ]
     },
     {
       "id": "msg-1d127847154d",
@@ -355,11 +403,14 @@
       "references": [
         "<276889.99443.qm@web28216.mail.ukl.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110404/016c2f68/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110404/016c2f68/attachment.pl>",
+      "body_plain": "Hola Fernando,\n\nGracias a ti.\nMe alegro de que hayas podido encontrar una alternativa al problema.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/ (*Nuevo Blog*)\n\n2011/4/4 Fernando Sanchez <fernandsanche at yahoo.es>\n\n> Hola Carlos, muchas gracias por tu coreo.Efectivamente, el problema estaba\n> ahí, en la falta de datos. Con algunas combinaciones más simples de\n> variables (otras distintas a las originalmente probadas) sí he conseguido\n> representar gráficos cloud. Así que doy el caso por cerrado. Muchas gracias\n> también para Jorge Iván Vélez.\n>\n> saludos,\n>\n> Fernando\n>\n>\n>\n>\n>  ______________________________________________________________________________________________\n>\n> > De: Carlos Ortega [mailto:coforfe at gmail.com] Enviado el: domingo, 03\n> > de abril de 2011 21:05\n> > Para: Fernando Sanchez\n> > CC: r-help-es at r-project.org; jorgeivanvelez at gmail.com\n>\n> > Asunto: Re: [R-es] Significado de un mensaje de error\n> >\n> >\n> >\n> > Hola,\n> >\n> >\n> >\n> > Varias cosas:\n> >\n> > - ¿Puedes hacer summary(mtif)?. Sigo pensando que el problema es\n> > debido al gran número de celdas que se definen en la fórmula y que en\n> > muchas de ellas no hay puntos que cloud luego pueda representar.\n> >\n> > - La idea de mi anterior correo consistía en que ejecutaras \"cloud\"\n> > pero restringiendo el número de combinaciones. Y dos opciones posibles\n> > son las que te proponían. Si ejecutas cloud con ellas y obtienes\n> > gráficos sin problemas es que el problema está relacionado con esa\n> > falta de datos para el gran conjunto de combinaciones definidas en la\n> > formula.\n> >\n> > - Finalmente, si de esta última opción también tienes problemas,\n> > entonces te pediría si por favor puedes adjuntar el data.frame \"mtif\".\n> >\n> >\n> >\n> > Gracias,\n> >\n> > Carlos Ortega\n> >\n> > www.qualityexcellence.es\n> >\n> >\n> >\n> >\n> >\n> > 2011/4/3 Fernando Sanchez <fernandsanche at yahoo.es>\n> >\n> > Hola a todos, aprovecho el presente correo para agradecer las\n> > respuestas de Carlos Ortega y Jorge Iván Velez y procedo a contestar:\n> >\n> > - Carlos: con tu propuesta no he logrado nada de momento.\n> >\n> > - Jorge Iván: aquí va la información que pedías:\n> >\n> >> str(mtif)\n> >  num [1:224, 1:30] 0 1 0 1 1 1 1 0 1 1 ...\n> >  - attr(*, \"dimnames\")=List of 2\n> >   ..$ : chr [1:224] \"1\" \"3\" \"5\" \"6\" ...\n> >   ..$ : chr [1:30] \"FormPost\" \"FormCont.h.\" \"PImplNAte\" \"PCoroNAImplNAte\"\n> > ...\n> >>\n> >> sessionInfo()\n> > R version 2.12.1 (2010-12-16)\n> > Platform: i386-apple-darwin9.8.0/i386 (32-bit)\n> >\n> > locale:\n> > [1] es_ES.UTF-8/es_ES.UTF-8/C/C/es_ES.UTF-8/es_ES.UTF-8\n> >\n> > attached base packages:\n> > [1] splines   stats     graphics  grDevices utils     datasets  methods\n> > base\n> >\n> > other attached packages:\n> > [1] nnet_7.3-1      class_7.3-3     survival_2.36-2 mlbench_2.1-0\n> > MASS_7.3-9      rpart_3.1-48\n> >\n> > loaded via a namespace (and not attached):\n> > [1] caret_4.72      grid_2.12.1     ipred_0.8-8     lattice_0.19-13\n> >>\n> >\n> > A ver si me podeis dar alguna otra pista.\n> >\n> > Un saludo,\n> >\n> > Fernando\n> >\n> > De: Carlos Ortega [mailto:coforfe at gmail.com] Enviado el: sábado, 02 de\n> > abril de 2011 23:24\n> > Para: Fernando Sanchez\n> > CC: r-help-es at r-project.org; r-help-es-bounce at r-project.org\n> > Asunto: Re: [R-es] Significado de un mensaje de error\n> >\n> >\n> >\n> > Hola,\n> >\n> > El error está asociado a que en la fórmula que has utilizado alguno o\n> > varios de los grupos múltiples que se generan no tienen datos.\n> >\n> > Prueba a simplificar la función que incluyes, eliminando alguno de los\n> > términos, por ejemplo:\n> >\n> > mp89 ~ ImpTot89  | Edad\n> > mp89 ~ ImpTot89 * NDA\n> >\n> > Saludos,\n> > Carlos Ortega\n> > www.qualityexcellence.es\n> > On Sat, Apr 2, 2011 at 11:39 AM, Fernando Sanchez\n> > <fernandsanche at yahoo.es>\n> > wrote:\n> > Hola a todos, estoy procesando unos datos con las siguientes\n> > intrucciones que creo son del paquete stats:\n> > cloud(Imp89 ~ ImpTot89 * NDA | Edad, data = mtif,\n> > +       screen = list(x = -90, y = 45), distance = .4, zoom = .7)\n> >\n> > y obtengo el error:\n> > Error en eval(substitute(groups), data, environment(formula)) :\n> >  argumento 'envir' númerico no tiene longitud uno\n> >\n> > La verdad es que no se qué significa este error ¿me podeis ayudar?\n> >\n> > Gracias,\n> >\n> > Fernando\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n> >\n> >\n> >\n> >\n>\n>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Fernando,\n\nGracias a ti.\nMe alegro de que hayas podido encontrar una alternativa al problema.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/ (*Nuevo Blog",
       "thread_id": "thread-b41d953a1d4e",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110404/016c2f68/attachment.pl"
+      ]
     },
     {
       "id": "msg-39ebad2dbe4f",
@@ -423,11 +474,14 @@
       "subject_clean": "[R-es] configurar limite de memoria RAM para obtener maximo rendimiento con windows 7",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110406/44d25208/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110406/44d25208/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nTengo un equipo con windows 7 Home Premium 64 bits (8mb de RAM) y me gustaría saber como podría obtener el máximo rendimiento en R.\n\nHe visto que hay dos o tres comandos: memory.size(max=TRUE) memory.limit = ...\n\nEl caso es que si uso memory.size(max=TRUE) el maximo que me imprime por pantalla es bastante mayor en un equipo que tengo con windows xp a 32 bits que en el nuevo equipo que es bastante más potente.\n\n\n\n\nSaludos\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nTengo un equipo con windows 7 Home Premium 64 bits (8mb de RAM) y me gustaría saber como podría obtener el máximo rendimiento en R.\n\nHe visto que hay dos o tres comandos: memory.size(ma",
       "thread_id": "thread-c7512c0c83ff",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110406/44d25208/attachment.pl"
+      ]
     },
     {
       "id": "msg-b7b774265bb2",
@@ -441,11 +495,14 @@
       "references": [
         "<BLU141-W361B0F6DCAC1567CDEA40BD0A50@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110406/4324603d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110406/4324603d/attachment.pl>",
+      "body_plain": "Hola,\n\nEste es un tema que aparece en las R-FAQ-for-Windows:\n\nhttp://cran.at.r-project.org/bin/windows/base/rw-FAQ.html\n\nY en concreto dice lo siguiente:\n\n\"...\n 2.9 There seems to be a limit on the memory it uses!\n\nIndeed there is. It is set by the command-line flag --max-mem-size (see How\ndo I install R for\nWindows?<http://cran.at.r-project.org/bin/windows/base/rw-FAQ.html#How-do-I-install-R-for-Windows_003f>)\nand R defaults to the smaller of the amount of physical RAM in the machine\nand 0.5GB less than the limit on user virtual memory for a process (most\noften 2GB on a 32-bit build).\n\nUse ?Memory and ?memory.size for information about memory usage. The limit\ncan be raised (if possible) by calling memory.limit within a running R\nsession.\n\nThe 32-bit executables Rgui.exe and Rterm.exe support up to 3GB of user\naddress space per process under suitably enabled versions of 32-bit Windows\n(see http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx,\nhttp://msdn.microsoft.com/en-us/library/bb613473%28VS.85%29.aspx; this is\nnot enabled by default). On such systems, the default for --max-mem-size is\nthe smaller of the amount of RAM and 2.5GB. On all but the earliest 64-bit\nversions of Windows the user address space for a 32-bit process is 4GB, and\nthere the default for --max-mem-size is the smaller of the amount of RAM and\n3.5GB.\n\nFor a 64-bit build, the default is the amount of RAM.\n...\"\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/ (*Nuevo Blog*)\n\n2011/4/6 Víctor Rodríguez Galiano <luxorvrg at hotmail.com>\n\n>\n> Hola a todos,\n>\n> Tengo un equipo con windows 7 Home Premium 64 bits (8mb de RAM) y me\n> gustaría saber como podría obtener el máximo rendimiento en R.\n>\n> He visto que hay dos o tres comandos: memory.size(max=TRUE) memory.limit =\n> ...\n>\n> El caso es que si uso memory.size(max=TRUE) el maximo que me imprime por\n> pantalla es bastante mayor en un equipo que tengo con windows xp a 32 bits\n> que en el nuevo equipo que es bastante más potente.\n>\n>\n>\n>\n> Saludos\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEste es un tema que aparece en las R-FAQ-for-Windows:\n\nhttp://cran.at.r-project.org/bin/windows/base/rw-FAQ.html\n\nY en concreto dice lo siguiente:\n\n\"...\n 2.9 There seems to be a limit on the me",
       "thread_id": "thread-c7512c0c83ff",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110406/4324603d/attachment.pl"
+      ]
     },
     {
       "id": "msg-40dd366eccfc",
@@ -477,11 +534,14 @@
       "references": [
         "<1302083041.4d9c35e15ff36@webmail.upv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/ccd31424/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/ccd31424/attachment.pl>",
+      "body_plain": "Hola,\n\nAdemás de la posibilidad de que no hayas instaladp el programa Rgraphviz que\npor lo que entiendo de tu correo sí que lo has hecho, puede que el problema\nsea que como se indica en esta frase: \" (3) graphviz is accessible to  R,\ne.g., the path to the graphviz 'bin' directory is in the system 'PATH'\nvariable.\"\n\nPara ello, sería conveniente que comprobaras si en la variable de sistema de\nWindows \"PATH\" está declardo el directorio donde está instalado el binario\nde Rgraphviz.\n\nLas variables de entorno de Windows se configuran a través de: Panel de\nControl -> Sistema. Y aquí depende del Windows que tengas, para acceder al\nmenú donde puedes ver, editar y añadir las variables existentes.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/ (*Nuevo Blog*)\n\nOn Wed, Apr 6, 2011 at 11:44 AM, Adriana Villa Murillo <\nadvilmu at doctor.upv.es> wrote:\n\n>\n> Hola a todos..!!\n>\n> Necesito trabajar con el package classGraph, entiendo que dicho package\n> requiere\n> como previo a Rgraphviz. Pues bien, al tratar de cargarlo aparece el\n> siguiente\n> mensaje de error:\n>\n> Error : .onLoad failed in loadNamespace() for 'Rgraphviz', details:\n>  call: value[[3L]](cond)\n>  error: unable to load shared object\n> 'C:/ARCHIV~1/R/R-212~1.2/library/Rgraphviz/libs/i386/Rgraphviz.dll':\n>  LoadLibrary failure:  No se puede encontrar el módulo especificado.\n>\n>\n>  Check that (1) graphviz is installed on your system; (2) the\n>  installed version of graphviz matches '2.20.3'; this is the version\n>  used to build this Rgraphviz package; (3) graphviz is accessible to\n>  R, e.g., the path to the graphviz 'bin' directory is in the system\n>  'PATH' variable.  See additional instructions in the 'README' file of\n>  the Rgraphviz 'source' distribution, available at\n>\n>  http://bioconductor.org/packages/release/bioc/html/Rgraphviz.html\n>\n>  Ask further questions on the Bioconductor mailing list\n>\n>  http://bioconductor.org/docs/mailList.html\n>\n> Sabeis a que se refiere esto?\n>\n> Asi mismo, si mirais el package classGraph, aparece como Depends e Imports\n> los\n> mismos packages, sabeis porque?\n>\n> De antemano gracias!!\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nAdemás de la posibilidad de que no hayas instaladp el programa Rgraphviz que\npor lo que entiendo de tu correo sí que lo has hecho, puede que el problema\nsea que como se indica en esta frase: \" ",
       "thread_id": "thread-39ebad2dbe4f",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/ccd31424/attachment.pl"
+      ]
     },
     {
       "id": "msg-6592cda47c61",
@@ -497,11 +557,14 @@
         "<BANLkTikTxjMjhj1FzpLZ8X7_6ko7v4YOgQ@mail.gmail.com>",
         "<4D9DD11B.7070403@etecsa.cu>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/fa81c287/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/fa81c287/attachment.pl>",
+      "body_plain": "Respetado Leonardo:\n\nAlgunas ideas para responder tus preguntas.\n> \n> Hola amigos:\n> \n> Necesito implementar un sistema de control de acceso utilizando \n> DTMF, pero necesito saber si puedo hacerlo en R sobre LINUX por \n> ello les hago estas tres preguntas:\n> \n> R puede adquirir una señal de audio mediante el micrófono?\nParece que el paquete \"audio\" sólo está para windows.\n> Está implementado en R la detección de DTMF?\nNo la he visto.\n> Puedo trabajar desde R los puertos series o paralelo?\nSería todo mediante linux (programación en C)\n> Puedo hacer en R una aplicación independiente (Standalone \n> applications)\nNo, hasta ahora no.\n> Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he \n> implementado en matlab (Windows) y cuando lo corrí sobre linux \n> no trabajó porque Matlab para Linux no tiene el Toolbox de \n> adquisición de datos.\nLa idea sería que R hiciera interfaz con alguna aplicación en linux\nque tomara los datos y los grabara y luego el script del R (en ejecución\nBATCH para hacer un pseudo \"standalone\") procesara la información\nobtenida.\n\nFeliz día.\n> \n> Un abrazo a todos\n> \n> Leonardo> --- \n> This message was processed by Kaspersky Mail Gateway \n> 5.6.28/RELEASE running at host imx3.etecsa.cu\n> Visit our web-site: <http://www.kaspersky.com>, \n> <http://www.viruslist.com>> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Respetado Leonardo:\n\nAlgunas ideas para responder tus preguntas.\n> \n> Hola amigos:\n> \n> Necesito implementar un sistema de control de acceso utilizando \n> DTMF, pero necesito saber si puedo hacerlo en",
       "thread_id": "thread-39ebad2dbe4f",
       "thread_depth": 3,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/fa81c287/attachment.pl"
+      ]
     },
     {
       "id": "msg-1ce77c18e92b",
@@ -516,11 +579,14 @@
         "<1302083041.4d9c35e15ff36@webmail.upv.es>",
         "<BANLkTikTxjMjhj1FzpLZ8X7_6ko7v4YOgQ@mail.gmail.com>"
       ],
-      "body_plain": "Hola amigos:\n\nNecesito implementar un sistema de control de acceso utilizando DTMF, \npero necesito saber si puedo hacerlo en R sobre LINUX por ello les hago \nestas tres preguntas:\n\nR puede adquirir una seÃ±al de audio mediante el micrÃ³fono?\nEstÃ¡ implementado en R la detecciÃ³n de DTMF?\nPuedo trabajar desde R los puertos series o paralelo?\nPuedo hacer en R una aplicaciÃ³n independiente (Standalone applications)\n\nInsisto que es en R sobre LINUX (Ubuntu) porque ya lo he implementado en \nmatlab (Windows) y cuando lo corrÃ­ sobre linux no trabajÃ³ porque Matlab \npara Linux no tiene el Toolbox de adquisiciÃ³n de datos.\n\nUn abrazo a todos\n\nLeonardo\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/3a9ec6fc/attachment.pl>",
+      "body_plain": "Hola amigos:\n\nNecesito implementar un sistema de control de acceso utilizando DTMF, \npero necesito saber si puedo hacerlo en R sobre LINUX por ello les hago \nestas tres preguntas:\n\nR puede adquirir una seÃ±al de audio mediante el micrÃ³fono?\nEstÃ¡ implementado en R la detecciÃ³n de DTMF?\nPuedo trabajar desde R los puertos series o paralelo?\nPuedo hacer en R una aplicaciÃ³n independiente (Standalone applications)\n\nInsisto que es en R sobre LINUX (Ubuntu) porque ya lo he implementado en \nmatlab (Windows) y cuando lo corrÃ­ sobre linux no trabajÃ³ porque Matlab \npara Linux no tiene el Toolbox de adquisiciÃ³n de datos.\n\nUn abrazo a todos\n\nLeonardo\n------------ prÃ³xima parte ------------\n--- \nThis message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx3.etecsa.cu\nVisit our web-site: <http://www.kaspersky.com>, <http://www.viruslist.com>",
       "body_snippet": "Hola amigos:\n\nNecesito implementar un sistema de control de acceso utilizando DTMF, \npero necesito saber si puedo hacerlo en R sobre LINUX por ello les hago \nestas tres preguntas:\n\nR puede adquirir un",
       "thread_id": "thread-39ebad2dbe4f",
       "thread_depth": 2,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/3a9ec6fc/attachment.pl"
+      ]
     },
     {
       "id": "msg-0362b1c30716",
@@ -537,11 +603,14 @@
         "<4D9DD11B.7070403@etecsa.cu>",
         "<fb66c52d3b01.4d9d8294@une.net.co>"
       ],
-      "body_plain": "Gracias Kenneth, me han sido muy Ãºtiles tus respuestas\n\nAbrazos a todos\n\nLeonardo\n\n\nEl 07/04/11 10:23, KENNETH R CABRERA escribiÃ³:\n> Respetado Leonardo:\n>\n> Algunas ideas para responder tus preguntas.\n> >\n> > Hola amigos:\n> >\n> > Necesito implementar un sistema de control de acceso utilizando\n> > DTMF, pero necesito saber si puedo hacerlo en R sobre LINUX por\n> > ello les hago estas tres preguntas:\n> >\n> > R puede adquirir una seÃ±al de audio mediante el micrÃ³fono?\n> Parece que el paquete \"audio\" sÃ³lo estÃ¡ para windows.\n> > EstÃ¡ implementado en R la detecciÃ³n de DTMF?\n> No la he visto.\n> > Puedo trabajar desde R los puertos series o paralelo?\n> SerÃ­a todo mediante linux (programaciÃ³n en C)\n> > Puedo hacer en R una aplicaciÃ³n independiente (Standalone\n> > applications)\n> No, hasta ahora no.\n> > Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he\n> > implementado en matlab (Windows) y cuando lo corrÃ­ sobre linux\n> > no trabajÃ³ porque Matlab para Linux no tiene el Toolbox de\n> > adquisiciÃ³n de datos.\n> La idea serÃ­a que R hiciera interfaz con alguna aplicaciÃ³n en linux\n> que tomara los datos y los grabara y luego el script del R (en ejecuciÃ³n\n> BATCH para hacer un pseudo \"standalone\") procesara la informaciÃ³n\n> obtenida.\n>\n> Feliz dÃ­a.\n> >\n> > Un abrazo a todos\n> >\n> > Leonardo> ---\n> > This message was processed by Kaspersky Mail Gateway\n> > 5.6.28/RELEASE running at host imx3.etecsa.cu\n> > Visit our web-site: <http://www.kaspersky.com>,\n> > <http://www.viruslist.com>> \n> _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> ---\n> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx2.etecsa.cu\n> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110408/6a11bc9a/attachment.html>\n------------ prÃ³xima parte ------------\nAn embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110408/6a11bc9a/attachment.pl>",
+      "body_plain": "Gracias Kenneth, me han sido muy Ãºtiles tus respuestas\n\nAbrazos a todos\n\nLeonardo\n\n\nEl 07/04/11 10:23, KENNETH R CABRERA escribiÃ³:\n> Respetado Leonardo:\n>\n> Algunas ideas para responder tus preguntas.\n> >\n> > Hola amigos:\n> >\n> > Necesito implementar un sistema de control de acceso utilizando\n> > DTMF, pero necesito saber si puedo hacerlo en R sobre LINUX por\n> > ello les hago estas tres preguntas:\n> >\n> > R puede adquirir una seÃ±al de audio mediante el micrÃ³fono?\n> Parece que el paquete \"audio\" sÃ³lo estÃ¡ para windows.\n> > EstÃ¡ implementado en R la detecciÃ³n de DTMF?\n> No la he visto.\n> > Puedo trabajar desde R los puertos series o paralelo?\n> SerÃ­a todo mediante linux (programaciÃ³n en C)\n> > Puedo hacer en R una aplicaciÃ³n independiente (Standalone\n> > applications)\n> No, hasta ahora no.\n> > Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he\n> > implementado en matlab (Windows) y cuando lo corrÃ­ sobre linux\n> > no trabajÃ³ porque Matlab para Linux no tiene el Toolbox de\n> > adquisiciÃ³n de datos.\n> La idea serÃ­a que R hiciera interfaz con alguna aplicaciÃ³n en linux\n> que tomara los datos y los grabara y luego el script del R (en ejecuciÃ³n\n> BATCH para hacer un pseudo \"standalone\") procesara la informaciÃ³n\n> obtenida.\n>\n> Feliz dÃ­a.\n> >\n> > Un abrazo a todos\n> >\n> > Leonardo> ---\n> > This message was processed by Kaspersky Mail Gateway\n> > 5.6.28/RELEASE running at host imx3.etecsa.cu\n> > Visit our web-site: <http://www.kaspersky.com>,\n> > <http://www.viruslist.com>> \n> _______________________________________________\n> > R-help-es mailing list\n> > R-help-es en r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> ---\n> This message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx2.etecsa.cu\n> Visit our web-site:<http://www.kaspersky.com>,<http://www.viruslist.com>\n\n------------ prÃ³xima parte ------------\nSe ha borrado un adjunto en formato HTML...\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110408/6a11bc9a/attachment.html>\n------------ prÃ³xima parte ------------\n--- \nThis message was processed by Kaspersky Mail Gateway 5.6.28/RELEASE running at host imx2.etecsa.cu\nVisit our web-site: <http://www.kaspersky.com>, <http://www.viruslist.com>",
       "body_snippet": "Gracias Kenneth, me han sido muy Ãºtiles tus respuestas\n\nAbrazos a todos\n\nLeonardo\n\n\nEl 07/04/11 10:23, KENNETH R CABRERA escribiÃ³:\n> Respetado Leonardo:\n>\n> Algunas ideas para responder tus pregunta",
       "thread_id": "thread-39ebad2dbe4f",
       "thread_depth": 4,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110408/6a11bc9a/attachment.pl"
+      ]
     },
     {
       "id": "msg-6d45741d7b29",
@@ -553,11 +622,14 @@
       "subject_clean": "[R-es] entrada de datos",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/8f93eee4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/8f93eee4/attachment.pl>",
+      "body_plain": "Saludos\n\nmi consulta es en R existe algun paquete que realiza la entrada de datos\ndespues de la encuesta, equivalente a data entry en SPSS?\nfavor como se podria trabajar esto.?\n\n-- \natte.genaro llusco\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Saludos\n\nmi consulta es en R existe algun paquete que realiza la entrada de datos\ndespues de la encuesta, equivalente a data entry en SPSS?\nfavor como se podria trabajar esto.?\n\n-- \natte.genaro llusco",
       "thread_id": "thread-6d45741d7b29",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/8f93eee4/attachment.pl"
+      ]
     },
     {
       "id": "msg-0d502ed54db0",
@@ -603,11 +675,14 @@
       "subject_clean": "[R-es] grafico",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/248ed6a9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/248ed6a9/attachment.pl>",
+      "body_plain": "Hola Oliver,\n\nMuchas gracias por tu comentario. Me ha ayudado mucho. Mis etiquetas no son \nfechas, parece que eso complica un poco la cosa, pero con lo que me has dicho me \nhe podido apañar.\n\nsaludos,\n\nFernando\n\n\n\n--------------------------------------------------------------------------------------------------------------------------------------------\n\n\nFernando,\n\nno es lo más conciso, pero creo que lo siguiente te funcionará:\n\na<-c(1,2,3,4,5)\nb<-c(1.3,2.4,5,6,8)\netiquetas<-c(\"etiq1\",\"etiq2\",\"etiq3\",\"etiq4\",\"etiq5\")\nc<-rbind(a,b)\n\nx=data.frame(Serie1=a,Serie2=b)\nseries=ts(x)\nplot(series,plot.type=\"single\",col=c(4,2),xaxt=\"n\")\naxis(1, at=1:5,labels = etiquetas)\nlegend(x=\"topleft\",legend=c(\"Serie 1\",\"Serie 2\"),col=c(4,2),lty=c(1,1))\n\nEn todo caso y para sacar partido de R,  sería adecuado que tus etiquetas fuesen \nfechas.\nUn saludo. Olivier\n\n--\n____________________________________\n\nOlivier G. Nuñez\nEmail: onunez at iberstat.es\nTel : +34 663 03 69 09\nWeb: http://www.iberstat.es\n\n____________________________________\n\n\n\n\nEl 09/04/2011, a las 15:45, Fernando Sanchez escribió:\n\n> Hola a todos,\n> \n> a<-c(1,2,3,4,5)\n> b<-c(1.3,2.4,5,6,8)\n> etiquetas<-c(\"etiq1\",\"etiq2\",\"etiq3\",\"etiq4\",\"etiq5\")\n> c<-rbind(a,b)\n> \n> Me gustaría hacer un gráfico en el que se represente en el eje Y las\n> series a y b que están unidas en c y en el eje X las etiquetas ¿cómo \n> se podría hacer? Espero haberme explicado. Sería el equivalente a la\n> figura de Excel que os adjunto.\n> \n> saludos,\n> \n> Fernando\n> <Doc1.pdf>_______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Oliver,\n\nMuchas gracias por tu comentario. Me ha ayudado mucho. Mis etiquetas no son \nfechas, parece que eso complica un poco la cosa, pero con lo que me has dicho me \nhe podido apañar.\n\nsaludos,",
       "thread_id": "thread-9e011ba4eae7",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/248ed6a9/attachment.pl"
+      ]
     },
     {
       "id": "msg-e20a96089364",
@@ -621,11 +696,14 @@
       "references": [
         "<BANLkTin_B1vFS2bb-MrLpdjPVV_TtXyhCg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/c75dbda6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/c75dbda6/attachment.pl>",
+      "body_plain": "Hola\n\nUn inferfaz equivalente al SPSS-Data-Entry no existe como tal en R. Pero en\nR  existen múltiples opciones par poder bien conectarse con otras\naplicaciones, o importar ficheros de otras aplicaciones (entre ellas SPSS).\n\nEn el link adjunto puedes encontrar muchos más detalles de las posibilidades\nque tienes:\n\nhttp://cran.r-project.org/doc/manuals/R-data.html\n\nAhora bien, si buscas un método sencillos, te sugeriría que si tienes tus\ndatos en SPSS-Data.-Entry, los exportes como datos .sav (SPSS) y con la\npaquete foreign lo importes directamente en R. O incluso más sencillo\ntodavía, directamente incluye los datos de tus encuestas en un  fichero .txt\ny directamente impórtalos en R. Si prefieres algo más sencillo de tabular, y\nque puedas manipular si te hace falta, en una hoja Excel lo pudes hacer y\nluego con un Copy&Paste los incluyes en un fichero .txt directamente.\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/ (*Nuevo Blog*)\n\n2011/4/9 genaro llusco <gellusco at gmail.com>\n\n> Saludos\n>\n> mi consulta es en R existe algun paquete que realiza la entrada de datos\n> despues de la encuesta, equivalente a data entry en SPSS?\n> favor como se podria trabajar esto.?\n>\n> --\n> atte.genaro llusco\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola\n\nUn inferfaz equivalente al SPSS-Data-Entry no existe como tal en R. Pero en\nR  existen múltiples opciones par poder bien conectarse con otras\naplicaciones, o importar ficheros de otras aplicacio",
       "thread_id": "thread-6d45741d7b29",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110409/c75dbda6/attachment.pl"
+      ]
     },
     {
       "id": "msg-270847bf1b78",
@@ -655,11 +733,14 @@
       "subject_clean": "[R-es] grafico",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/0842bfc1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/0842bfc1/attachment.pl>",
+      "body_plain": "Hola Carlos, muchas gracias por tu correo. No es esto lo que necesito pues es en \nun gráfico de líneas. No te preocupes que el tema ya está solucionado. De todas \nformas lo que me has dicho me ha venido bien pues no sabía cómo hacer gráficos \nde barras con 2 variables en R.\n\nsaludos,\n\nFernando\n\n\n-----Mensaje original-----\nDe: r-help-es-bounces at r-project.org [mailto:r-help-es-bounces at r-project.org] En \nnombre de carlos.perez at uam.es\nEnviado el: domingo, 10 de abril de 2011 12:01\nPara: r-help-es at r-project.org; r-help-es-request at r-project.org\nAsunto: Re: [R-es] grafico\n \nHola fernando,\n \nNo he podido ver el gráfico de excel, así que no se si esto es  \nexactamente lo que querrías:\n \nbarplot(c,beside=T,names.arg=etiquetas)\n \nSaludos\n \n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Carlos, muchas gracias por tu correo. No es esto lo que necesito pues es en \nun gráfico de líneas. No te preocupes que el tema ya está solucionado. De todas \nformas lo que me has dicho me ha veni",
       "thread_id": "thread-2886dbd7e1fb",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/0842bfc1/attachment.pl"
+      ]
     },
     {
       "id": "msg-4150556bdb18",
@@ -689,11 +770,14 @@
       "subject_clean": "[R-es] grafico",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/7c0af91d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/7c0af91d/attachment.pl>",
+      "body_plain": "Hola Oscar, perfecto. Esto es exactamente lo que necesitaba. \n\n\n¡muchas gracias!\n\n\nsaludos,\n\nFernando\n\n\n-----Mensaje original-----\nDe: Oscar Perpiñan Lamigueiro [mailto:oscar.perpinan at upm.es] \nEnviado el: domingo, 10 de abril de 2011 18:01\nPara: Fernando Sanchez\nCC: r-help-es at r-project.org\nAsunto: Re: [R-es] grafico\n \nHola,\n \nA ver si te sirve esto:\n \nlibrary(lattice)\nDF <- data.frame(a=a, b=b, etiq=etiquetas)\nxyplot(a+b~etiq, data=DF, \n      type=c('l', 'g'), \n      xlab='Etiquetas', ylab=NULL, \n      auto.key=list(space='right'))\n \nSaludos\n \nOscar.\n \n-------------\nOscar Perpiñán Lamigueiro\nDpto. de Ingeniería Eléctrica\nEUITI-UPM\n \nhttp://procomun.wordpress.com\n---------------------------------------\nEn Sat, 9 Apr 2011 14:45:33 +0100 (BST)\n\n\n> Hola a todos,\n> \n> a<-c(1,2,3,4,5)\n> b<-c(1.3,2.4,5,6,8)\n> etiquetas<-c(\"etiq1\",\"etiq2\",\"etiq3\",\"etiq4\",\"etiq5\")\n> c<-rbind(a,b)\n> \n> Me gustaría hacer un gráfico en el que se represente en el eje Y las series a y \n>\n> b que están unidas en c y en el eje X las etiquetas ¿cómo se podría hacer? \n> Espero haberme explicado. Sería el equivalente a la figura de Excel que os \n> adjunto.\n> \n> saludos,\n> \n> Fernando\n> \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Oscar, perfecto. Esto es exactamente lo que necesitaba. \n\n\n¡muchas gracias!\n\n\nsaludos,\n\nFernando\n\n\n-----Mensaje original-----\nDe: Oscar Perpiñan Lamigueiro [mailto:oscar.perpinan at upm.es] \nEnvi",
       "thread_id": "thread-0a72ef153af0",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/7c0af91d/attachment.pl"
+      ]
     },
     {
       "id": "msg-3b7f9d9d686f",
@@ -705,11 +789,14 @@
       "subject_clean": "[R-es] R en la web",
       "in_reply_to": "<103586309.6567551302484248250.JavaMail.root@ucimail3.uci.cu>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/cf6634e1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/cf6634e1/attachment.pl>",
+      "body_plain": "Saludos colegas. Soy nuevo en R y me gustaría saber si es posible embeber código HTML en funciones R para hacer interfaces web. Es decir, lo que quiero hacer es una aplicación web que utilice R para el procesamiento estadístico de los datos y que me los grafique en la web. ¿Es posible hacer esto? . Saludos. \n\n-- \n\n-------------------------------------------------------------------------------------------- \nIng. Yusniel Hidalgo Delgado \nParticipe en COMPUMAT 2011 http://www.mfc.uclv.edu.cu/scmc \nParticipe en INFO 2012 http://www.congreso-info.cu \nUniversity of Informatic Sciences \n-------------------------------------------------------------------------------------------- \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Saludos colegas. Soy nuevo en R y me gustaría saber si es posible embeber código HTML en funciones R para hacer interfaces web. Es decir, lo que quiero hacer es una aplicación web que utilice R para e",
       "thread_id": "thread-3b7f9d9d686f",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/cf6634e1/attachment.pl"
+      ]
     },
     {
       "id": "msg-e2a0e1e2559c",
@@ -740,11 +827,14 @@
       "subject_clean": "[R-es] R en la web",
       "in_reply_to": "<966688432.6571561302485147336.JavaMail.root@ucimail3.uci.cu>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/9d7e0a3f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/9d7e0a3f/attachment.pl>",
+      "body_plain": "Muchas gracias Carlos, precisamente eso era lo que andaba buscando. Saludos. \n\n----- Mensaje original ----- \nDe: \"Carlos J. Gil Bellosta\" <cgb at datanalytics.com> \nPara: \"Ing. Yusniel Hidalgo Delgado\" <yhdelgado at uci.cu> \nCC: r-help-es at r-project.org \nEnviados: Domingo, 10 de Abril 2011 21:22:03 (GMT-0500) Auto-Detected \nAsunto: Re: [R-es] R en la web \n\nHola, ¿qué tal? \n\nSí, es posible y hay varias opciones. De entre ellas, la que más me \ngusta personalmente es usando Rapache (búscalo en Google). Otros \ntienen otras preferencias. \n\nUn saludo, \n\nCarlos J. Gil Bellosta \nhttp://www.datanalytics.com \n\nEl día 11 de abril de 2011 03:15, Ing. Yusniel Hidalgo Delgado \n<yhdelgado at uci.cu> escribió: \n> Saludos colegas. Soy nuevo en R y me gustaría saber si es posible embeber código HTML en funciones R para hacer interfaces web. Es decir, lo que quiero hacer es una aplicación web que utilice R para el procesamiento estadístico de los datos y que me los grafique en la web. ¿Es posible hacer esto? . Saludos. \n> \n> -- \n> \n> -------------------------------------------------------------------------------------------- \n> Ing. Yusniel Hidalgo Delgado \n> Participe en COMPUMAT 2011 http://www.mfc.uclv.edu.cu/scmc \n> Participe en INFO 2012 http://www.congreso-info.cu \n> University of Informatic Sciences \n> -------------------------------------------------------------------------------------------- \n> \n> [[alternative HTML version deleted]] \n> \n> \n> _______________________________________________ \n> R-help-es mailing list \n> R-help-es at r-project.org \n> https://stat.ethz.ch/mailman/listinfo/r-help-es \n> \n> \n\n\n-- \n\n-------------------------------------------------------------------------------------------- \nIng. Yusniel Hidalgo Delgado \nParticipe en COMPUMAT 2011 http://www.mfc.uclv.edu.cu/scmc \nParticipe en INFO 2012 http://www.congreso-info.cu \nUniversity of Informatic Sciences \n-------------------------------------------------------------------------------------------- \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Carlos, precisamente eso era lo que andaba buscando. Saludos. \n\n----- Mensaje original ----- \nDe: \"Carlos J. Gil Bellosta\" <cgb at datanalytics.com> \nPara: \"Ing. Yusniel Hidalgo Delgado",
       "thread_id": "thread-f544075350ab",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110410/9d7e0a3f/attachment.pl"
+      ]
     },
     {
       "id": "msg-fd9033ff9968",
@@ -797,11 +887,14 @@
         "<BANLkTinLpJ0eTDqq5MWK9GmsuKUr4Cx+EA@mail.gmail.com>",
         "<BANLkTin2vn8w1kYVLRs6BsiX7ZZNuKyBNQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110411/75e12fee/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110411/75e12fee/attachment.pl>",
+      "body_plain": "enhorabuena igualmente!.\n\ny un detalle,\nseria interesante, digo yo,  que para estas jornadas la gente \nmanifestase su intención de asistir al evento en este foro, de modo que \nse crearan más expectativas y se levanten ánimos.\n\nUn saludo.\n\n(aún es pronto pero que se tenga ahí presente).\n\n\nEl 06/04/11 13:29, Xavi de Blas escribió:\n> Enhorabuena por la iniciativa y por tener ya montada la página web,\n> calendario...\n>\n> Nos veremos allí\n>\n> Saludos\n>\n>\n> 2011/4/4 Carlos J. Gil Bellosta<cgb at datanalytics.com>:\n>    \n>> En nombre de los comités científico y organizador de las III Jornadas\n>> de usuarios de R, me complace anunciar en esta lista que:\n>>\n>> 1) Se celebrarán los días 17 y 18 de noviembre en la Escuela de\n>> Organización Industrial (http://www.eoi.es), en Madrid\n>> 2) Que ya está abierto el plazo para inscribirse y participar\n>> 3) Que la información relevante puede consultarse en www.usar.org.es\n>>\n>> La inscripción y la asistencia es libre y gratuita. No obstante,\n>> queremos solicitar a los miembros de la comunidad de usuarios de R\n>> ayuda para conseguir financiación que permita que las jornadas sean un\n>> éxito. Si alguien sabe de empresas o instituciones que pudieran estar\n>> interesadas en patrocinar o subvencionar las  jornadas o algunas\n>> actividades concretas dentro de ellas (como por ejemplo, financiar las\n>> dietas de ponentes), que no dude en ponerse en contacto con la\n>> organización a través del correo organizacion at usar.org.es.\n>>\n>> Un cordial saludo,\n>>\n>> Carlos J. Gil Bellosta\n>> Comité Organizador\n>> III Jornadas de Usuarios de R\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>      \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>    \n\n-- \nAntonio Maurandi López\nServ. Cálculo Científico. Apoyo Estadístico.\nServicio de Apoyo a la Investigación (SAI)\nVicerrectorado de Investigación.\nUniversidad de Murcia\n\nEdif. CAID. Campus de Espinardo.\n30100 Murcia\n@. amaurandi at um.es\nT. 868 88 7315 F. 868 88 7302\nwww.um.es/sai www.um.es/ae\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "enhorabuena igualmente!.\n\ny un detalle,\nseria interesante, digo yo,  que para estas jornadas la gente \nmanifestase su intención de asistir al evento en este foro, de modo que \nse crearan más expectati",
       "thread_id": "thread-1d127847154d",
       "thread_depth": 2,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110411/75e12fee/attachment.pl"
+      ]
     },
     {
       "id": "msg-4d4148910f64",
@@ -958,11 +1051,14 @@
       "references": [
         "<2657769459guivivi@alumni.uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/e226015c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/e226015c/attachment.pl>",
+      "body_plain": "Yo también veo la Delta en el visor de pdfs de Google.\n\nEl 12 de abril de 2011 10:07, <guivivi at alumni.uv.es> escribió:\n\n> Perdón, no he adjuntado el pdf\n>\n> > Buenos días a todos,\n> >\n> > No he tenido problemas a la hora de escribir letras griegas en un plot y\n> > guardar éste en un pdf hasta que he intentado escribir la letra Delta\n> > para indicar una tasa de cambio o variación.\n> >\n> > Como vereis en el pdf que os adjunto, el cual he generado simplemente\n> con:\n> >\n> > www <- \"http://www.massey.ac.nz/~pscowper/ts/global.dat\"\n> >\n> > global <- scan(www)\n> >\n> > global <- ts(global, st = c(1856, 1), end = c(2005, 12), fr = 12)\n> >\n> > global.breve <- window(global, start = c(1970, 1))\n> > pdf(\"item2_ses3.pdf\", useDingbats = F)\n> >\n> >\n> > plot(diff(global.breve), xlim = c(1970, 2005), col = \"steelblue1\",\n> > xlab = \"Periodo (mes)\", ylab = \"Diferencia entre temperaturas\n> > diferenciada\",\n> > main = expression(paste(\"Serie diferenciada \", Delta, y[t])), sub =\n> > \"Serie desde 1970\")\n> > dev.off()\n> >\n> > la letra Delta se me ha convertido en el símbolo del conjunto vacío y\n> > también me ocurre esto en el pdf que genero con Sweave.\n> >\n> > ¿Por qué ocurre esto?, ¿tiene que ver con la codificación?.\n> >\n> > Muchas gracias por la ayuda.\n> >\n> > Un saludo,\n> >\n> > Guillermo\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nDr. Gregorio R. Serrano\nDpto. Economía Cuantitativa (UCM)\nVoz:+34 91394 2361\nFax:+34 91394 2591\nhttp://www.grserrano.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yo también veo la Delta en el visor de pdfs de Google.\n\nEl 12 de abril de 2011 10:07, <guivivi at alumni.uv.es> escribió:\n\n> Perdón, no he adjuntado el pdf\n>\n> > Buenos días a todos,\n> >\n> > No he ten",
       "thread_id": "thread-83fbd646571b",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/e226015c/attachment.pl"
+      ]
     },
     {
       "id": "msg-4c16ccf592eb",
@@ -1009,11 +1105,14 @@
       "subject_clean": "[R-es] Modelo para datos de conteos",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/00bae50e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/00bae50e/attachment.pl>",
+      "body_plain": "Estimados compañeros de la lista,\n\nEstoy intentando modelar la riqueza de especies florísticas de una región de\nAmérica Latina pero la variable respuesta (riqueza) tiene un comportamiento\nmuy particular.  Son conteos en el orden de los cientos y miles, valor\nmínimo 442, máximo 1968.  La variable muestra atípicos \"hacia arriba y hacia\nabajo\", pero si hago una transformación logarítmica no corrijo los atípicos.\n\n> dput(riq$riqueza)\nc(1280L, 1262L, 1290L, 1321L, 1318L, 1232L, 1742L, 1351L, 1271L,\n1398L, 1295L, 1460L, 1431L, 966L, 1474L, 1831L, 1453L, 1274L,\n971L, 1286L, 1403L, 1488L, 1666L, 1406L, 1432L, 1503L, 1739L,\n1411L, 1361L, 1223L, 1303L, 1452L, 1293L, 1353L, 1383L, 1390L,\n1402L, 1307L, 1438L, 1398L, 1440L, 1427L, 1414L, 1323L, 1340L,\n1968L, 1825L, 1251L, 1897L, 876L, 442L, 948L, 1548L, 1535L)\n\nYo estoy pensando en usar un modelo con la función binomial negativa ya que\nlos datos muestran sobredisperisón para realizar un modelo de Poisson.\n\n¿Sería esto correcto?\n¿Existen otras alternativas?\n\nMuchas gracias,\n\nManuel Spínola\n\n\n\n-- \n*Manuel Spínola, Ph.D.*\nInstituto Internacional en Conservación y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.ac.cr\nmspinola10 at gmail.com\nTeléfono: (506) 2277-3598\nFax: (506) 2237-7036\nPersonal website: Lobito de río <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados compañeros de la lista,\n\nEstoy intentando modelar la riqueza de especies florísticas de una región de\nAmérica Latina pero la variable respuesta (riqueza) tiene un comportamiento\nmuy particul",
       "thread_id": "thread-15b94c585edc",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/00bae50e/attachment.pl"
+      ]
     },
     {
       "id": "msg-61357d7df291",
@@ -1025,11 +1124,14 @@
       "subject_clean": "[R-es] Cargar lista de variables en función",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/f4ff466d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/f4ff466d/attachment.pl>",
+      "body_plain": "Hola compañeros,\n\n \n\nSoy nuevo y me disculparan si la pregunta es muy básica. Quiero crear una\nfunción que me permita recibir variables que pueden ser 2, 3 o más,  la idea\nes llamar esta función e indicarle la ruta y el nombre de las variables para\nluego realizar algún análisis. Mi idea es la siguiente:\n\n \n\nlibrary(foreign)\n\nFDatos <- function(Ruta,Nombre,Variables){\n\n  Datos  <- read.spss(paste(Ruta,\"/\",Nombre,sep=\"\"),to.data.frame=TRUE)\n\n  Var01 <- subset(Datos,select=Variables)\n\n}\n\n \n\n### PARÁMETROS A MODIFICAR ###\n\nAnalis <- FDatos (\n\nRuta = \"C:/Archivos de programa/IBM/SPSS/Statistics/19/Samples/English\",\n\nNombre = \"adl.sav\",   \n\nVariables = c(id,age,los)\n\n)\n\n \n\nPero al ejecutarlo me sale: “Error en eval(expr, envir, enclos) : objeto\n'id' no encontrado”. Alguna sugerencia?\n\n \n\nGracias,\n\n \n\nEduardo Hurtado.\n\n \n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola compañeros,\n\n \n\nSoy nuevo y me disculparan si la pregunta es muy básica. Quiero crear una\nfunción que me permita recibir variables que pueden ser 2, 3 o más,  la idea\nes llamar esta función e ind",
       "thread_id": "thread-61357d7df291",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/f4ff466d/attachment.pl"
+      ]
     },
     {
       "id": "msg-c41a6a47a85e",
@@ -1075,11 +1177,14 @@
       "subject_clean": "[R-es] Resumen de R-help-es, Vol 26, Envío 21",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/18762d7f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/18762d7f/attachment.pl>",
+      "body_plain": "hola Paco...Recuerdo haber leído tu problema anteriormente, te doy unos consejos que a mi me han funcionado.Si no tienes una idea de la estacionalidad de la serie, utiliza las técnicas que de alguna forma ayudan a estimarla:Antes de esto, cerciórate que tus datos estén completos, es decir que tengan datos para todos tus días, si usas semanas de 5 días o de 7 días, que creo deberían ser las que dispones. Si no están completos, complétalos, puedes utilizar la librería mi, la que tiene algunas técnicas.Luego trata con las funciones de autocorrelación y autocorrelación parcial, y grafica retardos de hasta 60, o usa la función FitAR, que halla los coeficientes para modelos autoregresivos y observa si son significantes. Con todo esto, puedes tener una idea de la frecuencia de tus datos.Una vez que halles esto, se puede realizar las descomposiciones de la serie.Crea un objeto ts , donde la frecuencia es la que luego del análisis obtuviste (en este caso 5).dat <- ts(x,start=1,frequency=5)stl01 <- stl(dat)plot(stl01)\nEs un poco complicado, dependiendo de los números de datos que dispongas.Si esto no resulta, trata de reducir la frecuencia de tus datos, puede ser en base a promedios de periodos, ponderados equitativamente o exponencialmente o como creas conveniente.espero te sirva\n> From: r-help-es-request at r-project.org\n> Subject: Resumen de R-help-es, Vol 26, Envío 21\n> To: r-help-es at r-project.org\n> Date: Tue, 12 Apr 2011 15:30:52 +0200\n> \n> Envíe los mensajes para la lista R-help-es a\n> \tr-help-es at r-project.org\n> \n> Para subscribirse o anular su subscripción a través de la WEB\n> \thttps://stat.ethz.ch/mailman/listinfo/r-help-es\n> \n> O por correo electrónico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n> \tr-help-es-request at r-project.org\n> \n> Puede contactar con el responsable de la lista escribiendo a:\n> \tr-help-es-owner at r-project.org\n> \n> Si responde a algún contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". Además, por favor, incluya en\n> la respuesta sólo aquellas partes del mensaje a las que está\n> respondiendo.\n> \n> \n> Asuntos del día:\n> \n>    1. Análisis de una serie temporal diaria (Paco Pastor)\n> \n> \n> ----------------------------------------------------------------------\n> \n> Message: 1\n> Date: Tue, 12 Apr 2011 15:30:39 +0200\n> From: Paco Pastor <paco at ceam.es>\n> To: R-es <r-help-es at r-project.org>\n> Subject: [R-es] Análisis de una serie temporal diaria\n> Message-ID: <4DA453FF.8090301 at ceam.es>\n> Content-Type: text/plain; charset=\"utf-8\"; Format=\"flowed\"\n> \n> Hola a todos\n> \n> Aunque parezca mentira sigo enzarzado con esto de las series diarias. \n> Además de hallar una regresión lineal simple quiero utilizar stl o \n> decompose para encontrar la estacionalidad y la tendencia de una serie \n> diaria de temperatura pero no hay manera. En la creación del objeto ts \n> (desde uno zoo) de la serie diaria creo que estoy haciendo algo mal ya \n> que no obtengo resultados. El motivo de querer untilizar stl es que ya \n> lo había empleado para una serie de datos mensuales.\n> \n> Si intento leer directamente como ts\n> \n> temperatura=read.csv(\"tmax.dat\",header=F,sep=\",\")\n> \n> fecha=as.Date(temperatura[,1],\"%d/%m/%Y\")\n> \n> temp=temperatura[order(fecha),]\n> \n> media=rowMeans(temp[2:length(temp)], na.rm=TRUE)\n> \n> temp=cbind(temp,media)\n> \n> tsdata=ts(temp$media,freq=7,start=c(1968,1))\n> \n> a=decompose(tsdata)\n> \n> plot(a)\n> \n> \n> se obtiene la gráfica que os adjunto y que creo que no es correcta. Mi \n> duda es si al poner freq=t lo que estoy buscando es la componente \n> estacional en base periodos semanales. Tengo claro que para datos \n> mensuales la frecuencia es 12 ¿pero cual es para datos diarios de 40 \n> años? ¿365? En la ayuda de ts dice que para una serie de datos diarios \n> con periodo natural semanal freq=7. Pero yo no quiero analizar una serie \n> de datos semanales sino diarios, no tengo muy claro lo que estoy haciendo.\n> \n> Si primero creo un objeto zoo\n> \n> library(zoo)\n> \n> temperatura=read.csv(\"tmax.dat\",header=F,sep=\",\")\n> \n> fecha=as.Date(temperatura[,1],\"%d/%m/%Y\")\n> \n> temp=temperatura[order(fecha),]\n> \n> media=rowMeans(temp[2:length(temp)], na.rm=TRUE)\n> \n> zoodata=zoo(temp$media,fecha)\n> \n> zz=as.ts(zoodata,frequency=7,start=c(1968,1))     # los datos comienzan el 1 de enero de 1968\n> \n> decompose(zz)\n> \n> Error in decompose(zz) : time series has no or less than 2 periods\n> \n> \n> Entonces aparece el \"famoso\" error de que la serie no es periódica.\n> \n> Estoy ya un poco desesperado, ¿existe alguna posibilidad por esta \n> vía?¿hay otras funciones que puedan analizar los datos?¿alguien tiene un \n> ejemplo que pueda adaptar a mis datos? No siendo muy ducho en \n> estadística quería (necesitaba) solamente algún tipo de análisis \n> relativamente simple o no muy elaborado, algo que me dé una idea de la \n> evolución de los datos.\n> \n> Gracias de nuevo a todos\n> \n> Paco\n> \n> -----------\n> \n> Francisco Pastor\n> Meteorology department, Instituto Universitario CEAM-UMH\n> http://www.ceam.es\n> -----------\n> mail: paco at ceam.es\n> skype: paco.pastor.guzman\n> Researcher ID: http://www.researcherid.com/rid/B-8331-2008\n> Cosis profile: http://www.cosis.net/profile/francisco.pastor\n> -----------\n> Parque Tecnologico, C/ Charles R. Darwin, 14\n> 46980 PATERNA (Valencia), Spain\n> Tlf. 96 131 82 27 - Fax. 96 131 81 90\n> \n> \n> ---------------------------------------------------------------------\n> Este mensaje y los ficheros anexos son confidenciales. Los mismos contienen información reservada de la empresa que no puede ser difundida. Si usted ha recibido este correo por error, tenga la amabilidad de eliminarlo de su sistema y avisar al remitente mediante reenvío a su dirección electrónica; no deberá copiar el mensaje ni divulgar su contenido a ninguna persona.\n> \n> Su dirección de correo electrónico junto a sus datos personales forman parte de un fichero titularidad de la Fundación de la Comunidad Valenciana Centro de Estudios Ambientales del Mediterráneo - CEAM, con CIF: G-46957213, cuya finalidad es la de mantener el contacto con Ud. De acuerdo con la Ley Orgánica 15/1999, usted puede ejercitar sus derechos de acceso, rectificación, cancelación y, en su caso, oposición enviando una solicitud por escrito, acompañada de una fotocopia de su DNI dirigida a: Fundación de la Comunidad Valenciana Centro de Estudios Ambientales del Mediterráneo - CEAM. C/ Charles R. Darwin, 14. Parque Tecnológico.46980 PATERNA (Valencia).\n> \n> This message and the attached files are confidential. They contain reserved information belonging to our centre and are not to be broadcast. If you have received this email by mistake, please delete it from your system and alert the sender by returning it to his/her email address. You must not copy or divulge the contents of the message to anyone.\n> \n> Your email address and personal data are included in a file belonging to the Fundación de la Comunidad Valenciana Centro de Estudios Ambientales del Mediterráneo - CEAM, con CIF: G-46957213. The purpose of this file is to allow us to keep in contact with you. In accordance with Organic Law 15/1999, you are permitted to access, rectify, cancel or oppose the contents of this file by submitting a written request, accompanied by a photocopy of your DNI, to: Fundación de la Comunidad Valenciana Centro de Estudios Ambientales del Mediterráneo - CEAM. C/ Charles R. Darwin, 14. Parque Tecnológico.46980 PATERNA (Valencia).\n> \n> \n> \n> \n> \n> ------------ próxima parte ------------\n> A non-text attachment was scrubbed...\n> Name: plot_decompose_tsdata.png\n> Type: image/png\n> Size: 56362 bytes\n> Desc: no disponible\n> URL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/c1fff41d/attachment.png>\n> \n> ------------------------------\n> \n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> \n> \n> Fin de Resumen de R-help-es, Vol 26, Envío 21\n> *********************************************\n\n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "hola Paco...Recuerdo haber leído tu problema anteriormente, te doy unos consejos que a mi me han funcionado.Si no tienes una idea de la estacionalidad de la serie, utiliza las técnicas que de alguna f",
       "thread_id": "thread-5e6309a2d3da",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110412/18762d7f/attachment.pl"
+      ]
     },
     {
       "id": "msg-ba24fc34fd4a",
@@ -1111,11 +1216,14 @@
       "references": [
         "<mailman.3303.1302634724.4559.r-help-es@r-project.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/8a04b009/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/8a04b009/attachment.pl>",
+      "body_plain": "Una distribución binomial negativa podría ser adecuada. De hecho, una \nextensión de la binomial negativa, como la distribución de Waring \ngeneralizada, termina convergiendo a una distribución binomial negativa. \nPuedes ver que la mejora en la bondad del ajuste de la binomial negativa \ncon respecto a la Poisson es sustancial (te muestro también las salidas.).\n\ndatos<-c(1280, 1262, 1290, 1321, 1318, 1232, 1742, 1351, 1271, 1398, \n1295, 1460, 1431, 966, 1474, 1831, 1453, 1274,971, 1286, 1403, 1488, \n1666, 1406, 1432, 1503, 1739,1411, 1361, 1223, 1303, 1452, 1293, 1353, \n1383, 1390,1402, 1307, 1438, 1398, 1440, 1427, 1414, 1323, 1340,1968, \n1825, 1251, 1897, 876, 442, 948, 1548, 1535)\ndatos<-data.frame(y=datos)\nglm.nb(y~1,data=datos)\n\n    Call:  glm.nb(formula = y ~ 1, data = datos, init.theta = 25.57251534,\n         link = log)\n\n    Coefficients:\n    (Intercept)\n            7.23\n\n    Degrees of Freedom: 53 Total (i.e. Null);  53 Residual\n    Null Deviance:      54.55\n    Residual Deviance: 54.55        AIC: 762.7\n\n\n\nglm(y~1,family=\"poisson\",data=datos)\n\n    Call:  glm(formula = y ~ 1, family = \"poisson\", data = datos)\n\n    Coefficients:\n    (Intercept)\n            7.23\n\n    Degrees of Freedom: 53 Total (i.e. Null);  53 Residual\n    Null Deviance:      2607\n    Residual Deviance: 2607         AIC: 3097\n\n\nlibrary(GWRM)\nGWRM.fit(y~1,data=datos)$aic\n\n    [1] 764.7715\n\n\n\nEl 12/04/2011 20:58, r-help-es-request at r-project.org escribió:\n\n    ----------------------------------------------------------------------\n\n    Message: 1\n    Date: Tue, 12 Apr 2011 07:59:51 -0600\n    From: Manuel Spínola<mspinola10 at gmail.com>\n    To:r-help-es at r-project.org\n    Subject: [R-es] Modelo para datos de conteos\n    Message-ID:<BANLkTin3Xibq7JefqcDVSv5mt3zSmj-x0Q at mail.gmail.com>\n    Content-Type: text/plain\n\n    Estimados compañeros de la lista,\n\n    Estoy intentando modelar la riqueza de especies florísticas de una región de\n    América Latina pero la variable respuesta (riqueza) tiene un comportamiento\n    muy particular.  Son conteos en el orden de los cientos y miles, valor\n    mínimo 442, máximo 1968.  La variable muestra atípicos \"hacia arriba y hacia\n    abajo\", pero si hago una transformación logarítmica no corrijo los atípicos.\n\n\n>     >  dput(riq$riqueza)\n    c(1280L, 1262L, 1290L, 1321L, 1318L, 1232L, 1742L, 1351L, 1271L,\n    1398L, 1295L, 1460L, 1431L, 966L, 1474L, 1831L, 1453L, 1274L,\n    971L, 1286L, 1403L, 1488L, 1666L, 1406L, 1432L, 1503L, 1739L,\n    1411L, 1361L, 1223L, 1303L, 1452L, 1293L, 1353L, 1383L, 1390L,\n    1402L, 1307L, 1438L, 1398L, 1440L, 1427L, 1414L, 1323L, 1340L,\n    1968L, 1825L, 1251L, 1897L, 876L, 442L, 948L, 1548L, 1535L)\n\n    Yo estoy pensando en usar un modelo con la función binomial negativa ya que\n    los datos muestran sobredisperisón para realizar un modelo de Poisson.\n\n    ¿Sería esto correcto?\n    ¿Existen otras alternativas?\n\n    Muchas gracias,\n\n    Manuel Spínola\n\n\n\n    -- *Manuel Spínola, Ph.D.* Instituto Internacional en Conservación y\n    Manejo de Vida Silvestre Universidad Nacional Apartado 1350-3000\n    Heredia COSTA RICA mspinola at una.ac.cr mspinola10 at gmail.com Teléfono:\n    (506) 2277-3598 Fax: (506) 2237-7036 Personal website: Lobito de río\n    <https://sites.google.com/site/lobitoderio/> Institutional website:\n    ICOMVIS <http://www.icomvis.una.ac.cr/> [[alternative HTML version\n    deleted]]\n\n\n-- \nDr. Antonio José Sáez Castillo\nDpto. de Estadística e Investigación Operativa\nEscuela Politécnica Superior de Linares\nUniversidad de Jaén\nC/ Alfonso X El Sabio 28, 23700 Linares (Jaén) ESPAÑA\nTlf. y FAX +34 953 648578\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Una distribución binomial negativa podría ser adecuada. De hecho, una \nextensión de la binomial negativa, como la distribución de Waring \ngeneralizada, termina convergiendo a una distribución binomial",
       "thread_id": "thread-69bd34a23e00",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/8a04b009/attachment.pl"
+      ]
     },
     {
       "id": "msg-f682c81e2f6f",
@@ -1133,11 +1241,14 @@
         "<0A5B869BDC0A7445B15F9A4A5379437719CEB0B6F7@ASSCCEVS02.sergas.local>",
         "<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/8eb07a1b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/8eb07a1b/attachment.pl>",
+      "body_plain": "que me estresas.....!!, Gracias, ya me inscribí.\n\nA ver si con el tema de software libre y entrada gratuita vamos a tener \nque llevar nuestra propia silla!! (seguro que hay quien se llevaría un \nsillón reclinable)\n\n¿Cual es el aforo? y no sería politicamnete correcto pedir una \ninscripción de digamos 5-7EUR (o menos)?, lo digo para poder pagar otras \ncosas, viajes, comidas, las pastitas de los cafés, posters.... (yo no he \ndicho nada).\n\n\n\n\n\n\n\nEl 11/04/11 17:15, Carlos J. Gil Bellosta escribió:\n> Hola, ¿qué tal?\n>\n> A la vista del número de inscritos, yo creo que más que de entusiasmo,\n> los interesados en asistir a las jornadas deberían adquirir un cierto\n> sentido de urgencia. Al ritmo que vamos, igual hay que comenzar a\n> contar butacas en el salón de actos de la EOI y ver cuándo colgamos el\n> cartel de completo.\n>\n> Así que el que quiera asistir debería seguir mi consejo y no posponer\n> su inscripción a través del formulario\n>\n> http://usar.org.es/inscripcion.php\n>\n> Un saludo,\n>\n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n>\n>\n>\n> El día 11 de abril de 2011 13:32,\n> <miguel.angel.rodriguez.muinos at sergas.es>  escribió:\n>    \n>> Yo manifiesto mi intención de asistir!\n>> Y animo a tod at s a que hagan lo mismo.\n>>\n>> ... Seguramente habrá gente que nos cuente cosas que no sabemos (y que nos resultarán de utilidad)... también hay planificados talleres MUY interesantes y tendremos una oportunidad excelente de \"socializar\" con personas que entienden de qué hablamos cuando decimos CRAN, Bioconductor, packages, sweave, .. Además de tener la oportunidad de mostrar en qué estamos trabajando.... Ya sea presentando una comunicación oral o un póster.. O simplemente asistir como oyentes, que no es poco!!!!!\n>>\n>> Los que hemos tenido la oportunidad de estar en alguna de las anteriores Jornadas os podemos asegurar que vale la pena (aunque sólo sea por \"ponernos\" caras a los emails de esta lista y compartir una charla -y un \"refresco\"-).\n>> :-)'\n>>\n>> Venga, nos vemos en Madrid en Noviembre?\n>>\n>> Un Saludo,\n>> Miguel.\n>>\n>>\n>>\n>>\n>>\n>>\n>>\n>> -----Mensaje original-----\n>> De: r-help-es-bounces at r-project.org [mailto:r-help-es-bounces at r-project.org] En nombre de Antonio Maurandi López\n>> Enviado el: lunes, 11 de abril de 2011 10:54\n>> Para: r-help-es at r-project.org\n>> Asunto: Re: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre en la EOI, Madrid\n>>\n>> enhorabuena igualmente!.\n>>\n>> y un detalle,\n>> seria interesante, digo yo,  que para estas jornadas la gente manifestase su intención de asistir al evento en este foro, de modo que se crearan más expectativas y se levanten ánimos.\n>>\n>> Un saludo.\n>>\n>> (aún es pronto pero que se tenga ahí presente).\n>>\n>>\n>>\n>>\n>> Nota: A información contida nesta mensaxe e os seus posibles documentos adxuntos é privada e confidencial e está dirixida únicamente ó seu destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe, por favor elimínea. A distribución ou copia desta mensaxe non está autorizada.\n>>\n>> Nota: La información contenida en este mensaje y sus posibles documentos adjuntos es privada y confidencial y está dirigida únicamente a su destinatario/a. Si usted no es el/la destinatario/a original de este mensaje, por favor elimínelo. La distribución o copia de este mensaje no está autorizada.\n>>\n>> See more languages: http://www.sergas.es/aviso_confidencialidad.htm\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>      \n\n-- \nAntonio Maurandi López\nServ. Cálculo Científico. Apoyo Estadístico.\nServicio de Apoyo a la Investigación (SAI)\nVicerrectorado de Investigación.\nUniversidad de Murcia\n\nEdif. CAID. Campus de Espinardo.\n30100 Murcia\n@. amaurandi at um.es\nT. 868 88 7315 F. 868 88 7302\nwww.um.es/sai www.um.es/ae\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "que me estresas.....!!, Gracias, ya me inscribí.\n\nA ver si con el tema de software libre y entrada gratuita vamos a tener \nque llevar nuestra propia silla!! (seguro que hay quien se llevaría un \nsilló",
       "thread_id": "thread-1d127847154d",
       "thread_depth": 5,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/8eb07a1b/attachment.pl"
+      ]
     },
     {
       "id": "msg-a8edf089ed01",
@@ -1156,11 +1267,14 @@
         "<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>",
         "<4DA56A79.2050608@um.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/c468575d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/c468575d/attachment.pl>",
+      "body_plain": "¿Qué tal inscripción a 15 euros que incluya la cena del congreso?\n\nAsí garantizais una cena comunitaria.\n\nEl que no pueda ir a la cena está participando con un donativo.\n\nSaludos\nOn 13 Apr 2011 11:19, \"Antonio Maurandi López\" <amaurandi at um.es> wrote:\n> que me estresas.....!!, Gracias, ya me inscribí.\n>\n> A ver si con el tema de software libre y entrada gratuita vamos a tener\n> que llevar nuestra propia silla!! (seguro que hay quien se llevaría un\n> sillón reclinable)\n>\n> ¿Cual es el aforo? y no sería politicamnete correcto pedir una\n> inscripción de digamos 5-7EUR (o menos)?, lo digo para poder pagar otras\n> cosas, viajes, comidas, las pastitas de los cafés, posters.... (yo no he\n> dicho nada).\n>\n>\n>\n>\n>\n>\n>\n> El 11/04/11 17:15, Carlos J. Gil Bellosta escribió:\n>> Hola, ¿qué tal?\n>>\n>> A la vista del número de inscritos, yo creo que más que de entusiasmo,\n>> los interesados en asistir a las jornadas deberían adquirir un cierto\n>> sentido de urgencia. Al ritmo que vamos, igual hay que comenzar a\n>> contar butacas en el salón de actos de la EOI y ver cuándo colgamos el\n>> cartel de completo.\n>>\n>> Así que el que quiera asistir debería seguir mi consejo y no posponer\n>> su inscripción a través del formulario\n>>\n>> http://usar.org.es/inscripcion.php\n>>\n>> Un saludo,\n>>\n>> Carlos J. Gil Bellosta\n>> http://www.datanalytics.com\n>>\n>>\n>>\n>> El día 11 de abril de 2011 13:32,\n>> <miguel.angel.rodriguez.muinos at sergas.es> escribió:\n>>\n>>> Yo manifiesto mi intención de asistir!\n>>> Y animo a tod at s a que hagan lo mismo.\n>>>\n>>> ... Seguramente habrá gente que nos cuente cosas que no sabemos (y que\nnos resultarán de utilidad)... también hay planificados talleres MUY\ninteresantes y tendremos una oportunidad excelente de \"socializar\" con\npersonas que entienden de qué hablamos cuando decimos CRAN, Bioconductor,\npackages, sweave, .. Además de tener la oportunidad de mostrar en qué\nestamos trabajando.... Ya sea presentando una comunicación oral o un\npóster.. O simplemente asistir como oyentes, que no es poco!!!!!\n>>>\n>>> Los que hemos tenido la oportunidad de estar en alguna de las anteriores\nJornadas os podemos asegurar que vale la pena (aunque sólo sea por\n\"ponernos\" caras a los emails de esta lista y compartir una charla -y un\n\"refresco\"-).\n>>> :-)'\n>>>\n>>> Venga, nos vemos en Madrid en Noviembre?\n>>>\n>>> Un Saludo,\n>>> Miguel.\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>>\n>>> -----Mensaje original-----\n>>> De: r-help-es-bounces at r-project.org [mailto:\nr-help-es-bounces at r-project.org] En nombre de Antonio Maurandi López\n>>> Enviado el: lunes, 11 de abril de 2011 10:54\n>>> Para: r-help-es at r-project.org\n>>> Asunto: Re: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre\nen la EOI, Madrid\n>>>\n>>> enhorabuena igualmente!.\n>>>\n>>> y un detalle,\n>>> seria interesante, digo yo, que para estas jornadas la gente manifestase\nsu intención de asistir al evento en este foro, de modo que se crearan más\nexpectativas y se levanten ánimos.\n>>>\n>>> Un saludo.\n>>>\n>>> (aún es pronto pero que se tenga ahí presente).\n>>>\n>>>\n>>>\n>>>\n>>> Nota: A información contida nesta mensaxe e os seus posibles documentos\nadxuntos é privada e confidencial e está dirixida únicamente ó seu\ndestinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe,\npor favor elimínea. A distribución ou copia desta mensaxe non está\nautorizada.\n>>>\n>>> Nota: La información contenida en este mensaje y sus posibles documentos\nadjuntos es privada y confidencial y está dirigida únicamente a su\ndestinatario/a. Si usted no es el/la destinatario/a original de este\nmensaje, por favor elimínelo. La distribución o copia de este mensaje no\nestá autorizada.\n>>>\n>>> See more languages: http://www.sergas.es/aviso_confidencialidad.htm\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n>>>\n>\n> --\n> Antonio Maurandi López\n> Serv. Cálculo Científico. Apoyo Estadístico.\n> Servicio de Apoyo a la Investigación (SAI)\n> Vicerrectorado de Investigación.\n> Universidad de Murcia\n>\n> Edif. CAID. Campus de Espinardo.\n> 30100 Murcia\n> @. amaurandi at um.es\n> T. 868 88 7315 F. 868 88 7302\n> www.um.es/sai www.um.es/ae\n>\n>\n> [[alternative HTML version deleted]]\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "¿Qué tal inscripción a 15 euros que incluya la cena del congreso?\n\nAsí garantizais una cena comunitaria.\n\nEl que no pueda ir a la cena está participando con un donativo.\n\nSaludos\nOn 13 Apr 2011 11:19,",
       "thread_id": "thread-1d127847154d",
       "thread_depth": 6,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/c468575d/attachment.pl"
+      ]
     },
     {
       "id": "msg-cc7950b38d3d",
@@ -1179,11 +1293,14 @@
         "<BANLkTim97ESySyN-FE4UMtqc+h6UmuctEA@mail.gmail.com>",
         "<4DA56A79.2050608@um.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/cdf438d5/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/cdf438d5/attachment.pl>",
+      "body_plain": "Hola.\n\nEn mi opinión sería perfectamente correcto pedir 10 euros, que es poco pero\nayudará a cubrir gastos. Eso sí, habría que decirlo cuanto antes en la\npágina.\n\nUn saludo\nGregorio\n\nEl 13 de abril de 2011 11:18, Antonio Maurandi López <amaurandi at um.es>escribió:\n\n> que me estresas.....!!, Gracias, ya me inscribí.\n>\n> A ver si con el tema de software libre y entrada gratuita vamos a tener\n> que llevar nuestra propia silla!! (seguro que hay quien se llevaría un\n> sillón reclinable)\n>\n> ¿Cual es el aforo? y no sería politicamnete correcto pedir una\n> inscripción de digamos 5-7EUR (o menos)?, lo digo para poder pagar otras\n> cosas, viajes, comidas, las pastitas de los cafés, posters.... (yo no he\n> dicho nada).\n>\n>\n>\n>\n>\n>\n>\n> El 11/04/11 17:15, Carlos J. Gil Bellosta escribió:\n> > Hola, ¿qué tal?\n> >\n> > A la vista del número de inscritos, yo creo que más que de entusiasmo,\n> > los interesados en asistir a las jornadas deberían adquirir un cierto\n> > sentido de urgencia. Al ritmo que vamos, igual hay que comenzar a\n> > contar butacas en el salón de actos de la EOI y ver cuándo colgamos el\n> > cartel de completo.\n> >\n> > Así que el que quiera asistir debería seguir mi consejo y no posponer\n> > su inscripción a través del formulario\n> >\n> > http://usar.org.es/inscripcion.php\n> >\n> > Un saludo,\n> >\n> > Carlos J. Gil Bellosta\n> > http://www.datanalytics.com\n> >\n> >\n> >\n> > El día 11 de abril de 2011 13:32,\n> > <miguel.angel.rodriguez.muinos at sergas.es>  escribió:\n> >\n> >> Yo manifiesto mi intención de asistir!\n> >> Y animo a tod at s a que hagan lo mismo.\n> >>\n> >> ... Seguramente habrá gente que nos cuente cosas que no sabemos (y que\n> nos resultarán de utilidad)... también hay planificados talleres MUY\n> interesantes y tendremos una oportunidad excelente de \"socializar\" con\n> personas que entienden de qué hablamos cuando decimos CRAN, Bioconductor,\n> packages, sweave, .. Además de tener la oportunidad de mostrar en qué\n> estamos trabajando.... Ya sea presentando una comunicación oral o un\n> póster.. O simplemente asistir como oyentes, que no es poco!!!!!\n> >>\n> >> Los que hemos tenido la oportunidad de estar en alguna de las anteriores\n> Jornadas os podemos asegurar que vale la pena (aunque sólo sea por\n> \"ponernos\" caras a los emails de esta lista y compartir una charla -y un\n> \"refresco\"-).\n> >> :-)'\n> >>\n> >> Venga, nos vemos en Madrid en Noviembre?\n> >>\n> >> Un Saludo,\n> >> Miguel.\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >>\n> >> -----Mensaje original-----\n> >> De: r-help-es-bounces at r-project.org [mailto:\n> r-help-es-bounces at r-project.org] En nombre de Antonio Maurandi López\n> >> Enviado el: lunes, 11 de abril de 2011 10:54\n> >> Para: r-help-es at r-project.org\n> >> Asunto: Re: [R-es] III Jornadas de usuarios de R: 17 y 18 de noviembre\n> en la EOI, Madrid\n> >>\n> >> enhorabuena igualmente!.\n> >>\n> >> y un detalle,\n> >> seria interesante, digo yo,  que para estas jornadas la gente\n> manifestase su intención de asistir al evento en este foro, de modo que se\n> crearan más expectativas y se levanten ánimos.\n> >>\n> >> Un saludo.\n> >>\n> >> (aún es pronto pero que se tenga ahí presente).\n> >>\n> >>\n> >>\n> >>\n> >> Nota: A información contida nesta mensaxe e os seus posibles documentos\n> adxuntos é privada e confidencial e está dirixida únicamente ó seu\n> destinatario/a. Se vostede non é o/a destinatario/a orixinal desta mensaxe,\n> por favor elimínea. A distribución ou copia desta mensaxe non está\n> autorizada.\n> >>\n> >> Nota: La información contenida en este mensaje y sus posibles documentos\n> adjuntos es privada y confidencial y está dirigida únicamente a su\n> destinatario/a. Si usted no es el/la destinatario/a original de este\n> mensaje, por favor elimínelo. La distribución o copia de este mensaje no\n> está autorizada.\n> >>\n> >> See more languages: http://www.sergas.es/aviso_confidencialidad.htm\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >>\n>\n> --\n> Antonio Maurandi López\n> Serv. Cálculo Científico. Apoyo Estadístico.\n> Servicio de Apoyo a la Investigación (SAI)\n> Vicerrectorado de Investigación.\n> Universidad de Murcia\n>\n> Edif. CAID. Campus de Espinardo.\n> 30100 Murcia\n> @. amaurandi at um.es\n> T. 868 88 7315 F. 868 88 7302\n> www.um.es/sai www.um.es/ae\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nDr. Gregorio R. Serrano\nDpto. Economía Cuantitativa (UCM)\nVoz:+34 91394 2361\nFax:+34 91394 2591\nhttp://www.grserrano.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola.\n\nEn mi opinión sería perfectamente correcto pedir 10 euros, que es poco pero\nayudará a cubrir gastos. Eso sí, habría que decirlo cuanto antes en la\npágina.\n\nUn saludo\nGregorio\n\nEl 13 de abril de",
       "thread_id": "thread-1d127847154d",
       "thread_depth": 6,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/cdf438d5/attachment.pl"
+      ]
     },
     {
       "id": "msg-baaa12671887",
@@ -1203,11 +1320,14 @@
         "<4DA56A79.2050608@um.es>",
         "<BANLkTinpQxyNT40Sjr1ZzyYc_POJOoE7wg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/c184a828/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/c184a828/attachment.pl>",
+      "body_plain": "yo no lo veo mal, tb es cierto que Madrid es más barato para todos pues \nmucha gente no se tendrá que desplazar.\n\nLo de la cena comunal lo veo muy bien, pq con una birra o un par de \nvinos se habla de sw libre mucho mejor (y de estadística no te digo), \nademás yo creo que es algo que se echo en falta en las últimas jornadas.\n\nSi la organización no puede abordar lo de la cena quizás podemos abrir \nun proyecto paralelo....\n\n\n\n\nEl 13/04/11 13:19, Gregorio R. Serrano escribió:\n> cubrir gastos. Eso sí, habría que decirlo cuanto antes en l\n\n-- \nAntonio Maurandi López\nServ. Cálculo Científico. Apoyo Estadístico.\nServicio de Apoyo a la Investigación (SAI)\nVicerrectorado de Investigación.\nUniversidad de Murcia\n\nEdif. CAID. Campus de Espinardo.\n30100 Murcia\n@. amaurandi at um.es\nT. 868 88 7315 F. 868 88 7302\nwww.um.es/sai www.um.es/ae\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "yo no lo veo mal, tb es cierto que Madrid es más barato para todos pues \nmucha gente no se tendrá que desplazar.\n\nLo de la cena comunal lo veo muy bien, pq con una birra o un par de \nvinos se habla de",
       "thread_id": "thread-1d127847154d",
       "thread_depth": 7,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/c184a828/attachment.pl"
+      ]
     },
     {
       "id": "msg-7ccfae0a4ef1",
@@ -1222,11 +1342,14 @@
         "<mailman.3303.1302634724.4559.r-help-es@r-project.org>",
         "<4DA52F18.2010602@ujaen.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/0e2a12d3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/0e2a12d3/attachment.pl>",
+      "body_plain": "Muchas gracias Antonio.\n\n¿Cómo se hace para obtener el Theta inicial?\n\n¿la intepretación de los coeficientes en una binomial negativa es similar a\nla de la regresión de Poisson?  ¿Se extrae el antilogaritmo del coeficiente?\n\nSaludos,\n\nManuel\n\nEl 12 de abril de 2011 23:05, Antonio José Sáez Castillo\n<ajsaez at ujaen.es>escribió:\n\n> Una distribución binomial negativa podría ser adecuada. De hecho, una\n> extensión de la binomial negativa, como la distribución de Waring\n> generalizada, termina convergiendo a una distribución binomial negativa.\n> Puedes ver que la mejora en la bondad del ajuste de la binomial negativa\n> con respecto a la Poisson es sustancial (te muestro también las salidas.).\n>\n> datos<-c(1280, 1262, 1290, 1321, 1318, 1232, 1742, 1351, 1271, 1398,\n> 1295, 1460, 1431, 966, 1474, 1831, 1453, 1274,971, 1286, 1403, 1488,\n> 1666, 1406, 1432, 1503, 1739,1411, 1361, 1223, 1303, 1452, 1293, 1353,\n> 1383, 1390,1402, 1307, 1438, 1398, 1440, 1427, 1414, 1323, 1340,1968,\n> 1825, 1251, 1897, 876, 442, 948, 1548, 1535)\n> datos<-data.frame(y=datos)\n> glm.nb(y~1,data=datos)\n>\n>    Call:  glm.nb(formula = y ~ 1, data = datos, init.theta = 25.57251534,\n>         link = log)\n>\n>    Coefficients:\n>    (Intercept)\n>            7.23\n>\n>    Degrees of Freedom: 53 Total (i.e. Null);  53 Residual\n>    Null Deviance:      54.55\n>    Residual Deviance: 54.55        AIC: 762.7\n>\n>\n>\n> glm(y~1,family=\"poisson\",data=datos)\n>\n>    Call:  glm(formula = y ~ 1, family = \"poisson\", data = datos)\n>\n>    Coefficients:\n>    (Intercept)\n>            7.23\n>\n>    Degrees of Freedom: 53 Total (i.e. Null);  53 Residual\n>    Null Deviance:      2607\n>    Residual Deviance: 2607         AIC: 3097\n>\n>\n> library(GWRM)\n> GWRM.fit(y~1,data=datos)$aic\n>\n>    [1] 764.7715\n>\n>\n>\n> El 12/04/2011 20:58, r-help-es-request at r-project.org escribió:\n>\n>    ----------------------------------------------------------------------\n>\n>    Message: 1\n>    Date: Tue, 12 Apr 2011 07:59:51 -0600\n>    From: Manuel Spínola<mspinola10 at gmail.com>\n>    To:r-help-es at r-project.org\n>    Subject: [R-es] Modelo para datos de conteos\n>    Message-ID:<BANLkTin3Xibq7JefqcDVSv5mt3zSmj-x0Q at mail.gmail.com>\n>    Content-Type: text/plain\n>\n>    Estimados compañeros de la lista,\n>\n>    Estoy intentando modelar la riqueza de especies florísticas de una\n> región de\n>    América Latina pero la variable respuesta (riqueza) tiene un\n> comportamiento\n>    muy particular.  Son conteos en el orden de los cientos y miles, valor\n>    mínimo 442, máximo 1968.  La variable muestra atípicos \"hacia arriba y\n> hacia\n>    abajo\", pero si hago una transformación logarítmica no corrijo los\n> atípicos.\n>\n>\n> >     >  dput(riq$riqueza)\n>    c(1280L, 1262L, 1290L, 1321L, 1318L, 1232L, 1742L, 1351L, 1271L,\n>    1398L, 1295L, 1460L, 1431L, 966L, 1474L, 1831L, 1453L, 1274L,\n>    971L, 1286L, 1403L, 1488L, 1666L, 1406L, 1432L, 1503L, 1739L,\n>    1411L, 1361L, 1223L, 1303L, 1452L, 1293L, 1353L, 1383L, 1390L,\n>    1402L, 1307L, 1438L, 1398L, 1440L, 1427L, 1414L, 1323L, 1340L,\n>    1968L, 1825L, 1251L, 1897L, 876L, 442L, 948L, 1548L, 1535L)\n>\n>    Yo estoy pensando en usar un modelo con la función binomial negativa ya\n> que\n>    los datos muestran sobredisperisón para realizar un modelo de Poisson.\n>\n>    ¿Sería esto correcto?\n>    ¿Existen otras alternativas?\n>\n>    Muchas gracias,\n>\n>    Manuel Spínola\n>\n>\n>\n>    -- *Manuel Spínola, Ph.D.* Instituto Internacional en Conservación y\n>    Manejo de Vida Silvestre Universidad Nacional Apartado 1350-3000\n>    Heredia COSTA RICA mspinola at una.ac.cr mspinola10 at gmail.com Teléfono:\n>    (506) 2277-3598 Fax: (506) 2237-7036 Personal website: Lobito de río\n>    <https://sites.google.com/site/lobitoderio/> Institutional website:\n>    ICOMVIS <http://www.icomvis.una.ac.cr/> [[alternative HTML version\n>    deleted]]\n>\n>\n> --\n> Dr. Antonio José Sáez Castillo\n> Dpto. de Estadística e Investigación Operativa\n> Escuela Politécnica Superior de Linares\n> Universidad de Jaén\n> C/ Alfonso X El Sabio 28, 23700 Linares (Jaén) ESPAÑA\n> Tlf. y FAX +34 953 648578\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \n*Manuel Spínola, Ph.D.*\nInstituto Internacional en Conservación y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.ac.cr\nmspinola10 at gmail.com\nTeléfono: (506) 2277-3598\nFax: (506) 2237-7036\nPersonal website: Lobito de río <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Antonio.\n\n¿Cómo se hace para obtener el Theta inicial?\n\n¿la intepretación de los coeficientes en una binomial negativa es similar a\nla de la regresión de Poisson?  ¿Se extrae el antilog",
       "thread_id": "thread-69bd34a23e00",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/0e2a12d3/attachment.pl"
+      ]
     },
     {
       "id": "msg-3c366faf5eba",
@@ -1263,11 +1386,14 @@
       "subject_clean": "[R-es] Numeros en formato Ax10^{-B}",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/ee956943/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/ee956943/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nTengo un vector con valores en _P_\n\nx <- c(0.0001709122, 0.0007623474, 0.0001319547, 0.0002868035,\n0.0005602669,\n0.0007825347, 0.0007822033, 0.0001444821, 0.000324731, 8.4686e-05)\nx\n\nY me gustaria cambiar un poco el formato.  Conoce alguien alguna function\n\"foo\" tal que foo(x) produzca\n\n\"1.7x10(-4)\"  \"7.62x10(-4)\"  \"1.3x10(-4)\" ..... \"8.46x10(-5)\"\n\n?\n\nMuchas gracias,\n      Jorge Ivan Velez\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nTengo un vector con valores en _P_\n\nx <- c(0.0001709122, 0.0007623474, 0.0001319547, 0.0002868035,\n0.0005602669,\n0.0007825347, 0.0007822033, 0.0001444821, 0.000324731, 8.4686e-05)\nx\n\nY ",
       "thread_id": "thread-7481dbf927c1",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/ee956943/attachment.pl"
+      ]
     },
     {
       "id": "msg-a24820346042",
@@ -1300,11 +1426,14 @@
         "<BANLkTin+HTj2KCSP_p7b3B9DFdO3+ude_w@mail.gmail.com>",
         "<384093F3-1D3D-435E-87E0-1AD62D91FD40@iberstat.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/4dd10987/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/4dd10987/attachment.pl>",
+      "body_plain": "Ah ha!   Muchas gracias Olivier.  Creo que es hora de ir por mas cafe ;-)\n\nUn saludo,\nJorge\n\n\n2011/4/13 Olivier Nuñez <>\n\n> Igual, lo siguiente te vale:\n>\n> > foo<-function(x) { y=format(x, digits=2,scientific = TRUE);\n> sub(\"e\",\"x10\",y)}\n> > foo(x)\n>  [1] \"1.7x10-04\" \"7.6x10-04\" \"1.3x10-04\" \"2.9x10-04\" \"5.6x10-04\"\n> \"7.8x10-04\" \"7.8x10-04\" \"1.4x10-04\" \"3.2x10-04\" \"8.5x10-05\"\n>\n> Un saludo. Olivier\n> -- ____________________________________\n>\n> Olivier G. Nuñez\n> Email: onunez at iberstat.es\n> Tel : +34 663 03 69 09\n> Web: http://www.iberstat.es\n>\n> ____________________________________\n>\n>\n>\n>\n> El 13/04/2011, a las 22:23, Jorge Ivan Velez escribió:\n>\n>\n>  Hola a todos,\n>>\n>> Tengo un vector con valores en _P_\n>>\n>> x <- c(0.0001709122, 0.0007623474, 0.0001319547, 0.0002868035,\n>> 0.0005602669,\n>> 0.0007825347, 0.0007822033, 0.0001444821, 0.000324731, 8.4686e-05)\n>> x\n>>\n>> Y me gustaria cambiar un poco el formato.  Conoce alguien alguna function\n>> \"foo\" tal que foo(x) produzca\n>>\n>> \"1.7x10(-4)\"  \"7.62x10(-4)\"  \"1.3x10(-4)\" ..... \"8.46x10(-5)\"\n>>\n>> ?\n>>\n>> Muchas gracias,\n>>      Jorge Ivan Velez\n>>\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Ah ha!   Muchas gracias Olivier.  Creo que es hora de ir por mas cafe ;-)\n\nUn saludo,\nJorge\n\n\n2011/4/13 Olivier Nuñez <>\n\n> Igual, lo siguiente te vale:\n>\n> > foo<-function(x) { y=format(x, digits=2,s",
       "thread_id": "thread-7481dbf927c1",
       "thread_depth": 2,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/4dd10987/attachment.pl"
+      ]
     },
     {
       "id": "msg-176317b78b00",
@@ -1320,11 +1449,14 @@
         "<384093F3-1D3D-435E-87E0-1AD62D91FD40@iberstat.es>",
         "<BANLkTikjnEWZ_Ohq0unY-p+cSMYPfH4cnA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/7454f591/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/7454f591/attachment.pl>",
+      "body_plain": "Hola,\n\nPor si ayuda también...\n\nfoo<-function(x) {\n  y<-formatC(x,format=\"e\", digits=2)\n  z<-as.character(y)\n  v<-gsub(\"e\",\"x10(\",z)\n  w<-paste(v,\")\",sep=\"\")\n  return(w)\n}\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\n\n2011/4/13 Jorge Ivan Velez <jorgeivanvelez at gmail.com>\n\n> Ah ha!   Muchas gracias Olivier.  Creo que es hora de ir por mas cafe ;-)\n>\n> Un saludo,\n> Jorge\n>\n>\n> 2011/4/13 Olivier Nuñez <>\n>\n> > Igual, lo siguiente te vale:\n> >\n> > > foo<-function(x) { y=format(x, digits=2,scientific = TRUE);\n> > sub(\"e\",\"x10\",y)}\n> > > foo(x)\n> >  [1] \"1.7x10-04\" \"7.6x10-04\" \"1.3x10-04\" \"2.9x10-04\" \"5.6x10-04\"\n> > \"7.8x10-04\" \"7.8x10-04\" \"1.4x10-04\" \"3.2x10-04\" \"8.5x10-05\"\n> >\n> > Un saludo. Olivier\n> > -- ____________________________________\n> >\n> > Olivier G. Nuñez\n> > Email: onunez at iberstat.es\n> > Tel : +34 663 03 69 09\n> > Web: http://www.iberstat.es\n> >\n> > ____________________________________\n> >\n> >\n> >\n> >\n> > El 13/04/2011, a las 22:23, Jorge Ivan Velez escribió:\n> >\n> >\n> >  Hola a todos,\n> >>\n> >> Tengo un vector con valores en _P_\n> >>\n> >> x <- c(0.0001709122, 0.0007623474, 0.0001319547, 0.0002868035,\n> >> 0.0005602669,\n> >> 0.0007825347, 0.0007822033, 0.0001444821, 0.000324731, 8.4686e-05)\n> >> x\n> >>\n> >> Y me gustaria cambiar un poco el formato.  Conoce alguien alguna\n> function\n> >> \"foo\" tal que foo(x) produzca\n> >>\n> >> \"1.7x10(-4)\"  \"7.62x10(-4)\"  \"1.3x10(-4)\" ..... \"8.46x10(-5)\"\n> >>\n> >> ?\n> >>\n> >> Muchas gracias,\n> >>      Jorge Ivan Velez\n> >>\n> >\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPor si ayuda también...\n\nfoo<-function(x) {\n  y<-formatC(x,format=\"e\", digits=2)\n  z<-as.character(y)\n  v<-gsub(\"e\",\"x10(\",z)\n  w<-paste(v,\")\",sep=\"\")\n  return(w)\n}\n\nSaludos,\nCarlos Ortega\nwww.",
       "thread_id": "thread-7481dbf927c1",
       "thread_depth": 3,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110413/7454f591/attachment.pl"
+      ]
     },
     {
       "id": "msg-1b9ed6b3db79",
@@ -1397,11 +1529,14 @@
       "references": [
         "<BANLkTi=EbrxvZzg5q_rWWLxgv+rra95cHA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110416/7a142dc9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110416/7a142dc9/attachment.pl>",
+      "body_plain": "Hola,\n\nSi lo he entendido bien, te están pidiendo el intervalo de confianza para\ncada \"y\" de cada iteración.\nY que para cada una de esas \"y\" veas si su intervalo de confianza calculado\ncaptura el intervalo de confianza teórico.\n\nLo que has hecho es calcular el intervalo de confianza de las 1000 \"y\"\njuntas.\n\nYo lo haría así:\n\n\ntest.inf<-0\ntest.sup<-0\n for(i in 1:1000)\n {\n y<-rnorm(10, 2.5, 0.16)\n test.inf[i]<-t.test(y, conf.level=0.95)$conf.int[1]\n test.sup[i]<-t.test(y, conf.level=0.95)$conf.int[2]\n }\ntest.df<-data.frame(inf=test.inf, sup=test.sup, dif.inf=test.inf-(2.5-0.16)\n,dif.sup=test.sup-(2.5+0.16))\ngood.df<-test.df[test.df$dif.inf>0 & test.df$dif.sup>0, ]\n\npor.val<-dim(good.df)[1]*100/1000\nprint(c(\"Porcentaje Correcto: \", por.val))\n\nTambién comentarte que además de un mensaje desesperado en el \"Subject\"\nayuda el incluir un poco más de detalle del tipo de problema que quieres\nresolver...\n\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/ (*Nuevo Blog*)\n\n\n\n\n2011/4/16 Angela Cadena <angelacadenaramirez at gmail.com>\n\n> hola!\n>\n> podrian ayudarme con esto:\n>\n>\n> Genere 1000 muestras aleatorias de tamaño  n=10 de una población\n> normal con media\n>  =2,5 y desviación  0,16. Con cada una de las muestras construya un\n> intervalo de\n> confianza al 95% para la media y para la varianza. Cuente que\n> porcentaje de los 1000\n> intervalos atrapan la verdadera media y la verdadera varianza poblacional\n> respectivamente. Comente los resultados encontrados.\n>\n> he hecho esto\n>\n> promedio=0\n> varianza=0\n>  for(i in 1:1000)\n>  {\n>  y<-rnorm(10, 2.5, 0.16)\n>  promedio[i]=mean(y)\n>  varianza[i]=var(y)\n>  }\n> promedio\n> varianza\n> #para generar 1000 prom y 1000 varianzas para la muestra de n=10,\n> mu=2.5 y dev=0.16\n>\n> intmedia=c(promedio)            #intmedia =iintervalo de confianza para la\n> media\n> t.test(intmedia, conf.level=0.95)\n>\n>       One Sample t-test\n>\n> data:  intmedia\n> t = 1575.343, df = 999, p-value < 2.2e-16\n> alternative hypothesis: true mean is not equal to 0\n> 95 percent confidence interval:\n>  2.494522 2.500744\n> sample estimates:\n> mean of x\n>  2.497633\n>\n> # el intervalo de conf para la media seria ( 2.494522 , 2.500744 )\n>\n>\n>  ¿para la varianza seria igual?\n>  ¿como hago para contar los intervalos que atrapan las verderas medias\n> y las verdaderas varianzas?\n>\n> soy novata en esto, por favor ayudenme!\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSi lo he entendido bien, te están pidiendo el intervalo de confianza para\ncada \"y\" de cada iteración.\nY que para cada una de esas \"y\" veas si su intervalo de confianza calculado\ncaptura el inte",
       "thread_id": "thread-8307ac4c121b",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110416/7a142dc9/attachment.pl"
+      ]
     },
     {
       "id": "msg-af27b5b85eed",
@@ -1415,11 +1550,14 @@
       "references": [
         "<BANLkTi=EbrxvZzg5q_rWWLxgv+rra95cHA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110416/8ce81136/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110416/8ce81136/attachment.pl>",
+      "body_plain": "Se supone que debes hacer tus tareas sin pedir ayuda en una lista de correo que es para cuestiones técnicas y profesionales. El enunciado del problema es bastante claro. Si no puedes hacerlo tú sola, deberías considerar estudiar alguna disciplina de las humanidades, eh?\n\n\n-----------------------------------\nRubén H. Roa-Ureta, Ph. D.\nAzti Tecnalia, Marine Research Unit,\nTxatxarramendia ugartea z/g,\nSukarrieta, Bizkaia, SPAIN\n\n\n-----Original Message-----\nFrom: r-help-es-bounces at r-project.org on behalf of Angela Cadena\nSent: Sat 4/16/2011 7:17 PM\nTo: r-help-es at r-project.org\nSubject: [R-es] AYUDA POR FAVOR\n\nhola!\n\npodrian ayudarme con esto:\n\n\nGenere 1000 muestras aleatorias de tamaño  n=10 de una población\nnormal con media\n =2,5 y desviación  0,16. Con cada una de las muestras construya un\nintervalo de\nconfianza al 95% para la media y para la varianza. Cuente que\nporcentaje de los 1000\nintervalos atrapan la verdadera media y la verdadera varianza poblacional\nrespectivamente. Comente los resultados encontrados.\n\nhe hecho esto\n\npromedio=0\nvarianza=0\n for(i in 1:1000)\n {\n y<-rnorm(10, 2.5, 0.16)\n promedio[i]=mean(y)\n varianza[i]=var(y)\n }\npromedio\nvarianza\n#para generar 1000 prom y 1000 varianzas para la muestra de n=10,\nmu=2.5 y dev=0.16\n\nintmedia=c(promedio)            #intmedia =iintervalo de confianza para la media\nt.test(intmedia, conf.level=0.95)\n\n       One Sample t-test\n\ndata:  intmedia\nt = 1575.343, df = 999, p-value < 2.2e-16\nalternative hypothesis: true mean is not equal to 0\n95 percent confidence interval:\n 2.494522 2.500744\nsample estimates:\nmean of x\n 2.497633\n\n# el intervalo de conf para la media seria ( 2.494522 , 2.500744 )\n\n\n ¿para la varianza seria igual?\n ¿como hago para contar los intervalos que atrapan las verderas medias\ny las verdaderas varianzas?\n\nsoy novata en esto, por favor ayudenme!\n\n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Se supone que debes hacer tus tareas sin pedir ayuda en una lista de correo que es para cuestiones técnicas y profesionales. El enunciado del problema es bastante claro. Si no puedes hacerlo tú sola, ",
       "thread_id": "thread-8307ac4c121b",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110416/8ce81136/attachment.pl"
+      ]
     },
     {
       "id": "msg-c725267392ca",
@@ -1433,11 +1571,14 @@
       "references": [
         "<mailman.17.1302256806.26923.r-help-es@r-project.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110418/ee915cc8/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110418/ee915cc8/attachment.pl>",
+      "body_plain": "Hola Amigos:\n                    tengo una duda, necesito saber dónde encuentro un muy\nbuen manual del paquete tcltk de R, no encuentro un buen manual y las ayudas\npropias del paquete son muy malas.\n\nGracias\n\n\n2011/4/8 <r-help-es-request at r-project.org>\n\n> Envíe los mensajes para la lista R-help-es a\n>        r-help-es at r-project.org\n>\n> Para subscribirse o anular su subscripción a través de la WEB\n>        https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> O por correo electrónico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n>        r-help-es-request at r-project.org\n>\n> Puede contactar con el responsable de la lista escribiendo a:\n>        r-help-es-owner at r-project.org\n>\n> Si responde a algún contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". Además, por favor, incluya en\n> la respuesta sólo aquellas partes del mensaje a las que está\n> respondiendo.\n>\n>\n> Asuntos del día:\n>\n>   1. Varias preguntas (Leonardo Hernández Pérez)\n>   2. Re: Varias preguntas (KENNETH R CABRERA)\n>\n>\n> ----------------------------------------------------------------------\n>\n> Message: 1\n> Date: Thu, 07 Apr 2011 10:58:35 -0400\n> From: Leonardo Hernández Pérez  <leonardo.hernandez at etecsa.cu>\n> To: r-help-es at r-project.org\n> Subject: [R-es] Varias preguntas\n> Message-ID: <4D9DD11B.7070403 at etecsa.cu>\n> Content-Type: text/plain; charset=\"iso-8859-1\"; Format=\"flowed\"\n>\n>\n> Hola amigos:\n>\n> Necesito implementar un sistema de control de acceso utilizando DTMF,\n> pero necesito saber si puedo hacerlo en R sobre LINUX por ello les hago\n> estas tres preguntas:\n>\n> R puede adquirir una señal de audio mediante el micrófono?\n> Está implementado en R la detección de DTMF?\n> Puedo trabajar desde R los puertos series o paralelo?\n> Puedo hacer en R una aplicación independiente (Standalone applications)\n>\n> Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he implementado en\n> matlab (Windows) y cuando lo corrí sobre linux no trabajó porque Matlab\n> para Linux no tiene el Toolbox de adquisición de datos.\n>\n> Un abrazo a todos\n>\n> Leonardo\n> ------------ próxima parte ------------\n> An embedded and charset-unspecified text was scrubbed...\n> Name: no disponible\n> URL: <\n> https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/3a9ec6fc/attachment.ksh\n> >\n>\n> ------------------------------\n>\n> Message: 2\n> Date: Thu, 07 Apr 2011 09:23:32 -0500\n> From: KENNETH R CABRERA <krcabrer at une.net.co>\n> To: Leonardo Hernández Pérez    <leonardo.hernandez at etecsa.cu>\n> Cc: r-help-es at r-project.org\n> Subject: Re: [R-es] Varias preguntas\n> Message-ID: <fb66c52d3b01.4d9d8294 at une.net.co>\n> Content-Type: text/plain\n>\n> Respetado Leonardo:\n>\n> Algunas ideas para responder tus preguntas.\n> >\n> > Hola amigos:\n> >\n> > Necesito implementar un sistema de control de acceso utilizando\n> > DTMF, pero necesito saber si puedo hacerlo en R sobre LINUX por\n> > ello les hago estas tres preguntas:\n> >\n> > R puede adquirir una señal de audio mediante el micrófono?\n> Parece que el paquete \"audio\" sólo está para windows.\n> > Está implementado en R la detección de DTMF?\n> No la he visto.\n> > Puedo trabajar desde R los puertos series o paralelo?\n> Sería todo mediante linux (programación en C)\n> > Puedo hacer en R una aplicación independiente (Standalone\n> > applications)\n> No, hasta ahora no.\n> > Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he\n> > implementado en matlab (Windows) y cuando lo corrí sobre linux\n> > no trabajó porque Matlab para Linux no tiene el Toolbox de\n> > adquisición de datos.\n> La idea sería que R hiciera interfaz con alguna aplicación en linux\n> que tomara los datos y los grabara y luego el script del R (en ejecución\n> BATCH para hacer un pseudo \"standalone\") procesara la información\n> obtenida.\n>\n> Feliz día.\n> >\n> > Un abrazo a todos\n> >\n> > Leonardo> ---\n> > This message was processed by Kaspersky Mail Gateway\n> > 5.6.28/RELEASE running at host imx3.etecsa.cu\n> > Visit our web-site: <http://www.kaspersky.com>,\n> > <http://www.viruslist.com>>\n> _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n> ------------------------------\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> Fin de Resumen de R-help-es, Vol 26, Envío 8\n> ********************************************\n>\n\n\n\n-- \n        Pedro César Del Campo Neira\n        Estadístico\n        Universidad Nacional de Colombia\n        315 30 50 078\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Amigos:\n                    tengo una duda, necesito saber dónde encuentro un muy\nbuen manual del paquete tcltk de R, no encuentro un buen manual y las ayudas\npropias del paquete son muy malas.\n\n",
       "thread_id": "thread-c725267392ca",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110418/ee915cc8/attachment.pl"
+      ]
     },
     {
       "id": "msg-fcb950308f9a",
@@ -1452,11 +1593,14 @@
         "<mailman.17.1302256806.26923.r-help-es@r-project.org>",
         "<BANLkTim=knM2+vQTHUMw068Ci_XxAEei6A@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110418/e95e4de9/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110418/e95e4de9/attachment.pl>",
+      "body_plain": "Hola,\n\nAquí hay algunas referencias:\n\nhttp://www.mail-archive.com/r-help at r-project.org/msg32188.html\nhttp://bioinf.wehi.edu.au/~wettenhall/RTclTkExamples/\nhttp://www.pdffinder.com/get/the-r-tcltk-interface.pdf\n\nPara la siguiente duda, si cambias el título de tu pregunta a algo más\nrelacionado con tu problema, seguramente tendrás igualmente respuestas más\nprecisas.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/ (Blog)\n\n2011/4/18 Pedro César Del Campo Neira <pcdelcampon at gmail.com>\n\n> Hola Amigos:\n>                    tengo una duda, necesito saber dónde encuentro un muy\n> buen manual del paquete tcltk de R, no encuentro un buen manual y las\n> ayudas\n> propias del paquete son muy malas.\n>\n> Gracias\n>\n>\n> 2011/4/8 <r-help-es-request at r-project.org>\n>\n> > Envíe los mensajes para la lista R-help-es a\n> >        r-help-es at r-project.org\n> >\n> > Para subscribirse o anular su subscripción a través de la WEB\n> >        https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> > O por correo electrónico, enviando un mensaje con el texto \"help\" en\n> > el asunto (subject) o en el cuerpo a:\n> >        r-help-es-request at r-project.org\n> >\n> > Puede contactar con el responsable de la lista escribiendo a:\n> >        r-help-es-owner at r-project.org\n> >\n> > Si responde a algún contenido de este mensaje, por favor, edite la\n> > linea del asunto (subject) para que el texto sea mas especifico que:\n> > \"Re: Contents of R-help-es digest...\". Además, por favor, incluya en\n> > la respuesta sólo aquellas partes del mensaje a las que está\n> > respondiendo.\n> >\n> >\n> > Asuntos del día:\n> >\n> >   1. Varias preguntas (Leonardo Hernández Pérez)\n> >   2. Re: Varias preguntas (KENNETH R CABRERA)\n> >\n> >\n> > ----------------------------------------------------------------------\n> >\n> > Message: 1\n> > Date: Thu, 07 Apr 2011 10:58:35 -0400\n> > From: Leonardo Hernández Pérez  <leonardo.hernandez at etecsa.cu>\n> > To: r-help-es at r-project.org\n> > Subject: [R-es] Varias preguntas\n> > Message-ID: <4D9DD11B.7070403 at etecsa.cu>\n> > Content-Type: text/plain; charset=\"iso-8859-1\"; Format=\"flowed\"\n> >\n> >\n> > Hola amigos:\n> >\n> > Necesito implementar un sistema de control de acceso utilizando DTMF,\n> > pero necesito saber si puedo hacerlo en R sobre LINUX por ello les hago\n> > estas tres preguntas:\n> >\n> > R puede adquirir una señal de audio mediante el micrófono?\n> > Está implementado en R la detección de DTMF?\n> > Puedo trabajar desde R los puertos series o paralelo?\n> > Puedo hacer en R una aplicación independiente (Standalone applications)\n> >\n> > Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he implementado en\n> > matlab (Windows) y cuando lo corrí sobre linux no trabajó porque Matlab\n> > para Linux no tiene el Toolbox de adquisición de datos.\n> >\n> > Un abrazo a todos\n> >\n> > Leonardo\n> > ------------ próxima parte ------------\n> > An embedded and charset-unspecified text was scrubbed...\n> > Name: no disponible\n> > URL: <\n> >\n> https://stat.ethz.ch/pipermail/r-help-es/attachments/20110407/3a9ec6fc/attachment.ksh\n> > >\n> >\n> > ------------------------------\n> >\n> > Message: 2\n> > Date: Thu, 07 Apr 2011 09:23:32 -0500\n> > From: KENNETH R CABRERA <krcabrer at une.net.co>\n> > To: Leonardo Hernández Pérez    <leonardo.hernandez at etecsa.cu>\n> > Cc: r-help-es at r-project.org\n> > Subject: Re: [R-es] Varias preguntas\n> > Message-ID: <fb66c52d3b01.4d9d8294 at une.net.co>\n> > Content-Type: text/plain\n> >\n> > Respetado Leonardo:\n> >\n> > Algunas ideas para responder tus preguntas.\n> > >\n> > > Hola amigos:\n> > >\n> > > Necesito implementar un sistema de control de acceso utilizando\n> > > DTMF, pero necesito saber si puedo hacerlo en R sobre LINUX por\n> > > ello les hago estas tres preguntas:\n> > >\n> > > R puede adquirir una señal de audio mediante el micrófono?\n> > Parece que el paquete \"audio\" sólo está para windows.\n> > > Está implementado en R la detección de DTMF?\n> > No la he visto.\n> > > Puedo trabajar desde R los puertos series o paralelo?\n> > Sería todo mediante linux (programación en C)\n> > > Puedo hacer en R una aplicación independiente (Standalone\n> > > applications)\n> > No, hasta ahora no.\n> > > Insisto que es en R sobre LINUX (Ubuntu) porque ya lo he\n> > > implementado en matlab (Windows) y cuando lo corrí sobre linux\n> > > no trabajó porque Matlab para Linux no tiene el Toolbox de\n> > > adquisición de datos.\n> > La idea sería que R hiciera interfaz con alguna aplicación en linux\n> > que tomara los datos y los grabara y luego el script del R (en ejecución\n> > BATCH para hacer un pseudo \"standalone\") procesara la información\n> > obtenida.\n> >\n> > Feliz día.\n> > >\n> > > Un abrazo a todos\n> > >\n> > > Leonardo> ---\n> > > This message was processed by Kaspersky Mail Gateway\n> > > 5.6.28/RELEASE running at host imx3.etecsa.cu\n> > > Visit our web-site: <http://www.kaspersky.com>,\n> > > <http://www.viruslist.com>>\n> > _______________________________________________\n> > > R-help-es mailing list\n> > > R-help-es at r-project.org\n> > > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> >\n> > ------------------------------\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n> > Fin de Resumen de R-help-es, Vol 26, Envío 8\n> > ********************************************\n> >\n>\n>\n>\n> --\n>        Pedro César Del Campo Neira\n>        Estadístico\n>        Universidad Nacional de Colombia\n>        315 30 50 078\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nAquí hay algunas referencias:\n\nhttp://www.mail-archive.com/r-help at r-project.org/msg32188.html\nhttp://bioinf.wehi.edu.au/~wettenhall/RTclTkExamples/\nhttp://www.pdffinder.com/get/the-r-tcltk-i",
       "thread_id": "thread-c725267392ca",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110418/e95e4de9/attachment.pl"
+      ]
     },
     {
       "id": "msg-4c91be6a04c8",
@@ -1486,11 +1630,14 @@
       "subject_clean": "[R-es] 400 usuarios!",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/7d67042c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/7d67042c/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nQuería anunciaros que hemos llegado a los 400 usuarios.\nEnhorabuena a todos por hacer que esta lista funcione tan bien.\n\nEspero que sigamos creciendo y que las III jornadas sean un éxito. Aprovecho\npara dar las gracias a todos los que os estáis esforzando para que sea así,\nen especial a Carlos Gil Bellosta, y a todos los que tratáis de que esto sea\nun grupo organizado. Confío en que algún día seremos un referente a nivel\nnacional para todos los usuarios de R.\n\nUn saludos a todos!\n-- \nPatricia García González\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nQuería anunciaros que hemos llegado a los 400 usuarios.\nEnhorabuena a todos por hacer que esta lista funcione tan bien.\n\nEspero que sigamos creciendo y que las III jornadas sean un éxit",
       "thread_id": "thread-1e19b17a426b",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/7d67042c/attachment.pl"
+      ]
     },
     {
       "id": "msg-3196f83b3a4a",
@@ -1520,11 +1667,14 @@
       "references": [
         "<7723778466guivivi@alumni.uv.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/5de9570f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/5de9570f/attachment.pl>",
+      "body_plain": "> Hola Guillermo, muchas gracias por la respuesta.\n> Yo necesito dibujar las elipses a partir del centro de la elipse, que\nsería la temperatura y precipitaciones media, y de los ejes de la\nelipse, que serían las desviaciones estandar de temperatura y\nprecipitación. \n> Parece que la función ellipse que viene en el pdf que me has pasado me\npuede ayudar a conseguir lo que necesito, pero no me reconoce esta orden\n\"ellipse\" (\"could not find function ellipse\"). ¿Pertenece a alguna libreria?\n> Perdona, pero es que acabo de empezar con R y con la estadística en\ngeneral.\n> Muchas gracias Guillermo.\n\n> From: guivivi at alumni.uv.es\n> To: r-help-es at r-project.org; cesar_terrer_moreno at hotmail.com\n> Subject: (Fwd) Re: [R-es] gráfica_elipses\n> Date: Wed, 20 Apr 2011 10:56:17 +0200\n> \n> Hola César,\n> \n> Hace unos días yo también estaba interesado en dibujar un par de elipses\n> con R y buceando por Internet, encontré el pdf que adjunto, no sé si\n> esto te sirve de ayuda, pero por si acaso te lo mando.\n> \n> Un saludo,\n> \n> Guillermo\n> \n> > \n> > \n> > \n> > \n> > \n> > \n> > \n> > \n> > \n> > \n> > \n> > \n> > Hola muy buenas:\n> > \n> > Necesito saber como obtener un gráfico de elipses como el de la imagen\n> adjunta. Los datos de partida son llas desviaciones estandar de\n> temperatura media y precipitación de varios espacios naturales\n> (identificados con un número cada uno). Le agradecería mucho que me\n> indicara si conoce con que función de R podría obtener resultados similares.\n> > \n> > Muchísimas gracias de antemano.\n> > \n> > Un fuerte saludo: César Terrer\n> >  \t\t \t   \t\t  \n> \n \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "> Hola Guillermo, muchas gracias por la respuesta.\n> Yo necesito dibujar las elipses a partir del centro de la elipse, que\nsería la temperatura y precipitaciones media, y de los ejes de la\nelipse, que",
       "thread_id": "thread-3196f83b3a4a",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110420/5de9570f/attachment.pl"
+      ]
     },
     {
       "id": "msg-c887ad2dc69b",
@@ -1555,11 +1705,14 @@
       "subject_clean": "[R-es] Super indices en R",
       "in_reply_to": "<mailman.21.1303207205.22796.r-help-es@r-project.org>",
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/a8a80eab/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/a8a80eab/attachment.pl>",
+      "body_plain": "Hola a todos, \n\nEs mi primera vez escribiendo en esta lista de R-users! Quizas esto es super basico para ustedes, pero estoy pegado hace un buen rato.\n\nNecesito escribir las unidades de abundancia para una especie planctonica en la Isla Robinson Crusoe. La unidad de medida es Individuos /metro cubico, el punto que nosé como escribir en R el comando para hacer el 3 un super indice. \n\n¿Alguien tiene alguna idea?\n\nSaludos, \n\nJosé Bustos\nBiologo Marino\nMagister en Estadistica Aplicada\nDirector AESPRO\nwww.aespro.cl\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos, \n\nEs mi primera vez escribiendo en esta lista de R-users! Quizas esto es super basico para ustedes, pero estoy pegado hace un buen rato.\n\nNecesito escribir las unidades de abundancia par",
       "thread_id": "thread-fa0ae36e038d",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/a8a80eab/attachment.pl"
+      ]
     },
     {
       "id": "msg-a39c92060607",
@@ -1574,11 +1727,14 @@
         "<mailman.21.1303207205.22796.r-help-es@r-project.org>",
         "<586078.40709.qm@web26508.mail.ukl.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/e1bb06bb/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/e1bb06bb/attachment.pl>",
+      "body_plain": "Hola Jose,\n\nIntenta\n\nplot(1, xlab = expression(m^3))\n\nSaludos,\nJorge Ivan Velez\n\n\n2011/4/20 Jose Bustos Melo <>\n\n> Hola a todos,\n>\n> Es mi primera vez escribiendo en esta lista de R-users! Quizas esto es\n> super basico para ustedes, pero estoy pegado hace un buen rato.\n>\n> Necesito escribir las unidades de abundancia para una especie planctonica\n> en la Isla Robinson Crusoe. La unidad de medida es Individuos /metro cubico,\n> el punto que nosé como escribir en R el comando para hacer el 3 un super\n> indice.\n>\n> ¿Alguien tiene alguna idea?\n>\n> Saludos,\n>\n> José Bustos\n> Biologo Marino\n> Magister en Estadistica Aplicada\n> Director AESPRO\n> www.aespro.cl\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Jose,\n\nIntenta\n\nplot(1, xlab = expression(m^3))\n\nSaludos,\nJorge Ivan Velez\n\n\n2011/4/20 Jose Bustos Melo <>\n\n> Hola a todos,\n>\n> Es mi primera vez escribiendo en esta lista de R-users! Quizas esto",
       "thread_id": "thread-fa0ae36e038d",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/e1bb06bb/attachment.pl"
+      ]
     },
     {
       "id": "msg-d8a9c946dab9",
@@ -1593,11 +1749,14 @@
         "<mailman.21.1303207205.22796.r-help-es@r-project.org>",
         "<586078.40709.qm@web26508.mail.ukl.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/3806b89c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/3806b89c/attachment.pl>",
+      "body_plain": "O más especificamente:\n\nplot(1, xlab = expression(paste(\"individuos/\", m^3)))\nLuciano\n\n\nEl 20 de abril de 2011 21:33, Jose Bustos Melo <jbustosmelo at yahoo.es>escribió:\n\n> Hola a todos,\n>\n> Es mi primera vez escribiendo en esta lista de R-users! Quizas esto es\n> super basico para ustedes, pero estoy pegado hace un buen rato.\n>\n> Necesito escribir las unidades de abundancia para una especie planctonica\n> en la Isla Robinson Crusoe. La unidad de medida es Individuos /metro cubico,\n> el punto que nosé como escribir en R el comando para hacer el 3 un super\n> indice.\n>\n> ¿Alguien tiene alguna idea?\n>\n> Saludos,\n>\n> José Bustos\n> Biologo Marino\n> Magister en Estadistica Aplicada\n> Director AESPRO\n> www.aespro.cl\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "O más especificamente:\n\nplot(1, xlab = expression(paste(\"individuos/\", m^3)))\nLuciano\n\n\nEl 20 de abril de 2011 21:33, Jose Bustos Melo <jbustosmelo at yahoo.es>escribió:\n\n> Hola a todos,\n>\n> Es mi pri",
       "thread_id": "thread-fa0ae36e038d",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110421/3806b89c/attachment.pl"
+      ]
     },
     {
       "id": "msg-3d38c8b82941",
@@ -1612,11 +1771,14 @@
         "<SNT131-w137A7428A699BD8F88E995BB900@phx.gbl>",
         "<SNT131-w37FE813E068BE4FD3BF27DBB900@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110424/590c8e71/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110424/590c8e71/attachment.pl>",
+      "body_plain": "Hola,\n\nQuizá entro en este hilo demasiado tarde.\nPor si sirve de ayuda:\n\nellipse <http://cran.at.r-project.org/web/packages/ellipse/index.html>\nFunctions\nfor drawing ellipses and ellipse-like confidence regions\n\n\nSaludos,\nCarlos Ortega.\nwww.qualityexcellence.es\n\n\n2011/4/19 cesar terrer moreno <cesar_terrer_moreno at hotmail.com>\n\n>\n>\n> ------------------------------\n>\n>\n> Hola muy buenas:\n>\n> Necesito saber como obtener un gráfico de elipses como el de la imagen\n> adjunta. Los datos de partida son llas desviaciones estandar de temperatura\n> media y precipitación de varios espacios naturales (identificados con un\n> número cada uno). Le agradecería mucho que me indicara si conoce con que\n> función de R podría obtener resultados similares.\n>\n> Muchísimas gracias de antemano.\n>\n> Un fuerte saludo: César Terrer\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nQuizá entro en este hilo demasiado tarde.\nPor si sirve de ayuda:\n\nellipse <http://cran.at.r-project.org/web/packages/ellipse/index.html>\nFunctions\nfor drawing ellipses and ellipse-like confiden",
       "thread_id": "thread-4c91be6a04c8",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110424/590c8e71/attachment.pl"
+      ]
     },
     {
       "id": "msg-72f9a70f7b89",
@@ -1646,11 +1808,14 @@
       "references": [
         "<BANLkTi=2tfY=DsjVU8Xjk5kkecw3b7CEKg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110426/c5e34193/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110426/c5e34193/attachment.pl>",
+      "body_plain": "Hola Javier,\n\nJohn Fox tiene esta funcionalidad integrada en Rmcdr. Quizas\nhttps://stat.ethz.ch/pipermail/r-help/2009-March/193523.html pueda servirte\npara lo que necesitas.\n\nSeria interesante comparar los resultados que obtienes utilizando la funcion\npcor.test() y con partial.cor()\n\nSaludos,\nJorge Ivan Velez\n\n\n2011/4/26 Javier Martinez <>\n\n> Muy buenas,\n>\n> quiero calcular correlaciones de Pearson entre dos variables (a,b)\n> teniendo en cuenta una tercera (c). Para ello estoy usando una función\n> llamada \"pcor.test\" (http://www.yilab.gatech.edu/pcor.html), que en\n> realidad no está en ningún paquete de R, que yo sepa. ¿Alguien conoce\n> una función similar en alguna librería de R? Por otro lado, para ver\n> si me cuadraban los resultados, he hecho una regresión lineal entre\n> las variables \"a\" y \"c\" y luego he hecho otra regresión entre los\n> residuos del modelo resultante y la variable \"b\". Creo que esto sería\n> más o menos lo mismo que hacer la correlación parcial entre a y b\n> tendiendo en cuenta c, y de hecho los resultados son similares, pero\n> en el caso de la regresión el valor de P no sale significativo. ¿Sería\n> válido este método? Me interesa también representar gráficamente la\n> correlación parcial, por eso he usado también este otro método.\n>\n> Cualquier ayuda es bienvenida y agradecida.\n>\n> Saludos,\n>\n> Javier\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Javier,\n\nJohn Fox tiene esta funcionalidad integrada en Rmcdr. Quizas\nhttps://stat.ethz.ch/pipermail/r-help/2009-March/193523.html pueda servirte\npara lo que necesitas.\n\nSeria interesante compara",
       "thread_id": "thread-72f9a70f7b89",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110426/c5e34193/attachment.pl"
+      ]
     },
     {
       "id": "msg-1f8ab586a217",
@@ -1795,11 +1960,14 @@
       "references": [
         "<BANLkTi=xiUDmAw2hdXrBx=nY=pC+eXLAkw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110428/1d9a09f6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110428/1d9a09f6/attachment.pl>",
+      "body_plain": "Hola,\n\nPara lo segundo, utiliza la función rep().\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/\n\n2011/4/28 Ivonne Pacheco <impachecog at gmail.com>\n\n> Hola a tod at s,\n>\n> Estoy realizando pruebas de Kruskal Wallis en un conjunto de datos. La\n> duda con la que me encuentro ahora es que la base que tengo\n> corresponde a una muestra y por lo tanto cada registro cuenta con su\n> correspondiente factor de elevación (o factor de expansión).\n> Realizando pruebas con SPSS encuentro que los rangos medios para cada\n> grupo cambian si lo pondero por el factor o no(al igual que el\n> estadístico y un poco el p-valor) y dado que me interesa realizar las\n> comparaciones múltiples paso a R para realizarlas.\n>\n> Dentro de las ayudas que he consultado no veo que pueda utilizarse un\n> factor de elevación en la prueba KW (supongo que entraría en terreno\n> de observaciones repetidas y por lo tanto debería hacerse la\n> asignación del rango medio, etc o simplemente no tiene sentido). Creo\n> (no estoy completamente segura) que los resultados de la prueba\n> deberían cambiar si ponderara o no la muestra.\n> En resumen,\n>\n> 1. ¿Existe algún paquete que considere la prueba incluyendo un factor\n> de elevación?\n> 2. ¿Cómo podría simular la repetición de cada registro tantas veces se\n> indique en el factor? (Para verificar que efectivamente la prueba da o\n> no lo mismo...)\n>\n> Un saludo,\n>\n> --\n> ****  Ivonne Pacheco ****\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPara lo segundo, utiliza la función rep().\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\nhttp://qualityexcellence.wordpress.com/\n\n2011/4/28 Ivonne Pacheco <impachecog at gmail.com>\n\n> Hola a",
       "thread_id": "thread-e79c5d85f864",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110428/1d9a09f6/attachment.pl"
+      ]
     },
     {
       "id": "msg-45e3acb7285c",
@@ -1811,11 +1979,14 @@
       "subject_clean": "[R-es] Interrogante",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110429/fe4a86d4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110429/fe4a86d4/attachment.pl>",
+      "body_plain": "Buenas noches\n\nQuisiera preguntarles acerca de cómo puedo calcular el rango de una matriz\nen R\n\n\nMuchas gracias\n\n-- \nAtentamente:\n\nRicardo A. Borda Hernández\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas noches\n\nQuisiera preguntarles acerca de cómo puedo calcular el rango de una matriz\nen R\n\n\nMuchas gracias\n\n-- \nAtentamente:\n\nRicardo A. Borda Hernández\n\n\t[[alternative HTML version deleted]]",
       "thread_id": "thread-45e3acb7285c",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110429/fe4a86d4/attachment.pl"
+      ]
     },
     {
       "id": "msg-d636f5039660",
@@ -1829,11 +2000,14 @@
       "references": [
         "<BANLkTins6KhHz-R=pxiynu1MCJj6nGFJGw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110430/493676fd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110430/493676fd/attachment.pl>",
+      "body_plain": "help.search(\"rank matrix\") y RSiteSearch(\"rank matrix\").\n\nEl 30 de abril de 2011 05:41, Ricardo Borda <ricardobordah at yahoo.es>escribió:\n\n> Buenas noches\n>\n> Quisiera preguntarles acerca de cómo puedo calcular el rango de una matriz\n> en R\n>\n>\n> Muchas gracias\n>\n> --\n> Atentamente:\n>\n> Ricardo A. Borda Hernández\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nDr. Gregorio R. Serrano\nDpto. Economía Cuantitativa (UCM)\nVoz:+34 91394 2361\nFax:+34 91394 2591\nhttp://www.grserrano.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "help.search(\"rank matrix\") y RSiteSearch(\"rank matrix\").\n\nEl 30 de abril de 2011 05:41, Ricardo Borda <ricardobordah at yahoo.es>escribió:\n\n> Buenas noches\n>\n> Quisiera preguntarles acerca de cómo pue",
       "thread_id": "thread-45e3acb7285c",
       "thread_depth": 1,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110430/493676fd/attachment.pl"
+      ]
     },
     {
       "id": "msg-3efde795d78b",
@@ -1861,11 +2035,14 @@
       "subject_clean": "[R-es] Patron de curvas biologicas",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110430/da3c31a1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110430/da3c31a1/attachment.pl>",
+      "body_plain": "Cordial Saludo\n\nTengo muchas curvas de tipo biologico y ademas son de un comportamiento\nsimilar, que tipo de analisis requiero para determinar un patron de curva,\nen aproximadamente una muestra de 30 a 40. He investigado y nose si deba\nutilizar ANALISIS  DE COMPONENTES PRINICIPALES, CORRELACION CANONICA, entre\notros, Gracias por la atencion prestada\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Cordial Saludo\n\nTengo muchas curvas de tipo biologico y ademas son de un comportamiento\nsimilar, que tipo de analisis requiero para determinar un patron de curva,\nen aproximadamente una muestra de 30 ",
       "thread_id": "thread-25d247b4684d",
       "thread_depth": 0,
-      "month": "2011-04"
+      "month": "2011-04",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110430/da3c31a1/attachment.pl"
+      ]
     }
   ],
   "threads": [

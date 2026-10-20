@@ -15,11 +15,14 @@
       "references": [
         "<AANLkTinZif=DpUvTN6JsabnQjqZ18hZAXCyPSEhU_F8W@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100802/97250888/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100802/97250888/attachment.pl>",
+      "body_plain": "Buenos dias Cesar,\n\nDale una mirada al siguiente ejemplo. Lo que quieres hacer es posible via la\ncreacion de una funcion que en este caso he denominado f y que calcula la\nprobabilidad que describes.\n\n# x~ Poisson(2), calculo de P(x = N), N = 0, 1, ..., 10\np <- dpois(0:10, 2)\nd <- data.frame(x = 0:10, p = round(p, 5))\nd\n\n# funcion que indexe los resultados  (comparar con d)\nf <- function(k) p[k + 1]\nf(0)     # P(x = 0)\nf(1)     # P(x = 1)\nf(2)     # P(x = 2)\nf(3)     # P(x = 3)\nf(9)     # P(x = 9)\n\nY recuerda:\n\n# install.packages('fortunes')\nrequire(fortunes)\nfortune('Yoda')\n\nEvelyn Hall: I would like to know how (if) I can extract some of the\ninformation from the summary\nof my nlme.\nSimon Blomberg: This is R. There is no if. Only how.\n   -- Evelyn Hall and Simon 'Yoda' Blomberg\n      R-help (April 2005)\n\nSaludos,\nJorge Ivan Velez\n\n\n2010/7/30 Cesar Escalante <>\n\n> Hola para cada uno.\n>\n> Les agradecería que me ayudaran el siguiente asunto sintáctico:\n>\n> ¿Cómo configurar R para que indexe los vectores desde cero?\n>\n> Estoy trabajando con látices donde p_0 = Pr (N=0), y qué bueno sería que\n> pudiera escribir en R   p[0] para indicar la probabilidad en cero. ¿Es\n> posible?\n>\n> Gracias. Fuerte saludo.\n>\n> César Escalante\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenos dias Cesar,\n\nDale una mirada al siguiente ejemplo. Lo que quieres hacer es posible via la\ncreacion de una funcion que en este caso he denominado f y que calcula la\nprobabilidad que describes.\n\n",
       "thread_id": "thread-773f7154f8ed",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100802/97250888/attachment.pl"
+      ]
     },
     {
       "id": "msg-9649ba4aa2b4",
@@ -67,11 +70,14 @@
       "subject_clean": "[R-es] gibbs",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100811/ef8ef1dc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100811/ef8ef1dc/attachment.pl>",
+      "body_plain": "Hola a todos:\n\n \n\nTengo una duda despecto como usar gibbs y r. Me explicaré en un ejemplo\ndonde todos los datos se encuentran en “library(MCMCglmm)”. Al ejecutar el\ncódigo R que escribo en este correo, obtengo las soluciones (Solucion.m).\nPues bien, entiendo que utilizando HPDinterval (….) puedo obtener por\nejemplo la región donde se ubica el 95% de la probabilidad para …. Pues, me\ngustaría conocer aparte del valor de solución, el valor de “confiabilidad”,\nerror, error estándar, …, para cada solución. Obteniendo un resultado final\ncomo “Diert2,  3,64…, s.e. de ... ” (agregado a la lalida de Solucion.m del\ncódigo r que escribo a continuación). Por las dudas, HPDinterval de la\nlibrería coda.\n\n \n\n¿Alguien me puede ayudar al respecto?\n\n \n\nDesde ya muchas gracias y el código R.\n\n \n\n \n\nlibrary(MCMCglmm)\n\nlibrary(coda)\n\ndata(ChickWeight)\n\nhead(ChickWeight)\n\nxyplot(weight ~ Time | Chick, data = ChickWeight)\n\nprior.m <- list(R = list(V=1, n=0.0002), G=list(G1=list(V= diag(3),n=3)))\n\nm <- MCMCglmm(weight ~ Diet + poly(Time, 2, raw=TRUE),\n\n                      random = ~us(1+ poly (Time, 2, raw=TRUE)):Chick,\n\n                      data = ChickWeight, verbose = TRUE, pr=TRUE, pl=TRUE,\n\n                      prior = prior.m, saveX = TRUE, saveZ = TRUE)\n\n\npollos<-posterior.mode(m$Sol[,c(7:56)])\n\nW <- cBind(m$X, m$Z)\n\nprediccion <- W %*% posterior.mode(m$Sol)\n\nxyplot(weight+prediccion ~Time |Chick, data=ChickWeight)\n\nSolucion<-posterior.mode(m$Sol)\n\nSolucion\n\nSolucion.m <-as.matrix(Solucion)\n\nSolucion.m\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos:\n\n \n\nTengo una duda despecto como usar gibbs y r. Me explicaré en un ejemplo\ndonde todos los datos se encuentran en “library(MCMCglmm)”. Al ejecutar el\ncódigo R que escribo en este correo",
       "thread_id": "thread-fa76e9175ac2",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100811/ef8ef1dc/attachment.pl"
+      ]
     },
     {
       "id": "msg-cb9a3b2bce79",
@@ -120,11 +126,14 @@
       "references": [
         "<AANLkTikjaHUROxSN02u1kmq6rWd9ONYDjZM12sK0uE99@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100811/b8a98f39/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100811/b8a98f39/attachment.pl>",
+      "body_plain": "Buenas tardes Sebastian,\n\nUna manera es utilizando la funcion aggregate.zoo {zoo}. Hay varios ejemplos\nen\n\n> require(zoo)\nLoading required package: zoo\n> ?aggregate.zoo\n\nSaludos,\n    Jorge Ivan Velez\n\n\n2010/8/11 Sebastian Kruk <>\n\n> Hola:\n>\n> Tengo un vector de tipo ts y me gustaria calcular una serie que\n> contanga la media por año, ¿hay alguna forma de hacerlo?\n>\n> O sino partiendo de los datos en un vector, ¿se puede crear un objeto\n> ts incluyendo directamente las medias por año?\n>\n> Saludos,\n>\n> Sebastián.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Sebastian,\n\nUna manera es utilizando la funcion aggregate.zoo {zoo}. Hay varios ejemplos\nen\n\n> require(zoo)\nLoading required package: zoo\n> ?aggregate.zoo\n\nSaludos,\n    Jorge Ivan Velez\n",
       "thread_id": "thread-829941d206e0",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100811/b8a98f39/attachment.pl"
+      ]
     },
     {
       "id": "msg-b7719964b9da",
@@ -206,11 +215,14 @@
       "subject_clean": "[R-es] Leer archivos .xls",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/e7ee7973/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/e7ee7973/attachment.pl>",
+      "body_plain": "Buen dia:\n\nTengo que leer archivos .xls y me aparece el siguiente error:\n\n\"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\", from = 1 \n)\nError in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",  : \n  !! Your installation contains the cran placeholder shlib (dll/so).\nPlease get the regular shlib (420 KB) by executing the following command:\n   xls.getshlib()\nInfo, forum, issue tracker and manual download at http://www.swissr.org.\nBACKGROUND: Our .........\"\n\nAgradezco todo tipo de informacion que me pueda ayudar.\n\nGracias!!\n\n\n      \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buen dia:\n\nTengo que leer archivos .xls y me aparece el siguiente error:\n\n\"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\", from = 1 \n)\nError in read.xls(\"aa.xls\", colNames = TRU",
       "thread_id": "thread-932705a86398",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/e7ee7973/attachment.pl"
+      ]
     },
     {
       "id": "msg-fd7a15199186",
@@ -240,11 +252,14 @@
       "subject_clean": "[R-es] Consultor estadistico R....",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/398760bc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/398760bc/attachment.pl>",
+      "body_plain": "*Hola a todos... disculpen si este no es el medio adecuado, pero como habia\ncomentado hace algun tiempo, preciso de un consultor estadistico que\ndesarrolle, en plataforma R, modelacion estadistica asociando malaria/dengue\n(numeros de casos) con variables Temperatura y Precipitacion...\n\nBasicamente el requerimiento es como sigue, auncuando se publicara en la web\nla convocatoria oficial.... les informare de ello oportunamente.....\n\n*\n\n*Formación académica:* Profesional en el área de biología, matemáticas,\nfísica, estadística, meteorología, salud, ingeniería o economía, con\nestudios de posgrado en estadística, preferiblemente en epidemiología.\n\n*Experiencia*: general: 5 años.\n\n*Experiencia específica*: en modelar y administrar bases de datos,\nelaboración de series de tiempo, modelación estadística y conocimiento de\nsoftware estadístico. Preferiblemente experiencia en modelación estadística\neventos en salud.\n\nCondiciones especiales: Para el desarrollo del trabajo se puede\nrequerir disponibilidad\npara viajar a las zonas del proyecto\n\n\nson 14 actividades, de las cuales  quiero destacar:\n\n\n1.      Proponer al INS y el IDEAM los modelos requeridos por el Sistema de\nVigilancia SIVIGILA, especificando la metodología para obtenerlos. De ser\nnecesario incluir otras variables como socioeconómicas.\n\n2.      Generar el modelo de acuerdo con la valoración efectuada en el\nnumeral anterior, que permita tener la predicción con el menor grado de\nincertidumbre, de acuerdo con la información existente.\n\n3.      Validar el modelo con datos históricos.\n\n4.      Validar el modelo con datos de campo actuales.\n\n\n*\n\n*\n-- \nLuis Alfonso LOPEZ ALVAREZ\nMSc- Meteorologia - Ing. Sistemas\nPROFESIONAL ESPECIALIZADO (E)\nMETEOROLOGO - IDEAM\ne-mail: alflopez at ideam.gov.co\n           a.lopez.wrf at gmail.com\n           acalopez97 at yahoo.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "*Hola a todos... disculpen si este no es el medio adecuado, pero como habia\ncomentado hace algun tiempo, preciso de un consultor estadistico que\ndesarrolle, en plataforma R, modelacion estadistica aso",
       "thread_id": "thread-0048bbb2fd78",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/398760bc/attachment.pl"
+      ]
     },
     {
       "id": "msg-e08199d232bd",
@@ -258,11 +273,14 @@
       "references": [
         "<AANLkTikAf0nAhqBrD+53BWzikWrJLsk5GhfaV+si+vj4@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/9a36aaf7/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/9a36aaf7/attachment.pl>",
+      "body_plain": "Hola Luis\n\nEste es precisamente el medio mas adecuado. Para esto entre otras cosas se\nha creado esta lista, así que muchas gracias!\n\nUn saludo\nPatricia\n\n\nEl 17 de agosto de 2010 17:16, Luis Alfonso LOPEZ ALVAREZ <\na.lopez.wrf at gmail.com> escribió:\n\n> *Hola a todos... disculpen si este no es el medio adecuado, pero como habia\n> comentado hace algun tiempo, preciso de un consultor estadistico que\n> desarrolle, en plataforma R, modelacion estadistica asociando\n> malaria/dengue\n> (numeros de casos) con variables Temperatura y Precipitacion...\n>\n> Basicamente el requerimiento es como sigue, auncuando se publicara en la\n> web\n> la convocatoria oficial.... les informare de ello oportunamente.....\n>\n> *\n>\n> *Formación académica:* Profesional en el área de biología, matemáticas,\n> física, estadística, meteorología, salud, ingeniería o economía, con\n> estudios de posgrado en estadística, preferiblemente en epidemiología.\n>\n> *Experiencia*: general: 5 años.\n>\n> *Experiencia específica*: en modelar y administrar bases de datos,\n> elaboración de series de tiempo, modelación estadística y conocimiento de\n> software estadístico. Preferiblemente experiencia en modelación estadística\n> eventos en salud.\n>\n> Condiciones especiales: Para el desarrollo del trabajo se puede\n> requerir disponibilidad\n> para viajar a las zonas del proyecto\n>\n>\n> son 14 actividades, de las cuales  quiero destacar:\n>\n>\n> 1.      Proponer al INS y el IDEAM los modelos requeridos por el Sistema de\n> Vigilancia SIVIGILA, especificando la metodología para obtenerlos. De ser\n> necesario incluir otras variables como socioeconómicas.\n>\n> 2.      Generar el modelo de acuerdo con la valoración efectuada en el\n> numeral anterior, que permita tener la predicción con el menor grado de\n> incertidumbre, de acuerdo con la información existente.\n>\n> 3.      Validar el modelo con datos históricos.\n>\n> 4.      Validar el modelo con datos de campo actuales.\n>\n>\n> *\n>\n> *\n> --\n> Luis Alfonso LOPEZ ALVAREZ\n> MSc- Meteorologia - Ing. Sistemas\n> PROFESIONAL ESPECIALIZADO (E)\n> METEOROLOGO - IDEAM\n> e-mail: alflopez at ideam.gov.co\n>           a.lopez.wrf at gmail.com\n>           acalopez97 at yahoo.com\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nPatricia García González\nr-es.org/\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Luis\n\nEste es precisamente el medio mas adecuado. Para esto entre otras cosas se\nha creado esta lista, así que muchas gracias!\n\nUn saludo\nPatricia\n\n\nEl 17 de agosto de 2010 17:16, Luis Alfonso LO",
       "thread_id": "thread-0048bbb2fd78",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/9a36aaf7/attachment.pl"
+      ]
     },
     {
       "id": "msg-696e48aa26fa",
@@ -277,11 +295,14 @@
         "<104298.88187.qm@web55604.mail.re4.yahoo.com>",
         "<AANLkTikMU_qQnrS5tXUv44NiJfzCnfG7voeFmd1pEYbn@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/54a0a316/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/54a0a316/attachment.pl>",
+      "body_plain": "No he usado nunca la función que te da problemas, pero si he leido datos de\nun excel con la siguiente,\n* *\n\n*library(RODBC)*\n\n*data=odbcConnectExcel(file.choose())*\n\n*sqlTables(data)*\n\n*D=sqlFetch(data, \"P5\")*\n\n*odbcClose(data)*\n\n\ndonde, data es el nobre del archivo excel que hemos abiertyo i p5, la hoja\nde este excel de la que queremos leer los datos.\n\nespero que te ayude.\n\nMontserrat\n\n\n\nMontserrat Girabent Farrés\nCap d'àrea de Bioestadística, Epidemiologia i Salut Pública.\nDepartament de Ciències Bàsiques.\nFacultat de Medicina i Ciències de la Salut\nUniversitat Internacional de Catalunya (UIC)\nJosep Trueta s/n – 08195 Sant Cugat del Vallès\nTel.:(+34) 935 042 017\ngirabent at csc.uic.es\nwww.uic.es\n\n\n2010/8/17 Carlos J. Gil Bellosta <cgb at datanalytics.com>\n\n> Esto podría ayudarte:\n>\n>\n> http://r.789695.n4.nabble.com/Failed-install-of-package-xlsReadWrite-td1476880.html\n>\n> El no usar Excel y trabajar con ficheros de texto, también.\n>\n> Un saludo,\n>\n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n>\n>\n> 2010/8/17 cesar procopio <cesarpro at yahoo.com>:\n>  > Buen dia:\n> >\n> > Tengo que leer archivos .xls y me aparece el siguiente error:\n> >\n> > \"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",\n> from = 1\n> > )\n> > Error in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type =\n> \"data.frame\",  :\n> >   !! Your installation contains the cran placeholder shlib (dll/so).\n> > Please get the regular shlib (420 KB) by executing the following command:\n> >    xls.getshlib()\n> > Info, forum, issue tracker and manual download at http://www.swissr.org.\n> > BACKGROUND: Our .........\"\n> >\n> > Agradezco todo tipo de informacion que me pueda ayudar.\n> >\n> > Gracias!!\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "No he usado nunca la función que te da problemas, pero si he leido datos de\nun excel con la siguiente,\n* *\n\n*library(RODBC)*\n\n*data=odbcConnectExcel(file.choose())*\n\n*sqlTables(data)*\n\n*D=sqlFetch(dat",
       "thread_id": "thread-932705a86398",
       "thread_depth": 2,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/54a0a316/attachment.pl"
+      ]
     },
     {
       "id": "msg-b5bb387efa63",
@@ -295,11 +316,14 @@
       "references": [
         "<104298.88187.qm@web55604.mail.re4.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/3c585115/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/3c585115/attachment.pl>",
+      "body_plain": "Buenas tardes Cesar,\n\nTe sugiero usar RODBC a traves de la siguiente funcion, donde \"yourfile\" es\nel nombre del archivo de Excel, incluyendo la ruta., e.g. \"C:/datos/aa.xls\"\ny \"worksheet\" corresponde a la hoja donde tienes la informacion, e.g.\n\"Hoja1\".\n\n# From Excel\nFromExcel <- function(yourfile,worksheet){\n require(RODBC)\n channel <- odbcConnectExcel(yourfile)\n mydata <- sqlFetch(channel, worksheet)\n odbcClose(channel)\n attach(mydata)\n mydata\n}\n\ninstall.packaes(\"RODBC\")\nmisdatos <- FromExcel(\"C:/datos/aa.xls\", \"Hoja1\")\nhead(midatos)\n\nUn saludo,\n\n                    Jorge Ivan Velez\n\n\nOn Tue, Aug 17, 2010 at 8:49 AM, cesar procopio <> wrote:\n\n> Buen dia:\n>\n> Tengo que leer archivos .xls y me aparece el siguiente error:\n>\n> \"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",\n> from = 1\n> )\n> Error in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type =\n> \"data.frame\",  :\n>   !! Your installation contains the cran placeholder shlib (dll/so).\n> Please get the regular shlib (420 KB) by executing the following command:\n>    xls.getshlib()\n> Info, forum, issue tracker and manual download at http://www.swissr.org.\n> BACKGROUND: Our .........\"\n>\n> Agradezco todo tipo de informacion que me pueda ayudar.\n>\n> Gracias!!\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Cesar,\n\nTe sugiero usar RODBC a traves de la siguiente funcion, donde \"yourfile\" es\nel nombre del archivo de Excel, incluyendo la ruta., e.g. \"C:/datos/aa.xls\"\ny \"worksheet\" corresponde ",
       "thread_id": "thread-932705a86398",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/3c585115/attachment.pl"
+      ]
     },
     {
       "id": "msg-75a2800505fb",
@@ -331,11 +355,14 @@
       "references": [
         "<104298.88187.qm@web55604.mail.re4.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/dac44472/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/dac44472/attachment.pl>",
+      "body_plain": "Buenas tardes Cesar,\n\nTambien podrias explorar las opciones en [1] en caso de que estes usando\notra(s) plataforma(s) diferente(s) a Windows.\n\nUn saludo,\n\n                 Jorge Ivan Velez\n\n\n[1]\nhttp://rwiki.sciviews.org/doku.php?id=tips:data-io:ms_windows#exchanging_data_between_r_and_ms_windows_apps_excel_etc\n\n\n\nOn Tue, Aug 17, 2010 at 8:49 AM, cesar procopio <> wrote:\n\n> Buen dia:\n>\n> Tengo que leer archivos .xls y me aparece el siguiente error:\n>\n> \"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",\n> from = 1\n> )\n> Error in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type =\n> \"data.frame\",  :\n>   !! Your installation contains the cran placeholder shlib (dll/so).\n> Please get the regular shlib (420 KB) by executing the following command:\n>    xls.getshlib()\n> Info, forum, issue tracker and manual download at http://www.swissr.org.\n> BACKGROUND: Our .........\"\n>\n> Agradezco todo tipo de informacion que me pueda ayudar.\n>\n> Gracias!!\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Cesar,\n\nTambien podrias explorar las opciones en [1] en caso de que estes usando\notra(s) plataforma(s) diferente(s) a Windows.\n\nUn saludo,\n\n                 Jorge Ivan Velez\n\n\n[1]\nhttp:/",
       "thread_id": "thread-932705a86398",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/dac44472/attachment.pl"
+      ]
     },
     {
       "id": "msg-8c7b65d815b6",
@@ -349,11 +376,14 @@
       "references": [
         "<mailman.9370.1282074376.4244.r-help-es@r-project.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/5956240d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/5956240d/attachment.pl>",
+      "body_plain": "2010/8/17 <r-help-es-request at r-project.org>\n\n> Envíe los mensajes para la lista R-help-es a\n>        r-help-es at r-project.org\n>\n> Para subscribirse o anular su subscripción a través de la WEB\n>        https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n> O por correo electrónico, enviando un mensaje con el texto \"help\" en\n> el asunto (subject) o en el cuerpo a:\n>        r-help-es-request at r-project.org\n>\n> Puede contactar con el responsable de la lista escribiendo a:\n>        r-help-es-owner at r-project.org\n>\n> Si responde a algún contenido de este mensaje, por favor, edite la\n> linea del asunto (subject) para que el texto sea mas especifico que:\n> \"Re: Contents of R-help-es digest...\". Además, por favor, incluya en\n> la respuesta sólo aquellas partes del mensaje a las que está\n> respondiendo.\n>\n> Asuntos del día:\n>\n>   1. Leer archivos .xls (cesar procopio)\n>   2. Re: Leer archivos .xls (Carlos J. Gil Bellosta )\n>   3. Consultor estadistico R.... (Luis Alfonso LOPEZ ALVAREZ)\n>   4. Re: Consultor estadistico R.... (Usuario R)\n>   5. Re: Leer archivos .xls (Montserrat Girabent)\n>   6. Re: Leer archivos .xls (Jorge Ivan Velez)\n>   7. Re: Leer archivos .xls (Olivier Nuñez)\n>\n>\n> ---------- Mensaje reenviado ----------\n> From: cesar procopio <cesarpro at yahoo.com>\n> To: r-help-es at r-project.org\n> Date: Tue, 17 Aug 2010 05:49:20 -0700 (PDT)\n> Subject: [R-es] Leer archivos .xls\n> Buen dia:\n>\n> Tengo que leer archivos .xls y me aparece el siguiente error:\n>\n> \"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",\n> from = 1\n> )\n> Error in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type =\n> \"data.frame\",  :\n>   !! Your installation contains the cran placeholder shlib (dll/so).\n> Please get the regular shlib (420 KB) by executing the following command:\n>    xls.getshlib()\n> Info, forum, issue tracker and manual download at http://www.swissr.org.\n> BACKGROUND: Our .........\"\n>\n> Agradezco todo tipo de informacion que me pueda ayudar.\n>\n> Gracias!!\n>\n>\n>\n>        [[alternative HTML version deleted]]\n>\n> Hola\n>\n               una manera que me resultó sencilla (comento que estoy\nutilizando R en ubuntu) es usando la librería gdata\n\n\nlibrary(gdata)#se carga el paquete gdata para el manejo de datos\na <-read.xls(\"ejemplo.xls\",sheet=1)\n#antes de que \"a\" pase a  data frame, previamente se transforma a archivo\n.csv(automáticamente). En este caso seleccioné la hoja 1 con el parámetro\nsheet=1\n\nOtra opción es median oppen.office guardar la hoja de cálculo com archivo\n.csv y cargar desde R directamente\nespero ayude\n\n>\n> ---------- Mensaje reenviado ----------\n> From: \"Carlos J. Gil Bellosta \" <cgb at datanalytics.com>\n> To: cesar procopio <cesarpro at yahoo.com>\n> Date: Tue, 17 Aug 2010 15:06:29 +0200\n> Subject: Re: [R-es] Leer archivos .xls\n> Esto podría ayudarte:\n>\n>\n> http://r.789695.n4.nabble.com/Failed-install-of-package-xlsReadWrite-td1476880.html\n>\n> El no usar Excel y trabajar con ficheros de texto, también.\n>\n> Un saludo,\n>\n> Carlos J. Gil Bellosta\n> http://www.datanalytics.com\n>\n>\n> 2010/8/17 cesar procopio <cesarpro at yahoo.com>:\n> > Buen dia:\n> >\n> > Tengo que leer archivos .xls y me aparece el siguiente error:\n> >\n> > \"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",\n> from = 1\n> > )\n> > Error in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type =\n> \"data.frame\",  :\n> >   !! Your installation contains the cran placeholder shlib (dll/so).\n> > Please get the regular shlib (420 KB) by executing the following command:\n> >    xls.getshlib()\n> > Info, forum, issue tracker and manual download at http://www.swissr.org.\n> > BACKGROUND: Our .........\"\n> >\n> > Agradezco todo tipo de informacion que me pueda ayudar.\n> >\n> > Gracias!!\n>\n>\n>\n>\n> ---------- Mensaje reenviado ----------\n> From: Luis Alfonso LOPEZ ALVAREZ <a.lopez.wrf at gmail.com>\n> To: R-help-es at r-project.org\n> Date: Tue, 17 Aug 2010 10:16:31 -0500\n> Subject: [R-es] Consultor estadistico R....\n> *Hola a todos... disculpen si este no es el medio adecuado, pero como habia\n> comentado hace algun tiempo, preciso de un consultor estadistico que\n> desarrolle, en plataforma R, modelacion estadistica asociando\n> malaria/dengue\n> (numeros de casos) con variables Temperatura y Precipitacion...\n>\n> Basicamente el requerimiento es como sigue, auncuando se publicara en la\n> web\n> la convocatoria oficial.... les informare de ello oportunamente.....\n>\n> *\n>\n> *Formación académica:* Profesional en el área de biología, matemáticas,\n> física, estadística, meteorología, salud, ingeniería o economía, con\n> estudios de posgrado en estadística, preferiblemente en epidemiología.\n>\n> *Experiencia*: general: 5 años.\n>\n> *Experiencia específica*: en modelar y administrar bases de datos,\n> elaboración de series de tiempo, modelación estadística y conocimiento de\n> software estadístico. Preferiblemente experiencia en modelación estadística\n> eventos en salud.\n>\n> Condiciones especiales: Para el desarrollo del trabajo se puede\n> requerir disponibilidad\n> para viajar a las zonas del proyecto\n>\n>\n> son 14 actividades, de las cuales  quiero destacar:\n>\n>\n> 1.      Proponer al INS y el IDEAM los modelos requeridos por el Sistema de\n> Vigilancia SIVIGILA, especificando la metodología para obtenerlos. De ser\n> necesario incluir otras variables como socioeconómicas.\n>\n> 2.      Generar el modelo de acuerdo con la valoración efectuada en el\n> numeral anterior, que permita tener la predicción con el menor grado de\n> incertidumbre, de acuerdo con la información existente.\n>\n> 3.      Validar el modelo con datos históricos.\n>\n> 4.      Validar el modelo con datos de campo actuales.\n>\n>\n> *\n>\n> *\n> --\n> Luis Alfonso LOPEZ ALVAREZ\n> MSc- Meteorologia - Ing. Sistemas\n> PROFESIONAL ESPECIALIZADO (E)\n> METEOROLOGO - IDEAM\n> e-mail: alflopez at ideam.gov.co\n>           a.lopez.wrf at gmail.com\n>           acalopez97 at yahoo.com\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n>\n> ---------- Mensaje reenviado ----------\n> From: Usuario R <r.user.spain at gmail.com>\n> To: Luis Alfonso LOPEZ ALVAREZ <a.lopez.wrf at gmail.com>\n> Date: Tue, 17 Aug 2010 17:21:44 +0200\n> Subject: Re: [R-es] Consultor estadistico R....\n> Hola Luis\n>\n> Este es precisamente el medio mas adecuado. Para esto entre otras cosas se\n> ha creado esta lista, así que muchas gracias!\n>\n> Un saludo\n> Patricia\n>\n>\n> El 17 de agosto de 2010 17:16, Luis Alfonso LOPEZ ALVAREZ <\n> a.lopez.wrf at gmail.com> escribió:\n>\n> > *Hola a todos... disculpen si este no es el medio adecuado, pero como\n> habia\n> > comentado hace algun tiempo, preciso de un consultor estadistico que\n> > desarrolle, en plataforma R, modelacion estadistica asociando\n> > malaria/dengue\n> > (numeros de casos) con variables Temperatura y Precipitacion...\n> >\n> > Basicamente el requerimiento es como sigue, auncuando se publicara en la\n> > web\n> > la convocatoria oficial.... les informare de ello oportunamente.....\n> >\n> > *\n> >\n> > *Formación académica:* Profesional en el área de biología, matemáticas,\n> > física, estadística, meteorología, salud, ingeniería o economía, con\n> > estudios de posgrado en estadística, preferiblemente en epidemiología.\n> >\n> > *Experiencia*: general: 5 años.\n> >\n> > *Experiencia específica*: en modelar y administrar bases de datos,\n> > elaboración de series de tiempo, modelación estadística y conocimiento de\n> > software estadístico. Preferiblemente experiencia en modelación\n> estadística\n> > eventos en salud.\n> >\n> > Condiciones especiales: Para el desarrollo del trabajo se puede\n> > requerir disponibilidad\n> > para viajar a las zonas del proyecto\n> >\n> >\n> > son 14 actividades, de las cuales  quiero destacar:\n> >\n> >\n> > 1.      Proponer al INS y el IDEAM los modelos requeridos por el Sistema\n> de\n> > Vigilancia SIVIGILA, especificando la metodología para obtenerlos. De ser\n> > necesario incluir otras variables como socioeconómicas.\n> >\n> > 2.      Generar el modelo de acuerdo con la valoración efectuada en el\n> > numeral anterior, que permita tener la predicción con el menor grado de\n> > incertidumbre, de acuerdo con la información existente.\n> >\n> > 3.      Validar el modelo con datos históricos.\n> >\n> > 4.      Validar el modelo con datos de campo actuales.\n> >\n> >\n> > *\n> >\n> > *\n> > --\n> > Luis Alfonso LOPEZ ALVAREZ\n> > MSc- Meteorologia - Ing. Sistemas\n> > PROFESIONAL ESPECIALIZADO (E)\n> > METEOROLOGO - IDEAM\n> > e-mail: alflopez at ideam.gov.co\n> >           a.lopez.wrf at gmail.com\n> >           acalopez97 at yahoo.com\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n>\n> --\n> Patricia García González\n> r-es.org/\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n>\n> ---------- Mensaje reenviado ----------\n> From: Montserrat Girabent <girabent at csc.uic.es>\n> To: cesar procopio <cesarpro at yahoo.com>, r-help-es at r-project.org\n> Date: Tue, 17 Aug 2010 18:10:23 +0200\n> Subject: Re: [R-es] Leer archivos .xls\n> No he usado nunca la función que te da problemas, pero si he leido datos de\n> un excel con la siguiente,\n> * *\n>\n> *library(RODBC)*\n>\n> *data=odbcConnectExcel(file.choose())*\n>\n> *sqlTables(data)*\n>\n> *D=sqlFetch(data, \"P5\")*\n>\n> *odbcClose(data)*\n>\n>\n> donde, data es el nobre del archivo excel que hemos abiertyo i p5, la hoja\n> de este excel de la que queremos leer los datos.\n>\n> espero que te ayude.\n>\n> Montserrat\n>\n>\n>\n> Montserrat Girabent Farrés\n> Cap d'àrea de Bioestadística, Epidemiologia i Salut Pública.\n> Departament de Ciències Bàsiques.\n> Facultat de Medicina i Ciències de la Salut\n> Universitat Internacional de Catalunya (UIC)\n> Josep Trueta s/n – 08195 Sant Cugat del Vallès\n> Tel.:(+34) 935 042 017\n> girabent at csc.uic.es\n> www.uic.es\n>\n>\n> 2010/8/17 Carlos J. Gil Bellosta <cgb at datanalytics.com>\n>\n> > Esto podría ayudarte:\n> >\n> >\n> >\n> http://r.789695.n4.nabble.com/Failed-install-of-package-xlsReadWrite-td1476880.html\n> >\n> > El no usar Excel y trabajar con ficheros de texto, también.\n> >\n> > Un saludo,\n> >\n> > Carlos J. Gil Bellosta\n> > http://www.datanalytics.com\n> >\n> >\n> > 2010/8/17 cesar procopio <cesarpro at yahoo.com>:\n> >  > Buen dia:\n> > >\n> > > Tengo que leer archivos .xls y me aparece el siguiente error:\n> > >\n> > > \"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",\n> > from = 1\n> > > )\n> > > Error in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type =\n> > \"data.frame\",  :\n> > >   !! Your installation contains the cran placeholder shlib (dll/so).\n> > > Please get the regular shlib (420 KB) by executing the following\n> command:\n> > >    xls.getshlib()\n> > > Info, forum, issue tracker and manual download at\n> http://www.swissr.org.\n> > > BACKGROUND: Our .........\"\n> > >\n> > > Agradezco todo tipo de informacion que me pueda ayudar.\n> > >\n> > > Gracias!!\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n>\n> ---------- Mensaje reenviado ----------\n> From: Jorge Ivan Velez <jorgeivanvelez at gmail.com>\n> To: cesar procopio <cesarpro at yahoo.com>\n> Date: Tue, 17 Aug 2010 12:17:57 -0400\n> Subject: Re: [R-es] Leer archivos .xls\n> Buenas tardes Cesar,\n>\n> Te sugiero usar RODBC a traves de la siguiente funcion, donde \"yourfile\" es\n> el nombre del archivo de Excel, incluyendo la ruta., e.g. \"C:/datos/aa.xls\"\n> y \"worksheet\" corresponde a la hoja donde tienes la informacion, e.g.\n> \"Hoja1\".\n>\n> # From Excel\n> FromExcel <- function(yourfile,worksheet){\n>  require(RODBC)\n>  channel <- odbcConnectExcel(yourfile)\n>  mydata <- sqlFetch(channel, worksheet)\n>  odbcClose(channel)\n>  attach(mydata)\n>  mydata\n> }\n>\n> install.packaes(\"RODBC\")\n> misdatos <- FromExcel(\"C:/datos/aa.xls\", \"Hoja1\")\n> head(midatos)\n>\n> Un saludo,\n>\n>                    Jorge Ivan Velez\n>\n>\n> On Tue, Aug 17, 2010 at 8:49 AM, cesar procopio <> wrote:\n>\n> > Buen dia:\n> >\n> > Tengo que leer archivos .xls y me aparece el siguiente error:\n> >\n> > \"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",\n> > from = 1\n> > )\n> > Error in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type =\n> > \"data.frame\",  :\n> >   !! Your installation contains the cran placeholder shlib (dll/so).\n> > Please get the regular shlib (420 KB) by executing the following command:\n> >    xls.getshlib()\n> > Info, forum, issue tracker and manual download at http://www.swissr.org.\n> > BACKGROUND: Our .........\"\n> >\n> > Agradezco todo tipo de informacion que me pueda ayudar.\n> >\n> > Gracias!!\n> >\n> >\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n>        [[alternative HTML version deleted]]\n>\n>\n>\n>\n> ---------- Mensaje reenviado ----------\n> From: \"Olivier Nuñez\" <onunez at iberstat.es>\n> To: cesar procopio <cesarpro at yahoo.com>\n> Date: Tue, 17 Aug 2010 21:45:54 +0200\n> Subject: Re: [R-es] Leer archivos .xls\n> Cesar,\n>\n> si no tienes Windows (es mi caso), puedes utilizar la función \"read.xls\"\n> del paquete \"gdata\".\n> Yo la utilizo frecuentemente y funciona perfectamente.\n> Un saludo\n>\n> -- ____________________________________\n>\n> Olivier G. Nuñez\n> Email: onunez at iberstat.es\n> Tel : +34 663 03 69 09\n> Web: http://www.iberstat.es\n>\n> ____________________________________\n>\n>\n>\n>\n> El 17/08/2010, a las 14:49, cesar procopio escribió:\n>\n>  Buen dia:\n>>\n>> Tengo que leer archivos .xls y me aparece el siguiente error:\n>>\n>> \"> read.xls( \"aa.xls\", colNames = TRUE, sheet = 1, type = \"data.frame\",\n>> from = 1\n>> )\n>> Error in read.xls(\"aa.xls\", colNames = TRUE, sheet = 1, type =\n>> \"data.frame\",  :\n>>  !! Your installation contains the cran placeholder shlib (dll/so).\n>> Please get the regular shlib (420 KB) by executing the following command:\n>>   xls.getshlib()\n>> Info, forum, issue tracker and manual download at http://www.swissr.org.\n>> BACKGROUND: Our .........\"\n>>\n>> Agradezco todo tipo de informacion que me pueda ayudar.\n>>\n>> Gracias!!\n>>\n>>\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nIng. Agr. Gustavo Giménez\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "2010/8/17 <r-help-es-request at r-project.org>\n\n> Envíe los mensajes para la lista R-help-es a\n>        r-help-es at r-project.org\n>\n> Para subscribirse o anular su subscripción a través de la WEB\n>  ",
       "thread_id": "thread-8c7b65d815b6",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100817/5956240d/attachment.pl"
+      ]
     },
     {
       "id": "msg-e30122d0eff8",
@@ -365,11 +395,14 @@
       "subject_clean": "[R-es] Ayuda en mineria de datos",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100819/fc881094/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100819/fc881094/attachment.pl>",
+      "body_plain": "Saludos Cordiales\nSoy de Ecuador y me he enterado de este foro de R y me parece muy chevere (Interesante) poder compartir los conocimientos y más que todo solicitar algunos tips sobre este paquete que en el Ecuador es un software nuevo y que está tomando fuerza.\n \nLes comento que estoy tratando de desarrollar un modelo para la detección de lavado de dinero y de las múltiples documentos, indican que el primer paso es conocer completamente al cliente (osea que es eso) para lo cual la mayoría utiliza paquetes o software para minería de datos, obviamente los que mencionan esto son parte de SPSS o SAS pero quisiera sabe si alguien a realizado este tipo de análisis con R. En los últimos días he revisado algunas fuentes y sugieren el uso de Rattle en R pero no se que tal es.\n \nAtte\nDiego Maldonado\nQuito-Ecuador\n\n\n      \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Saludos Cordiales\nSoy de Ecuador y me he enterado de este foro de R y me parece muy chevere (Interesante) poder compartir los conocimientos y más que todo solicitar algunos tips sobre este paquete que",
       "thread_id": "thread-e30122d0eff8",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100819/fc881094/attachment.pl"
+      ]
     },
     {
       "id": "msg-532d4a47eec2",
@@ -415,11 +448,14 @@
       "references": [
         "<4C6D61D5.5070902@bariloche.inta.gov.ar>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100819/573c931d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100819/573c931d/attachment.pl>",
+      "body_plain": "Buenas tardes Alejandro,\n\nUna manera es controlando los limites del eje x usando el argumento xlim en\nmatplot() como sigue:\n\n# 5 series de 84 puntos\n\nx <- rnorm(84)\n\ny <- replicate(4, 3 + 1.5*x + rnorm(84))\n\nmatplot(sort(x), y[order(x),], type = 'l', lty = 1)\n\n\n # 2 series de 29 puntos\n\nxn <- rnorm(29, 2, 0.5)\n\nyn <- replicate(2, 3 + 1.5*xn + rnorm(29, 2, 3))\n\nmatplot(sort(xn), yn[order(xn),], type = 'l', lty = 2, col = c('orange',\n'gold'), lwd = 2)\n\n\n # rangos\n\nrangox <- range(x, xn)\n\nrangoy <- range(y, yn)\n\n\n # grafico de las primeras series de 84 puntos\n\nmatplot(sort(x), y[order(x),], type = 'l', lty = 1, xlim = rangox, ylim =\nrangoy)\n\n\n# grafico de las dos series de 29 puntos\n\nmatpoints(sort(xn), yn[order(xn),], type = 'l', col = 'orange')\n\n\n# linea para diferenciar unas series de las otras\n\nabline(v = min(xn), col = 1, lty = 2, lwd = 2)\n\nEspero sea de utilidad,\n\n                            Jorge Ivan Velez\n\n\n2010/8/19 Alejandro Martinez Meier <>\n\n> Estimados\n> Quisiera hacer un gráfico tipo matplot y luego superponer sobre el mismo\n> otro y otro y otro... (par(new=T))\n> El problema que tengo es que por ejemplo el primer gráfico tiene 84\n> elementos para ser graficas, pero el segundo solo 29 motivo por el cual los\n> gráficos quedan con el eje x corrido\n> Necesito que el segundo tenga 84 valores por lo que se me ocurrio hacer\n>  que xx<-c(rep(NA,55),seq(along=mv[,1])) y usar xx como eje x del gráfico en\n> este caso de la siguiente manera\n> par(new=T)\n>  xx<-c(rep(NA,55),seq(along=mv[,1]))\n>        if (length(mv==84))\n>            {\n>            matplot(seq(along=mv[,1]),mv,type=\"n\",ylim=c(-5,15),ylab=\"\n> \",xlab=\" \",las=1)#seq(along=mv[,1])\n>            matlines(seq(along=mv[,1]),mv,lty=2,lwd=1) #courbes brutes\n>            matlines(seq(along=mv[,1]),mvl,lty=1,lwd=2)\n>            }\n>        else\n>            {\n>            matplot(xx,mv,type=\"n\",ylim=c(-5,15),ylab=\" \",xlab=\"\n> \",las=1)#seq(along=mv[,1])\n>            matlines(xx,mv,lty=2,lwd=1) #courbes brutes\n>            matlines(xx,mvl,lty=1,lwd=2)\n>            }\n> pero no esta queriendo hacerlo\n> alguien tiene una solución?\n> gracias, Alejandro\n>\n>\n>\n> --\n> Unidad de Genética Ecológica y Mejoramiento Forestal tel +54-+2944-422731\n> int 237 fax +54-+2944-424991 correo electrónico\n> almarti at bariloche.inta.gov.ar\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes Alejandro,\n\nUna manera es controlando los limites del eje x usando el argumento xlim en\nmatplot() como sigue:\n\n# 5 series de 84 puntos\n\nx <- rnorm(84)\n\ny <- replicate(4, 3 + 1.5*x + rnor",
       "thread_id": "thread-532d4a47eec2",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100819/573c931d/attachment.pl"
+      ]
     },
     {
       "id": "msg-5ac657bab9b3",
@@ -467,11 +503,14 @@
       "subject_clean": "[R-es] consultor estadistico y R...",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100826/8a8357d3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100826/8a8357d3/attachment.pl>",
+      "body_plain": "*Hola a todos.. .gracias a aquellos(as) que me han enviado su curriculo ...\n\nCon el proposito de hacer finalmente la convocatoria para el consultor\nestadistico, preciso que aquellos que tengan inrteres, me envien al menos\nsus datos personales y e-mail para hacerles una invitacion formal a\nparticipar en el proceso...\n\nMe confirman que ahora el proceso de seleccion se hace en principio\ninvitando a los posibles candidatos formalmente a hacer parte del\nproceso....\n\nAsi que estoy atento a sus manifestaciones de interes... y nuevamente\ngracias por su atencion...\n\nHasta Pronto\n*\n---\nLuis Alfonso LOPEZ ALVAREZ\nMSc- Meteorologia - Ing. Sistemas\nPROFESIONAL ESPECIALIZADO (E)\nMETEOROLOGO - IDEAM\ne-mail: alflopez at ideam.gov.co\n           a.lopez.wrf at gmail.com\n           acalopez97 at yahoo.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "*Hola a todos.. .gracias a aquellos(as) que me han enviado su curriculo ...\n\nCon el proposito de hacer finalmente la convocatoria para el consultor\nestadistico, preciso que aquellos que tengan inrtere",
       "thread_id": "thread-87b3d17b8111",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100826/8a8357d3/attachment.pl"
+      ]
     },
     {
       "id": "msg-eb9bf20c73e6",
@@ -483,11 +522,14 @@
       "subject_clean": "[R-es] modelo linear segmentado",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100827/056bfe7b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100827/056bfe7b/attachment.pl>",
+      "body_plain": "Estimados,\n\nestoy tratando de ajustar un modelo lineal simple de dos segmentos con\npendientes, ordenadas al origen y punto de quiebre desconocidos, es decir\nque pueden variar libremente.\nIntente usar la función \"segmented\" del paquete del mismo nombre, pero me da\nsiempre el siguiente error:\n\nError en model.matrix(seg.Z, data = eval(obj$call$data)) :\n        el argumento \"seg.Z\" está ausente, sin valor por omisión\n\nAbajo pego el script que estoy usando y el objeto con los datos \"lcru\"\n\n\n> lcru\n\n     logAC logLC\n1    0.71  0.50\n2    0.81  0.59\n3    0.82  0.61\n4    0.83  0.61\n5    0.92  0.73\n6    0.97  0.77\n7    0.99  0.68\n8    1.04  0.83\n9    1.10  0.90\n10   1.10  0.87\n11   1.11  0.89\n12   1.18  0.97\n13   1.19  0.94\n14   1.19  0.99\n15   1.19  0.97\n16   1.20  1.01\n17   1.27  1.07\n18   1.30  1.11\n19   1.33  1.13\n20   1.33  1.15\n21   1.35  1.16\n22   1.35  1.15\n23   1.36  1.17\n24   1.37  1.18\n25   1.38  1.19\n26   1.38  1.18\n27   1.38  1.21\n28   1.38  1.19\n29   1.40  1.17\n30   1.40  1.23\n31   1.41  1.22\n32   1.41  1.23\n33   1.41  1.22\n34   1.42  1.16\n35   1.43  1.25\n36   1.45  1.27\n37   1.46  1.28\n38   1.47  1.28\n39   1.48  1.33\n40   1.49  1.32\n41   1.49  1.33\n42   1.49  1.29\n43   1.49  1.33\n44   1.50  1.32\n45   1.50  1.34\n46   1.52  1.34\n47   1.52  1.35\n48   1.53  1.34\n49   1.53  1.35\n50   1.54  1.38\n51   1.55  1.39\n52   1.56  1.40\n53   1.57  1.39\n54   1.57  1.41\n55   1.59  1.42\n56   1.60  1.43\n57   1.60  1.41\n58   1.61  1.46\n59   1.61  1.44\n60   1.62  1.44\n61   1.62  1.45\n62   1.62  1.48\n63   1.63  1.47\n64   1.63  1.46\n65   1.64  1.53\n66   1.64  1.51\n67   1.65  1.49\n68   1.65  1.49\n69   1.65  1.46\n70   1.66  1.51\n71   1.66  1.52\n72   1.66  1.51\n73   1.66  1.48\n74   1.66  1.51\n75   1.67  1.51\n76   1.67  1.52\n77   1.68  1.51\n78   1.69  1.54\n79   1.69  1.54\n80   1.70  1.56\n81   1.70  1.57\n82   1.70  1.55\n83   1.71  1.56\n84   1.71  1.57\n85   1.71  1.59\n86   1.73  1.59\n87   1.73  1.61\n88   1.74  1.61\n89   1.74  1.61\n90   1.76  1.65\n91   1.76  1.59\n92   1.76  1.58\n93   1.77  1.66\n94   1.78  1.63\n95   1.78  1.66\n96   1.78  1.66\n97   1.78  1.66\n98   1.79  1.68\n99   1.79  1.64\n100  1.79  1.68\n101  1.80  1.70\n102  1.81  1.73\n103  1.81  1.71\n104  1.81  1.73\n105  1.83  1.73\n106  1.83  1.67\n107  1.83  1.74\n108  1.83  1.72\n109  1.83  1.74\n110  1.83  1.72\n111  1.84  1.76\n112  1.84  1.77\n113  1.84  1.77\n114  1.85  1.80\n115  1.86  1.81\n116  1.86  1.87\n117  1.87  1.84\n118  1.88  1.83\n119  1.89  1.89\n120  1.90  1.83\n121  1.92  1.88\n122  1.94  1.91\n123  1.95  1.97\n\n\n> attach(lcru)\n> Lmodel<-lm(logLC~logAC)\n> Lmodel\n\nCall:\nlm(formula = y ~ x)\n\nCoefficients:\n(Intercept)            x\n    -0.4026       1.1607\n\n\n> segmented(Lmodel, Z=logAC, psi=1.8)\n\nError en model.matrix(seg.Z, data = eval(obj$call$data)) :\n        el argumento \"seg.Z\" está ausente, sin valor por omisión\n\nEn que me equivoco?\n\n\nDesde ya gracias!\n\n-- \nLic. Nahuel E. Farias\nLaboratorio de Invertebrados\nDepartamento de Biología\nFacultad de Ciencias Exactas y Naturales,\nUniversidad Nacional de Mar Del Plata, CC 1245, CP 7600 Mar del Plata,\nArgentina\nTel. + 54 - 0223 - 4752426 (Int. 466)\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados,\n\nestoy tratando de ajustar un modelo lineal simple de dos segmentos con\npendientes, ordenadas al origen y punto de quiebre desconocidos, es decir\nque pueden variar libremente.\nIntente usar ",
       "thread_id": "thread-eb9bf20c73e6",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100827/056bfe7b/attachment.pl"
+      ]
     },
     {
       "id": "msg-e06d5313c955",
@@ -501,11 +543,14 @@
       "references": [
         "<AANLkTi=2Ymp6JRarpjGHn-zj4xr1ELwuSpt59QcFvvTb@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100827/2fcd1d19/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100827/2fcd1d19/attachment.pl>",
+      "body_plain": "Hola Nahuel,\n\nLeyendo la ayuda, veo que debes especificar el modelo y luego seg.Z (tienes\nZ) como una formula. En tu caso seria lo siguiente:\n\nsegmented(Lmodel, seg.Z=~logAC, psi=1.8)\n# Call: segmented.lm(obj = Lmodel, seg.Z = ~logAC, psi = 1.8)\n#\n# Meaningful coefficients of the linear terms:\n# (Intercept)        logAC     U1.logAC\n#    -0.3209       1.0989       0.6926\n#\n#Estimated Break-Point(s) psi1.logAC : 1.753\n\nEspero sea de utilidad,\n\n                            Jorge Ivan Velez\n\n\n2010/8/27 Nahuel Farias <>\n\n> Estimados,\n>\n> estoy tratando de ajustar un modelo lineal simple de dos segmentos con\n> pendientes, ordenadas al origen y punto de quiebre desconocidos, es decir\n> que pueden variar libremente.\n> Intente usar la función \"segmented\" del paquete del mismo nombre, pero me\n> da\n> siempre el siguiente error:\n>\n> Error en model.matrix(seg.Z, data = eval(obj$call$data)) :\n>        el argumento \"seg.Z\" está ausente, sin valor por omisión\n>\n> Abajo pego el script que estoy usando y el objeto con los datos \"lcru\"\n>\n>\n> > lcru\n>\n>     logAC logLC\n> 1    0.71  0.50\n> 2    0.81  0.59\n> 3    0.82  0.61\n> 4    0.83  0.61\n> 5    0.92  0.73\n> 6    0.97  0.77\n> 7    0.99  0.68\n> 8    1.04  0.83\n> 9    1.10  0.90\n> 10   1.10  0.87\n> 11   1.11  0.89\n> 12   1.18  0.97\n> 13   1.19  0.94\n> 14   1.19  0.99\n> 15   1.19  0.97\n> 16   1.20  1.01\n> 17   1.27  1.07\n> 18   1.30  1.11\n> 19   1.33  1.13\n> 20   1.33  1.15\n> 21   1.35  1.16\n> 22   1.35  1.15\n> 23   1.36  1.17\n> 24   1.37  1.18\n> 25   1.38  1.19\n> 26   1.38  1.18\n> 27   1.38  1.21\n> 28   1.38  1.19\n> 29   1.40  1.17\n> 30   1.40  1.23\n> 31   1.41  1.22\n> 32   1.41  1.23\n> 33   1.41  1.22\n> 34   1.42  1.16\n> 35   1.43  1.25\n> 36   1.45  1.27\n> 37   1.46  1.28\n> 38   1.47  1.28\n> 39   1.48  1.33\n> 40   1.49  1.32\n> 41   1.49  1.33\n> 42   1.49  1.29\n> 43   1.49  1.33\n> 44   1.50  1.32\n> 45   1.50  1.34\n> 46   1.52  1.34\n> 47   1.52  1.35\n> 48   1.53  1.34\n> 49   1.53  1.35\n> 50   1.54  1.38\n> 51   1.55  1.39\n> 52   1.56  1.40\n> 53   1.57  1.39\n> 54   1.57  1.41\n> 55   1.59  1.42\n> 56   1.60  1.43\n> 57   1.60  1.41\n> 58   1.61  1.46\n> 59   1.61  1.44\n> 60   1.62  1.44\n> 61   1.62  1.45\n> 62   1.62  1.48\n> 63   1.63  1.47\n> 64   1.63  1.46\n> 65   1.64  1.53\n> 66   1.64  1.51\n> 67   1.65  1.49\n> 68   1.65  1.49\n> 69   1.65  1.46\n> 70   1.66  1.51\n> 71   1.66  1.52\n> 72   1.66  1.51\n> 73   1.66  1.48\n> 74   1.66  1.51\n> 75   1.67  1.51\n> 76   1.67  1.52\n> 77   1.68  1.51\n> 78   1.69  1.54\n> 79   1.69  1.54\n> 80   1.70  1.56\n> 81   1.70  1.57\n> 82   1.70  1.55\n> 83   1.71  1.56\n> 84   1.71  1.57\n> 85   1.71  1.59\n> 86   1.73  1.59\n> 87   1.73  1.61\n> 88   1.74  1.61\n> 89   1.74  1.61\n> 90   1.76  1.65\n> 91   1.76  1.59\n> 92   1.76  1.58\n> 93   1.77  1.66\n> 94   1.78  1.63\n> 95   1.78  1.66\n> 96   1.78  1.66\n> 97   1.78  1.66\n> 98   1.79  1.68\n> 99   1.79  1.64\n> 100  1.79  1.68\n> 101  1.80  1.70\n> 102  1.81  1.73\n> 103  1.81  1.71\n> 104  1.81  1.73\n> 105  1.83  1.73\n> 106  1.83  1.67\n> 107  1.83  1.74\n> 108  1.83  1.72\n> 109  1.83  1.74\n> 110  1.83  1.72\n> 111  1.84  1.76\n> 112  1.84  1.77\n> 113  1.84  1.77\n> 114  1.85  1.80\n> 115  1.86  1.81\n> 116  1.86  1.87\n> 117  1.87  1.84\n> 118  1.88  1.83\n> 119  1.89  1.89\n> 120  1.90  1.83\n> 121  1.92  1.88\n> 122  1.94  1.91\n> 123  1.95  1.97\n>\n>\n> > attach(lcru)\n> > Lmodel<-lm(logLC~logAC)\n> > Lmodel\n>\n> Call:\n> lm(formula = y ~ x)\n>\n> Coefficients:\n> (Intercept)            x\n>    -0.4026       1.1607\n>\n>\n> > segmented(Lmodel, Z=logAC, psi=1.8)\n>\n> Error en model.matrix(seg.Z, data = eval(obj$call$data)) :\n>        el argumento \"seg.Z\" está ausente, sin valor por omisión\n>\n> En que me equivoco?\n>\n>\n> Desde ya gracias!\n>\n> --\n> Lic. Nahuel E. Farias\n> Laboratorio de Invertebrados\n> Departamento de Biología\n> Facultad de Ciencias Exactas y Naturales,\n> Universidad Nacional de Mar Del Plata, CC 1245, CP 7600 Mar del Plata,\n> Argentina\n> Tel. + 54 - 0223 - 4752426 (Int. 466)\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Nahuel,\n\nLeyendo la ayuda, veo que debes especificar el modelo y luego seg.Z (tienes\nZ) como una formula. En tu caso seria lo siguiente:\n\nsegmented(Lmodel, seg.Z=~logAC, psi=1.8)\n# Call: segmente",
       "thread_id": "thread-eb9bf20c73e6",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100827/2fcd1d19/attachment.pl"
+      ]
     },
     {
       "id": "msg-23b92de96d05",
@@ -517,11 +562,14 @@
       "subject_clean": "[R-es] Función que transforme variables",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/5cb42e05/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/5cb42e05/attachment.pl>",
+      "body_plain": "Buenas tardes a todos.\nQuisiera saber que debo tener en cuenta cuando realice una función que\ntransforme variables y como resultado de su aplicación obtenga la variable\ntransformada. Deseo recategorizar una variable ordinal (1 a 5) en dos\ncategorias y he pensado algo así:\n\nbaja_satis <- function(f)\n{\nn <- length(f)\nf_cat <- character(length(n))\nfor(i in 1:n)\n if(f[i] < 4) n[i]== \"Insatisfechos\" else n[i]==\"Satisfechos\"\nf_cat\n}\n\nEvidentemente me falta conocer algunos aspectos de la construcción de\nfunciones.\n\nDesde ya les doy las gracias por su ayuda.\n\n-- \nLuis Alberto López González\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes a todos.\nQuisiera saber que debo tener en cuenta cuando realice una función que\ntransforme variables y como resultado de su aplicación obtenga la variable\ntransformada. Deseo recategoriz",
       "thread_id": "thread-23b92de96d05",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/5cb42e05/attachment.pl"
+      ]
     },
     {
       "id": "msg-b40c5ffa919a",
@@ -535,11 +583,14 @@
       "references": [
         "<AANLkTimMg1rEi55msmKVv9wHYzb+32ThQ_zJY45ie+XY@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/b05e8282/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/b05e8282/attachment.pl>",
+      "body_plain": "Hola Luis Alberto,\n\nUna manera es usando ifelse() de la siguiente manera:\n\nFcat <- function(f, a) ifelse(f<a, \"Insatisfecho\", \"Satisfecho\")\n\nFcat(tuvariable, tucriterio)\n\nMas informacion en ?ifelse.\n\nUn saludo,\nJorge Ivan Velez\n\nSent from my HTC Hero on the Sprint Now Network!\n\nOn Aug 30, 2010 5:15 PM, \"Luis Alberto Lopez Gonzalez\" <\nluialopezg at bt.unal.edu.co> wrote:\n\nBuenas tardes a todos.\nQuisiera saber que debo tener en cuenta cuando realice una función que\ntransforme variables y como resultado de su aplicación obtenga la variable\ntransformada. Deseo recategorizar una variable ordinal (1 a 5) en dos\ncategorias y he pensado algo así:\n\nbaja_satis <- function(f)\n{\nn <- length(f)\nf_cat <- character(length(n))\nfor(i in 1:n)\n if(f[i] < 4) n[i]== \"Insatisfechos\" else n[i]==\"Satisfechos\"\nf_cat\n}\n\nEvidentemente me falta conocer algunos aspectos de la construcción de\nfunciones.\n\nDesde ya les doy las gracias por su ayuda.\n\n--\nLuis Alberto López González\n\n       [[alternative HTML version deleted]]\n\n\n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Luis Alberto,\n\nUna manera es usando ifelse() de la siguiente manera:\n\nFcat <- function(f, a) ifelse(f<a, \"Insatisfecho\", \"Satisfecho\")\n\nFcat(tuvariable, tucriterio)\n\nMas informacion en ?ifelse.\n\n",
       "thread_id": "thread-23b92de96d05",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/b05e8282/attachment.pl"
+      ]
     },
     {
       "id": "msg-ce5d1e3d3b30",
@@ -553,11 +604,14 @@
       "references": [
         "<AANLkTimMg1rEi55msmKVv9wHYzb+32ThQ_zJY45ie+XY@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/8b170656/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/8b170656/attachment.pl>",
+      "body_plain": "Hola Luis:\nUna forma más sencilla es usar la función cut que convierte\nvariables numéricas en categóricas:\n\ncut(f, breaks = c(4,5), labels = c(\"Insatisfechos\", \"Satisfechos\"))\n\nUn Saludo\nLuciano\n\n\nEl 30 de agosto de 2010 18:14, Luis Alberto Lopez Gonzalez <\nluialopezg at bt.unal.edu.co> escribió:\n\n> Buenas tardes a todos.\n> Quisiera saber que debo tener en cuenta cuando realice una función que\n> transforme variables y como resultado de su aplicación obtenga la variable\n> transformada. Deseo recategorizar una variable ordinal (1 a 5) en dos\n> categorias y he pensado algo así:\n>\n> baja_satis <- function(f)\n> {\n> n <- length(f)\n> f_cat <- character(length(n))\n> for(i in 1:n)\n>  if(f[i] < 4) n[i]== \"Insatisfechos\" else n[i]==\"Satisfechos\"\n> f_cat\n> }\n>\n> Evidentemente me falta conocer algunos aspectos de la construcción de\n> funciones.\n>\n> Desde ya les doy las gracias por su ayuda.\n>\n> --\n> Luis Alberto López González\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Luis:\nUna forma más sencilla es usar la función cut que convierte\nvariables numéricas en categóricas:\n\ncut(f, breaks = c(4,5), labels = c(\"Insatisfechos\", \"Satisfechos\"))\n\nUn Saludo\nLuciano\n\n\nEl ",
       "thread_id": "thread-23b92de96d05",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100830/8b170656/attachment.pl"
+      ]
     },
     {
       "id": "msg-5a031553b32b",
@@ -572,11 +626,14 @@
         "<AANLkTimMg1rEi55msmKVv9wHYzb+32ThQ_zJY45ie+XY@mail.gmail.com>",
         "<AANLkTinKmtfLOm6vW9zh+YPT6wHVw46=T4zi3LPcr8WL@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/da21026d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/da21026d/attachment.pl>",
+      "body_plain": "Yo utilizaría la función específica que propone RCommander:\n\nDatos -> Modificar variables del conjunto de datos activo -> Recodificar \nvariables\n\nEl código que se genera es:\n\nPrimero creo una variable que se parece a la del ejemplo, también \nmediante el menú de Rcommander:\n\n > binomiales <- as.data.frame(matrix(1+rbinom(20*1, size=4, prob=0.5), \nncol=1))\n > rownames(binomiales) <- paste(\"event\", 1:20, sep=\"\")\n > colnames(binomiales) <- \"sample\"\n > binomiales$sample\n [1] 4 3 3 4 3 5 2 3 1 1 1 2 5 1 4 5 1 2 2 3\n\nA continuación recodifico según deseos Luis:\n\n > binomiales$variable <- recode(binomiales$sample, \n'1:3=\"Insatisfechos\";c( 4,5) = \"Satisfechos\"; ', as.factor.result=TRUE)\n > binomiales$variable\n [1] Satisfechos   Insatisfechos Insatisfechos Satisfechos   \nInsatisfechos Satisfechos \n [7] Insatisfechos Insatisfechos Insatisfechos Insatisfechos \nInsatisfechos Insatisfechos\n[13] Satisfechos   Insatisfechos Satisfechos   Satisfechos   \nInsatisfechos Insatisfechos\n[19] Insatisfechos Insatisfechos\nLevels: Insatisfechos Satisfechos\n\nLa orden \"recode\" es muy facilita, flexible (incluye lo y hi como \nvalores especiales y la opción else para lo no especificado) y hace \nexactamente lo que programa Luis.\n\nUn saludo.\n\n\n\nLuciano Selzer escribió:\n> Hola Luis:\n> Una forma más sencilla es usar la función cut que convierte\n> variables numéricas en categóricas:\n>\n> cut(f, breaks = c(4,5), labels = c(\"Insatisfechos\", \"Satisfechos\"))\n>\n> Un Saludo\n> Luciano\n>\n>\n> El 30 de agosto de 2010 18:14, Luis Alberto Lopez Gonzalez <\n> luialopezg at bt.unal.edu.co> escribió:\n>\n>   \n>> Buenas tardes a todos.\n>> Quisiera saber que debo tener en cuenta cuando realice una función que\n>> transforme variables y como resultado de su aplicación obtenga la variable\n>> transformada. Deseo recategorizar una variable ordinal (1 a 5) en dos\n>> categorias y he pensado algo así:\n>>\n>> baja_satis <- function(f)\n>> {\n>> n <- length(f)\n>> f_cat <- character(length(n))\n>> for(i in 1:n)\n>>  if(f[i] < 4) n[i]== \"Insatisfechos\" else n[i]==\"Satisfechos\"\n>> f_cat\n>> }\n>>\n>> Evidentemente me falta conocer algunos aspectos de la construcción de\n>> funciones.\n>>\n>> Desde ya les doy las gracias por su ayuda.\n>>\n>> --\n>> Luis Alberto López González\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>>     \n>\n> \t[[alternative HTML version deleted]]\n>\n>   \n> ------------------------------------------------------------------------\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>   \n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yo utilizaría la función específica que propone RCommander:\n\nDatos -> Modificar variables del conjunto de datos activo -> Recodificar \nvariables\n\nEl código que se genera es:\n\nPrimero creo una variable",
       "thread_id": "thread-23b92de96d05",
       "thread_depth": 2,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/da21026d/attachment.pl"
+      ]
     },
     {
       "id": "msg-c18bc78cfc8e",
@@ -608,11 +665,14 @@
       "subject_clean": "[R-es] Contratista Proyecto estadistico....",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/64eea250/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/64eea250/attachment.pl>",
+      "body_plain": "*Hola a todos... finalmente ha salido oficial la convocatoria para el modelo\nde malaria y datos climaticos....*\n*Estamos en proceso de evaluacion de las hojas de vida que me enviaron... si\nalguien mas quiere participar de la convocatoria, por favor envienme su\ncurriculum completo (con soportes), para incluirlos en el proceso...*\n**\n*Les recuedo que se trata de elaborar un modelo para alerta temprana, en el\nque se relacionen las variables temperatura y precipitacion con los casos de\nmalaria.... es un contrato a 10 meses, con un valor de U$20.000=*\n**\n*Hasta Pronto*\n\n\n-- \nLuis Alfonso LOPEZ ALVAREZ\nMSc- Meteorologia - Ing. Sistemas\nPROFESIONAL ESPECIALIZADO (E)\nMETEOROLOGO - IDEAM\ne-mail: alflopez at ideam.gov.co\n           a.lopez.wrf at gmail.com\n           acalopez97 at yahoo.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "*Hola a todos... finalmente ha salido oficial la convocatoria para el modelo\nde malaria y datos climaticos....*\n*Estamos en proceso de evaluacion de las hojas de vida que me enviaron... si\nalguien mas",
       "thread_id": "thread-48e727671223",
       "thread_depth": 0,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/64eea250/attachment.pl"
+      ]
     },
     {
       "id": "msg-2688f883a2b4",
@@ -626,11 +686,14 @@
       "references": [
         "<AANLkTinQfmopgh+S69-K8KcgmoM6rVMF8ssFNYdtESJF@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/92450c43/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/92450c43/attachment.pl>",
+      "body_plain": "*Una cosa mas... el plazo maximo para recibir las hojas de vida es el 02 de\nseptiembre de 2010... animo... espero su participacion activa...*\n\n*Hasta Pronto*\n\n\nEl 31 de agosto de 2010 18:59, Luis Alfonso LOPEZ ALVAREZ <\na.lopez.wrf at gmail.com> escribió:\n\n> *Hola a todos... finalmente ha salido oficial la convocatoria para el\n> modelo de malaria y datos climaticos....*\n> *Estamos en proceso de evaluacion de las hojas de vida que me enviaron...\n> si alguien mas quiere participar de la convocatoria, por favor envienme su\n> curriculum completo (con soportes), para incluirlos en el proceso...*\n> **\n> *Les recuedo que se trata de elaborar un modelo para alerta temprana, en\n> el que se relacionen las variables temperatura y precipitacion con los casos\n> de malaria.... es un contrato a 10 meses, con un valor de U$20.000=*\n> **\n> *Hasta Pronto*\n>\n>\n> --\n> Luis Alfonso LOPEZ ALVAREZ\n> MSc- Meteorologia - Ing. Sistemas\n> PROFESIONAL ESPECIALIZADO (E)\n> METEOROLOGO - IDEAM\n> e-mail: alflopez at ideam.gov.co\n>            a.lopez.wrf at gmail.com\n>            acalopez97 at yahoo.com\n>\n\n\n\n-- \nLuis Alfonso LOPEZ ALVAREZ\nMSc- Meteorologia - Ing. Sistemas\nPROFESIONAL ESPECIALIZADO (E)\nMETEOROLOGO - IDEAM\ne-mail: alflopez at ideam.gov.co\n           a.lopez.wrf at gmail.com\n           acalopez97 at yahoo.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "*Una cosa mas... el plazo maximo para recibir las hojas de vida es el 02 de\nseptiembre de 2010... animo... espero su participacion activa...*\n\n*Hasta Pronto*\n\n\nEl 31 de agosto de 2010 18:59, Luis Alfo",
       "thread_id": "thread-48e727671223",
       "thread_depth": 1,
-      "month": "2010-08"
+      "month": "2010-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20100831/92450c43/attachment.pl"
+      ]
     }
   ],
   "threads": [

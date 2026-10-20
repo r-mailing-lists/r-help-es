@@ -34,11 +34,14 @@
         "<4E35B306.4030704@gmail.com>",
         "<CAFKNbkKVbhyA_oafXgVmCGt9ftNsUZfB-KXyJFK+bnS0nBM-qg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/792213e6/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/792213e6/attachment.pl>",
+      "body_plain": "Hola.\n\nNo es eso exactamente, me refiero a los llamados  modelos de regresión \nheterocedástica, dónde se modela la varianza,. por ejemplo con \nlog(sigma)=bZ con Z un conjunto de covariables que explican la \nheterocedasticidad.\n\nEn el paquete statmod he encontrado la función /remlscore/ que asume un \nmodelo de regresión heterocedástica , pero sólo para variables \ndependientes continuas.\n\n\nEl 01/08/11 01:16, Carlos Ortega escribió:\n> Hola,\n>\n> Si los errores (entiendo que te refieres a los residuos) no son\n> homocedasticos entonces tienes que utilizar un modelo de regresión\n> (logística) que permita eliminar ( o reducir considerablemente ) esa\n> variabilidad.\n>\n> Esto se consigue introduciendo una función ( polinomica, logaritmos )\n> bien en la variable \"y\" o en las variables \"x\". La elección de un tipo\n> de función u otro depende de la variabilidad que muestren los\n> residuos. Si presentan curvatura entonces ajustaras tu modelo con un\n> polinomio sobre las \"x\", si  es creciente/decreciente ( pero lineal )\n> en ese caso el modelo a ajustar es uno del tipo logarítmico.\n>\n> Saludos\n> Carlos Ortega\n> Www.qualityexcellence.es\n>\n> On Sunday, July 31, 2011, jose luis cañadas<canadasreche at gmail.com>  wrote:\n>> Hola a todos.\n>>\n>> ¿Cómo puedo ajustar un modelo de regresión logística en el que la\n>> varianza de los errores no son iguales, sino que esta puede ser modelada\n>> por otras variables ?\n>> ¿Utilizando modelos mixtos o voy desencaminado?\n>>\n>>\n>> Gracias..\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola.\n\nNo es eso exactamente, me refiero a los llamados  modelos de regresión \nheterocedástica, dónde se modela la varianza,. por ejemplo con \nlog(sigma)=bZ con Z un conjunto de covariables que explic",
       "thread_id": "thread-63c72ae617b4",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/792213e6/attachment.pl"
+      ]
     },
     {
       "id": "msg-b5d6b2cb8c16",
@@ -68,11 +71,14 @@
       "references": [
         "<1311929625.95075.YahooMailNeo@web29608.mail.ird.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/728d6050/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/728d6050/attachment.pl>",
+      "body_plain": "Gracias por vuestras respuestas. Al final, este script me resolvió estupendamente: \n> library(plyr)\n \n> ddply(Datos,\"arte\",function(X) data.frame(wmn=weighted.mean(X$talla, \n+     X$ejemplares), \n+     mn=mean(X$talla)))\n \n \n    arte                      wmn            mn\n1   BACA                33.362       40.120\n2   BETA                 26.566       28.654\n3 PAREJA              38.9289     42.278\n \n \n De esta forma obtengo una media ponderada de la talla (en funcion de los ejemplares) para cada tipo de arte, y tambien la media aritmetica.\nDe: jose cebrian <pepeceb at yahoo.es>\nPara: \"R-help-es at r-project.org\" <R-help-es at r-project.org>\nEnviado: viernes 29 de julio de 2011 10:53\nAsunto: [R-es] Media Ponderada\n\nHola a todos.\nYa he escrito sobre esto pero vuelvo a no ser capaz de resolver una cosa \n\nTengo este archivo\n\n\n\naño   mes      fecha  puerto           barco   origen       arte        \n   \n 2007 enero 2007-01-04 Ribeira  juan        Norte     PAREJA     \n 2007 enero 2007-01-04 Ribeira    luis        -Norte     BETA   \n 2007 enero 2007-01-04 Ribeira  pedro     Norte     PAREJA     \n 2007 enero 2007-01-04 Ribeira    marcosNorte     BACA    \n 2007 enero 2007-01-04 Ribeira       nolo    Norte     GNR   \n2007 enero 2007-01-04 Ribeira      bein     Norte     TNF    \n\n p.desem  talla ejemplares \n   1485        30          6     \n   1485         31         18    \n    1485         32         18    \n    1485         33         12     \n   1485         57         12     \n    1485         35          6    \n\n\n\nPuedo hallar la Media Ponderada de la Talla en funcion de los ejemplares (weighted.mean (talla, ejemplares))\nPero no soy capaz de hallar la media ponderada en funcion del arte\n\nTal que me quede algo asi  \n\n  BACA     BETA   PAREJA \n40.12        28.66    42.27\n\nEsto me sale con      tapply(talla+ejemplares,arte, weighted.mean, na.rm=TRUE)\n\n\nLo que pasa es que esto es la media y yo quiero la media ponderada\n\nBueno, gracias por leerme\nSaludos\nJocedo\n\n    [[alternative HTML version deleted]]\n\n\n_______________________________________________\nR-help-es mailing list\nR-help-es at r-project.org\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Gracias por vuestras respuestas. Al final, este script me resolvió estupendamente: \n> library(plyr)\n \n> ddply(Datos,\"arte\",function(X) data.frame(wmn=weighted.mean(X$talla, \n+     X$ejemplares), \n+   ",
       "thread_id": "thread-e99333b0fd6f",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/728d6050/attachment.pl"
+      ]
     },
     {
       "id": "msg-b52e2ec6f86f",
@@ -87,11 +93,14 @@
         "<4E256895.309@um.es>",
         "<CAPRmSMEcU3BcgTB5_=6WbgUsnajX_4FJZxxd=wjW=1rvwcQz3w@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/6ea6661d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/6ea6661d/attachment.pl>",
+      "body_plain": "Creo que el paquete 'demography' calcula la tabla de vida a partir de un \nvector de tasas por grupos de edad.\n\nSi como comentas los datos esta en una tabla de duraciones de \nseguimiento por individuo y estado de la censura. Deberás derivar \nprimero las tasas por grupos de edad. Según el numero de casos que \ntengas: puede usar Survival o Epi para ello.\n\nSaludos.\n\nEl 19/07/2011 13:29, Gregorio R. Serrano escribió:\n> Hola \"individuo\"\n>\n> El paquete demography va en la línea de lo que quieres. Yo también miraría\n> el paquete actuar.\n>\n> Un saludo\n> Gregorio R. Serrano\n>\n> El 19 de julio de 2011 13:20, Antonio Maurandi López<amaurandi at um.es>escribió:\n>\n>> Hola gente!\n>>      ¿Hay alguna función que me calcule los parámetros de una tabla de\n>> vida dados los datos referentes a estado (censurado o no, en mi caso no\n>> hay censurados) y el tiempo de vida.?\n>>\n>> ¿que paquete me recomendáis?\n>>\n>> D, d(x), l(x), q(x), L(x), T(x), e(x),.....\n>>\n>>\n>> Gracias.\n>>\n>> --\n>> Antonio Maurandi\n>>\n>>\n>>         [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n-- \n+--------------------------------------------------------------\n| Francisco J. Viciana Fernández\n| Coordinador del Registro de Población\n| Servicio de Estadísticas Demográficas y Sociales\n| Instituto de Estadística y Cartografía de Andalucía\n| Leonardo Da Vinci, nº 21. Isla de La Cartuja.\n| 41071 SEVILLA.\n| franciscoj.viciana at juntadeandalucia.es\n| Tlf.: +(34) 95 503 38 21\n+--------------------------------------------------------------\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Creo que el paquete 'demography' calcula la tabla de vida a partir de un \nvector de tasas por grupos de edad.\n\nSi como comentas los datos esta en una tabla de duraciones de \nseguimiento por individuo ",
       "thread_id": "thread-b52e2ec6f86f",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/6ea6661d/attachment.pl"
+      ]
     },
     {
       "id": "msg-979dcca385f0",
@@ -107,11 +116,14 @@
         "<CAFKNbkKVbhyA_oafXgVmCGt9ftNsUZfB-KXyJFK+bnS0nBM-qg@mail.gmail.com>",
         "<4E364978.5060705@gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/93d0968b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/93d0968b/attachment.pl>",
+      "body_plain": "Los modelos mixtos que apuntabas, creo que son una buena alternativa. El \npaquete 'lme4' quizas pueda ser útil. .\n\nEl 01/08/2011 8:36, José Luis Cañadas escribió:\n> Hola.\n>\n> No es eso exactamente, me refiero a los llamados  modelos de regresión\n> heterocedástica, dónde se modela la varianza,. por ejemplo con\n> log(sigma)=bZ con Z un conjunto de covariables que explican la\n> heterocedasticidad.\n>\n> En el paquete statmod he encontrado la función /remlscore/ que asume un\n> modelo de regresión heterocedástica , pero sólo para variables\n> dependientes continuas.\n>\n>\n> El 01/08/11 01:16, Carlos Ortega escribió:\n>> Hola,\n>>\n>> Si los errores (entiendo que te refieres a los residuos) no son\n>> homocedasticos entonces tienes que utilizar un modelo de regresión\n>> (logística) que permita eliminar ( o reducir considerablemente ) esa\n>> variabilidad.\n>>\n>> Esto se consigue introduciendo una función ( polinomica, logaritmos )\n>> bien en la variable \"y\" o en las variables \"x\". La elección de un tipo\n>> de función u otro depende de la variabilidad que muestren los\n>> residuos. Si presentan curvatura entonces ajustaras tu modelo con un\n>> polinomio sobre las \"x\", si  es creciente/decreciente ( pero lineal )\n>> en ese caso el modelo a ajustar es uno del tipo logarítmico.\n>>\n>> Saludos\n>> Carlos Ortega\n>> Www.qualityexcellence.es\n>>\n>> On Sunday, July 31, 2011, jose luis cañadas<canadasreche at gmail.com>   wrote:\n>>> Hola a todos.\n>>>\n>>> ¿Cómo puedo ajustar un modelo de regresión logística en el que la\n>>> varianza de los errores no son iguales, sino que esta puede ser modelada\n>>> por otras variables ?\n>>> ¿Utilizando modelos mixtos o voy desencaminado?\n>>>\n>>>\n>>> Gracias..\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>\n> \t[[alternative HTML version deleted]]\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n-- \n+--------------------------------------------------------------\n| Francisco J. Viciana Fernández\n| Coordinador del Registro de Población\n| Servicio de Estadísticas Demográficas y Sociales\n| Instituto de Estadística y Cartografía de Andalucía\n| Leonardo Da Vinci, nº 21. Isla de La Cartuja.\n| 41071 SEVILLA.\n| franciscoj.viciana at juntadeandalucia.es\n| Tlf.: +(34) 95 503 38 21\n+--------------------------------------------------------------\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Los modelos mixtos que apuntabas, creo que son una buena alternativa. El \npaquete 'lme4' quizas pueda ser útil. .\n\nEl 01/08/2011 8:36, José Luis Cañadas escribió:\n> Hola.\n>\n> No es eso exactamente, me",
       "thread_id": "thread-63c72ae617b4",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/93d0968b/attachment.pl"
+      ]
     },
     {
       "id": "msg-bf6dc1798fa0",
@@ -128,11 +140,14 @@
         "<4E364978.5060705@gmail.com>",
         "<4E365D67.80107@juntadeandalucia.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: nÃ£o disponÃ­vel\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/9e6b4bb1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: nÃ£o disponÃ­vel\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/9e6b4bb1/attachment.pl>",
+      "body_plain": "Talvez esto te pueda ayudar:\nhttp://dl.dropbox.com/u/2736772/R%20course/5-Modelos%20lineales%20mixtos%20en%20R.pdf\nSacado de aqui:\nhttp://luiscayuela.blogspot.com/2010/06/analisis-de-datos-ecologicos-en-r.html\n\nSaludos,\n\n\nEloi Ribeiro\nGIS Analyst\n39,45º -0,40º\nhttp://eloiribeiro.wordpress.com\n\n\n2011/8/1 Francisco Viciana <franciscoj.viciana at juntadeandalucia.es>\n\n> Los modelos mixtos que apuntabas, creo que son una buena alternativa. El\n> paquete 'lme4' quizas pueda ser útil. .\n>\n> El 01/08/2011 8:36, José Luis Cañadas escribió:\n> > Hola.\n> >\n> > No es eso exactamente, me refiero a los llamados  modelos de regresión\n> > heterocedástica, dónde se modela la varianza,. por ejemplo con\n> > log(sigma)=bZ con Z un conjunto de covariables que explican la\n> > heterocedasticidad.\n> >\n> > En el paquete statmod he encontrado la función /remlscore/ que asume un\n> > modelo de regresión heterocedástica , pero sólo para variables\n> > dependientes continuas.\n> >\n> >\n> > El 01/08/11 01:16, Carlos Ortega escribió:\n> >> Hola,\n> >>\n> >> Si los errores (entiendo que te refieres a los residuos) no son\n> >> homocedasticos entonces tienes que utilizar un modelo de regresión\n> >> (logística) que permita eliminar ( o reducir considerablemente ) esa\n> >> variabilidad.\n> >>\n> >> Esto se consigue introduciendo una función ( polinomica, logaritmos )\n> >> bien en la variable \"y\" o en las variables \"x\". La elección de un tipo\n> >> de función u otro depende de la variabilidad que muestren los\n> >> residuos. Si presentan curvatura entonces ajustaras tu modelo con un\n> >> polinomio sobre las \"x\", si  es creciente/decreciente ( pero lineal )\n> >> en ese caso el modelo a ajustar es uno del tipo logarítmico.\n> >>\n> >> Saludos\n> >> Carlos Ortega\n> >> Www.qualityexcellence.es\n> >>\n> >> On Sunday, July 31, 2011, jose luis cañadas<canadasreche at gmail.com>\n> wrote:\n> >>> Hola a todos.\n> >>>\n> >>> ¿Cómo puedo ajustar un modelo de regresión logística en el que la\n> >>> varianza de los errores no son iguales, sino que esta puede ser\n> modelada\n> >>> por otras variables ?\n> >>> ¿Utilizando modelos mixtos o voy desencaminado?\n> >>>\n> >>>\n> >>> Gracias..\n> >>>\n> >>> _______________________________________________\n> >>> R-help-es mailing list\n> >>> R-help-es at r-project.org\n> >>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>>\n> >       [[alternative HTML version deleted]]\n> >\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n> --\n> +--------------------------------------------------------------\n> | Francisco J. Viciana Fernández\n> | Coordinador del Registro de Población\n> | Servicio de Estadísticas Demográficas y Sociales\n> | Instituto de Estadística y Cartografía de Andalucía\n> | Leonardo Da Vinci, nº 21. Isla de La Cartuja.\n> | 41071 SEVILLA.\n> | franciscoj.viciana at juntadeandalucia.es\n> | Tlf.: +(34) 95 503 38 21\n> +--------------------------------------------------------------\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Talvez esto te pueda ayudar:\nhttp://dl.dropbox.com/u/2736772/R%20course/5-Modelos%20lineales%20mixtos%20en%20R.pdf\nSacado de aqui:\nhttp://luiscayuela.blogspot.com/2010/06/analisis-de-datos-ecologicos-",
       "thread_id": "thread-63c72ae617b4",
       "thread_depth": 3,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/9e6b4bb1/attachment.pl"
+      ]
     },
     {
       "id": "msg-7465c98866a1",
@@ -146,11 +161,14 @@
       "references": [
         "<DE8AD9B5-78EC-40E8-9582-5948E57881F8@gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/8723b7d2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/8723b7d2/attachment.pl>",
+      "body_plain": "Hola,\n\nHay un paquete específico en R que permite hacer este tipo de cosas:\n\nprettyR <http://cran.at.r-project.org/web/packages/prettyR/index.html> Pretty\ndescriptive stats\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/7/27 Jesús Armand Calejero Román <ana.ismi.3isa at gmail.com>\n\n> Hola a todos.\n>\n> Me gustaría saber por curiosidad cual es el comando que permite maquetar o\n> definir la salida por consola del resultado de alguna operación.\n>\n> En algunos casos utilizo print pero si, por ejemplo, pongo el resultado\n> es... y es un vector de dimensión 10 me aparece 10 veces el resultado es X1,\n> el resultado es X2.... y así los diez. A mi me gustaría que apareciera, por\n> ejemplo:\n>\n>                             Juan     Pepe    Víctor....\n> el resultado es     X1        X2         X3\n>\n> He intentado buscar algún manual de programación en R pero no he conseguido\n> encontrar esta cuestión. Si alguien conoce algún manual o me puede ayudar se\n> lo agradecería.\n>\n> Gracias y un saludo a todos\n>\n> Jesús Armand Calejero Román\n> ------------------------------------------------------\n> Estadístico\n> Progresa Abogados y Economistas S.L\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nHay un paquete específico en R que permite hacer este tipo de cosas:\n\nprettyR <http://cran.at.r-project.org/web/packages/prettyR/index.html> Pretty\ndescriptive stats\n\nSaludos,\nCarlos Ortega\nwww",
       "thread_id": "thread-7465c98866a1",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/8723b7d2/attachment.pl"
+      ]
     },
     {
       "id": "msg-51cc045347b9",
@@ -164,11 +182,14 @@
       "references": [
         "<CAO9KDdX73dqGv=3HYsayXFMBQu4sZGrZ9eH6ApOhNqO3jyE2-A@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/73104818/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/73104818/attachment.pl>",
+      "body_plain": "Hola,\n\nEn cuanto a referencias con ejemplos prácticos sobre tipo de gráficos de\ncontrol, recomendaría:\n\nhttp://www.itl.nist.gov/div898/handbook/pmc/section3/pmc332.htm\n\nY buscar en Google por \"np control charts\". Uno de los primeros ejemplos que\naparecen es este, igualmente válido e ilustrativo:\n\nhttp://thequalityweb.com/npcontrol.html\n\nFinalmente comentarte que si usas con cierta frecuencia este tipo de\ngráficos de control te resultará útil hacerte con una copia de alguno de los\nlibros de Montgomery (qcc recomienda la edición del 2000) pero es un libro\nque se actualiza casi cada año, por lo que puedes conseguir ejemplares de\nediciones recientes con precios muy ajustados...\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/7/25 María A. Rodríguez Carrasco <mari.angus.rc at gmail.com>\n\n> Hola soy María,\n>\n> estoy intentando pintar un gráfico de control tipo \"np\" y no sé porqué R no\n> lo hace. Tengo todo lo necesario para poder pintarlo y me da error, mirad\n> estos son los parámetros de entrada:\n>\n> *> sTypeChart*\n> [1] \"np\"\n> *> sDatos*\n>  [1]   0.0  31.0   0.5   0.0   0.0   0.0   0.0  58.0   1.5  21.5   2.0\n> 4.5\n>  60.2  19.5 113.5   0.0  14.0   9.5   0.0   0.0   0.0   0.0   0.0   0.0\n> 0.0\n> [26]   0.0   0.0   0.0   0.0\n> *> sSize*\n>  [1]   1.0  31.0   0.5   1.0  16.0  21.5  76.0  61.0   1.5  22.5  11.0\n>  15.5\n>  83.2  57.0 113.5   1.0  14.0  76.0   1.0   1.0   1.0   1.0   1.0   1.0\n> 1.0\n> [26]   1.0   1.0   1.0   1.0\n> *> sDates*\n>  [1] \"2011-01-03\" \"2011-01-10\" \"2011-01-17\" \"2011-01-24\" \"2011-01-31\"\n> \"2011-02-07\" \"2011-02-14\" \"2011-02-21\" \"2011-02-28\" \"2011-03-07\"\n> \"2011-03-14\"\n> [12] \"2011-03-21\" \"2011-03-28\" \"2011-04-04\" \"2011-04-11\" \"2011-04-18\"\n> \"2011-04-25\" \"2011-05-02\" \"2011-05-09\" \"2011-05-16\" \"2011-05-23\"\n> \"2011-05-30\"\n> [23] \"2011-06-06\" \"2011-06-13\" \"2011-06-20\" \"2011-06-27\" \"2011-07-04\"\n> \"2011-07-11\" \"2011-07-18\"\n>\n> *>qcc(sDatos, type=sTypeChart, sizes = sSize ,labels =sDates)*\n>\n> Error en plot.window(...) : se necesitan valores finitos de 'ylim'\n>\n> Si lo pinto tipo \"n\" si lo hace. ¿Porqué al querer hacerlo \"np\" no lo\n> pinta?¿Se debe quizás a que hay algún problema en el planteamiento?\n>\n> Espero que alguien me pueda ayudar en este tema, ya que en internet no\n> encuentro muchos ejemplo de este tipo de gráficos.\n>\n> Muchas Gracias a todos,\n>\n> Saludos, María.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEn cuanto a referencias con ejemplos prácticos sobre tipo de gráficos de\ncontrol, recomendaría:\n\nhttp://www.itl.nist.gov/div898/handbook/pmc/section3/pmc332.htm\n\nY buscar en Google por \"np cont",
       "thread_id": "thread-51cc045347b9",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/73104818/attachment.pl"
+      ]
     },
     {
       "id": "msg-e6c64781efc6",
@@ -183,11 +204,14 @@
         "<CAO9KDdX73dqGv=3HYsayXFMBQu4sZGrZ9eH6ApOhNqO3jyE2-A@mail.gmail.com>",
         "<CAFKNbk+yzP-=Uk-rDFFXqUk-e3Ji6Sfo-zvw6weHGpEsdm2B1A@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/dd61e3e4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/dd61e3e4/attachment.pl>",
+      "body_plain": "Muchas gracias por tu ayuda Carlos. Me vienen muy bien las referencias que\nme has dado para este y futuros trabajos, ya que estoy involucrada en estos\ntemas de Control de la Calidad y Control Charts.\n\nSaludos, María.\n\n\n\nEl 1 de agosto de 2011 11:34, Carlos Ortega <coforfe at gmail.com> escribió:\n\n> Hola,\n>\n> En cuanto a referencias con ejemplos prácticos sobre tipo de gráficos de\n> control, recomendaría:\n>\n> http://www.itl.nist.gov/div898/handbook/pmc/section3/pmc332.htm\n>\n> Y buscar en Google por \"np control charts\". Uno de los primeros ejemplos\n> que aparecen es este, igualmente válido e ilustrativo:\n>\n> http://thequalityweb.com/npcontrol.html\n>\n> Finalmente comentarte que si usas con cierta frecuencia este tipo de\n> gráficos de control te resultará útil hacerte con una copia de alguno de los\n> libros de Montgomery (qcc recomienda la edición del 2000) pero es un libro\n> que se actualiza casi cada año, por lo que puedes conseguir ejemplares de\n> ediciones recientes con precios muy ajustados...\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> 2011/7/25 María A. Rodríguez Carrasco <mari.angus.rc at gmail.com>\n>\n>> Hola soy María,\n>>\n>> estoy intentando pintar un gráfico de control tipo \"np\" y no sé porqué R\n>> no\n>> lo hace. Tengo todo lo necesario para poder pintarlo y me da error, mirad\n>> estos son los parámetros de entrada:\n>>\n>> *> sTypeChart*\n>> [1] \"np\"\n>> *> sDatos*\n>>  [1]   0.0  31.0   0.5   0.0   0.0   0.0   0.0  58.0   1.5  21.5   2.0\n>> 4.5\n>>  60.2  19.5 113.5   0.0  14.0   9.5   0.0   0.0   0.0   0.0   0.0   0.0\n>> 0.0\n>> [26]   0.0   0.0   0.0   0.0\n>> *> sSize*\n>>  [1]   1.0  31.0   0.5   1.0  16.0  21.5  76.0  61.0   1.5  22.5  11.0\n>>  15.5\n>>  83.2  57.0 113.5   1.0  14.0  76.0   1.0   1.0   1.0   1.0   1.0   1.0\n>> 1.0\n>> [26]   1.0   1.0   1.0   1.0\n>> *> sDates*\n>>  [1] \"2011-01-03\" \"2011-01-10\" \"2011-01-17\" \"2011-01-24\" \"2011-01-31\"\n>> \"2011-02-07\" \"2011-02-14\" \"2011-02-21\" \"2011-02-28\" \"2011-03-07\"\n>> \"2011-03-14\"\n>> [12] \"2011-03-21\" \"2011-03-28\" \"2011-04-04\" \"2011-04-11\" \"2011-04-18\"\n>> \"2011-04-25\" \"2011-05-02\" \"2011-05-09\" \"2011-05-16\" \"2011-05-23\"\n>> \"2011-05-30\"\n>> [23] \"2011-06-06\" \"2011-06-13\" \"2011-06-20\" \"2011-06-27\" \"2011-07-04\"\n>> \"2011-07-11\" \"2011-07-18\"\n>>\n>> *>qcc(sDatos, type=sTypeChart, sizes = sSize ,labels =sDates)*\n>>\n>> Error en plot.window(...) : se necesitan valores finitos de 'ylim'\n>>\n>> Si lo pinto tipo \"n\" si lo hace. ¿Porqué al querer hacerlo \"np\" no lo\n>> pinta?¿Se debe quizás a que hay algún problema en el planteamiento?\n>>\n>> Espero que alguien me pueda ayudar en este tema, ya que en internet no\n>> encuentro muchos ejemplo de este tipo de gráficos.\n>>\n>> Muchas Gracias a todos,\n>>\n>> Saludos, María.\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias por tu ayuda Carlos. Me vienen muy bien las referencias que\nme has dado para este y futuros trabajos, ya que estoy involucrada en estos\ntemas de Control de la Calidad y Control Charts.\n",
       "thread_id": "thread-51cc045347b9",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/dd61e3e4/attachment.pl"
+      ]
     },
     {
       "id": "msg-5b3bd7fe43d7",
@@ -201,11 +225,14 @@
       "references": [
         "<CADOfPChFGT5wy2-ZnWocMfSnbu0HiEetQxqwCg6-VO=uHZPpsg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/7689b1e1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/7689b1e1/attachment.pl>",
+      "body_plain": "Hola,\n\nPues creo que si usas lm() puedes decir Análisis de la Varianza. Si usas\nglm() con distribuciones de datos digamos especiales (poisson, binomial,\netc) tienes que decir Devianza. Ojo con esto por que si usas anova() con\nmodelos generalizados tienes que especificarle que ese test no es con una F\nsino con una Ji2 o lo que sea más adecuado para tus datos.\nMira aquí:\nhttp://dl.dropbox.com/u/2736772/R%20course/3-Modelos%20lineales%20generalizados.pdf\n\njaume\n\nEl 1 de agosto de 2011 09:03, Josué Polanco <jomopo at gmail.com> escribió:\n\n> Hola a todos,\n>\n> Estoy trabajando con modelos lineales generalizados (GLM), en\n> particular con las funciones glm y anova.glm de R. Tengo una pregunta\n> que es más bien técnica en el sentido estadístico (y un poco Off Topic\n> y probablemente un tanto naive). No tengo claro si es correcto decir\n> análisis de varianza o de devianza al utilizar GLMs, veo que en el\n> help de  anova.glm dice análisis de \"deviance\", pero\n> he visto en algunos otros textos (utilizando el GLM de R) que dice\n> análisis de varianza. Estoy\n> un poco confundido con esto. ¿Qué es lo que hace en realidad la\n> función anova.glm?, son intercambiales los términos análisis de\n> varianza y análisis de devianza al usar GLM?\n>\n> gracias,\n>\n> saludos\n>\n> ---\n> Josué\n>\n>\n>\n>\n>\n>\n> --\n> Josué Mosés Polanco Martínez\n> Correo-e alternativo jomopo9 at yahoo.com\n> ----\n> It is a wasted day unless you have learned something new and made\n> someone smile -Mark Weingartz.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nJaume Tormo Blanes\nIMEM Ramon Margalef.\nCarretera San Vicente del Raspeig s/n\n03690 San Vicente del Raspeig - Alicante\nwww.ua.es\nacercad.wordpress.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nPues creo que si usas lm() puedes decir Análisis de la Varianza. Si usas\nglm() con distribuciones de datos digamos especiales (poisson, binomial,\netc) tienes que decir Devianza. Ojo con esto po",
       "thread_id": "thread-b5d6b2cb8c16",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/7689b1e1/attachment.pl"
+      ]
     },
     {
       "id": "msg-fd02fc649653",
@@ -217,11 +244,14 @@
       "subject_clean": "[R-es] Como buscar en los mails viejos",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/ac42eb2f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/ac42eb2f/attachment.pl>",
+      "body_plain": "Estimados eRReros,\n\n¿Como puedo buscar entre los mensajes antiguos de la lista? Puedo buscar\nentre los que tengo guardados, pero no en los anteriores.\nDesde la página de la lista puedo acceder mes a mes ¿Hay una forma de buscar\nen todo el archivo?\nHe intentado en google: \"palabra site:\nhttps://mailman.stat.ethz.ch/pipermail/r-help-es\" pero no me da ningún\nresultado. También está la opción \"R-help-es palabra\" pero no hay nada más\nespecífico.\n\nGracias.\n\njaume\n\n\n\n\n-- \nJaume Tormo Blanes\nIMEM Ramon Margalef.\nCarretera San Vicente del Raspeig s/n\n03690 San Vicente del Raspeig - Alicante\nwww.ua.es\nacercad.wordpress.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados eRReros,\n\n¿Como puedo buscar entre los mensajes antiguos de la lista? Puedo buscar\nentre los que tengo guardados, pero no en los anteriores.\nDesde la página de la lista puedo acceder mes a m",
       "thread_id": "thread-fd02fc649653",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/ac42eb2f/attachment.pl"
+      ]
     },
     {
       "id": "msg-a99a537d681d",
@@ -235,11 +265,14 @@
       "references": [
         "<CAP3FtZjbOSV0SCrgaS8MG-nk_CSu1q_Jqx=kBojTZbXjWDeiNw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/41d59c5a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/41d59c5a/attachment.pl>",
+      "body_plain": "Hola,\n\nMucho me temo que las formas que has comentado son las únicas de encontrar\nun email anterior. En la interfaz administrativa yo tampoco tengo una forma\nmejor de buscar emails que el archivo ordenado por meses.\n\nSi en algún momento se empieza a usar alguna de las webs de forma\ncontinuada, podríamos coger los ficheros con el historial y almacenarlos de\nforma que se puedan hacer búsquedas de forma mas eficiente. ¿Qué os\nparecería la idea?\n\nUn saludo\nPatricia\n\n\nEl 1 de agosto de 2011 13:46, Jaume Tormo <jautorbla at gmail.com> escribió:\n\n> Estimados eRReros,\n>\n> ¿Como puedo buscar entre los mensajes antiguos de la lista? Puedo buscar\n> entre los que tengo guardados, pero no en los anteriores.\n> Desde la página de la lista puedo acceder mes a mes ¿Hay una forma de\n> buscar\n> en todo el archivo?\n> He intentado en google: \"palabra site:\n> https://mailman.stat.ethz.ch/pipermail/r-help-es\" pero no me da ningún\n> resultado. También está la opción \"R-help-es palabra\" pero no hay nada más\n> específico.\n>\n> Gracias.\n>\n> jaume\n>\n>\n>\n>\n> --\n> Jaume Tormo Blanes\n> IMEM Ramon Margalef.\n> Carretera San Vicente del Raspeig s/n\n> 03690 San Vicente del Raspeig - Alicante\n> www.ua.es\n> acercad.wordpress.com\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nPatricia García González\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nMucho me temo que las formas que has comentado son las únicas de encontrar\nun email anterior. En la interfaz administrativa yo tampoco tengo una forma\nmejor de buscar emails que el archivo orde",
       "thread_id": "thread-fd02fc649653",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/41d59c5a/attachment.pl"
+      ]
     },
     {
       "id": "msg-3a480e87957f",
@@ -254,11 +287,14 @@
         "<CAP3FtZjbOSV0SCrgaS8MG-nk_CSu1q_Jqx=kBojTZbXjWDeiNw@mail.gmail.com>",
         "<CAGf9gZPaB_7suDt=9L47y4rz4uH0nVQ0a1ZxhjPGOUXVLL=9UQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/3a9fe769/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/3a9fe769/attachment.pl>",
+      "body_plain": "Hola,\n\nMe parece buena idea lo de la web.\nBuscando he encontrado que algunos de los mensajes están archivados aquí:\nhttp://web.archiveorange.com\nPero si buscas en la lista de listas que tienen indexadas no estamos. En esa\nweb puedes hacer una busqueda y te da los mensajes con todas sus respuestas,\nalgo es algo.\n\nGracias.\n\n\nEl 1 de agosto de 2011 14:01, Usuario R <r.user.spain at gmail.com> escribió:\n\n> Hola,\n>\n> Mucho me temo que las formas que has comentado son las únicas de encontrar\n> un email anterior. En la interfaz administrativa yo tampoco tengo una forma\n> mejor de buscar emails que el archivo ordenado por meses.\n>\n> Si en algún momento se empieza a usar alguna de las webs de forma\n> continuada, podríamos coger los ficheros con el historial y almacenarlos de\n> forma que se puedan hacer búsquedas de forma mas eficiente. ¿Qué os\n> parecería la idea?\n>\n> Un saludo\n> Patricia\n>\n>\n> El 1 de agosto de 2011 13:46, Jaume Tormo <jautorbla at gmail.com> escribió:\n>\n>> Estimados eRReros,\n>>\n>> ¿Como puedo buscar entre los mensajes antiguos de la lista? Puedo buscar\n>> entre los que tengo guardados, pero no en los anteriores.\n>> Desde la página de la lista puedo acceder mes a mes ¿Hay una forma de\n>> buscar\n>> en todo el archivo?\n>> He intentado en google: \"palabra site:\n>> https://mailman.stat.ethz.ch/pipermail/r-help-es\" pero no me da ningún\n>> resultado. También está la opción \"R-help-es palabra\" pero no hay nada más\n>> específico.\n>>\n>> Gracias.\n>>\n>> jaume\n>>\n>>\n>>\n>>\n>> --\n>> Jaume Tormo Blanes\n>> IMEM Ramon Margalef.\n>> Carretera San Vicente del Raspeig s/n\n>> 03690 San Vicente del Raspeig - Alicante\n>> www.ua.es\n>> acercad.wordpress.com\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n>\n> --\n> Patricia García González\n>\n>\n>\n\n\n-- \nJaume Tormo Blanes\nIMEM Ramon Margalef.\nCarretera San Vicente del Raspeig s/n\n03690 San Vicente del Raspeig - Alicante\nwww.ua.es\nacercad.wordpress.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nMe parece buena idea lo de la web.\nBuscando he encontrado que algunos de los mensajes están archivados aquí:\nhttp://web.archiveorange.com\nPero si buscas en la lista de listas que tienen indexad",
       "thread_id": "thread-fd02fc649653",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/3a9fe769/attachment.pl"
+      ]
     },
     {
       "id": "msg-965dc19e12ba",
@@ -274,11 +310,14 @@
         "<CAGf9gZPaB_7suDt=9L47y4rz4uH0nVQ0a1ZxhjPGOUXVLL=9UQ@mail.gmail.com>",
         "<CAP3FtZiRdMyr6mOfo6Me7e1mdCPioCZpRofF1H+yMfQmsZs7BA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/dda76e07/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/dda76e07/attachment.pl>",
+      "body_plain": "Hola Jaume y todos,\n\nPues ya he subscrito nuestra lista en http://web.archiveorange.com/.\nAhora deberíamos empezar a ver ahí los nuevos mensajes que se mandan\n\nGracias por la propuesta!\nUn saludo\n\nPatricia\n\n\n\n\n\nEl 1 de agosto de 2011 14:08, Jaume Tormo <jautorbla at gmail.com> escribió:\n\n> Hola,\n>\n> Me parece buena idea lo de la web.\n> Buscando he encontrado que algunos de los mensajes están archivados aquí:\n> http://web.archiveorange.com\n> Pero si buscas en la lista de listas que tienen indexadas no estamos. En\n> esa\n> web puedes hacer una busqueda y te da los mensajes con todas sus\n> respuestas,\n> algo es algo.\n>\n> Gracias.\n>\n>\n> El 1 de agosto de 2011 14:01, Usuario R <r.user.spain at gmail.com> escribió:\n>\n> > Hola,\n> >\n> > Mucho me temo que las formas que has comentado son las únicas de\n> encontrar\n> > un email anterior. En la interfaz administrativa yo tampoco tengo una\n> forma\n> > mejor de buscar emails que el archivo ordenado por meses.\n> >\n> > Si en algún momento se empieza a usar alguna de las webs de forma\n> > continuada, podríamos coger los ficheros con el historial y almacenarlos\n> de\n> > forma que se puedan hacer búsquedas de forma mas eficiente. ¿Qué os\n> > parecería la idea?\n> >\n> > Un saludo\n> > Patricia\n> >\n> >\n> > El 1 de agosto de 2011 13:46, Jaume Tormo <jautorbla at gmail.com>\n> escribió:\n> >\n> >> Estimados eRReros,\n> >>\n> >> ¿Como puedo buscar entre los mensajes antiguos de la lista? Puedo buscar\n> >> entre los que tengo guardados, pero no en los anteriores.\n> >> Desde la página de la lista puedo acceder mes a mes ¿Hay una forma de\n> >> buscar\n> >> en todo el archivo?\n> >> He intentado en google: \"palabra site:\n> >> https://mailman.stat.ethz.ch/pipermail/r-help-es\" pero no me da ningún\n> >> resultado. También está la opción \"R-help-es palabra\" pero no hay nada\n> más\n> >> específico.\n> >>\n> >> Gracias.\n> >>\n> >> jaume\n> >>\n> >>\n> >>\n> >>\n> >> --\n> >> Jaume Tormo Blanes\n> >> IMEM Ramon Margalef.\n> >> Carretera San Vicente del Raspeig s/n\n> >> 03690 San Vicente del Raspeig - Alicante\n> >> www.ua.es\n> >> acercad.wordpress.com\n> >>\n> >>        [[alternative HTML version deleted]]\n> >>\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >>\n> >\n> >\n> > --\n> > Patricia García González\n> >\n> >\n> >\n>\n>\n> --\n> Jaume Tormo Blanes\n> IMEM Ramon Margalef.\n> Carretera San Vicente del Raspeig s/n\n> 03690 San Vicente del Raspeig - Alicante\n> www.ua.es\n> acercad.wordpress.com\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \nPatricia García González\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Jaume y todos,\n\nPues ya he subscrito nuestra lista en http://web.archiveorange.com/.\nAhora deberíamos empezar a ver ahí los nuevos mensajes que se mandan\n\nGracias por la propuesta!\nUn saludo\n\nPat",
       "thread_id": "thread-fd02fc649653",
       "thread_depth": 3,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/dda76e07/attachment.pl"
+      ]
     },
     {
       "id": "msg-0420510fdd34",
@@ -296,11 +335,14 @@
         "<4E365D67.80107@juntadeandalucia.es>",
         "<CANPxM8gT8mPMq9sJ4SC4OADcgkG1wCpAzHhYXPwF=VN7fNoacg@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/95187e60/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/95187e60/attachment.pl>",
+      "body_plain": "Creo que he encontrado un paquete que puede servir , se trata de ordinal\n, que por ejemplo con la función clm ajusta modelos de odds\nproporcionales con un modelo multiplicativo para la varianza. En el\noutput por defecto da la estimación de los parámetros beta para el\nmodelo logístico ( o usando otra función link) y los parámetros zeta\npara la varianza .. Si alguien lo ha probado, le agradecería que me\ncomentara que tal funciona.\n\nPD. Gracias a todos por las respuestas.\n\n\n\nclm\nCumulative link models\nDescription\nFits cumulative link models with an additive model for the location and\na multiplicative model for\nthe scale. The function allows for structured thresholds. A popular\nspecial case of a CLM is the\nproportional odds model. In addition to the standard link functions, two\nflexible link functions,\n\"Arandar-Ordaz\" and \"log-gamma\" are available, where an extra link\nfunction parameter provides\nadditional flexibility. A subset of the predictors can be allowed to\nhave nominal rather than ordinal\neffects. This has been termed \"partial proportional odds\" when the link\nis the logistic.\n\n\n\n\nEl 01/08/11 10:25, Eloi Ribeiro escribió:\n> Talvez esto te pueda ayudar:\n> http://dl.dropbox.com/u/2736772/R%20course/5-Modelos%20lineales%20mixtos%20en%20R.pdf\n> Sacado de aqui:\n> http://luiscayuela.blogspot.com/2010/06/analisis-de-datos-ecologicos-en-r.html\n>\n> Saludos,\n>\n>\n> Eloi Ribeiro\n> GIS Analyst\n> 39,45º -0,40º\n> http://eloiribeiro.wordpress.com\n>\n>\n> 2011/8/1 Francisco Viciana <franciscoj.viciana at juntadeandalucia.es>\n>\n>> Los modelos mixtos que apuntabas, creo que son una buena alternativa. El\n>> paquete 'lme4' quizas pueda ser útil. .\n>>\n>> El 01/08/2011 8:36, José Luis Cañadas escribió:\n>>> Hola.\n>>>\n>>> No es eso exactamente, me refiero a los llamados  modelos de regresión\n>>> heterocedástica, dónde se modela la varianza,. por ejemplo con\n>>> log(sigma)=bZ con Z un conjunto de covariables que explican la\n>>> heterocedasticidad.\n>>>\n>>> En el paquete statmod he encontrado la función /remlscore/ que asume un\n>>> modelo de regresión heterocedástica , pero sólo para variables\n>>> dependientes continuas.\n>>>\n>>>\n>>> El 01/08/11 01:16, Carlos Ortega escribió:\n>>>> Hola,\n>>>>\n>>>> Si los errores (entiendo que te refieres a los residuos) no son\n>>>> homocedasticos entonces tienes que utilizar un modelo de regresión\n>>>> (logística) que permita eliminar ( o reducir considerablemente ) esa\n>>>> variabilidad.\n>>>>\n>>>> Esto se consigue introduciendo una función ( polinomica, logaritmos )\n>>>> bien en la variable \"y\" o en las variables \"x\". La elección de un tipo\n>>>> de función u otro depende de la variabilidad que muestren los\n>>>> residuos. Si presentan curvatura entonces ajustaras tu modelo con un\n>>>> polinomio sobre las \"x\", si  es creciente/decreciente ( pero lineal )\n>>>> en ese caso el modelo a ajustar es uno del tipo logarítmico.\n>>>>\n>>>> Saludos\n>>>> Carlos Ortega\n>>>> Www.qualityexcellence.es\n>>>>\n>>>> On Sunday, July 31, 2011, jose luis cañadas<canadasreche at gmail.com>\n>> wrote:\n>>>>> Hola a todos.\n>>>>>\n>>>>> ¿Cómo puedo ajustar un modelo de regresión logística en el que la\n>>>>> varianza de los errores no son iguales, sino que esta puede ser\n>> modelada\n>>>>> por otras variables ?\n>>>>> ¿Utilizando modelos mixtos o voy desencaminado?\n>>>>>\n>>>>>\n>>>>> Gracias..\n>>>>>\n>>>>> _______________________________________________\n>>>>> R-help-es mailing list\n>>>>> R-help-es at r-project.org\n>>>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>>>>\n>>>       [[alternative HTML version deleted]]\n>>>\n>>>\n>>>\n>>> _______________________________________________\n>>> R-help-es mailing list\n>>> R-help-es at r-project.org\n>>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>> --\n>> +--------------------------------------------------------------\n>> | Francisco J. Viciana Fernández\n>> | Coordinador del Registro de Población\n>> | Servicio de Estadísticas Demográficas y Sociales\n>> | Instituto de Estadística y Cartografía de Andalucía\n>> | Leonardo Da Vinci, nº 21. Isla de La Cartuja.\n>> | 41071 SEVILLA.\n>> | franciscoj.viciana at juntadeandalucia.es\n>> | Tlf.: +(34) 95 503 38 21\n>> +--------------------------------------------------------------\n>>\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n> \t[[alternative HTML version deleted]]\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Creo que he encontrado un paquete que puede servir , se trata de ordinal\n, que por ejemplo con la función clm ajusta modelos de odds\nproporcionales con un modelo multiplicativo para la varianza. En el",
       "thread_id": "thread-63c72ae617b4",
       "thread_depth": 4,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/95187e60/attachment.pl"
+      ]
     },
     {
       "id": "msg-141af1ab59c2",
@@ -312,11 +354,14 @@
       "subject_clean": "[R-es] Modelo Regresión Lineal.",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/2add4564/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/2add4564/attachment.pl>",
+      "body_plain": "Hola,\n\nEstoy trabajando con una base de datos que tiene razones de consultas\nmédicas sobre proyecciones de población, y por otro lado razones de\ncobertura de salud.\nTodas las variables las tengo por año y por Provincia (2003-2010).\n\nNecesito meter algunas de las variables de la base en un modelo de regresión\nLineal, las variables independientes serían razco_ps y razco_pc y la\ndependiente razco_pr.\nEstuve trabajando con SPSS pero quería probar en R, alguien podrá ayudarme?\n\nMuchas gracias,\n\nSaludos cordiales\n\nJuan Manuel Dias.\n\nMinisterio de Salud - Argentina.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEstoy trabajando con una base de datos que tiene razones de consultas\nmédicas sobre proyecciones de población, y por otro lado razones de\ncobertura de salud.\nTodas las variables las tengo por a",
       "thread_id": "thread-141af1ab59c2",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110801/2add4564/attachment.pl"
+      ]
     },
     {
       "id": "msg-cbd975493bf7",
@@ -330,11 +375,14 @@
       "references": [
         "<CAOF0weFv5J2q2FE=XC1xvLUfj6HGx8x9pwHWt8_H9oO8SMroOw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/c4e51e53/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/c4e51e53/attachment.pl>",
+      "body_plain": "Hola,\n\nSi tan sólo estás interesado en crear un modelo lineal con que revises la\nayuda de la función lm() podrás tener suficiente. En cualquier caso, hay\ndocumentación en R de libre acceso que cubren algunos aspectos de una forma\nmás específica. Esta documentación está aquí:\n\nhttp://cran.r-project.org/other-docs.html\n\nY dentro de ella, hay un documento que trata la regresión y los análisis\nANOVA:\n\nhttp://cran.r-project.org/doc/contrib/Faraway-PRA.pdf\n\nAdicionalmente y con mayor profundidad este libro cubre justamente la\ntransición para aprender R cuando se viene de usar SAS o SPSS:\n\nhttp://www.amazon.com/SAS-SPSS-Users-Statistics-Computing/dp/0387094172/ref=sr_1_1?s=books&ie=UTF8&qid=1312281584&sr=1-1\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/8/1 juan manuel dias <juamadias at gmail.com>\n\n> Hola,\n>\n> Estoy trabajando con una base de datos que tiene razones de consultas\n> médicas sobre proyecciones de población, y por otro lado razones de\n> cobertura de salud.\n> Todas las variables las tengo por año y por Provincia (2003-2010).\n>\n> Necesito meter algunas de las variables de la base en un modelo de\n> regresión\n> Lineal, las variables independientes serían razco_ps y razco_pc y la\n> dependiente razco_pr.\n> Estuve trabajando con SPSS pero quería probar en R, alguien podrá ayudarme?\n>\n> Muchas gracias,\n>\n> Saludos cordiales\n>\n> Juan Manuel Dias.\n>\n> Ministerio de Salud - Argentina.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSi tan sólo estás interesado en crear un modelo lineal con que revises la\nayuda de la función lm() podrás tener suficiente. En cualquier caso, hay\ndocumentación en R de libre acceso que cubren ",
       "thread_id": "thread-141af1ab59c2",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/c4e51e53/attachment.pl"
+      ]
     },
     {
       "id": "msg-7c4f561ca0fb",
@@ -348,11 +396,14 @@
       "references": [
         "<CAP3FtZjbOSV0SCrgaS8MG-nk_CSu1q_Jqx=kBojTZbXjWDeiNw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/af6d54d1/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/af6d54d1/attachment.pl>",
+      "body_plain": "Hola,\n\nSimplemente añadir que no sé si el correo que estabas buscando lo has\nterminado de encontrar a través del par de mecanismos de Google.\n\nPor si es de ayuda, guardo todos los correos de la lista (desde que me\nsuscribí)...\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/8/1 Jaume Tormo <jautorbla at gmail.com>\n\n> Estimados eRReros,\n>\n> ¿Como puedo buscar entre los mensajes antiguos de la lista? Puedo buscar\n> entre los que tengo guardados, pero no en los anteriores.\n> Desde la página de la lista puedo acceder mes a mes ¿Hay una forma de\n> buscar\n> en todo el archivo?\n> He intentado en google: \"palabra site:\n> https://mailman.stat.ethz.ch/pipermail/r-help-es\" pero no me da ningún\n> resultado. También está la opción \"R-help-es palabra\" pero no hay nada más\n> específico.\n>\n> Gracias.\n>\n> jaume\n>\n>\n>\n>\n> --\n> Jaume Tormo Blanes\n> IMEM Ramon Margalef.\n> Carretera San Vicente del Raspeig s/n\n> 03690 San Vicente del Raspeig - Alicante\n> www.ua.es\n> acercad.wordpress.com\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSimplemente añadir que no sé si el correo que estabas buscando lo has\nterminado de encontrar a través del par de mecanismos de Google.\n\nPor si es de ayuda, guardo todos los correos de la lista ",
       "thread_id": "thread-fd02fc649653",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/af6d54d1/attachment.pl"
+      ]
     },
     {
       "id": "msg-74534372c8f1",
@@ -367,11 +418,14 @@
         "<CAP3FtZjbOSV0SCrgaS8MG-nk_CSu1q_Jqx=kBojTZbXjWDeiNw@mail.gmail.com>",
         "<CAFKNbk+x7N0bhf6mG-fJ1pGAmbs6nTuWi5dpFUv6WFj9WJ3u7w@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/366da361/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/366da361/attachment.pl>",
+      "body_plain": "Ya lo he encontrado. Peró quería saber si había una forma más directa de\nbuscar.\nGracias por la oferta (me tomo nota).\n\njaume.\n\nEl 2 de agosto de 2011 13:06, Carlos Ortega <coforfe at gmail.com> escribió:\n\n> Hola,\n>\n> Simplemente añadir que no sé si el correo que estabas buscando lo has\n> terminado de encontrar a través del par de mecanismos de Google.\n>\n> Por si es de ayuda, guardo todos los correos de la lista (desde que me\n> suscribí)...\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> 2011/8/1 Jaume Tormo <jautorbla at gmail.com>\n>\n>> Estimados eRReros,\n>>\n>> ¿Como puedo buscar entre los mensajes antiguos de la lista? Puedo buscar\n>> entre los que tengo guardados, pero no en los anteriores.\n>> Desde la página de la lista puedo acceder mes a mes ¿Hay una forma de\n>> buscar\n>> en todo el archivo?\n>> He intentado en google: \"palabra site:\n>> https://mailman.stat.ethz.ch/pipermail/r-help-es\" pero no me da ningún\n>> resultado. También está la opción \"R-help-es palabra\" pero no hay nada más\n>> específico.\n>>\n>> Gracias.\n>>\n>> jaume\n>>\n>>\n>>\n>>\n>> --\n>> Jaume Tormo Blanes\n>> IMEM Ramon Margalef.\n>> Carretera San Vicente del Raspeig s/n\n>> 03690 San Vicente del Raspeig - Alicante\n>> www.ua.es\n>> acercad.wordpress.com\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n\n\n-- \nJaume Tormo Blanes\nIMEM Ramon Margalef.\nCarretera San Vicente del Raspeig s/n\n03690 San Vicente del Raspeig - Alicante\nwww.ua.es\nacercad.wordpress.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Ya lo he encontrado. Peró quería saber si había una forma más directa de\nbuscar.\nGracias por la oferta (me tomo nota).\n\njaume.\n\nEl 2 de agosto de 2011 13:06, Carlos Ortega <coforfe at gmail.com> escri",
       "thread_id": "thread-fd02fc649653",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/366da361/attachment.pl"
+      ]
     },
     {
       "id": "msg-5be91cd4b9cc",
@@ -385,11 +439,14 @@
       "references": [
         "<mailman.17.1312279206.7438.r-help-es@r-project.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/ef30ab99/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/ef30ab99/attachment.pl>",
+      "body_plain": "Buenas!\nTengo una consulta.\nEn el trabajo debo traducir los siguientes comandos del STATA al R.\n\n\nforeach x in _cf _sf {\ncap drop seguro`x'\ncap g pf04=0\ng seguro`x'=0\nreplace\nseguro`x'=pg11p+pg12p+pg14p+pg15p+pg16p+pg17p`x'+pg71p+pg73p`x'+pg71o+pg73o`x'\nif pobp==2 & pf04==7 & (pg101`x'==0 | pg101`x'!=.) // & anio<2001\nrecode seguro`x' .=0\n)\n\nNo me doy cuenta como utilizar el for en R de forma tal que calcule para las\nvariables seguro_cf y seguro_sf y lo mismo con las otras variables.\n\nSaludos, Pablo.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas!\nTengo una consulta.\nEn el trabajo debo traducir los siguientes comandos del STATA al R.\n\n\nforeach x in _cf _sf {\ncap drop seguro`x'\ncap g pf04=0\ng seguro`x'=0\nreplace\nseguro`x'=pg11p+pg12p+pg1",
       "thread_id": "thread-5be91cd4b9cc",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/ef30ab99/attachment.pl"
+      ]
     },
     {
       "id": "msg-117dbf4ee736",
@@ -420,11 +477,14 @@
         "<mailman.17.1312279206.7438.r-help-es@r-project.org>",
         "<CAMP_S-MJRQHKyWtY1jOWkYhjZJhQyycwmokwaP0QVB_Ws8m3fA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/13c8898e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/13c8898e/attachment.pl>",
+      "body_plain": "Hola a todos,\n\nPor favor tratad de definir correctamente los asuntos de vuestros emails.\n\nMuchas gracias,\nun saludo\n\n\nPatricia\n\n\n\n\nEl 2 de agosto de 2011 15:01, Pablo Messina <elauti at gmail.com> escribió:\n\n> Buenas!\n> Tengo una consulta.\n> En el trabajo debo traducir los siguientes comandos del STATA al R.\n>\n>\n> foreach x in _cf _sf {\n> cap drop seguro`x'\n> cap g pf04=0\n> g seguro`x'=0\n> replace\n>\n> seguro`x'=pg11p+pg12p+pg14p+pg15p+pg16p+pg17p`x'+pg71p+pg73p`x'+pg71o+pg73o`x'\n> if pobp==2 & pf04==7 & (pg101`x'==0 | pg101`x'!=.) // & anio<2001\n> recode seguro`x' .=0\n> )\n>\n> No me doy cuenta como utilizar el for en R de forma tal que calcule para\n> las\n> variables seguro_cf y seguro_sf y lo mismo con las otras variables.\n>\n> Saludos, Pablo.\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nPatricia García González\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos,\n\nPor favor tratad de definir correctamente los asuntos de vuestros emails.\n\nMuchas gracias,\nun saludo\n\n\nPatricia\n\n\n\n\nEl 2 de agosto de 2011 15:01, Pablo Messina <elauti at gmail.com> esc",
       "thread_id": "thread-5be91cd4b9cc",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/13c8898e/attachment.pl"
+      ]
     },
     {
       "id": "msg-5935811d1d7c",
@@ -436,11 +496,14 @@
       "subject_clean": "[R-es] Como utilizar el for",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/72d9db59/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/72d9db59/attachment.pl>",
+      "body_plain": "Buenas!\nTengo una consulta.\nEn el trabajo debo traducir los siguientes comandos del STATA al R.\n\n\nforeach x in _cf _sf {\ncap drop seguro`x'\ncap g pf04=0\ng seguro`x'=0\nreplace\nseguro`x'=pg11p+pg12p+pg14p+pg15p+pg16p+pg17p`x'+pg71p+pg73p`x'+pg71o+pg73o`x'\nif pobp==2 & pf04==7 & (pg101`x'==0 | pg101`x'!=.) // & anio<2001\nrecode seguro`x' .=0\n)\n\nNo me doy cuenta como utilizar el for en R de forma tal que calcule para las\nvariables seguro_cf y seguro_sf y lo mismo con las otras variables.\n\nSaludos, Pablo.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas!\nTengo una consulta.\nEn el trabajo debo traducir los siguientes comandos del STATA al R.\n\n\nforeach x in _cf _sf {\ncap drop seguro`x'\ncap g pf04=0\ng seguro`x'=0\nreplace\nseguro`x'=pg11p+pg12p+pg1",
       "thread_id": "thread-5935811d1d7c",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/72d9db59/attachment.pl"
+      ]
     },
     {
       "id": "msg-7ace18af63ff",
@@ -454,11 +517,14 @@
       "references": [
         "<CALCOUqug0fSrCdux6Tx2rP6rdmNUqHLkciv4H5zB=7J-8je1Ng@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/1c41b369/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/1c41b369/attachment.pl>",
+      "body_plain": "Hola Fredy!\n\nMuchas gracias por la información que me brindas. Me ha sido de utilidad.\n\nSaludos cordiales,\n\nJuan Manuel.\n\nEl 2 de agosto de 2011 10:14, Freddy López <freddy.vate01 at gmail.com>escribió:\n\n> Hola Juan.\n>\n> La regresión lineal es un método muy difundido y estoy seguro que con\n> una breve búsqueda en internet podrás encontrar excelentes manuales en\n> español.\n>\n> Puedes adelantar con saber que la función básica para regresiones\n> lineales es lm() (de linear model) y para las variables que mencionas\n> podrías utilizar:\n>\n> ajuste<-lm(razco_pr~razco_ps+razco_pc, data=tusdatos)\n> summary(ajuste)\n>\n> Adicionalmente, si deseas hacer consultas de tus datos desde R,\n> existen varias opciones como son los paquetes RODBC, RMySQL,\n> RPostgreSQL, RSQLite, etc dependiendo del manejador en que tengas tus\n> datos.\n>\n> Salud y que disfrutes tu incursión en R.\n>\n> >\n> > Asuntos del día:\n> >\n> >   1. Modelo Regresión Lineal. (juan manuel dias)\n> >\n> >\n> > ----------------------------------------------------------------------\n> >\n> > Message: 1\n> > Date: Mon, 1 Aug 2011 13:09:52 -0300\n> > From: juan manuel dias <juamadias at gmail.com>\n> > To: r-help-es at r-project.org\n> > Subject: [R-es] Modelo Regresión Lineal.\n> > Message-ID:\n> >        <CAOF0weFv5J2q2FE=\n> XC1xvLUfj6HGx8x9pwHWt8_H9oO8SMroOw at mail.gmail.com>\n> > Content-Type: text/plain\n> >\n> > Hola,\n> >\n> > Estoy trabajando con una base de datos que tiene razones de consultas\n> > médicas sobre proyecciones de población, y por otro lado razones de\n> > cobertura de salud.\n> > Todas las variables las tengo por año y por Provincia (2003-2010).\n> >\n> > Necesito meter algunas de las variables de la base en un modelo de\n> regresión\n> > Lineal, las variables independientes serían razco_ps y razco_pc y la\n> > dependiente razco_pr.\n> > Estuve trabajando con SPSS pero quería probar en R, alguien podrá\n> ayudarme?\n> >\n> > Muchas gracias,\n> >\n> > Saludos cordiales\n> >\n> > Juan Manuel Dias.\n> >\n> > Ministerio de Salud - Argentina.\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> >\n> > ------------------------------\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n> > Fin de Resumen de R-help-es, Vol 30, Envío 4\n> > ********************************************\n> >\n>\n>\n>\n> --\n> «But Gwindor answered: 'The doom lies in yourself, not in your name.'»\n>\n> JRR Tolkien\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Fredy!\n\nMuchas gracias por la información que me brindas. Me ha sido de utilidad.\n\nSaludos cordiales,\n\nJuan Manuel.\n\nEl 2 de agosto de 2011 10:14, Freddy López <freddy.vate01 at gmail.com>escribi",
       "thread_id": "thread-117dbf4ee736",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/1c41b369/attachment.pl"
+      ]
     },
     {
       "id": "msg-fbb24264a209",
@@ -472,11 +538,14 @@
       "references": [
         "<CAMP_S-MukjAygP2++H-Gm2yykZbz5fpqzC5JVewE0HTE8h1vDA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/a63567b2/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/a63567b2/attachment.pl>",
+      "body_plain": "¿Qué te hace pensar que alguien de la *lista de R* sepa Stata?\n\nUn saludo\nGregorio R. Serrano\n\nEl 2 de agosto de 2011 15:53, Pablo Messina <elauti at gmail.com> escribió:\n\n> Buenas!\n> Tengo una consulta.\n> En el trabajo debo traducir los siguientes comandos del STATA al R.\n>\n>\n> foreach x in _cf _sf {\n> cap drop seguro`x'\n> cap g pf04=0\n> g seguro`x'=0\n> replace\n>\n> seguro`x'=pg11p+pg12p+pg14p+pg15p+pg16p+pg17p`x'+pg71p+pg73p`x'+pg71o+pg73o`x'\n> if pobp==2 & pf04==7 & (pg101`x'==0 | pg101`x'!=.) // & anio<2001\n> recode seguro`x' .=0\n> )\n>\n> No me doy cuenta como utilizar el for en R de forma tal que calcule para\n> las\n> variables seguro_cf y seguro_sf y lo mismo con las otras variables.\n>\n> Saludos, Pablo.\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n\n-- \nDr. Gregorio R. Serrano\nDpto. Economía Cuantitativa (UCM)\nVoz:+34 91394 2361\nFax:+34 91394 2591\nhttp://www.grserrano.es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "¿Qué te hace pensar que alguien de la *lista de R* sepa Stata?\n\nUn saludo\nGregorio R. Serrano\n\nEl 2 de agosto de 2011 15:53, Pablo Messina <elauti at gmail.com> escribió:\n\n> Buenas!\n> Tengo una consul",
       "thread_id": "thread-5935811d1d7c",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/a63567b2/attachment.pl"
+      ]
     },
     {
       "id": "msg-b97499580eb5",
@@ -490,11 +559,14 @@
       "references": [
         "<CAMP_S-MukjAygP2++H-Gm2yykZbz5fpqzC5JVewE0HTE8h1vDA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/43b462c4/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/43b462c4/attachment.pl>",
+      "body_plain": "Pablo,\nNo se la respuesta a tu pregunta, pero creo [1] puede darte algunas ideas\nacerca de como resolverla.\nSaludos,\nJorge\n[1]\nhttp://www.springerlink.com/content/978-1-4419-1318-0#section=692374&page=1&locus=9\n\n\n2011/8/2 Pablo Messina <>\n\n> Buenas!\n> Tengo una consulta.\n> En el trabajo debo traducir los siguientes comandos del STATA al R.\n>\n>\n> foreach x in _cf _sf {\n> cap drop seguro`x'\n> cap g pf04=0\n> g seguro`x'=0\n> replace\n>\n> seguro`x'=pg11p+pg12p+pg14p+pg15p+pg16p+pg17p`x'+pg71p+pg73p`x'+pg71o+pg73o`x'\n> if pobp==2 & pf04==7 & (pg101`x'==0 | pg101`x'!=.) // & anio<2001\n> recode seguro`x' .=0\n> )\n>\n> No me doy cuenta como utilizar el for en R de forma tal que calcule para\n> las\n> variables seguro_cf y seguro_sf y lo mismo con las otras variables.\n>\n> Saludos, Pablo.\n>\n>        [[alternative HTML version deleted]]\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Pablo,\nNo se la respuesta a tu pregunta, pero creo [1] puede darte algunas ideas\nacerca de como resolverla.\nSaludos,\nJorge\n[1]\nhttp://www.springerlink.com/content/978-1-4419-1318-0#section=692374&page",
       "thread_id": "thread-5935811d1d7c",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110802/43b462c4/attachment.pl"
+      ]
     },
     {
       "id": "msg-18c0a9d51235",
@@ -528,11 +600,14 @@
         "<1311929625.95075.YahooMailNeo@web29608.mail.ird.yahoo.com>",
         "<1312183120.41755.YahooMailNeo@web29618.mail.ird.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110804/4f69b10d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110804/4f69b10d/attachment.pl>",
+      "body_plain": "Hola a todos, estoy atascado en una sencilla operacion:\n\n\n\nA            B        C       D\nRojo         5        6        8\nVerde        6        8        9  \n\nAzul        9        8        7\n\n\nMi preguntas es sencilla pero no me sale.\nYo quiero crear una nueva variable D, con la siguiente funcion:\nSi A es rojo, D= C*D\nSi A no es rojo, D = B*D\n\nAgradezco la ayuda\n\n\nJocedo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola a todos, estoy atascado en una sencilla operacion:\n\n\n\nA            B        C       D\nRojo         5        6        8\nVerde        6        8        9  \n\nAzul        9        8        7\n\n\nMi pre",
       "thread_id": "thread-e99333b0fd6f",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110804/4f69b10d/attachment.pl"
+      ]
     },
     {
       "id": "msg-35fa2d9f7bed",
@@ -568,11 +643,14 @@
         "<1312183120.41755.YahooMailNeo@web29618.mail.ird.yahoo.com>",
         "<1312458655.16380.YahooMailNeo@web29609.mail.ird.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110804/a991284b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110804/a991284b/attachment.pl>",
+      "body_plain": "Hola,\n\nLa nueva variable a crear entiendo que ha de ser \"F\", ya que \"D\" ya existe\nen tu ejemplo.\nCon esta premisa, una solución posible es esta -utilizando la función\nifelse():\n\n>\n> dat.df\n      A B C D\n1  Rojo 5 6 8\n2 Verde 6 7 9\n3  Azul 9 8 7\n> ifelse(dat.df$A==\"Rojo\", dat.df$C * dat.df$D, dat.df$B * dat.df$D)\n[1] 48 54 63\n>\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\n2011/8/4 jose cebrian <pepeceb at yahoo.es>\n\n>\n>\n> Hola a todos, estoy atascado en una sencilla operacion:\n>\n>\n>\n> A            B        C       D\n> Rojo         5        6        8\n> Verde        6        8        9\n>\n> Azul        9        8        7\n>\n>\n> Mi preguntas es sencilla pero no me sale.\n> Yo quiero crear una nueva variable D, con la siguiente funcion:\n> Si A es rojo, D= C*D\n> Si A no es rojo, D = B*D\n>\n> Agradezco la ayuda\n>\n>\n> Jocedo\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nLa nueva variable a crear entiendo que ha de ser \"F\", ya que \"D\" ya existe\nen tu ejemplo.\nCon esta premisa, una solución posible es esta -utilizando la función\nifelse():\n\n>\n> dat.df\n      A B C",
       "thread_id": "thread-e99333b0fd6f",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110804/a991284b/attachment.pl"
+      ]
     },
     {
       "id": "msg-d007b0681cbe",
@@ -584,11 +662,14 @@
       "subject_clean": "[R-es] Simulacion matrices de varianza-covarianza",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110805/55dc1486/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110805/55dc1486/attachment.pl>",
+      "body_plain": "Hola!\nPara simular matrices de datos normales multivariados con la sentencia\nrmvnorm (dentro del paquete mvtnorm) se necesita, entre otras cosas, el\nnúmero de vectores a simular, el vector de parámetros-medias correspondiente\na cada variable y su respectiva matriz de Varianza-Covarianza. En este\núltimo punto, tengo problemas.\nEn lugar de ingresar una matriz sigma creada por mi, necesito simular\nmatrices de Varianza-covarianza semidefinidas-positivas.\nLa idea es generar estas matrices sigma con distintas estructuras (ej. todas\nlas variables muy correlacionadas, otra matriz con variables poco\ncorrelacionadas entre si, algunas poco correlacionadas y otras más\ncorrelacionadas dentro de una misma matriz, etc.) que posteriormente me\nposibiliten generar matrices de datos normales multivariados.\nConocen algún paquete que me permita simular esto??\nMuchas gracias!\nGuillermo\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola!\nPara simular matrices de datos normales multivariados con la sentencia\nrmvnorm (dentro del paquete mvtnorm) se necesita, entre otras cosas, el\nnúmero de vectores a simular, el vector de parámetr",
       "thread_id": "thread-d007b0681cbe",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110805/55dc1486/attachment.pl"
+      ]
     },
     {
       "id": "msg-00949fe7cbc1",
@@ -602,11 +683,14 @@
       "references": [
         "<CAFOHKp2ooMZWbJd7hjLgGJ5XzGkBqE0FOmi6ujcvB3A=CiJMcw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110805/3f2c289e/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110805/3f2c289e/attachment.pl>",
+      "body_plain": "Holas Guillermo,\n\nPuedes usar la distribucion Wishart para lo que quieres.  A  continuacion un\nejemplo:\n\nrequire(bayesm)\nrho <- 0.7    # correlacion\nVs <- matrix(c(1, rho, rho, 1), ncol = 2, byrow = TRUE)  # matrix de\ncorrelacion\n\nn <- 20    # tamano de muestra\n\n# generacion de 10 matrices de varianza covarianza\nout <- replicate(10, list(rwishart(n, Vs)$W/n))\nout\n\nPara obtener las matrices de correlacion, puedes usar cov2cor().\n\nUn saludo,\nJorge\n\n\n2011/8/5 Guillermo Sabino <>\n\n> Hola!\n> Para simular matrices de datos normales multivariados con la sentencia\n> rmvnorm (dentro del paquete mvtnorm) se necesita, entre otras cosas, el\n> número de vectores a simular, el vector de parámetros-medias\n> correspondiente\n> a cada variable y su respectiva matriz de Varianza-Covarianza. En este\n> último punto, tengo problemas.\n> En lugar de ingresar una matriz sigma creada por mi, necesito simular\n> matrices de Varianza-covarianza semidefinidas-positivas.\n> La idea es generar estas matrices sigma con distintas estructuras (ej.\n> todas\n> las variables muy correlacionadas, otra matriz con variables poco\n> correlacionadas entre si, algunas poco correlacionadas y otras más\n> correlacionadas dentro de una misma matriz, etc.) que posteriormente me\n> posibiliten generar matrices de datos normales multivariados.\n> Conocen algún paquete que me permita simular esto??\n> Muchas gracias!\n> Guillermo\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Holas Guillermo,\n\nPuedes usar la distribucion Wishart para lo que quieres.  A  continuacion un\nejemplo:\n\nrequire(bayesm)\nrho <- 0.7    # correlacion\nVs <- matrix(c(1, rho, rho, 1), ncol = 2, byrow = T",
       "thread_id": "thread-d007b0681cbe",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110805/3f2c289e/attachment.pl"
+      ]
     },
     {
       "id": "msg-34884900ea13",
@@ -636,11 +720,14 @@
       "references": [
         "<4E42BE69.9000208@gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110810/d7973d0c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110810/d7973d0c/attachment.pl>",
+      "body_plain": "Hola,\n\nSí, efectivamente para el análisis de este tipo de observaciones repetidas\nen el tiempo (longitudinal data) el análisis se realiza mediante modelos\nlineales mixtos (linear mixed models). En tu caso además el modelo es lineal\nya que tus variables dependientes son continuas, de otro modo debieras de\nusar el equivalente logístico.\n\nLa diferencia de usar \"tiempo\" en los efectos random, tiene que ver con las\ndos variantes que presentan este tipo de modelos y es que bien supongas que\nen tu caso el efecto del tratamiento (REPETICIONES) en el crecimiento\ncelular tan sólo hace variar la ordenada en el origen (intercept) en el\nmodelo lineal o bien que la variación en el crecimiento celular además de la\nordenada en el origen también cambiar la pendiente del modelo.\n\na) Que sólo cambie la ordenada en el origen, no aparecería el tiempo.\nb) Si aparece, es que también se espera que cambie la pendiente.\n\nUna forma cómoda de evaluar con qué modelo quedarse en realizar un análisis\nanova de los dos tipos de modelos y quedarse con el que ofrezca menor error.\n\nCon los datos que aportas, el código en R (he renombrado tu data.frame)\n\n\n> dat.df <- data.frame(rep = Repeticiones, time = factor(Tiempo), conc = Concentracion_celular)> library(nlme)> conc.mod.1<-lme(conc ~ time, random = ~1|rep, data=dat.df)> conc.mod.2<-lme(conc ~ time, random = ~1|rep/time, data=dat.df)> anova(conc.mod.1, conc.mod.2)           Model df      AIC      BIC    logLik   Test      L.Ratio p-value\nconc.mod.1     1 16 89.35734 110.6726 -28.67867\nconc.mod.2     2 17 91.35734 114.0048 -28.67867 1 vs 2 1.421086e-14       1>\n\n\nEl análisis indica que el modelo simple (variación tan sólo en la ordenada\nen el origen) es el que ofrece menor error, y por tanto debiera de ser el\nadecuado a utilizar. Por ser más parsimonioso.\n\nAdicionalmente, puedes comprobar cuáles de los términos \"tiempo\" de tu\nmodelo ( concentración ~ tiempo) son realmente significativos. Esto lo\npuedes realizar con la función \"cftest()\" del paquete multcomp.\n\nY para el modelo primero:\n\n> cftest(conc.mod.1)\n\t Simultaneous Tests for General Linear Hypotheses\n\nFit: lme.formula(fixed = conc ~ time, data = dat.df, random = ~1 |\n    rep)\n\nLinear Hypotheses:\n                 Estimate Std. Error z value Pr(>|z|)\n(Intercept) == 0  0.53287    0.30141   1.768   0.0771 .\ntime2 == 0        0.02580    0.40424   0.064   0.9491\ntime4 == 0       -0.08787    0.40424  -0.217   0.8279\ntime6 == 0       -0.03123    0.40424  -0.077   0.9384\ntime8 == 0        0.05433    0.40424   0.134   0.8931\ntime10 == 0       0.05153    0.40424   0.127   0.8986\ntime12 == 0      -0.03750    0.40424  -0.093   0.9261\ntime24 == 0       1.81797    0.40424   4.497 6.88e-06 ***\ntime36 == 0       0.46643    0.40424   1.154   0.2486\ntime48 == 0       0.28237    0.40424   0.699   0.4849\ntime60 == 0       0.79003    0.40424   1.954   0.0507 .\ntime72 == 0       0.12910    0.40424   0.319   0.7495\ntime96 == 0       0.62653    0.40424   1.550   0.1212\ntime120 == 0      0.26057    0.40424   0.645   0.5192\n---\nSignif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n(Univariate p values reported)\n\n\nCon lo que realmente tu modelo puede simplificarse notablemente, ya que te\nquedarías tan sólo con los términos: Intercept, tiempo_24 y tiempo_60 para\nexplicar el crecimiento celular.\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n2011/8/10 Argel Gastélum Arellánez <argel.gastelum at gmail.com>\n\n>    Hola compañeros de la lista.\n>\n>    Tengo el siguiente set de datos:\n>\n> Repeticiones <- c(rep(\"RI\", 14), rep(\"RII\", 14), rep(\"RIII\", 14))\n> Tiempo <- rep(c(0, 2, 4, 6, 8, 10, 12, 24, 36, 48, 60, 72, 96, 120), 3)\n> Concentracion_celular <- c(0.4862, 0.5375, 0.4309, 0.4390, 0.4603, 0.4733,\n> 0.3936, 0.9085, 0.5838, 0.5477, 0.6331, 0.8693, 1.0092, 0.6341, 0.5350,\n> 0.4951, 0.4120, 0.5032, 0.5968, 0.5734, 0.5258, 4.2884, 1.0763, 0.6967,\n> 1.6744, 0.6124, 1.1766, 0.6999, 0.5774, 0.6434, 0.4921, 0.5627, 0.7045,\n> 0.7065, 0.5667, 1.8556, 1.3378, 1.2013, 1.6612, 0.5042, 1.2924, 1.0463)\n>\n> DATOS <- data.frame(REPETICIONES = Repeticiones, TIEMPO = factor(Tiempo),\n> CONCENTRACION_CELULAR = Concentracion_celular)\n>\n>    Se trata de cultivos bacterianos, realizado con tres repeticiones, a los\n> que se les monitoreó la concentración celular en el tiempo (en horas). Para\n> determinar si existe diferencia significativa en la concentración celular en\n> los diferentes tiempos necesito aplicar un anova de medidas repetidas, lo\n> que estoy haciendo con la siguiente instrucción (tomado de\n> http://blog.gribblelab.org/**2009/03/09/repeated-measures-**anova-using-r/<http://blog.gribblelab.org/2009/03/09/repeated-measures-anova-using-r/>\n> ):\n>\n> # Modelo medidas repetidas:\n> library(nlme)\n>\n> modelo.medidas.repetidas <- lme(CONCENTRACION_CELULAR ~ TIEMPO, random =\n> ~1|REPETICIONES/TIEMPO, na.action = na.exclude, data = DATOS)\n>\n> ¿Es adecuado aplicar el modelo de esta forma para realizar un anova de\n> medidas repetidas? ¿Tiene sentido que aparezca la variable TIEMPO en el\n> argumento \"random\" o sólo con dejar REPETICIONES es suficiente? Lo he\n> aplicado de las dos forma y me da el mismo resultado para el valor de p.\n>\n>    De antemano muchas gracias por la ayuda.\n>\n>    Saludos.\n>\n> --\n>    Argel.\n>\n> ______________________________**_________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSí, efectivamente para el análisis de este tipo de observaciones repetidas\nen el tiempo (longitudinal data) el análisis se realiza mediante modelos\nlineales mixtos (linear mixed models). En tu ",
       "thread_id": "thread-34884900ea13",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110810/d7973d0c/attachment.pl"
+      ]
     },
     {
       "id": "msg-923dfa2c55fd",
@@ -652,11 +739,14 @@
       "subject_clean": "[R-es] DUDAS anova y lm",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/cf073f5a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/cf073f5a/attachment.pl>",
+      "body_plain": "Estimados muy buenas quería hacerles unas consultas!\n\nEstoy trabajando con resultados de pesos al destete (variable repuesta) en\nanimales, comparando animales de distinto genotipo (12) basados en 2 razas\npuras AAAA y HHHH con sus respectivas variaciones según los cruzamientos\nobtenidos entre las razas.\n\nMi planteo lo dividí en partes:\n\n1) Ajusté un modelo fijo con las siguientes variables explicativas:\n\n- año\n-sexo\n-categoría de la madre del ternero (según el número de partos)\n-genotipo del ternero en base a la raza de los padres\n\nCon la función lm ajusté el modelo lineal:\n\nmodel<-lm(pesodes~anio+sexo+categ+genot,data=peso)\nsummary(model)\n\nCon el summary (model) el *intercepto incluyó además de la media general, el\ngenotipo AAAA, el sexo H (hembra) y el año más viejo 1994. *\n\n*La duda es si yo quisiera afirmar que la diferencia entre el genotipo AAAA\ny el genotipo HHHH es de 6 kg a favor del genotipo AAAA (*como lo expresa la\ntabla 1 con los coeficientes)* está bien? o está sesgando la comparación lo\notro que quedó incluído en el intercepto (media general, sexo H y año 1994)?\n\n*\n# TABLA 1:\n\nResiduals:\n       Min         1Q     Median         3Q        Max\n-118.22628  -16.27613    0.07058   16.00515   68.98782\n\nCoefficients:\n            Estimate Std. Error t value Pr(>|t|)\n(Intercept)  152.928      3.766  40.605  < 2e-16 ***\nanio1995     -18.852      3.894  -4.841 1.46e-06 ***\nanio1996     -12.971      3.983  -3.256 0.001160 **\nanio1997     -16.267      3.958  -4.110 4.22e-05 ***\nanio1998     -22.752      3.668  -6.203 7.56e-10 ***\nanio1999     -22.991      4.167  -5.518 4.18e-08 ***\nanio2000       4.480      3.627   1.235 0.216959\nanio2001      18.357      3.848   4.770 2.06e-06 ***\nanio2002     -13.889      3.914  -3.549 0.000402 ***\nsexoM          5.728      1.407   4.071 4.98e-05 ***\ncategVQU.2    -2.641      1.519  -1.739 0.082243 .\ncategVQU.3     8.050      3.180   2.532 0.011482 *\ngenotAAAH     14.921      4.144   3.600 0.000331 ***\ngenotAAHA     11.736      3.471   3.381 0.000746 ***\ngenotAAHH     -3.380      2.310  -1.463 0.143792\ngenotAHAH     12.465      6.888   1.810 0.070569 .\ngenotAHHA      4.985      6.670   0.747 0.454941\ngenotHAAH     17.877      5.824   3.070 0.002190 **\ngenotHAHA     18.888      6.406   2.948 0.003257 **\ngenotHHAA      7.769      2.336   3.325 0.000909 ***\ngenotHHAH      5.786      3.320   1.742 0.081692 .\ngenotHHHA     10.849      4.108   2.641 0.008381 **\n*genotHHHH     -6.044      2.274  -2.657 0.007985 ***\n---\nSignif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n\nResidual standard error: 24.54 on 1225 degrees of freedom\nMultiple R-squared: 0.3359,     Adjusted R-squared: 0.324\nF-statistic: 28.16 on 22 and 1225 DF,  p-value: < 2.2e-16\n\n2)Luego le pedí un ANOVA para ver la significancia de efectos fijos:\n\nanova(model)\n\nAnalysis of Variance Table\n\nResponse: pesodes\n            Df Sum Sq Mean Sq F value    Pr(>F)\nanio         8 302153   37769 62.7340 < 2.2e-16 ***\nsexo         1   9774    9774 16.2340 5.943e-05 ***\ncateg        2   7504    3752  6.2318  0.002029 **\ngenot       11  53589    4872  8.0919 9.061e-14 ***\nResiduals 1225 737514     602\n\n*El problema fue que **el resultado que me dió el ANOVA es la suma de\ncuadrados tipo 1.\n\nE**xiste alguna forma de pedirle el resultado como suma de cuadrados tipo 3\nasí puedo saber la significancia de cada una de las variables explicativas\nsin que dependa su valor del orden en que las ingrese al modelo?\n\n*3) *Si quisiera realizar compararaciones de múltiples medias, por ejemplo\nsaber cuales son las medias de peso al destete que son diferentes\nsignificativamente entre los distintos genotipos *(12 genotipos)*, (una vez\nque ya se que es significativa la variable genotipo), cómo lo escribiría\nusando tukey o usando contrastes?\n\n*Porque si me baso en los resultados del summary.lm(model) solo me compara\nel genotipo AAAA contra cada uno de los genotipos restantes pero no puedo\nsaber si entre ellos tambien hay diferencias.\n\n\n4) La segunda parte del ajuste de modelos consistió en ajustar un modelo\nmixto en base a los efectos fijos año, sexo y categoría de la madre y el\nefecto aleatorio fue el efecto geneético del animal.\n\n*La duda es, los resultados no me dan los p-valores de los efectos fijos\npara saber si son significatuivos o no, existe alguna forma de saberlo?\nporque si yo quisiera ajustar directamente un modelo mixto sin tener que\najustar uno fijo previamente, puedo hacerlo?\n\n\n*SALUDOS Y MUCHAS GRACIAS!\n\nRodrigo.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Estimados muy buenas quería hacerles unas consultas!\n\nEstoy trabajando con resultados de pesos al destete (variable repuesta) en\nanimales, comparando animales de distinto genotipo (12) basados en 2 ra",
       "thread_id": "thread-923dfa2c55fd",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/cf073f5a/attachment.pl"
+      ]
     },
     {
       "id": "msg-b49dad9aa808",
@@ -671,11 +761,14 @@
         "<4E42BE69.9000208@gmail.com>",
         "<CAFKNbkJWRO7Pts5EPFPQzRHZYn=Tm4vLuDZPKnp4NAODHO9Guw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110810/1d21d7f3/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110810/1d21d7f3/attachment.pl>",
+      "body_plain": "Hola Carlos, muchas gracias por tu ayuda. Tengo algunas dudas con \nrespecto a lo que me explicas que describo abajo.\n\nEl 10/08/11 16:20, Carlos Ortega escribió:\n> En tu caso además el modelo es lineal ya que tus variables \n> dependientes son continuas, de otro modo debieras de usar el \n> equivalente logístico. \n\n     En este caso el crecimiento fue medido mediante la densidad óptica \nde muestras del cultivo. Si el crecimiento se representara como peso \nseco, en gramos/litro, también sería una variable continua y seguiría \nanalizándose mediante un modelo lineal. En el caso de representar el \ncrecimiento como número de células ¿tendría que usar el equivalente \nlogístico?\n\n> La diferencia de usar \"tiempo\" en los efectos random, tiene que ver \n> con las dos variantes que presentan este tipo de modelos y es que bien \n> supongas que en tu caso el efecto del tratamiento (REPETICIONES) en el \n> crecimiento celular tan sólo hace variar la ordenada en el origen \n> (intercept) en el modelo lineal o bien que la variación en el \n> crecimiento celular además de la ordenada en el origen también cambiar \n> la pendiente del modelo.\n>\n> a) Que sólo cambie la ordenada en el origen, no aparecería el tiempo.\n> b) Si aparece, es que también se espera que cambie la pendiente.\n>\n\n     ¿Podrías por favor recomendarme alguna referencia dónde poder \nestudiar esto? He leído un poco sobre modelos mixtos con R pero esto no \nlo había entendido.\n\n> Una forma cómoda de evaluar con qué modelo quedarse en realizar un \n> análisis anova de los dos tipos de modelos y quedarse con el que \n> ofrezca menor error.\n> Con los datos que aportas, el código en R (he renombrado tu data.frame)\n> >  dat.df<- data.frame(rep = Repeticiones, time = factor(Tiempo), conc = Concentracion_celular)\n> >  library(nlme)\n> >  conc.mod.1<-lme(conc ~ time, random = ~1|rep, data=dat.df)\n> >  conc.mod.2<-lme(conc ~ time, random = ~1|rep/time, data=dat.df)\n> >  anova(conc.mod.1, conc.mod.2)\n>             Model df      AIC      BIC    logLik   Test      L.Ratio p-value\n> conc.mod.1     1 16 89.35734 110.6726 -28.67867\n> conc.mod.2     2 17 91.35734 114.0048 -28.67867 1 vs 2 1.421086e-14       1\n>\n> El análisis indica que el modelo simple (variación tan sólo en la \n> ordenada en el origen) es el que ofrece menor error, y por tanto \n> debiera de ser el adecuado a utilizar. Por ser más parsimonioso.\n\n     Perdón por mi ignorancia, ¿esto lo interpretas por los valores de \nAIC y BIC?, ¿el p-value cómo se interpreta en este tipo de comparación \nentre modelos?\nSi tengo varios experimentos de este tipo, con microorganismos \ndiferentes, supongo que tendría que comparar ambos modelos lineales para \ncada uno de los casos.\n\n> Adicionalmente, puedes comprobar cuáles de los términos \"tiempo\" de tu \n> modelo ( concentración ~ tiempo) son realmente significativos. Esto lo \n> puedes realizar con la función \"cftest()\" del paquete multcomp.\n\n     Esta función cftest da información muy interesante, no la conocía. \nOriginalmente el objetivo de este análisis, además de detectar si la \ndiferencia en la concentración celular es o no significativa a través \ndel tiempo, era realizar una comparación de medias, lo que hice de la \nsiguiente forma:\n\nPares <- glht(conc.mod.1, linfct = mcp(time = \"Tukey\"))\ncld(Pares)\n\n     ¿Es válido hacerlo de esta forma?\n\n     De nuevo muchas gracias por tu ayuda.\n\n     Saludos.\n\n--\n     Argel.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Carlos, muchas gracias por tu ayuda. Tengo algunas dudas con \nrespecto a lo que me explicas que describo abajo.\n\nEl 10/08/11 16:20, Carlos Ortega escribió:\n> En tu caso además el modelo es lineal",
       "thread_id": "thread-34884900ea13",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110810/1d21d7f3/attachment.pl"
+      ]
     },
     {
       "id": "msg-25278b19b762",
@@ -691,11 +784,14 @@
         "<CAFKNbkJWRO7Pts5EPFPQzRHZYn=Tm4vLuDZPKnp4NAODHO9Guw@mail.gmail.com>",
         "<4E435D03.60402@gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/93a8e530/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/93a8e530/attachment.pl>",
+      "body_plain": "Hola Argel,\n\nSobre las dudas que planteas.\n\n1. No, el modelo logístico lo aplicarías cuando la variable es de tipo\nbinario (si una de tus variables fuese Sexo por ejemplo, valor de la\nvariable 0 ó 1). Medir la concentración o contar células proporcionan\nvariables numéricas multivaluadas.\n\n2. Como referencias para este tipo de modelos tienes la siguiente\nreferencia. Aunque en los ejemplos se utiliza S-Plus el paquete que estás\nutilizando (nlme) fue creado por los autores de este libro (Pinheiro y\nBates)\n:\nhttp://www.amazon.com/Mixed-Effects-Models-S-S-Plus/dp/0387989579/ref=sr_1_1?ie=UTF8&qid=1313050380&sr=8-1\n\nTambién si quieres algo más aplicado y que incorpore análisis con librerías\nya de R y de publicación más reciente te recomendaría especialmente este\notro:\nhttp://www.amazon.com/Handbook-Statistical-Analyses-Using-Second/dp/1420079336/ref=sr_1_1?s=books&ie=UTF8&qid=1313050540&sr=1-1\n\nCuriosamente utilicé en primera aproximación el paquete (lme4) y el\nprocedimiento que se recomienda en este segundo libro pero no terminaba de\nconverger el modelo para el modelo en el que en el random aparecía el\ntiempo.\n\n3. La selección del mejor modelo la he hecho basándome en el p-value.\n\n4. Si tienes varios modelos con diferentes microorganismos, su comparación\nno sé en principio que sentido tiene. Estás modelando la concentración de\nuna especie sujeta a unas condiciones cuyo crecimiento no tiene porqué estar\nrelacionado con el crecimiento que experimenta otra especie. En cualquier\ncaso, los análisis de diferentes experimentos sobre un mismo tipo de efecto\nes algo que cada vez se hace más y hay una técnica estadística para ello que\nviene descrita de forma aplicada en modo de introducción y con ejemplos en\nel segundo libro que te he sugerido. El tipo de análisis se conoce como\n\"Meta-Análisis\".\n\n5. Sobre función glht que has utilizado, sí es la adecuada para realizar\ncomparaciones en modo pareado. Lo que no tengo claro es su utilidad para tu\nexperimento. Quiero decir, que si por ejemplo el par de tiempos 120-8 es\npoco significativo, ¿qué quiere decir? ¿que podrías haberte ahorrado el\nhaber realizado el experimento hasta 120?. Este tipo de situación de\n\"Comparaciones múltiples\" requiere un análisis especial de la técnica\nestadística a utilizar y su interpretación. De nuevo la segunda referencia\nes válida, aunque esta otra referencia muy reciente te puede ayudar también:\nhttp://www.amazon.com/Multiple-Comparisons-Using-Frank-Bretz/dp/1584885742/ref=sr_1_1?s=books&ie=UTF8&qid=1313064853&sr=1-1\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n2011/8/11 Argel Gastélum Arellánez <argel.gastelum at gmail.com>\n\n>     Hola Carlos, muchas gracias por tu ayuda. Tengo algunas dudas con\n> respecto a lo que me explicas que describo abajo.\n>\n> El 10/08/11 16:20, Carlos Ortega escribió:\n> > En tu caso además el modelo es lineal ya que tus variables\n> > dependientes son continuas, de otro modo debieras de usar el\n> > equivalente logístico.\n>\n>      En este caso el crecimiento fue medido mediante la densidad óptica\n> de muestras del cultivo. Si el crecimiento se representara como peso\n> seco, en gramos/litro, también sería una variable continua y seguiría\n> analizándose mediante un modelo lineal. En el caso de representar el\n> crecimiento como número de células ¿tendría que usar el equivalente\n> logístico?\n>\n> > La diferencia de usar \"tiempo\" en los efectos random, tiene que ver\n> > con las dos variantes que presentan este tipo de modelos y es que bien\n> > supongas que en tu caso el efecto del tratamiento (REPETICIONES) en el\n> > crecimiento celular tan sólo hace variar la ordenada en el origen\n> > (intercept) en el modelo lineal o bien que la variación en el\n> > crecimiento celular además de la ordenada en el origen también cambiar\n> > la pendiente del modelo.\n> >\n> > a) Que sólo cambie la ordenada en el origen, no aparecería el tiempo.\n> > b) Si aparece, es que también se espera que cambie la pendiente.\n> >\n>\n>      ¿Podrías por favor recomendarme alguna referencia dónde poder\n> estudiar esto? He leído un poco sobre modelos mixtos con R pero esto no\n> lo había entendido.\n>\n> > Una forma cómoda de evaluar con qué modelo quedarse en realizar un\n> > análisis anova de los dos tipos de modelos y quedarse con el que\n> > ofrezca menor error.\n> > Con los datos que aportas, el código en R (he renombrado tu data.frame)\n> > >  dat.df<- data.frame(rep = Repeticiones, time = factor(Tiempo), conc =\n> Concentracion_celular)\n> > >  library(nlme)\n> > >  conc.mod.1<-lme(conc ~ time, random = ~1|rep, data=dat.df)\n> > >  conc.mod.2<-lme(conc ~ time, random = ~1|rep/time, data=dat.df)\n> > >  anova(conc.mod.1, conc.mod.2)\n> >             Model df      AIC      BIC    logLik   Test      L.Ratio\n> p-value\n> > conc.mod.1     1 16 89.35734 110.6726 -28.67867\n> > conc.mod.2     2 17 91.35734 114.0048 -28.67867 1 vs 2 1.421086e-14\n> 1\n> >\n> > El análisis indica que el modelo simple (variación tan sólo en la\n> > ordenada en el origen) es el que ofrece menor error, y por tanto\n> > debiera de ser el adecuado a utilizar. Por ser más parsimonioso.\n>\n>      Perdón por mi ignorancia, ¿esto lo interpretas por los valores de\n> AIC y BIC?, ¿el p-value cómo se interpreta en este tipo de comparación\n> entre modelos?\n> Si tengo varios experimentos de este tipo, con microorganismos\n> diferentes, supongo que tendría que comparar ambos modelos lineales para\n> cada uno de los casos.\n>\n> > Adicionalmente, puedes comprobar cuáles de los términos \"tiempo\" de tu\n> > modelo ( concentración ~ tiempo) son realmente significativos. Esto lo\n> > puedes realizar con la función \"cftest()\" del paquete multcomp.\n>\n>      Esta función cftest da información muy interesante, no la conocía.\n> Originalmente el objetivo de este análisis, además de detectar si la\n> diferencia en la concentración celular es o no significativa a través\n> del tiempo, era realizar una comparación de medias, lo que hice de la\n> siguiente forma:\n>\n> Pares <- glht(conc.mod.1, linfct = mcp(time = \"Tukey\"))\n> cld(Pares)\n>\n>     ¿Es válido hacerlo de esta forma?\n>\n>     De nuevo muchas gracias por tu ayuda.\n>\n>     Saludos.\n>\n> --\n>     Argel.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Argel,\n\nSobre las dudas que planteas.\n\n1. No, el modelo logístico lo aplicarías cuando la variable es de tipo\nbinario (si una de tus variables fuese Sexo por ejemplo, valor de la\nvariable 0 ó 1).",
       "thread_id": "thread-34884900ea13",
       "thread_depth": 3,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/93a8e530/attachment.pl"
+      ]
     },
     {
       "id": "msg-a2fcb41a9775",
@@ -712,11 +808,14 @@
         "<4E435D03.60402@gmail.com>",
         "<CAFKNbk+5_DsGOCqjjPdTGrOhQ0Kj9pAbOQOow272hMBgRzptLw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/ffb49232/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/ffb49232/attachment.pl>",
+      "body_plain": "Hola Argel, solo quería acotar una pequeña cosa a lo que ya dijo Carlos. El\nmodelo de crecimiento logístico es distinto de un modelo logistico. Usar un\nmodelo de crecimiento logístico tiene sentido en tu caso. El problema es que\nno es una función lineal. Por lo tanto los parametros K y r0 deben ser\nestimados con funciones no lineales (nmle es una opción). El tiempo debe ser\ntomado como una variable continua en este caso. Por cierto parece que\ntuvieses un outlier. Ese punto de 4 y algo es más del doble que el mayor del\nresto de los puntos.\nLuciano\n\n\nEl 11 de agosto de 2011 09:18, Carlos Ortega <coforfe at gmail.com> escribió:\n\n> Hola Argel,\n>\n> Sobre las dudas que planteas.\n>\n> 1. No, el modelo logístico lo aplicarías cuando la variable es de tipo\n> binario (si una de tus variables fuese Sexo por ejemplo, valor de la\n> variable 0 ó 1). Medir la concentración o contar células proporcionan\n> variables numéricas multivaluadas.\n>\n> 2. Como referencias para este tipo de modelos tienes la siguiente\n> referencia. Aunque en los ejemplos se utiliza S-Plus el paquete que estás\n> utilizando (nlme) fue creado por los autores de este libro (Pinheiro y\n> Bates)\n> :\n>\n> http://www.amazon.com/Mixed-Effects-Models-S-S-Plus/dp/0387989579/ref=sr_1_1?ie=UTF8&qid=1313050380&sr=8-1\n>\n> También si quieres algo más aplicado y que incorpore análisis con librerías\n> ya de R y de publicación más reciente te recomendaría especialmente este\n> otro:\n>\n> http://www.amazon.com/Handbook-Statistical-Analyses-Using-Second/dp/1420079336/ref=sr_1_1?s=books&ie=UTF8&qid=1313050540&sr=1-1\n>\n> Curiosamente utilicé en primera aproximación el paquete (lme4) y el\n> procedimiento que se recomienda en este segundo libro pero no terminaba de\n> converger el modelo para el modelo en el que en el random aparecía el\n> tiempo.\n>\n> 3. La selección del mejor modelo la he hecho basándome en el p-value.\n>\n> 4. Si tienes varios modelos con diferentes microorganismos, su comparación\n> no sé en principio que sentido tiene. Estás modelando la concentración de\n> una especie sujeta a unas condiciones cuyo crecimiento no tiene porqué\n> estar\n> relacionado con el crecimiento que experimenta otra especie. En cualquier\n> caso, los análisis de diferentes experimentos sobre un mismo tipo de efecto\n> es algo que cada vez se hace más y hay una técnica estadística para ello\n> que\n> viene descrita de forma aplicada en modo de introducción y con ejemplos en\n> el segundo libro que te he sugerido. El tipo de análisis se conoce como\n> \"Meta-Análisis\".\n>\n> 5. Sobre función glht que has utilizado, sí es la adecuada para realizar\n> comparaciones en modo pareado. Lo que no tengo claro es su utilidad para tu\n> experimento. Quiero decir, que si por ejemplo el par de tiempos 120-8 es\n> poco significativo, ¿qué quiere decir? ¿que podrías haberte ahorrado el\n> haber realizado el experimento hasta 120?. Este tipo de situación de\n> \"Comparaciones múltiples\" requiere un análisis especial de la técnica\n> estadística a utilizar y su interpretación. De nuevo la segunda referencia\n> es válida, aunque esta otra referencia muy reciente te puede ayudar\n> también:\n>\n> http://www.amazon.com/Multiple-Comparisons-Using-Frank-Bretz/dp/1584885742/ref=sr_1_1?s=books&ie=UTF8&qid=1313064853&sr=1-1\n>\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n> 2011/8/11 Argel Gastélum Arellánez <argel.gastelum at gmail.com>\n>\n> >     Hola Carlos, muchas gracias por tu ayuda. Tengo algunas dudas con\n> > respecto a lo que me explicas que describo abajo.\n> >\n> > El 10/08/11 16:20, Carlos Ortega escribió:\n> > > En tu caso además el modelo es lineal ya que tus variables\n> > > dependientes son continuas, de otro modo debieras de usar el\n> > > equivalente logístico.\n> >\n> >      En este caso el crecimiento fue medido mediante la densidad óptica\n> > de muestras del cultivo. Si el crecimiento se representara como peso\n> > seco, en gramos/litro, también sería una variable continua y seguiría\n> > analizándose mediante un modelo lineal. En el caso de representar el\n> > crecimiento como número de células ¿tendría que usar el equivalente\n> > logístico?\n> >\n> > > La diferencia de usar \"tiempo\" en los efectos random, tiene que ver\n> > > con las dos variantes que presentan este tipo de modelos y es que bien\n> > > supongas que en tu caso el efecto del tratamiento (REPETICIONES) en el\n> > > crecimiento celular tan sólo hace variar la ordenada en el origen\n> > > (intercept) en el modelo lineal o bien que la variación en el\n> > > crecimiento celular además de la ordenada en el origen también cambiar\n> > > la pendiente del modelo.\n> > >\n> > > a) Que sólo cambie la ordenada en el origen, no aparecería el tiempo.\n> > > b) Si aparece, es que también se espera que cambie la pendiente.\n> > >\n> >\n> >      ¿Podrías por favor recomendarme alguna referencia dónde poder\n> > estudiar esto? He leído un poco sobre modelos mixtos con R pero esto no\n> > lo había entendido.\n> >\n> > > Una forma cómoda de evaluar con qué modelo quedarse en realizar un\n> > > análisis anova de los dos tipos de modelos y quedarse con el que\n> > > ofrezca menor error.\n> > > Con los datos que aportas, el código en R (he renombrado tu data.frame)\n> > > >  dat.df<- data.frame(rep = Repeticiones, time = factor(Tiempo), conc\n> =\n> > Concentracion_celular)\n> > > >  library(nlme)\n> > > >  conc.mod.1<-lme(conc ~ time, random = ~1|rep, data=dat.df)\n> > > >  conc.mod.2<-lme(conc ~ time, random = ~1|rep/time, data=dat.df)\n> > > >  anova(conc.mod.1, conc.mod.2)\n> > >             Model df      AIC      BIC    logLik   Test      L.Ratio\n> > p-value\n> > > conc.mod.1     1 16 89.35734 110.6726 -28.67867\n> > > conc.mod.2     2 17 91.35734 114.0048 -28.67867 1 vs 2 1.421086e-14\n> > 1\n> > >\n> > > El análisis indica que el modelo simple (variación tan sólo en la\n> > > ordenada en el origen) es el que ofrece menor error, y por tanto\n> > > debiera de ser el adecuado a utilizar. Por ser más parsimonioso.\n> >\n> >      Perdón por mi ignorancia, ¿esto lo interpretas por los valores de\n> > AIC y BIC?, ¿el p-value cómo se interpreta en este tipo de comparación\n> > entre modelos?\n> > Si tengo varios experimentos de este tipo, con microorganismos\n> > diferentes, supongo que tendría que comparar ambos modelos lineales para\n> > cada uno de los casos.\n> >\n> > > Adicionalmente, puedes comprobar cuáles de los términos \"tiempo\" de tu\n> > > modelo ( concentración ~ tiempo) son realmente significativos. Esto lo\n> > > puedes realizar con la función \"cftest()\" del paquete multcomp.\n> >\n> >      Esta función cftest da información muy interesante, no la conocía.\n> > Originalmente el objetivo de este análisis, además de detectar si la\n> > diferencia en la concentración celular es o no significativa a través\n> > del tiempo, era realizar una comparación de medias, lo que hice de la\n> > siguiente forma:\n> >\n> > Pares <- glht(conc.mod.1, linfct = mcp(time = \"Tukey\"))\n> > cld(Pares)\n> >\n> >     ¿Es válido hacerlo de esta forma?\n> >\n> >     De nuevo muchas gracias por tu ayuda.\n> >\n> >     Saludos.\n> >\n> > --\n> >     Argel.\n> >\n> >        [[alternative HTML version deleted]]\n> >\n> >\n> > _______________________________________________\n> > R-help-es mailing list\n> > R-help-es at r-project.org\n> > https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >\n> >\n>\n>         [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Argel, solo quería acotar una pequeña cosa a lo que ya dijo Carlos. El\nmodelo de crecimiento logístico es distinto de un modelo logistico. Usar un\nmodelo de crecimiento logístico tiene sentido en",
       "thread_id": "thread-34884900ea13",
       "thread_depth": 4,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/ffb49232/attachment.pl"
+      ]
     },
     {
       "id": "msg-ab401a806996",
@@ -733,11 +832,14 @@
         "<4E435D03.60402@gmail.com>",
         "<CAFKNbk+5_DsGOCqjjPdTGrOhQ0Kj9pAbOQOow272hMBgRzptLw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/443c62dd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/443c62dd/attachment.pl>",
+      "body_plain": "Hola de nuevo Carlos, buen día.\n\n     Muchas gracias por tus comentarios, me han ayudado mucho. Estudiaré \nlas referencias que me recomiendas para entender mejor lo que estoy \nhaciendo. Te comento un par de cosas más abajo, aunque no tienen mucho \nque ver con R, si están fuera de lugar en la lista ruego me disculpen.\n\nEl 11/08/11 07:18, Carlos Ortega escribió:\n> 4. Si tienes varios modelos con diferentes microorganismos, su \n> comparación no sé en principio que sentido tiene. Estás modelando la \n> concentración de una especie sujeta a unas condiciones cuyo \n> crecimiento no tiene porqué estar relacionado con el crecimiento que \n> experimenta otra especie. En cualquier caso, los análisis de \n> diferentes experimentos sobre un mismo tipo de efecto es algo que cada \n> vez se hace más y hay una técnica estadística para ello que viene \n> descrita de forma aplicada en modo de introducción y con ejemplos en \n> el segundo libro que te he sugerido. El tipo de análisis se conoce \n> como \"Meta-Análisis\". \n\n     Tienes razón, en realidad el objetivo en este momento no es \ncomparar el crecimiento entre varios microorganismos, sino aplicar el \nanálisis de medidas repetidas para una condición de cultivo en un \nmicroorganismo y determinar si existen diferencias significativas en la \nconcentración celular de acuerdo con el tiempo de muestreo. Esto se \nharía de forma independiente para cada condición de cultivo.\n\n> 5. Sobre función glht que has utilizado, sí es la adecuada para \n> realizar comparaciones en modo pareado. Lo que no tengo claro es su \n> utilidad para tu experimento. Quiero decir, que si por ejemplo el par \n> de tiempos 120-8 es poco significativo, ¿qué quiere decir? ¿que \n> podrías haberte ahorrado el haber realizado el experimento hasta 120?. \n> Este tipo de situación de \"Comparaciones múltiples\" requiere un \n> análisis especial de la técnica estadística a utilizar y su \n> interpretación. De nuevo la segunda referencia es válida, aunque esta \n> otra referencia muy reciente te puede ayudar también:\n> http://www.amazon.com/Multiple-Comparisons-Using-Frank-Bretz/dp/1584885742/ref=sr_1_1?s=books&ie=UTF8&qid=1313064853&sr=1-1 \n> <http://www.amazon.com/Multiple-Comparisons-Using-Frank-Bretz/dp/1584885742/ref=sr_1_1?s=books&ie=UTF8&qid=1313064853&sr=1-1>\n\n     El objetivo en este momento es como lo comentas. Por poner un \nejemplo hipotético, si las diferencias en el producto de interés dejan \nde ser significativas a partir de las 24 h, entonces no tendría mucho \nsentido invertir más tiempo en el cultivo y se cosecharía el producto, \nen este caso las células, a las 12 h en vez de a las 120 h, lo que \nahorraría mucho tiempo de proceso. Esto lo estoy tratando de determinar \nde esta forma debido a que no existe el clásico crecimiento exponencial \nbajo las condiciones que se están evaluando, como se presentaría en la \nmayoría de los cultivos bacterianos, en donde se cosecharían las células \nal final del crecimiento exponencial. ¿Habría una aproximación más \nadecuada para determinar esto que la comparación de medidas repetidas?\n\n     De nuevo muchas gracias por tu ayuda.\n\n     Saludos.\n\n--\n     Argel.\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola de nuevo Carlos, buen día.\n\n     Muchas gracias por tus comentarios, me han ayudado mucho. Estudiaré \nlas referencias que me recomiendas para entender mejor lo que estoy \nhaciendo. Te comento un ",
       "thread_id": "thread-34884900ea13",
       "thread_depth": 4,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110811/443c62dd/attachment.pl"
+      ]
     },
     {
       "id": "msg-5b3de3be8259",
@@ -834,11 +936,14 @@
       "references": [
         "<CAMn86Ndhh-nQEVZYyXo6=Y=N+g+Jj+_FPaJNcr2orK-5-gov8g@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110815/f3c0d680/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110815/f3c0d680/attachment.pl>",
+      "body_plain": "Hola,\n\nNo es inmediato el utilizar una librería de Matlab en R.\nEn R, existen un par de paquetes que permiten emular funciones básicas de\nMatlab y poder importar y exportar ficheros .mat:\n\nhttp://cran.at.r-project.org/web/packages/matlab/index.html\nhttp://cran.at.r-project.org/web/packages/R.matlab/index.html\n\nPor otro lado la librería que comentas de Matlab, al parecer tiene dos\nmódulos uno en Matlab y otro un interfaz para Excel escrito en Visual Basic,\ny para esto último realmente todavía no hay nada.\n\nEn cualquier caso, para el tipo de necesidad que tienes la siguiente ayuda\npuede venirte bien, es un ejemplo equivalente:\n\nhttps://stat.ethz.ch/pipermail/r-sig-finance/2009q3/004677.html\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\n2011/8/15 Sebastian Kruk <residuo.solow at gmail.com>\n\n> Estimados usuarios de R:\n>\n> Tengo que hacer una desagregación temporal de una serie anual del\n> producto interno bruto en trimestral.\n>\n> ¿Hay alguna forma de utilizar la librería en matlab de Quilis de\n> desagregación temporal en R?\n>\n> La libreria se puede bajar de\n>\n> http://www.mathworks.com/matlabcentral/fileexchange/24438-temporal-disaggregation-library\n>\n> Saludos,\n>\n> Sebastián.\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nNo es inmediato el utilizar una librería de Matlab en R.\nEn R, existen un par de paquetes que permiten emular funciones básicas de\nMatlab y poder importar y exportar ficheros .mat:\n\nhttp://cran",
       "thread_id": "thread-7e94ec000c8a",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110815/f3c0d680/attachment.pl"
+      ]
     },
     {
       "id": "msg-617eda36a487",
@@ -852,11 +957,14 @@
       "references": [
         "<CALo3VdfzsjF2u5B75kw-_zW28wnv93cWXZSJVMwGjxgEP4gsfQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110815/49c7b3fc/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110815/49c7b3fc/attachment.pl>",
+      "body_plain": "Hola,\n\nTe sugiero varias posibilidades a las dudas que planteas\n\n1. Una forma de comprobar que la diferencia de los coeficientes del modelo\npara los genotipos A y H es mediante el cálculo del intervalo de confianza\npara los coeficientes del modelo de cada una de estas variables. Lo puedes\nhacer a través de la función confint(). Con esta función obtendrás el\nintervalo de confianza entre e. 2.5% y el 97.5%.\n\n2. Mediante la función \"step()\" puedes  introducir las variables en el\nmodelo de forma progresiva y variando el orden de forma automática. Y para\ncada iteración se obtiene el nivel de bondad del ajuste.\n\n\n3. Esta comparación entre pares para las medias, se puede realizar de forma\nmuy inmediata mediante la función \"TukeyHSD()\" a partir del modelo lineal\nque has definido.\n\n4. Los p-values para modelos mixtos los puedes obtener con la función\n\"cftest()\" del paquete \"multcomp\".\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n2011/8/11 rod lopez <rod99hare at gmail.com>\n\n> Estimados muy buenas quería hacerles unas consultas!\n>\n> Estoy trabajando con resultados de pesos al destete (variable repuesta) en\n> animales, comparando animales de distinto genotipo (12) basados en 2 razas\n> puras AAAA y HHHH con sus respectivas variaciones según los cruzamientos\n> obtenidos entre las razas.\n>\n> Mi planteo lo dividí en partes:\n>\n> 1) Ajusté un modelo fijo con las siguientes variables explicativas:\n>\n> - año\n> -sexo\n> -categoría de la madre del ternero (según el número de partos)\n> -genotipo del ternero en base a la raza de los padres\n>\n> Con la función lm ajusté el modelo lineal:\n>\n> model<-lm(pesodes~anio+sexo+categ+genot,data=peso)\n> summary(model)\n>\n> Con el summary (model) el *intercepto incluyó además de la media general,\n> el\n> genotipo AAAA, el sexo H (hembra) y el año más viejo 1994. *\n>\n> *La duda es si yo quisiera afirmar que la diferencia entre el genotipo AAAA\n> y el genotipo HHHH es de 6 kg a favor del genotipo AAAA (*como lo expresa\n> la\n> tabla 1 con los coeficientes)* está bien? o está sesgando la comparación lo\n> otro que quedó incluído en el intercepto (media general, sexo H y año\n> 1994)?\n>\n> *\n> # TABLA 1:\n>\n> Residuals:\n>       Min         1Q     Median         3Q        Max\n> -118.22628  -16.27613    0.07058   16.00515   68.98782\n>\n> Coefficients:\n>            Estimate Std. Error t value Pr(>|t|)\n> (Intercept)  152.928      3.766  40.605  < 2e-16 ***\n> anio1995     -18.852      3.894  -4.841 1.46e-06 ***\n> anio1996     -12.971      3.983  -3.256 0.001160 **\n> anio1997     -16.267      3.958  -4.110 4.22e-05 ***\n> anio1998     -22.752      3.668  -6.203 7.56e-10 ***\n> anio1999     -22.991      4.167  -5.518 4.18e-08 ***\n> anio2000       4.480      3.627   1.235 0.216959\n> anio2001      18.357      3.848   4.770 2.06e-06 ***\n> anio2002     -13.889      3.914  -3.549 0.000402 ***\n> sexoM          5.728      1.407   4.071 4.98e-05 ***\n> categVQU.2    -2.641      1.519  -1.739 0.082243 .\n> categVQU.3     8.050      3.180   2.532 0.011482 *\n> genotAAAH     14.921      4.144   3.600 0.000331 ***\n> genotAAHA     11.736      3.471   3.381 0.000746 ***\n> genotAAHH     -3.380      2.310  -1.463 0.143792\n> genotAHAH     12.465      6.888   1.810 0.070569 .\n> genotAHHA      4.985      6.670   0.747 0.454941\n> genotHAAH     17.877      5.824   3.070 0.002190 **\n> genotHAHA     18.888      6.406   2.948 0.003257 **\n> genotHHAA      7.769      2.336   3.325 0.000909 ***\n> genotHHAH      5.786      3.320   1.742 0.081692 .\n> genotHHHA     10.849      4.108   2.641 0.008381 **\n> *genotHHHH     -6.044      2.274  -2.657 0.007985 ***\n> ---\n> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n>\n> Residual standard error: 24.54 on 1225 degrees of freedom\n> Multiple R-squared: 0.3359,     Adjusted R-squared: 0.324\n> F-statistic: 28.16 on 22 and 1225 DF,  p-value: < 2.2e-16\n>\n> 2)Luego le pedí un ANOVA para ver la significancia de efectos fijos:\n>\n> anova(model)\n>\n> Analysis of Variance Table\n>\n> Response: pesodes\n>            Df Sum Sq Mean Sq F value    Pr(>F)\n> anio         8 302153   37769 62.7340 < 2.2e-16 ***\n> sexo         1   9774    9774 16.2340 5.943e-05 ***\n> categ        2   7504    3752  6.2318  0.002029 **\n> genot       11  53589    4872  8.0919 9.061e-14 ***\n> Residuals 1225 737514     602\n>\n> *El problema fue que **el resultado que me dió el ANOVA es la suma de\n> cuadrados tipo 1.\n>\n> E**xiste alguna forma de pedirle el resultado como suma de cuadrados tipo 3\n> así puedo saber la significancia de cada una de las variables explicativas\n> sin que dependa su valor del orden en que las ingrese al modelo?\n>\n> *3) *Si quisiera realizar compararaciones de múltiples medias, por ejemplo\n> saber cuales son las medias de peso al destete que son diferentes\n> significativamente entre los distintos genotipos *(12 genotipos)*, (una vez\n> que ya se que es significativa la variable genotipo), cómo lo escribiría\n> usando tukey o usando contrastes?\n>\n> *Porque si me baso en los resultados del summary.lm(model) solo me compara\n> el genotipo AAAA contra cada uno de los genotipos restantes pero no puedo\n> saber si entre ellos tambien hay diferencias.\n>\n>\n> 4) La segunda parte del ajuste de modelos consistió en ajustar un modelo\n> mixto en base a los efectos fijos año, sexo y categoría de la madre y el\n> efecto aleatorio fue el efecto geneético del animal.\n>\n> *La duda es, los resultados no me dan los p-valores de los efectos fijos\n> para saber si son significatuivos o no, existe alguna forma de saberlo?\n> porque si yo quisiera ajustar directamente un modelo mixto sin tener que\n> ajustar uno fijo previamente, puedo hacerlo?\n>\n>\n> *SALUDOS Y MUCHAS GRACIAS!\n>\n> Rodrigo.\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nTe sugiero varias posibilidades a las dudas que planteas\n\n1. Una forma de comprobar que la diferencia de los coeficientes del modelo\npara los genotipos A y H es mediante el cálculo del interval",
       "thread_id": "thread-923dfa2c55fd",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110815/49c7b3fc/attachment.pl"
+      ]
     },
     {
       "id": "msg-f6ab5261e989",
@@ -868,11 +976,14 @@
       "subject_clean": "[R-es] ggplot2",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/d8279f14/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/d8279f14/attachment.pl>",
+      "body_plain": "Cordial saludo.\nEstoy tratando de hacer un gráfico con qplot de la libreria ggplot2, en ella  tengo dos vectores un \"x\" y un \"y\" de tal forma que el gráfico seria\n qlot(x,y...), ahora quiero añadir un nuevo gráfico con un vector \"y1\" pero en el mismo cuadro algo parecido a lo que hace la funcion \"lines\", es decir, que en en mismo cuadro me queden las dos curvas (x,y) y (x,y1) con la libreria ggplot2.\n \nAgradezco la ayuda que me puedan prestar.  \n\nANDRÉS FELIPE FLÓREZ RIVERA \nUNIVERSIDAD NACIONAL DE COLOMBIA\nESTADISTICA 2010 \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Cordial saludo.\nEstoy tratando de hacer un gráfico con qplot de la libreria ggplot2, en ella  tengo dos vectores un \"x\" y un \"y\" de tal forma que el gráfico seria\n qlot(x,y...), ahora quiero añadir un",
       "thread_id": "thread-f6ab5261e989",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/d8279f14/attachment.pl"
+      ]
     },
     {
       "id": "msg-9b83f4c0da0e",
@@ -904,11 +1015,14 @@
       "references": [
         "<BLU159-W575136EFA1EC96F43C9D93A5290@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/f136806b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/f136806b/attachment.pl>",
+      "body_plain": "Yo había pensado también en algo como lo que te envió Carlos.\n\na = rnorm(100)\nb = rnorm(100)\nc = rnorm(100)\n\ndf = data.frame(a, b, c)\n\nggplot() +\n  geom_point(data = df, aes(a, b)) +\n  geom_line(data = df, aes(a,c))\n\nSaludos,\n\nManuel\n\nEl 16 de agosto de 2011 10:17, ANDRÉS FELIPE FLÓREZ RIVERA <\nandreselestadistico at hotmail.com> escribió:\n\n>\n> Cordial saludo.\n> Estoy tratando de hacer un gráfico con qplot de la libreria ggplot2, en\n> ella  tengo dos vectores un \"x\" y un \"y\" de tal forma que el gráfico seria\n>  qlot(x,y...), ahora quiero añadir un nuevo gráfico con un vector \"y1\" pero\n> en el mismo cuadro algo parecido a lo que hace la funcion \"lines\", es decir,\n> que en en mismo cuadro me queden las dos curvas (x,y) y (x,y1) con la\n> libreria ggplot2.\n>\n> Agradezco la ayuda que me puedan prestar.\n>\n> ANDRÉS FELIPE FLÓREZ RIVERA\n> UNIVERSIDAD NACIONAL DE COLOMBIA\n> ESTADISTICA 2010\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \n*Manuel Spínola, Ph.D.*\nInstituto Internacional en Conservación y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.ac.cr\nmspinola10 at gmail.com\nTeléfono: (506) 2277-3598\nFax: (506) 2237-7036\nPersonal website: Lobito de río <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Yo había pensado también en algo como lo que te envió Carlos.\n\na = rnorm(100)\nb = rnorm(100)\nc = rnorm(100)\n\ndf = data.frame(a, b, c)\n\nggplot() +\n  geom_point(data = df, aes(a, b)) +\n  geom_line(data ",
       "thread_id": "thread-f6ab5261e989",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/f136806b/attachment.pl"
+      ]
     },
     {
       "id": "msg-cf8acf5c3873",
@@ -938,11 +1052,14 @@
       "references": [
         "<BLU159-W575136EFA1EC96F43C9D93A5290@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/eb04229b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/eb04229b/attachment.pl>",
+      "body_plain": "Alguien\n sabe como poner un segmento de linea horizontal con ggplot2, la idea es\n que tenga un intercepto en \"y\" , xmin y xmax, he intentado pero no encuntro algo que lo \nhaga. \n\n\nAgradezco la ayuda que me puedan prestar.  \n\nANDRÉS FELIPE FLÓREZ RIVERA \nUNIVERSIDAD NACIONAL DE COLOMBIA\nESTADISTICA 2010\n \t\t \t   \t\t   \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Alguien\n sabe como poner un segmento de linea horizontal con ggplot2, la idea es\n que tenga un intercepto en \"y\" , xmin y xmax, he intentado pero no encuntro algo que lo \nhaga. \n\n\nAgradezco la ayuda q",
       "thread_id": "thread-f6ab5261e989",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110816/eb04229b/attachment.pl"
+      ]
     },
     {
       "id": "msg-cf82c62b216f",
@@ -956,11 +1073,14 @@
       "references": [
         "<CAMn86NeM4hsTk5xo2WFmnH2dDmpoAFw=H+8ZPq6FwZVafpQP5A@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/91f71e02/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/91f71e02/attachment.pl>",
+      "body_plain": "Hola,\n\nSí, es como igualmente te han comentado en la lista del R-Help-en que te\nfaltaría todavía el interfaz en Excel. En la respuesta de R-Help-en te\nsugieren también el uso de otros paquetes de R como alternativa.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/8/17 Sebastian Kruk <residuo.solow at gmail.com>\n\n> Buenas noches, quizas lo más sencillo sea recodificar en R los\n> diferentes métodos o sino importar la libreria en Octave.\n>\n> El ejemplo equivalente no me sirve. Justamente algunos de los métodos\n> que tiene esta librería de Quilis permite desagregar teniendo como\n> referencia otra u otras variables o sino cumplir con la restricción\n> vertical y horizontal.\n>\n> Saludos,\n>\n> Sebastián.\n>\n> > Date: Mon, 15 Aug 2011 21:32:58 +0200\n> > From: Carlos Ortega <coforfe at gmail.com>\n> > To: Sebastian Kruk <residuo.solow at gmail.com>\n> > Cc: r-help-es at r-project.org\n> > Subject: Re: [R-es] desagregación temporal\n> > Message-ID:\n> >        <\n> CAFKNbkJAv7NXo8Vuv+xrtU3vmbmgyr3JTJvOADroRc9KBWBr5g at mail.gmail.com>\n> > Content-Type: text/plain\n> >\n> > Hola,\n> >\n> > No es inmediato el utilizar una librería de Matlab en R.\n> > En R, existen un par de paquetes que permiten emular funciones básicas de\n> > Matlab y poder importar y exportar ficheros .mat:\n> >\n> > http://cran.at.r-project.org/web/packages/matlab/index.html\n> > http://cran.at.r-project.org/web/packages/R.matlab/index.html\n> >\n> > Por otro lado la librería que comentas de Matlab, al parecer tiene dos\n> > módulos uno en Matlab y otro un interfaz para Excel escrito en Visual\n> Basic,\n> > y para esto último realmente todavía no hay nada.\n> >\n> > En cualquier caso, para el tipo de necesidad que tienes la siguiente\n> ayuda\n> > puede venirte bien, es un ejemplo equivalente:\n> >\n> > https://stat.ethz.ch/pipermail/r-sig-finance/2009q3/004677.html\n> >\n> > Saludos,\n> > Carlos Ortega\n> > www.qualityexcellence.es\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nSí, es como igualmente te han comentado en la lista del R-Help-en que te\nfaltaría todavía el interfaz en Excel. En la respuesta de R-Help-en te\nsugieren también el uso de otros paquetes de R co",
       "thread_id": "thread-cf8acf5c3873",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/91f71e02/attachment.pl"
+      ]
     },
     {
       "id": "msg-545d8e6bf8a2",
@@ -975,11 +1095,14 @@
         "<BLU159-W575136EFA1EC96F43C9D93A5290@phx.gbl>",
         "<BLU159-W54DCE3813AB814DD2DFA24A5280@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/bc0f758b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/bc0f758b/attachment.pl>",
+      "body_plain": "Hola Andrés,\n\nLo mejor es que incluyas un ejemplo que sea reproducible.\n\ngeom_hline puede hacer lo que quieres. Escribe en la consola de R:\n?geom_hline\n\nVisita la ayuda de ggplot2: http://had.co.nz/ggplot2/\n\nManuel Spínola\n\nEl 16 de agosto de 2011 20:24, ANDRÉS FELIPE FLÓREZ RIVERA <\nandreselestadistico at hotmail.com> escribió:\n\n>\n> Alguien\n>  sabe como poner un segmento de linea horizontal con ggplot2, la idea es\n>  que tenga un intercepto en \"y\" , xmin y xmax, he intentado pero no\n> encuntro algo que lo\n> haga.\n>\n>\n> Agradezco la ayuda que me puedan prestar.\n>\n> ANDRÉS FELIPE FLÓREZ RIVERA\n> UNIVERSIDAD NACIONAL DE COLOMBIA\n> ESTADISTICA 2010\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\n-- \n*Manuel Spínola, Ph.D.*\nInstituto Internacional en Conservación y Manejo de Vida Silvestre\nUniversidad Nacional\nApartado 1350-3000\nHeredia\nCOSTA RICA\nmspinola at una.ac.cr\nmspinola10 at gmail.com\nTeléfono: (506) 2277-3598\nFax: (506) 2237-7036\nPersonal website: Lobito de río <https://sites.google.com/site/lobitoderio/>\nInstitutional website: ICOMVIS <http://www.icomvis.una.ac.cr/>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Andrés,\n\nLo mejor es que incluyas un ejemplo que sea reproducible.\n\ngeom_hline puede hacer lo que quieres. Escribe en la consola de R:\n?geom_hline\n\nVisita la ayuda de ggplot2: http://had.co.nz/gg",
       "thread_id": "thread-f6ab5261e989",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/bc0f758b/attachment.pl"
+      ]
     },
     {
       "id": "msg-8fa83a7b1db6",
@@ -1010,11 +1133,14 @@
         "<BLU159-W575136EFA1EC96F43C9D93A5290@phx.gbl>",
         "<BLU159-W54DCE3813AB814DD2DFA24A5280@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/2b353c28/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/2b353c28/attachment.pl>",
+      "body_plain": "Hola,\n\nComo estás buscando un segmento específicamente, ggplot2 tiene un elemento\ngráfico justamente para esto \"geom_segment()\".\n\nUn ejemplo, así como un grupo de ayuda sobre ggplot2 se mantiene aquí:\nhttp://groups.google.com/group/ggplot2/browse_thread/thread/e779321db4fe1610/429e1268467a6389?pli=1\n\nEl ejemplo reproducible (aunque no es un segmento horizontal) sería este,\nobtenido de esa ayuda de arriba:\n\n\nlibrary(ggplot2)\nt1 <- ggplot(data.frame(x=runif(10,max=30),y=runif(10,max=0.05)),\n            aes(x=x,y=y))+xlim(0,30)+ylim(0,0.05)+geom_point()\n\nt1+geom_segment(data=NULL,\naes(x=1,xend=20,y=0.01,yend=0.04),linetype=2,colour=\"red\")\n+\ngeom_abline(intercept=0,slope=0.01,colour=\"blue\")\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/8/17 ANDRÉS FELIPE FLÓREZ RIVERA <andreselestadistico at hotmail.com>\n\n>\n> Alguien\n>  sabe como poner un segmento de linea horizontal con ggplot2, la idea es\n>  que tenga un intercepto en \"y\" , xmin y xmax, he intentado pero no\n> encuntro algo que lo\n> haga.\n>\n>\n> Agradezco la ayuda que me puedan prestar.\n>\n> ANDRÉS FELIPE FLÓREZ RIVERA\n> UNIVERSIDAD NACIONAL DE COLOMBIA\n> ESTADISTICA 2010\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nComo estás buscando un segmento específicamente, ggplot2 tiene un elemento\ngráfico justamente para esto \"geom_segment()\".\n\nUn ejemplo, así como un grupo de ayuda sobre ggplot2 se mantiene aquí:",
       "thread_id": "thread-f6ab5261e989",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110817/2b353c28/attachment.pl"
+      ]
     },
     {
       "id": "msg-5779a2c90f1b",
@@ -1028,11 +1154,14 @@
       "references": [
         "<CAHB8Jp+mgbrpQNJ3ZubCr448bZCGznxWVwxrwCWf_LVthLgrUA@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/c8c55065/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/c8c55065/attachment.pl>",
+      "body_plain": "Hola,\n\nLa tabla que buscas no la proporciona R de forma automática, pero sí que se\npuede conseguir a partir de los datos del modelo.\n\nComo sugerencia puedes mirar la sección de \"R\" de este breve paper:\nhttp://www.indiana.edu/~statmath/stat/all/hlm/hlm.pdf\n\nY para entenderlo de una manera más detallada, te sugiero especialmente el\ncapítulo 10 de este libro:\nhttp://www.amazon.com/Data-Analysis-Graphics-Using-Example-Based/dp/0521762936/ref=sr_1_1?ie=UTF8&qid=1313667205&sr=8-1\n\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\n\n2011/8/17 Manuel Ramon <m.ramon.fernandez at gmail.com>\n\n> Mi duda es la siguiente,\n>\n> estoy interesado en saber la contribución de cada factor de variación de un\n> modelo mixto a la varianza total. En la web del proyecto lme4 (\n> http://lme4.r-forge.r-project.org/) hay un listado de artículos que hacen\n> uso del paquete lme4. Leyendo uno de ellos (Aguirre et al. 2008. Postharvest\n> Biology and Technology - adjunto el artículo), me encuentro que los autores\n> calcular el porcentaje de varianza explicada por cada elemento del modelo\n> mixto (Tabla 3).\n>\n> ¿Cómo se puede hacer ese cálculo?\n> ¿Alguien podría proporcionar un ejemplo sencillo usando alguna de las bases\n> de datos que vienen con el paquete lme4, como por ejemplo \"sleepstudy\" (>\n> example(sleepstudy) para ver el modelo que usan)?\n>\n> Muchas gracias,\n> Manuel\n>\n> --\n>\n> Manuel Ramón\n> m.ramon.fernandez at gmail.com\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nLa tabla que buscas no la proporciona R de forma automática, pero sí que se\npuede conseguir a partir de los datos del modelo.\n\nComo sugerencia puedes mirar la sección de \"R\" de este breve paper",
       "thread_id": "thread-8fa83a7b1db6",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/c8c55065/attachment.pl"
+      ]
     },
     {
       "id": "msg-3bd2835348dc",
@@ -1044,11 +1173,14 @@
       "subject_clean": "[R-es] orientación de etiquetas de los ejes con ggplot2 y qplot",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/8561981d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/8561981d/attachment.pl>",
+      "body_plain": "Hola\nAyuda por favor.\n¿Cómo roto u oriento las etiquetas de los ejes de una grafica hecha con\nggplot2 y qplot?\nCon plot() lo hacía con \"las\" pero ahora no se si deba ser así y en su caso\nno sé dónde ponerlo.\nGracias!\nAlfredo.\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola\nAyuda por favor.\n¿Cómo roto u oriento las etiquetas de los ejes de una grafica hecha con\nggplot2 y qplot?\nCon plot() lo hacía con \"las\" pero ahora no se si deba ser así y en su caso\nno sé dónde p",
       "thread_id": "thread-3bd2835348dc",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/8561981d/attachment.pl"
+      ]
     },
     {
       "id": "msg-b4e255d029d1",
@@ -1062,11 +1194,14 @@
       "references": [
         "<CAHnWKsfmG=5FYFHoQXgMFPLdsRqaoecYZj1L8Ep-2QprfWw+zw@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/77c168dd/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/77c168dd/attachment.pl>",
+      "body_plain": "bueno... ahora ya encontre algo.\nNo estoy familiarizado con opts() pero funciona para mi caso.\n\nqplot() + opts(axis.text.x=theme_text(angle=-90))\nSaludos.\nAlfredo\nEl 18 de agosto de 2011 12:22, Alfredo <elcorreodealfredo at gmail.com>escribió:\n\n> Hola\n> Ayuda por favor.\n> ¿Cómo roto u oriento las etiquetas de los ejes de una grafica hecha con\n> ggplot2 y qplot?\n> Con plot() lo hacía con \"las\" pero ahora no se si deba ser así y en su caso\n> no sé dónde ponerlo.\n> Gracias!\n> Alfredo.\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "bueno... ahora ya encontre algo.\nNo estoy familiarizado con opts() pero funciona para mi caso.\n\nqplot() + opts(axis.text.x=theme_text(angle=-90))\nSaludos.\nAlfredo\nEl 18 de agosto de 2011 12:22, Alfred",
       "thread_id": "thread-3bd2835348dc",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/77c168dd/attachment.pl"
+      ]
     },
     {
       "id": "msg-6105c9740b83",
@@ -1081,11 +1216,14 @@
         "<CAHnWKsfmG=5FYFHoQXgMFPLdsRqaoecYZj1L8Ep-2QprfWw+zw@mail.gmail.com>",
         "<CAHnWKsdoCeeT=4zzd7XbiL3E7RoGy2796t_MJGe-XRbf9J47uQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/d3d26c47/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/d3d26c47/attachment.pl>",
+      "body_plain": "Alfredo, fijate en este sitio donde están todas las opciones de opts:\nhttp://github.com/hadley/ggplot2/wiki/+opts()-List\ncon ejemplos\n\nUn saludo\nLuciano\n\n\nEl 18 de agosto de 2011 14:37, Alfredo <elcorreodealfredo at gmail.com>escribió:\n\n> bueno... ahora ya encontre algo.\n> No estoy familiarizado con opts() pero funciona para mi caso.\n>\n> qplot() + opts(axis.text.x=theme_text(angle=-90))\n> Saludos.\n> Alfredo\n> El 18 de agosto de 2011 12:22, Alfredo <elcorreodealfredo at gmail.com\n> >escribió:\n>\n> > Hola\n> > Ayuda por favor.\n> > ¿Cómo roto u oriento las etiquetas de los ejes de una grafica hecha con\n> > ggplot2 y qplot?\n> > Con plot() lo hacía con \"las\" pero ahora no se si deba ser así y en su\n> caso\n> > no sé dónde ponerlo.\n> > Gracias!\n> > Alfredo.\n> >\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Alfredo, fijate en este sitio donde están todas las opciones de opts:\nhttp://github.com/hadley/ggplot2/wiki/+opts()-List\ncon ejemplos\n\nUn saludo\nLuciano\n\n\nEl 18 de agosto de 2011 14:37, Alfredo <elcor",
       "thread_id": "thread-3bd2835348dc",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/d3d26c47/attachment.pl"
+      ]
     },
     {
       "id": "msg-3cf407fbcd8d",
@@ -1097,11 +1235,14 @@
       "subject_clean": "[R-es] Colores geom_polygon ggplot2",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/fabdf479/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/fabdf479/attachment.pl>",
+      "body_plain": "Cordial saludo.\n \nestoy tratando de realizar el siguiente grafico\n \nlibrary(\"ggplot2\")\ngraf<-function()\n{\npolys <- data.frame(  \n  id = rep(factor(c(\"1\",\"2\",\"3\",\"4\")),each=4), \n  x = c(70,85,85,70,85,100,100,85,85,100,100,85,70,85,85,70), \n  y = c( 0, 0,50,50, 0,  0, 50,50,50,50,100,100,50,50,100,100), \n  value = rep(c(40, 15, 10,15), each=4) )  \n \np <- ggplot(polys, aes(x=x, y=y)) + geom_polygon(aes(fill=value,group=id))\nreturn(p)}\ngraf()\n \nHe tenido problemas porque no encuentro la forma de cambiar los colores a los que yo deseo, yo quiero que cada cuadro tenga un color especifico.\n \nDe antemano gracias por la intención prestada y espero me puedan ayudar\n\nANDRÉS FELIPE FLÓREZ RIVERA \nUNIVERSIDAD NACIONAL DE COLOMBIA\nESTADISTICA 2010 \t\t \t   \t\t  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Cordial saludo.\n \nestoy tratando de realizar el siguiente grafico\n \nlibrary(\"ggplot2\")\ngraf<-function()\n{\npolys <- data.frame(  \n  id = rep(factor(c(\"1\",\"2\",\"3\",\"4\")),each=4), \n  x = c(70,85,85,70,85,",
       "thread_id": "thread-3cf407fbcd8d",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110818/fabdf479/attachment.pl"
+      ]
     },
     {
       "id": "msg-5d949cef4ac2",
@@ -1116,11 +1257,14 @@
         "<CAHB8Jp+mgbrpQNJ3ZubCr448bZCGznxWVwxrwCWf_LVthLgrUA@mail.gmail.com>",
         "<CAFKNbk+SZaji27Rpm3+vxbRA7hWC2_zmMx-TZkaksShfKif36g@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110822/fd8b8a7f/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110822/fd8b8a7f/attachment.pl>",
+      "body_plain": "Muchas gracias Carlos.\n\nSaludos,\nManuel\n\n\n\n2011/8/18 Carlos Ortega <coforfe at gmail.com>\n\n> Hola,\n>\n> La tabla que buscas no la proporciona R de forma automática, pero sí que se\n> puede conseguir a partir de los datos del modelo.\n>\n> Como sugerencia puedes mirar la sección de \"R\" de este breve paper:\n> http://www.indiana.edu/~statmath/stat/all/hlm/hlm.pdf\n>\n> Y para entenderlo de una manera más detallada, te sugiero especialmente el\n> capítulo 10 de este libro:\n>\n> http://www.amazon.com/Data-Analysis-Graphics-Using-Example-Based/dp/0521762936/ref=sr_1_1?ie=UTF8&qid=1313667205&sr=8-1\n>\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n>\n>\n> 2011/8/17 Manuel Ramon <m.ramon.fernandez at gmail.com>\n>\n>> Mi duda es la siguiente,\n>>\n>> estoy interesado en saber la contribución de cada factor de variación de\n>> un modelo mixto a la varianza total. En la web del proyecto lme4 (\n>> http://lme4.r-forge.r-project.org/) hay un listado de artículos que hacen\n>> uso del paquete lme4. Leyendo uno de ellos (Aguirre et al. 2008. Postharvest\n>> Biology and Technology - adjunto el artículo), me encuentro que los autores\n>> calcular el porcentaje de varianza explicada por cada elemento del modelo\n>> mixto (Tabla 3).\n>>\n>> ¿Cómo se puede hacer ese cálculo?\n>> ¿Alguien podría proporcionar un ejemplo sencillo usando alguna de las\n>> bases de datos que vienen con el paquete lme4, como por ejemplo \"sleepstudy\"\n>> (> example(sleepstudy) para ver el modelo que usan)?\n>>\n>> Muchas gracias,\n>> Manuel\n>>\n>> --\n>>\n>> Manuel Ramón\n>> m.ramon.fernandez at gmail.com\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n\n\n-- \n\nManuel Ramón\nm.ramon.fernandez at gmail.com\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Carlos.\n\nSaludos,\nManuel\n\n\n\n2011/8/18 Carlos Ortega <coforfe at gmail.com>\n\n> Hola,\n>\n> La tabla que buscas no la proporciona R de forma automática, pero sí que se\n> puede conseguir a p",
       "thread_id": "thread-8fa83a7b1db6",
       "thread_depth": 2,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110822/fd8b8a7f/attachment.pl"
+      ]
     },
     {
       "id": "msg-fc3216ecac86",
@@ -1134,11 +1278,14 @@
       "references": [
         "<BLU159-W20E70B1D658EF4C936C40DA52B0@phx.gbl>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110822/8a631a7d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110822/8a631a7d/attachment.pl>",
+      "body_plain": "No estoy seguro de que esto es los que buscas, pero prueba a pasar a \nfactor (en lugar de númerico), el contenido de $value:\n\npolys$value<- as.factor(polys$value)\n\nantes de representar el gráfico.\n\nSalud.\n\nEl 18/08/2011 23:55, ANDRÉS FELIPE FLÓREZ RIVERA escribió:\n> Cordial saludo.\n>\n> estoy tratando de realizar el siguiente grafico\n>\n> library(\"ggplot2\")\n> graf<-function()\n> {\n> polys<- data.frame(\n>    id = rep(factor(c(\"1\",\"2\",\"3\",\"4\")),each=4),\n>    x = c(70,85,85,70,85,100,100,85,85,100,100,85,70,85,85,70),\n>    y = c( 0, 0,50,50, 0,  0, 50,50,50,50,100,100,50,50,100,100),\n>    value = rep(c(40, 15, 10,15), each=4) )\n>\n> p<- ggplot(polys, aes(x=x, y=y)) + geom_polygon(aes(fill=value,group=id))\n> return(p)}\n> graf()\n>\n> He tenido problemas porque no encuentro la forma de cambiar los colores a los que yo deseo, yo quiero que cada cuadro tenga un color especifico.\n>\n> De antemano gracias por la intención prestada y espero me puedan ayudar\n>\n> ANDRÉS FELIPE FLÓREZ RIVERA\n> UNIVERSIDAD NACIONAL DE COLOMBIA\n> ESTADISTICA 2010 \t\t \t   \t\t\n> \t[[alternative HTML version deleted]]\n>\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\n-- \n+--------------------------------------------------------------\n| Francisco J. Viciana Fernández\n| Coordinador del Registro de Población\n| Servicio de Estadísticas Demográficas y Sociales\n| Instituto de Estadística y Cartografía de Andalucía\n| Leonardo Da Vinci, nº 21. Isla de La Cartuja.\n| 41071 SEVILLA.\n| franciscoj.viciana at juntadeandalucia.es\n| Tlf.: +(34) 95 503 38 21\n+--------------------------------------------------------------\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "No estoy seguro de que esto es los que buscas, pero prueba a pasar a \nfactor (en lugar de númerico), el contenido de $value:\n\npolys$value<- as.factor(polys$value)\n\nantes de representar el gráfico.\n\nSa",
       "thread_id": "thread-3cf407fbcd8d",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110822/8a631a7d/attachment.pl"
+      ]
     },
     {
       "id": "msg-1a644c52959a",
@@ -1170,11 +1317,14 @@
         "<CAHnWKsdoCeeT=4zzd7XbiL3E7RoGy2796t_MJGe-XRbf9J47uQ@mail.gmail.com>",
         "<CACrdxLGdOzKv-fGjsCoZANv1xL3+6anyn1sLB565dsQtbDNmug@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110824/404f3d21/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110824/404f3d21/attachment.pl>",
+      "body_plain": "Luciano\nGracias por el enlace, lo estaré revisando. Aunque ahora no me carga las\nimagenes de los ejemplos es buena ayuda.\nSaludos\n\n\n\nEl 18 de agosto de 2011 12:42, Luciano Selzer\n<luciano.selzer at gmail.com>escribió:\n\n> Alfredo, fijate en este sitio donde están todas las opciones de opts:\n> http://github.com/hadley/ggplot2/wiki/+opts()-List\n> con ejemplos\n>\n> Un saludo\n> Luciano\n>\n>\n> El 18 de agosto de 2011 14:37, Alfredo <elcorreodealfredo at gmail.com>escribió:\n>\n>>  bueno... ahora ya encontre algo.\n>> No estoy familiarizado con opts() pero funciona para mi caso.\n>>\n>> qplot() + opts(axis.text.x=theme_text(angle=-90))\n>> Saludos.\n>> Alfredo\n>> El 18 de agosto de 2011 12:22, Alfredo <elcorreodealfredo at gmail.com\n>> >escribió:\n>>\n>> > Hola\n>> > Ayuda por favor.\n>> > ¿Cómo roto u oriento las etiquetas de los ejes de una grafica hecha con\n>> > ggplot2 y qplot?\n>> > Con plot() lo hacía con \"las\" pero ahora no se si deba ser así y en su\n>> caso\n>> > no sé dónde ponerlo.\n>> > Gracias!\n>> > Alfredo.\n>> >\n>>\n>>        [[alternative HTML version deleted]]\n>>\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es at r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Luciano\nGracias por el enlace, lo estaré revisando. Aunque ahora no me carga las\nimagenes de los ejemplos es buena ayuda.\nSaludos\n\n\n\nEl 18 de agosto de 2011 12:42, Luciano Selzer\n<luciano.selzer at gm",
       "thread_id": "thread-3bd2835348dc",
       "thread_depth": 3,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110824/404f3d21/attachment.pl"
+      ]
     },
     {
       "id": "msg-7ea554587998",
@@ -1186,11 +1336,14 @@
       "subject_clean": "[R-es] manejando big data",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110825/19481649/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110825/19481649/attachment.pl>",
+      "body_plain": "Buenas tardes compañer at s. Estoy intentando correr un problema de progrmación\nlineal en R, bastante grande con la función Rglpk_solve_LP, de la libreria\nRGLPK. He eliminado antes,todos los objetos de gran tamaño que no necesito\nen la función.\n\nCuando ejecuto la fución el programa comienza una secuncia de conteo del\ntiempo y la memoria utilizada. Quisiera saber si, ¿esto es señal de que\npuedo esperar una respuesta al final, o que estoy metido en un ciclo\ninterminable y debo pararlo?.\n\nAgradezco mucho cualquier ayuda.\n\n-- \nLuis Alberto López\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Buenas tardes compañer at s. Estoy intentando correr un problema de progrmación\nlineal en R, bastante grande con la función Rglpk_solve_LP, de la libreria\nRGLPK. He eliminado antes,todos los objetos d",
       "thread_id": "thread-7ea554587998",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110825/19481649/attachment.pl"
+      ]
     },
     {
       "id": "msg-f63301522ae2",
@@ -1202,11 +1355,14 @@
       "subject_clean": "[R-es] modelling with a decision tree in Rpart",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110826/12fa6368/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110826/12fa6368/attachment.pl>",
+      "body_plain": "Hello everyone,\n\nI working in a public helath project and we have created a Decision Tree for categorical variables usign the package rpart. Our goal is to develop a model in order to predict presence/ausent of a diabetes and get a better understanding  of what are the important factors in a particular chilean population.  There are some importants variable that we have found.  Now we want to apply this model over a dataset in order to determinate a possible outcome (probability of getting the deseasse), but we only have the combination of predictive variables for a particular person (we have thousands).\n\nWe have created this code:\n\nlibrary(rpart)\nfit1 <- rpart(sickness~ distancetothesource+gse+age+sex,   method=\"class\", data=data)\nprediccion<-predict(fit1 , type=\"prob\")  \npredictionsyes<-prediccion[,2]\npred <- prediction(predictionsyes, datos$sickness)\n\n\nMy question is. How do I put the people's conditions in this model and get the proability of getting the desease?\n\nHope someone can help.\nBest Regards,\n\nJosé Bustos\nEscuela de Enfermeria\nPontificia Universidad Católica de Chile\nProyecto FONIS 2010\nCelular 95939144\n\n\n\n\n\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hello everyone,\n\nI working in a public helath project and we have created a Decision Tree for categorical variables usign the package rpart. Our goal is to develop a model in order to predict presence",
       "thread_id": "thread-f63301522ae2",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110826/12fa6368/attachment.pl"
+      ]
     },
     {
       "id": "msg-cff4c513736d",
@@ -1224,11 +1380,14 @@
         "<CAHnWKsc9gM84Tmgfe5EOv++uh33033UJofRFj3KEDAeieMow5A@mail.gmail.com>",
         "<1314364944.87317.YahooMailNeo@web29619.mail.ird.yahoo.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/cfe03a56/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/cfe03a56/attachment.pl>",
+      "body_plain": "________________________________\nPerdon, habia enviado la pregunta con otro Asunto\n\n\nAlguien conoce el mejor metodo para graficar el Coeficiente de Variacion?\ngracias, saludos\n\n\n\n________________________________\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "________________________________\nPerdon, habia enviado la pregunta con otro Asunto\n\n\nAlguien conoce el mejor metodo para graficar el Coeficiente de Variacion?\ngracias, saludos\n\n\n\n_____________________",
       "thread_id": "thread-cff4c513736d",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/cfe03a56/attachment.pl"
+      ]
     },
     {
       "id": "msg-d3adcea7a185",
@@ -1268,11 +1427,14 @@
         "<CACrdxLGdOzKv-fGjsCoZANv1xL3+6anyn1sLB565dsQtbDNmug@mail.gmail.com>",
         "<CAHnWKsc9gM84Tmgfe5EOv++uh33033UJofRFj3KEDAeieMow5A@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/dc10199b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/dc10199b/attachment.pl>",
+      "body_plain": "Hola,\n\nEn la ayuda del grupo de Yahoo sobre ggplot2, aparece resuelta la duda:\nhttp://groups.google.com/group/ggplot2/browse_thread/thread/25d1330abb3fa327/dfb004780b3dd046?lnk=gst&q=axis+orientation#dfb004780b3dd046\n\nEl ejemplo reproducible es este:\n\ng <- qplot(displ,hwy,data=mpg,geom=\"point\")\n                         g + opts(*axis*.text.x = theme_text(angle = 90),\n                          *axis*.title.x = theme_text(angle = 90),\n                          *axis*.title.y = theme_text(angle = 0))\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/8/24 Alfredo <elcorreodealfredo at gmail.com>\n\n> Luciano\n> Gracias por el enlace, lo estaré revisando. Aunque ahora no me carga las\n> imagenes de los ejemplos es buena ayuda.\n> Saludos\n>\n>\n>\n> El 18 de agosto de 2011 12:42, Luciano Selzer\n> <luciano.selzer at gmail.com>escribió:\n>\n> > Alfredo, fijate en este sitio donde están todas las opciones de opts:\n> > http://github.com/hadley/ggplot2/wiki/+opts()-List\n> > con ejemplos\n> >\n> > Un saludo\n> > Luciano\n> >\n> >\n> > El 18 de agosto de 2011 14:37, Alfredo <elcorreodealfredo at gmail.com\n> >escribió:\n> >\n> >>  bueno... ahora ya encontre algo.\n> >> No estoy familiarizado con opts() pero funciona para mi caso.\n> >>\n> >> qplot() + opts(axis.text.x=theme_text(angle=-90))\n> >> Saludos.\n> >> Alfredo\n> >> El 18 de agosto de 2011 12:22, Alfredo <elcorreodealfredo at gmail.com\n> >> >escribió:\n> >>\n> >> > Hola\n> >> > Ayuda por favor.\n> >> > ¿Cómo roto u oriento las etiquetas de los ejes de una grafica hecha\n> con\n> >> > ggplot2 y qplot?\n> >> > Con plot() lo hacía con \"las\" pero ahora no se si deba ser así y en su\n> >> caso\n> >> > no sé dónde ponerlo.\n> >> > Gracias!\n> >> > Alfredo.\n> >> >\n> >>\n> >>        [[alternative HTML version deleted]]\n> >>\n> >>\n> >> _______________________________________________\n> >> R-help-es mailing list\n> >> R-help-es at r-project.org\n> >> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> >>\n> >>\n> >\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nEn la ayuda del grupo de Yahoo sobre ggplot2, aparece resuelta la duda:\nhttp://groups.google.com/group/ggplot2/browse_thread/thread/25d1330abb3fa327/dfb004780b3dd046?lnk=gst&q=axis+orientation#",
       "thread_id": "thread-3bd2835348dc",
       "thread_depth": 4,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/dc10199b/attachment.pl"
+      ]
     },
     {
       "id": "msg-3372187c8c80",
@@ -1286,11 +1448,14 @@
       "references": [
         "<CAMqWmd=UKEVE+qsm=gt3vhZ+-ze8-RVzeugNCGJ4AxAGW+_SjQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/5f9b230c/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/5f9b230c/attachment.pl>",
+      "body_plain": "Hola,\n\nLa función Rglpk_solve_LPL tiene una opción (\"verbose\") que permite\nvisualizar detalles del cálculo. Pero por defecto está en \"FALSE\". A lo\nmejor tienes esta opción a \"TRUE\"\n\n2011/8/25 Luis Alberto Lopez Gonzalez <luialopezg at bt.unal.edu.co>\n\n> Buenas tardes compañer at s. Estoy intentando correr un problema de\n> progrmación\n> lineal en R, bastante grande con la función Rglpk_solve_LP, de la libreria\n> RGLPK. He eliminado antes,todos los objetos de gran tamaño que no necesito\n> en la función.\n>\n> Cuando ejecuto la fución el programa comienza una secuncia de conteo del\n> tiempo y la memoria utilizada. Quisiera saber si, ¿esto es señal de que\n> puedo esperar una respuesta al final, o que estoy metido en un ciclo\n> interminable y debo pararlo?.\n>\n> Agradezco mucho cualquier ayuda.\n>\n> --\n> Luis Alberto López\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nLa función Rglpk_solve_LPL tiene una opción (\"verbose\") que permite\nvisualizar detalles del cálculo. Pero por defecto está en \"FALSE\". A lo\nmejor tienes esta opción a \"TRUE\"\n\n2011/8/25 Luis Alb",
       "thread_id": "thread-7ea554587998",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/5f9b230c/attachment.pl"
+      ]
     },
     {
       "id": "msg-b08060c22b20",
@@ -1304,11 +1469,14 @@
       "references": [
         "<CAMqWmd=UKEVE+qsm=gt3vhZ+-ze8-RVzeugNCGJ4AxAGW+_SjQ@mail.gmail.com>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/eb4cd47d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/eb4cd47d/attachment.pl>",
+      "body_plain": "Hola,\n\nLa función tiene una opción \"verbose\" que permite visualizar detalles\nadicionales de la salida que produce la función. Por defecto está activada a\nFALSE, puede que la tengas activada en tu caso a \"TRUE\" y te vaya informando\ndel proceso de cálculo.\n\n*verbose a logical for turning on/off additional solver output: Default:\nFALSE.*\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/8/25 Luis Alberto Lopez Gonzalez <luialopezg at bt.unal.edu.co>\n\n> Buenas tardes compañer at s. Estoy intentando correr un problema de\n> progrmación\n> lineal en R, bastante grande con la función Rglpk_solve_LP, de la libreria\n> RGLPK. He eliminado antes,todos los objetos de gran tamaño que no necesito\n> en la función.\n>\n> Cuando ejecuto la fución el programa comienza una secuncia de conteo del\n> tiempo y la memoria utilizada. Quisiera saber si, ¿esto es señal de que\n> puedo esperar una respuesta al final, o que estoy metido en un ciclo\n> interminable y debo pararlo?.\n>\n> Agradezco mucho cualquier ayuda.\n>\n> --\n> Luis Alberto López\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nLa función tiene una opción \"verbose\" que permite visualizar detalles\nadicionales de la salida que produce la función. Por defecto está activada a\nFALSE, puede que la tengas activada en tu caso",
       "thread_id": "thread-7ea554587998",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/eb4cd47d/attachment.pl"
+      ]
     },
     {
       "id": "msg-716887aa0e01",
@@ -1322,11 +1490,14 @@
       "references": [
         "<4E54D06A.6080902@vi.ieo.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/4456ca4a/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/4456ca4a/attachment.pl>",
+      "body_plain": "Hola,\n\nComo alternativa a solucionar tu problema de utilizar una función para\ndefinir diferentes parámetros de entrada, podrías utilizar la función\nequivalente (también para minimizar) \"nlminb\" que permite justamente esto,\nel poder definir un intervalo sobre el que minimizar tu función.\n\n\nnlminb(start, objective, gradient = NULL, hessian = NULL, ...,\n       scale = 1, control = list(), lower = -Inf, upper = Inf)\n\nlower, uppervectors of lower and upper bounds, replicated to be as long as\nstart. If unspecified, all parameters are assumed to be unconstrained.\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n2011/8/24 Juan Santos <juan.santos at vi.ieo.es>\n\n> Hola a todos,\n>\n> Necesito estimar dos parametros utilizando la función nlm;\n>\n> fit<-nlm(hood2par,c(x01[i],**x02[j]),iterlim=300,\n> catch=x[,c(3,4,5)],sp=.5)\n>\n> donde hood2par es una logística modificada.\n>\n> Pero en mi caso, la convergencia de nlm depende de los  valores iniciales\n> de dichos parámetros. Para buscar dichos valores iniciales de manera\n> automática, genero dos vectores de valores iniciales posibles,\n>\n> x01=seq(-10,-20,-0.1)\n> x02=seq(0.1,0.9,0.01)\n>\n> y construyo un doble bucle para buscar los valores que llevan a la\n> convergencia de la función:\n>\n> for (i in 1:length(x01)) { for (j in 1:length(x02)) {\n>\n> fit<-NULL                      #genero un objeto nulo llamado fit\n>\n> try(fit<-nlm(hood2par,c(x01[i]**,x02[j]),iterlim=300,\n> catch=x[,c(3,4,5)],sp=.5),**silent=TRUE) # Con try, evito la rotura de los\n> #bucles cuando nlm no converge\n>\n> stopifnot(is.null(fit)) # si finalmente converge (\"fit\" ya no es nulo)\n> rompo los bucles con stopifnot\n> }\n> }\n>\n> Cuando fit no es NULL, stopifnot rompe el bucle. El problema que tengo es\n> que cuando trato de embeber la rutina anterior en una función:\n>\n> FFF<-function(x01,x02,catch){\n>\n> for (i in 1:length(x01)) { for (j in 1:length(x02)) {\n>\n> fit<-NULL\n>\n> try(fit<-nlm(hood2par,c(x01[i]**,x02[j]),iterlim=300,\n> catch=x[,c(3,4,5)],sp=.5),**silent=TRUE) # does not stop in the case of\n> err\n>\n> stopifnot(is.null(fit))}}\n>\n> return(fit)}\n>\n>\n> no consigo que esta me retorne el valor de fit estimado por nlm\n>\n> > FFF(x01,x02,catch)\n> #Error: is.null(fit) is not TRUE\n>\n> ¿Alguien puede ayudarme? muchas gracias.\n>\n> Juan Santos\n>\n> ______________________________**_________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/**listinfo/r-help-es<https://stat.ethz.ch/mailman/listinfo/r-help-es>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola,\n\nComo alternativa a solucionar tu problema de utilizar una función para\ndefinir diferentes parámetros de entrada, podrías utilizar la función\nequivalente (también para minimizar) \"nlminb\" que pe",
       "thread_id": "thread-1a644c52959a",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110829/4456ca4a/attachment.pl"
+      ]
     },
     {
       "id": "msg-e6669884b8bc",
@@ -1338,11 +1509,14 @@
       "subject_clean": "[R-es] Manipulación de vectores",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/d1c9e086/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/d1c9e086/attachment.pl>",
+      "body_plain": "Hola, tengo un vector con mas de 20000 elementos que representan\nsecuencias de códigos (numéricos) de 40 sujetos.En el vector aparece el\nvalor 99 para indicar que empieza la secuencia de otro sujeto. Un\nejemplo de secuencia seria la siguiente: \n\n7 2 8 2 99 8 2 8 5 2 8 2 2 99\n2 8 2 8 5 2 99  \n\nLa idea seria construir un data frame en el que cada\ncolumna represente la secuencia de cada sujeto. Quedaría asi: \n\n7 8 2\n\n\n2 2 8 \n\n8 8 2 \n\n2 5 8 \n\n99 2 5  \n\n99 8 2 \n\n99 2 99 \n\n99 2 99 \n\nLas\nsecuencias de los sujetos tienen tamaños distintos. Para igualar las\ncolumnas habría que añadir el valor 99 (o cualquier otro distinto a los\ncódigos). \n\nAlguna sugerencia? \n\nSaludos, \n\nManuel \n\n  \n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola, tengo un vector con mas de 20000 elementos que representan\nsecuencias de códigos (numéricos) de 40 sujetos.En el vector aparece el\nvalor 99 para indicar que empieza la secuencia de otro sujeto. ",
       "thread_id": "thread-e6669884b8bc",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/d1c9e086/attachment.pl"
+      ]
     },
     {
       "id": "msg-94d0f69579fd",
@@ -1356,11 +1530,14 @@
       "references": [
         "<3dd28c7764f031180dd591fb41b427cb@us.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/a2120e65/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/a2120e65/attachment.pl>",
+      "body_plain": "Hola Manuel,\nPodrias considerar la siguiente alternativa.\nUn saludo,\nJorge\n\n# datos\nx <- c(7, 2, 8, 2, 99, 8, 2, 8, 5, 2, 8, 2, 2, 99, 2, 8, 2, 8, 5,\n2, 99)\n\n# a mano\nR <- rle(x != 99)\ncambios <- R$length[R$values]\nk <- sum(x == 99)   # cuantos 99\nsujetos <- sapply(1:k, function(ii) c(rep(ii, cambios[ii]), NA))\nvalores <- split(x, unlist(sujetos))\nsapply(valores, function(l) l[1:max(cambios)])\n\n\n# haciendo lo anterior en una funcion\n# se asume que el primer sujeto comienza con un numero diferente de 99\n foo <- function(x){\nR <- rle(x != 99)\ncambios <- R$length[R$values]\n k <- sum(x == 99)\nsujetos <- sapply(1:k, function(ii) c(rep(ii, cambios[ii]), NA))\n valores <- split(x, unlist(sujetos))\nsapply(valores, function(l) l[1:max(cambios)])\n }\n\n# lo mismo pero chequeando si la ultima observacion es 99\nconvertir <- function(x){\nn <- length(x)\n if(x[n] == 99) res <- foo(x)  # chequeando ultimo valor de x\nelse{\n    x[n+1] <- 99\n    res <- foo(x)\n}\n   res\n   }\n\n# ejemplo 1\nconvertir(x)\nconvertir(x[-length(x)])  # removiendo el ultimo 99\n\n\n# ejemplo 2 con 8 sujetos (solo hay 7 numeros 99!)\ny <- rpois(100, 10)\nis.na(y) <- c(8, 28, 35, 54, 63, 78, 93)\ny[is.na(y)] <- 99\ny\nconvertir(y)\ndata.frame(convertir(y))\n\n\n\n2011/8/31 <>\n\n>\n>\n> Hola, tengo un vector con mas de 20000 elementos que representan\n> secuencias de códigos (numéricos) de 40 sujetos.En el vector aparece el\n> valor 99 para indicar que empieza la secuencia de otro sujeto. Un\n> ejemplo de secuencia seria la siguiente:\n>\n> 7 2 8 2 99 8 2 8 5 2 8 2 2 99\n> 2 8 2 8 5 2 99\n>\n> La idea seria construir un data frame en el que cada\n> columna represente la secuencia de cada sujeto. Quedaría asi:\n>\n> 7 8 2\n>\n>\n> 2 2 8\n>\n> 8 8 2\n>\n> 2 5 8\n>\n> 99 2 5\n>\n> 99 8 2\n>\n> 99 2 99\n>\n> 99 2 99\n>\n> Las\n> secuencias de los sujetos tienen tamaños distintos. Para igualar las\n> columnas habría que añadir el valor 99 (o cualquier otro distinto a los\n> códigos).\n>\n> Alguna sugerencia?\n>\n> Saludos,\n>\n> Manuel\n>\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Manuel,\nPodrias considerar la siguiente alternativa.\nUn saludo,\nJorge\n\n# datos\nx <- c(7, 2, 8, 2, 99, 8, 2, 8, 5, 2, 8, 2, 2, 99, 2, 8, 2, 8, 5,\n2, 99)\n\n# a mano\nR <- rle(x != 99)\ncambios <- R$le",
       "thread_id": "thread-e6669884b8bc",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/a2120e65/attachment.pl"
+      ]
     },
     {
       "id": "msg-3c1e930871a7",
@@ -1374,11 +1551,14 @@
       "references": [
         "<mailman.17.1314784811.25946.r-help-es@r-project.org>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/8339520d/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/8339520d/attachment.pl>",
+      "body_plain": "Muchas gracias Jorge. La función va bien, pero las columnas las\ncompleta con NAs y no con un dígito (99 o cualquier otro, pero dígito).\n\n\nSaludos, \n\nManuel \n\nOn Wed, 31 Aug 2011 12:00:11 +0200,\nr-help-es-request at r-project.org wrote: \n\n> Envíe los mensajes para la\nlista R-help-es a\n> r-help-es at r-project.org [3]\n> \n> Para subscribirse o\nanular su subscripción a través de la WEB\n>\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es [4]\n> \n> O por correo\nelectrónico, enviando un mensaje con el texto \"help\" en\n> el asunto\n(subject) o en el cuerpo a:\n> r-help-es-request at r-project.org [5]\n> \n>\nPuede contactar con el responsable de la lista escribiendo a:\n>\nr-help-es-owner at r-project.org [6]\n> \n> Si responde a algún contenido de\neste mensaje, por favor, edite la\n> linea del asunto (subject) para que\nel texto sea mas especifico que:\n> \"Re: Contents of R-help-es\ndigest...\". Además, por favor, incluya en\n> la respuesta sólo aquellas\npartes del mensaje a las que está\n> respondiendo.\n> \n> Asuntos del\ndía:\n> \n> 1. Manipulación de vectores (morales at us.es [7])\n> 2. Re:\nManipulación de vectores (Jorge I Velez)\n> \n>\n----------------------------------------------------------------------\n>\n\n> Message: 1\n> Date: Wed, 31 Aug 2011 06:45:24 +0200\n> From:\nmorales at us.es [8]\n> To: \n> Subject: [R-es] Manipulación de vectores\n>\nMessage-ID: \n> Content-Type: text/plain\n> \n> Hola, tengo un vector con\nmas de 20000 elementos que representan\n> secuencias de cÃ³digos\n(numÃ(c)ricos) de 40 sujetos.En el vector aparece el\n> valor 99 para\nindicar que empieza la secuencia de otro sujeto. Un\n> ejemplo de\nsecuencia seria la siguiente: \n> \n> 7 2 8 2 99 8 2 8 5 2 8 2 2 99\n> 2 8\n2 8 5 2 99 \n> \n> La idea seria construir un data frame en el que cada\n>\ncolumna represente la secuencia de cada sujeto. QuedarÃ­a asi: \n> \n> 7 8\n2\n> \n> 2 2 8 \n> \n> 8 8 2 \n> \n> 2 5 8 \n> \n> 99 2 5 \n> \n> 99 8 2 \n> \n> 99\n2 99 \n> \n> 99 2 99 \n> \n> Las\n> secuencias de los sujetos tienen tamaÃ±os\ndistintos. Para igualar las\n> columnas habrÃ­a que aÃ±adir el valor 99\n(o cualquier otro distinto a los\n> cÃ³digos). \n> \n> Alguna sugerencia?\n\n> \n> Saludos, \n> \n> Manuel \n> \n> [[alternative HTML version deleted]]\n>\n\n> ------------------------------\n> \n> Message: 2\n> Date: Wed, 31 Aug\n2011 02:53:13 -0400\n> From: Jorge I Velez \n> To: morales at us.es [12]\n>\nCc: r-help-es at r-project.org [13]\n> Subject: Re: [R-es] Manipulación de\nvectores\n> Message-ID:\n> \n> Content-Type: text/plain\n> \n> Hola Manuel,\n>\nPodrias considerar la siguiente alternativa.\n> Un saludo,\n> Jorge\n> \n> #\ndatos\n> x\n> \n>> Hola, tengo un vector con mas de 20000 elementos que\nrepresentan secuencias de códigos (numéricos) de 40 sujetos.En el vector\naparece el valor 99 para indicar que empieza la secuencia de otro\nsujeto. Un ejemplo de secuencia seria la siguiente: 7 2 8 2 99 8 2 8 5 2\n8 2 2 99 2 8 2 8 5 2 99 La idea seria construir un data frame en el que\ncada columna represente la secuencia de cada sujeto. Quedaría asi: 7 8 2\n2 2 8 8 8 2 2 5 8 99 2 5 99 8 2 99 2 99 99 2 99 Las secuencias de los\nsujetos tienen tamaños distintos. Para igualar las columnas habría que\nañadir el valor 99 (o cualquier otro distinto a los códigos). Alguna\nsugerencia? Saludos, Manuel [[alternative HTML version deleted]]\n_______________________________________________ R-help-es mailing list\nR-help-es at r-project.org [1]\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es [2]\n> \n> [[alternative\nHTML version deleted]]\n> \n> ------------------------------\n> \n>\n_______________________________________________\n> R-help-es mailing\nlist\n> R-help-es at r-project.org [15]\n>\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es [16]\n> \n> Fin de Resumen\nde R-help-es, Vol 30, Envío 21\n>\n*********************************************\n \n\nLinks:\n------\n[1]\nmailto:R-help-es at r-project.org\n[2]\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n[3]\nmailto:r-help-es at r-project.org\n[4]\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n[5]\nmailto:r-help-es-request at r-project.org\n[6]\nmailto:r-help-es-owner at r-project.org\n[7] mailto:morales at us.es\n[8]\nmailto:morales at us.es\n[9] mailto:r-help-es at r-project.org\n[10]\nmailto:3dd28c7764f031180dd591fb41b427cb at us.es\n[11]\nmailto:jorgeivanvelez at gmail.com\n[12] mailto:morales at us.es\n[13]\nmailto:r-help-es at r-project.org\n[14]\nmailto:CAKL8G3H-DKFOvSoJJ_ZgRUhdqV03if5hjtfxyaHoodMLeH_CRw at mail.gmail.com\n[15]\nmailto:R-help-es at r-project.org\n[16]\nhttps://stat.ethz.ch/mailman/listinfo/r-help-es\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Muchas gracias Jorge. La función va bien, pero las columnas las\ncompleta con NAs y no con un dígito (99 o cualquier otro, pero dígito).\n\n\nSaludos, \n\nManuel \n\nOn Wed, 31 Aug 2011 12:00:11 +0200,\nr-help",
       "thread_id": "thread-3c1e930871a7",
       "thread_depth": 0,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/8339520d/attachment.pl"
+      ]
     },
     {
       "id": "msg-1788519856d8",
@@ -1393,11 +1573,14 @@
         "<mailman.17.1314784811.25946.r-help-es@r-project.org>",
         "<12e96c5906db76c0d54ece35bc1a6e30@us.es>"
       ],
-      "body_plain": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/f49a5d8b/attachment.pl>",
-      "body_snippet": "An embedded and charset-unspecified text was scrubbed...\nName: no disponible\nURL: <https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/f49a5d8b/attachment.pl>",
+      "body_plain": "Hola Manuel,\nPuedes hacer el cambio de NA a 99 una vez obtengas la matriz utilizando\nis.na() o modificando la funcion \"convertir\" como se muestra a continuacion.\n\nJorge.-\n\n# opcion 1\nresultado <- convertir(x)\nresutado[is.na(resultado)] <- 99\nresultado\n\n# opcion 2\nconvertir2 <- function(x){\n n <- length(x)\nif(x[n] == 99) res <- foo(x)  # chequeando ultimo valor de x\n else{\n    x[n+1] <- 99\n    res <- foo(x)\n }\n   res[is.na(res)] <- 99  # cambie esto\n   res\n   }\n\nconvertir2(x)\nconvertir2(x[-length(x)])\n\n\n\n2011/8/31 <>\n\n>\n>\n> Muchas gracias Jorge. La función va bien, pero las columnas las\n> completa con NAs y no con un dígito (99 o cualquier otro, pero dígito).\n>\n>\n> Saludos,\n>\n> Manuel\n>\n> On Wed, 31 Aug 2011 12:00:11 +0200,\n> r-help-es-request at r-project.org wrote:\n>\n> > Envíe los mensajes para la\n> lista R-help-es a\n> > r-help-es at r-project.org [3]\n> >\n> > Para subscribirse o\n> anular su subscripción a través de la WEB\n> >\n> https://stat.ethz.ch/mailman/listinfo/r-help-es [4]\n> >\n> > O por correo\n> electrónico, enviando un mensaje con el texto \"help\" en\n> > el asunto\n> (subject) o en el cuerpo a:\n> > r-help-es-request at r-project.org [5]\n> >\n> >\n> Puede contactar con el responsable de la lista escribiendo a:\n> >\n> r-help-es-owner at r-project.org [6]\n> >\n> > Si responde a algún contenido de\n> este mensaje, por favor, edite la\n> > linea del asunto (subject) para que\n> el texto sea mas especifico que:\n> > \"Re: Contents of R-help-es\n> digest...\". Además, por favor, incluya en\n> > la respuesta sólo aquellas\n> partes del mensaje a las que está\n> > respondiendo.\n> >\n> > Asuntos del\n> día:\n> >\n> > 1. Manipulación de vectores (morales at us.es [7])\n> > 2. Re:\n> Manipulación de vectores (Jorge I Velez)\n> >\n> >\n> ----------------------------------------------------------------------\n> >\n>\n> > Message: 1\n> > Date: Wed, 31 Aug 2011 06:45:24 +0200\n> > From:\n> morales at us.es [8]\n> > To:\n> > Subject: [R-es] Manipulación de vectores\n> >\n> Message-ID:\n> > Content-Type: text/plain\n> >\n> > Hola, tengo un vector con\n> mas de 20000 elementos que representan\n> > secuencias de cÃ³digos\n> (numÃ(c)ricos) de 40 sujetos.En el vector aparece el\n> > valor 99 para\n> indicar que empieza la secuencia de otro sujeto. Un\n> > ejemplo de\n> secuencia seria la siguiente:\n> >\n> > 7 2 8 2 99 8 2 8 5 2 8 2 2 99\n> > 2 8\n> 2 8 5 2 99\n> >\n> > La idea seria construir un data frame en el que cada\n> >\n> columna represente la secuencia de cada sujeto. QuedarÃ­a asi:\n> >\n> > 7 8\n> 2\n> >\n> > 2 2 8\n> >\n> > 8 8 2\n> >\n> > 2 5 8\n> >\n> > 99 2 5\n> >\n> > 99 8 2\n> >\n> > 99\n> 2 99\n> >\n> > 99 2 99\n> >\n> > Las\n> > secuencias de los sujetos tienen tamaÃ±os\n> distintos. Para igualar las\n> > columnas habrÃ­a que aÃ±adir el valor 99\n> (o cualquier otro distinto a los\n> > cÃ³digos).\n> >\n> > Alguna sugerencia?\n>\n> >\n> > Saludos,\n> >\n> > Manuel\n> >\n> > [[alternative HTML version deleted]]\n> >\n>\n> > ------------------------------\n> >\n> > Message: 2\n> > Date: Wed, 31 Aug\n> 2011 02:53:13 -0400\n> > From: Jorge I Velez\n> > To: morales at us.es [12]\n> >\n> Cc: r-help-es at r-project.org [13]\n> > Subject: Re: [R-es] Manipulación de\n> vectores\n> > Message-ID:\n> >\n> > Content-Type: text/plain\n> >\n> > Hola Manuel,\n> >\n> Podrias considerar la siguiente alternativa.\n> > Un saludo,\n> > Jorge\n> >\n> > #\n> datos\n> > x\n> >\n> >> Hola, tengo un vector con mas de 20000 elementos que\n> representan secuencias de códigos (numéricos) de 40 sujetos.En el vector\n> aparece el valor 99 para indicar que empieza la secuencia de otro\n> sujeto. Un ejemplo de secuencia seria la siguiente: 7 2 8 2 99 8 2 8 5 2\n> 8 2 2 99 2 8 2 8 5 2 99 La idea seria construir un data frame en el que\n> cada columna represente la secuencia de cada sujeto. Quedaría asi: 7 8 2\n> 2 2 8 8 8 2 2 5 8 99 2 5 99 8 2 99 2 99 99 2 99 Las secuencias de los\n> sujetos tienen tamaños distintos. Para igualar las columnas habría que\n> añadir el valor 99 (o cualquier otro distinto a los códigos). Alguna\n> sugerencia? Saludos, Manuel [[alternative HTML version deleted]]\n> _______________________________________________ R-help-es mailing list\n> R-help-es at r-project.org [1]\n> https://stat.ethz.ch/mailman/listinfo/r-help-es [2]\n> >\n> > [[alternative\n> HTML version deleted]]\n> >\n> > ------------------------------\n> >\n> >\n> _______________________________________________\n> > R-help-es mailing\n> list\n> > R-help-es at r-project.org [15]\n> >\n> https://stat.ethz.ch/mailman/listinfo/r-help-es [16]\n> >\n> > Fin de Resumen\n> de R-help-es, Vol 30, Envío 21\n> >\n> *********************************************\n>\n>\n> Links:\n> ------\n> [1]\n> mailto:R-help-es at r-project.org\n> [2]\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> [3]\n> mailto:r-help-es at r-project.org\n> [4]\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n> [5]\n> mailto:r-help-es-request at r-project.org\n> [6]\n> mailto:r-help-es-owner at r-project.org\n> [7] mailto:morales at us.es\n> [8]\n> mailto:morales at us.es\n> [9] mailto:r-help-es at r-project.org\n> [10]\n> mailto:3dd28c7764f031180dd591fb41b427cb at us.es\n> [11]\n> mailto:jorgeivanvelez at gmail.com\n> [12] mailto:morales at us.es\n> [13]\n> mailto:r-help-es at r-project.org\n> [14]\n> mailto:CAKL8G3H-DKFOvSoJJ_ZgRUhdqV03if5hjtfxyaHoodMLeH_CRw at mail.gmail.com\n> [15]\n> mailto:R-help-es at r-project.org\n> [16]\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>        [[alternative HTML version deleted]]\n>\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es at r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n>\n\n\t[[alternative HTML version deleted]]",
+      "body_snippet": "Hola Manuel,\nPuedes hacer el cambio de NA a 99 una vez obtengas la matriz utilizando\nis.na() o modificando la funcion \"convertir\" como se muestra a continuacion.\n\nJorge.-\n\n# opcion 1\nresultado <- conv",
       "thread_id": "thread-3c1e930871a7",
       "thread_depth": 1,
-      "month": "2011-08"
+      "month": "2011-08",
+      "restored_from": [
+        "https://stat.ethz.ch/pipermail/r-help-es/attachments/20110831/f49a5d8b/attachment.pl"
+      ]
     }
   ],
   "threads": [
