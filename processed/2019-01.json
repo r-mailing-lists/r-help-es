@@ -17,7 +17,8 @@
       "body_snippet": "Buenas,\n\nAlguno sabe algo sobre promela? Se que es bastante offtopic pero no encuentro a nadie que me pueda ayudar con promela...\n\nJes?s\n\n\t[[alternative HTML version deleted]]",
       "thread_id": "thread-593980d8f6ed",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013082.html"
     },
     {
       "id": "msg-8c904bc827b0",
@@ -29,11 +30,12 @@
       "subject_clean": "[R-es] Función mosaicplot() con alpha segun valor.",
       "in_reply_to": null,
       "references": [],
-      "body_plain": "Feliz año a todos!\n\nY al que sepa y tenga tiempo, una duda:\nQuiero hacer un análisis de distribución de léxico (supongo que da igual\neso) mediante mosaicplot(), en particular me interesa que me muestre el\npeso de la distribución según una proporción que ya conseguí sacar; la de\nel uso de x termino en un espacio determinado.\n\nEjemplo:\n\nDistribución de los términos, totales (tabla1)\n         sitio1 sitio2 sitio3\nterminoA     20     20     20\nterminoB      0     40     40\nterminoC      2      0     10\n\nDistribución de los términos, porcentuales: en el sitio 1 hay 20 medidas,\nen el 2 hay 4 y en el 3 son las 50 medidas posibles (tabla2)\n         sitio1 sitio2 sitio3\nterminoA    100     50     40\nterminoB      0    100     80\nterminoC     10      0     20\n\nquiero hacer algo así como:\nmosaicplot(tabla1, col = alpha(1:3,tabla2/100))\nPero no me lo permite, si me permitiría que cada uno de los colores, 1:3,\ntengan un alpha diferente, pero no que cambie según cada valor de la tabla.\n\nEs imposible hacerlo con los g?aficos de base? (muy complicado lo tomamos\npor imposible tambien :-)\n\n\n\n\n-- \nJuan Abasolo\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea\nUPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT: (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype: abasolo72\n\nTutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Feliz año a todos!\n\nY al que sepa y tenga tiempo, una duda:\nQuiero hacer un análisis de distribución de léxico (supongo que da igual\neso) mediante mosaicplot(), en particular me interesa que me muestre el\npeso de la distribución según una proporción que ya conseguí sacar; la de\nel uso de x termino en un espacio determinado.\n\nEjemplo:\n\nDistribución de los términos, totales (tabla1)\n         sitio1 sitio2 sitio3\nterminoA     20     20     20\nterminoB      0     40     40\nterminoC      2      0     10\n\nDistribución de los términos, porcentuales: en el sitio 1 hay 20 medidas,\nen el 2 hay 4 y en el 3 son las 50 medidas posibles (tabla2)\n         sitio1 sitio2 sitio3\nterminoA    100     50     40\nterminoB      0    100     80\nterminoC     10      0     20\n\nquiero hacer algo así como:\nmosaicplot(tabla1, col = alpha(1:3,tabla2/100))\nPero no me lo permite, si me permitiría que cada uno de los colores, 1:3,\ntengan un alpha diferente, pero no que cambie según cada valor de la tabla.\n\nEs imposible hacerlo con los gŕaficos de base? (muy complicado lo tomamos\npor imposible tambien :-)\n\n\n\n\n-- \nJuan Abasolo\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea\nUPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT: (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype: abasolo72\n\nTutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Feliz año a todos!\n\nY al que sepa y tenga tiempo, una duda:\nQuiero hacer un análisis de distribución de léxico (supongo que da igual\neso) mediante mosaicplot(), en particular me interesa que me muestr",
       "thread_id": "thread-8c904bc827b0",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013083.html"
     },
     {
       "id": "msg-bbccd9cf05dd",
@@ -47,11 +49,12 @@
       "references": [
         "<CA+8ueyZcrOtPwUYJR0erF5tdh9+K81Z24XRiFb=KEK+=JrerCA@mail.gmail.com>"
       ],
-      "body_plain": "Hola, Juan:\n\nCreo que hay varios problemas en tu código. Por un lado, no hay una \nfunción \"alpha()\" en R básico ni un argumento \"alpha\" en mosaicplot(). \nPor otro lado \"1:3\" son tres colores, y tabla1 tiene 9 celdas para colorear.\n\nPodrías hacer algo así:\n\nmosaicplot(tabla1, col=grey(as.matrix(tabla2)/100))\n\no así:\n\n  mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100, \nalpha=as.matrix(tabla2)/100))\n\nO si el gris no es tu color, definir una paleta de colores que varíe \nsegún los valores de tabla2.\n\nSaludos,\n\nMarcelino\n\n\nEl 04/01/2019 a las 12:43, Juan Abasolo escribió:\n> Feliz año a todos!\n>\n> Y al que sepa y tenga tiempo, una duda:\n> Quiero hacer un análisis de distribución de léxico (supongo que da igual\n> eso) mediante mosaicplot(), en particular me interesa que me muestre el\n> peso de la distribución según una proporción que ya conseguí sacar; la de\n> el uso de x termino en un espacio determinado.\n>\n> Ejemplo:\n>\n> Distribución de los términos, totales (tabla1)\n>           sitio1 sitio2 sitio3\n> terminoA     20     20     20\n> terminoB      0     40     40\n> terminoC      2      0     10\n>\n> Distribución de los términos, porcentuales: en el sitio 1 hay 20 medidas,\n> en el 2 hay 4 y en el 3 son las 50 medidas posibles (tabla2)\n>           sitio1 sitio2 sitio3\n> terminoA    100     50     40\n> terminoB      0    100     80\n> terminoC     10      0     20\n>\n> quiero hacer algo así como:\n> mosaicplot(tabla1, col = alpha(1:3,tabla2/100))\n> Pero no me lo permite, si me permitiría que cada uno de los colores, 1:3,\n> tengan un alpha diferente, pero no que cambie según cada valor de la tabla.\n>\n> Es imposible hacerlo con los g?aficos de base? (muy complicado lo tomamos\n> por imposible tambien :-)\n>\n>\n>\n>\n\n-- \nMarcelino de la Cruz Rot\nDepto. de Biología y Geología\nFísica y Química Inorgánica\nUniversidad Rey Juan Carlos\nMóstoles España",
+      "body_plain": "Hola, Juan:\n\nCreo que hay varios problemas en tu código. Por un lado, no hay una \nfunción \"alpha()\" en R básico ni un argumento \"alpha\" en mosaicplot(). \nPor otro lado \"1:3\" son tres colores, y tabla1 tiene 9 celdas para colorear.\n\nPodrías hacer algo así:\n\nmosaicplot(tabla1, col=grey(as.matrix(tabla2)/100))\n\no así:\n\n  mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100, \nalpha=as.matrix(tabla2)/100))\n\nO si el gris no es tu color, definir una paleta de colores que varíe \nsegún los valores de tabla2.\n\nSaludos,\n\nMarcelino\n\n\nEl 04/01/2019 a las 12:43, Juan Abasolo escribió:\n> Feliz año a todos!\n>\n> Y al que sepa y tenga tiempo, una duda:\n> Quiero hacer un análisis de distribución de léxico (supongo que da igual\n> eso) mediante mosaicplot(), en particular me interesa que me muestre el\n> peso de la distribución según una proporción que ya conseguí sacar; la de\n> el uso de x termino en un espacio determinado.\n>\n> Ejemplo:\n>\n> Distribución de los términos, totales (tabla1)\n>           sitio1 sitio2 sitio3\n> terminoA     20     20     20\n> terminoB      0     40     40\n> terminoC      2      0     10\n>\n> Distribución de los términos, porcentuales: en el sitio 1 hay 20 medidas,\n> en el 2 hay 4 y en el 3 son las 50 medidas posibles (tabla2)\n>           sitio1 sitio2 sitio3\n> terminoA    100     50     40\n> terminoB      0    100     80\n> terminoC     10      0     20\n>\n> quiero hacer algo así como:\n> mosaicplot(tabla1, col = alpha(1:3,tabla2/100))\n> Pero no me lo permite, si me permitiría que cada uno de los colores, 1:3,\n> tengan un alpha diferente, pero no que cambie según cada valor de la tabla.\n>\n> Es imposible hacerlo con los gŕaficos de base? (muy complicado lo tomamos\n> por imposible tambien :-)\n>\n>\n>\n>\n\n-- \nMarcelino de la Cruz Rot\nDepto. de Biología y Geología\nFísica y Química Inorgánica\nUniversidad Rey Juan Carlos\nMóstoles España",
       "body_snippet": "Hola, Juan:\n\nCreo que hay varios problemas en tu código. Por un lado, no hay una \nfunción \"alpha()\" en R básico ni un argumento \"alpha\" en mosaicplot(). \nPor otro lado \"1:3\" son tres colores, y tabla1",
       "thread_id": "thread-8c904bc827b0",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013084.html"
     },
     {
       "id": "msg-b0b012635bcf",
@@ -66,11 +69,12 @@
         "<CA+8ueyZcrOtPwUYJR0erF5tdh9+K81Z24XRiFb=KEK+=JrerCA@mail.gmail.com>",
         "<d798881c-1ddb-4f31-6fae-7bdc424c25c6@urjc.es>"
       ],
-      "body_plain": "Hola,\n\nPrueba también las opciones que ofrecen los paquetes vcd/vcdExtra\n(Visualizing Categorial Data).\nIncluye varias funciones para representar tablas de frecuencias.\n\nMira esta viñeta que detalla el cómo:\n\nhttps://cloud.r-project.org/web/packages/vcdExtra/vignettes/vcd-tutorial.pdf\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl vie., 4 ene. 2019 a las 15:08, Marcelino De La Cruz Rot (<\nmarcelino.delacruz en urjc.es>) escribió:\n\n> Hola, Juan:\n>\n> Creo que hay varios problemas en tu código. Por un lado, no hay una\n> función \"alpha()\" en R básico ni un argumento \"alpha\" en mosaicplot().\n> Por otro lado \"1:3\" son tres colores, y tabla1 tiene 9 celdas para\n> colorear.\n>\n> Podrías hacer algo así:\n>\n> mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100))\n>\n> o así:\n>\n>   mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100,\n> alpha=as.matrix(tabla2)/100))\n>\n> O si el gris no es tu color, definir una paleta de colores que varíe\n> según los valores de tabla2.\n>\n> Saludos,\n>\n> Marcelino\n>\n>\n> El 04/01/2019 a las 12:43, Juan Abasolo escribió:\n> > Feliz año a todos!\n> >\n> > Y al que sepa y tenga tiempo, una duda:\n> > Quiero hacer un análisis de distribución de léxico (supongo que da igual\n> > eso) mediante mosaicplot(), en particular me interesa que me muestre el\n> > peso de la distribución según una proporción que ya conseguí sacar; la de\n> > el uso de x termino en un espacio determinado.\n> >\n> > Ejemplo:\n> >\n> > Distribución de los términos, totales (tabla1)\n> >           sitio1 sitio2 sitio3\n> > terminoA     20     20     20\n> > terminoB      0     40     40\n> > terminoC      2      0     10\n> >\n> > Distribución de los términos, porcentuales: en el sitio 1 hay 20 medidas,\n> > en el 2 hay 4 y en el 3 son las 50 medidas posibles (tabla2)\n> >           sitio1 sitio2 sitio3\n> > terminoA    100     50     40\n> > terminoB      0    100     80\n> > terminoC     10      0     20\n> >\n> > quiero hacer algo así como:\n> > mosaicplot(tabla1, col = alpha(1:3,tabla2/100))\n> > Pero no me lo permite, si me permitiría que cada uno de los colores, 1:3,\n> > tengan un alpha diferente, pero no que cambie según cada valor de la\n> tabla.\n> >\n> > Es imposible hacerlo con los g?aficos de base? (muy complicado lo tomamos\n> > por imposible tambien :-)\n> >\n> >\n> >\n> >\n>\n> --\n> Marcelino de la Cruz Rot\n> Depto. de Biología y Geología\n> Física y Química Inorgánica\n> Universidad Rey Juan Carlos\n> Móstoles España\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Hola,\n\nPrueba también las opciones que ofrecen los paquetes vcd/vcdExtra\n(Visualizing Categorial Data).\nIncluye varias funciones para representar tablas de frecuencias.\n\nMira esta viñeta que detalla el cómo:\n\nhttps://cloud.r-project.org/web/packages/vcdExtra/vignettes/vcd-tutorial.pdf\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\nEl vie., 4 ene. 2019 a las 15:08, Marcelino De La Cruz Rot (<\nmarcelino.delacruz en urjc.es>) escribió:\n\n> Hola, Juan:\n>\n> Creo que hay varios problemas en tu código. Por un lado, no hay una\n> función \"alpha()\" en R básico ni un argumento \"alpha\" en mosaicplot().\n> Por otro lado \"1:3\" son tres colores, y tabla1 tiene 9 celdas para\n> colorear.\n>\n> Podrías hacer algo así:\n>\n> mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100))\n>\n> o así:\n>\n>   mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100,\n> alpha=as.matrix(tabla2)/100))\n>\n> O si el gris no es tu color, definir una paleta de colores que varíe\n> según los valores de tabla2.\n>\n> Saludos,\n>\n> Marcelino\n>\n>\n> El 04/01/2019 a las 12:43, Juan Abasolo escribió:\n> > Feliz año a todos!\n> >\n> > Y al que sepa y tenga tiempo, una duda:\n> > Quiero hacer un análisis de distribución de léxico (supongo que da igual\n> > eso) mediante mosaicplot(), en particular me interesa que me muestre el\n> > peso de la distribución según una proporción que ya conseguí sacar; la de\n> > el uso de x termino en un espacio determinado.\n> >\n> > Ejemplo:\n> >\n> > Distribución de los términos, totales (tabla1)\n> >           sitio1 sitio2 sitio3\n> > terminoA     20     20     20\n> > terminoB      0     40     40\n> > terminoC      2      0     10\n> >\n> > Distribución de los términos, porcentuales: en el sitio 1 hay 20 medidas,\n> > en el 2 hay 4 y en el 3 son las 50 medidas posibles (tabla2)\n> >           sitio1 sitio2 sitio3\n> > terminoA    100     50     40\n> > terminoB      0    100     80\n> > terminoC     10      0     20\n> >\n> > quiero hacer algo así como:\n> > mosaicplot(tabla1, col = alpha(1:3,tabla2/100))\n> > Pero no me lo permite, si me permitiría que cada uno de los colores, 1:3,\n> > tengan un alpha diferente, pero no que cambie según cada valor de la\n> tabla.\n> >\n> > Es imposible hacerlo con los gŕaficos de base? (muy complicado lo tomamos\n> > por imposible tambien :-)\n> >\n> >\n> >\n> >\n>\n> --\n> Marcelino de la Cruz Rot\n> Depto. de Biología y Geología\n> Física y Química Inorgánica\n> Universidad Rey Juan Carlos\n> Móstoles España\n>\n> _______________________________________________\n> R-help-es mailing list\n> R-help-es en r-project.org\n> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>\n\n\n-- \nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Hola,\n\nPrueba también las opciones que ofrecen los paquetes vcd/vcdExtra\n(Visualizing Categorial Data).\nIncluye varias funciones para representar tablas de frecuencias.\n\nMira esta viñeta que detalla e",
       "thread_id": "thread-8c904bc827b0",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013085.html"
     },
     {
       "id": "msg-7e692a722914",
@@ -86,11 +90,12 @@
         "<d798881c-1ddb-4f31-6fae-7bdc424c25c6@urjc.es>",
         "<CAOKbq8hPSTkJbW8nTFy9XXfTFAYOWDR8nVa-BsgKAFfAmXMujQ@mail.gmail.com>"
       ],
-      "body_plain": "Muchas gracias, Marcelino y Carlos.\n\nCon respecto a lo que comentás, Marcelino, me parece que voy a tener que\nseguir experimentando. De momento, solamente conseguí que mosaicplot haga\ntantos colores como niveles tiene el eje Y. Quiero decir, con un 1:9, si\nsolo hay tres niveles en Y solo usa 1:3.\nIntenté hacer una exposición mínima. Yo estoy trabajando con mi propia\npaleta y los niveles son 6. Voy a investigar en base a lo que me proponés,\na ver si le encuentro la vuelta.\n\nEl paquete que comentás, Carlos, lo tengo usado. Me parece grandioso en lo\nque hace (lo usé para investigar sobre la significatividad de unas\ndistribuciones ji cuadrado) y me ahorró un montón de dolores de cabeza.\nPero ahora lo que estoy buscando no va por el lado de la significatividad o\nno y los colores los quiero conservar con respecto a los niveles (sitio1A,\nsitio1B, sitio2A... y así). Ahí me resolvería que la trasparencia mayor o\nmenor me diese cuenta de la representatividad sobre el total de los,\ndigamos, informantes del sitio en cuestión. Gracias por recordarmelo!\n\nQue se porten bien los Reyes!\n\n\n\nHau idatzi du Carlos Ortega (cof en qualityexcellence.es) erabiltzaileak (2019\nurt. 4, or. (15:32)):\n\n> Hola,\n>\n> Prueba también las opciones que ofrecen los paquetes vcd/vcdExtra\n> (Visualizing Categorial Data).\n> Incluye varias funciones para representar tablas de frecuencias.\n>\n> Mira esta viñeta que detalla el cómo:\n>\n>\n> https://cloud.r-project.org/web/packages/vcdExtra/vignettes/vcd-tutorial.pdf\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El vie., 4 ene. 2019 a las 15:08, Marcelino De La Cruz Rot (<\n> marcelino.delacruz en urjc.es>) escribió:\n>\n>> Hola, Juan:\n>>\n>> Creo que hay varios problemas en tu código. Por un lado, no hay una\n>> función \"alpha()\" en R básico ni un argumento \"alpha\" en mosaicplot().\n>> Por otro lado \"1:3\" son tres colores, y tabla1 tiene 9 celdas para\n>> colorear.\n>>\n>> Podrías hacer algo así:\n>>\n>> mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100))\n>>\n>> o así:\n>>\n>>   mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100,\n>> alpha=as.matrix(tabla2)/100))\n>>\n>> O si el gris no es tu color, definir una paleta de colores que varíe\n>> según los valores de tabla2.\n>>\n>> Saludos,\n>>\n>> Marcelino\n>>\n>>\n>> El 04/01/2019 a las 12:43, Juan Abasolo escribió:\n>> > Feliz año a todos!\n>> >\n>> > Y al que sepa y tenga tiempo, una duda:\n>> > Quiero hacer un análisis de distribución de léxico (supongo que da igual\n>> > eso) mediante mosaicplot(), en particular me interesa que me muestre el\n>> > peso de la distribución según una proporción que ya conseguí sacar; la\n>> de\n>> > el uso de x termino en un espacio determinado.\n>> >\n>> > Ejemplo:\n>> >\n>> > Distribución de los términos, totales (tabla1)\n>> >           sitio1 sitio2 sitio3\n>> > terminoA     20     20     20\n>> > terminoB      0     40     40\n>> > terminoC      2      0     10\n>> >\n>> > Distribución de los términos, porcentuales: en el sitio 1 hay 20\n>> medidas,\n>> > en el 2 hay 4 y en el 3 son las 50 medidas posibles (tabla2)\n>> >           sitio1 sitio2 sitio3\n>> > terminoA    100     50     40\n>> > terminoB      0    100     80\n>> > terminoC     10      0     20\n>> >\n>> > quiero hacer algo así como:\n>> > mosaicplot(tabla1, col = alpha(1:3,tabla2/100))\n>> > Pero no me lo permite, si me permitiría que cada uno de los colores,\n>> 1:3,\n>> > tengan un alpha diferente, pero no que cambie según cada valor de la\n>> tabla.\n>> >\n>> > Es imposible hacerlo con los g?aficos de base? (muy complicado lo\n>> tomamos\n>> > por imposible tambien :-)\n>> >\n>> >\n>> >\n>> >\n>>\n>> --\n>> Marcelino de la Cruz Rot\n>> Depto. de Biología y Geología\n>> Física y Química Inorgánica\n>> Universidad Rey Juan Carlos\n>> Móstoles España\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\n-- \nJuan Abasolo\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea\nUPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT: (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype: abasolo72\n\nTutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n\n\t[[alternative HTML version deleted]]",
+      "body_plain": "Muchas gracias, Marcelino y Carlos.\n\nCon respecto a lo que comentás, Marcelino, me parece que voy a tener que\nseguir experimentando. De momento, solamente conseguí que mosaicplot haga\ntantos colores como niveles tiene el eje Y. Quiero decir, con un 1:9, si\nsolo hay tres niveles en Y solo usa 1:3.\nIntenté hacer una exposición mínima. Yo estoy trabajando con mi propia\npaleta y los niveles son 6. Voy a investigar en base a lo que me proponés,\na ver si le encuentro la vuelta.\n\nEl paquete que comentás, Carlos, lo tengo usado. Me parece grandioso en lo\nque hace (lo usé para investigar sobre la significatividad de unas\ndistribuciones ji cuadrado) y me ahorró un montón de dolores de cabeza.\nPero ahora lo que estoy buscando no va por el lado de la significatividad o\nno y los colores los quiero conservar con respecto a los niveles (sitio1A,\nsitio1B, sitio2A... y así). Ahí me resolvería que la trasparencia mayor o\nmenor me diese cuenta de la representatividad sobre el total de los,\ndigamos, informantes del sitio en cuestión. Gracias por recordarmelo!\n\nQue se porten bien los Reyes!\n\n\n\nHau idatzi du Carlos Ortega (cof en qualityexcellence.es) erabiltzaileak (2019\nurt. 4, or. (15:32)):\n\n> Hola,\n>\n> Prueba también las opciones que ofrecen los paquetes vcd/vcdExtra\n> (Visualizing Categorial Data).\n> Incluye varias funciones para representar tablas de frecuencias.\n>\n> Mira esta viñeta que detalla el cómo:\n>\n>\n> https://cloud.r-project.org/web/packages/vcdExtra/vignettes/vcd-tutorial.pdf\n>\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n> El vie., 4 ene. 2019 a las 15:08, Marcelino De La Cruz Rot (<\n> marcelino.delacruz en urjc.es>) escribió:\n>\n>> Hola, Juan:\n>>\n>> Creo que hay varios problemas en tu código. Por un lado, no hay una\n>> función \"alpha()\" en R básico ni un argumento \"alpha\" en mosaicplot().\n>> Por otro lado \"1:3\" son tres colores, y tabla1 tiene 9 celdas para\n>> colorear.\n>>\n>> Podrías hacer algo así:\n>>\n>> mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100))\n>>\n>> o así:\n>>\n>>   mosaicplot(tabla1, col=grey(as.matrix(tabla2)/100,\n>> alpha=as.matrix(tabla2)/100))\n>>\n>> O si el gris no es tu color, definir una paleta de colores que varíe\n>> según los valores de tabla2.\n>>\n>> Saludos,\n>>\n>> Marcelino\n>>\n>>\n>> El 04/01/2019 a las 12:43, Juan Abasolo escribió:\n>> > Feliz año a todos!\n>> >\n>> > Y al que sepa y tenga tiempo, una duda:\n>> > Quiero hacer un análisis de distribución de léxico (supongo que da igual\n>> > eso) mediante mosaicplot(), en particular me interesa que me muestre el\n>> > peso de la distribución según una proporción que ya conseguí sacar; la\n>> de\n>> > el uso de x termino en un espacio determinado.\n>> >\n>> > Ejemplo:\n>> >\n>> > Distribución de los términos, totales (tabla1)\n>> >           sitio1 sitio2 sitio3\n>> > terminoA     20     20     20\n>> > terminoB      0     40     40\n>> > terminoC      2      0     10\n>> >\n>> > Distribución de los términos, porcentuales: en el sitio 1 hay 20\n>> medidas,\n>> > en el 2 hay 4 y en el 3 son las 50 medidas posibles (tabla2)\n>> >           sitio1 sitio2 sitio3\n>> > terminoA    100     50     40\n>> > terminoB      0    100     80\n>> > terminoC     10      0     20\n>> >\n>> > quiero hacer algo así como:\n>> > mosaicplot(tabla1, col = alpha(1:3,tabla2/100))\n>> > Pero no me lo permite, si me permitiría que cada uno de los colores,\n>> 1:3,\n>> > tengan un alpha diferente, pero no que cambie según cada valor de la\n>> tabla.\n>> >\n>> > Es imposible hacerlo con los gŕaficos de base? (muy complicado lo\n>> tomamos\n>> > por imposible tambien :-)\n>> >\n>> >\n>> >\n>> >\n>>\n>> --\n>> Marcelino de la Cruz Rot\n>> Depto. de Biología y Geología\n>> Física y Química Inorgánica\n>> Universidad Rey Juan Carlos\n>> Móstoles España\n>>\n>> _______________________________________________\n>> R-help-es mailing list\n>> R-help-es en r-project.org\n>> https://stat.ethz.ch/mailman/listinfo/r-help-es\n>>\n>\n>\n> --\n> Saludos,\n> Carlos Ortega\n> www.qualityexcellence.es\n>\n\n\n-- \nJuan Abasolo\n\nHizkuntzaren eta Literaturaren Didaktika Saila | EUDIA ikerketa taldea\nBilboko Hezkuntza Fakultatea\nEuskal Herriko Unibertsitatea\nUPV/EHU\n\nSarriena auzoa z/g 48940 - Leioa (Bizkaia)\n\nT: (+34) 94 601 7567\nTelegram: @JuanAbasolo\nSkype: abasolo72\n\nTutoretza ordutegia <https://labur.eus/JAbasolo-tutoretzak>\n\n\t[[alternative HTML version deleted]]",
       "body_snippet": "Muchas gracias, Marcelino y Carlos.\n\nCon respecto a lo que comentás, Marcelino, me parece que voy a tener que\nseguir experimentando. De momento, solamente conseguí que mosaicplot haga\ntantos colores c",
       "thread_id": "thread-8c904bc827b0",
       "thread_depth": 3,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013086.html"
     },
     {
       "id": "msg-045e3c5a8b9b",
@@ -106,7 +111,8 @@
       "body_snippet": "Buenas,\n\n?Como se puede generar una lista doble en R mediante un bucle for?\n\nEs decir, tengo algo asi:\n\nlista <- list()\n\nfor(i in 1:5){\n\nlista[0][['a']] <- i\nlista[0][['b']] <- i*2\n\n}\n\nDe tal manera q",
       "thread_id": "thread-045e3c5a8b9b",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013087.html"
     },
     {
       "id": "msg-adb7f044a1c8",
@@ -122,7 +128,8 @@
       "body_snippet": "Buenas noches;\nvengo con una consulta, que no se si es fácilmente resoluble o necesito\nsaber más para entender porqué no tengo que hacer lo que me propongo.\n\nTengo una matriz de distancias y unos clus",
       "thread_id": "thread-adb7f044a1c8",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013088.html"
     },
     {
       "id": "msg-72b5379225aa",
@@ -140,7 +147,8 @@
       "body_snippet": "Estimado Juán Abasolo\n\nNo se si comprendo, usted no quiere replicar sino recalcular datos. Por\nejemplo:\n\nEn el trabajo original: datos ---> análisis ---> resultados\n\nUsted tiene: resultados\n\nUsted des",
       "thread_id": "thread-adb7f044a1c8",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013089.html"
     },
     {
       "id": "msg-8da55ebbcca3",
@@ -159,7 +167,8 @@
       "body_snippet": "Puede que no me haya expresado certeramente. Es lo que pasa al tocar de\noído.\n\nTengo unos datos (df) de los que se alguien calculó unas distancias\n(dis.df) de las que se hicieron/hacen unos clusters (",
       "thread_id": "thread-adb7f044a1c8",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013090.html"
     },
     {
       "id": "msg-c1bc55f9726d",
@@ -179,7 +188,8 @@
       "body_snippet": "Estimado Juan\n\nEntonces si tiene los datos, lo más simple es tomar una de las opciones de\nR, recalcula todo desde cero y tiene los parámetros computacionales para\nrealizar preguntas a R, meterce con a",
       "thread_id": "thread-adb7f044a1c8",
       "thread_depth": 3,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013091.html"
     },
     {
       "id": "msg-513ce8df7fe7",
@@ -200,7 +210,8 @@
       "body_snippet": "Entiendo tu planteamiento, pero me alejaría de los pasos ya dados. Tendría\nque replantearlos y discutirlos.\n\nMe resulta mentalmente muchísimo más fácil no discutir y proseguir la\nelaboración desde el ",
       "thread_id": "thread-adb7f044a1c8",
       "thread_depth": 4,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013092.html"
     },
     {
       "id": "msg-423a6faa00b9",
@@ -218,7 +229,8 @@
       "body_snippet": "¿Has probado la versión de la función \"agnes\"?:\nhttps://www.rdocumentation.org/packages/cluster/versions/1.4-1/topics/agnes\nPor lo que parece, utiliza el mismo método que la antigua \"hclust\", que\ndebe",
       "thread_id": "thread-adb7f044a1c8",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013093.html"
     },
     {
       "id": "msg-0bd2911b0461",
@@ -237,7 +249,8 @@
       "body_snippet": "Muchas gracias, Isidro;\nHice la prueba que me recomendás y con mis datos me da los mismos clusters.\nLa única diferencia que aprecio es el orden estético. Pero las agrupaciones\nque me surgen son idénti",
       "thread_id": "thread-adb7f044a1c8",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013094.html"
     },
     {
       "id": "msg-1afebf9fa7bc",
@@ -253,7 +266,8 @@
       "body_snippet": "Estimados.\n\nHace un tiempo que tengo una duda, estaba pensando en los problemas como\noptimización de costos, donde hay varias alternativas y librerías, pasando\npor soluciones inspiradas en energía, ge",
       "thread_id": "thread-1afebf9fa7bc",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013095.html"
     },
     {
       "id": "msg-5a6ebbfc7a2e",
@@ -271,7 +285,8 @@
       "body_snippet": "Buenas Javier,\n\n\nSobre temas de optimizaci?n hay unos apuntes de la universidad de Granada que son realmente buenos. TE aconsejo que les eches un vistazo (basan su c?digo en matlab)\n\nhttps://elvex.ugr",
       "thread_id": "thread-1afebf9fa7bc",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013096.html"
     },
     {
       "id": "msg-2d7dc49ef29e",
@@ -290,7 +305,8 @@
       "body_snippet": "Estimado Jesús Para Fernández\n\nEn teoría es ese material, lo vi muy rápido y en la parte genética tiene\ncosas que biológicamente no son así, hay un libro de Falconer, Introducción\na la genética cuanti",
       "thread_id": "thread-1afebf9fa7bc",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013097.html"
     },
     {
       "id": "msg-b3ca08cff362",
@@ -310,7 +326,8 @@
       "body_snippet": "Estimados\n\nEncontré un ejemplo que se aproxima a mi pregunta, lo copio y pego para\ncompartirlo. Lo primero como para comentar es la facilidad de R respecto a\npython y tensorflow, aunque estos podrían ",
       "thread_id": "thread-1afebf9fa7bc",
       "thread_depth": 3,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013098.html"
     },
     {
       "id": "msg-1f2e7c50bb95",
@@ -326,7 +343,8 @@
       "body_snippet": "Buenas tardes. ¿Sabe alguno de vosotros cómo indicar la variable con  \nla que identificar los puntos con plot3d?\n\nlibrary(rgl)\n\nplot3d(Data$RTLML,Data$JD,Data$SB)\n\nLas muestras pertenecen a una de dos",
       "thread_id": "thread-1f2e7c50bb95",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013099.html"
     },
     {
       "id": "msg-b7e039ed3047",
@@ -344,7 +362,8 @@
       "body_snippet": "Hola Manuel:\n\nPor ejemplo así:\n\n\nplot3d(Data$RTLML,Data$JD,Data$SB, col = \nc(\"red\",\"blue\")[as.numeric(as.factor(Family))])\n\n\n\nEl 18/01/2019 a las 13:48, Manuel Mendoza escribió:\n> Buenas tardes. ¿Sabe",
       "thread_id": "thread-1f2e7c50bb95",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013100.html"
     },
     {
       "id": "msg-63aad9131e33",
@@ -363,7 +382,8 @@
       "body_snippet": "Gracias Marcelino, funcionó,\n\nManuel\n\nQuoting Marcelino De La Cruz Rot <marcelino.delacruz en urjc.es>:\n\n> Hola Manuel:\n>\n> Por ejemplo así:\n>\n>\n> plot3d(Data$RTLML,Data$JD,Data$SB, col =\n> c(\"red\",\"b",
       "thread_id": "thread-1f2e7c50bb95",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013101.html"
     },
     {
       "id": "msg-57ce843d215f",
@@ -385,7 +405,8 @@
       "body_snippet": "Estimado Enrique Baquela\n\nLo que usted escribe es lo que yo pensé, uno tiene todo ajustado hacia un\nárea desde hace tiempo, el otro muy desarrollado principalmente para el\nreconocimiento de imágenes, ",
       "thread_id": "thread-57ce843d215f",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013102.html"
     },
     {
       "id": "msg-bd3e3443995e",
@@ -401,7 +422,8 @@
       "body_snippet": "Buenas tardes estimados amigos,\n\nAlguien me puede ayudar indic?ndome c?mo hacer para obtener un gr?fico de superficie para un modelo de regresi?n en 3D.\n\nCon el siguiente script he obtenido el modelo ",
       "thread_id": "thread-bd3e3443995e",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013103.html"
     },
     {
       "id": "msg-e70bb4ecbc9a",
@@ -417,7 +439,8 @@
       "body_snippet": "Buenas tardes,\n\nEstamos intentando hacer esta función, y sabemos que el bucle funciona (lo\nhemos testeado). Pero nos da este error ya en la primera línea:\n\n\"Error in if (phen_tot$convergence[i][j] == ",
       "thread_id": "thread-e70bb4ecbc9a",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013104.html"
     },
     {
       "id": "msg-19e6a23bf117",
@@ -435,7 +458,8 @@
       "body_snippet": "Hola, qué tal? Habría que ver qué contiene el objeto phen_tot, pero la\nexpresión\nphen_tot$convergence[i][j]\nes muy sospechosa. Qué estructura tiene phen_tot$convergence?\n\nUn saludo,\n\nCarlos J. Gil Bel",
       "thread_id": "thread-e70bb4ecbc9a",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013105.html"
     },
     {
       "id": "msg-448025e51b94",
@@ -454,7 +478,8 @@
       "body_snippet": "Hola Carlos,\n\nGracias por la respuesta. phen_tot es un data frame visualizado como\ntibble, y contiene (entre otras) las columnas \"convergence\", \"r_square\" y\n\"maxlog10mfi\". Y queremos crear nuevas colu",
       "thread_id": "thread-e70bb4ecbc9a",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013106.html"
     },
     {
       "id": "msg-3297affb5bbf",
@@ -474,7 +499,8 @@
       "body_snippet": "Buenas,\n\npuedes imprimir phen_tot$convergence[i][j], con diversas i i j, para ver\nque te devuelve. también puedes usar type(phen_tot$convergence[i][j]) para\nver que tipo es. Entonces sabrás que tienes",
       "thread_id": "thread-e70bb4ecbc9a",
       "thread_depth": 3,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013107.html"
     },
     {
       "id": "msg-29818a970916",
@@ -495,7 +521,8 @@
       "body_snippet": "Hola, ¿qué tal?\n\nSi phen_tot es un DF, entonces no existe phen_tot$convergence[i][j]. A lo\nmás, existe phen_tot$convergence[i], que es el i-ésimo elemento de la\ncolumna \"convergence\" de phen_tot. A sa",
       "thread_id": "thread-e70bb4ecbc9a",
       "thread_depth": 4,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013108.html"
     },
     {
       "id": "msg-36922918dba1",
@@ -517,7 +544,8 @@
       "body_snippet": "Hola Carlos y Xavier,\n\nMuchas gracias, realmente los índices estaban mal y no tenía sentido porque\nefectivamente no existía phen_tot$convergence[i][j].\n\nEstamos arreglándolo ahora y pinta bien, gracia",
       "thread_id": "thread-e70bb4ecbc9a",
       "thread_depth": 5,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013109.html"
     },
     {
       "id": "msg-99e7463bdf65",
@@ -533,7 +561,8 @@
       "body_snippet": "Buenas a todos,\n\nAyer celebramos la primera reunión del año del Grupo de Usuarios de R de\nMadrid.\nLos videos de las presentaciones están disponibles en el portal aquí:\n\nhttp://madrid.r-es.org/57-jueve",
       "thread_id": "thread-99e7463bdf65",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013110.html"
     },
     {
       "id": "msg-4ac53db4c5fd",
@@ -549,7 +578,8 @@
       "body_snippet": "Hola,\n\nSoy un usuario de R. En el trabajo queremos instalar R y RStudio en servidor (la versi?n gratuita) y me gustar?a saber si alguien de la lista de correos tiene experiencia con la versi?n gratuit",
       "thread_id": "thread-4ac53db4c5fd",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013111.html"
     },
     {
       "id": "msg-8df9fed98d7c",
@@ -567,7 +597,8 @@
       "body_snippet": "Buenas,\n\nYo he instalado y trabjo con la versión gratuita de Rstudio open server.... Si teines dudas, comentalas por aqui por si pudiera ser util al resto de gente de la lista....\n\nUn saludo\nJesús\n___",
       "thread_id": "thread-4ac53db4c5fd",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013112.html"
     },
     {
       "id": "msg-76ca216f0d7f",
@@ -586,7 +617,8 @@
       "body_snippet": "Sí por favor, yo estoy interesado en saber como funciona y demas.\n\nUn saludo,\n\nEl lun., 28 ene. 2019 10:42, Jesús Para Fernández <\nj.para.fernandez en hotmail.com> escribió:\n\n> Buenas,\n>\n> Yo he insta",
       "thread_id": "thread-4ac53db4c5fd",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013113.html"
     },
     {
       "id": "msg-15dfca343dd3",
@@ -606,7 +638,8 @@
       "body_snippet": "Para poder instalarlo necesitais un servidor linux o bien un docker. Instlarlo es bastante sencillo, tan solo hay que repetir los siguientes pasos:\n\nhttps://www.rstudio.com/products/rstudio/download-s",
       "thread_id": "thread-4ac53db4c5fd",
       "thread_depth": 3,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013114.html"
     },
     {
       "id": "msg-f8c1ce026f80",
@@ -627,7 +660,8 @@
       "body_snippet": "Hola Jesús,\n\n\nMuchas gracias por tu respuesta. Te comento algunas dudas iniciales que tengo respecto a la versión gratuïta de RStudio Server Open Source.\n\n\n  *   Características técnicas del servidor:",
       "thread_id": "thread-4ac53db4c5fd",
       "thread_depth": 4,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013115.html"
     },
     {
       "id": "msg-2799feccc052",
@@ -643,7 +677,8 @@
       "body_snippet": "Buenas tardes,\n\nEs la primera vez que intento realizar un gráfico 3d de series temporales.\n\nSería genial si me pueden dar recomendaciones.\n\n  *   El paquete rgl, no me funciona - presenta problemas y ",
       "thread_id": "thread-2799feccc052",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013116.html"
     },
     {
       "id": "msg-defc78ef93ca",
@@ -665,7 +700,8 @@
       "body_snippet": "Hola\n\nYo he instalado varias veces Rstudio Server, contesto tus preguntas:\n\n\n\n  1.  Yo lo he instalado y trabajado en Ubuntu, Red Hat, Fedora y Arch Linux(esta distro no es tan usada). Sobre docker ha",
       "thread_id": "thread-4ac53db4c5fd",
       "thread_depth": 5,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013117.html"
     },
     {
       "id": "msg-5677fb047352",
@@ -681,7 +717,8 @@
       "body_snippet": "Buenas, erreros;\nQuiero pasar unas tablas resumen (data.frame) para que las investigue otra\ngente. Necesitaría que puedan pinchar en una columna y que se ordene según\nlos valores de esa columna y así ",
       "thread_id": "thread-5677fb047352",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013118.html"
     },
     {
       "id": "msg-9aefd09b550a",
@@ -697,7 +734,8 @@
       "body_snippet": "Hola.\n\nOs informo de que hemos publicado una nueva versi?n (la 4) de BioStatFLOSS.\n\nPara el que no lo conozca, se trata de una recopilaci?n de software para Windows. Es una \"colecci?n\" de programas de",
       "thread_id": "thread-9aefd09b550a",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013119.html"
     },
     {
       "id": "msg-4d3f663bc68e",
@@ -715,7 +753,8 @@
       "body_snippet": "Gracias por el esfuerzo! \n\n\nOn Tue, 29 Jan 2019 09:56:59 +0000\n<miguel.angel.rodriguez.muinos en sergas.es> wrote:\n\n> Hola.\n> \n> Os informo de que hemos publicado una nueva versi_n (la 4) de BioStatFL",
       "thread_id": "thread-9aefd09b550a",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013120.html"
     },
     {
       "id": "msg-d1fbd6261263",
@@ -738,7 +777,8 @@
       "body_snippet": "Por añadir mi experiencia, lo he instalado en debian y ubuntu y cero problemas... El resto de preguntas considero lo mismo que Javier.\n\nJesús\n________________________________\nDe: Javier Nieto <mac_jav",
       "thread_id": "thread-4ac53db4c5fd",
       "thread_depth": 6,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013121.html"
     },
     {
       "id": "msg-d6cb52ac7a8d",
@@ -754,7 +794,8 @@
       "body_snippet": "Buenas,\n\nAlguno usa alguno de los paquetes de Microsoft R para la conexion a SQL Server? De ser asi, que paquete y que comandos usais?\n\nYo hasta ahora he usado odbc, de Rstudio, pero me da siempre pro",
       "thread_id": "thread-d6cb52ac7a8d",
       "thread_depth": 0,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013122.html"
     },
     {
       "id": "msg-9dc7247c1fce",
@@ -772,7 +813,8 @@
       "body_snippet": "Estimado Jesús Para Fernández\n\nYo se usar SQL Server con R, es más, ODBC es obsoleto por decirlo de alguna\nforma, incluso RServer viene dentro de Sqlserver.\n\nJavier Rubén Marcuzzi\n\nEl mar., 29 ene. 20",
       "thread_id": "thread-d6cb52ac7a8d",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013123.html"
     },
     {
       "id": "msg-3213d7b563f6",
@@ -790,7 +832,8 @@
       "body_snippet": "Estimado Juan Abasolo\n\nCreo que es imposible, por ahí podría haber un programa que junto a R, algo\nmuy rebuscado, por ejemplo creando algo con tk (como Rcmdr).\n\nJavier Rubén Marcuzzi\n\nEl mar., 29 ene.",
       "thread_id": "thread-5677fb047352",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013124.html"
     },
     {
       "id": "msg-1fa41c1d4f39",
@@ -808,7 +851,8 @@
       "body_snippet": "Hola,\n\nSí, puedes hacerlo con un widget \"datatable\" que puedes incluir en un\ninforme RMarkdown.\nMira el ejemplo aquí:\n\nhttp://www.htmlwidgets.org/showcase_datatables.html\nhttps://rstudio.github.io/DT/",
       "thread_id": "thread-5677fb047352",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013125.html"
     },
     {
       "id": "msg-fed964aef165",
@@ -827,7 +871,8 @@
       "body_snippet": "¿ DT de RStudio? https://rstudio.github.io/DT/\n\n\nEl mar., 29 de ene. de 2019 a la(s) 17:02, Javier Marcuzzi (\njavier.ruben.marcuzzi en gmail.com) escribió:\n\n> Estimado Juan Abasolo\n>\n> Creo que es imp",
       "thread_id": "thread-5677fb047352",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013126.html"
     },
     {
       "id": "msg-e0d2046d0f71",
@@ -847,7 +892,8 @@
       "body_snippet": "Sí.\nhttps://github.com/rstudio/DT\n\nDe los autores de Shiny y de RMarkdown...\n\nSaludos,\nCarlos Ortega\nwww.qualityexcellence.es\n\n\nEl mar., 29 ene. 2019 a las 21:13, daniel (<daniel319 en gmail.com>) esc",
       "thread_id": "thread-5677fb047352",
       "thread_depth": 3,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013127.html"
     },
     {
       "id": "msg-0891912add7f",
@@ -866,7 +912,8 @@
       "body_snippet": "Buenísimo!\nMil gracias. Muchísimo más facil que pedir disculpas. Me pongo a ello.\n\n\nHau idatzi du Carlos Ortega (cof en qualityexcellence.es) erabiltzaileak (2019\nurt. 29, ar. (21:09)):\n\n> Hola,\n>\n> S",
       "thread_id": "thread-5677fb047352",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013128.html"
     },
     {
       "id": "msg-29474982af7b",
@@ -886,7 +933,8 @@
       "body_snippet": "Si, no queda mal, lo único que sale de R hacia html y JavaScript, no había\npensado en eso. Yo supe utilizar esa librería de JavaScript, el problema es\ncuándo son una cantidad de datos un poquito grand",
       "thread_id": "thread-5677fb047352",
       "thread_depth": 3,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013129.html"
     },
     {
       "id": "msg-9e4125e7801d",
@@ -904,7 +952,8 @@
       "body_snippet": "Yo valoro el tiempo que han dedicado y donado al resto de las personas, más\naún en cuestiones de salud.\n\nFelicitaciones\n\nJavier Rubén Marcuzzi\n\nEl mar., 29 ene. 2019 a las 6:57, <miguel.angel.rodrigue",
       "thread_id": "thread-9aefd09b550a",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013130.html"
     },
     {
       "id": "msg-fb489bbcaa10",
@@ -922,7 +971,8 @@
       "body_snippet": "On Tue, Jan 29, 2019 at 01:23:12PM +0000, Jesús Para Fernández wrote:\n\n> Buenas,\n>\n> Alguno usa alguno de los paquetes de Microsoft R para la conexion a\n> SQL Server? De ser asi, que paquete y que com",
       "thread_id": "thread-d6cb52ac7a8d",
       "thread_depth": 1,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013131.html"
     },
     {
       "id": "msg-9b6cbbaa6a7c",
@@ -941,7 +991,8 @@
       "body_snippet": "Hola,\n\nYo empleo RODBC, previamente he creado el origen de datos ODBC en mi \nequipo y hago:\n\nlibrary(RODBC)\n\nodbc_con <- odbcConnect(\"origenODBC\")\n\nsiniestros <- sqlQuery(odbc_con,\"\n               SEL",
       "thread_id": "thread-d6cb52ac7a8d",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013132.html"
     },
     {
       "id": "msg-a3f2d2648ce1",
@@ -961,7 +1012,8 @@
       "body_snippet": "Gracias a todos por contestar,\n\nPor lo visto, nadie usa ningun paquete de Microsoft R para conectarse a SQL Server (entiendo que es porque no existe tal soluci?n...)\n\nGracias!\nJes?s\n__________________",
       "thread_id": "thread-d6cb52ac7a8d",
       "thread_depth": 3,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013133.html"
     },
     {
       "id": "msg-df8709ec74d6",
@@ -982,7 +1034,8 @@
       "body_snippet": "Hola Jesús,\n\n¿Has buscado en las propias páginas de Microsoft_R...?\nhttps://docs.microsoft.com/es-es/sql/advanced-analytics/r/set-up-a-data-science-client?view=sql-server-2017\n\nGracias,\nCarlos Ortega\n",
       "thread_id": "thread-d6cb52ac7a8d",
       "thread_depth": 4,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013134.html"
     },
     {
       "id": "msg-7ccb631e27b7",
@@ -1001,7 +1054,8 @@
       "body_snippet": "Muchas gracias, Javier.\n\n\nUn saludo.\n\n\n\n\n________________________________\nDe: Javier Marcuzzi <javier.ruben.marcuzzi en gmail.com>\nEnviado: martes, 29 de enero de 2019 23:35\nPara: Rodr?guez Mu??os, Mi",
       "thread_id": "thread-9aefd09b550a",
       "thread_depth": 2,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013135.html"
     },
     {
       "id": "msg-f7dcd7ff176b",
@@ -1022,7 +1076,8 @@
       "body_snippet": "Está buenísima!\nLo que sí, como dice Javier, con cantidades grandecitas se queja un poco.\nYo lo que quería era sacarlo de R para difundir/que otros revisen, así que\nestá perfecta.\n\nHau idatzi du Javie",
       "thread_id": "thread-5677fb047352",
       "thread_depth": 4,
-      "month": "2019-01"
+      "month": "2019-01",
+      "source_url": "https://stat.ethz.ch/pipermail/r-help-es/2019-January/013136.html"
     }
   ],
   "threads": [
